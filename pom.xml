@@ -98,7 +98,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.glassfish.build</groupId>
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <version>1.2</version>
@@ -119,11 +119,11 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.glassfish.build</groupId>
                 <artifactId>glassfishbuild-maven-plugin</artifactId>
-                <version>3.2.24</version>
+                <version>3.2.26</version>
                 <executions>
                     <execution>
                         <id>unpack-sources</id>
