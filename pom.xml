@@ -27,7 +27,7 @@
 
     <groupId>jakarta.ejb</groupId>
     <artifactId>jakarta.ejb-api</artifactId>
-    <version>3.2.3-SNAPSHOT</version>
+    <version>3.2.4-SNAPSHOT</version>
 
     <properties>
         <extension.name>javax.ejb</extension.name>
@@ -36,6 +36,7 @@
         <findbugs.version>3.0.5</findbugs.version>
         <findbugs.exclude>exclude.xml</findbugs.exclude>
         <findbugs.threshold>Low</findbugs.threshold>
+        <legal.doc.source>.</legal.doc.source>
     </properties>
 
     <name>${extension.name} API</name>
@@ -397,6 +398,31 @@
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-legal-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${legal.doc.source}</directory>
+                                    <includes>
+                                        <include>NOTICE.md</include>
+                                        <include>LICENSE.md</include>
+                                    </includes>
+                                    <targetPath>META-INF</targetPath>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
