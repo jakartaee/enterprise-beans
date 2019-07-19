@@ -1,10 +1,10 @@
-# Contributing to Eclipse Project for EJB
+# Contributing to Jakarta Enterprise Beans
 
 Thanks for your interest in this project.
 
 ## Project description
 
-Enterprise JavaBeans is an architecture for the development and deployment of
+Jakarta Enterprise Beans is an architecture for the development and deployment of
 component-based business applications.
 
 * https://projects.eclipse.org/projects/ee4j.ejb

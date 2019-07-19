@@ -26,23 +26,23 @@ import static java.lang.annotation.RetentionPolicy.*;
  * JavaBean.
  * <p>
  * Either the <code>beanName</code> or the <code>lookup</code> element can 
- * be used to resolve the EJB dependency to its target session bean component.  
+ * be used to resolve the enterprise bean dependency to its target session bean component.  
  * It is an error to specify values for both <code>beanName</code> and 
  * <code>lookup</code>.
  * <p>
  * If no explicit linking information is provided and there is only one session
  * bean within the same application that exposes the matching client view type,
- * by default the EJB dependency resolves to that session bean.
+ * by default the enterprise bean dependency resolves to that session bean.
  *
  * @since EJB 3.0
  */
 
 @Target({TYPE, METHOD, FIELD})
 @Retention(RUNTIME)
-public @interface EJB {
+public @interface enterprise bean {
 
     /**
-     * The logical name of the ejb reference within the declaring component's
+     * The logical name of the enterprise bean reference within the declaring component's
      * (e.g., java:comp/env) environment.
      */
     String name() default "";
@@ -68,7 +68,7 @@ public @interface EJB {
      * separated from the path name by &#35;. The path name is relative to the jar file 
      * containing the component that is referencing the target bean.
      * <p>
-     * Only applicable if the target EJB is defined within the 
+     * Only applicable if the target enterprise bean is defined within the 
      * same application or stand-alone module as the declaring component.
      */
     String beanName() default "";
@@ -77,7 +77,7 @@ public @interface EJB {
      * The interface type of the Enterprise Java Bean to which this reference
      * is mapped.
      * <p>
-     * Holds one of the following types of the target EJB :
+     * Holds one of the following types of the target enterprise bean :
      * <ul>
      * <li> Local business interface
      * <li> Bean class (for no-interface view)
@@ -89,8 +89,8 @@ public @interface EJB {
     Class beanInterface() default Object.class;
 
     /**
-     * The product specific name of the EJB component to which this
-     * ejb reference should be mapped.  This mapped name is often a
+     * The product specific name of the enterprise bean component to which this
+     * enterprise bean reference should be mapped.  This mapped name is often a
      * global JNDI name, but may be a name of any form. 
      * <p>
      * Application servers are not required to support any particular 
@@ -101,7 +101,7 @@ public @interface EJB {
     String mappedName() default "";
 
     /**
-     * A portable lookup string containing the JNDI name for the target EJB component. 
+     * A portable lookup string containing the JNDI name for the target enterprise bean component. 
      *
      * @since EJB 3.1
      */ 

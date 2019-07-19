@@ -18,7 +18,7 @@ package javax.ejb;
 
 /**
  * The ObjectNotFoundException exception is thrown by a finder or select method to
- * indicate that the specified EJB object or local object does not exist.
+ * indicate that the specified enterprise bean object or local object does not exist.
  *
  * <p> Only the finder and select methods that are declared to return
  * a single object use this exception. This exception should not be

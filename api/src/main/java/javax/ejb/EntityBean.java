@@ -25,11 +25,11 @@ import java.rmi.RemoteException;
  * bean instances of the instance's life cycle events.
  *
  * <p>
- * Applications written to the EJB 3.0 and later APIs should use the facilities
+ * Applications written to the enterprise bean 3.0 and later APIs should use the facilities
  * of the Java Persistence API (<code>javax.persistence</code>) to model
  * persistent entities.
  *
- * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+ * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
  *
  * @since EJB 1.0
  */
@@ -48,8 +48,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -72,8 +72,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -81,10 +81,10 @@ public interface EntityBean extends EnterpriseBean {
     public void unsetEntityContext() throws EJBException, RemoteException;
 
     /**
-     * A container invokes this method before it removes the EJB object
+     * A container invokes this method before it removes the enterprise bean object
      * that is currently associated with the instance. This method
      * is invoked when a client invokes a remove operation on the
-     * entity bean's home interface or the EJB object's remote interface.
+     * entity bean's home interface or the enterprise bean object's remote interface.
      * This method transitions the instance from the ready state to the pool 
      * of available instances.
      * 
@@ -99,8 +99,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -111,7 +111,7 @@ public interface EntityBean extends EnterpriseBean {
     /**
      * A container invokes this method when the instance
      * is taken out of the pool of available instances to become associated
-     * with a specific EJB object. This method transitions the instance to 
+     * with a specific enterprise bean object. This method transitions the instance to 
      * the ready state.
      *
      * <p> This method executes in an unspecified transaction context.
@@ -121,8 +121,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -131,7 +131,7 @@ public interface EntityBean extends EnterpriseBean {
 
     /**
      * A container invokes this method on an instance before the instance
-     * becomes disassociated with a specific EJB object. After this method
+     * becomes disassociated with a specific enterprise bean object. After this method
      * completes, the container will place the instance into the pool of
      * available instances.
      *
@@ -142,8 +142,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -163,8 +163,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -184,8 +184,8 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
-     *    written for the EJB 1.0 specification. Enterprise beans written 
-     *    for the EJB 1.1 specification should throw the
+     *    written for the enterprise bean 1.0 specification. Enterprise beans written 
+     *    for the enterprise bean 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.

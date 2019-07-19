@@ -21,7 +21,7 @@ import java.rmi.RemoteException;
 /**
  * The EJBObject interface is extended by all enterprise beans' remote
  * interfaces. An enterprise bean's remote interface provides the
- * remote client view of an EJB object. An enterprise bean's remote
+ * remote client view of an enterprise bean object. An enterprise bean's remote
  * interface defines the business methods callable by a remote client.
  *
  * <p> The remote interface must extend the javax.ejb.EJBObject
@@ -32,7 +32,7 @@ import java.rmi.RemoteException;
  * bean provider and implemented by the enterprise bean container.
  *
  * <p>
- * Enterprise beans written to the EJB 3.0 and later APIs do not require
+ * Enterprise beans written to the enterprise bean 3.0 and later APIs do not require
  * a remote interface that extends the EJBObject interface.  A remote
  * business interface can be used instead.
  *
@@ -52,14 +52,14 @@ public interface EJBObject extends java.rmi.Remote {
     public EJBHome getEJBHome() throws RemoteException; 
 
     /**
-     * Obtain the primary key of the EJB object. 
+     * Obtain the primary key of the enterprise bean object. 
      *
      * <p> This method can be called on an entity bean. An attempt to invoke
      * this method on a session bean will result in RemoteException.
      *
-     * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+     * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
      *
-     * @return The EJB object's primary key.
+     * @return The enterprise bean object's primary key.
      *
      * @exception RemoteException Thrown when the method failed due to a
      *    system-level failure or when invoked on a session bean.
@@ -67,7 +67,7 @@ public interface EJBObject extends java.rmi.Remote {
     public Object getPrimaryKey() throws RemoteException;
 
     /**
-     * Remove the EJB object.
+     * Remove the enterprise bean object.
      *
      * @exception RemoteException Thrown when the method failed due to a
      *    system-level failure.
@@ -78,11 +78,11 @@ public interface EJBObject extends java.rmi.Remote {
     public void remove() throws RemoteException, RemoveException;
 
     /**
-     * Obtain a handle for the EJB object. The handle can be used at later
-     * time to re-obtain a reference to the EJB object, possibly in a
+     * Obtain a handle for the enterprise bean object. The handle can be used at later
+     * time to re-obtain a reference to the enterprise bean object, possibly in a
      * different Java Virtual Machine.
      *
-     * @return A handle for the EJB object.
+     * @return A handle for the enterprise bean object.
      *
      * @exception RemoteException Thrown when the method failed due to a
      *    system-level failure.
@@ -90,11 +90,11 @@ public interface EJBObject extends java.rmi.Remote {
     public Handle getHandle() throws RemoteException;
 
     /**
-     * Test if a given EJB object is identical to the invoked EJB object.
+     * Test if a given enterprise bean object is identical to the invoked enterprise bean object.
      *
      * @param obj An object to test for identity with the invoked object.
      *
-     * @return True if the given EJB object is identical to the invoked object,
+     * @return True if the given enterprise bean object is identical to the invoked object,
      *    false otherwise.
      *
      * @exception RemoteException Thrown when the method failed due to a

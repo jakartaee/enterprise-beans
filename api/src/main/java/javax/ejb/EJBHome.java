@@ -22,12 +22,12 @@ import java.rmi.RemoteException;
  * The EJBHome interface must be extended by all enterprise beans'
  * remote home interfaces. An enterprise bean's remote home interface
  * defines the methods that allow a remote client to create, find, and
- * remove EJB objects.
+ * remove enterprise bean objects.
  *
  * <p> The remote home interface is defined by the enterprise bean provider and 
  * implemented by the enterprise bean container.
  * <p>
- * Enterprise beans written to the EJB 3.0 and later APIs do not require
+ * Enterprise beans written to the enterprise bean 3.0 and later APIs do not require
  * a home interface.
  *
  * @since EJB 1.0
@@ -35,9 +35,9 @@ import java.rmi.RemoteException;
 public interface EJBHome extends java.rmi.Remote {
 
     /**
-     * Remove an EJB object identified by its handle.
+     * Remove an enterprise bean object identified by its handle.
      *
-     * @param handle the handle of the EJB object to be removed
+     * @param handle the handle of the enterprise bean object to be removed
      *
      * @exception RemoveException Thrown if the enterprise bean or
      *    the container does not allow the client to remove the object.
@@ -48,14 +48,14 @@ public interface EJBHome extends java.rmi.Remote {
     void remove(Handle handle) throws RemoteException, RemoveException;
 
     /**
-     * Remove an EJB object identified by its primary key.
+     * Remove an enterprise bean object identified by its primary key.
      *
      * <p>This method can be used only for an entity bean. An attempt
      * to call this method on a session bean will result in a RemoveException.
      *
-     * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+     * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
      *
-     * @param primaryKey the primary key of the EJB object to be removed
+     * @param primaryKey the primary key of the enterprise bean object to be removed
      *
      * @exception RemoveException Thrown if the enterprise bean or
      *    the container does not allow the client to remove the object.

@@ -76,7 +76,7 @@ public interface EJBContext
     /**
      * Obtain the <code>java.security.Identity</code> of the caller.
      *
-     * This method is deprecated in EJB 1.1. The Container
+     * This method is deprecated in enterprise bean 1.1. The Container
      * is allowed to return always <code>null</code> from this method. The enterprise
      * bean should use the <code>getCallerPrincipal</code> method instead.
      *
@@ -103,7 +103,7 @@ public interface EJBContext
     /**
      * Test if the caller has a given role.
      *
-     * <p>This method is deprecated in EJB 1.1. The enterprise bean
+     * <p>This method is deprecated in enterprise bean 1.1. The enterprise bean
      * should use the <code>isCallerInRole(String roleName)</code> method instead.
      *
      * @param role The <code>java.security.Identity</code> of the role to be tested.
@@ -179,7 +179,7 @@ public interface EJBContext
     boolean getRollbackOnly() throws IllegalStateException;
 
     /**
-     * Get access to the EJB Timer Service.
+     * Get access to the enterprise bean Timer Service.
      *
      * @exception IllegalStateException The Container throws the exception
      *    if the instance is not allowed to use this method (e.g. if the bean

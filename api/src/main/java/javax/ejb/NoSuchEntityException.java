@@ -26,7 +26,7 @@ package javax.ejb;
  * the business methods defined in the bean's component interface and by 
  * the <code>ejbLoad</code> and <code>ejbStore</code> methods.
  *
- * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+ * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
  *
  * @since EJB 1.1
  */

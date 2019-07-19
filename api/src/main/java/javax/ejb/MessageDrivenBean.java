@@ -17,11 +17,11 @@
 package javax.ejb;
 
 /**
- * The MessageDrivenBean interface defines methods that the EJB container uses
+ * The MessageDrivenBean interface defines methods that the enterprise bean container uses
  * to notify a message driven bean instance of the instance's life cycle 
  * events.
  * <p>
- * As of EJB 3.0 it is no longer required that a message driven bean class
+ * As of enterprise bean 3.0 it is no longer required that a message driven bean class
  * implement this interface.
  *
  * @since EJB 2.0

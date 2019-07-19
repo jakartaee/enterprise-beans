@@ -1,6 +1,6 @@
-# EJB API
+# Jakarta Enterprise Beans API
 
-This is the repository for EJB API.
+This is the repository for Jakarta Enterprise Beans API.
 
 ## Build
 

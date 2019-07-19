@@ -29,7 +29,7 @@ import javax.ejb.EJBException;
 import javax.ejb.spi.EJBContainerProvider;
 
 /** 
-  * Used to execute an EJB application in an embeddable container.  
+  * Used to execute an enterprise bean application in an embeddable container.  
   *
   * @since EJB 3.1
   */
@@ -56,7 +56,7 @@ public abstract class EJBContainer implements AutoCloseable {
 
     /**
      * Standard property name for specifying the application name of
-     * the EJB modules executing within the embeddable container. If
+     * the enterprise bean modules executing within the embeddable container. If
      * specified, the property value applies to the
      * <code>&#060;app-name&#062;</code> portion of the portable
      * global JNDI name syntax. If this property is not specified, the
@@ -66,7 +66,7 @@ public abstract class EJBContainer implements AutoCloseable {
     public static final String APP_NAME = "javax.ejb.embeddable.appName";
 
     /**
-     * Create and initialize an embeddable EJB container.  JVM classpath is 
+     * Create and initialize an embeddable enterprise bean container.  JVM classpath is 
      * searched for all ejb-jars or exploded ejb-jars in directory format.
      *
      * @return EJBContainer instance
@@ -79,7 +79,7 @@ public abstract class EJBContainer implements AutoCloseable {
     }
 
     /**
-     * Create and initialize an embeddable EJB container with a
+     * Create and initialize an embeddable enterprise bean container with a
      * set of configuration properties.
      *
      * @param properties Spec-defined and/or vendor-specific

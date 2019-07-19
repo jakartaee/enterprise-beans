@@ -1,12 +1,12 @@
-# Notices for Eclipse Project for EJB
+# Notices for Jakarta Enterprise Beans
 
-This content is produced and maintained by the Eclipse Project for EJB project.
+This content is produced and maintained by the Jakarta Enterprise Beans project.
 
 * Project home: https://projects.eclipse.org/projects/ee4j.ejb
 
 ## Trademarks
 
-Eclipse Project for EJB is a trademark of the Eclipse Foundation.
+Jakarta Enterprise Beans is a trademark of the Eclipse Foundation.
 
 ## Copyright
 

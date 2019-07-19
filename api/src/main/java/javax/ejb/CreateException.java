@@ -22,7 +22,7 @@ package javax.ejb;
  * interface. 
  *
  * <p> This exception is used as a standard application-level exception to
- * report a failure to create an EJB object or local object.
+ * report a failure to create an enterprise bean object or local object.
  *
  * @since EJB 1.0
  */

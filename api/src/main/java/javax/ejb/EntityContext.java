@@ -29,27 +29,27 @@ import java.security.Identity;
  * the lifetime of the instance. Note that the information that the instance
  * obtains using the EntityContext interface (such as the result of the
  * getPrimaryKey() method) may change, as the container assigns the instance
- * to different EJB objects during the instance's life cycle.
+ * to different enterprise bean objects during the instance's life cycle.
  *
- * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+ * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
  *
  * @since EJB 2.0
  */
 public interface EntityContext extends EJBContext
 {
     /**
-     * Obtain a reference to the EJB local object that is currently 
+     * Obtain a reference to the enterprise bean local object that is currently 
      * associated with the instance.
      *
      * <p> An instance of an entity bean can call this method only
-     * when the instance is associated with an EJB local object identity, i.e.
+     * when the instance is associated with an enterprise bean local object identity, i.e.
      * in the ejbActivate, ejbPassivate, ejbPostCreate, ejbRemove,
      * ejbLoad, ejbStore, and business methods.
      *
      * <p> An instance can use this method, for example, when it wants to
      * pass a reference to itself in a method argument or result.
      *
-     * @return The EJB local object currently associated with the instance.
+     * @return The enterprise bean local object currently associated with the instance.
      *
      * @exception IllegalStateException if the instance invokes this
      *    method while the instance is in a state that does not allow the
@@ -61,18 +61,18 @@ public interface EntityContext extends EJBContext
     EJBLocalObject getEJBLocalObject() throws IllegalStateException;
 
     /**
-     * Obtain a reference to the EJB object that is currently associated with 
+     * Obtain a reference to the enterprise bean object that is currently associated with 
      * the instance.
      *
      * <p> An instance of an entity bean can call this method only
-     * when the instance is associated with an EJB object identity, i.e.
+     * when the instance is associated with an enterprise bean object identity, i.e.
      * in the ejbActivate, ejbPassivate, ejbPostCreate, ejbRemove,
      * ejbLoad, ejbStore, and business methods.
      *
      * <p> An instance can use this method, for example, when it wants to
      * pass a reference to itself in a method argument or result.
      *
-     * @return The EJB object currently associated with the instance.
+     * @return The enterprise bean object currently associated with the instance.
      *
      * @exception IllegalStateException Thrown if the instance invokes this
      *    method while the instance is in a state that does not allow the
@@ -82,11 +82,11 @@ public interface EntityContext extends EJBContext
     EJBObject getEJBObject() throws IllegalStateException;
 
     /**
-     * Obtain the primary key of the EJB object that is currently
+     * Obtain the primary key of the enterprise bean object that is currently
      * associated with this instance.
      *
      * <p> An instance of an entity bean can call this method only
-     * when the instance is associated with an EJB object identity, i.e.
+     * when the instance is associated with an enterprise bean object identity, i.e.
      * in the ejbActivate, ejbPassivate, ejbPostCreate, ejbRemove,
      * ejbLoad, ejbStore, and business methods.
      *

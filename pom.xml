@@ -31,7 +31,7 @@
     <packaging>pom</packaging>
     <version>3.2.3-SNAPSHOT</version>
     <name>${extension.name} API</name>
-    <description>Eclipse Project for EJB</description>
+    <description>Jakarta Enterprise Beans</description>
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
 
     <scm>
