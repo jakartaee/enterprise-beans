@@ -22,9 +22,9 @@ import java.util.Collection;
 
 /**
  * The TimerService interface provides enterprise bean components with
- * access to the container-provided Timer Service.  The EJB Timer
+ * access to the container-provided Timer Service.  The enterprise bean Timer
  * Service allows stateless session beans, singleton session beans,
- * message-driven beans, and EJB 2.x entity beans to be registered for
+ * message-driven beans, and enterprise bean 2.x entity beans to be registered for
  * timer callback events at a specified time, after a specified
  * elapsed time, after a specified interval, or according to a
  * calendar-based schedule.

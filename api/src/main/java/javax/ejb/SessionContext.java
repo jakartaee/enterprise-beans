@@ -32,7 +32,7 @@ import javax.xml.rpc.handler.MessageContext;
 public interface SessionContext extends EJBContext
 {
     /**
-     * Obtain a reference to the EJB local object that is  
+     * Obtain a reference to the enterprise bean local object that is  
      * associated with the instance.
      *
      * <p> An instance of a session bean can call this method at
@@ -44,7 +44,7 @@ public interface SessionContext extends EJBContext
      * <p> An instance can use this method, for example, when it wants to
      * pass a reference to itself in a method argument or result.
      *
-     * @return The EJB local object currently associated with the instance.
+     * @return The enterprise bean local object currently associated with the instance.
      *
      * @exception IllegalStateException Thrown if the instance invokes this
      *    method while the instance is in a state that does not allow the
@@ -56,7 +56,7 @@ public interface SessionContext extends EJBContext
     EJBLocalObject getEJBLocalObject() throws IllegalStateException;
 
     /**
-     * Obtain a reference to the EJB object that is currently associated with 
+     * Obtain a reference to the enterprise bean object that is currently associated with 
      * the instance.
      *
      * <p> An instance of a session enterprise Bean can call this
@@ -68,7 +68,7 @@ public interface SessionContext extends EJBContext
      * <p> An instance can use this method, for example, when it wants to
      * pass a reference to itself in a method argument or result.
      *
-     * @return The EJB object currently associated with the instance.
+     * @return The enterprise bean object currently associated with the instance.
      *
      * @exception IllegalStateException Thrown if the instance invokes this
      *    method while the instance is in a state that does not allow the
@@ -84,7 +84,7 @@ public interface SessionContext extends EJBContext
      * from any business method invoked through its web service
      * endpoint interface.
      *
-     * <p><b>Note:</b> Support for web services invocations using JAX-RPC is optional as of EJB 3.2
+     * <p><b>Note:</b> Support for web services invocations using JAX-RPC is optional as of enterprise bean 3.2
      *
      * @return The MessageContext for this web service invocation.
      *

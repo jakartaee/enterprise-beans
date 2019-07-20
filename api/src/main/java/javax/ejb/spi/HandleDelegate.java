@@ -25,10 +25,10 @@ import javax.ejb.EJBHome;
 
 
 /**
- * The <code>HandleDelegate</code> interface is implemented by the EJB container. 
+ * The <code>HandleDelegate</code> interface is implemented by the enterprise bean container. 
  * It is used by portable implementations of <code>javax.ejb.Handle</code> and
  * <code>javax.ejb.HomeHandle</code>.
- * It is not used by EJB components or by client components.
+ * It is not used by enterprise bean components or by client components.
  * It provides methods to serialize and deserialize EJBObject and
  * EJBHome references to streams.
  *

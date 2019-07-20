@@ -18,7 +18,7 @@ package javax.ejb;
 
 /**  
  * A NoSuchObjectLocalException is thrown if an attempt is made to invoke
- * a method on a local object (local EJB object or timer) that no longer exists.
+ * a method on a local object (local enterprise bean object or timer) that no longer exists.
  *
  * @since EJB 2.0
  */

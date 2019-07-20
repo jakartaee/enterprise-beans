@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  *
  * The <code>Timer</code> interface contains information about a timer
- * that was created through the EJB Timer Service.
+ * that was created through the enterprise bean Timer Service.
  *
  * @since EJB 2.1
  */

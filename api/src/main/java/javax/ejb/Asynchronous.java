@@ -30,7 +30,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * Asynchronous method invocation semantics only apply to the no-interface, 
  * local business, and remote business client views.   Methods exposed 
- * through the EJB 2.x local, EJB 2.x remote, and web service client views 
+ * through the enterprise bean 2.x local, enterprise bean 2.x remote, and web service client views 
  * must not be designated as asynchronous.
  *
  * @see AsyncResult

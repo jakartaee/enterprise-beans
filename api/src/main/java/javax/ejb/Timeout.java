@@ -23,8 +23,8 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 /**
  * Designates a method on a stateless session bean class, a singleton
- * session bean class, a message driven bean class, or an EJB 2.x entity bean
- * class that should receive EJB timer expirations for that bean.
+ * session bean class, a message driven bean class, or an enterprise bean 2.x entity bean
+ * class that should receive enterprise bean timer expirations for that bean.
  * <p>
  * The method to which the <code>Timeout</code> annotation is applied
  * must have one of the following signatures, where <code>&#060;METHOD&#062;</code>

@@ -19,19 +19,19 @@ package javax.ejb;
 import java.rmi.RemoteException;
 
 /**
- * The Handle interface is implemented by all EJB object handles. A handle
- * is an abstraction of a network reference to an EJB object. A handle is
- * intended to be used as a "robust" persistent reference to an EJB object.
+ * The Handle interface is implemented by all enterprise bean object handles. A handle
+ * is an abstraction of a network reference to an enterprise bean object. A handle is
+ * intended to be used as a "robust" persistent reference to an enterprise bean object.
  *
  * @since EJB 1.0
  */
 public interface Handle extends java.io.Serializable {
     /**
-     * Obtain the EJB object reference represented by this handle.
+     * Obtain the enterprise bean object reference represented by this handle.
      *
-     * @return the EJB object reference represented by this handle.
+     * @return the enterprise bean object reference represented by this handle.
      *
-     * @exception RemoteException The EJB object could not be obtained
+     * @exception RemoteException The enterprise bean object could not be obtained
      *    because of a system-level failure.
      */
     public EJBObject getEJBObject() throws RemoteException;

@@ -25,7 +25,7 @@ import java.lang.annotation.Retention;
 /**
  * Designates a method of a session bean that corresponds to a
  * <code>create&#060;METHOD&#062;</code> method of an adapted home or
- * local home interface (an interface that adapts an EJB 2.1 or earlier
+ * local home interface (an interface that adapts an enterprise bean 2.1 or earlier
  * EJBHome or EJBLocalHome client view respectively).
  *
  * <p> The result type of such an <code>Init</code> method is required
