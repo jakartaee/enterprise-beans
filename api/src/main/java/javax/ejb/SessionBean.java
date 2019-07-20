@@ -22,7 +22,7 @@ import java.rmi.RemoteException;
  * The SessionBean interface defines methods that the enterprise bean container uses
  * to notify a session bean instance of the instance's life cycle events.
  * <p>
- * As of enterprise bean 3.0 it is no longer required that a session bean class
+ * As of EJB 3.0 it is no longer required that a session bean class
  * implement this interface.
  *
  * @since EJB 1.0
@@ -45,7 +45,7 @@ public interface SessionBean extends EnterpriseBean {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for applications written
      *    for the enterprise bean 1.0 specification. Enterprise beans written for the 
-     *    enterprise bean 1.1 specification should throw the
+     *    EJB 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -67,7 +67,7 @@ public interface SessionBean extends EnterpriseBean {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
-     *    for the enterprise bean 1.1 specification should throw the
+     *    for the EJB 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -87,7 +87,7 @@ public interface SessionBean extends EnterpriseBean {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
-     *    for the enterprise bean 1.1 specification should throw the
+     *    for the EJB 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.
@@ -111,7 +111,7 @@ public interface SessionBean extends EnterpriseBean {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
-     *    for the enterprise bean 1.1 specification should throw the
+     *    for the EJB 1.1 specification should throw the
      *    javax.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
      *    must throw the javax.ejb.EJBException instead of this exception.

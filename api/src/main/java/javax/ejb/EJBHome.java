@@ -27,7 +27,7 @@ import java.rmi.RemoteException;
  * <p> The remote home interface is defined by the enterprise bean provider and 
  * implemented by the enterprise bean container.
  * <p>
- * Enterprise beans written to the enterprise bean 3.0 and later APIs do not require
+ * Enterprise beans written to the EJB 3.0 and later APIs do not require
  * a home interface.
  *
  * @since EJB 1.0
@@ -53,7 +53,7 @@ public interface EJBHome extends java.rmi.Remote {
      * <p>This method can be used only for an entity bean. An attempt
      * to call this method on a session bean will result in a RemoveException.
      *
-     * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
+     * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @param primaryKey the primary key of the enterprise bean object to be removed
      *

@@ -49,9 +49,9 @@ public interface SessionSynchronization {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
-     *    for the enterprise bean 1.1 and later specifications should throw the
+     *    for the EJB 1.1 and later specifications should throw the
      *    javax.ejb.EJBException instead of this exception. 
-     *    Enterprise beans written for the enterprise bean 2.0 and later specifications 
+     *    Enterprise beans written for the EJB 2.0 and later specifications
      *    must not throw the java.rmi.RemoteException.
      *
      * @see AfterBegin
@@ -75,9 +75,9 @@ public interface SessionSynchronization {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
-     *    for the enterprise bean 1.1 and later specification should throw the
+     *    for the EJB 1.1 and later specification should throw the
      *    javax.ejb.EJBException instead of this exception.
-     *    Enterprise beans written for the enterprise bean 2.0 and later specifications 
+     *    Enterprise beans written for the EJB 2.0 and later specifications
      *    must not throw the java.rmi.RemoteException.
      *
      * @see BeforeCompletion
@@ -100,9 +100,9 @@ public interface SessionSynchronization {
      * @exception RemoteException This exception is defined in the method
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
-     *    for the enterprise bean 1.1 and later specification should throw the
+     *    for the EJB 1.1 and later specification should throw the
      *    javax.ejb.EJBException instead of this exception. 
-     *    Enterprise beans written for the enterprise bean 2.0 and later specifications 
+     *    Enterprise beans written for the EJB 2.0 and later specifications
      *    must not throw the java.rmi.RemoteException.
      *
      * @see AfterCompletion

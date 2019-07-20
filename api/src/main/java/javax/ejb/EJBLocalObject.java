@@ -26,7 +26,7 @@ package javax.ejb;
  * bean provider and implemented by the enterprise bean container.
  * 
  * <p>
- * Enterprise beans written to the enterprise bean 3.0 and later APIs do not require
+ * Enterprise beans written to the EJB 3.0 and later APIs do not require
  * a local interface that extends the EJBLocalObject interface.  A local
  * business interface can be used instead.
  *
@@ -53,7 +53,7 @@ public interface EJBLocalObject {
      * An attempt to invoke this method on a session bean will result in
      * an EJBException.
      *
-     * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
+     * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @return The enterprise bean local object's primary key.
      *

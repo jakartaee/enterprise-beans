@@ -25,7 +25,7 @@ package javax.ejb;
  * <p> The local home interface is defined by the enterprise bean provider
  * and implemented by the enterprise bean container.
  * <p>
- * Enterprise beans written to the enterprise bean 3.0 and later APIs do not require
+ * Enterprise beans written to the EJB 3.0 and later APIs do not require
  * a local home interface.
  *
  * @since EJB 2.0
@@ -39,7 +39,7 @@ public interface EJBLocalHome {
      * bean.  An attempt to call this method on a session bean will
      * result in a RemoveException.
      *
-     * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
+     * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @param primaryKey the primary key of the enterprise bean object to be removed
      *
