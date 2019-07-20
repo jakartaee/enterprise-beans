@@ -39,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 @Target({TYPE, METHOD, FIELD})
 @Retention(RUNTIME)
-public @interface enterprise bean {
+public @interface EJB {
 
     /**
      * The logical name of the enterprise bean reference within the declaring component's
