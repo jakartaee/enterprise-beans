@@ -1,9 +1,3 @@
-.classpath
-.project
-.settings/
-target/
-*~
-*.iml
-*nbactions.xml
-.vscode/
+/target/
 .idea
+*.iml

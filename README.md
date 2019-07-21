@@ -5,7 +5,7 @@ This is the repository for Jakarta Enterprise Beans API.
 ## Build
 
 Use the following command:
-```bash 
+```bash
 mvn clean install
 ```
 
