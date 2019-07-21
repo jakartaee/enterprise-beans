@@ -26,7 +26,7 @@ import java.rmi.RemoteException;
  *
  * <p>
  * Applications written to the EJB 3.0 and later APIs should use the facilities
- * of the Java Persistence API (<code>javax.persistence</code>) to model
+ * of the Jakarta Persistence API (<code>javax.persistence</code>) to model
  * persistent entities.
  *
  * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
