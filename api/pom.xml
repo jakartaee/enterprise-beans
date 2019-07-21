@@ -39,8 +39,8 @@
         <legal.doc.source>.</legal.doc.source>
     </properties>
 
-    <name>${extension.name} API</name>
-    <description>Eclipse Project for EJB</description>
+    <name>Jakarta Enterprise Beans</name>
+    <description>Jakarta Enterprise Beans</description>
 
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
 
@@ -306,6 +306,17 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
+                    <groups>
+                        <group>
+                            <title>Enterprise Beans API Documentation</title>
+                            <packages>
+                                javax.ejb
+                            </packages>
+                        </group>
+                    </groups>
+                    <header>Jakarta Enterprise Beans ${spec.version}</header>
+                    <footer>Jakarta Enterprise Beans ${spec.version}</footer>
+
                     <doclint>none</doclint>
                     <bottom>
 <![CDATA[Copyright &#169; 1996-2013,
@@ -323,6 +334,8 @@
                             <goal>javadoc</goal>
                         </goals>
                         <configuration>
+                            <header>Jakarta Enterprise Beans ${spec.version}</header>
+                            <footer>Jakarta Enterprise Beans ${spec.version}</footer>
                             <groups>
                                 <group>
                                     <title>Jakarta Enterprise Beans API Documentation</title>
