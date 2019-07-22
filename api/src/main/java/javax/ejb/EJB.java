@@ -22,8 +22,7 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Indicates a dependency on the local, no-interface, or remote view of an Enterprise
- * JavaBean.
+ * Indicates a dependency on the local, no-interface, or remote view of an Enterprise Bean.
  * <p>
  * Either the <code>beanName</code> or the <code>lookup</code> element can 
  * be used to resolve the enterprise bean dependency to its target session bean component.  
@@ -39,7 +38,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 
 @Target({TYPE, METHOD, FIELD})
 @Retention(RUNTIME)
-public @interface enterprise bean {
+public @interface EJB {
 
     /**
      * The logical name of the enterprise bean reference within the declaring component's
@@ -74,7 +73,7 @@ public @interface enterprise bean {
     String beanName() default "";
 
     /**
-     * The interface type of the Enterprise Java Bean to which this reference
+     * The interface type of the Enterprise Bean to which this reference
      * is mapped.
      * <p>
      * Holds one of the following types of the target enterprise bean :

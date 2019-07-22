@@ -38,7 +38,7 @@ import java.lang.annotation.Retention;
  * create method signature.
  *
  * <p>
- * Session beans written to the enterprise bean 3.0 and later APIs do not otherwise make
+ * Session beans written to the EJB 3.0 and later APIs do not otherwise make
  * use of local home interfaces.
  *
  * @see Init

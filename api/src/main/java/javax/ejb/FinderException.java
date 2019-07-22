@@ -23,7 +23,7 @@ package javax.ejb;
  * <p> The exception is used as a standard application-level exception to 
  * report a failure to find the requested enterprise bean object(s).
  *
- * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
+ * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
  *
  * @since EJB 1.0
  */

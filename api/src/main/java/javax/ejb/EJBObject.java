@@ -32,7 +32,7 @@ import java.rmi.RemoteException;
  * bean provider and implemented by the enterprise bean container.
  *
  * <p>
- * Enterprise beans written to the enterprise bean 3.0 and later APIs do not require
+ * Enterprise beans written to the EJB 3.0 and later APIs do not require
  * a remote interface that extends the EJBObject interface.  A remote
  * business interface can be used instead.
  *
@@ -57,7 +57,7 @@ public interface EJBObject extends java.rmi.Remote {
      * <p> This method can be called on an entity bean. An attempt to invoke
      * this method on a session bean will result in RemoteException.
      *
-     * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
+     * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @return The enterprise bean object's primary key.
      *

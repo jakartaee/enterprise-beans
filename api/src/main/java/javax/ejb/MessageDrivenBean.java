@@ -21,7 +21,7 @@ package javax.ejb;
  * to notify a message driven bean instance of the instance's life cycle 
  * events.
  * <p>
- * As of enterprise bean 3.0 it is no longer required that a message driven bean class
+ * As of EJB 3.0 it is no longer required that a message driven bean class
  * implement this interface.
  *
  * @since EJB 2.0

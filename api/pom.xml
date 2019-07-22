@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2012, 2018 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2012, 2019 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -27,8 +27,8 @@
 
     <groupId>jakarta.ejb</groupId>
     <artifactId>jakarta.ejb-api</artifactId>
-    <version>3.2.3-SNAPSHOT</version>
-    
+    <version>3.2.6-SNAPSHOT</version>
+
     <properties>
         <extension.name>javax.ejb</extension.name>
         <spec.version>3.2</spec.version>
@@ -36,11 +36,12 @@
         <findbugs.version>3.0.5</findbugs.version>
         <findbugs.exclude>exclude.xml</findbugs.exclude>
         <findbugs.threshold>Low</findbugs.threshold>
+        <legal.doc.source>.</legal.doc.source>
     </properties>
-    
-    <name>${extension.name} API</name>
-    <description>Eclipse Project for EJB</description>
-    
+
+    <name>Jakarta Enterprise Beans</name>
+    <description>Jakarta Enterprise Beans</description>
+
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
 
     <developers>
@@ -82,7 +83,7 @@
         <url>https://github.com/eclipse-ee4j/ejb-api</url>
       <tag>HEAD</tag>
   </scm>
-
+  
     <build>
 
         <resources>
@@ -93,7 +94,7 @@
                     <include>**/*.html</include>
                 </includes>
             </resource>
-        </resources>        
+        </resources>
 
         <pluginManagement>
             <plugins>
@@ -168,22 +169,28 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.6</version>
                 </plugin>
+                <plugin>
+                    <!-- Enables step-by-step staging deployment -->
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-		<configuration>
-			<source>1.6</source>
-			<target>1.6</target>
-		</configuration>
+            		<configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+               </configuration>
             </plugin>
             <plugin>
                 <groupId>org.glassfish.build</groupId>
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <configuration>
-		    <specMode>jakarta</specMode>
+		                <specMode>jakarta</specMode>
                     <spec>
                         <nonFinal>${non.final}</nonFinal>
                         <jarType>api</jarType>
@@ -213,7 +220,7 @@
                         </goals>
                         <configuration>
                             <attachSources>true</attachSources>
-                            <includeArtifactIds>javax.xml.rpc-api</includeArtifactIds>
+                            <includeArtifactIds>jakarta.xml.rpc-api</includeArtifactIds>
                             <includes>javax/xml/rpc/handler/*</includes>
                             <excludeTransitive>true</excludeTransitive>
                         </configuration>
@@ -232,13 +239,13 @@
                         <Bundle-SymbolicName>${spec.bundle.symbolic-name}</Bundle-SymbolicName>
                         <Extension-Name>${spec.extension.name}</Extension-Name>
                         <Implementation-Version>${spec.implementation.version}</Implementation-Version>
-                        <Specification-Version>${spec.specification.version}</Specification-Version> 
+                        <Specification-Version>${spec.specification.version}</Specification-Version>
                         <Bundle-Description>
-                            Java(TM) EJB ${spec.version} API Design Specification
+                            Jakarta Enterprise Beans ${spec.version} API Design Specification
                         </Bundle-Description>
-                        <Specification-Vendor>Oracle Corporation</Specification-Vendor>
+                        <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
                         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
-                        <Implementation-Vendor-Id>org.glassfish</Implementation-Vendor-Id>
+                        <Implementation-Vendor-Id>org.eclipse.ee4j.ejb</Implementation-Vendor-Id>
                         <Import-Package>javax.transaction;version="[1.3,2.0)",*</Import-Package>
                         <Export-Package>javax.xml.rpc.handler.*;version="1.1.2",*</Export-Package>
                         <Embed-Dependency>javax.xml.rpc;inline=javax/xml/rpc/handler/*.class</Embed-Dependency>
@@ -290,7 +297,7 @@
                     <execution>
                        <id>attach-sources</id>
                        <goals>
-                           <goal>jar-no-fork</goal> 
+                           <goal>jar-no-fork</goal>
                        </goals>
                     </execution>
                 </executions>
@@ -299,11 +306,22 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
+                    <groups>
+                        <group>
+                            <title>Enterprise Beans API Documentation</title>
+                            <packages>
+                                javax.ejb
+                            </packages>
+                        </group>
+                    </groups>
+                    <header>Jakarta Enterprise Beans ${spec.version}</header>
+                    <footer>Jakarta Enterprise Beans ${spec.version}</footer>
+
                     <doclint>none</doclint>
                     <bottom>
 <![CDATA[Copyright &#169; 1996-2013,
     <a href="http://www.oracle.com">Oracle</a>
-    and/or its affiliates. All Rights Reserved.
+    and/or its affiliates. Copyright 2019 Contributors to the Eclipse Foundation.  All Rights Reserved.
     Use is subject to
     <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.
 ]]>
@@ -316,9 +334,11 @@
                             <goal>javadoc</goal>
                         </goals>
                         <configuration>
+                            <header>Jakarta Enterprise Beans ${spec.version}</header>
+                            <footer>Jakarta Enterprise Beans ${spec.version}</footer>
                             <groups>
                                 <group>
-                                    <title>EJB API Documentation</title>
+                                    <title>Jakarta Enterprise Beans API Documentation</title>
                                     <packages>javax.ejb</packages>
                                 </group>
                             </groups>
@@ -331,7 +351,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>     
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
@@ -369,9 +389,53 @@
                                     <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
                                 </configuration>
                             </plugin>
-                        </plugins>                        
+                        </plugins>
                     </reporting>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-legal-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${legal.doc.source}</directory>
+                                    <includes>
+                                        <include>NOTICE.md</include>
+                                        <include>LICENSE.md</include>
+                                    </includes>
+                                    <targetPath>META-INF</targetPath>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 

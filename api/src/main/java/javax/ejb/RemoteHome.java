@@ -37,7 +37,7 @@ import java.lang.annotation.Retention;
  * derived from the return type of remote home interface's
  * create method signature.
  * <p>
- * Session beans written to the enterprise bean 3.0 and later APIs do not otherwise make
+ * Session beans written to the EJB 3.0 and later APIs do not otherwise make
  * use of remote home interfaces.
  *
  * @see Init

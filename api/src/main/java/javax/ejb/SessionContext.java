@@ -84,7 +84,7 @@ public interface SessionContext extends EJBContext
      * from any business method invoked through its web service
      * endpoint interface.
      *
-     * <p><b>Note:</b> Support for web services invocations using JAX-RPC is optional as of enterprise bean 3.2
+     * <p><b>Note:</b> Support for web services invocations using JAX-RPC is optional as of EJB 3.2
      *
      * @return The MessageContext for this web service invocation.
      *

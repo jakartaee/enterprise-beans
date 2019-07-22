@@ -31,7 +31,7 @@ import java.security.Identity;
  * getPrimaryKey() method) may change, as the container assigns the instance
  * to different enterprise bean objects during the instance's life cycle.
  *
- * <p><b>Note:</b> Support for entity beans is optional as of enterprise bean 3.2.
+ * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
  *
  * @since EJB 2.0
  */
