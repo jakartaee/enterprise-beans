@@ -2,7 +2,7 @@
 // Copyright (c) 2017, 2019 Contributors to the Eclipse Foundation
 //
 
-= Jakarta Enterprise Beans 3.2
+= Jakarta Enterprise Beans
 :authors: Jakarta Enterprise Beans Team, https://projects.eclipse.org/projects/ee4j.ejb
 :email: https://dev.eclipse.org/mailman/listinfo/ejb-api-dev
 :version-label!:
