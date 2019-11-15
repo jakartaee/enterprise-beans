@@ -46,9 +46,9 @@ public interface SessionBean extends EnterpriseBean {
      *    signature to provide backward compatibility for applications written
      *    for the enterprise bean 1.0 specification. Enterprise beans written for the 
      *    EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     void setSessionContext(SessionContext ctx) throws EJBException,
 	    RemoteException;
@@ -68,9 +68,9 @@ public interface SessionBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
      void ejbRemove() throws EJBException, RemoteException;    
 
@@ -88,9 +88,9 @@ public interface SessionBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     void ejbActivate() throws EJBException, RemoteException;
 
@@ -112,9 +112,9 @@ public interface SessionBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     void ejbPassivate() throws EJBException, RemoteException;
 }

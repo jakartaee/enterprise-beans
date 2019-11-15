@@ -325,7 +325,7 @@ public interface TimerService {
      * Returns all active timers associated with this bean. These include both the 
      * programmatically-created timers and the automatically-created timers.
      *
-     * @return a collection of <code>javax.ejb.Timer</code> objects.
+     * @return a collection of <code>jakarta.ejb.Timer</code> objects.
      *
      * @exception java.lang.IllegalStateException If this method is
      * invoked while the instance is in a state that does not allow access 
@@ -342,7 +342,7 @@ public interface TimerService {
      * which the caller bean is packaged. These include both the
      * programmatically-created timers and the automatically-created timers.
      *
-     * @return a collection of <code>javax.ejb.Timer</code> objects.
+     * @return a collection of <code>jakarta.ejb.Timer</code> objects.
      *
      * @exception java.lang.IllegalStateException If this method is
      * invoked while the instance is in a state that does not allow access

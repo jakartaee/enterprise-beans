@@ -36,20 +36,20 @@ public interface EJBContainerProvider {
      * 
      * <ul>
      * <li>
-     *   The <code>javax.ejb.embeddable.provider</code> property was
+     *   The <code>jakarta.ejb.embeddable.provider</code> property was
      *   included in the Map passed to <code>createEJBContainer</code>
      *   and the value of the property is the provider's
      *   implementation class.
      *
      * <li>
-     *   No <code>javax.ejb.embeddable.provider</code> property was specified.
+     *   No <code>jakarta.ejb.embeddable.provider</code> property was specified.
      *</ul>
      *
      * If a provider does not qualify as the provider for the
      * embeddable application, it must return null.
      *
      * @param properties Spec-defined and/or vendor-specific
-     * properties, that were passed to <code>javax.ejb.embeddable.EJBContainer#createEJBContainer(Map&#60;&#63;,&#63;&#62;)</code> call
+     * properties, that were passed to <code>jakarta.ejb.embeddable.EJBContainer#createEJBContainer(Map&#60;&#63;,&#63;&#62;)</code> call
      * 
      * @return EJBContainer instance or null
      */

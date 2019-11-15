@@ -50,9 +50,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void setEntityContext(EntityContext ctx) throws EJBException,
             RemoteException;
@@ -74,9 +74,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void unsetEntityContext() throws EJBException, RemoteException;
 
@@ -101,9 +101,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void ejbRemove() throws RemoveException, EJBException, 
 	RemoteException;
@@ -123,9 +123,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void ejbActivate() throws EJBException, RemoteException;
 
@@ -144,9 +144,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void ejbPassivate() throws EJBException, RemoteException;
 
@@ -165,9 +165,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void ejbLoad() throws EJBException, RemoteException;
 
@@ -186,9 +186,9 @@ public interface EntityBean extends EnterpriseBean {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB2.0 and higher specifications
-     *    must throw the javax.ejb.EJBException instead of this exception.
+     *    must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void ejbStore() throws EJBException, RemoteException;
 }

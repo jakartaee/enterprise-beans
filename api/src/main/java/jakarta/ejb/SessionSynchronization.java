@@ -50,7 +50,7 @@ public interface SessionSynchronization {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 and later specifications should throw the
-     *    javax.ejb.EJBException instead of this exception. 
+     *    jakarta.ejb.EJBException instead of this exception. 
      *    Enterprise beans written for the EJB 2.0 and later specifications
      *    must not throw the java.rmi.RemoteException.
      *
@@ -76,7 +76,7 @@ public interface SessionSynchronization {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 and later specification should throw the
-     *    javax.ejb.EJBException instead of this exception.
+     *    jakarta.ejb.EJBException instead of this exception.
      *    Enterprise beans written for the EJB 2.0 and later specifications
      *    must not throw the java.rmi.RemoteException.
      *
@@ -101,7 +101,7 @@ public interface SessionSynchronization {
      *    signature to provide backward compatibility for enterprise beans 
      *    written for the enterprise bean 1.0 specification. Enterprise beans written 
      *    for the EJB 1.1 and later specification should throw the
-     *    javax.ejb.EJBException instead of this exception. 
+     *    jakarta.ejb.EJBException instead of this exception. 
      *    Enterprise beans written for the EJB 2.0 and later specifications
      *    must not throw the java.rmi.RemoteException.
      *

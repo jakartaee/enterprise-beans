@@ -56,7 +56,7 @@ public interface Timer {
      * @throws jakarta.ejb.NoSuchObjectLocalException If invoked on a timer
  that has expired or has been cancelled.
      *
-     * @exception javax.ejb.NoMoreTimeoutsExceptions Indicates that the 
+     * @exception jakarta.ejb.NoMoreTimeoutsExceptions Indicates that the 
      * timer has no future timeouts
      * @throws jakarta.ejb.EJBException If this method could not complete due
  to a system-level failure.
@@ -76,7 +76,7 @@ public interface Timer {
      * @throws jakarta.ejb.NoSuchObjectLocalException If invoked on a timer
  that has expired or has been cancelled.
      * 
-     * @exception javax.ejb.NoMoreTimeoutsExceptions Indicates that the 
+     * @exception jakarta.ejb.NoMoreTimeoutsExceptions Indicates that the 
      * timer has no future timeouts
      * @throws jakarta.ejb.EJBException If this method could not complete due
  to a system-level failure.

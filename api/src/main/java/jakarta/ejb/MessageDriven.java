@@ -47,7 +47,7 @@ public @interface MessageDriven {
      * Message-listener interface.  If the message-driven bean class
      * implements more than one interface other than <code>java.io.Serializable</code>,
      * <code>java.io.Externalizable</code>, or any of the interfaces defined by the
-     * <code>javax.ejb</code> package, the message listener interface must be 
+     * <code>jakarta.ejb</code> package, the message listener interface must be 
      * specified.
      */
     Class messageListenerInterface() default Object.class;

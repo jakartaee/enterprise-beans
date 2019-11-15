@@ -54,7 +54,7 @@ public @interface Remote {
      * as a remote business interface using <code>Remote</code> annotation on the interface,
      * and at least one other interface (excluding <code>java.io.Serializable</code>,
      * <code>java.io.Externalizable</code>, and any of the interfaces
-     * defined by the <code>javax.ejb</code> package) has no designation.
+     * defined by the <code>jakarta.ejb</code> package) has no designation.
      * </ul>
      */
     Class[] value() default {};

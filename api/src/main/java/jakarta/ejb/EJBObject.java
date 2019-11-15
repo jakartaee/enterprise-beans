@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
  * remote client view of an enterprise bean object. An enterprise bean's remote
  * interface defines the business methods callable by a remote client.
  *
- * <p> The remote interface must extend the javax.ejb.EJBObject
+ * <p> The remote interface must extend the jakarta.ejb.EJBObject
  * interface, and define the enterprise bean specific business
  * methods.
  *

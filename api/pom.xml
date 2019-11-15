@@ -30,7 +30,7 @@
     <version>3.2.6-SNAPSHOT</version>
 
     <properties>
-        <extension.name>javax.ejb</extension.name>
+        <extension.name>jakarta.ejb</extension.name>
         <spec.version>3.2</spec.version>
         <non.final>false</non.final>
         <findbugs.version>3.0.5</findbugs.version>
@@ -333,7 +333,7 @@
                             <groups>
                                 <group>
                                     <title>Jakarta Enterprise Beans API Documentation</title>
-                                    <packages>javax.ejb</packages>
+                                    <packages>jakarta.ejb</packages>
                                 </group>
                             </groups>
                         </configuration>

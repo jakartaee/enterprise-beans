@@ -39,7 +39,7 @@ public abstract class EJBContainer implements AutoCloseable {
      * Standard property name for specifying the embeddable container implementation bootstrap
      * class.  Property value is a fully-qualified class name.
      */
-    public static final String PROVIDER = "javax.ejb.embeddable.provider";
+    public static final String PROVIDER = "jakarta.ejb.embeddable.provider";
 
     /**
      * Standard property name for specifying the set of modules to be
@@ -52,7 +52,7 @@ public abstract class EJBContainer implements AutoCloseable {
      *        or exploded ejb-jar directory
      * </ul>
      */
-    public static final String MODULES = "javax.ejb.embeddable.modules";
+    public static final String MODULES = "jakarta.ejb.embeddable.modules";
 
     /**
      * Standard property name for specifying the application name of
@@ -63,7 +63,7 @@ public abstract class EJBContainer implements AutoCloseable {
      * <code>&#060;app-name&#062;</code> portion of the portable
      * global JNDI name syntax does not apply.
      */
-    public static final String APP_NAME = "javax.ejb.embeddable.appName";
+    public static final String APP_NAME = "jakarta.ejb.embeddable.appName";
 
     /**
      * Create and initialize an embeddable enterprise bean container.  JVM classpath is 
@@ -83,7 +83,7 @@ public abstract class EJBContainer implements AutoCloseable {
      *
      * @param properties Spec-defined and/or vendor-specific
      * properties.  The spec reserves the prefix
-     * <code>"javax.ejb."</code> for spec-defined properties.
+     * <code>"jakarta.ejb."</code> for spec-defined properties.
      *
      * @return EJBContainer instance
      * @throws jakarta.ejb.EJBException Thrown if the container or application

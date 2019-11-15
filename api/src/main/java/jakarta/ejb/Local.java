@@ -48,7 +48,7 @@ import java.lang.annotation.Retention;
  * <p>
  * The following interfaces are excluded when determining whether the bean class 
  * has business interfaces: <code>java.io.Serializable</code>; 
- * <code>java.io.Externalizable</code>; any of the interfaces defined in <code>javax.ejb</code>.
+ * <code>java.io.Externalizable</code>; any of the interfaces defined in <code>jakarta.ejb</code>.
  *
  * @since EJB 3.0
  */
@@ -69,7 +69,7 @@ public @interface Local {
      * as local business interfaces using <code>Local</code> annotation on the interface,
      * and at least one other interface (excluding <code>java.io.Serializable</code>, 
      * <code>java.io.Externalizable</code>, and any of the interfaces 
-     * defined by the <code>javax.ejb</code> package) has no designation.
+     * defined by the <code>jakarta.ejb</code> package) has no designation.
      * </ul>
      */
     Class[] value() default {};
