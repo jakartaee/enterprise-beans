@@ -1,0 +1,46 @@
+# Jakarta Enterprise Beans 4.0
+
+The Jakarta Enterprise Beans 4.0 intended scope includes all plans detailed in the link:https://eclipse-ee4j.github.io/jakartaee-platform/jakartaee9/JakartaEE9ReleasePlan[Jakarta EE 9 Release Plan], which in essence involves a backwards incompatible namespace change from `javax.ejb` to `jakarta.ejb`.  In addition the Jakarta Enterprise Beans 4.0 Release Plan will involve three changes:
+
+ - Removal of methods relying on `java.security.Identity`
+ - Removal of Support for Distributed Interoperability
+ - Mark optional EJB 2.x API Group (Table 18 in EJB 3.2 Spec)
+
+## Removal of methods relying on `java.security.Identity`
+
+The `java.security.Identity` class was added to Java in 1.1 and immediately deprecated in Java 1.2.  The EJB 1.0 specification defined two methods in `EJBContext` leveraging `java.security.Identity` and immediately deprecated both methods in EJB 1.1.  From EJB 1.1 and onwards implementations have been allowed to return null or throw an IllegalStateException if these deprecated methods are called.
+
+As of Java 11 the `java.security.Identity` class has been marked for removal and will not be present in any future LTS releases.  Use of `java.security.Identity` will be removed from Jakarta Enterprise Beans 4.0 during the `javax` to `jakarta` transition to ensure applications, once ported, do not experience a future breaking change running on JVMs beyond Java 11.
+
+The following two methods of `javax.ejb.EJBContext` will not be present in `jakarta.ejb.EJBContext`
+
+  - `Identity getCallerIdentity()`
+  - `boolean isCallerInRole(Identity role)`
+
+## Removal of Support for Distributed Interoperability
+
+Since version 1.0 EJB has maintained remote EJB interfaces and maintained an RMI-IIOP compatability requirement.  This requirement allowed an EJB implementation to support any protocol it desired for remote EJB communication as long as that protocol did not conflict with the Java serialization rules of either RMI or IIOP.  This gave EJB application developers the assurance that their application could be distributed by any vendor's proprietary protocol without change.  This did not require that a vendor's proprietary protocol could communicate with another vendor's proprietary protocol.
+
+In EJB 2.1, chapter 19 "Support for Distribution and Interoperability" was added requiring all vendors to specifically support the CORBA protocol for cross-vendor interoperability of remote EJB calls, including interoperability requirements for cross-vendor distributed security and cross-vendor distributed transactions.
+
+To reduce complexity of Jakarta Enterprise Beans and Jakarta EE Full Profile platforms the requirements defined in EJB 3.2 chapter 10 "Support for Distributed and Interoperability" and all TCK tests will be removed from Jakarta Enterprise Beans 4.0 and Jakarta EE 9.  No `javax.ejb` or `jakarta.ejb` API class or methods will be removed by this change.
+
+Marking these requirements as optional was considered, but ruled out due to several factors:
+
+ - Per rules of the Jakarta EE Specification Process (JESP) A specification cannot be released unless there is one implementation that passes all option features.  Thus, it would still be in some way a requirement, unfairly burdoning that implementation allowing other implementations to be lighter.
+ - Mandates that the community maintain all related TCK tests and respond to CORBA-related TCK challenges.
+ - Creates a requirement difficult to maintain without the concept of a Reference Implementation (RI) to use for interoperability testing.
+
+Vendors may continue to provide support for CORBA and interoperability should they chose.
+
+## Mark optional EJB 2.x API Group (Table 18 in EJB 3.2 Spec)
+
+Requirements for EJB 2.x APIs listed in EJB 3.2 table 18 have all been marked optional and need not be implemented by a Jakarta EE 9 Full Profile implementation.  These includes:
+
+ - EJB 2.x Session Beans implementing `jakarta.ejb.SessionBean`
+ - 2.x Local and Remote Home and Component views implementing `jakarta.ejb.EJBObject`, `jakarta.ejb.EJBHome`, `jakarta.ejb.EJBLocalObject`, `jakarta.ejb.EJBLocalHome
+ - Support for `TimedObject` interface
+ - Support for `SessionSynchronization` interface
+ - Support for RMI-IIOP Interoperability
+
+All such requirements have always been excluded from the Java EE Web Profile and Jakarta EE Web Profile.  Marking them optional allows new implementations of Jakarta EE Full Profile to enter the market not burdened by legacy.
