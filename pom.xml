@@ -43,7 +43,6 @@
 
     <properties>
         <extension.name>jakarta.ejb</extension.name>
-        <spec.version>3.2</spec.version>
         <non.final>false</non.final>
         <findbugs.version>3.0.5</findbugs.version>
         <findbugs.exclude>exclude.xml</findbugs.exclude>
