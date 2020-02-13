@@ -60,20 +60,6 @@ public interface EJBContext
     EJBLocalHome getEJBLocalHome() throws IllegalStateException;
 
     /**
-     * Obtain the enterprise bean's environment properties.
-     * 
-     * <p><b>Note:</b> If the enterprise bean has no environment properties 
-     * this method returns an empty <code>java.util.Properties</code> object. 
-     * This method never returns <code>null</code>.
-     *
-     * @return The environment properties for the enterprise bean.
-     *
-     * @deprecated Use the JNDI naming context java:comp/env to access
-     *    enterprise bean's environment.
-     */
-    Properties getEnvironment();
-
-    /**
      * Obtain the <code>java.security.Identity</code> of the caller.
      *
      * This method is deprecated in EJB 1.1. The Container
