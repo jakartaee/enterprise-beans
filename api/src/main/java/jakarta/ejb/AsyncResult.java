@@ -16,7 +16,6 @@
 
 package jakarta.ejb;
 
-import java.io.Serializable;
 import java.util.concurrent.*;
 
 /**
