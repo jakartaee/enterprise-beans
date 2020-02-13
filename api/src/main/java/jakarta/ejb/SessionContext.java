@@ -16,10 +16,6 @@
 
 package jakarta.ejb;
 
-import java.util.*;
-import java.security.Identity;
-import javax.xml.rpc.handler.MessageContext;
-
 /**
  * The SessionContext interface provides access to the runtime session context 
  * that the container provides for a session bean instance. The 
@@ -76,25 +72,6 @@ public interface SessionContext extends EJBContext
      *    a remote interface.
      */
     EJBObject getEJBObject() throws IllegalStateException;
-
-    /**
-     * Obtain a reference to the JAX-RPC MessageContext. 
-     *
-     * <p> An instance of a stateless session bean can call this method
-     * from any business method invoked through its web service
-     * endpoint interface.
-     *
-     * <p><b>Note:</b> Support for web services invocations using JAX-RPC is optional as of EJB 3.2
-     *
-     * @return The MessageContext for this web service invocation.
-     *
-     * @exception IllegalStateException Thrown if this method is invoked
-     *    while the instance is in a state that does not allow access
-     *    to this method.
-     *
-     * @since EJB 2.1
-     */
-    MessageContext getMessageContext() throws IllegalStateException;
 
     /**
      * Obtain an object that can be used to invoke the current bean through
