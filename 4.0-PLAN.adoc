@@ -3,6 +3,8 @@
 The Jakarta Enterprise Beans 4.0 intended scope includes all plans detailed in the link:https://eclipse-ee4j.github.io/jakartaee-platform/jakartaee9/JakartaEE9ReleasePlan[Jakarta EE 9 Release Plan], which in essence involves a backwards incompatible namespace change from `javax.ejb` to `jakarta.ejb`.  In addition the Jakarta Enterprise Beans 4.0 Release Plan will involve three changes:
 
  - Removal of methods relying on `java.security.Identity`
+ - Removal of methods relying on JAX-RPC
+ - Removal of deprecated `EJBContext.getEnvironment()` method
  - Removal of Support for Distributed Interoperability
  - Mark optional EJB 2.x API Group (Table 18 in EJB 3.2 Spec)
 
@@ -16,6 +18,25 @@ The following two methods of `javax.ejb.EJBContext` will not be present in `jaka
 
   - `Identity getCallerIdentity()`
   - `boolean isCallerInRole(Identity role)`
+
+
+## Removal of methods relying on JAX-RPC
+
+Per the Jakarta EE 9 Release Plan the JAX-RPC API will be removed from the platform and **not** migrated from `javax.xml.rpc` to a `jakarta` package.  Dependencies of JAX-RPC will be migrated and this will leave the code under `javax.xml.rpc` broken.  All references to `javax.xml.rpc` in the Jakarta Enterprise Beans 4.0 specification will therefore be removed.
+
+The following method of `javax.ejb.SessionContext` will not be present in `jakarta.ejb.SessionContext`
+
+  - `MessageContext getMessageContext()`
+
+
+## Removal of deprecated `EJBContext.getEnvironment()` method
+
+The `getEnvironment` method of `javax.ejb.EJBContext` was added in EJB 1.0 and immediately deprecated in EJB 1.1.  Since EJB 1.1, implementations have been allowed to throw a `RuntimeException` if this method is called.  In light of the other breaking changes, the Jakarta Enterprise Beans specification project has opted to finally remove the deprecated method signature.
+
+The following method of `javax.ejb.EJBContext` will not be present in `jakarta.ejb.EJBContext`
+
+  - `Properties getEnvironment()`
+
 
 ## Removal of Support for Distributed Interoperability
 
