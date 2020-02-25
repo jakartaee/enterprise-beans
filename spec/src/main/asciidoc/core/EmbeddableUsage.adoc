@@ -1,0 +1,352 @@
+[[a9735]]
+== Embeddable Usage
+
+The embeddable API is designed to support the
+execution of EJB applications within a Java SE environment only. Use of
+the javax.ejb.embeddable package is not allowed from an application
+running in a Java EE environment. Unlike traditional Java EE
+server-based execution, embeddable usage allows client code and its
+corresponding enterprise beans to run within the same JVM and class
+loader. This provides better support for testing, offline processing
+(e.g. batch), and the use of the EJB programming model in desktop
+applications.
+
+Support for the embeddable API is not
+required. However, any product that supports the embeddable API must
+adhere to the requirements of this specification.
+
+=== Overview
+
+
+
+Embeddable usage requirements allow client
+code to instantiate an EJB container that runs within its own JVM and
+classloader. The client uses a specification-defined bootstrapping API
+to start the embeddable EJB container and identify the set of enterprise
+bean components for execution.
+
+The embeddable EJB container provides a
+managed environment with support for the same basic services that exist
+within a Java EE runtime: injection, access to a component environment,
+container-managed transactions, etc. In general, enterprise bean
+components are unaware of the kind of managed environment in which they
+are running. This allows maximum reusability of enterprise components
+across a wide range of testing and deployment scenarios without
+significant rework.
+
+=== Bootstrapping API
+
+
+
+The embeddable EJB container is instantiated
+using a bootstrapping API defined within the javax.ejb package. By
+default, the embeddable container uses the JVM class path to scan for
+the enterprise bean modules to be initialized. The client can override
+this behavior during setup by specifying an alternative set of target
+modules.
+
+=== [[a9743]]EJBContainer
+
+The javax.ejb.embeddable.EJBContainer
+abstract class represents an instance of an embeddable container. It
+contains factory methods for creating a container instance. The client
+initializes a new embeddable container by calling the createEJBContainer
+method of the javax.ejb.embeddable.EJBContainer class.
+
+For example,
+
+EJBContainer ec =
+EJBContainer.createEJBContainer();
+
+By default, the embeddable container searches
+the JVM classpath (the value of the Java System property
+java.class.path) to find the set of EJB modules for initialization. A
+classpath entry is considered a matching entry if it meets one of the
+following criteria:
+
+It is an ejb-jar according to the standard
+module-type identification rules defined by the Java EE platform
+specification
+
+It is a directory containing a
+_META-INF/ejb-jar.xml_ file or at least one _.class_ file with an
+enterprise bean component-defining annotation
+
+{empty}Each such matching entry is considered
+an EJB module within the same application.link:#a10346[126]
+
+If an _ejb-jar.xml_ file is present the
+_module-name_ element defines the module name. Otherwise, for ejb-jar
+files, the module name is the unqualified file name excluding the “
+_.jar_ ” extension, and for directories the module name is the
+unqualified name of the directory (the last name in the pathname’s name
+sequence). The embeddable container is not required to support more than
+one matching entry with the same module name.
+
+An alternative form of the createEJBContainer
+method provides a set of properties for customizing the embeddable
+container creation:
+
+javax.ejb.embeddable.EJBContainer
+createEJBContainer(Map<?, ?> properties)
+
+This specification reserves the prefix
+“javax.ejb.” for standard property names. It is expected that embeddable
+Container Providers will define their own properties as well.
+
+For example, given the following java command
+and assuming that foo.jar and bar.jar are both valid ejb-jar files,
+
+java -classpath
+foo.jar:bar.jar:vendor-rt.jar:client.jar
+
+ com.acme.Client
+
+
+
+the following will result in only the bar.jar
+module being initialized by the container:
+
+Properties props = new Properties();
+
+props.setProperty(EJBContainer.MODULES,
+"bar");
+
+
+
+EJBContainer ec =
+EJBContainer.createEJBContainer(props);
+
+An embeddable Container Provider is permitted
+to require that a preprocessing or tooling step be performed on the
+application modules prior to JVM initialization.
+
+After identifying the set of matching
+modules, the embeddable container commences application initialization.
+Any singleton session beans configured for eager initialization will be
+initialized at this point. When the createEJBContainer method returns
+successfully, the client can access the client view of any enterprise
+bean in the application.
+
+Enterprise beans running within the
+embeddable container are loaded using the context class loader active on
+the thread at the time that the createEJBContainer method is called.
+
+=== Standard Initialization Properties
+
+The following embeddable container
+initialization properties are required to be supported by all embeddable
+Container Providers.
+
+=== javax.ejb.embeddable.provider
+
+This property holds a String value that
+specifies the fully-qualified name of an embeddable container provider
+class corresponding to the embeddable container implementation that
+should be used for this application.
+
+The property name is defined as
+EJBContainer.PROVIDER.
+
+=== javax.ejb.embeddable.modules
+
+This property is used to explicitly specify
+the module(s) to be initialized. It can refer to modules that are
+included in the JVM classpath or to modules outside the JVM classpath.
+
+If the target modules are part of the
+classpath, this property holds either a single module name (of type
+java.lang.String) or an array of module names (of type
+java.lang.String[]). For each specified module name, the container
+searches the class path for the first eligible ejb-jar file or directory
+whose corresponding module name matches the given name. All specified
+modules must match an entry in the classpath.
+
+If the target modules are outside of the
+classpath, this property holds either a single java.io.File object or an
+array of java.io.File objects, where each file object refers to either
+an ejb-jar file or an exploded ejb-jar directory in the format listed
+above. Note that in this case it is the responsibility of the caller to
+ensure that the context class loader has visibility to the classes
+required by these modules.
+
+The property name is defined as
+EJBContainer.MODULES.
+
+=== javax.ejb.embeddable.appName
+
+This property specifies an application name
+for the EJB modules executing within the embeddable container. If
+specified, the property value applies to the <app-name> portion of the
+portable global JNDI name syntax. It is recommended that this property
+be set whenever an embeddable container is executed with more than one
+EJB module.
+
+The property name is defined as
+EJBContainer.APP_NAME.
+
+=== Looking Up Session Bean References
+
+The _EJBContainer_ instance can be used to
+retrieve a javax.naming.Context object that supports the lookup of
+client references to session beans running within the embeddable
+container. Session bean references are identified using the portable
+"java:global/" JNDI name syntax defined in section
+link:Ejb.html#a800[See Access in the Global JNDI Namespace].
+
+A client retrieves a Context object using the
+following _EJBContainer_ method:
+
+javax.naming.Context
+EJBContainer.getContext();
+
+The following example illustrates the lookup
+of a FooLocal local business interface of a session bean with ejb-name
+FooBean in the ejb-jar foo.jar:
+
+Context ctx = ec.getContext();
+
+
+
+FooLocal foo = (FooLocal)
+ctx.lookup("java:global/foo/FooBean");
+
+
+
+=== Embeddable Container Shutdown
+
+To shut down an embeddable container instance
+and its associated application, the client may call the
+EJBContainer.close() method or, because the EJBContainer class
+implements the java.lang.AutoCloseable interface, the client may close
+the container implicitly by using the try-with-resources statement when
+aquiring the EJBContainer instance.
+
+The client is not required to call close() or
+use the try-with-resources statement, but their use is recommended for
+optimal resource cleanup, especially in the case when the application
+lifetime is shorter than the lifetime of the enclosing JVM.
+
+During the implicit or explicit processing of
+the close() method, the embeddable container:
+
+cancels all non-persistent timers
+
+cancels all pending asynchronous invocations
+
+calls the PreDestroy methods of any singleton
+session bean instances in the application
+
+An embeddable Container Provider is only
+required to support one active embeddable EJB container at a time per
+JVM. Attempts to concurrently create multiple active embeddable EJB
+containers may result in a container initialization error.
+
+=== Embeddable Container Provider’s Responsibilities
+
+
+
+This section describes the responsibilities
+of the embeddable Container Provider to support an embeddable container
+environment.
+
+=== [[a9799]]Runtime Environment
+
+Except for the packaging requirements, the
+embeddable Container Provider is required to support the EJB Lite group
+of the EJB API within an embeddable container environment. See section
+link:Ejb.html#a9743[See EJBContainer] for the packaging
+requirements. An embeddable Container Provider may additionally support
+other EJB API groups within an embeddable container environment. See
+link:Ejb.html#a9428[See EJB Lite and Other EJB API Groups] for
+more details.
+
+=== Naming Lookups
+
+The embeddable Container Provider is required
+to support naming lookups of the local and no-interface views of any
+session beans defined to run within the embeddable container. Naming
+entries for these enterprise beans must conform to the portable global
+JNDI name requirements in link:Ejb.html#a800[See Access in the
+Global JNDI Namespace].
+
+=== [[a9803]]Embeddable Container Bootstrapping
+
+An embeddable Container Provider
+implementation must act as a service provider by supplying a service
+provider configuration file as described in the JAR File Specification
+link:Ejb.html#a9882[See JAR File Specification,
+http://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html.].
+
+The service provider configuration file
+serves to export the embeddable container implementation class to the
+EJBContainer bootstrap class, positioning itself as a candidate for
+instantiation.
+
+The embeddable Container Provider supplies
+the provider configuration file by creating a text file named
+javax.ejb.spi.EJBContainerProvider and placing it in the
+META-INF/services directory of one of its JAR files. The contents of the
+file must be the name of the embeddable Container Provider
+implementation class of the javax.ejb.spi.EJBContainerProvider
+interface.
+
+ _Example:_
+
+An embeddable Container Provider creates a
+JAR called acme.jar that contains its embeddable container
+implementation. The JAR includes the provider configuration file:
+
+acme.jar
+
+
+META-INF/services/javax.ejb.spi.EJBContainerProvider
+
+ com/acme/EJBContainerProvider.class
+
+ ...
+
+
+
+The contents of the
+META-INF/services/javax.ejb.spi.EJBContainerProvider file is nothing
+more than the name of the implementation class:
+com.acme.EJBContainerProvider.
+
+The EJBContainer bootstrap class will locate
+all of the embeddable Container Providers by their provider
+configuration files and call the
+EJBContainerProvider.createEJBContainer(Map<?, ?>) method on them in
+turn until an appropriate backing provider returns an EJBContainer
+instance. A provider may deem itself as appropriate for the embeddable
+application if any of the following are true:
+
+The javax.ejb.embeddable.provider property
+was included in the Map passed to the createEJBContainer method and the
+value of the property is the provider’s implementation class.
+
+No javax.ejb.embeddable.provider property was
+specified.
+
+If a provider does not qualify as the
+provider for the embeddable application, it must return null when
+createEJBContainer is invoked on it.
+
+=== Concrete javax.ejb.embeddable.EJBContainer Implementation Class
+
+The embeddable Container Provider is required
+to provide a subclass of the javax.ejb.embeddable.EJBContainer class.
+The following are the requirements for this class:
+
+The class must be defined as public and must
+not be abstract
+
+The class must extend either directly or
+indirectly the class javax.ejb.embeddable.EJBContainer
+
+The class must provide implementations of the
+following javax.ejb.embeddable.EJBContainer methods:
+
+getContext()
+
+close()

@@ -1,0 +1,607 @@
+[[a66]]
+== Overview
+
+=== Overall Goals
+
+
+
+The Enterprise JavaBeans (EJB) architecture
+has the following goals:
+
+The Enterprise JavaBeans architecture will be
+the standard component architecture for building object-oriented
+business applications in the Java™ programming language.
+
+The Enterprise JavaBeans architecture will
+support the development, deployment, and use of distributed business
+applications in the Java™ programming language.
+
+The Enterprise JavaBeans architecture will
+support the development, deployment, and use of web services.
+
+The Enterprise JavaBeans architecture will
+make it easy to write applications: application developers will not have
+to understand low-level transaction and state management details,
+multi-threading, connection pooling, or other complex low-level APIs.
+
+Enterprise JavaBeans applications will follow
+the Write Once, Run Anywhere™ philosophy of the Java programming
+language. An enterprise bean can be developed once, and then deployed on
+multiple platforms without recompilation or source code modification.
+
+The Enterprise JavaBeans architecture will
+address the development, deployment, and runtime aspects of an
+enterprise application’s life cycle.
+
+The Enterprise JavaBeans architecture will
+define the contracts that enable tools from multiple vendors to develop
+and deploy components that can interoperate at runtime.
+
+The Enterprise JavaBeans architecture will
+make it possible to build applications by combining components developed
+using tools from different vendors.
+
+The Enterprise JavaBeans architecture will
+provide interoperability between enterprise beans and Java Platform,
+Enterprise Edition (Java EE) components as well as non-Java programming
+language applications.
+
+The Enterprise JavaBeans architecture will be
+compatible with existing server platforms. Vendors will be able to
+extend their existing products to support Enterprise JavaBeans.
+
+The Enterprise JavaBeans architecture will be
+compatible with other Java programming language APIs.
+
+The Enterprise JavaBeans architecture will be
+compatible with the CORBA protocols.
+
+The purpose of the EJB 3.2 release is both to
+continue to achieve these goals and to improve the EJB architecture by
+reducing its complexity from the enterprise application developer’s
+point of view.
+
+=== EJB Roles
+
+
+
+The Enterprise JavaBeans architecture defines
+six distinct roles in the application development and deployment life
+cycle. Each EJB role may be performed by a different party. The EJB
+architecture specifies the contracts that ensure that the product of
+each EJB role is compatible with the product of the other EJB roles. The
+EJB specification focuses on those contracts that are required to
+support the development and deployment of enterprise beans.
+
+In some scenarios, a single party may perform
+several EJB Roles. For example, the Container Provider and the EJB
+Server Provider may be the same vendor. Or a single programmer may
+perform the two EJB Roles of the Enterprise Bean Provider and the
+Application Assembler.
+
+The following sections define the six EJB
+roleslink:#a10218[1].
+
+=== Enterprise Bean Provider
+
+The Enterprise
+Bean Provider (Bean Provider for short) is the producer of enterprise
+beans. His or her output is a set of one or more enterprise beans. These
+beans may be contained in a ejb-jar
+
+or may be contained directly in a .war file.
+The Bean Provider is responsible for the Java classes that implement the
+enterprise beans’ business methods; the definition of the beans’ client
+view interfaces, if any; and the declarative specification of the beans’
+metadata. The beans’ metadata may take the form of metadata annotations
+applied to the bean classes and/or an external XML deployment
+descriptor. The beans’ metadata—whether expressed in metadata
+annotations or in the deployment descriptor—includes the structural
+information of the enterprise beans and declares all the enterprise
+beans’ external dependencies (e.g. the names and types of resources that
+the enterprise beans use).
+
+The Enterprise Bean Provider is typically an
+application domain expert. The Bean Provider develops reusable
+enterprise beans that typically implement business tasks or business
+entities.
+
+The Bean Provider is not required to be an
+expert at system-level programming. Therefore, the Bean Provider usually
+does not program transactions, concurrency, security, distribution, or
+other services into the enterprise beans. The Bean Provider relies on
+the EJB container for these services.
+
+A Bean Provider of multiple enterprise beans
+often performs the EJB role of the Application Assembler.
+
+=== Application Assembler
+
+The Application
+Assembler combines enterprise beans into larger deployable application
+units. The input to the Application Assembler is a set of enterprise
+beans, their interfaces, and metadata, as produced by the Bean
+Provider(s). The Bean Provider's output may also simply be un-assembled
+enterprise beans that must be packaged in an ejb-jar file or _.war_
+file. The Application Assembler may insert the application assembly
+instructions into the deployment descriptors. The Application Assembler
+will create one or more ejb-jar and/or _.war_ files from the input
+artifacts together with their application assembly instructions as
+needed.
+
+All of the input could be combined into a
+single output ejb-jar file or _.war_ file. Similarly, the input could
+also be split into multiple output ejb-jar and/or _.war_ files. For
+example, the Application Assembler could combine ejb1.jar and ejb2.jar
+into ejb3.jar, combine ejb1.jar and web1.war into web2.war, split
+ejb1.jar into ejb2.jar and ejb3.jar, split web1.war into ejb1.jar and
+web2.jar, and so forth. Each output ejb-jar file or _.war_ file is
+either a deployment unit intended for the Deployer or a partially
+assembled application that is intended for another Application
+Assembler.
+
+The Application Assembler can also combine
+enterprise beans with other types of application components when
+composing an application.
+
+The EJB specification describes the case in
+which the application assembly step occurs before the deployment of the
+enterprise beans. However, the EJB architecture does not preclude the
+case that application assembly is performed after the deployment of all
+or some of the enterprise beans.
+
+The Application Assembler is a domain expert
+who composes applications that use enterprise beans. The Application
+Assembler works with the enterprise beans’ metadata annotations and/or
+deployment descriptor and the enterprise beans’ client-view contract.
+Although the Assembler must be familiar with the functionality provided
+by the enterprise beans’ client-view, he or she does not need to have
+any knowledge of the enterprise beans’ implementation.
+
+=== Deployer
+
+The Deployer
+takes one or more ejb-jar files and/or .war file produced by a Bean
+Provider or Application Assembler and deploys the enterprise beans
+contained in the ejb-jar files or .war files in a specific operational
+environment. The operational environment includes an EJB container and
+server.
+
+The Deployer must resolve all the external
+dependencies declared by the Bean Provider (e.g. the Deployer must
+ensure that all resource manager connection factories used by the
+enterprise beans are present in the operational environment, and he or
+she must bind them to the resource manager connection factory references
+declared in the metadata annotations or deployment descriptor), and must
+follow the application assembly instructions defined by the Application
+Assembler. To perform his or her role, the Deployer uses tools provided
+by the EJB Container Provider.
+
+The Deployer’s output is a set of enterprise
+beans (or an assembled application that includes enterprise beans) that
+have been customized for the target operational environment, and that
+are deployed in a specific EJB container.
+
+The Deployer is an expert at a specific
+operational environment and is responsible for the deployment of
+enterprise beans. For example, the Deployer is responsible for mapping
+the security roles defined by the Bean Provider or Application Assembler
+to the user groups and accounts that exist in the operational
+environment in which the enterprise beans are deployed.
+
+The Deployer uses tools supplied by the EJB
+Container Provider to perform the deployment tasks. The deployment
+process is typically two-stage:
+
+The Deployer first generates the additional
+classes and interfaces that enable the container to manage the
+enterprise beans at runtime. These classes are container-specific.
+
+The Deployer performs the actual installation
+of the enterprise beans and the additional classes and interfaces into
+the EJB container.
+
+In some cases, a qualified Deployer may
+customize the business logic of the enterprise beans at their
+deployment. Such a Deployer would typically use the Container Provider’s
+tools to write relatively simple application code that wraps the
+enterprise beans’ business methods.
+
+=== EJB Server Provider
+
+The EJB Server
+Provider is a specialist in the area of distributed transaction
+management, distributed objects, and other lower-level system-level
+services.
+
+The current EJB architecture assumes that the
+EJB Server Provider and the EJB Container Provider roles are the same
+vendor. Therefore, it does not define any interface requirements for the
+EJB Server Provider.
+
+=== EJB Container Provider
+
+The EJB Container
+Provider (Container Provider for short) provides:
+
+The deployment tools necessary for the
+deployment of enterprise beans.
+
+The runtime support for the deployed
+enterprise bean instances.
+
+From the perspective of the enterprise beans,
+the container is a part of the target operational environment. The
+container runtime provides the deployed enterprise beans with
+transaction and security management, network distribution of remote
+clients, scalable management of resources, and other services that are
+generally required as part of a manageable server platform.
+
+The “EJB Container Provider’s
+responsibilities” defined by the EJB architecture are meant to be
+requirements for the implementation of the EJB container and server.
+Since the EJB specification does not architect the interface between the
+EJB container and server, it is left up to the vendor how to split the
+implementation of the required functionality between the EJB container
+and server.
+
+The expertise of the Container Provider is
+system-level programming, possibly combined with some application-domain
+expertise. The focus of a Container Provider is on the development of a
+scalable, secure, transaction-enabled container that is integrated with
+an EJB server. The Container Provider insulates the enterprise bean from
+the specifics of an underlying EJB server by providing a simple,
+standard API between the enterprise bean and the container. This API is
+the Enterprise JavaBeans component contract.
+
+The Container Provider typically provides
+support for versioning the installed enterprise bean components. For
+example, the Container Provider may allow enterprise bean classes to be
+upgraded without invalidating existing clients or losing existing
+enterprise bean objects.
+
+The Container Provider typically provides
+tools that allow the System Administrator to monitor and manage the
+container and the beans running in the container at runtime.
+
+=== System Administrator
+
+The System
+Administrator is responsible for the configuration and administration of
+the enterprise’s computing and networking infrastructure that includes
+the EJB server and container. The System Administrator is also
+responsible for overseeing the well-being of the deployed enterprise
+beans applications at runtime.
+
+=== Enterprise Beans
+
+
+
+Enterprise JavaBeans is an architecture for
+component-based transaction-oriented enterprise applications.
+
+=== Characteristics of Enterprise Beans
+
+The essential
+characteristics of an enterprise bean are:
+
+An enterprise bean typically contains
+business logic that operates on the enterprise’s data.
+
+An enterprise bean’s instances are managed at
+runtime by a container.
+
+An enterprise bean can be customized at
+deployment time by editing its environment entries.
+
+Various service information, such as
+transaction and security attributes, may be specified together with the
+business logic of the enterprise bean class in the form of metadata
+annotations, or separately, in an XML deployment descriptor. This
+service information may be extracted and managed by tools during
+application assembly and deployment.
+
+Client access is mediated by the container in
+which the enterprise bean is deployed.
+
+If an enterprise bean uses only the services
+defined by the EJB specification, the enterprise bean can be deployed in
+any compliant EJB container. Specialized containers can provide
+additional services beyond those defined by the EJB specification. An
+enterprise bean that depends on such a service can be deployed only in a
+container that supports that service.
+
+An enterprise bean can be included in an
+assembled application without requiring source code changes or
+recompilation of the enterprise bean.
+
+The Bean Provider defines a client view of an
+enterprise bean. The Bean Provider can manually define the client view
+or it can be generated automatically by application development tools.
+The client view is unaffected by the container and server in which the
+bean is deployed. This ensures that both the beans and their clients can
+be deployed in multiple execution environments without changes or
+recompilation.
+
+=== Flexible Model
+
+The enterprise bean architecture is flexible
+enough to implement the following:
+
+An object that represents a stateless
+service.
+
+An object that represents a stateless service
+and that implements a web service endpoint.
+
+An object that represents a stateless service
+and whose invocation is asynchronous, driven by the arrival of messages.
+
+An object that represents a conversational
+session with a particular client. Such session objects automatically
+maintain their conversational state across multiple client-invoked
+methods.
+
+Enterprise beans
+that are remotely accessible components are intended to be relatively
+coarse-grained business objects or services (e.g. shopping cart, stock
+quote service). In general, fine-grained objects should not be modeled
+as remotely accessible components.
+
+Although the state management protocol
+defined by the Enterprise JavaBeans architecture is simple, it provides
+an enterprise bean developer great flexibility in managing a bean’s
+state.
+
+=== Enterprise Bean Object Types
+
+
+
+The Enterprise JavaBeans architecture defines
+the following types of enterprise bean objects:
+
+Session objects.
+
+Message-driven objects.
+
+Entity objects (optional).
+
+Support for session objects and
+message-driven objects is required by this specification.
+
+Earlier versions of the Enterprise JavaBeans
+specification required support for entity bean _components_ (not to be
+confused with the light-weight persistent entities defined by the Java
+Persistence API). Support for entity bean components has been made
+optional for an implementation as of the 3.2 version of the EJB
+specification and is described in the EJB Optional Features document
+link:Ejb.html#a9890[See EJB 3.2 Optional Features
+http://jcp.org/en/jsr/detail?id=345.].
+
+=== Session Objects
+
+A typical session
+object has the following characteristics:
+
+Executes on behalf of a single client.
+
+Can be transaction-aware.
+
+Updates shared data in an underlying
+database.
+
+Does not represent directly shared data in
+the database, although it may access and update such data.
+
+May be relatively short-lived, or may have
+the same lifetime as that of the application.
+
+Is removed when the EJB container crashes.
+The client has to re-establish a new session object to continue
+computation.
+
+A typical EJB container provides a scalable
+runtime environment to execute a large number of session objects
+concurrently.
+
+The EJB specification defines _stateful_ ,
+stateless, and singleton session beans. There are differences in the API
+between stateful session beans, stateless session beans, and singleton
+session beans.
+
+=== Message-Driven Objects
+
+A typical
+message-driven object has the following
+characteristics:
+
+Executes upon receipt of a single client
+message.
+
+Is asynchronously invoked.
+
+Can be transaction-aware.
+
+May update shared data in an underlying
+database.
+
+Does not represent directly shared data in
+the database, although it may access and update such data.
+
+Is relatively short-lived.
+
+Is stateless.
+
+Is removed when the EJB container crashes.
+The container has to re-establish a new message-driven object to
+continue computation.
+
+A typical EJB container provides a scalable
+runtime environment to execute a large number of message-driven objects
+concurrently.
+
+=== Entity Objects (Optional)
+
+A typical entity
+object has the following characteristics:
+
+Is part of a domain model, providing an
+object view of data in the database.
+
+Can be long-lived (lives as long as the data
+in the database).
+
+The entity and its primary key survive the
+crash of the EJB container. If the state of an entity was being updated
+by a transaction at the time the container crashed, the entity’s state
+is restored to the state of the last committed transaction when the
+entity is next retrieved.
+
+See the EJB Optional Features
+link:Ejb.html#a9890[See EJB 3.2 Optional Features
+http://jcp.org/en/jsr/detail?id=345.] document for details.
+
+=== Standard Mapping to CORBA Protocols
+
+
+
+To help
+interoperability for EJB environments that include systems from multiple
+vendors, the EJB specification requires compliant implementations to
+support the interoperability protocol based on CORBA/IIOP for remote
+invocations from Java EE clients. Implementations may support other
+remote invocation protocols in addition to IIOP.
+
+Chapter link:Ejb.html#a3308[See
+Support for Distributed Interoperability] summarizes the requirements
+for support for distribution and interoperability.
+
+=== [[a179]]Mapping to Web Service Protocols
+
+
+
+To support web service interoperability, the
+EJB specification requires compliant implementations to support
+XML-based web service invocations using WSDL and SOAP or plain XML over
+HTTP in conformance with the requirements of the JAX-WS
+link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
+version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.], Web
+Services for Java EE link:Ejb.html#a9879[See Web Services for
+Java EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.], and Web
+Services Metadata for the Java Platform link:Ejb.html#a9878[See
+Web Services Metadata for the Java Platform, version 2.1.
+http://jcp.org/en/jsr/detail?id=181.] specifications.
+
+Support for web services invocations using
+JAX-RPC link:Ejb.html#a9873[See Java™ API for XML-based RPC,
+version 1.1 (JAX-RPC). http://jcp.org/en/jsr/detail?id=101.] is optional
+as of the 3.2 release of the Enterprise JavaBeans specification. See the
+EJB Optional Features document link:Ejb.html#a9890[See EJB 3.2
+Optional Features http://jcp.org/en/jsr/detail?id=345.] for the complete
+description.
+
+=== [[a182]]Pruning the EJB API
+
+
+
+The Java EE 6 Specification adopted the
+process defined by the Java SE group for “pruning” technologies from the
+platform in a careful and orderly way that minimizes the impact to
+developers using these technologies while allowing the platform to grow
+even stronger.
+
+The result of pruning a feature is not the
+actual deletion of the feature but rather the conversion of the feature
+from a required part of the EJB API into an optional part of the EJB
+API. No actual removal from the specification occurs, although the
+feature may be removed from products at the choice of the product
+vendor.
+
+Support for the following features has been
+made optional in the Enterprise JavaBeans specification as of the 3.2
+release and the content of the related chapters had been moved to the
+separate EJB Optional Features document link:Ejb.html#a9890[See
+EJB 3.2 Optional Features http://jcp.org/en/jsr/detail?id=345.]. An
+implementation of this specification is therefore not required to
+support any of these features. However, if an implementation chooses to
+implement an optional feature, it must do so in accordance with the
+requirements of this specification.
+
+EJB 2.1 and earlier Entity Bean Component
+Contract for Container-Managed Persistence
+
+EJB 2.1 and earlier Entity Bean Component
+Contract for Bean-Managed Persistence
+
+Client View of an EJB 2.1 and earlier Entity
+Bean
+
+EJB QL: EJB Query Language for
+Container-Managed Persistence Query Methods
+
+JAX-RPC Based Web Service Endpoints
+
+JAX-RPC Web Service Client View
+
+=== Relationship to Managed Bean Specification
+
+
+
+The _Managed Beans Specification_
+link:Ejb.html#a9886[See Managed Beans, version 1.0 (Managed
+Beans). http://jcp.org/en/jsr/detail?id=316.] defines the minimal
+requirements for container-managed objects, otherwise known under the
+acronym “POJOs” (Plain Old Java Objects), within the Java EE Platform.
+Managed Beans support a small set of basic services, such as resource
+injection, lifecycle callbacks and interceptors.
+
+A session bean component is a Managed Bean.
+The EJB component model extends the basic _Managed Bean_ model in many
+areas (component definition, naming, lifecycle, threading, etc.)
+
+=== [[a195]]Relationship to Contexts and Dependency Injection (CDI) Specification
+
+
+
+The _Context and Dependency Injection
+Specification_ link:Ejb.html#a9888[See Contexts and Dependency
+Injection for the Java EE Platform 1.1 (CDI specification)
+http://jcp.org/en/jsr/detail?id=346.] provides a uniform framework for
+the dependency injection and lifecycle management of “managed beans” and
+adds contextual lifecycle management to the EJB component model.
+
+An EJB packaged into a CDI bean archive and
+not annotated with javax.enterprise.inject.Vetoed annotation, is
+considered a CDI-enabled bean. The CDI container performs dependency
+injection on all instances of CDI-enabled session and message-driven
+beans, even those which are not contextual instances:
+
+A session bean instance obtained via
+dependency injection is a contextual instance, i.e. it is bound to a
+lifecycle context and is available to other objects that execute in the
+same context
+
+A message-driven bean instance is always
+non-contextual, i.e. it may not be injected into other objects.
+
+=== Relationship to the Java API for RESTful Web Services (JAX-RS) Specification
+
+
+
+The Java API for RESTful Web Services
+_Specification_ link:Ejb.html#a9889[See The Java API for RESTful
+Web Services, version 2.0 (JAX-RS) http://jcp.org/en/jsr/detail?id=339.]
+defines a set of Java APIs for the development of Web services built
+according to the Representational State Transfer (REST) architectural
+style.
+
+The JAX-RS API provides a set of annotations
+and associated classes and interfaces that may be used to expose beans
+as Web resources.
+
+In a product that supports the JAX-RS
+specification, stateless and singleton session beans must be supported
+as root resource classes, providers, and javax.ws.rs.core.Application
+subclasses. JAX-RS annotations may be applied to a session bean class,
+methods of a session bean’s no-interface view, or a session bean’s local
+business interface.

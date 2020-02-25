@@ -1,0 +1,563 @@
+[[a2004]]
+== Interceptors
+
+Interceptors are used to interpose on the
+business method invocations and lifecycle events that occur on an
+enterprise bean instance.
+
+=== Overview
+
+
+
+The general rules for defining Interceptor
+classes, their lifecycle, and associated metadata are described in the
+_Interceptors_ specification link:Ejb.html#a9887[See
+Interceptors, version 1.2. http://jcp.org/en/jsr/detail?id=318.]. This
+chapter describes the set of requirements that are specific to the use
+of interceptors with Enterprise JavaBeans.
+
+For the use of interceptors with Enterprise
+JavaBeans, the interceptor “target class” is the bean class.
+Interceptors may be used with session beans and message-driven beans.
+
+The programming restrictions that apply to
+enterprise bean components apply to interceptors as well. See
+link:Ejb.html#a9535[See Programming Restrictions].
+
+{empty}It is illegal to associate JTA
+transactional interceptors (see link:Ejb.html#a9857[See Java™
+Transaction API, version 1.2 (JTA).
+http://jcp.org/en/jsr/detail?id=907.]) with Enterprise JavaBeans. The
+EJB Container should fail deployment of such
+applications.link:#a10261[42]
+
+Default interceptors are interceptors that
+apply to all components within an ejb-jar file or _.war_ file.
+
+=== Interceptor Life Cycle
+
+
+
+The lifecycle of an interceptor instance is
+the same as that of the bean instance with which it is associated. In
+the case of interceptors associated with stateful session beans, the
+interceptor instances are passivated upon bean instance passivation, and
+activated when the bean instance is activated. See sections
+link:Ejb.html#a921[See Stateful Session Beans],
+link:Ejb.html#a1077[See Stateless Session Bean Lifecycle State
+Diagram], and link:Ejb.html#a1871[See Message-Driven Bean State
+Diagram].
+
+In addition to the AroundConstruct,
+PostConstruct and PreDestroy callback support required by the
+_Interceptors_ specification link:Ejb.html#a9887[See
+Interceptors, version 1.2. http://jcp.org/en/jsr/detail?id=318.],
+interceptors associated with stateful session beans may define
+PostActivate and PrePassivate callbacks. Both the interceptor instance
+and the bean instance are created or activated before any of the
+respective _PostConstruct_ or _PostActivate_ callbacks are invoked. Any
+_PreDestroy_ and _PrePassivate_ callbacks are invoked before the
+respective destruction or passivation of either the bean instance or
+interceptor instance.
+
+The use of an extended persistence context is
+only supported for interceptors that are associated with stateful
+session beans.
+
+=== Business Method Interceptors
+
+
+
+ _AroundInvoke_ interceptor methods may be
+defined for business methods of sessions beans and for the message
+listener methods of message-driven beans.
+
+Business method interceptor methods may throw
+runtime exceptions or application exceptions that are allowed in the
+_throws_ clause of the business method. See section
+link:Ejb.html#a2031[See Exception Handling] for further details.
+
+=== Timer Timeout Method Interceptors
+
+
+
+Interceptor methods may be defined for the
+EJB timer timeout methods of session beans and message-driven beans.
+Such methods are referred to as AroundTimeout methods.
+
+Within an AroundTimeout method, the
+_InvocationContext.getTimer()_ method returns the _javax.ejb.Timer_
+object associated with the timeout being intercepted.
+
+ _AroundTimeout_ methods may throw system
+exceptions, but not application exceptions. See section
+link:Ejb.html#a2031[See Exception Handling] for further details.
+
+=== [[a2023]]Interceptors for LifeCycle Event Callbacks
+
+
+
+Lifecycle callback interceptor methods may be
+defined for session beans and message-driven beans.
+
+The AroundConstruct, _PostConstruct_ ,
+_PreDestroy_ , _PostActivate_ , and _PrePassivate_ annotations are used
+to define interceptor methods for a lifecycle callback events. An
+AroundConstruct lifecycle callback interceptor method may be defined on
+an interceptor class only. All other interceptor methods can be defined
+on an interceptor class and/or directly on the bean class.
+
+Lifecycle callback interceptor methods are
+invoked in an unspecified security context. Lifecycle callback
+interceptor methods are invoked in an unspecified transaction context,
+except for singleton and stateful session bean PostConstruct and
+PreDestroy methods and stateful session bean _PostActivate_ , and
+_PrePassivate_ methods, whose transaction context is based on their
+respective transaction attributes. See link:Ejb.html#a705[See
+Session Bean Lifecycle Callback Interceptor Methods].
+
+ _PostActivate_ , and _PrePassivate_ methods
+follow requirements for the lifecycle callback interceptor methods
+defined in the Interceptors specification document
+link:Ejb.html#a9887[See Interceptors, version 1.2.
+http://jcp.org/en/jsr/detail?id=318.].
+
+Lifecycle callback interceptor methods may
+throw system runtime exceptions, but not application exceptions. See
+section link:Ejb.html#a2031[See Exception Handling] for further
+details.
+
+=== [[a2029]]InvocationContext
+
+
+
+The _InvocationContext_ object provides
+metadata that enables interceptor methods to control the behavior of the
+invocation chain. The _getContextData_ method enables an interceptor to
+retrieve or update the data associated with the invocation by another
+interceptor, business method, and/or webservices context in the
+invocation chain. The contextual data is not sharable across separate
+business method invocations or lifecycle callback events. If
+interceptors are invoked as a result of the invocation on a web service
+endpoint, the map returned by the _getContextData_ method will be the
+JAX-WS MessageContext link:Ejb.html#a9881[See Java™ API for
+XML-based Web Service, version 2.2 (JAX-WS).
+http://jcp.org/en/jsr/detail?id=224.]. The lifecycle of the
+_InvocationContext_ instance is otherwise unspecified.
+
+=== [[a2031]]Exception Handling
+
+
+
+ _Interceptor_ methods are allowed to throw
+runtime exceptions or any checked exceptions that the method they
+interpose on allows within its _throws_ clause. _Interceptor_ methods
+are allowed to catch and suppress exceptions and recover by calling
+_proceed()._
+
+ _Interceptor_ method invoked in a
+transaction context, can mark the transaction for rollback by throwing a
+runtime exception or by calling the _EJBContext_ method
+_setRollbackOnly()_ . This may be done before or after
+_InvocationContext.proceed()_ is called.
+
+If a system exception escapes the interceptor
+chain, the bean instance and any associated interceptor instances are
+discarded (unless the bean is a singleton session
+beanlink:#a10262[43]). The _PreDestroy_ callbacks are not invoked
+in this case: the interceptor methods in the chain should perform any
+necessary clean-up operations as the interceptor chain unwinds.
+
+=== Specification of Interceptors in the Deployment Descriptor
+
+
+
+The deployment descriptor can be used as an
+alternative to metadata annotations to specify interceptors and their
+binding to enterprise beans or to override the invocation order of
+interceptors as specified in annotations.
+
+=== Specification of Interceptors
+
+The _interceptor_ deployment descriptor
+element is used to specify the interceptor methods of an interceptor
+class. The interceptor methods are specified by using the
+_around-invoke_ , _around-timeout_ , _around-construct_ ,
+_post-construct_ , _pre-destroy,_ pre-passivate, and post-activate
+elements.
+
+At most one method of a given interceptor
+class can be designated as an around-invoke method, an around-timeout
+method, a lifecycle callback interceptor method, regardless of whether
+the deployment descriptor is used to define interceptors or whether some
+combination of annotations and deployment descriptor elements is used.
+
+=== Binding of Interceptors to Target Classes
+
+The _interceptor-binding_ element is used to
+specify the binding of interceptor classes to target classes and their
+methods. The subelements of the _interceptor-binding_ element are as
+follows:
+
+The _target-name_ element must identify the
+associated target class or the wildcard value " _*_ " (which is used to
+define interceptors that are bound to all target classes).
+
+The _interceptor-class_ element specifies the
+interceptor class. The interceptor class contained in an
+_interceptor-class_ element must either be declared in the _interceptor_
+deployment descriptor element or appear in at least one _Interceptor_
+annotation on a target class. The _interceptor-order_ element is used as
+an optional alternative to specify a total ordering over the
+interceptors defined for the given level and above.
+
+The _exclude-default-interceptors_ and
+_exclude-class-interceptors_ elements specify that default interceptors
+and class interceptors, respectively, are not to be applied to a target
+class and/or method.
+
+The _method-name_ element specifies the
+method name for a method-level interceptor; and the optional
+_method-params_ elements identify a single method among multiple methods
+with an overloaded method name.
+
+The _method-name_ element may be used to bind
+a constructor-level interceptor using the unqualified name of the bean
+class as the value; the optional _method-params_ elements identify the
+constructor if a bean class has a constructor annotated with the Inject
+annotation in addition to a no-arg constructor.
+
+Default interceptors are bound to all target
+classes in a module using the wildcard syntax " _*_ ". In addition,
+interceptors may be bound at the level of the target class (class-level
+interceptors) or methods of the target class (method-level
+interceptors).
+
+The binding of interceptors to classes is
+additive. If interceptors are bound at the class level and/or default
+level as well as at the method level, both class-level and/or
+default-level as well as method-level interceptors will apply. The
+deployment descriptor may be used to augment the interceptors and
+interceptor methods defined by means of annotations. When the deployment
+descriptor is used to augment the interceptors specified in annotations,
+the interceptor methods specified in the deployment descriptor will be
+invoked after those specified in annotations, according to the ordering
+specified earlier. The _interceptor-order_ deployment descriptor element
+may be used to override this ordering.
+
+The _exclude-default-interceptors_ element
+disables default interceptors for the level at which it is specified and
+lower. That is, _exclude-default-interceptors_ when applied at the class
+level disables the application of default interceptors for all methods
+of the class. The _exclude-class-interceptors_ element applied to a
+method disables the application of class-level interceptors for the
+given method. Explicitly listing an excluded higher-level interceptor at
+a lower level causes it to be applied at that level and below.
+
+It is possible to override the ordering of
+interceptors by using the _interceptor-order_ element to specify a total
+ordering of interceptors at class level and/or method level. If the
+_interceptor-order_ element is used, the ordering specified at the given
+level must be a total order over all interceptor classes that have been
+defined at that level and above (unless they have been explicitly
+excluded by means of one of the _exclude-_ elements described above).
+
+There are four possible styles of the
+_interceptor-binding_ element syntax:
+
+ _Style 1_ :
+
+ <interceptor-binding>
+
+ <target-name>*</target-name>
+
+
+<interceptor-class>INTERCEPTOR</interceptor-class>
+
+ </interceptor-binding>
+
+Specifying the _target-name_ element as the
+wildcard value " _*_ " designates default interceptors.
+
+ _Style 2_ :
+
+ <interceptor-binding>
+
+ <target-name>TARGETNAME</target-name>
+
+
+<interceptor-class>INTERCEPTOR</interceptor-class>
+
+ </interceptor-binding>
+
+
+
+This style is used to refer to interceptors
+associated with the specified target class (class-level interceptors).
+
+ _Style 3_ :
+
+ <interceptor-binding>
+
+ <target-name>TARGETNAME</target-name>
+
+
+<interceptor-class>INTERCEPTOR</interceptor-class>
+
+ <method-name>METHOD</method-name>
+
+ </interceptor-binding>
+
+
+
+This style is used to associate a
+method-level interceptor with the specified method of the specified
+target class. If there are multiple methods with the same overloaded
+name, the element of this style refers to all the methods with the
+overloaded name. Note that the wildcard value " _*_ " cannot be used to
+specify method-level interceptors.
+
+ _Style 4_ :
+
+ <interceptor-binding>
+
+ <target-name>TARGETNAME</target-name>
+
+
+<interceptor-class>INTERCEPTOR</interceptor-class>
+
+ <method-name>METHOD</method-name>
+
+ <method-params>
+
+ <method-param>PARAM-1</method-param>
+
+ <method-param>PARAM-2</method-param>
+
+ ...
+
+ <method-param>PARAM-n</method-param>
+
+ </method-params>
+
+ <interceptor-binding>
+
+
+
+This style is used to associate a
+method-level interceptor with the specified method of the specified
+target class. This style is used to refer to a single method within a
+set of methods with an overloaded name. The values _PARAM-1_ through
+_PARAM-n_ are the fully-qualified Java types of the method’s input
+parameters (if the method has no input arguments, the _method-params_
+element contains no _method-param_ elements). Arrays are specified by
+the array element’s type, followed by one or more pair of square
+brackets (e.g. _int[][]_ ).
+
+If both styles 3 and 4 are used to define
+method-level interceptors for the same bean, the relative ordering of
+those method-level interceptors is undefined.
+
+=== Examples
+
+Examples of the usage of the
+_interceptor-binding_ syntax are given below.
+
+ _Style 1_ : The following interceptors are
+default interceptors. They will be invoked in the order specified.
+
+ <interceptor-binding>
+
+ <target-name>*</target-name>
+
+
+<interceptor-class>org.acme.MyDefaultIC</interceptor-class>
+
+
+<interceptor-class>org.acme.MyDefaultIC2</interceptor-class>
+
+ </interceptor-binding>
+
+
+
+ _Style 2:_ The following interceptors are
+the class-level interceptors of the _EmployeeService_ class. They will
+be invoked in the order specified after any default interceptors.
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+
+<interceptor-class>org.acme.MyIC</interceptor-class>
+
+
+<interceptor-class>org.acme.MyIC2</interceptor-class>
+
+ </interceptor-binding>
+
+
+
+ _Style 3_ : The following interceptors apply
+to all the _myMethod_ methods of the _EmployeeService_ class. They will
+be invoked in the order specified after any default interceptors and
+class-level interceptors.
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+
+<interceptor-class>org.acme.MyIC</interceptor-class>
+
+
+<interceptor-class>org.acme.MyIC2</interceptor-class>
+
+ <method-name>myMethod</method-name>
+
+ </interceptor-binding>
+
+
+
+The following example illustrates more
+complex parameter types. The method _myMethod(char_ _s,_ _int_ _i,_
+_int[]_ _iar,_ _mypackage.MyClass_ _mycl,_ _mypackage.MyClass[][]_
+_myclaar)_ would be specified as:
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+
+<interceptor-class>org.acme.MyIC</interceptor-class>
+
+ <method-name>myMethod</method-name>
+
+ <method-params>
+
+ <method-param>char</method-param>
+
+ <method-param>int</method-param>
+
+ <method-param>int[]</method-param>
+
+
+<method-param>mypackage.MyClass</method-param>
+
+
+<method-param>mypackage.MyClass[][]</method-param>
+
+ </method-params>
+
+ </interceptor-binding>
+
+
+
+The following example illustrates
+constructor-level interceptors that apply to all constructors of the
+_EmployeeService_ class. They will be invoked in the order specified
+after any default interceptors and class-level interceptors.
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+
+<interceptor-class>org.acme.MyIC</interceptor-class>
+
+
+<interceptor-class>org.acme.MyIC2</interceptor-class>
+
+ <method-name>EmployeeService</method-name>
+
+ </interceptor-binding>
+
+
+
+ _Style 4_ : The following interceptor
+element refers to the _myMethod(String_ _firstName, String_ _LastName)_
+method of the _EmployeeService_ class.
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+
+<interceptor-class>org.acme.MyIC</interceptor-class>
+
+ <method-name>myMethod</method-name>
+
+ <method-params>
+
+
+<method-param>java.lang.String</method-param>
+
+
+<method-param>java.lang.String</method-param>
+
+ </method-params>
+
+ </interceptor-binding>
+
+
+
+The following example illustrates
+constructor-level interceptors that apply to the specific constructor of
+the _EmployeeService_ class.
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+
+<interceptor-class>org.acme.MyIC</interceptor-class>
+
+
+<interceptor-class>org.acme.MyIC2</interceptor-class>
+
+ <method-name>EmployeeService</method-name>
+
+ <method-params>
+
+
+<method-param>org.acme.Account</method-param>
+
+
+<method-param>java.lang.String</method-param>
+
+ </method-params>
+
+
+
+ </interceptor-binding>
+
+
+
+The following example illustrates the total
+ordering of interceptors using the _interceptor-order_ element:
+
+ <interceptor-binding>
+
+ <target-name>EmployeeService</target-name>
+
+ <interceptor-order>
+
+ <interceptor-class>org.acme.MyIC
+
+ </interceptor-class>
+
+ <interceptor-class>org.acme.MyDefaultIC
+
+ </interceptor-class>
+
+ <interceptor-class>org.acme.MyDefaultIC2
+
+ </interceptor-class>
+
+ <interceptor-class>org.acme.MyIC2
+
+ </interceptor-class>
+
+ </interceptor-order>
+
+ </interceptor-binding>

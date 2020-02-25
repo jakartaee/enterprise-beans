@@ -1,0 +1,83 @@
+== Revision History
+
+This appendix lists the significant changes
+that have been made to this document during the development of this
+Specification.
+
+=== Early Draft
+
+
+
+Created document from the EJB 3.2 Draft.
+
+=== Early Draft 2
+
+
+
+Updated the expert group list.
+
+=== Public Draft
+
+
+
+Removed Interceptors specification from the
+list of the EJB 3.2 set of documents
+
+Minor editorial changes
+
+Updated related documents to their latest
+versions where applicable
+
+Replaced section number with the section
+title when referencing EJB Core Contracts and Requirements document.
+
+Removed text from
+link:Ejb.html#a3185[See Support for Transactions] that is
+exactly the same as in the EJB Core Contracts and Requirements document.
+Added references to the corresponding sections with the complete rules.
+
+Removed text from
+link:Ejb.html#a3210[See Exception Handling] that is exactly the
+same as in the EJB Core Contracts and Requirements document. Added
+references to the corresponding sections with the complete rules.
+
+Removed most of the text from
+link:Ejb.html#a3253[See Support for Distributed
+Interoperability] as it was an unnecessary duplication of the
+corresponding chapter in the EJB Core Contracts and Requirements
+document. Left only section “Mapping Objects Returned by Entity Bean
+Finder Methods to IDL”
+
+Removed chapters “Enterprise Bean
+Environment” and “Security Management” as it was an unnecessary
+duplication of the corresponding chapters in the EJB Core Contracts and
+Requirements document.
+
+=== Proposed Final Draft
+
+
+
+Minor editorial changes
+
+Updated to the final versions of the related
+documents
+
+Changed the rule for optional feature support
+for CMP/BMP beans and EJBQL to be that if any of the features is
+supported, all these features must be supported
+
+=== Final Release Candidate
+
+
+
+Editorial changes
+
+{empty}Rearranged sections in the
+link:Ejb.html#a3139[See Support for JAX-RPC Web Service
+Endpoints]
+
+=== Final Release
+
+
+
+Minor editorial changes

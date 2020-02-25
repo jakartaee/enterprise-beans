@@ -1,0 +1,1799 @@
+[[a4945]]
+== Security Management
+
+This chapter defines the EJB architecture’s
+support for security management.
+
+=== Overview
+
+
+
+We set the following goals for the security
+management in the EJB architecture:
+
+Lessen the burden of the application
+developer (i.e. the Bean Provider) for securing the application by
+allowing greater coverage from more qualified EJB roles. The EJB
+Container Provider provides the implementation of the security
+infrastructure; the Deployer and System Administrator define the
+security policies.
+
+Allow the security policies to be set by the
+Application Assembler or Deployer.
+
+Allow the enterprise bean applications to be
+portable across multiple EJB servers that use different security
+mechanisms.
+
+The EJB architecture encourages the Bean
+Provider to implement the enterprise bean class without hard-coding the
+security policies and mechanisms into the business methods. In most
+cases, the enterprise bean’s business methods should not contain any
+security-related logic. This allows the Deployer to configure the
+security policies for the application in a way that is most appropriate
+for the operational environment of the enterprise.
+
+To make the
+Deployer’s task easier, the Bean Provider or the Application Assembler
+(which could be the same party as the Bean Provider) may define security
+roles for an application composed of one or more enterprise beans. A
+security role is a semantic grouping of permissions that a given type of
+users of the application must have in order to successfully use the
+application. The Bean Provider can define declaratively using metadata
+annotations or the deployment descriptor the method permissions for each
+security role. The Applications Assembler can define, augment, or
+override the method permissions using the deployment descriptor. A
+method permission is a permission to invoke a specified group of methods
+of an enterprise bean’s business interface, no-interface view, home
+interface, component interface, and/or web service endpoint. The
+security roles defined by the Bean Provider or the Application Assembler
+present a simplified security view of the enterprise beans application
+to the Deployer—the Deployer’s view of the application’s security
+requirements is the small set of security roles rather than a large
+number of individual methods.
+
+The security
+principal under which a method invocation is performed is typically that
+of the component’s caller. By specifying a run-as identity, however, it
+is possible to specify that a different principal be substituted for the
+execution of the methods of the bean’s business interface, no-interface
+view, home interface, component interface, and/or web service endpoint
+and any methods of other enterprise beans that the bean may call.
+
+This determines whether the caller principal
+is propagated from the caller to the callee—that is, whether the called
+enterprise bean will see the same returned value of the
+EJBContext.getCallerPrincipal as the calling enterprise bean—or whether
+a security principal that has been assigned to the specified security
+role will be used for the execution of the bean’s methods and will be
+visible as the caller principal in the bean’s callee.
+
+The Bean Provider can use metadata
+annotations or the deployment descriptor to specify whether the caller’s
+security identity or a run-as security identity should be used for the
+execution of the bean’s methods.
+
+By default, the caller principal will be
+propagated as the caller identity. The Bean Provider can use the _RunAs_
+annotation to specify that a security principal that has been assigned
+to a specified security role be used instead. See Section
+link:Ejb.html#a5322[See Specification of Security Identities in
+the Deployment Descriptor].
+
+If the deployment descriptor is used to
+specify the security principal, the Bean Provider or the Application
+Assembler can use the _security-identity_ deployment descriptor element
+to specify the security identity. If the _security-identity_ deployment
+descriptor element is not specified and if a run-as identity has not
+been specified by the use of the _RunAs_ annotation or if
+_use-caller-identity_ is specified as the value of the
+_security-identity_ element, the caller principal is propagated from the
+caller to the callee. If the _run-as_ element is specified, a security
+principal that has been assigned to the specified security role will be
+used. The Application Assembler is permitted to override a security
+identity value set or defaulted by the Bean Provider.
+
+The Deployer is responsible for assigning
+principals, or groups of principals, which are defined in the target
+operational environment, to the security roles defined by the Bean
+Provider or Application Assembler. The Deployer is also responsible for
+assigning principals for the run-as identities specified. The Deployer
+is further responsible for configuring other aspects of the security
+management of the enterprise beans, such as principal mapping for
+inter-enterprise bean calls, and principal
+mapping for resource manager access.
+
+At runtime, a client will be allowed to
+invoke a business method only if the principal associated with the
+client call has been assigned by the Deployer to have at least one
+security role that is allowed to invoke the business method or if the
+Bean Provider or Application Assembler has specified that security
+authorization is not to be checked for the method (i.e., that all roles,
+including any unauthenticated roles, are permitted). See
+link:Ejb.html#a5186[See Method Permissions].
+
+The Container Provider is responsible for
+enforcing the security policies at runtime, providing the tools for
+managing security at runtime, and providing the tools used by the
+Deployer to manage security during deployment.
+
+Because not all security policies can be
+expressed declaratively, the EJB architecture provides a simple
+programmatic interface that the Bean Provider may use to access the
+security context from the business methods.
+
+The following sections define the
+responsibilities of the individual EJB roles with respect to security
+management.
+
+=== Bean Provider’s Responsibilities
+
+
+
+This section defines the Bean Provider’s
+perspective of the EJB architecture support for security, and defines
+his or her responsibilities. In addition, the Bean Provider may define
+the security roles for the application, as defined in
+link:Ejb.html#a5121[See Responsibilities of the Bean Provider
+and/or Application Assembler].
+
+=== Invocation of Other Enterprise Beans
+
+An enterprise bean business method can invoke
+another enterprise bean via the other bean’s business interface,
+no-interface view, or home or component interface. The EJB architecture
+provides no programmatic interfaces for the invoking enterprise bean to
+control the principal passed to the invoked enterprise bean.
+
+The
+management of caller principals passed on
+_inter-enterprise_ bean invocations (i.e. principal delegation) is set
+up by the Deployer and System Administrator in a container-specific way.
+The Bean Provider and Application Assembler should describe all the
+requirements for the caller’s principal management of inter-enterprise
+bean invocations as part of the description.
+
+=== Resource Access
+
+Section link:Ejb.html#a4159[See
+Resource Manager Connection Factory References] defines the protocol for
+accessing resource managers, including the requirements for security
+management.
+
+=== Access of Underlying OS Resources
+
+The EJB architecture does not define the
+operating system principal under which
+enterprise bean methods execute. Therefore, the Bean Provider cannot
+rely on a specific principal for accessing the underlying OS resources,
+such as files. (See Subsection link:Ejb.html#a5425[See System
+Principal] for the reasons behind this rule.)
+
+We believe that most enterprise business
+applications store information in resource managers such as relational
+databases rather than in resources at the operating system levels.
+Therefore, this rule should not affect the portability of most
+enterprise beans.
+
+=== Programming Style Recommendations
+
+The Bean Provider
+should neither implement security mechanisms nor hard-code security
+policies in the enterprise beans’ business methods. Rather, the Bean
+Provider should rely on the security mechanisms provided by the EJB
+container.
+
+The Bean Provider can use metadata
+annotations and/or the deployment descriptor to convey security-related
+information to the Deployer. The information helps the Deployer to set
+up the appropriate security policy for the enterprise bean application.
+
+=== Programmatic Access to Caller’s Security Context
+
+Note: In general, security management should
+be enforced by the container in a manner that is transparent to the
+enterprise beans’ business methods. The security API described in this
+section should be used only in the less frequent situations in which the
+enterprise bean business methods need to access the security context
+information.
+
+The
+javax.ejb.EJBContext interface provides two
+methods (plus two deprecated methods that were defined in EJB 1.0) that
+allow the Bean Provider to access security information about the
+enterprise bean’s caller.
+
+public interface javax.ejb.EJBContext \{
+
+ ...
+
+
+
+ //
+
+ // The following two methods allow the EJB
+class
+
+ // to access security information.
+
+ //
+
+ java.security.Principal
+getCallerPrincipal();
+
+ boolean isCallerInRole(String roleName);
+
+
+
+
+
+ //
+
+ // The following two EJB 1.0 methods are
+deprecated.
+
+ //
+
+ java.security.Identity getCallerIdentity();
+
+ boolean
+isCallerInRole(java.security.Identity role);
+
+
+
+ ...
+
+
+
+}
+
+The Bean Provider
+can invoke the getCallerPrincipal and isCallerInRole methods only in the
+enterprise bean’s business methods as specified in
+link:Ejb.html#a953[See Operations Allowed in the Methods of a
+Stateful Session Bean], link:Ejb.html#a1091[See Operations
+Allowed in the Methods of a Stateless Session Bean],
+link:Ejb.html#a1886[See Operations Allowed in the Methods of a
+Message-Driven Bean], link:../Optional/Chapters.html#UNKNOWN[], and
+link:../Optional/Chapters.html#UNKNOWN[]. If they are otherwise invoked
+when no security context exists, they should throw the
+_java.lang.IllegalStateException_ runtime exception.
+
+The
+getCallerIdentity() and isCallerInRole(Identity role) methods were
+deprecated in EJB 1.1. The Bean Provider must use the
+getCallerPrincipal() and isCallerInRole(String roleName) methods for new
+enterprise beans.
+
+An EJB 1.1 or later compliant container may
+choose to implement the two deprecated methods as follows.
+
+A container that does not want to provide
+support for this deprecated method should throw a RuntimeException (or
+subclass of RuntimeException) from the getCallerIdentity method.
+
+A container that wants to provide support for
+the getCallerIdentity method should return an instance of a subclass of
+the java.security.Identity abstract class from the method. The getName
+method invoked on the returned object must return the same value that
+getCallerPrincipal().getName() would return.
+
+A container that does not want to provide
+support for this deprecated method should throw a RuntimeException (or
+subclass of RuntimeException) from the isCallerInRole(Identity identity)
+method.
+
+A container that wants to implement the
+isCallerInRole(Identity identity) method should implement it as follows:
+
+ public boolean isCallerInRole(Identity
+identity) \{
+
+ return isCallerInRole(identity.getName());
+
+ }
+
+=== Use of getCallerPrincipal
+
+The purpose of the _getCallerPrincipal_
+method is to allow the enterprise bean methods to obtain the current
+caller principal’s name. The methods might, for example, use the name as
+a key to information in a database.
+
+An enterprise
+bean can invoke the getCallerPrincipal method to obtain a
+java.security.Principal interface representing the current caller. The
+enterprise bean can then obtain the distinguished name of the caller
+principal using the getName method of the java.security.Principal
+interface. If the security identity has not been established,
+_getCallerPrincipal_ returns the container’s representation of the
+unauthenticated identity.
+
+Note that
+getCallerPrincipal returns the principal that represents the caller of
+the enterprise bean, not the principal that corresponds to the run-as
+security identity for the bean, if any.
+
+The meaning of the current caller, the Java
+class that implements the
+java.security.Principal interface, and the
+realm of the principals returned by the getCallerPrincipal method depend
+on the operational environment and the configuration of the application.
+
+An enterprise may have a complex security
+infrastructure that includes multiple security domains. The security
+infrastructure may perform one or more mapping of principals on the path
+from an EJB caller to the EJB object. For example, an employee accessing
+his or her company over the Internet may be identified by a userid and
+password (basic authentication), and the security infrastructure may
+authenticate the principal and then map the principal to a Kerberos
+principal that is used on the enterprise’s intranet before delivering
+the method invocation to the EJB object. If the security infrastructure
+performs principal mapping, the _getCallerPrincipal_ method returns the
+principal that is the result of the mapping, not the original caller
+principal. (In the previous example, _getCallerPrincipal_ would return
+the Kerberos principal.) The management of the security infrastructure,
+such as principal mapping, is performed by the System Administrator
+role; it is beyond the scope of the EJB specification.
+
+The following code sample illustrates the use
+of the getCallerPrincipal() method.
+
+
+
+@Stateless public class EmployeeServiceBean
+
+ implements EmployeeService\{
+
+ @Resource SessionContext ctx;
+
+ @PersistenceContext EntityManager em;
+
+
+
+ public void changePhoneNumber(...) \{
+
+ ...
+
+
+
+ // obtain the caller principal.
+
+ callerPrincipal = ctx.getCallerPrincipal();
+
+
+
+ // obtain the caller principal’s name.
+
+ callerKey = callerPrincipal.getName();
+
+
+
+ // use callerKey as primary key to find
+EmployeeRecord
+
+ EmployeeRecord myEmployeeRecord =
+
+ em.find(EmployeeRecord.class, callerKey);
+
+
+
+ // update phone number
+
+ myEmployeeRecord.setPhoneNumber(...);
+
+
+
+ ...
+
+ }
+
+}
+
+In the previous example, the enterprise bean
+obtains the principal name of the current caller and uses it as the
+primary key to locate an _EmployeeRecord_ entity. This example assumes
+that application has been deployed such that the current caller
+principal contains the primary key used for the identification of
+employees (e.g., employee number).
+
+=== Use of isCallerInRole
+
+The main purpose of the
+_isCallerInRole(String_ _roleName)_ method is to allow the Bean Provider
+to code the security checks that cannot be easily defined declaratively
+in the deployment descriptor using method permissions. Such a check
+might impose a role-based limit on a request, or it might depend on
+information stored in the database.
+
+The enterprise
+bean code can use the isCallerInRole method to test whether the current
+caller has been assigned to a given security role. Security roles are
+defined by the Container, Bean Provider or the Application Assembler
+(see Subsection link:Ejb.html#a5130[See Security Roles]), and
+are assigned to principals or principal groups that exist in the
+operational environment by the Deployer.
+
+The enterprise bean code can also use the
+isCallerInRole method to test whether the current caller has been
+authenticated; and without further consideration of whether the
+authenticated caller has been assigned to one or more specific security
+roles. To perform this test, the code passes the value “**” as the
+argument to the isCallerInRole method. As is the case with all calls to
+the isCallerInRole method, the run-time return value of the call will
+depend on the security role linked to the reference (as defined in
+section link:Ejb.html#a5293[See Linking Security Role References
+to Security Roles]) and on the principal-to-role mapping configured for
+the linked role (as defined in section link:Ejb.html#a5371[See
+Assignment of Security Roles]).
+
+Note that isCallerInRole(String roleName)
+tests the principal that represents the caller of the enterprise bean,
+not the principal that corresponds to the run-as security identity for
+the bean, if any.
+
+The following code sample illustrates the use
+of the isCallerInRole(String roleName) method.
+
+@Stateless public class PayrollBean
+implements Payroll \{
+
+ @Resource SessionContext ctx;
+
+
+
+ public void updateEmployeeInfo(EmplInfo
+info) \{
+
+
+
+ oldInfo = ... read from database;
+
+
+
+ // The salary field can be changed only by
+callers
+
+ // who have the security role "payroll"
+
+ if (info.salary != oldInfo.salary &&
+
+ !ctx.isCallerInRole("payroll")) \{
+
+ throw new SecurityException(...);
+
+ }
+
+ ...
+
+ }
+
+ ...
+
+}
+
+=== [[a5071]]Declaration of Security Roles Referenced from the Bean’s Code
+
+The Bean Provider
+is responsible for declaring all names that may be used to reference
+security roles from the enterprise bean code. The names of security
+roles defined in the deployment descriptor or used in the RolesAllowed
+annotation are implicitly declared. The Bean Provider is responsible for
+using either the _DeclareRoles_ annotation or the security-role-ref
+elements of the deployment descriptor to declare all such names that are
+not implicitly declared.
+
+The _DeclareRoles_ annotation is specified on
+a bean class, where it serves to declare the names of (otherwise
+undeclared) roles that may be tested by calling _isCallerInRole_ from
+within the methods of the annotated class. Declaring the security roles
+allows the Bean Provider, Application Assembler, or Deployer to link
+security role names used in the code to the security roles defined for
+an assembled application. In the absence of this linking step, any
+security role name as used in the code will be assumed to correspond to
+a security role of the same name.
+
+When the Bean Provider uses the DeclareRoles
+annotation to declare the name of a role used as a parameter to the
+isCallerInRole(String roleName) method, the declared name must be the
+same as the parameter value. The Bean Provider may optionally provide a
+description of the named security roles in the description element of
+the _DeclareRoles_ annotation.
+
+In the following example, the _DeclareRoles_
+annotation is used to indicate that the enterprise bean AardvarkPayroll
+makes the security check using isCallerInRole("payroll") in its business
+method.
+
+@DeclareRoles("payroll")
+
+@Stateless public class PayrollBean
+implements Payroll \{
+
+ @Resource SessionContext ctx;
+
+
+
+ public void updateEmployeeInfo(EmplInfo
+info) \{
+
+
+
+ oldInfo = ... read from database;
+
+
+
+ // The salary field can be changed only by
+callers
+
+ // who have the security role "payroll"
+
+ if (info.salary != oldInfo.salary &&
+
+ !ctx.isCallerInRole("payroll")) \{
+
+ throw new SecurityException(...);
+
+ }
+
+ ...
+
+ }
+
+ ...
+
+}
+
+The Bean Provider must use the
+_security-role-ref_ elements of the deployment descriptor to declare any
+security roles referenced in the code and not otherwise declared. The
+security-role-ref elements are defined as follows:
+
+Declare the name of the security role using
+the role-name element. The name must be the security role name that is
+used as a parameter to the isCallerInRole(String _roleName_ ) method.
+
+Optionally provide a description of the
+security role in the description element.
+
+The following example illustrates how an
+enterprise bean’s references to security roles are declared in the
+deployment descriptor.
+
+ ...
+
+ <enterprise-beans>
+
+ ...
+
+ <session>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+
+<ejb-class>com.aardvark.payroll.PayrollBean</ejb-class>
+
+ ...
+
+ <security-role-ref>
+
+ <description>
+
+ This security role should be assigned to the
+
+ employees of the payroll department who are
+
+ allowed to update employees’ salaries.
+
+ </description>
+
+ <role-name>payroll</role-name>
+
+ </security-role-ref>
+
+ ...
+
+ </session>
+
+ ...
+
+ </enterprise-beans>
+
+ ...
+
+The deployment descriptor above indicates
+that the enterprise bean AardvarkPayroll makes the security check using
+isCallerInRole("payroll") in its business method.
+
+A security role reference, including the name
+defined by the reference, is scoped to the component whose bean class
+contains the _DeclareRoles_ metadata annotation or whose deployment
+descriptor element contains the security-role-ref deployment descriptor
+element.
+
+The Bean Provider (or Application Assembler)
+may also use the security-role-ref elements for those references that
+were declared in annotations and which the Bean Provider wishes to have
+linked to a security-role whose name differs from the reference value.
+If a security role reference is not linked to a security role in this
+way, the container must map the reference name to the security role of
+the same name. See section link:Ejb.html#a5293[See Linking
+Security Role References to Security Roles] for a description of how
+security role references are linked to security roles.
+
+=== [[a5121]]Responsibilities of the Bean Provider and/or Application Assembler
+
+
+
+The Bean Provider
+and Application Assembler (which could be the same party as the Bean
+Provider) may define a security view of the enterprise beans contained
+in the ejb-jar file. Providing the security view is optional for the
+Bean Provider and Application Assembler.
+
+The main reason for providing the security
+view of the enterprise beans is to simplify the Deployer’s job. In the
+absence of a security view of an application, the Deployer needs
+detailed knowledge of the application in order to deploy the application
+securely. For example, the Deployer would have to know what each
+business method does to determine which users can call it. The security
+view defined by the Bean Provider or Application Assembler presents a
+more consolidated view to the Deployer, allowing the Deployer to be less
+familiar with the application.
+
+The security view consists of a set of
+security roles. A security role is a
+semantic grouping of permissions that a given type of users of an
+application must have in order to successfully use the application.
+
+The Bean Provider
+or Application Assembler defines method permissions for each security
+role. A method permission is a permission to
+invoke a specified group of methods of the enterprise beans’ business
+interface, no-interface view, home interface, component interface,
+and/or web service endpoint.
+
+It is important to keep in mind that the
+security roles are used to define the logical security view of an
+application. They should not be confused with the user groups, users,
+principals, and other concepts that exist in the target enterprise’s
+operational environment.
+
+In special cases, a qualified Deployer may
+change the definition of the security roles for an application, or
+completely ignore them and secure the application using a different
+mechanism that is specific to the operational environment.
+
+=== [[a5130]]Security Roles
+
+The Bean Provider
+or Application Assembler can define one or more security roles in the
+bean’s metadata annotations or deployment descriptor. The Bean Provider
+or Application Assembler then assigns groups of methods of the
+enterprise beans’ business, home, and component interfaces, no-interface
+view, and/or web service endpoints to the security roles to define the
+security view of the application.
+
+Because the Bean Provider and Application
+Assembler do not, in general, know the security environment of the
+operational environment, the security roles are meant to be logical
+roles (or actors), each representing a type of user that should have the
+same access rights to the application.
+
+The Deployer then assigns user groups and/or
+user accounts defined in the operational environment to the security
+roles defined by the Bean Provider and Application Assembler.
+
+A security role with the name “**” is defined
+by the Container, and is intended to be used by the Bean Provider,
+Application Assembler, or Deployer to indicate that the caller must log
+on or authenticate to invoke a method or to perform some processing
+requiring membership in this container role. This container security
+role indicates that authentication, without consideration of role
+membership, is required. An application role should not be defined with
+the same name as this container security role, and a security role
+reference should not be used to link this role reference to a different
+role. Moreover the assignment of principals to the container role with
+this name should not be subject to reconfiguration that would remove any
+authenticated user from membership in the container role. That said,
+when an application defines a security role in its deployment descriptor
+with the name “**”, this application role is applied wherever the
+application or its deployment descriptor refers to a role named “**”.
+
+Defining the security roles in the metadata
+annotations and/or deployment descriptor is
+optionallink:#a10327[107]. Their omission means that the Bean
+Provider and Application Assembler chose not to pass any security
+deployment related instructions to the Deployer.
+
+If Java language metadata annotations are
+used, the Bean Provider uses the _DeclareRoles_ and _RolesAllowed_
+annotations to define the security roles. The set of security roles used
+by the application is taken to be the aggregation of the security roles
+defined by the security role names used in the _DeclareRoles_ and
+_RolesAllowed_ annotations. The Bean Provider may augment the set of
+security roles defined for the application by annotations in this way by
+means of the _security-role_ deployment descriptor element.
+
+If the deployment descriptor is used, the
+Bean Provider and/or Application Assembler uses the _security-role_
+deployment descriptor element as follows:
+
+Define each security role using a
+security-role element. An application
+security role with name “**” should not be defined as the Container must
+provide a container security role with this name.
+
+Use the role-name element to define the name
+of the security role.
+
+Optionally, use the description element to
+provide a description of a security role.
+
+The following example illustrates security
+roles definition in a deployment descriptor.
+
+ ...
+
+<assembly-descriptor>
+
+ <security-role>
+
+ <description>
+
+ This role includes the employees of the
+
+ enterprise who are allowed to access the
+
+ employee self-service application. This role
+
+ is allowed only to access his/her own
+
+ information.
+
+ </description>
+
+ <role-name>employee</role-name>
+
+ </security-role>
+
+
+
+ <security-role>
+
+ <description>
+
+ This role includes the employees of the
+human
+
+ resources department. The role is allowed to
+
+ view and update all employee records.
+
+ </description>
+
+ <role-name>hr-department</role-name>
+
+ </security-role>
+
+
+
+ <security-role>
+
+ <description>
+
+ This role includes the employees of the
+payroll
+
+ department. The role is allowed to view and
+
+ update the payroll entry for any employee.
+
+ </description>
+
+ <role-name>payroll-department</role-name>
+
+ </security-role>
+
+
+
+ <security-role>
+
+ <description>
+
+ This role should be assigned to the
+personnel
+
+ authorized to perform administrative
+functions
+
+ for the employee self-service application.
+
+ This role does not have direct access to
+
+ sensitive employee and payroll information.
+
+ </description>
+
+ <role-name>admin</role-name>
+
+ </security-role>
+
+ ...
+
+</assembly-descriptor>
+
+=== [[a5186]]Method Permissions
+
+If the Bean Provider and/or Application
+Assembler have defined security roles for the enterprise beans in the
+ejb-jar file, they can also specify the methods of the business, home,
+and component interfaces, no-interface views, and/or web service
+endpoints that each security role is allowed to invoke.
+
+Metadata annotations and/or the deployment
+descriptor can be used for this purpose.
+
+Method permissions are defined as a binary
+relation from the set of security roles to the set of methods of the
+business interfaces, home interfaces, component interfaces, no-interface
+views, and/or web service endpoints of session and
+entitylink:#a10328[108] beans, including all their
+superinterfaces (including the methods of the EJBHome and EJBObject
+interfaces and/or EJBLocalHome and EJBLocalObject interfaces). The
+method permissions relation includes the pair (R, M) if and only if the
+security role R is allowed to invoke the method M.
+
+=== Specification of Method Permissions with Metadata Annotations
+
+The following is the description of the rules
+for the specification of method permissions using Java language metadata
+annotations.
+
+The method permissions for the methods of a
+bean class may be specified on the class, the business methods of the
+class, or both.
+
+The _RolesAllowed_ , _PermitAll_ , and
+_DenyAll_ annotations are used to specify method permissions. The value
+of the _RolesAllowed_ annotation is a list of security role names to be
+mapped to the security roles that are permitted to execute the specified
+method(s). The _PermitAll_ annotation specifies that all security roles,
+including any unauthenticated roles, are permitted to execute the
+specified method(s). The _DenyAll_ annotation specifies that no security
+roles, including any unauthenticated roles, are permitted to execute the
+specified method(s).
+
+Specifying the _RolesAllowed_ or _PermitAll_
+or DenyAll annotation on the bean class means that it applies to all
+applicable business methods of the class.
+
+Method permissions may be specified on a
+method of the bean class to override the method permissions value
+specified on the bean class.
+
+If the bean class has superclasses, the
+following additional rules apply.
+
+A method permissions value specified on a
+superclass _S_ applies to the business methods defined by _S_ .
+
+A method permissions value may be specified
+on a business method _M_ defined by class _S_ to override for method _M_
+the method permissions value explicitly or implicitly specified on the
+class _S_ .
+
+If a method _M_ of class _S_ overrides a
+business method defined by a superclass of _S_ , the method permissions
+value of _M_ is determined by the above rules as applied to class _S_ .
+
+
+
+Example:
+
+@RolesAllowed("admin")
+
+public class SomeClass \{
+
+ public void aMethod () \{...}
+
+ public void bMethod () \{...}
+
+ ...
+
+}
+
+
+
+@Stateless public class MyBean extends
+SomeClass implements A \{
+
+
+
+ @RolesAllowed("HR")
+
+ public void aMethod () \{...}
+
+
+
+ public void cMethod () \{...}
+
+ ...
+
+}
+
+
+
+Assuming _aMethod_ , _bMethod_ , _cMethod_
+are methods of business interface _A_ , the method permissions values of
+methods _aMethod_ and _bMethod_ are _RolesAllowed(_ " _HR_ " _)_ and
+_RolesAllowed(_ " _admin_ " _)_ respectively. The method permissions for
+method _cMethod_ have not been specified (see Sections
+link:Ejb.html#a5219[See Specification of Method Permissions in
+the Deployment Descriptor] and link:Ejb.html#a5291[See
+Unspecified Method Permissions]) .
+
+=== [[a5219]]Specification of Method Permissions in the Deployment Descriptor
+
+The Bean Provider may use the deployment
+descriptor as an alternative to metadata annotations to specify the
+method permissions (or as a means to supplement or override metadata
+annotations for method permission values). The Application Assembler is
+permitted to override the method permission values using the bean’s
+deployment descriptor.
+
+Any values explicitly specified in the
+deployment descriptor override any values specified in annotations. If a
+value for a method has not be specified in the deployment descriptor,
+and a value has been specified for that method by means of the use of
+annotations, the value specified in annotations will apply. The
+granularity of overriding is on the per-method basis.
+
+The Bean Provider
+or Application Assembler defines the method permissions relation in the
+deployment descriptor using the method-permission elements as follows.
+
+Each method-permission element includes a
+list of one or more security roles and a list of one or more methods.
+All the listed security roles are allowed to invoke all the listed
+methods. Each security role in the list is identified by the role-name
+element, and each method (or a set of methods, as described below) is
+identified by the method element. An optional description can be
+associated with a method-permission element using the description
+element.
+
+If the role name “**” is included in the list
+of allowed roles, and the application has not defined in its deployment
+descriptor an application security role with this name, then the list of
+allowed roles includes every and any authenticated user.
+
+The method permissions relation is defined as
+the union of all the method permissions defined in the individual
+method-permission elements.
+
+A security role or a method may appear in
+multiple method-permission elements.
+
+The Bean Provider or Application Assembler
+can indicate that all roles, including any unauthenticated roles, are
+permitted to execute one or more specified methods (i.e., the methods
+should not be “checked” for authorization prior to invocation by the
+container). The _unchecked_ element is used instead of a role name in
+the _method-permission_ element to indicate that all roles, including
+any unauthenticated roles, are permitted.
+
+If the method permission relation specifies
+both the _unchecked_ element for a given method and one or more security
+roles, all roles are permitted for the specified methods.
+
+The _exclude-list_
+ element can be used to indicate the set of
+methods that should not be called. The Deployer should configure the
+enterprise bean’s security such that no access is permitted to any
+method contained in the _exclude-list_ .
+
+If a given method is specified both in the
+_exclude-list_ element and in the method permission relation, the
+Deployer should configure the enterprise bean’s security such that no
+access is permitted to the method.
+
+The method
+element uses the ejb-name, method-name, and method-params elements to
+denote one or more methods of an enterprise bean’s business interface,
+home interface, component interface, no-interface view, and/or web
+service endpoint. There are three legal styles for composing the method
+element:
+
+ +
+<method> +
+<ejb-name>EJBNAME</ejb-name> +
+<method-name>*</method-name> +
+</method> +
+ +
+This style is used for referring to all of the methods of the business,
+home, and component interfaces, no-interface view, and web service
+endpoint of a specified enterprise bean.
+
+ +
+<method> +
+<ejb-name>EJBNAME</ejb-name> +
+<method-name>METHOD</method-name> +
+</method> +
+ +
+This style is used for referring to a specified method of the business,
+home, or component interface, no-interface view, or web service endpoint
+of the specified enterprise bean. If there are multiple methods with the
+same overloaded name, this style refers to all of the overloaded
+methods.
+
+ +
+<method> +
+<ejb-name>EJBNAME</ejb-name> +
+<method-name>METHOD</method-name> +
+<method-params> +
+<method-param>PARAMETER_1</method-param> +
+... +
+<method-param>PARAMETER_N</method-param> +
+</method-params> +
+</method> +
+ +
+This style is used to refer to a specified method within a set of
+methods with an overloaded name. The method must be defined in the
+specified enterprise bean’s business, home, or component interface,
+no-interface view, or web service endpoint. If there are multiple
+methods with the same overloaded name, however, this style refers to all
+of the overloaded methods.
+
+The optional _method-intf_ element can be
+used to differentiate between methods with the same name and signature
+that are multiply defined across the business, component, or home
+interfaces, no-interface view, and/or web service endpoint. If the same
+method is a method of a local business interface, local component
+interface, or no-interface view, the same method permission values apply
+to the method for all of them. Likewise, if the same method is a method
+of both the remote business interface and remote component interface,
+the same method permission values apply to the method for both
+interfaces.
+
+The following example illustrates how
+security roles are assigned method permissions in the deployment
+descriptor:
+
+ ...
+
+ <method-permission>
+
+ <role-name>employee</role-name>
+
+ <method>
+
+ <ejb-name>EmployeeService</ejb-name>
+
+ <method-name>*</method-name>
+
+ </method>
+
+ </method-permission>
+
+
+
+ <method-permission>
+
+ <role-name>employee</role-name>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+ <method-name>findByPrimaryKey</method-name>
+
+ </method>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+ <method-name>getEmployeeInfo</method-name>
+
+ </method>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+
+<method-name>updateEmployeeInfo</method-name>
+
+ </method>
+
+ </method-permission>
+
+
+
+ <method-permission>
+
+ <role-name>payroll-department</role-name>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+ <method-name>findByPrimaryKey</method-name>
+
+ </method>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+ <method-name>getEmployeeInfo</method-name>
+
+ </method>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+
+<method-name>updateEmployeeInfo</method-name>
+
+ </method>
+
+ <method>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+ <method-name>updateSalary</method-name>
+
+ </method>
+
+ </method-permission>
+
+
+
+ <method-permission>
+
+ <role-name>admin</role-name>
+
+ <method>
+
+ <ejb-name>EmployeeServiceAdmin</ejb-name>
+
+ <method-name>*</method-name>
+
+ </method>
+
+ </method-permission>
+
+ ...
+
+=== [[a5291]]Unspecified Method Permissions
+
+It is possible that some methods are not
+assigned to any security roles nor annotated as _DenyAll_ or contained
+in the _exclude-list_ element. In this case, the Deployer should assign
+method permissions for all of the unspecified methods, either by
+assigning them to security roles, or by marking them as unchecked. If
+the Deployer does not assigned method permissions to the unspecified
+methods, those methods must be treated by the container as _unchecked_ .
+
+=== [[a5293]]Linking Security Role References to Security Roles
+
+The application's references to security
+roles are linked to the security roles defined for the application. In
+the absence of any explicit linking, a security role reference will be
+linked to a security role having the same name. This requirement also
+applies to role references with value “**”, and an explicit mapping
+should only be defined for a role reference with value “**” when the
+reference needs to be linked to an application role with name other than
+“**”.
+
+The Application Assembler uses a
+security-role-ref element to explicitly link a role reference by a
+component to a security role defined by annotation and/or by
+security-role element (as described in section
+link:Ejb.html#a5130[See Security Roles]). The linkage is made
+explicit using the role-link element of the security-role-ref element;
+in which case the value of the role-link element must be the name of one
+of the security roles defined by annotation and/or security-role
+element.
+
+A security-role-ref element need not be
+defined for a role reference that is to be mapped to a security-role
+with the same name as the role reference, and when a role-link is not
+specified within a security-role-ref, the reference is implicitly mapped
+to the security role with the same name as the reference.
+
+The following deployment descriptor example
+shows how to link the security role reference named payroll to the
+security role named payroll-department.
+
+ ...
+
+ <enterprise-beans>
+
+ ...
+
+ <session>
+
+ <ejb-name>AardvarkPayroll</ejb-name>
+
+
+<ejb-class>com.aardvark.payroll.PayrollBean</ejb-class>
+
+ ...
+
+ <security-role-ref>
+
+ <description>
+
+ This role should be assigned to the
+
+ employees of the payroll department.
+
+ Members of this role have access to
+
+ anyone’s payroll record.
+
+ The role has been linked to the
+
+ payroll-department role.
+
+ </description>
+
+ <role-name>payroll</role-name>
+
+ <role-link>payroll-department</role-link>
+
+ </security-role-ref>
+
+ ...
+
+ </session>
+
+ ...
+
+ </enterprise-beans>
+
+ ...
+
+=== [[a5322]]Specification of Security Identities in the Deployment Descriptor
+
+The Bean Provider or Application Assembler
+typically specifies whether the caller’s
+security identity should be used for the
+execution of the methods of an enterprise bean or whether a specific
+run-as identity should be used.
+
+By default the caller’s security identity is
+used. The Bean Provider can use the _RunAs_ metadata annotation to
+specify a run-as identity for the execution of the bean’s methods. If
+the deployment descriptor is used, the Bean Provider or the Application
+Assembler can use the _security-identity_ deployment descriptor element
+for this purpose or to override a security identity specified in
+metadata. The value of the _security-identity_
+ element is either _use-caller-identity_ or
+_run-as_ .
+
+Defining the security identities in the
+deployment descriptor is optional for the Application Assembler. Their
+omission in the deployment descriptor means that the Application
+Assembler chose not to pass any instructions related to security
+identities to the Deployer in the deployment descriptor.
+
+If a run-as security identity is not
+specified by the Deployer, the container should use the caller’s
+security identity for the execution of the bean’s methods.
+
+=== [[a5329]]Run-as
+
+The Bean Provider can use the _RunAs_
+metadata annotation or the Bean Provider or Application Assembler can
+use the _run-as_  deployment descriptor
+element to define a run-as identity for an enterprise bean in the
+deployment descriptor. The run-as identity applies to the enterprise
+bean as a whole, that is, to all methods of the enterprise bean’s
+business, home, and component interfaces, no-interface view, and/or web
+service endpoint; to the message listener methods of a message-driven
+bean; and to the timeout callback methods of an enterprise bean; and all
+internal methods of the bean that they might in turn call.
+
+ _Establishing a run-as identity for an
+enterprise bean does not affect the identities of its callers, which are
+the identities tested for permission to access the methods of the
+enterprise bean. The run-as identity establishes the identity the
+enterprise bean will use when it makes calls._
+
+Because the Bean Provider and Application
+Assembler do not, in general, know the security environment of the
+operational environment, the run-as identity is designated by a
+_logical_ role-name, which corresponds to one of the security roles
+defined by the Bean Provider or Application Assembler in the metadata
+annotations or deployment descriptor.
+
+The Deployer then assigns a security
+principal defined in the operational environment to be used as the
+principal for the run-as identity. The security principal assigned by
+the Deployer should be a principal that has been assigned to the
+security role specified by _RunAs_
+annotation or by the _role-name_ element of the _run-as_ deployment
+descriptor element.
+
+The Bean Provider and/or Application
+Assembler is responsible for the following in the specification of
+run-as identities:
+
+Use the _RunAs_ metadata annotation or
+_role-name_  element of the _run-as_
+deployment descriptor element to define the name of the security role.
+
+Optionally, use the
+description element to provide a description
+of the principal that is expected to be bound to the run-as identity in
+terms of its security role.
+
+The following example illustrates the
+definition of a run-as identity using metadata annotations.
+
+@RunAs("admin")
+
+@Stateless public class EmployeeServiceBean
+
+ implements EmployeeService\{
+
+ ...
+
+}
+
+Using the deployment descriptor, this can be
+specified as follows.
+
+ ...
+
+ <enterprise-beans>
+
+ ...
+
+ <session>
+
+ <ejb-name>EmployeeService</ejb-name>
+
+ ...
+
+ <security-identity>
+
+ <run-as>
+
+ <role-name>admin</role-name>
+
+ </run-as>
+
+ </security-identity>
+
+ ...
+
+ </session>
+
+ ...
+
+ </enterprise-beans>
+
+ ...
+
+=== [[a5364]]Deployer’s Responsibilities
+
+
+
+The Deployer is responsible for ensuring that
+an assembled application is secure after it has been deployed in the
+target operational environment. This section defines the Deployer’s
+responsibility with respect to EJB security management.
+
+The Deployer uses deployment tools provided
+by the EJB Container Provider to read the security view of the
+application supplied by the Bean Provider and/or Application Assembler
+in the metadata annotations and/or deployment descriptor. The Deployer’s
+job is to map the security view that was specified by the Bean Provider
+and/or Application Assembler to the mechanisms and policies used by the
+security domain in the target operational environment. The output of the
+Deployer’s work includes an application security policy descriptor that
+is specific to the operational environment. The format of this
+descriptor and the information stored in the descriptor are specific to
+the EJB container.
+
+The following subsections describe the
+security related tasks performed by the Deployer.
+
+=== Security Domain and Principal Realm Assignment
+
+The Deployer is
+responsible for assigning the security domain and principal realm to an
+enterprise bean application.
+
+Multiple principal realms within the same
+security domain may exist, for example, to separate the realms of
+employees, trading partners, and customers. Multiple security domains
+may exist, for example, in application hosting scenarios.
+
+=== [[a5371]]Assignment of Security Roles
+
+The Deployer assigns principals and/or groups
+of principals (such as individual users or user groups) used for
+managing security in the operational environment to the security roles
+defined by means of the _DeclareRoles_ and _RolesAllowed_ metadata
+annotations and/or security-role elements of the deployment descriptor.
+
+The Deployer does not define (or in effect
+redefine) the principals assigned to the container security role with
+name “**”. The Container is required to assign a principal of any and
+every authenticated user (as defined by the operational environment of
+the application) to the container security role with this name.
+
+The Deployer does not assign principals
+and/or principal groups to the security role references—the principals
+and/or principals groups assigned to a security role apply also to all
+the linked security role references. For example, the Deployer of the
+AardvarkPayroll enterprise bean in subsection
+link:Ejb.html#a5293[See Linking Security Role References to
+Security Roles] would assign principals and/or principal groups to the
+security-role payroll-department, and the assigned principals and/or
+principal groups would be implicitly assigned also to the linked
+security role reference payroll.
+
+The EJB architecture does not specify how an
+enterprise should implement its security architecture. Therefore, the
+process of assigning the logical security roles defined in the
+application’s deployment descriptor to the operational environment’s
+security concepts is specific to that operational environment.
+Typically, the deployment process consists of assigning to each security
+role one or more user groups (or individual users) defined in the
+operational environment. This assignment is done on a per-application
+basis. (That is, if multiple independent ejb-jar files use the same
+security role name, each may be assigned differently.) If the Deployer
+does not assign the logical security roles defined by the application to
+groups in the operational environment, it must be assumed that a logical
+role maps to a principal or principal group of the same name.
+
+=== Principal Delegation
+
+The Deployer is
+responsible for configuring the principal delegation for inter-component
+calls. The Deployer must follow any instructions supplied by the Bean
+Provider and/or Application Assembler (for example, provided in the
+_RunAs_ metadata annotations, the _run-as_
+elements of the deployment descriptor, in the description elements of
+the annotations or deployment descriptor, or in a deployment manual).
+
+If the security identity is defaulted, or it
+is explicitly specified that the caller identity be used (e.g.,
+_use-caller-identity_  deployment descriptor
+element is specified), the caller principal is propagated from one
+component to another (i.e., the caller principal of the first enterprise
+bean in a call-chain is passed to the enterprise beans down the chain).
+
+If the Bean Provider or Application Assembler
+specifies that a run-as identity be used on behalf of a particular
+enterprise bean, the Deployer must configure the enterprise beans such
+that the run-as principal is used as the caller principal on any calls
+that the enterprise bean makes to other beans, and that the run-as
+principal is propagated along the call-chain of those other beans (in
+the absence of the specification of any further run-as elements).
+
+=== Security Management of Resource Access
+
+The Deployer’s responsibilities with respect
+to securing resource managers access are defined in subsection
+link:Ejb.html#a4312[See Deployer’s Responsibility].
+
+=== General Notes on Deployment Descriptor Processing
+
+The Deployer can
+use the security view defined in the deployment descriptor by the Bean
+Provider and Application Assembler merely as “hints” and may change the
+information whenever necessary to adapt the security policy to the
+operational environment.
+
+Since providing the security information is
+optional for the Bean Provider and Application Assembler, the Deployer
+is responsible for performing any tasks that have not been done by the
+Bean Provider or Application Assembler. (For example, if the definition
+of security roles and method permissions is missing in the metadata
+annotations and in deployment descriptor, the Deployer must define the
+security roles and method permissions for the application.) It is not
+required that the Deployer store the output of this activity in the
+standard ejb-jar file format.
+
+=== EJB Client Responsibilities
+
+
+
+This section
+defines the rules that the EJB client program must follow to ensure that
+the security context passed on the client calls, and possibly imported
+by the enterprise bean, do not conflict with the EJB server’s
+capabilities for association between a security context and
+transactions.
+
+These rules are:
+
+A transactional
+client cannot change its principal association within a transaction.
+This rule ensures that all calls from the client within a transaction
+are performed with the same security context.
+
+A session bean’s client must not change its
+principal association for the duration of the communication with the
+session object. This rule ensures that the server can associate a
+security identity with the session instance
+at instance creation time, and never have to change the security
+association during the session instance lifetime.
+
+If transactional requests within a single
+transaction arrive from multiple clients (this could happen if there are
+intermediary objects or programs in the transaction call-chain), all
+requests within the same transaction must be associated with the same
+security context.
+
+=== EJB Container Provider’s Responsibilities
+
+
+
+This section describes the responsibilities
+of the EJB Container Provider and Server Provider.
+
+=== Deployment Tools
+
+The EJB Container Provider is responsible for
+providing the deployment tools that the Deployer can use to perform the
+tasks defined in Section link:Ejb.html#a5364[See Deployer’s
+Responsibilities].
+
+The deployment
+tools read the information from the beans’ metadata annotations and/or
+deployment descriptor and present the information to the Deployer. The
+tools guide the Deployer through the deployment process, and present him
+or her with choices for mapping the security information in the metadata
+annotations and deployment descriptor to the security management
+mechanisms and policies used in the target operational environment.
+
+The deployment tools’ output is stored in an
+EJB container-specific manner, and is available at runtime to the EJB
+container.
+
+=== Security Domain(s)
+
+The EJB container
+provides a security domain and one or more principal realms to the
+enterprise beans. The EJB architecture does not specify how an EJB
+server should implement a security domain, and does not define the scope
+of a security domain.
+
+A security domain can be implemented,
+managed, and administered by the EJB server. For example, the EJB server
+may store X509 certificates or it might use an external security
+provider such as Kerberos.
+
+The EJB specification does not define the
+scope of the security domain. For example, the scope may be defined by
+the boundaries of the application, EJB server, operating system,
+network, or enterprise.
+
+The EJB server can, but is not required to,
+provide support for multiple security domains, and/or multiple principal
+realms.
+
+The case of multiple domains on the same EJB
+server can happen when a large server is used for application hosting.
+Each hosted application can have its own security domain to ensure
+security and management isolation between applications owned by multiple
+organizations.
+
+=== Security Mechanisms
+
+The EJB Container
+Provider must provide the security mechanisms necessary to enforce the
+security policies set by the Deployer. The EJB specification does not
+specify the exact mechanisms that must be implemented and supported by
+the EJB server.
+
+The typical security functions provided by
+the EJB server include:
+
+Authentication of principals.
+
+Access authorization for EJB calls and
+resource manager access.
+
+Secure communication with remote clients
+(privacy, integrity, etc.).
+
+=== Passing Principals on EJB Calls
+
+The EJB Container Provider is responsible for
+providing the deployment tools that allow the Deployer to configure the
+principal delegation for calls from one enterprise bean to another. The
+EJB container is responsible for performing the principal delegation as
+specified by the Deployer.
+
+The EJB container
+must be capable of allowing the Deployer to specify that, for all calls
+from a single application within a single Java EE product, the caller
+principal is propagated on calls from one enterprise bean to another
+(i.e., the multiple beans in the call chain will see the same return
+value from getCallerPrincipal).
+
+This requirement is necessary for
+applications that need a consistent return value of _getCallerPrincipal_
+across a chain of calls between enterprise beans.
+
+The EJB container must be capable of allowing
+the Deployer to specify that a run-as principal be used for the
+execution of the business, home, and component interfaces, no-interface
+view, and/or web service endpoint methods of a session or an
+entitylink:#a10329[109] bean, or for the message listener methods
+of a message-driven bean.
+
+=== Security Methods in javax.ejb.EJBContext
+
+The EJB container
+must provide access to the caller’s security context information from
+the enterprise beans’ instances via the getCallerPrincipal() and
+isCallerInRole(String roleName) methods. The EJB container must provide
+the caller’s security context information during the execution of a
+business method invoked via the enterprise bean’s business, home,
+component, no-interface view, or messsage listener interface, web
+service endpoint, and/or _TimedObject_ interface, as defined in
+link:Ejb.html#a953[See Operations Allowed in the Methods of a
+Stateful Session Bean], link:Ejb.html#a1091[See Operations
+Allowed in the Methods of a Stateless Session Bean],
+link:Ejb.html#a1886[See Operations Allowed in the Methods of a
+Message-Driven Bean], link:../Optional/Chapters.html#UNKNOWN[], and
+link:../Optional/Chapters.html#UNKNOWN[]. The container must ensure that
+all enterprise bean method invocations received through these interfaces
+are associated with some principal. If the security identity of the
+caller has not been established, the container returns the container’s
+representation of the unauthenticated identity. The container must never
+return a null from the getCallerPrincipal method.
+
+=== Secure Access to Resource Managers
+
+The EJB Container Provider is responsible for
+providing secure access to resource managers
+as described in Subsection link:Ejb.html#a4322[See Container
+Provider Responsibility].
+
+=== Principal Mapping
+
+If the application requires that its clients
+are deployed in a different security domain, or if multiple applications
+deployed across multiple security domains need to interoperate, the EJB
+Container Provider is responsible for the mechanism and tools that allow
+mapping of principals. The tools are used by the System Administrator to
+configure the security for the application’s environment.
+
+=== [[a5425]]System Principal
+
+The EJB specification does not define the
+“system” principal under which the JVM
+running an enterprise bean’s method executes.
+
+Leaving the principal undefined makes it
+easier for the EJB container vendors to provide runtime support for EJB
+on top of their existing server infrastructures. For example, while one
+EJB container implementation can execute all instances of all enterprise
+beans in a single JVM, another implementation can use a separate JVM per
+ejb-jar per client. Some EJB containers may make the system principal
+the same as the application-level principal. Others may use different
+principals, potentially from different principal realms and even
+security domains.
+
+=== Runtime Security Enforcement
+
+The EJB container
+is responsible for enforcing the security policies defined by the
+Deployer. The implementation of the enforcement mechanism is EJB
+container implementation-specific. The EJB container may, but does not
+have to, use the Java programming language security as the enforcement
+mechanism.
+
+For example, to isolate multiple executing
+enterprise bean instances, the EJB container can load the multiple
+instances into the same JVM and isolate them via using multiple class
+loaders, or it can load each instance into its own JVM and rely on the
+address space protection provided by the operating system.
+
+The general security enforcement requirements
+for the EJB container follow:
+
+The EJB container must provide enforcement of
+the client access control per the policy defined by the Deployer. A
+caller is allowed to invoke a method if, and only if, the method is
+specified as _PermitAll_ or the caller is assigned _at least one_ of the
+security roles that includes the method in its method permissions
+definition. (That is, it is not meant that the caller must be assigned
+_all_ the roles associated with the method.) If the container denies a
+client access to a business method, the container should throw the
+_javax.ejb.EJBAccessExceptionlink:#a10330[110]_ . If the EJB 2.1
+client view is used, the container must throw the
+java.rmi.RemoteException (or its subclass,
+the _java.rmi.AccessException_ ) to the client if the client is a remote
+client, or the _javax.ejb.EJBException_  (or
+its subclass, the _javax.ejb.AccessLocalException_ ) if the client is a
+local client.
+
+The EJB container must isolate an enterprise
+bean instance from other instances and other application components
+running on the server. The EJB container must ensure that other
+enterprise bean instances and other application components are allowed
+to access an enterprise bean only via the enterprise bean’s business
+interface, component interface, home interface, no-interface view,
+and/or web service endpoint.
+
+The EJB container must isolate an enterprise
+bean instance at runtime such that the instance does not gain
+unauthorized access to privileged system information. Such information
+includes the internal implementation classes of the container, the
+various runtime state and context maintained by the container, object
+references of other enterprise bean instances, or resource managers used
+by other enterprise bean instances. The EJB container must ensure that
+the interactions between the enterprise beans and the container are only
+through the EJB architected views.
+
+The EJB container must ensure
+the security of the persistent state of the
+enterprise beans.
+
+The EJB container must manage the mapping of
+principals on calls to other enterprise beans or on access to resource
+managers according to the security policy defined by the Deployer.
+
+The container must allow the same enterprise
+bean to be deployed independently multiple times, each time with a
+different security policylink:#a10331[111]. The container must
+allow multiple-deployed enterprise beans to co-exist at runtime.
+
+=== [[a5442]]Audit Trail
+
+The EJB container
+may provide a security audit trail mechanism. A security audit trail
+mechanism typically logs all _java.security.Exceptions_ . It also logs
+all denials of access to EJB servers, EJB containers, EJB business
+interfaces, EJB component interfaces, EJB home interfaces, EJB
+no-interface views, and EJB web service endpoints.
+
+=== System Administrator’s Responsibilities
+
+
+
+This section defines the security-related
+responsibilities of the System Administrator. Note that some
+responsibilities may be carried out by the Deployer instead, or may
+require cooperation of the Deployer and the System Administrator.
+
+=== Security Domain Administration
+
+The System Administrator is responsible for
+the administration of principals. Security
+domain administration is beyond the scope of the EJB specification.
+
+Typically, the System Administrator is
+responsible for creating a new user account, adding a user to a user
+group, removing a user from a user group, and removing or freezing a
+user account.
+
+=== Principal Mapping
+
+If the client is in a different security
+domain than the target enterprise bean, the System Administrator is
+responsible for mapping the principals used by the client to the
+principals defined for the enterprise bean. The result of the mapping is
+available to the Deployer.
+
+The specification of principal mapping
+techniques is beyond the scope of the EJB architecture.
+
+=== Audit Trail Review
+
+If the EJB container provides an
+audit trail facility, the System
+Administrator is responsible for its management.

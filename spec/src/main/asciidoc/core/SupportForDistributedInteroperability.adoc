@@ -1,0 +1,1480 @@
+[[a3308]]
+== Support for Distributed Interoperability
+
+This chapter describes the interoperability
+support for accessing an enterprise bean through the EJB 2.1 remote
+client view from clients distributed over a network, and the distributed
+interoperability requirements for invocations on enterprise beans from
+remote clients that are Java Platform, Enterprise Edition (Java EE)
+components. Distributed Interoperability is not defined for the EJB 3.x
+remote client view.
+
+=== Support for Distribution
+
+
+
+The remote home
+and remote component interfaces of an enterprise bean’s remote client
+view are defined as Java™ RMI [link:Ejb.html#a9855[See Java
+Remote Method Invocation (RMI).
+http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/.]]
+interfaces. This allows the container to implement the remote home and
+remote component interfaces as distributed objects. A client using the
+remote home and remote component interfaces can reside on a different
+machine than the enterprise bean (location transparency), and the object
+references of the remote home and remote component interfaces can be
+passed over the network to other applications.
+
+The EJB
+specification further constrains the Java RMI types that can be used by
+enterprise beans to be legal RMI-IIOP types
+[link:Ejb.html#a9859[See IDL To Java™ Language Mapping
+Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.]]. This
+makes it possible for EJB container implementors to use RMI-IIOP as the
+object distribution protocol.
+
+=== Client-Side Objects in a Distributed Environment
+
+When the RMI-IIOP
+protocol or similar distribution protocols are used, the remote client
+communicates with the enterprise bean using stubs for the server-side
+objects. The stubs implement the remote home and remote component
+interfaces.
+
+===
+
+
+
+Location of EJB Client Stubs.
+
+image:EBCore-23.png[image]
+
+The communication stubs used on the client
+side are artifacts generated at the enterprise bean’s deployment time by
+the Container Provider’s tools. The stubs used on the client are
+specific to the wire protocol used for the remote invocation.
+
+=== Interoperability Overview
+
+
+
+Session beans and
+entitylink:#a10312[93] beans that are deployed in one vendor’s
+server product may need to be accessed from Java EE client components
+that are deployed in another vendor’s product through the remote client
+view. EJB defines a standard interoperability protocol based on
+CORBA/IIOP to address this need.
+
+The
+interoperability protocols described here must be supported by
+compatible EJB products. Additional vendor-specific protocols may also
+be supported.
+
+link:Ejb.html#a3322[See Heterogeneous
+EJB Environment] shows a heterogeneous environment that includes systems
+from several vendors to illustrate the interoperability enabled by EJB.
+
+===
+
+
+
+[[a3322]]Heterogeneous EJB Environment
+
+image:EBCore-24.png[image]
+
+The following sections in this chapter
+
+describe the goals for EJB invocation
+interoperability
+
+provide illustrative scenarios
+
+describe the interoperability requirements
+for remote invocations, transactions, naming, and security.
+
+=== Interoperability Goals
+
+ _The goals of the_
+interoperability _requirements specified in
+this chapter are as follows:_
+
+To allow clients in one application deployed
+in Java EE containers from one Server Provider to access services from
+session and entitylink:Ejb.html#a10313[See Component contract and
+client view of entity beans are described in the EJB Optional Features
+document [40].] beans in another application that is deployed in an EJB
+container from a different Server Provider. For example, web components
+(JavaServer Pages and servlets) that are deployed on a Java EE compliant
+web server provided by one Server Provider must be able to invoke the
+business methods of enterprise beans that are deployed on a Java EE
+compliant EJB server from another Server Provider.
+
+To achieve interoperability without any new
+requirements on the Java EE application developer.
+
+To ensure out-of-the-box interoperability
+between compliant Java EE products. It must be possible for an
+enterprise customer to install multiple Java EE server products from
+different Server Providers (on potentially different operating systems),
+deploy applications in the Java EE servers, and have the multiple
+applications interoperate.
+
+To leverage the interoperability work done by
+standards bodies (including the IETF, W3C, and OMG) where possible, so
+that customers can work with industry standards and use standard
+protocols to access enterprise beans.
+
+This specification does not address
+interoperability issues between enterprise beans and non-Java-EE
+components. The Java EE platform specification
+link:Ejb.html#a9861[See Java™ Platform, Enterprise Edition
+Specification Version 7 (Java EE). http://jcp.org/en/jsr/detail?id=342.]
+and JAX-WS specification link:Ejb.html#a9881[See Java™ API for
+XML-based Web Service, version 2.2 (JAX-WS).
+http://jcp.org/en/jsr/detail?id=224.] describe requirements for
+interoperability with Internet clients (using HTTP and XML) and
+interoperability with enterprise information systems (using the
+Connector architecture link:Ejb.html#a9863[See Java EE™
+Connector Architecture, version 1.7 (Connector).
+http://jcp.org/en/jsr/detail?id=322.]).
+
+Since the interoperability protocol described
+here is based on CORBA/IIOP, CORBA clients written in Java, C++, or
+other languages can also invoke methods on enterprise beans.
+
+This chapter subsumes the previous
+EJB1.1-to-CORBA mapping document link:Ejb.html#a9864[See
+Enterprise JavaBeans™ to CORBA Mapping
+v1.1.http://www.oracle.com/technetwork/java/javaee/ejb/index.html.].
+
+=== [[a3337]]Interoperability Scenarios
+
+
+
+This section
+presents a number of interoperability scenarios that motivate the
+interoperability mechanisms described in later sections of this chapter.
+These scenarios are illustrative rather than prescriptive. This section
+does not specify requirements for a Java EE product to support these
+scenarios in exactly the manner described here.
+
+Java EE applications are multi-tier,
+web-enabled applications. Each application consists of one or more
+components, which are deployed in containers. The four types of
+containers are:
+
+EJB containers, which host enterprise beans.
+
+Web containers, which host JavaServer Pages
+(JSPs) and servlet components as well as static documents, including
+HTML pages.
+
+Application client containers, which host
+standalone applications.
+
+Applet containers, which host applets which
+may be downloaded from a web site. At this time, there is no requirement
+for an applet to be able to directly invoke the remote methods of
+enterprise beans.
+
+The scenarios below describe interactions
+between components hosted in these various container types.
+
+
+
+=== Interactions Between Web Containers and EJB Containers for E-Commerce Applications
+
+This scenario occurs for business-to-business
+and business-to-consumer interactions over the Internet.
+
+ _Scenario 1: A customer wants to buy a book
+from an Internet bookstore. The bookstore’s web site consists of a Java
+EE application containing JSPs that form the presentation layer, and
+another Java EE application containing enterprise beans that have the
+business logic and database access code. The JSPs and enterprise beans
+are deployed in containers from different vendors._
+
+ _At deployment time: The enterprise beans
+are deployed, and their EJBHome objects are published in the EJB
+server’s name service. The Deployer links the EJB reference in the JSP’s
+deployment descriptor to the URL of the enterprise bean’s EJBHome
+object, which can be looked up from the name service. The transaction
+attribute specified in the enterprise bean’s deployment descriptor is
+RequiresNew for all business methods. Because the “checkout” JSP
+requires secure access to set up payments for purchases, the bookstore’s
+administrator configures the “checkout” JSP to require access over HTTPS
+with only server authentication. Customer authentication is done using
+form-based login. The “book search” JSP is accessed over normal HTTP.
+Both JSPs talk with enterprise beans that access the book database. The
+web and EJB containers use the same customer realm and have a trust
+relationship with each other. The network between the web and EJB
+servers is not guaranteed to be secure from attacks._
+
+ _At runtime: The customer accesses the book
+search JSP using a browser. The JSP looks up the enterprise bean’s
+EJBHome object in a name service, and calls findBooks(...) with the
+search criteria as parameters. The web container establishes a secure
+session with the EJB container with mutual authentication between the
+containers, and invokes the enterprise bean. The customer then decides
+to buy a book, and accesses the “checkout” JSP. The customer enters the
+necessary information in the login form, which is used by the web server
+to authenticate the customer. The JSP invokes the enterprise bean to
+update the book and customer databases. The customer’s principal is
+propagated to the EJB container and used for authorization checks. The
+enterprise bean completes the updates and commits the transaction. The
+JSP sends back a confirmation page to the customer._
+
+=== [[a3351]]Interactions Between Application Client Containers and EJB Containers Within an Enterprise’s Intranet
+
+ _Scenario 2.1: An enterprise has an expense
+accounting application used by employees from their desktops. The
+server-side consists of a Java EE application containing enterprise
+beans that are deployed on one vendor's Java EE product, which is hosted
+in a datacenter. The client side consists of another Java EE application
+containing an application client deployed using another vendor's Java EE
+infrastructure. The network between the application client and the EJB
+container is insecure and needs to be protected against spoofing and
+other attacks._
+
+ _At deployment time: The enterprise beans
+are deployed and their EJBHome objects are published in the enterprise’s
+name service. The application clients are configured with the names of
+the EJBHome objects. The Deployer maps employees to roles that are
+allowed access to the enterprise beans. The System Administrator
+configures the security settings of the application client and EJB
+container to use client and server authentication and message
+protection. The System Administrator also does the necessary client-side
+configuration to allow client authentication._
+
+ _At runtime: The employee logs on using
+username and password. The application client container may interact
+with the enterprise’s authentication service infrastructure to set up
+the employee’s credentials. The client application does a remote
+invocation to the name server to look up the enterprise bean’s EJBHome
+object, and creates the enterprise beans. The application client
+container uses a secure transport protocol to interact with the name
+server and EJB server, which does mutual authentication and also
+guarantees the confidentiality and integrity of messages. The employee
+then enters the expense information and submits it. This causes remote
+business methods of the enterprise beans to be invoked. The EJB
+container performs authorization checks and, if they succeed, executes
+the business methods._
+
+ _Scenario 2.2: This is the same as Scenario
+2.1, except that there is no client-side authentication infrastructure
+set up by the System Administrator which can authenticate at the
+transport protocol layer. At runtime the client container needs to send
+the user’s password to the server during the method invocation to
+authenticate the employee._
+
+=== [[a3356]]Interactions Between Two EJB Containers in an Enterprise’s Intranet
+
+ _Scenario 3: An enterprise has an expense
+accounting application which needs to communicate with a payroll
+application. The applications use enterprise beans and are deployed on
+Java EE servers from different vendors. The Java EE servers and
+naming/authentication services may be in the enterprise's datacenter
+with a physically secure private network between them, or they may need
+to communicate across the intranet, which may be less secure. The
+applications need to update accounts and payroll databases. The employee
+(client) accesses the expense accounting application as described in
+Scenario 2._
+
+ _At deployment time: The Deployer configures
+both applications with the appropriate database resources. The accounts
+application is configured with the name of the EJBHome object of the
+payroll application. The payroll bean’s deployment descriptor specifies
+the RequiresNew transaction attribute for all methods. The applications
+use the same principal-to-role mappings (e.g. the roles may be Employee,
+PayrollDept, AccountsDept). The Deployer of these two applications has
+administratively set up a trust relationship between the two EJB
+containers, so that the containers do not need to authenticate
+principals propagated on calls to enterprise beans from the other
+container. The System Administrator also sets up the message protection
+parameters of the two containers if the network is not physically
+secure._
+
+ _At runtime: An employee makes a request to
+the accounts application which requires it to access the payroll
+application. The accounts application does a lookup of the payroll
+application’s EJBHome object in the naming/directory service and creates
+enterprise beans. It updates the accounts database and invokes a remote
+method of the payroll bean. The accounts bean’s container propagates the
+employee’s principal on the method call. The payroll bean’s container
+maps the propagated employee principal to a role, does authorization
+checks, and sets up the payroll bean’s transaction context. The
+container starts a new transaction, then the payroll bean updates the
+payroll database, and the container commits the transaction. The
+accounts bean receives a status reply from the payroll bean. If an error
+occurs in the payroll bean, the accounts bean executes code to recover
+from the error and restore the databases to a consistent state._
+
+=== Intranet Application Interactions Between Web Containers and EJB Containers
+
+ _Scenario 4: This is the same as scenario
+2.1, except that instead of using a “fat-client” desktop application to
+access the enterprise’s expense accounting application, employees use a
+web browser and connect to a web server in the intranet that hosts JSPs.
+The JSPs gather input from the user (e.g., through an HTML form), invoke
+enterprise beans that contain the actual business logic, and format the
+results returned by the enterprise beans (using HTML)._
+
+ _At deployment time: The enterprise Deployer
+configures its expense accounting JSPs to require access over HTTPS with
+mutual authentication. The web and EJB containers use the same customer
+realm and have a trust relationship with each other._
+
+ _At run-time:
+The employee logs in to the client desktop, starts the browser, and
+accesses the expense accounting JSP. The browser establishes an HTTPS
+session with the web server. Client authentication is performed (for
+example) using the employee’s credentials which have been established by
+the operating system at login time (the browser interacts with the
+operating system to obtain the employee’s credentials). The JSP looks up
+the enterprise bean’s EJBHome object in a name service. The web
+container establishes a secure session with the EJB container with
+mutual authentication and integrity/confidentiality protection between
+the containers, and invokes methods on the enterprise beans._
+
+=== [[a3364]]Overview of Interoperability Requirements
+
+
+
+The
+interoperability requirements used to
+support the above scenarios are:
+
+ Remote method invocation on an enterprise
+bean’s EJBObject and EJBHome object references (scenarios 1,2,3,4),
+described in section link:Ejb.html#a3376[See Remote Invocation
+Interoperability].
+
+ Name service lookup of the enterprise bean’s
+EJBHome object (scenarios 1,2,3,4), described in section
+link:Ejb.html#a3504[See Naming Interoperability].
+
+Integrity and confidentiality protection of
+messages (scenarios 1,2,3,4), described in section
+link:Ejb.html#a3517[See Security Interoperability].
+
+Authentication between an application client
+and EJB container (described in section link:Ejb.html#a3517[See
+Security Interoperability]):
+
+Mutual authentication at the transport
+protocol layer when there is client-side authentication infrastructure
+such as certificates (scenario 2.1).
+
+Transfer of the user’s authentication data
+from application client to EJB container to allow the EJB container to
+authenticate the client when there is no client-side authentication
+infrastructure (scenario 2.2).
+
+ Mutual authentication between two EJB
+containers or between a web and EJB container to establish trust before
+principals are propagated (scenarios 1,3,4), described in section
+link:Ejb.html#a3517[See Security Interoperability].
+
+ Propagation of the Internet or intranet
+user’s principal name for invocations on enterprise beans from web or
+EJB containers when the client and server containers have a trust
+relationship (scenarios 1,3,4), described in section
+link:Ejb.html#a3517[See Security Interoperability].
+
+EJB, web, and application client containers
+must support the above requirements separately as well as in
+combinations.
+
+=== [[a3376]]Remote Invocation Interoperability
+
+
+
+This section
+describes the interoperability mechanisms that enable remote invocations
+on EJBObject and EJBHome object references when client containers and
+EJB containers are provided by different vendors. This is needed to
+satisfy interoperability requirement (1) in section
+link:Ejb.html#a3364[See Overview of Interoperability
+Requirements].
+
+All EJB, web, and
+application client containers must support the IIOP 1.2 protocol for
+remote invocations on EJBObject and EJBHome references. EJB containers
+must be capable of servicing IIOP 1.2 based invocations on EJBObject and
+EJBHome objects. IIOP 1.2 is part of the CORBA 2.3.1 specification
+link:Ejb.html#a9865[See CORBA 2.3.1 Specification.
+http://www.omg.org/cgi-bin/doc?formal/99-10-07.] from the
+OMGlink:#a10314[94]. Containers may additionally support
+vendor-specific protocols.
+
+CORBA Interoperable Object References (IORs)
+for EJBObject and EJBHome object references must include the GIOP
+version number 1.2. The IIOP infrastructure in all Java EE containers
+must be able to accept fragmented GIOP messages, although sending
+fragmented messages is optional. Bidirectional GIOP messages may
+optionally be supported by Java EE clients and servers: if a Java EE
+server receives an IIOP message from a client which contains the
+_BiDirIIOPServiceContext_ structure, it may or may not use the same
+connection for sending requests back to the client.
+
+Since Java applications use Unicode
+characters by default, Java EE containers are required to support the
+Unicode UTF16 code set for transmission of character and string data (in
+the IDL _wchar_ and _wstring_ datatypes). Java EE containers may
+optionally support additional code sets. EJBObject and EJBHome IORs must
+have the _TAG_CODE_SETS_ tagged component which declares the codesets
+supported by the EJB container. IIOP messages which include _wchar_ and
+_wstring_ datatypes must have the code sets service context field. The
+CORBA 2.3.1 requirements for code set support must be followed by Java
+EE containers.
+
+EJB containers are required to translate Java
+types to their on-the-wire representation in IIOP messages using the
+Java Language to IDL mapping specification
+link:Ejb.html#a9859[See IDL To Java™ Language Mapping
+Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.] with the
+wire formats for IDL types as described in the GIOP specification in
+CORBA 2.3. The following subsections describe the mapping details for
+Java types.
+
+=== Mapping Java Remote Interfaces to IDL
+
+The Java Language to IDL Mapping
+specification link:Ejb.html#a9859[See IDL To Java™ Language
+Mapping Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.]
+describes precisely how the remote home and remote component interfaces
+of a session bean or an entity beanlink:#a10315[95] are mapped to
+IDL. This mapping to IDL is typically implicit when Java RMI over IIOP
+is used to invoke enterprise beans. Java EE clients use only the Java
+RMI APIs to invoke enterprise beans. The client container may use the
+CORBA portable Stub APIs for the client-side stubs. EJB containers may
+create CORBA Tie objects for each EJBObject or EJBHome object.
+
+=== Mapping Value Objects to IDL
+
+The Java
+interfaces that are passed by value during remote invocations on
+enterprise beans are _javax.ejb.Handle_ , _javax.ejb.HomeHandle_ , and
+_javax.ejb.EJBMetaData_ . There may also be application-specific value
+types that are passed as parameters or return values on enterprise bean
+invocations. In addition, several Java exception classes that are thrown
+by remote methods also result in concrete IDL value types. All these
+value types are mapped to IDL abstract value types or abstract
+interfaces using the rules in the Java Language to IDL Mapping.
+
+=== Mapping of System Exceptions
+
+Java system
+exceptions, including the _java.rmi.RemoteException_ and its subclasses,
+may be thrown by the EJB container. If the client’s invocation was made
+over IIOP, the EJB server is required to map these exceptions to CORBA
+system exceptions and send them in the IIOP reply message to the client,
+as specified in the following table
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|System exception thrown by EJB container
+|CORBA system exception received by client
+ORB
+|javax.transaction.TransactionRolledbackException
+|TRANSACTION_ROLLEDBACK
+
+|javax.transaction.TransactionRequiredException
+|TRANSACTION_REQUIRED
+
+|javax.transaction.InvalidTransactionException
+|INVALID_TRANSACTION
+
+|java.rmi.NoSuchObjectException
+|OBJECT_NOT_EXIST
+
+|java.rmi.AccessException
+|NO_PERMISSION
+
+|java.rmi.MarshalException
+|MARSHAL
+
+|java.rmi.RemoteException
+|UNKNOWN
+|===
+
+For EJB clients, the ORB’s unmarshaling
+machinery maps CORBA system exceptions received in the IIOP reply
+message to the appropriate Java exception as specified in the Java
+Language to IDL mapping. This results in the original Java exception
+being received by the client Java EE component.
+
+=== Obtaining Stub and Client View Classes
+
+When a Java EE
+component (application client, JSP, servlet or enterprise bean) receives
+a reference to an EJBObject or EJBHome object through JNDI lookup or as
+a parameter or return value of an invocation on an enterprise bean, an
+instance of an RMI-IIOP stub class (proxy) for the enterprise bean’s
+remote home or remote RMI interface needs to be created. When a
+component receives a value object as a parameter or return value of an
+enterprise bean invocation, an instance of the value class needs to be
+created. The stub class, value class, and other client view classes must
+be available to the referencing container (the container hosting the
+component that receives the reference or value type).
+
+The client view
+classes, including application value classes, must be packaged with the
+referencing component’s application, as described in
+link:Ejb.html#a9306[See Packaging Requirements].
+
+Stubs for invoking on EJBHome and EJBObject
+references must be provided by the referencing container, for example,
+by generating stub classes at deployment time for the EJBHome and
+EJBObject interfaces of the referenced beans that are packaged with the
+referencing component’s application. Stub classes may or may not follow
+the standard RMI-IIOP portable stub architecture.
+
+Containers may optionally support run-time
+downloading of stub and value classes needed by the referencing
+container. The CORBA 2.3.1 specification and the Java Language to IDL
+Mapping specify how stub and value type implementations are to be
+downloaded: using codebase URLs that are either embedded in the
+EJBObject or EJBHome’s IOR, or sent in the IIOP message service context,
+or marshalled with the value type. The URLs for downloading may
+optionally include an HTTPS URL for secure downloading.
+
+=== [[a3410]]System Value Classes
+
+System value
+classes are serializable value classes
+implementing the javax.ejb.Handle, javax.ejb.HomeHandle,
+javax.ejb.EJBMetaData, java.util.Enumeration, java.util.Collection, and
+java.util.Iterator interfaces. These value classes are provided by the
+EJB container vendor. They must be provided in the form of a JAR file by
+the container hosting the referenced bean. For interoperability
+scenarios, if a referencing component would use such
+system value classes at runtime, the
+Deployer must ensure that these system value classes provided by the
+container hosting the referenced bean are available to the referencing
+component. This may be done, for example, by including these system
+value classes in the classpath of the referencing container, or by
+deploying the system value classes with the referencing component’s
+application by providing them to the deployment tool.
+
+Implementations of these system value classes
+must be portable (they must use only J2SE and Java EE APIs) so that they
+can be instantiated in another vendor’s container. If the system value
+class implementation needs to load application-specific classes (such as
+remote home or remote component interfaces) at runtime, it must use the
+thread context class loader. The referencing container must make
+application-specific classes available to the system value class
+instance at runtime through the thread context class loader.
+
+=== HandleDelegate SPI
+
+The
+javax.ejb.spi.HandleDelegate service
+provider interface defines methods that enable portable implementations
+of _Handle_ and _HomeHandle_ that are instantiated in a different
+vendor’s container to serialize and deserialize EJBObject and EJBHome
+references. The _HandleDelegate_ interface is not used by enterprise
+beans or Java EE application components directly.
+
+EJB, web and application client containers
+must provide implementations of the _HandleDelegate_ interface. The
+HandleDelegate object must be accessible in the client Java EE
+component’s JNDI namespace at the reserved name “
+_java:comp/HandleDelegate_ ”. The HandleDelegate object is not exported
+outside the container that provides it.
+
+Portable implementations of _Handle_
+ and _HomeHandle_
+ must look up the HandleDelegate object of
+the container in which they are instantiated using JNDI at the name “
+_java:comp/HandleDelegate_ ” and use the HandleDelegate object to
+serialize and deserialize EJBObject and EJBHome references as follows:
+
+Handle and HomeHandle implementation classes
+must define writeObject and readObject methods to control their
+serialization and deserialization. These methods must not wrap or
+substitute the stream objects that are passed to the HandleDelegate
+methods.
+
+The writeObject method of Handle
+implementations must call HandleDelegate.writeEJBObject with the
+Handle’s EJBObject reference and the serialization output stream object
+as parameters. The HandleDelegate implementation (which is provided by
+the client container in which the Handle was instantiated, potentially
+from a different vendor) then writes the EJBObject to the output stream.
+If the output stream corresponds to an IIOP message, the HandleDelegate
+must use the standard IIOP abstract interface format for writing the
+EJBObject reference.
+
+The readObject method of Handle
+implementations must call HandleDelegate.readEJBObject with the
+serialization input stream object as parameter, and with the stream
+positioned at the location where the EJBObject can be read. The
+HandleDelegate implementation then reads the EJBObject from the input
+stream and returns it to the Handle. If the input stream corresponds to
+an IIOP message, the HandleDelegate must use the standard abstract
+interface format for reading the EJBObject reference. The HandleDelegate
+must ensure that the EJBObject reference is capable of performing
+invocations immediately after deserialization. The Handle maintains a
+reference to the EJBObject as a transient instance variable and returns
+it when the Java EE component calls Handle.getEJBObject.
+
+The writeObject and readObject methods of
+HomeHandle implementation classes must be implemented similarly, by
+using HandleDelegate.writeEJBHome and HandleDelegate.readEJBHome
+respectively.
+
+===  _Transaction Interoperability_
+
+
+
+ _Transaction interoperability between
+containers provided by different vendors is an optional feature in this
+version of the EJB specification. Vendors may choose to not implement
+transaction interoperability. However, vendors who choose to implement
+transaction interoperability must follow the requirements in sections
+link:Ejb.html#a3429[See Transaction Interoperability
+Requirements] and link:Ejb.html#a3452[See Interoperating with
+Containers that do not Implement Transaction Interoperability], and
+vendors who choose not to_ implement
+transaction interoperability _must follow the requirements in section
+link:Ejb.html#a3452[See Interoperating with Containers that do
+not Implement Transaction Interoperability]._
+
+=== [[a3429]]Transaction Interoperability Requirements
+
+ _A distributed transaction started by a web
+or EJB container must be able to propagate in a remote invocation to an
+enterprise bean in an EJB container provided by a different vendor, and
+the containers must participate in the distributed two-phase commit
+protocol._
+
+=== Transaction Context Wire Format
+
+ _Transaction context propagation from client
+to EJB container uses the implicit propagation mechanism described in
+the_ CORBA Object Transaction Service (OTS)
+v1.2 specification link:Ejb.html#a9860[See Transaction Service
+Specification (OTS). http://www.omg.org/cgi-bin/doc?ptc/2001-11-03.].
+
+ _The transaction context format in IIOP
+messages is specified in the_ _CosTransactions::PropagationContext_
+_structure described in the OTS specification. EJB containers that
+support transaction interoperability are required to be capable of
+producing and consuming transaction contexts in IIOP messages in the
+format described in the OTS specification. Web containers_ that support
+transaction interoperability _are required to include client-side
+libraries which can produce the OTS transaction context for sending over
+IIOP._
+
+Note that it is not necessary for containers
+to include the Java mappings of the OTS APIs. A container may implement
+the requirements in the OTS specification in any manner, for example
+using a non-Java OTS implementation, or an on-the-wire bridge between an
+existing transaction manager and the OTS protocol, or an OTS wrapper
+around an existing transaction manager.
+
+ _The_ _CosTransactions::PropagationContext_
+_structure must be included in IIOP messages sent by web or EJB
+containers when required by the rules described in the OTS 1.2
+specification. The target EJB container must process IIOP invocations
+based on the transaction policies of EJBObject or EJBHome references
+using the rules described in the_ OTS 1.2 specification
+link:Ejb.html#a9860[See Transaction Service Specification (OTS).
+http://www.omg.org/cgi-bin/doc?ptc/2001-11-03.].
+
+=== Two-Phase Commit Protocol
+
+The object
+interaction diagram in link:Ejb.html#a3440[See Transaction
+Context Propagation] illustrates the interactions between the client and
+server transaction managers for transaction context propagation,
+resource and synchronization object registration, and two-phase commit.
+This diagram is an example of the interactions between the various
+entities; it is not intended to be prescriptive.
+
+===
+
+
+
+[[a3440]]Transaction Context Propagation
+
+image:EBCore-25.png[image]
+
+ _Containers that perform transactional work
+within the scope of a transaction must register an OTS Resource object
+with the transaction coordinator whose object reference is included in
+the propagated transaction context (step 3), and may also register an
+OTS Synchronization object (step 2). If the server container does not
+register an OTS Synchronization object, it must still ensure that the
+beforeCompletion method of session beans and ejbStore method of entity
+beanslink:#a10316[96] are called with the proper transaction
+context. Containers must participate in the two-phase commit and
+recovery procedures performed by the transaction coordinator /
+terminator (steps 6,7), as described by the OTS specification._
+
+Compliant Java EE containers must not use
+nested transactions in interoperability scenarios.
+
+=== [[a3443]]Transactional Policies of Enterprise Bean References
+
+The OTS1.2
+specification describes the _CosTransactions::OTSPolicy_ and
+_CosTransactions::InvocationPolicy_ structures that are encoded in IORs
+as tagged components. EJBObject and EJBHome references must contain
+these tagged componentslink:#a10317[97] with policy values as
+described below.
+
+The transaction attributes of enterprise
+beans can be specified per method, while in OTS the entire CORBA object
+has the same OTS transaction policy. The rules below ensure that the
+transaction context will be propagated if any method of an enterprise
+bean needs to execute in the client’s transaction context. However, in
+some cases there may be extra performance overhead of propagating the
+client’s transaction context even if it will not be used by the
+enterprise bean method.
+
+EJBObject and EJBHome references may have the
+InvocationPolicy value as either _CosTransactions::SHARED_ or
+_CosTransactions::EITHER_ link:#a10318[98].
+
+All EJBObject and EJBHome references must
+have the OTSPolicy value as _CosTransactions::ADAPTS_ . This is
+necessary to allow clients to invoke methods of the
+_javax.ejb.EJBObject_ and _javax.ejb.EJBHome_ with or without a
+transaction.
+
+The _CosTransactions::Synchronization_ object
+registered by the EJB container with the transaction coordinator should
+have the OTSPolicy value _CosTransactions::ADAPTS_ and InvocationPolicy
+value _CosTransactions::SHARED_ to allow enterprise beans to do
+transactional work during the _beforeCompletion_ notification from the
+transaction coordinator.
+
+===  _Exception Handling Behavior_
+
+ _The exception handling behavior described
+in the OTS1.2 specification must be followed. In particular, if an
+application exception (an exception which is not a CORBA system
+exception and does not extend_
+_java.rmi.RemoteException_ _) is returned by the server, the request is
+defined as being successful; hence the client-side OTS library must not
+roll back the transaction. This allows application exceptions to be
+propagated back to the client without rolling back the transaction, as
+required by the exception handling rules in
+link:Ejb.html#a2940[See Exception Handling]._
+
+=== [[a3452]]Interoperating with Containers that do not Implement Transaction Interoperability
+
+The requirements
+in this subsection are designed to ensure that when a Java EE container
+does not support transaction interoperability, the failure modes are
+well defined so that the integrity of an application’s data is not
+compromised: at worst the transaction is rolled back. When a Java EE
+client component expects the client’s transaction to propagate to the
+enterprise bean but the client or EJB container cannot satisfy this
+expectation, a _java.rmi.RemoteException_ or subclass is thrown, which
+ensures that the client’s transaction will roll back.
+
+In addition, the requirements below allow a
+container that does not support transaction propagation to interoperate
+with a container that does support transaction propagation in the cases
+where the enterprise bean method’s transaction attribute indicates that
+the method would not be executed in the client’s transaction.
+
+=== [[a3455]]Client Container Requirements
+
+If the client in
+another container invokes an enterprise bean’s method when there is no
+active global transaction associated with the client’s thread, the
+client container does not include a transaction context in the IIOP
+request message to the EJB server, i.e., there is no
+_CosTransactions::PropagationContext_ structure in the IIOP request
+header.
+
+The client application component expects a
+global transaction to be propagated to the server only if the client’s
+thread has an active global transaction. In this scenario, if the client
+container does not support transaction interoperability, it has two
+options:
+
+If the client container does not support
+transaction propagation or uses a non-OTS protocol, it must include the
+OTS _CosTransactions::PropagationContext_ structure in the IIOP request
+to the server (step 1 in the object interaction diagram above), with the
+_CosTransactions::Coordinator_ and _CosTransactions::Terminator_ object
+references as null. The remaining fields in this “null transaction
+context,” such as the transaction identifier, are not interpreted and
+may have any value. The “null transaction context” indicates that there
+is a global client transaction active but the client container is not
+capable of propagating it to the server. The presence of this “null
+transaction context” allows the EJB container to determine whether the
+Java EE client component expects the client’s global transaction to
+propagate to the server.
+
+Client containers that use the OTS
+transaction context format but still do not support transaction
+interoperability with other vendor’s containers must reject the
+_Coordinator::register_resource_ call (step 3 in the object interaction
+diagram above) by throwing a CORBA system exception if the server’s
+Resource object reference indicates that it belongs to another vendor’s
+container.
+
+=== EJB container requirements
+
+All EJB
+containers (including those that do not support transaction propagation)
+must include the _CosTransactions::OTSPolicy_ and optionally the
+_CosTransactions::InvocationPolicy_ tagged component in the IOR for
+EJBObject and EJBHome references as described in section
+link:Ejb.html#a3443[See Transactional Policies of Enterprise
+Bean References].
+
+=== Requirements for EJB Containers Supporting Transaction Interoperability
+
+When an EJB container that supports
+transaction propagation receives the IIOP
+request message, it must behave as follows:
+
+If there is no
+OTS transaction context in the IIOP message,
+the container must follow the behavior described in
+link:Ejb.html#a2695[See Container Provider Responsibilities].
+
+If there is a valid, complete OTS transaction
+context in the IIOP message, the container must follow the behavior
+described in link:Ejb.html#a2695[See Container Provider
+Responsibilities].
+
+If there is a null transaction context (as
+defined in section link:Ejb.html#a3455[See Client Container
+Requirements] above) in the IIOP message, the container’s required
+behavior is described in the table below. The entry “throw
+RemoteException” indicates that the EJB container must throw the
+_java.rmi.RemoteException_ to the client after the “received request”
+interaction with the server’s transaction manager (after step 1 in the
+object interaction diagram above).
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+a|
+EJB method’s
+
+Transaction Attribute
+
+a|
+EJB container behavior on receiving
+
+null OTS transaction context
+
+|Mandatory |throw
+RemoteException
+
+|Required |throw
+RemoteException
+
+|RequiresNew
+|follow link:Ejb.html#a2695[See
+Container Provider Responsibilities]
+
+|Supports |throw
+RemoteException
+
+|NotSupported
+|follow link:Ejb.html#a2695[See
+Container Provider Responsibilities]
+
+|Never |follow
+link:Ejb.html#a2695[See Container Provider Responsibilities]
+
+|Bean Managed
+|follow link:Ejb.html#a2695[See
+Container Provider Responsibilities]
+|===
+
+=== Requirements for EJB Containers not Supporting Transaction Interoperability
+
+When an EJB container that does not support
+transaction interoperability receives the
+IIOP request message, it must behave as follows:
+
+If there is no OTS transaction context in the
+IIOP message, the container must follow the behavior described in
+link:Ejb.html#a2695[See Container Provider Responsibilities].
+
+If there is a valid, complete OTS transaction
+context in the IIOP message, the container’s required behavior is
+described in the table below.
+
+If there is a null transaction context (as
+defined in section link:Ejb.html#a3455[See Client Container
+Requirements]) in the IIOP message, the container’s required behavior is
+described in the table below. Note that the container may not know
+whether the received transaction context in the IIOP message is valid or
+null.
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+a|
+EJB method’s
+
+Transaction Attribute
+
+a|
+EJB container behavior on receiving
+
+null or valid OTS transaction context
+
+|Mandatory |throw
+RemoteException
+
+|Required |throw
+RemoteException
+
+|RequiresNew
+|follow link:Ejb.html#a2695[See
+Container Provider Responsibilities]
+
+|Supports |throw
+RemoteException
+
+|NotSupported
+|follow link:Ejb.html#a2695[See
+Container Provider Responsibilities]
+
+|Never |follow
+link:Ejb.html#a2695[See Container Provider Responsibilities]
+
+|Bean Managed
+|follow link:Ejb.html#a2695[See
+Container Provider Responsibilities]
+|===
+
+EJB containers that accept the OTS
+transaction context format but still do not support interoperability
+with other vendors’ client containers must follow the column in the
+table above for “null or valid OTS transaction context” if the
+transaction identity or the Coordinator object reference in the
+propagated client transaction context indicate that the client belongs
+to a different vendor’s container.
+
+===  _Naming Interoperability_ [[a3504]]
+
+
+
+ _This section describes the requirements for
+supporting interoperable access to naming services for looking up
+EJBHome object references_ (interoperability
+requirement two in section link:Ejb.html#a3364[See Overview of
+Interoperability Requirements]) _._
+
+ _EJB containers are required to be able to
+publish EJBHome object references in a CORBA CosNaming service
+link:Ejb.html#a9866[See CORBA Naming Service.
+http://www.omg.org/spec/NAM/.]. The CosNaming service must implement the
+IDL interfaces in the CosNaming module defined in
+link:Ejb.html#a9866[See CORBA Naming Service.
+http://www.omg.org/spec/NAM/.] and allow clients to invoke the_
+ _resolve_ _and_ _list_ _operations over
+IIOP._
+
+ _The CosNaming service must follow the
+requirements in the CORBA Interoperable Name Service specification
+link:Ejb.html#a9867[See Interoperable Name Service FTF document.
+http://www.omg.org/cgi-bin/doc?ptc/00-08-07.] for providing the host,
+port, and object key for its root_ _NamingContext_ _object. The
+CosNaming service must be able to service IIOP invocations on the root_
+_NamingContext_ _at the advertised host, port, and object key._
+
+ _Client containers_ (i.e., EJB, web, or
+application client containers) _are required to include a JNDI CosNaming
+service provider that uses the mechanisms defined in the_ Interoperable
+Name Service specification _to contact the server’s CosNaming service,
+and to resolve the EJBHome object using standard CosNaming APIs. The
+JNDI CosNaming service provider may or may not use the JNDI SPI
+architecture. The JNDI CosNaming service provider must access the_ root
+NamingContext _of the server’s CosNaming service by creating an object
+reference from the URL_ _corbaloc:iiop:1.2@<host>:<port>/<objectkey>_
+_(where_ _<host>_ _,_ _<port>_ , and _<objectkey>_ _are the values
+corresponding to the root NamingContext advertised by the server’s
+CosNaming service), or by using an equivalent mechanism._
+
+At deployment time, the Deployer of the
+client container should obtain the host, port and object key of the
+server’s CosNaming service and the CosNaming name of the server EJBHome
+object (e.g. by browsing the server’s namespace) for each such _EJB_
+annotation or _ejb-ref_ element in the client component’s deployment
+descriptor. The _ejb-ref-name_ (which is used by the client code in the
+JNDI lookup call) should then be linked to the EJBHome object’s
+CosNaming name. At run-time, the client component’s JNDI lookup call
+uses the CosNaming service provider, which contacts the server’s
+CosNaming service, resolves the CosNaming name, and returns the EJBHome
+object reference to the client component.
+
+Since the EJBHome object’s name is scoped
+within the namespace of the CosNaming service that is accessible at the
+provided host and port, it is not necessary to federate the namespaces
+of the client and server containers.
+
+ _The advantage of using CosNaming is better
+integration with the IIOP infrastructure that is already required for
+interoperability, as well as interoperability with non-Java-EE CORBA
+clients and servers. Since CosNaming stores only CORBA objects it is
+likely that vendors will use other enterprise directory services for
+storing other resources._
+
+
+ _Security of CosNaming service access is
+achieved using the security interoperability protocol described in
+link:Ejb.html#a3517[See Security Interoperability]. The
+CosNaming service must support this protocol. Clients which construct
+the root NamingContext object reference from a URL should send an IIOP_
+ _LocateRequest_ _message to the CosNaming
+service to obtain the complete IOR (with SSL information) of the root
+NamingContext, and then initiate an SSL session with the CosNaming
+service, as determined by the client policy._
+
+=== [[a3517]]Security Interoperability
+
+
+
+This section
+describes the interoperable mechanisms that support secure invocations
+on enterprise beans in intranets. These mechanisms are based on the
+CORBA/IIOP protocol.
+
+ _EJB containers are required to follow the
+protocol rules prescribed by the CSIv2 specification_ Conformance Level
+0 _._
+
+=== Introduction
+
+The goal of the secure invocation mechanisms
+is to support the interoperability requirements described earlier in
+this chapter, as well as be capable of supporting security technologies
+that are expected to be widely deployed in enterprises, including
+Kerberos-based secret key mechanisms and X.509 certificate-based public
+key mechanisms.
+
+The
+authentication identity (i.e. principal) associated with a Java EE
+component is usually that of the user on whose behalf the component is
+executinglink:#a10319[99]. The principal under which an
+enterprise bean invocation is performed is either that of the bean’s
+caller or the run-as principal which was configured by the Deployer.
+When there is a chain of invocations across a web component and
+enterprise beans, an intermediate component may use the principal of the
+caller (the initiating client) or the intermediate component may use its
+run-as principal to perform an invocation on the callee, depending on
+the security identity specified for the intermediate component in its
+deployment descriptor.
+
+The security principal associated with a
+container depends on the type of container. Application client
+containers usually do not have a separate principal associated with them
+(they operate under the user’s principal). Web and EJB containers are
+typically associated with a security principal of their own (e.g., the
+operating system user for the container’s process) which may be
+configured by the System Administrator at deployment time. When the
+client is a web or EJB container, the difference between the client
+component’s principal and the client container’s principal is
+significant for interoperability considerations.
+
+=== Trust Relationships Between Containers, Principal Propagation
+
+
+
+image:EBCore-26.png[image]
+
+When there is a chain of multiple invocations
+across web components and enterprise beans, intermediate components may
+not have access to the authentication data of the initiating client to
+provide proof of the client’s identity to the target. In such cases, the
+target’s authentication requirements can be satisfied if the target
+container trusts the intermediate container to vouch for the
+authenticity of the propagated principal. The call is made using the
+intermediate container’s principal and authentication data, while also
+carrying the propagated principal of the initiating client. The
+invocation on the target enterprise bean is authorized and performed
+using the propagated principal. This procedure also avoids the overhead
+associated with authentication of clients on every remote invocation in
+a chain.
+
+EJB containers are required to provide the
+Deployer or Administrator with the tools to configure
+trust relationships for interactions with
+intermediate web or EJB containerslink:#a10320[100]. If a trust
+relationship is set up, the containers are usually configured to perform
+mutual authentication, unless the security of the network can be ensured
+by some physical means. If the network is physically secure, the target
+EJB container may be configured to trust all client containers. After a
+trust relationship is set up, the target EJB container does not need to
+independently authenticate the initiating client principal sent by the
+intermediate container on invocations. Thus only the principal name of
+the initiating client (which may include a realm) needs to be
+propagated. After a trust relationship has been established, the target
+EJB container must be able to accept invocations carrying only the
+principal name of the initiating client.
+
+For the current interoperability needs of
+Java EE, it is assumed that trust
+relationships are transitive, such that if a target container trusts an
+intermediate container, it implicitly trusts all containers trusted by
+the intermediate container.
+
+If no trust relationship has been set up
+between a target EJB container and an intermediate web or EJB container,
+the target container must not accept
+principals propagated from that intermediate
+container, hence the target container needs to have access to and
+independently verify the initiating client principal’s authentication
+data.
+
+Web and EJB containers are required to
+support caller propagation mode (where the
+initiating client’s principal is propagated down the chain of calls on
+enterprise beans) and run-as mode (where the web/EJB component’s run-as
+identity is propagated). This is needed for scenarios 1, 3 and 4 where
+the internet or intranet user’s principal needs to be propagated to the
+target EJB container.
+
+=== Application Client Authentication
+
+Application
+client containers that have authentication infrastructure (such as
+certificates, Kerberos) can:
+
+authenticate the user by interacting with an
+authentication service (e.g. the Kerberos
+KDC) in the enterprise
+
+inherit an authentication context which was
+established at system login time from the operating system process, or
+
+obtain the user’s
+certificate from a client-side store.
+
+These may be
+achieved by plugging in a Java
+Authentication and Authorization Service (JAAS) login module for the
+particular authentication service. After authentication is completed, a
+credential is associated with the client’s thread of execution, which is
+used for all invocations on enterprise beans made from that thread.
+
+If there is no authentication infrastructure
+installed in the client’s environment, or the authentication
+infrastructure is not capable of authenticating at the transport
+protocol layer, the client may send its private credentials (e.g.
+password) over a secure connection to the EJB server, which
+authenticates the user by interacting with an authentication service
+(e.g. a secure user/password database). This is similar to the basic
+authentication feature of HTTP.
+
+=== Securing EJB Invocations
+
+This subsection
+describes the interoperable protocol requirements for providing
+authentication, protection of integrity and confidentiality, and
+principal propagation for invocations on enterprise beans. The
+invocation takes place over an enterprise’s intranet as described in the
+scenarios in section link:Ejb.html#a3337[See Interoperability
+Scenarios]. Since EJB invocations use the IIOP protocol, we need to
+secure IIOP messages between client and server containers. The client
+container may be any of the Java EE containers; the server container is
+an EJB container.
+
+The secure
+interoperability requirements for EJB 2.0 (and later) and other J2EE 1.3
+(and later) containers are based on Conformance Level 0 of the Common
+Secure Interoperability version 2 (CSIv2) Final Available specification
+link:Ejb.html#a9871[See Common Secure Interoperability Version 2
+Final Available Specification.
+http://www.omg.org/cgi-bin/doc?ptc/2001-06-17.], which was developed by
+the OMG. EJB, web, and application client containers must support all
+requirements of Conformance Level 0 of the CSIv2 specification. The
+following subsections describe how the CSIv2 features are used to
+realize the scenarios described in section
+link:Ejb.html#a3337[See Interoperability Scenarios].
+
+=== Secure Transport Protocol
+
+The Secure
+Sockets Layer (SSL 3.0) protocol link:Ejb.html#a9870[See The SSL
+Protocol Version 3.0. http://tools.ietf.org/html/rfc6101.] and the
+related IETF standard Transport Layer
+Security (TLS 1.0) protocol link:Ejb.html#a9868[See RFC 2246:
+The TLS Protocol. ftp://ftp.isi.edu/in-notes/rfc2246.txt.] provide
+authentication and message protection (that is, integrity and/or
+confidentiality) at the transport layer. The original SSL and TLS
+specifications supported only X.509 certificates for authenticating
+principals. Recently, Kerberos-based authentication mechanisms and
+cipher suites have been defined for TLS (RFC 2712
+_link:Ejb.html#a9869[See RFC 2712: Addition of Kerberos Cipher
+Suites to Transport Layer Security.
+ftp://ftp.isi.edu/in-notes/rfc2712.txt.]). Thus the TLS specification is
+capable of supporting the two main security technologies that are
+expected to be widely deployed in enterprises._
+
+EJB, web and application client containers
+are required to support both SSL 3.0 and TLS 1.0 as security protocols
+for IIOP. This satisfies interoperability requirement 3 in section
+link:Ejb.html#a3364[See Overview of Interoperability
+Requirements]. Compliant containers must be capable of using the
+following public key SSL/TLS ciphersuites
+based on policies set by the System Administrator:
+
+TLS_RSA_WITH_RC4_128_MD5
+
+SSL_RSA_WITH_RC4_128_MD5
+
+{empty}TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHAlink:#a10321[101]
+
+SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+
+TLS_RSA_EXPORT_WITH_RC4_40_MD5
+
+SSL_RSA_EXPORT_WITH_RC4_40_MD5
+
+TLS_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA
+
+SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA
+
+ _Support for Kerberos ciphersuites is not
+specified._
+
+ _When using IIOP over SSL, a secure channel
+between client and server containers is established at the SSL layer.
+The SSL handshake layer handles authentication (either mutual or
+server-only) between containers, negotiation of cipher suite for bulk
+data encryption, and optionally provides a compression method. The SSL
+record layer performs confidentiality and integrity protection_
+on application data. Since compliant Java EE
+products are already required to support SSL (HTTPS for Internet
+communication), the use of SSL/TLS provides a relatively easy route to
+interoperable security at the transport layer.
+
+=== Security Information in IORs
+
+Before initiating
+a secure connection to the EJB container, the client needs to know the
+hostname and port number at which the server is listening for SSL
+connections, and the security protocols supported or required by the
+server object. This information is obtained from the EJBObject or
+EJBHome reference’s IOR.
+
+The CSIv2 specification
+link:Ejb.html#a9871[See Common Secure Interoperability Version 2
+Final Available Specification.
+http://www.omg.org/cgi-bin/doc?ptc/2001-06-17.] describes the
+_TAG_CSI_SEC_MECH_LIST_ tagged component which is included in the IORs
+of secured objects. This component contains a sequence of
+_CSIIOP::CompoundSecMech_ structures (in decreasing order of the
+server’s preference) that contain the target object’s security
+information for transport layer and service context layer mechanisms.
+This information includes the server’s SSL/TLS port, its security
+principal and supported/required security mechanisms.
+
+EJB containers must be capable of inserting
+the CSIv2 tagged components into the IORs for EJBObject and EJBHome
+references, based on the Deployer or System Administrator’s security
+policy settings. Compliant EJB containers must follow the Conformance
+Level 0 rules described in the CSIv2 specification for constructing
+these IORs.
+
+ _EJB containers must also be capable of
+creating IORs that allow access to enterprise beans over unprotected
+IIOP, based on the security policies set by the Deployer or System
+Administrator._
+
+=== Propagating Principals and Authentication Data in IIOP Messages
+
+In scenarios
+where client authentication does not occur at the transport layer it is
+necessary to support transfer of authentication data between two
+containers in the IIOP message service context. When an intermediate
+client container does not have authentication data for the initiating
+client, it is necessary to support propagation of client principals in
+the IIOP message service context.
+
+It is assumed that all information exchanged
+between client and server at the transport layer is also available to
+the containers: e.g. the certificates used for authentication at the SSL
+layer may be used by the server container for authorization.
+
+
+
+image:EBCore-27.png[image]
+
+The following cases are required to be
+supported:
+
+Application client invocations on enterprise
+beans with mutual authentication between the
+application client and EJB container (C and S1) at the SSL layer
+(scenario 2.1 in section link:Ejb.html#a3351[See Interactions
+Between Application Client Containers and EJB Containers Within an
+Enterprise’s Intranet], interoperability requirement 4.1 in section
+link:Ejb.html#a3364[See Overview of Interoperability
+Requirements]). For example, this is possible when the enterprise has a
+Kerberos-based authentication infrastructure or when client-side
+certificates have been installed. In this case the security context of
+the IIOP message sent from C to S1 should not contain any additional
+information.
+
+Application client invocations on enterprise
+beans with server-only authentication
+between the application client and EJB container (C and S1) at the SSL
+layer (scenario 2.2 in section link:Ejb.html#a3351[See
+Interactions Between Application Client Containers and EJB Containers
+Within an Enterprise’s Intranet], interoperability requirement 4.2 in
+section link:Ejb.html#a3364[See Overview of Interoperability
+Requirements]). This usually happens when the client cannot authenticate
+in the transport. In this case, the client container must be capable of
+inserting into the IIOP message a CSIv2 security context with a client
+authentication token that contains the client C’s authentication data.
+Once the EJB container S1 has authenticated the client, it may or may
+not maintain state about the client, so subsequent invocations from the
+client on the same network connection may need to be authenticated
+again. The client and server containers must follow the Conformance
+Level 0 rules in the CSIv2 specification for client authentication. In
+particular, support for the GSSUP username-password authentication
+mechanism is required. Support for other
+GSSAPI mechanisms (such as Kerberos) to
+perform client authentication at the IIOP layer is optional.
+
+Invocations from Web/EJB clients to
+enterprise beans with a trust relationship between the client container
+S1 and server container S2 (scenarios 1,3 and 4 in section
+link:Ejb.html#a3356[See Interactions Between Two EJB Containers
+in an Enterprise’s Intranet], interoperability requirements five and six
+in section link:Ejb.html#a3364[See Overview of Interoperability
+Requirements]). S2 does not need to independently authenticate the
+initiating client C. In this case the client container S1 must insert
+into the IIOP message a security context with an identity token in the
+format described in the CSIv2 specification. The principal may be
+propagated as an X.509 certificate chain or
+as a X.501 distinguished name or as a
+principal name encoded in the GSS exported name format, as described in
+the CSIv2 specification. The identity propagated is determined as
+follows:
+
+If the client Web/EJB component is configured
+to use caller identity, and the caller C authenticated itself to S1,
+then the identity token contains the initiating client C’s identity.
+
+If the client component is configured to use
+caller identity, and the caller C did not authenticate itself to S1,
+then the identity token contains the anonymous type.
+
+If the client component is configured to use
+a run-as identity then the identity token contains the run-as identity.
+
+Java EE containers are required to support
+the stateless mode of propagating principal and authentication
+information defined in CSIv2 (where the server does not store any state
+for a particular client principal across invocations), and may
+optionally support the stateful mode.
+
+The caller principal String provided by
+_EJBContext.getCallerPrincipal().getName()_ is defined as follows:
+
+For case one, the principal should be derived
+from the distinguished name obtained from the first X.509 certificate in
+the client’s certificate chain that was provided to the server during
+SSL mutual authentication.
+
+For case two, the principal should be derived
+from the username obtained from the client authentication token in the
+CSIv2 security context of the IIOP message. For the GSSUP
+username-password mechanism, the principal should be derived from the
+username in the _GSSUP::InitialContextToken_ structure.
+
+For case three, the principal depends on the
+identity token type in the CSIv2 security
+context:
+
+If the type is
+X.509 certificate chain, then the principal
+should be derived from the distinguished name from the first certificate
+in the chain.
+
+If the type is distinguished name, then the
+principal should be derived from the distinguished name.
+
+If the type is principal name propagated as a
+GSS exported name, then the principal should be derived from the
+mechanism-specific principal name.
+
+If the anonymous principal type was
+propagated or the identity token was absent, then
+_EJBContext.getCallerPrincipal().getName()_ returns a product-specific
+unauthenticated principal name.
+
+===  _Security Configuration for Containers_
+
+ _Since the interoperability scenarios
+involve IIOP/SSL usage in intranets, it is assumed that client and
+server container administrators cooperatively configure a consistent set
+of security policies for the enterprise._
+
+ _At product installation or application
+deployment time, client and server container administrators may
+optionally configure the container and SSL infrastructure as described
+below._ These preferences may be specified at any level of granularity
+(e.g. per host or per container process or per enterprise bean).
+
+ _Configure the list of supported SSL cipher
+suites in preference order._
+
+For server containers, configure a list of
+trusted client container principals with whom the server has a trust
+relationship.
+
+ _Configure authentication preferences and
+requirements (e.g. if the server prefers authenticated clients to
+anonymous clients). In particular, if a trust relationship has been
+configured between two servers, then mutual authentication should be
+required unless there is physical network security._
+
+
+ _If the client and server are using
+certificates for authentication, configure a trusted common certificate
+authority for both client and server. If using Kerberos, configure the
+client and server with the same KDC or cooperating KDCs._
+
+
+ _Configure a restricted list of trusted
+server principals that a client container is allowed to interact with,
+to prevent the client’s private credentials such as password from being
+sent to untrusted servers._
+
+=== Runtime Behavior
+
+ _Client containers determine whether to use
+SSL for an enterprise bean invocation by using the security policies
+configured by the client administrator for interactions with the target
+host or enterprise bean, and the_
+_target_requires_ _information in the CSIv2 tagged component in the
+target enterprise bean’s IOR. If either the client configuration
+requires secure interactions with the enterprise bean, or the enterprise
+bean requires a secure transport, the client should initiate an SSL
+connection to the server._ The client must follow the rules described in
+the CSIv2 specification Conformance Level 0 for interpreting security
+information in IORs and including security context information in IIOP
+messages.
+
+ _When an EJB container receives an IIOP
+message, its behavior depends on deployment time configuration, run-time
+information exchanged with the client at the SSL layer, and
+principal/authentication data contained in the IIOP message service
+context. EJB containers are required to follow the protocol rules
+prescribed by the CSIv2 specification_ Conformance Level 0 _._
+
+When the System
+Administrator changes the security policies associated with an
+enterprise bean, the IORs for EJB references should be updated. When the
+bean has existing clients holding IORs, it is recommended that the
+security policy change should be handled by the client and server
+containers transparently to the client application if the old security
+policy is compatible with the new one. This may be done by using
+interoperable GIOP 1.2 forwarding mechanisms.

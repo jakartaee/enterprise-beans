@@ -1,0 +1,59 @@
+== Related Documents
+
+Enterprise JavaBeans™, version 3.2. (this
+specification) _http://jcp.org/en/jsr/detail?id=3_ 45
+
+[[a3323]]Enterprise JavaBeans™,
+version 3.1. (EJB 3.1). _http://jcp.org/en/jsr/detail?id=318_ .
+
+Enterprise JavaBeans™,
+version 2. (EJB 2.1).
+http://www.oracle.com/technetwork/java/javaee/ejb/index.html.
+
+[[a3325]]Java™ Persistence API,
+version 2.1. _http://jcp.org/en/jsr/detail?id=338_ .
+
+Java™ Naming and Directory
+Interface 1.2 Specification (JNDI).
+http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html.
+
+[[a3327]]Java Remote Method
+Invocation (RMI).
+http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/.
+
+IDL To Java™ Language
+Mapping Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.
+
+Java™ Platform, Enterprise
+Edition Specification Version 7 (Java EE).
+_http://jcp.org/en/jsr/detail?id=342_ .
+
+Java 2 Enterprise Edition
+Connector Architecture, v1.7. _http://jcp.org/en/jsr/detail?id=322_ .
+
+[[a3331]]Database Language SQL.
+ANSI X3.135-1992 or ISO/IEC 9075:1992.
+
+[[a3332]]Java API for XML-based RPC
+(JAX-RPC) 2.0. _http://jcp.org/en/jsr/detail?id=101._
+
+Web Services Description
+Language (WSDL) 1.1. _http://www.w3.org/TR/wsdl._
+
+[[a3334]]The Java Virtual Machine
+Specification.
+
+[[a3335]]JDBC™ 4.1 API (JDBC
+specification). http://jcp.org/en/jsr/detail?id=221.
+
+Web Services Metadata for
+the Java Platform, version 2.1. _http://jcp.org/en/jsr/detail?id=181._
+
+[[a3337]]Web Services for Java EE,
+version 1.3. _http://jcp.org/en/jsr/detail?id=109._
+
+[[a3338]]W3C: SOAP 1.2.
+http://www.w3.org/TR/SOAP/.
+
+[[a3339]]EJB 3.2 Core Contracts and
+Requirements. _http://jcp.org/en/jsr/detail?id=345_
