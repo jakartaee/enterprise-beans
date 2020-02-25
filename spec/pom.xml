@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2019 Contributors to the Eclipse Foundation.
+    Copyright (c) 2019, 2020 Contributors to the Eclipse Foundation.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -26,13 +26,14 @@
     <artifactId>enterprise-beans-spec</artifactId>
     <packaging>pom</packaging>
     <name>Jakarta Enterprise Beans Specification</name>
+    <version>4.0-SNAPSHOT</version>
 
     <properties>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
         <asciidoctor.maven.plugin.version>1.5.7.1</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>1.6.2</asciidoctorj.version>
-        <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
+        <asciidoctorj.pdf.version>1.5.0-alpha.18</asciidoctorj.pdf.version>
         <jruby.version>9.2.6.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status>DRAFT</status>
@@ -86,64 +87,99 @@
                     </dependency>
                 </dependencies>
                 <executions>
+                    <!-- Core Features HTML generation -->
                     <execution>
-                        <id>asciidoc-to-html</id>
+                        <id>core-asciidoc-to-html</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
                             <backend>html5</backend>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-${project.version}.html</outputFile>
+                            <sourceDocumentName>enterprise-beans-spec-core.adoc</sourceDocumentName>
+                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-core-${project.version}.html</outputFile>
                             <attributes>
-                                <doctype>book</doctype>
-                                <status>${status}</status>
-                                <data-uri />
-                                <icons>font</icons>
                                 <toc>left</toc>
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <idprefix />
-                                <idseparator>-</idseparator>
-                                <docinfo1>true</docinfo1>
+                            </attributes>
+                            <attributes>
+                                <toc>left</toc>
                             </attributes>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>asciidoc-to-pdf</id>
+                        <!-- Core Featrues PDF generation  -->
+                        <id>core-asciidoc-to-pdf</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
                             <backend>pdf</backend>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-${project.version}.pdf</outputFile>
+                            <sourceDocumentName>enterprise-beans-spec-core.adoc</sourceDocumentName>
+                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-core-${project.version}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
-                                <doctype>book</doctype>
-                                <status>${status}</status>
-                                <data-uri />
-                                <icons>font</icons>
                                 <pagenums />
                                 <toc />
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <idprefix />
-                                <idseparator>-</idseparator>
-                                <docinfo1>true</docinfo1>
+                                <embedAssets>true</embedAssets>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <!-- Optional Features HTML generation -->
+                    <execution>
+                        <id>opt-asciidoc-to-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
+                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.html</outputFile>
+                            <attributes>
+                                <toc>left</toc>
+                            </attributes>
+                            <attributes>
+                                <toc>left</toc>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Optional Features PDF generation  -->
+                        <id>opt-asciidoc-to-pdf</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
+                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.pdf</outputFile>
+                            <attributes>
+                                <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
+                                <pdf-style>jakartaee</pdf-style>
+                                <pagenums />
+                                <toc />
                                 <embedAssets>true</embedAssets>
                             </attributes>
                         </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDocumentName>enterprise-beans-spec.adoc</sourceDocumentName>
                     <sourceHighlighter>coderay</sourceHighlighter>
                     <attributes>
                         <revnumber>${project.version}</revnumber>
                         <revremark>${status}</revremark>
                         <revdate>${revisiondate}</revdate>
+                        <doctype>book</doctype>
+                        <status>${status}</status>
+                        <data-uri />
+                        <icons>font</icons>
+                        <sectanchors>true</sectanchors>
+                        <idprefix />
+                        <idseparator>-</idseparator>
+                        <docinfo1>true</docinfo1>
                     </attributes>
                 </configuration>
 
