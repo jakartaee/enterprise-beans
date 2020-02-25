@@ -18,7 +18,7 @@ package jakarta.ejb;
 
 import java.util.*;
 import java.security.Principal;
-import javax.transaction.UserTransaction;
+import jakarta.transaction.UserTransaction;
 
 /**
  * The EJBContext interface provides an instance with access to the 
