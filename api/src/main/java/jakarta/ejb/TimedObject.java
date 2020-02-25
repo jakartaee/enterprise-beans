@@ -16,8 +16,6 @@
 
 package jakarta.ejb;
 
-import java.io.Serializable;
-
 /**
  * The <code>TimedObject</code> interface contains a callback method
  * that is used to deliver timer expiration notifications.  It can be

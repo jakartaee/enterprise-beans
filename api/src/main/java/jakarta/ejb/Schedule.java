@@ -16,6 +16,7 @@
 
 package jakarta.ejb;
 
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import java.lang.annotation.Retention;
@@ -197,6 +198,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  */
 @Target(METHOD) 
 @Retention(RUNTIME)
+@Repeatable(Schedules.class)
 public @interface Schedule {
 
     /**

@@ -16,9 +16,6 @@
 
 package jakarta.ejb;
 
-import java.util.*;
-import java.security.Identity;
-
 /**
  * The EntityContext interface provides an instance with access to the 
  * container-provided runtime context of an entity bean instance. 
