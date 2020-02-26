@@ -1,0 +1,204 @@
+[[a3139]]
+== Support for JAX-RPC Web Service Endpoints
+
+A stateless session bean may implement a
+JAX-RPC web service endpoint. JAX-RPC web service endpoints are accessed
+by Java clients through the JAX-RPC client APIs, which utilize an
+XML-based protocol (SOAP 1.2 link:Ejb.html#a3338[See W3C: SOAP
+1.2. http://www.w3.org/TR/SOAP/.]) over an HTTP transport.
+
+A JAX-RPC web service client makes use of the
+enterprise bean’s JAX-RPC web service client view corresponding to the
+web service endpoint interface, as described by a WSDL document.
+
+This chapter defines requirements for
+stateless sessions beans and EJB containers that support JAX-RPC web
+service endpoints. See EJB Core Contracts and Requirements document
+link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
+http://jcp.org/en/jsr/detail?id=345] for additional requirements that
+apply to stateless session beans.
+
+=== JAX-RPC Web Service Client View
+
+
+
+The JAX-RPC web service client obtains a
+reference to the service object that implements the
+_javax.xml.rpc.Service_ interface through dependency injection or using
+JNDI. The service interface can be a generic _javax.xml.rpc.Service_
+interface or a generated service interface which extends the
+_javax.xml.rpc.Service_ interface. The service interface is then used to
+obtain a stub or proxy that implements the session bean’s web service
+endpoint interface. The mechanisms and APIs for client web service
+access is described in the JAX-RPC specification
+link:Ejb.html#a3332[See Java API for XML-based RPC (JAX-RPC)
+2.0. http://jcp.org/en/jsr/detail?id=101.].
+
+The following example illustrates how a Java
+EE client looks up a web service in JNDI using a logical name called a
+service reference (specified using the _service-ref_ element), obtains a
+stub instance for a web service endpoint, and invokes a method on that
+endpoint.
+
+Context ctx = new InitialContext();
+
+com.example.StockQuoteService sqs =
+(com.example.StockQuoteService)
+
+
+ctx.lookup("java:comp/env/service/StockQuoteService");
+
+com.example.StockQuoteProvider sqp =
+
+ sqs.getStockQuoteProviderPort();
+
+float quotePrice =
+sqp.getLastTradePrice("ACME");
+
+...
+
+The use of service references and the
+_service-ref_ deployment descriptor element are described in further
+detail in link:Ejb.html#a3337[See Web Services for Java EE,
+version 1.3. http://jcp.org/en/jsr/detail?id=109.].
+
+=== The Responsibilities of the Bean Provider
+
+
+
+This section describes the responsibilities
+of the session Bean Provider to support JAX-RPC web service endpoints.
+These requirements are in addition to those specified in the EJB Core
+Contracts and Requirements document link:Ejb.html#a3339[See EJB
+3.2 Core Contracts and Requirements.
+http://jcp.org/en/jsr/detail?id=345].
+
+=== Session Bean’s JAX-RPC Service Endpoint Interface
+
+The following are
+the requirements for stateless session beans with JAX-RPC web service
+endpoint interfaces.
+
+The interface must follow the rules for
+JAX-RPC service endpoint interfaces link:Ejb.html#a3332[See Java
+API for XML-based RPC (JAX-RPC) 2.0.
+http://jcp.org/en/jsr/detail?id=101.].
+
+The interface must extend the
+_java.rmi.Remote_ interface.
+
+The methods defined in the interface must
+follow the rules for JAX-RPC service endpoint interfaces. This means
+that their argument and return values must be of valid types for
+JAX-RPC, and their _throws_ clauses must include the
+java.rmi.RemoteException. The _throws_ clause may additionally include
+application exceptions.
+
+ _Note that JAX-RPC Holder classes may be
+used as method parameters. The JAX-RPC specification requires support
+for Holder classes as part of the standard Java mapping of WSDL
+operations in order to handle out and inout parameters. Holder classes
+implement the javax.xml.rpc.holders.Holder interface. See the JAX-RPC
+specification link:Ejb.html#a3332[See Java API for XML-based RPC
+(JAX-RPC) 2.0. http://jcp.org/en/jsr/detail?id=101.] for further
+details._
+
+For each method defined in the web service
+endpoint interface, there must be a matching method in the session
+bean’s class. The matching method must have:
+
+The same name.
+
+The same number and types of arguments, and
+the same return type.
+
+All the exceptions defined in the _throws_
+clause of the matching method of the session bean class must be defined
+in the _throws_ clause of the method of the web service endpoint
+interface.
+
+The web service endpoint interface must not
+include an EJBObject or EJBLocalObject as either a parameter or return
+type. An array or JAX-RPC value type must not include an EJBObject or
+EJBLocalObject as a contained element. The web service endpoint
+interface methods must not expose business interface types, local or
+remote component interface types, local or remote home interface types,
+timers or timer handles, or the managed collection classes that are used
+for entity beans with container-managed persistence as arguments or
+results or as fields of value types.
+
+JAX-RPC serialization rules apply for any
+value types that are used by the web service endpoint interface. If it
+is important that Java serialization semantics apply, the Bean Provider
+should use the restricted set of JAX-RPC value types for which the
+semantics of Java serialization apply under JAX-RPC serialization. See
+the JAX-RPC specification link:Ejb.html#a3332[See Java API for
+XML-based RPC (JAX-RPC) 2.0. http://jcp.org/en/jsr/detail?id=101.] for
+details.
+
+The web service endpoint interface must not
+include constant (as _public final static_ ) declarations.
+
+The Bean Provider must designate the web
+service endpoint interface in the deployment descriptor by means of the
+_service-endpoint_ element. The service endpoint itself is only exposed
+within a web service if it is referenced by a web service deployment
+descriptor as defined by link:Ejb.html#a3337[See Web Services
+for Java EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.].
+
+=== MessageContext Interface
+
+The _MessageContext_ interface allows the
+stateless session bean instance to see the SOAP message for the web
+service endpoint, as well as the properties set by the JAX-RPC SOAP
+message handlers, if any. The stateless session bean may use the
+_MessageContext_ interface to set properties for JAX-RPC message
+response handlers.
+
+A stateless session bean that implements a
+web service endpoint using the JAX-RPC contracts accesses the JAX-RPC
+_MessageContext_ interface by means of the
+_SessionContext.getMessageContext_ method. The _getMessageContext_
+method returns the _javax.xml.rpc.handler.MessageContext_ interface of a
+stateless session bean that implements a JAX-RPC web service endpoint.
+
+Only stateless session beans with web service
+endpoint interfaces are permitted to use this method.
+
+=== The Responsibilities of the Container Provider
+
+
+
+This section describes the responsibilities
+of the Container Provider to support JAX-RPC web service endpoints.
+These requirements are in addition to those specified in the EJB Core
+Contracts and Requirements document link:Ejb.html#a3339[See EJB
+3.2 Core Contracts and Requirements.
+http://jcp.org/en/jsr/detail?id=345].
+
+=== Generation of WSDL
+
+Reference link:Ejb.html#a3337[See Web
+Services for Java EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.]
+describes the generation of a WSDL document for a web service endpoint.
+The Java to WSDL mapping must adhere to the requirements of JAX-RPC
+specification link:Ejb.html#a3332[See Java API for XML-based RPC
+(JAX-RPC) 2.0. http://jcp.org/en/jsr/detail?id=101.].
+
+=== JAX-RPC Message Handlers for Web Service Endpoints
+
+The container must support the use of JAX-RPC
+message handlers for web service endpoints. Container requirements for
+support of message handlers are specified in
+link:Ejb.html#a3337[See Web Services for Java EE, version 1.3.
+http://jcp.org/en/jsr/detail?id=109.].
+
+If message handlers are present, they must be
+invoked before any business method interceptor methods.
+
+=== The SessionContext Interface Restrictions
+
+Invoking the _getMessageContext_ method of
+the _SessionContext interface_ is disallowed in session bean methods
+that were not invoked by the container through the session bean’s web
+service endpoint.

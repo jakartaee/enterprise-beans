@@ -1,0 +1,20 @@
+== Packaging Restrictions
+
+=== Restrictions
+
+
+
+Entity Beans are not supported within .war
+files. These component types must only be packaged in a stand-alone
+ejb-jar file or an ejb-jar file packaged within an .ear file.
+
+JAX-RPC based web service endpoints are not
+supported within _.war_ files. These endpoints must be only be packaged
+in a stand-alone ejb-jar file or an ejb-jar file packaged within an .ear
+file.
+
+Entity Beans and JAX-RPC based web service
+endpoints are not supported with the EJB 3.2 Lite API (see EJB Core
+Contracts and Requirements document link:Ejb.html#a3339[See EJB
+3.2 Core Contracts and Requirements.
+http://jcp.org/en/jsr/detail?id=345], Subsection “EJB 3.2 Lite”).

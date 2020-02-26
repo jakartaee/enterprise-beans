@@ -1,0 +1,77 @@
+== Introduction
+
+This document describes features for which
+support has been made optional as of the 3.2 release of the Enterprise
+JavaBeans _TM_ specification:
+
+ _EJB 2.1 Entity Bean Component Contract for
+Container-Managed Persistence_
+
+ _EJB 2.1 Entity Bean Component Contract for
+Bean-Managed Persistence_
+
+ _EJB 1.1 Entity Bean Component Contract for
+Container-Managed Persistence_
+
+ _Client View of an Entity Bean_
+
+ _EJB QL: Query Language for
+Container-Managed Persistence Query Methods_
+
+ _JAX-RPC Based Web Service Endpoints_
+
+ _JAX-RPC Web Service Client View._
+
+=== Acknowledgements
+
+
+
+The EJB 3.2 specification work is being
+conducted as part of JSR-345 under the Java Community Process Program.
+This specification is the result of the collaborative work of the
+members of the EJB 3.2 Expert Group: Caucho Technology, Inc: Reza
+Rahman; IBM: Jeremy Bauer; Oracle: Marina Vatkina, Linda DeMichiel; OW2:
+Florent Benoit; Pramati Technologies: Ravikiran Noothi; RedHat: Pete
+Muir, Carlo de Wolf; TmaxSoft, Inc.: Miju Byon; individual members: Adam
+Bien; David Blevins; Antonio Goncalves; Stefan Heldt; Richard Hightower,
+Jean-Louis Monteiro.
+
+
+
+=== Organization of the Specification Documents
+
+
+
+This specification is organized into the
+following documents:
+
+EJB Core Contracts and Requirements
+
+EJB Optional Features
+
+The EJB Core Contracts and Requirements
+document defines the contracts and requirements for the use and
+implementation of Enterprise JavaBeans. These contracts include those
+for the EJB 3.2 API, as well as for the earlier EJB API that is required
+to be supported in this release.
+
+This EJB Optional Features document defines
+the contracts and requirements for the use and implementation of
+features support for which has been made optional for the Enterprise
+JavaBeans. These contracts are separated from the core contracts
+requirements in the EJB 3.1 specification
+link:Ejb.html#a3323[See Enterprise JavaBeans™, version 3.1. (EJB
+3.1). http://jcp.org/en/jsr/detail?id=318.].
+
+=== Document Conventions
+
+
+
+The regular Times font is used for
+information that is prescriptive by the EJB specification.
+
+The italic Times font is used for paragraphs
+that contain descriptive information, such as notes describing typical
+use, or notes clarifying the text with prescriptive specification.
+
+The Courier font is used for code examples.

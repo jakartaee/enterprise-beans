@@ -1,7 +1,7 @@
 Jakarta Enterprise Beans Specification
 ============================
 
-This project generates the Jakarta Enterprise Beans Specification.
+This project generates the Jakarta Enterprise Beans Specifications.
 
 Building
 --------
@@ -16,7 +16,9 @@ Run the full build:
 `mvn install`
 
 Locate the html files:
-- `target/generated-docs/enterprise-beans-spec-<version>.html`
+- `target/generated-docs/enterprise-beans-spec-core-<version>.html`
+- `target/generated-docs/enterprise-beans-spec-opt-<version>.html`
 
 Locate the PDF files:
-- `target/generated-docs/enterprise-beans-spec-<version>.pdf`
+- `target/generated-docs/enterprise-beans-spec-core-<version>.pdf`
+- `target/generated-docs/enterprise-beans-spec-opt-<version>.pdf`

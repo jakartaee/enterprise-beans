@@ -1,0 +1,24 @@
+[[a3253]]
+== Support for Distributed Interoperability
+
+The JAX-RPC specification
+link:Ejb.html#a3332[See Java API for XML-based RPC (JAX-RPC)
+2.0. http://jcp.org/en/jsr/detail?id=101.] describes requirements for
+interoperability with other JAX-RPC implementations and XML based RPC
+products.
+
+This chapter defines requirements for
+interoperability of entity beans in addition to the contracts specified
+in the EJB Core Contracts and Requirements document
+link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
+http://jcp.org/en/jsr/detail?id=345] Chapter “Support for Distributed
+Interoperability”.
+
+=== Mapping Objects Returned by Entity Bean Finder Methods to IDL
+
+
+
+The _Enumeration_
+or _Collection_ objects returned by entity bean finder methods are value
+types that are mapped to IDL abstract value types or abstract interfaces
+using the rules in the Java Language to IDL Mapping.

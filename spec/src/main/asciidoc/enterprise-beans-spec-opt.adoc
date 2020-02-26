@@ -1,8 +1,8 @@
 //
-// Copyright (c) 2017, 2019 Contributors to the Eclipse Foundation
+// Copyright (c) 2017, 2020 Contributors to the Eclipse Foundation
 //
 
-= Jakarta Enterprise Beans
+= Jakarta Enterprise Beans, Optional Features
 :authors: Jakarta Enterprise Beans Team, https://projects.eclipse.org/projects/ee4j.ejb
 :email: https://dev.eclipse.org/mailman/listinfo/ejb-api-dev
 :version-label!:
@@ -25,4 +25,4 @@ include::license-efsl.adoc[]
 
 // == Scope
 :sectnums:
-include::scope.adoc[]
+include::opt/EBOpt.adoc[]

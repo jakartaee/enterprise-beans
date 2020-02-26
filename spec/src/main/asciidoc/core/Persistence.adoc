@@ -1,0 +1,25 @@
+[[a2000]]
+== Persistence
+
+The model for persistence and
+object/relational mapping was considerably revised and enhanced in the
+Enterprise JavaBeans 3.0 release. The contracts and requirements for
+persistent entities are defined by the “ _Java Persistence API_ ”
+specification link:Ejb.html#a9851[See Java™ Persistence API,
+version 2.1. http://jcp.org/en/jsr/detail?id=338.], which also contains
+the full specification of the Java Persistence query language and the
+metadata for object/relational mapping.
+
+The client view of entity beans under the
+earlier EJB 2.1 programming model, the contracts for EJB 2.1 Entity
+Beans with Container-Managed Persistence, the contracts for the EJB QL
+query language, the contracts for EJB 2.1 Entity Beans with Bean-Managed
+Persistence, and the contracts for EJB 1.1 Entity Beans with
+Container-Managed Persistence are described in the EJB Optional Features
+document link:Ejb.html#a9890[See EJB 3.2 Optional Features
+http://jcp.org/en/jsr/detail?id=345.] Chapters
+link:../Optional/Chapters.html#UNKNOWN[],
+link:../Optional/Chapters.html#UNKNOWN[],
+link:../Optional/Chapters.html#UNKNOWN[],
+link:../Optional/Chapters.html#UNKNOWN[], and
+link:../Optional/Chapters.html#UNKNOWN[] respectively.
