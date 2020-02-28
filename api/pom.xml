@@ -27,7 +27,7 @@
 
     <groupId>jakarta.ejb</groupId>
     <artifactId>jakarta.ejb-api</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0-RC1</version>
 
     <properties>
         <extension.name>jakarta.ejb</extension.name>
