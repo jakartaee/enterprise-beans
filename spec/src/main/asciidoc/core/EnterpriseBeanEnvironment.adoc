@@ -84,9 +84,8 @@ the enterprise bean’s environment.
 * <<a4901>> describes the
 requirements for other resources and configuration parameters.
 
-=== [[a3635]]Enterprise Bean’s Environment as a JNDI Naming Context
-
-
+[[a3635]]
+=== Enterprise Bean’s Environment as a JNDI Naming Context
 
 The enterprise
 bean’s environment is a mechanism that allows customization of the
@@ -104,88 +103,90 @@ The container implements the enterprise
 bean’s environment, and provides it as a JNDI naming context. The
 enterprise bean’s environment is used as follows:
 
-The enterprise bean makes use of entries from
+. The enterprise bean makes use of entries from
 the environment. Entries from the environment may be injected by the
 container into the bean’s fields or methods, or the methods of the bean
-may access the environment using the EJBContext _lookup_ method or the
+may access the environment using the EJBContext `lookup` method or the
 JNDI interfaces. The Bean Provider declares in Java language metadata
 annotations or in the deployment descriptor all the environment entries
 that the enterprise bean expects to be provided in its environment at
 runtime.
 
-The container provides an implementation of
+. The container provides an implementation of
 the JNDI naming context that stores the enterprise bean environment. The
 container also provides the tools that allow the Deployer to create and
 manage the environment of each enterprise bean.
 
-The Deployer uses the tools provided by the
+. The Deployer uses the tools provided by the
 container to create and initialize the environment entries that are
 declared by means of the enterprise bean’s annotations or deployment
 descriptor. The Deployer can set and modify the values of the
 environment entries.
 
-The container injects entries from the
+. The container injects entries from the
 environment into the enterprise bean’s fields or methods as specified by
 the bean’s metadata annotations or the deployment descriptor.
 
-The container makes the environment naming
+. The container makes the environment naming
 context available to the enterprise bean instances at runtime. The
-enterprise bean’s instances can use the EJBContext _lookup_ method or
+enterprise bean’s instances can use the EJBContext `lookup` method or
 the JNDI interfaces to obtain the values of the environment entries.
 
-The container must make an enterprise bean’s
+[none]
+. _The container must make an enterprise bean’s
 environment available to any interceptor class and any JAX-WS message
 handler for the bean as well. The interceptor and web service handler
 classes for an enterprise bean share that bean’s environment. Within the
-context of this chapter, the term “bean” should be construed as
+context of this chapter, the term "bean" should be construed as
 including a bean’s interceptor and handler classes unless otherwise
-noted.
+noted._
 
-=== [[a3645]]Sharing of Environment Entries
+[[a3645]]
+==== Sharing of Environment Entries
 
 For enterprise beans packaged in a standalone
-ejb-jar file or in an ejb-jar file within an _.ear_ file, each
+ejb-jar file or in an ejb-jar file within an `.ear` file, each
 enterprise bean defines its own set of
 environment entries. In this case, all
 instances of an enterprise bean share the same environment entries; the
 environment entries are not shared with other enterprise beans.
 
-In a _.war_ file, there is only a single
+In a `.war` file, there is only a single
 naming environment shared between all the components in the module. For
-enterprise beans packaged in a _.war_ file, all enterprise beans share
+enterprise beans packaged in a `.war` file, all enterprise beans share
 this single naming environment. The enterprise beans share their
 environment entries with all other enterprise bean components and web
-components in the _.wa_ r file.
+components in the `.war` file.
 
 Enterprise bean instances are not allowed to
 modify the bean’s environment at runtime.
 
-If an enterprise bean written to the EJB 2.1
+_Compatibility Note: If an enterprise bean written to the EJB 2.1
 API specification is deployed multiple times in the same container, each
 deployment results in the creation of a distinct home. The Deployer may
 set different values for the enterprise bean environment entries for
-each home.
+each home._
 
 In general, lookups of objects in the JNDI
-_java:_ namespace are required to return a new instance of the requested
+`java:` namespace are required to return a new instance of the requested
 object every time. Exceptions are allowed for the following:
 
-The container knows the object is immutable
-(for example, objects of type _java.lang.String_ ), or knows that the
+* The container knows the object is immutable
+(for example, objects of type `java.lang.String`), or knows that the
 application can’t change the state of the object.
 
-The object is defined to be a singleton, such
+* The object is defined to be a singleton, such
 that only one instance of the object may exist in the JVM.
 
-The name used for the lookup is defined to
+* The name used for the lookup is defined to
 return an instance of the object that might be shared. The name
-_java:comp/ORB_ is such a name.
+`java:comp/ORB` is such a name.
 
 In these cases, a shared instance of the
 object may be returned. In all other cases, a new instance of the
 requested object must be returned on each lookup. Note that, in the case
 of resource adapter connection objects, it is the resource adapter’s
-_ManagedConnectionFactory_ implementation that is responsible for
+`ManagedConnectionFactory` implementation that is responsible for
 satisfying this requirement.
 
 Each injection of an object corresponds to a
@@ -193,48 +194,49 @@ JNDI lookup. Whether a new instance of the requested object is injected,
 or whether a shared instance is injected, is determined by the rules
 described above.
 
-Terminology warning: The enterprise bean’s
-“environment” should not be confused with the “environment properties”
-defined in the JNDI documentation.
+_Terminology warning: The enterprise bean’s
+"environment" should not be confused with the "environment properties"
+defined in the JNDI documentation._
 
-=== [[a3658]]Annotations for Environment Entries
+[[a3658]]
+==== Annotations for Environment Entries
 
 A field or method of a bean class may be
 annotated to request that an entry from the bean’s environment be
 injected. Any of the types of resources or other environment
-entrieslink:#a10322[102] described in this chapter may be
+entries<<a10322,^[102]^>> described in this chapter may be
 injected. Injection may also be requested using entries in the
 deployment descriptor corresponding to each of these resource types. The
-field or method may have any access qualifier ( _public_ , _private_ ,
-etc.) but must not be _static_ .
+field or method may have any access qualifier (`public`, `private`,
+etc.) but must not be `static`.
 
-A field of the bean class may be the target
-of injection. The field must not be _final_ . By default, the name of
+* A field of the bean class may be the target
+of injection. The field must not be `final`. By default, the name of
 the field is combined with the name of the class in which the annotation
 is used and is used directly as the name in the bean’s naming context.
-For example, a field named _myDatabase_ in the class _MySessionBean_ in
-the package _com.acme.example_ would correspond to the JNDI name
-_java:comp/env/com.acme.example.MySessionBean/myDatabase_ . The
+For example, a field named `myDatabase` in the class `MySessionBean` in
+the package `com.acme.example` would correspond to the JNDI name
+`java:comp/env/com.acme.example.MySessionBean/myDatabase`. The
 annotation also allows the JNDI name to be specified explicitly.
 
-Environment entries may also be injected into
+* Environment entries may also be injected into
 the bean through bean methods that follow the naming conventions for
-JavaBeans properties. The annotation is applied to the _set_ method for
+JavaBeans properties. The annotation is applied to the `set` method for
 the property, which is the method that is called to inject the
 environment entry. The JavaBeans property name (not the method name) is
 used as the default JNDI name. For example, a method named
-_setMyDatabase_ in the same _MySessionBean_ class would correspond to
-the JNDI name _java:comp/env/com.example.MySessionBean/myDatabase_ .
+`setMyDatabase` in the same `MySessionBean` class would correspond to
+the JNDI name `java:comp/env/com.example.MySessionBean/myDatabase`.
 
-When a deployment descriptor entry is used to
+* When a deployment descriptor entry is used to
 specify injection, the JNDI name and the instance variable name or
 property name are both specified explicitly. Note that the JNDI name is
-always relative to the _java:comp/env_ naming context.
+always relative to the `java:comp/env` naming context.
 
 Each resource may only be injected into a
 single field or method of the bean. Requesting injection of the
-_java:comp/env/com.example.MySessionBean/myDatabase_ resource into both
-the _setMyDatabase_ method and the _myDatabase_ instance variable is an
+`java:comp/env/com.example.MySessionBean/myDatabase` resource into both
+the `setMyDatabase` method and the `myDatabase` instance variable is an
 error. Note, however, that either the field or the method could request
 injection of a resource of a different (non-default) name. By explicitly
 specifying the JNDI name of a resource, a single resource may be
@@ -243,7 +245,7 @@ injected into multiple fields or methods of multiple classes.
 Annotations may also be applied to the bean
 class itself. These annotations declare an entry in the bean’s
 environment, but do not cause the resource to be injected. Instead, the
-bean is expected to use the EJBContext _lookup_ method or the methods of
+bean is expected to use the EJBContext `lookup` method or the methods of
 the JNDI API to lookup the entry. When the annotation is applied to the
 bean class, the JNDI name and the environment entry type must be
 explicitly specified.
@@ -268,7 +270,7 @@ using an injected resource. Note that a declaration of a field in a
 subclass with the same name as a field in a superclass always causes the
 field in the superclass to be hidden.
 
-=== Annotations and Deployment Descriptors
+==== Annotations and Deployment Descriptors
 
 Environment entries may be declared by the
 use of annotations, without need for any deployment descriptor entries.
@@ -283,53 +285,53 @@ descriptor entries should not be used to request injection of a resource
 into a field or method that has not been designed for injection.
 
 The following rules apply to how a deployment
-descriptor entry may override a _Resource_ annotation:
+descriptor entry may override a `Resource` annotation:
 
-The relevant deployment descriptor entry is
+* The relevant deployment descriptor entry is
 located based on the JNDI name used with the annotation (either
 defaulted or provided explicitly).
 
-The type specified in the deployment
+* The type specified in the deployment
 descriptor must be assignable to the type of the field or property or
-the type specified in the _Resource_ annotation.
+the type specified in the `Resource` annotation.
 
-The description, if specified, overrides the
+* The description, if specified, overrides the
 description element of the annotation.
 
-The injection target, if specified, must name
+* The injection target, if specified, must name
 exactly the annotated field or property method.
 
-The mapped-name element, if specified,
+* The `mapped-name` element, if specified,
 overrides the mappedName element of the annotation.
 
-The _res-sharing_ -scope element, if
-specified, overrides the _shareable_ element of the annotation. In
+* The `res-sharing-scope` element, if
+specified, overrides the `shareable` element of the annotation. In
 general, the Application Assembler or Deployer should never change the
 value of this element, as doing so is likely to break the application.
 
-The _res-auth_ element, if specified,
-overrides the _authenticationType_ element of the annotation. In
+* The `res-auth` element, if specified,
+overrides the `authenticationType` element of the annotation. In
 general, the Application Assembler or Deployer should never change the
 value of this element, as doing so is likely to break the application.
 
-The lookup-name element, if specified,
+* The `lookup-name` element, if specified,
 overrides the lookup element of the annotation.
 
 Restrictions on the overriding of environment
 entry values depend on the type of environment entry.
 
+:!section-refsig:
 The rules for how a deployment descriptor
-entry may override an EJB annotation are described in Section
-link:Ejb.html#a3912[See EJB References]. The rules for how a
-deployment descriptor entry may override a _PersistenceUnit_ or
-_PersistenceContext_ annotation are described in Sections
-link:Ejb.html#a4533[See Persistence Unit References] and
-link:Ejb.html#a4671[See Persistence Context References]. The
-rules for web services references and how a deployment descriptor entry
-may override a _WebServiceRef_ annotation are included in the _Web
-Services for Java EE_ specification link:Ejb.html#a9879[See Web
-Services for Java EE, version 1.3.
-http://jcp.org/en/jsr/detail?id=109.].
+entry may override an EJB annotation are described in 
+Section <<a3912>>. The rules for how a
+deployment descriptor entry may override a `PersistenceUnit` or
+`PersistenceContext` annotation are described in Sections 
+<<a4533>> and <<a4671>>. 
+The rules for web services references and how a deployment descriptor entry
+may override a `WebServiceRef` annotation are included in the _Web
+Services for Java EE_ specification<<a9879, ^[30]^>>.
+
+:section-refsig:
 
 === [[a3680]]Responsibilities by EJB Role
 
