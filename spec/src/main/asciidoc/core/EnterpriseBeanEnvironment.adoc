@@ -2335,23 +2335,20 @@ of any unresolved message destination references, and allow him or her
 to resolve a message destination reference by binding it to a specified
 compatible target object in the environment.
 
-=== [[a4533]]Persistence Unit References
-
-
+[[a4533]]
+=== Persistence Unit References
 
 This section describes the metadata
 annotations and deployment descriptor elements that allow the enterprise
 bean code to refer to the entity manager factory for a persistence unit
-using a logical name called a _persistence unit reference_ . Persistence
+using a logical name called a _persistence unit reference_. Persistence
 unit references are special entries in the enterprise bean’s
 environment. The Deployer binds the persistence unit references to
 entity manager factories that are configured in accordance with the
-_persistence.xml_ specification for the persistence unit, as described
-in the _Java Persistence API_ specification
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
+`persistence.xml` specification for the persistence unit, as described
+in the _Java Persistence API_ specification<<a9851, ^[2]^>>.
 
-=== Bean Provider’s Responsibilities
+==== Bean Provider’s Responsibilities
 
 This subsection describes the Bean Provider’s
 view of locating the entity manager factory for a persistence unit and
@@ -2362,236 +2359,178 @@ manager factory using a persistence unit reference; and the third
 describes syntax for declaring persistence unit references in a
 deployment descriptor.
 
-=== Injection of Persistence Unit References
+===== Injection of Persistence Unit References
 
 A field or a method of an enterprise bean may
-be annotated with the _PersistenceUnit_ annotation. The _name_ element
+be annotated with the `PersistenceUnit` annotation. The `name` element
 specifies the name under which the entity manager factory for the
 referenced persistence unit may be located in the JNDI naming context.
-The optional _unitName_ element specifies the name of the persistence
-unit as declared in the _persistence.xml_ file that defines the
+The optional `unitName` element specifies the name of the persistence
+unit as declared in the `persistence.xml` file that defines the
 persistence unit.
 
 The following code example illustrates how an
 enterprise bean uses annotations to declare persistence unit references.
 
+[source, java]
+----
 @PersistenceUnit
-
 EntityManagerFactory emf;
 
-
-
 @PersistenceUnit(unitName="InventoryManagement")
-
 EntityManagerFactory inventoryEMF;
+----
 
-=== Programming Interfaces for Persistence Unit References
+===== Programming Interfaces for Persistence Unit References
 
 The Bean Provider
 must use persistence unit references to obtain references to entity
-manager factories as follows.
+manager factories as follows:
 
-Assign an entry in the enterprise bean’s
-environment to the persistence unit reference. (See subsection
-link:Ejb.html#a4588[See Declaration of Persistence Unit
-References in Deployment Descriptor] for information on how persistence
+:section-refsig: subsection
+* Assign an entry in the enterprise bean’s
+environment to the persistence unit reference. (See <<a4588>> 
+for information on how persistence
 unit references are declared in the deployment descriptor.)
 
-The EJB specification recommends, but does
-not require, that all persistence unit references be organized in the
-java:comp/env/persistence subcontexts of the bean’s environment.
+:section-refsig: Section
 
-Lookup the entity manager factory for the
+* The EJB specification recommends, but does
+not require, that all persistence unit references be organized in the
+`java:comp/env/persistence` subcontexts of the bean’s environment.
+
+* Lookup the entity manager factory for the
 persistence unit in the enterprise bean’s environment using the
-_EJBContext_ _lookup_ method or using the JNDI API.
+EJBContext `lookup` method or using the JNDI API.
 
 The following code sample illustrates
-obtaining an entity manager factory when the EJBContext _lookup_ method
+obtaining an entity manager factory when the EJBContext `lookup` method
 is used.
 
+[source, java]
+----
 @PersistenceUnit(name="persistence/InventoryAppDB")
-
 @Stateless
+public class InventoryManagerBean implements InventoryManager {
 
-public class InventoryManagerBean implements
-InventoryManager \{
+ @Resource
+ SessionContext ctx;
 
- @Resource SessionContext ctx;
-
-
-
- public void updateInventory(...) \{
-
+ public void updateInventory(...) {
  ...
+ // use context lookup to obtain entity manager factory
+ EntityManagerFactory emf = (EntityManagerFactory)
+     ctx.lookup("persistence/InventoryAppDB");
 
- // use context lookup to obtain entity
-manager factory
-
- EntityManagerFactory emf =
-(EntityManagerFactory)
-
- ctx.lookup("persistence/InventoryAppDB");
-
-
-
- // use factory to obtain application-managed
-entity manager
-
- EntityManager em =
-emf.createEntityManager();
-
+ // use factory to obtain application-managed entity manager
+ EntityManager em = emf.createEntityManager();
  ...
-
  }
-
 }
+----
 
 The following code sample illustrates
 obtaining an entity manager factory when the JNDI APIs are used
 directly.
 
+[source, java]
+----
 @PersistenceUnit(name="persistence/InventoryAppDB")
-
 @Stateless
-
-public class InventoryManagerBean implements
-InventoryManager \{
+public class InventoryManagerBean implements InventoryManager {
 
  EJBContext ejbContext;
-
  ...
-
- public void updateInventory(...) \{
-
+ public void updateInventory(...) {
  ...
-
  // obtain the initial JNDI context
-
  Context initCtx = new InitialContext();
 
+ // perform JNDI lookup to obtain entity manager factory
+ EntityManagerFactory emf = (EntityManagerFactory) 
+     initCtx.lookup("java:comp/env/persistence/InventoryAppDB");
 
-
- // perform JNDI lookup to obtain entity
-manager factory
-
- EntityManagerFactory emf =
-(EntityManagerFactory)
-
-
-initCtx.lookup("java:comp/env/persistence/InventoryAppDB");
-
-
-
- // use factory to obtain application-managed
-entity manager
-
- EntityManager em =
-emf.createEntityManager();
-
+ // use factory to obtain application-managed entity manager
+ EntityManager em = emf.createEntityManager();
  ...
-
  }
-
 }
+----
 
-
-
-=== [[a4588]]Declaration of Persistence Unit References in Deployment Descriptor
+[[a4588]]
+===== Declaration of Persistence Unit References in Deployment Descriptor
 
 Although a persistence unit reference is an
 entry in the enterprise bean’s environment, the Bean Provider must not
-use an env-entry element to declare it.
+use an `env-entry` element to declare it.
 
 Instead, if metadata annotations are not
 used, the Bean Provider must declare all the persistence unit references
-in the deployment descriptor using the persistence-unit-ref elements.
+in the deployment descriptor using the `persistence-unit-ref` elements.
 This allows the ejb-jar consumer (i.e. Application Assembler or
 Deployer) to discover all the persistence unit references used by an
 enterprise bean. Deployment descriptor entries may also be used to
 specify injection of a persistence unit reference into a bean.
 
 Each
-persistence-unit-ref element describes a single entity manager factory
-reference for the persistence unit. The persistence-unit-ref element
-consists of the optional description and persistence-unit-name elements,
-and the mandatory persistence-unit-ref-name element.
+`persistence-unit-ref` element describes a single entity manager factory
+reference for the persistence unit. The `persistence-unit-ref` element
+consists of the optional `description` and `persistence-unit-name` elements,
+and the mandatory `persistence-unit-ref-name` element.
 
-The persistence-unit-ref-name element
+The `persistence-unit-ref-name` element
 contains the name of the environment entry used in the enterprise bean’s
 code. The name of the environment entry is relative to the java:comp/env
-context (e.g., the name should be persistence/InventoryAppDB rather than
-java:comp/env/persistence/InventoryAppDB). The optional
-persistence-unit-name element is the name of the persistence unit, as
-specified in the _persistence.xml_ file for the persistence unit.
+context (e.g., the name should be `persistence/InventoryAppDB` rather than
+`java:comp/env/persistence/InventoryAppDB`). The optional
+`persistence-unit-name` element is the name of the persistence unit, as
+specified in the `persistence.xml` file for the persistence unit.
 
 The following example is the declaration of a
 persistence unit reference used by the InventoryManager enterprise bean
 illustrated in the previous subsection.
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>InventoryManagerBean</ejb-name>
-
- <ejb-class>
-
- com.wombat.empl.InventoryManagerBean
-
- </ejb-class>
-
- ...
-
- <persistence-unit-ref>
-
- <description>
-
- Persistence unit for the inventory
-management
-
- application.
-
- </description>
-
- <persistence-unit-ref-name>
-
- persistence/InventoryAppDB
-
- </persistence-unit-ref-name>
-
- <persistence-unit-name>
-
- InventoryManagement
-
- </persistence-unit-name>
-
- </persistence-unit-ref>
-
- ...
-
- </session>
-
+  <session>
+    ...
+    <ejb-name>InventoryManagerBean</ejb-name>
+    <ejb-class>
+      com.wombat.empl.InventoryManagerBean
+    </ejb-class>
+    ...
+    <persistence-unit-ref>
+      <description>
+        Persistence unit for the inventory management
+        application.
+      </description>
+      <persistence-unit-ref-name>
+        persistence/InventoryAppDB
+      </persistence-unit-ref-name>
+      <persistence-unit-name>
+        InventoryManagement
+      </persistence-unit-name>
+    </persistence-unit-ref>
+    ...
+  </session>
 </enterprise-beans>
-
 ...
+----
 
-
-
-=== [[a4621]]Application Assembler’s Responsibilities
+[[a4621]]
+==== Application Assembler’s Responsibilities
 
 The Application Assembler can use the
-_persistence-unit-name_ element in the deployment descriptor to specify
+`persistence-unit-name` element in the deployment descriptor to specify
 a reference to a persistence unit. The Application Assembler (or Bean
-Provider) may use the following syntax in the _persistence-unit-name_
+Provider) may use the following syntax in the `persistence-unit-name`
 element of the referencing application component to avoid the need to
 rename persistence units to have unique names within a Java EE
 application. The Application Assembler specifies the path name of the
 root of the referenced persistence unit and appends the name of the
-persistence unit separated from the path name by _#_ . The path name is
+persistence unit separated from the path name by `#`. The path name is
 relative to the referencing application component jar file. In this
 manner, multiple persistence units with the same persistence unit name
 may be uniquely identified when persistence unit names cannot be
@@ -2599,81 +2538,58 @@ changed.
 
 For example,
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>InventoryManagerBean</ejb-name>
-
- <ejb-class>
-
- com.wombat.empl.InventoryManagerBean
-
- </ejb-class>
-
- ...
-
- <persistence-unit-ref>
-
- <description>
-
- Persistence unit for the inventory
-management
-
- application.
-
- </description>
-
- <persistence-unit-ref-name>
-
- persistence/InventoryAppDB
-
- </persistence-unit-ref-name>
-
- <persistence-unit-name>
-
- ../lib/inventory.jar#InventoryManagement
-
- </persistence-unit-name>
-
- </persistence-unit-ref>
-
- ...
-
- </session>
-
+  <session>
+    ...
+    <ejb-name>InventoryManagerBean</ejb-name>
+    <ejb-class>
+      com.wombat.empl.InventoryManagerBean
+    </ejb-class>
+    ...
+    <persistence-unit-ref>
+      <description>
+        Persistence unit for the inventory management
+        application.
+      </description>
+      <persistence-unit-ref-name>
+        persistence/InventoryAppDB
+      </persistence-unit-ref-name>
+      <persistence-unit-name>
+        ../lib/inventory.jar#InventoryManagement
+      </persistence-unit-name>
+    </persistence-unit-ref>
+    ...
+  </session>
 </enterprise-beans>
-
 ...
+----
 
 The Application Assembler uses the
-_persistence-unit-name_ element to link the persistence unit name
-_InventoryManagement_ declared in the _InventoryManagerBean_ to the
-persistence unit named _InventoryManagement_ defined in _inventory.jar_
-.
+`persistence-unit-name` element to link the persistence unit name
+`InventoryManagement` declared in the `InventoryManagerBean` to the
+persistence unit named `InventoryManagement` defined in `inventory.jar`.
 
-=== Overriding Rules
+===== Overriding Rules
 
 The following rules apply to how a deployment
-descriptor entry may override a _PersistenceUnit_ annotation:
+descriptor entry may override a `PersistenceUnit` annotation:
 
 The relevant deployment descriptor entry is
 located based on the JNDI name used with the annotation (either
 defaulted or provided explicitly).
 
-The _persistence-unit-name_ overrides the
-_unitName_ element of the annotation. The Application Assembler or
+The `persistence-unit-name` overrides the
+`unitName` element of the annotation. The Application Assembler or
 Deployer should exercise caution in changing this value, if specified,
 as doing so is likely to break the application.
 
 The injection target, if specified, must name
 exactly the annotated field or property method.
 
-=== Deployer’s Responsibility
+==== Deployer’s Responsibility
 
 The Deployer uses deployment tools to
 bind a persistence unit reference to the
@@ -2684,48 +2600,46 @@ The Deployer must perform the following tasks
 for each persistence unit reference declared in the metadata annotations
 or deployment descriptor:
 
-Bind the persistence unit reference to an
+* Bind the persistence unit reference to an
 entity manager factory configured for the persistence unit that exists
 in the operational environment. The Deployer may use, for example, the
-JNDI LinkRef mechanism to create a symbolic link to the actual JNDI name
+JNDI `LinkRef` mechanism to create a symbolic link to the actual JNDI name
 of the entity manager factory.
 
-If the persistence unit name is specified,
+* If the persistence unit name is specified,
 the Deployer should bind the persistence unit reference to the entity
 manager factory for the persistence unit specified as the target.
 
-Provide any additional configuration
+* Provide any additional configuration
 information that the entity manager factory needs for managing the
-persistence unit, as described in link:Ejb.html#a9851[See Java™
-Persistence API, version 2.1. http://jcp.org/en/jsr/detail?id=338.].
+persistence unit, as described in <<a9851, ^[2]^>>.
 
-=== Container Provider Responsibility
+==== Container Provider Responsibility
 
 The EJB Container
 Provider is responsible for the following:
 
-Provide the
+* Provide the
 deployment tools that allow the Deployer to
 perform the tasks described in the previous subsection.
 
-Provide the implementation of the entity
+* Provide the implementation of the entity
 manager factory classes for the persistence units that are configured
 with the EJB container. The implementation of the entity manager factory
 classes may be provided by the container directly or by the container in
 conjunction with a third-party persistence provider, as described in
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
+<<a9851, ^[2]^>>.
 
-=== System Administrator’s Responsibility
+==== System Administrator’s Responsibility
 
 The System
 Administrator is typically responsible for the following:
 
-Add, remove, and configure entity manager
+* Add, remove, and configure entity manager
 factories in the EJB server environment.
 
-In some scenarios, these tasks can be
-performed by the Deployer.
+_In some scenarios, these tasks can be
+performed by the Deployer._
 
 === [[a4671]]Persistence Context References
 
