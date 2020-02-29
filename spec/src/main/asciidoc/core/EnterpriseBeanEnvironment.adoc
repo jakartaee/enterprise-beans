@@ -792,15 +792,14 @@ container must throw the
 from all the methods of the `javax.naming.Context` interface that modify
 the environment naming context and its subcontexts.
 
-=== [[a3912]]EJB References
-
-
+[[a3912]]
+=== EJB References
 
 This section
 describes the programming and deployment descriptor interfaces that
 allow the Bean Provider to refer to the business interfaces,
 no-interface views, or home interfaces of other enterprise beans using
-“logical” names called EJB references. The EJB references are special
+"logical" names called _EJB references_. The EJB references are special
 entries in the enterprise bean’s environment. The Deployer binds the EJB
 references to the enterprise bean business interfaces, no-interface
 views, or home interfaces in the target operational environment, as
@@ -816,7 +815,8 @@ view, or home interface of the specified target enterprise bean. This
 linking can also be specified by the Bean Provider using annotations in
 the source code of the bean class.
 
-=== [[a3915]]Bean Provider’s Responsibilities
+[[a3915]]
+==== Bean Provider’s Responsibilities
 
 This section describes the Bean Provider’s
 view and responsibilities with respect to EJB references. The first
@@ -825,449 +825,351 @@ second describes the API for accessing EJB references; and the third
 describes syntax for declaring the EJB references in a deployment
 descriptor.
 
-=== Injection of EJB References
+===== Injection of EJB References
 
-The Bean Provider uses the _EJB_ annotation
+The Bean Provider uses the `EJB` annotation
 to annotate a field or setter property method of the bean class as a
 target for the injection of an EJB reference.
 
-EJB annotation contains the following
+`EJB` annotation contains the following
 elements:
 
-The name element refers to the name by which
+* The `name` element refers to the name by which
 the resource is to be looked up in the environment.
 
-The beanInterface element is the referenced
+* The `beanInterface` element is the referenced
 interface type. The reference may be to a session bean’s business
 interface, to a session bean’s no-interface view, or to the local home
 interface or remote home interface of a session bean or an entity
-beanlink:#a10323[103].
+bean<<a10323, ^[103]^>>.
 
-The beanName element references the value of
-the name element of the Stateful or Stateless annotation (or ejb-name
+* The `beanName` element references the value of
+the name element of the `Stateful` or `Stateless` annotation (or `ejb-name`
 element, if the deployment descriptor was used to define the name of th
-bean). The beanName element allows disambiguation if multiple session
+bean). The `beanName` element allows disambiguation if multiple session
 beans in the ejb-jar implement the same interface.
 
-The mappedName element is a product-specific
+* The `mappedName` element is a product-specific
 name that the bean reference should be mapped to. Applications that use
 mapped names may not be portable.
 
-The lookup element is a portable lookup
+* The `lookup` element is a portable lookup
 string containing the JNDI name for the target EJB component.
 
-Either the beanName or the lookup element can
+Either the `beanName` or the `lookup` element can
 be used to resolve the EJB dependency to the target component. It is an
-error to specify values for both beanName and lookup.
+error to specify values for both `beanName` and `lookup`.
 
 The following example illustrates how an
-enterprise bean uses the _EJB_ annotation to reference another
+enterprise bean uses the `EJB` annotation to reference another
 enterprise bean. The enterprise bean reference will have the name
-_java:comp/env/com.acme.example.ExampleBean/myCart_ in the referencing
-bean’s naming context, where _ExampleBean_ is the name of the class of
-the referencing bean and _com.acme.example_ its package. The target of
+`java:comp/env/com.acme.example.ExampleBean/myCart` in the referencing
+bean’s naming context, where `ExampleBean` is the name of the class of
+the referencing bean and `com.acme.example` its package. The target of
 the reference must be resolved by the Deployer, unless there is only one
 session bean component within the same application that exposes a client
 view type which matches the EJB reference.
 
+[source, java]
+----
 package com.acme.example;
-
-
-
-@Stateless public class ExampleBean
-implements Example \{
-
+@Stateless 
+public class ExampleBean implements Example {
  ...
-
- @EJB private ShoppingCart myCart;
-
+ @EJB 
+ private ShoppingCart myCart;
  ...
-
 }
+----
 
 The following example illustrates use of
-almost all portable elements of the _EJB_ annotation. In this case, the
+almost all portable elements of the `EJB` annotation. In this case, the
 enterprise bean reference would have the name
-_java:comp/env/ejb/shopping-cart_ in the referencing bean’s naming
-context. This reference is linked to a bean named _cart1_ .
+`java:comp/env/ejb/shopping-cart` in the referencing bean’s naming
+context. This reference is linked to a bean named `cart1` .
 
+[source, java]
+----
 @EJB(
-
  name="ejb/shopping-cart",
-
  beanInterface=ShoppingCart.class,
-
  beanName="cart1",
-
- description="The shopping cart for this
-application"
-
+ description="The shopping cart for this application"
 )
-
 private ShoppingCart myCart;
+----
 
-
-
-As an alternative to _beanName_ , a reference
+As an alternative to `beanName` , a reference
 to an EJB can use a session bean JNDI name by means of the lookup
 annotation element. The following example uses a JNDI name in the
 application namespace.
 
-
-
+[source, java]
+----
 @EJB(
-
  lookup="java:app/cartModule/ShoppingCart",
-
- description="The shopping cart for this
-application"
-
+ description="The shopping cart for this application"
 )
-
 private ShoppingCart myOtherCart;
+----
 
-
-
-If the _ShoppingCart_ bean were instead
+If the `ShoppingCart` bean were instead
 written to the EJB 2.1 client view, the EJB reference would be to the
 bean’s home interface. For example:
 
+[source, java]
+----
 @EJB(
-
  name="ejb/shopping-cart",
-
  beanInterface=ShoppingCartHome.class,
-
  beanName="cart1",
-
- description="The shopping cart for this
-application"
-
+ description="The shopping cart for this application"
 )
-
 private ShoppingCartHome myCartHome;
+----
 
-
-
-If the _ShoppingCart_ bean were instead
+If the `ShoppingCart` bean were instead
 written to the no-interface client view and was implemented by bean
-class ShoppingCartBean.class, the EJB reference would have type
-ShoppingCartBean.class. For example:
+class `ShoppingCartBean.class`, the EJB reference would have type
+`ShoppingCartBean.class`. For example:
 
+[source, java]
+----
 @EJB(
-
  name="ejb/shopping-cart",
-
  beanInterface=ShoppingCartBean.class,
-
  beanName="cart1",
-
- description="The shopping cart for this
-application"
-
+ description="The shopping cart for this application"
 )
-
 private ShoppingCartBean myCart;
+----
 
-
-
-=== EJB Reference Programming Interfaces
+===== EJB Reference Programming Interfaces
 
 The Bean Provider
 may use EJB references to locate the business interfaces, no-interface
 views, or home interfaces of other enterprise beans as follows.
 
-Assign an entry in the enterprise bean’s
-environment to the reference. (See subsection
-link:Ejb.html#a3998[See Declaration of EJB References in
-Deployment Descriptor] for information on how EJB references are
+:section-refsig: subsection
+* Assign an entry in the enterprise bean’s
+environment to the reference. (See <<a3998>> 
+for information on how EJB references are
 declared in the deployment descriptor.)
 
-The EJB specification recommends, but does
+:section-refsig: Section
+
+* The EJB specification recommends, but does
 not require, that all references to other enterprise beans be organized
-in the _ejb_ subcontext of the bean’s environment (i.e., in the
-_java:comp/env/ejb_ JNDI context). Note that enterprise bean references
+in the `ejb` subcontext of the bean’s environment (i.e., in the
+`java:comp/env/ejb` JNDI context). Note that enterprise bean references
 declared by means of annotations will not, by default, be in any
 subcontext.
 
-Look up the business interface, no-interface
+* Look up the business interface, no-interface
 view, or home interface of the referenced enterprise bean in the
-enterprise bean’s environment using the EJBContext _lookup_ method or
+enterprise bean’s environment using the EJBContext `lookup` method or
 the JNDI API.
 
 The following example illustrates how an
 enterprise bean uses an EJB reference to locate the remote home
 interface of another enterprise bean using the JNDI APIs.
 
+[source, java]
+----
 @EJB(name="ejb/EmplRecord",
 beanInterface=EmployeeRecordHome.class)
+@Stateless 
+public class EmployeeServiceBean 
+        implements EmployeeService {
 
-@Stateless public class EmployeeServiceBean
-
- implements EmployeeService \{
-
-
-
- public void changePhoneNumber(...) \{
-
+ public void changePhoneNumber(...) {
  ...
-
-
-
  // Obtain the default initial JNDI context.
-
  Context initCtx = new InitialContext();
 
-
-
- // Look up the home interface of the
-EmployeeRecord
-
+ // Look up the home interface of the EmployeeRecord
  // enterprise bean in the environment.
-
  Object result = initCtx.lookup(
-
- "java:comp/env/ejb/EmplRecord");
-
-
+      "java:comp/env/ejb/EmplRecord");
 
  // Convert the result to the proper type.
-
- EmployeeRecordHome emplRecordHome =
-(EmployeeRecordHome)
-
-
-javax.rmi.PortableRemoteObject.narrow(result,
-
- EmployeeRecordHome.class);
-
+ EmployeeRecordHome emplRecordHome = (EmployeeRecordHome)
+       javax.rmi.PortableRemoteObject.narrow(result,
+                EmployeeRecordHome.class);
  ...
-
  }
-
 }
+----
 
 In the example, the Bean Provider of the
-_EmployeeServiceBean_ enterprise bean assigned the environment entry
-ejb/EmplRecord as the EJB reference name to refer to the remote home of
+`EmployeeServiceBean` enterprise bean assigned the environment entry
+`ejb/EmplRecord` as the EJB reference name to refer to the remote home of
 another enterprise bean.
 
-=== [[a3998]]Declaration of EJB References in Deployment Descriptor
+[[a3998]]
+===== Declaration of EJB References in Deployment Descriptor
 
 Although the EJB
 reference is an entry in the enterprise bean’s environment, the Bean
-Provider must not use a env-entry element to declare it. Instead, the
-Bean Provider must declare all the EJB references using the ejb-ref and
-_ejb-local-ref_ elements of the deployment descriptor. This allows the
+Provider must not use a `env-entry` element to declare it. Instead, the
+Bean Provider must declare all the EJB references using the `ejb-ref` and
+`ejb-local-ref` elements of the deployment descriptor. This allows the
 ejb-jar consumer (i.e. Application Assembler or Deployer) to discover
 all the EJB references used by the enterprise bean. Deployment
 descriptor entries may also be used to specify injection of an EJB
 reference into a bean.
 
-Each ejb-ref or _ejb-local-ref_
+Each `ejb-ref` or `ejb-local-ref`
  element describes the interface
 requirements that the referencing enterprise bean has for the referenced
-enterprise bean. The _ejb-ref_ element is used for referencing an
+enterprise bean. The `ejb-ref` element is used for referencing an
 enterprise bean that is accessed through its remote business interface
-or remote home and component interfaces. The _ejb-local-ref_
+or remote home and component interfaces. The `ejb-local-ref`
  element is used for referencing an
 enterprise bean that is accessed through its local business interface,
 no-interface view, local home and component interfaces.
 
-The ejb-ref element contains the description,
-ejb-ref-name, ejb-ref-type, home, remote, ejb-link, and lookup-name
+The `ejb-ref` element contains the `description`,
+`ejb-ref-name`, `ejb-ref-type`, `home`, `remote`, `ejb-link`, and `lookup-name`
 elements.
 
-The ejb-local-ref element contains the
-description, ejb-ref-name, ejb-ref-type, _local-home_ , local, ejb-link,
-and lookup-name elements.
+The `ejb-local-ref` element contains the
+`description`, `ejb-ref-name`, `ejb-ref-type`, `local-home` , `local`, `ejb-link`,
+and `lookup-name` elements.
 
-The ejb-ref-name
+The `ejb-ref-name`
 element specifies the EJB reference name: its value is the environment
-entry name used in the enterprise bean code. The _ejb-ref-name_ must be
+entry name used in the enterprise bean code. The `ejb-ref-name` must be
 specified.
 
 The optional
-ejb-ref-type element specifies the expected
+`ejb-ref-type` element specifies the expected
 type of the enterprise bean: its value must be either
-Entitylink:#a10324[104] or Session.
+Entity<<a10324, ^[104]^>> or Session.
 
-The home and remote or _local-home_
- and _local_
+The `home` and `remote` or `local-home`
+ and `local`
 elements specify the expected Java types of the referenced enterprise
 bean’s interface(s). If the reference is to an EJB 2.1 remote client
-view interface, the _home_ element is required. Likewise, if the
-reference is to an EJB 2.1 local client view interface, the _local-home_
-element is required. The _remote_ element of the _ejb-ref_ element
+view interface, the `home` element is required. Likewise, if the
+reference is to an EJB 2.1 local client view interface, the `local-home`
+element is required. The `remote` element of the `ejb-ref` element
 refers to either the remote business interface type or the remote
 component interface, depending on whether the reference is to a bean’s
-EJB 3.x or EJB 2.1 remote client view. Likewise, the _local_ element of
-the _ejb-local-ref_ element refers to either the local business
+EJB 3.x or EJB 2.1 remote client view. Likewise, the `local` element of
+the `ejb-local-ref` element refers to either the local business
 interface type, bean class type or the local component interface type,
 depending on whether the reference is to a bean’s EJB 3.x local business
 interface, no-interface view, or EJB 2.1 local client view respectively.
 
-The _ejb-link_ element is used to like an EJB
-reference to a target bean, and is described in section
-link:Ejb.html#a4057[See Application Assembler’s
-Responsibilities] below.
+The `ejb-link` element is used to like an EJB
+reference to a target bean, and is described in <<a4057>> below.
 
-The lookup-name element specifies the JNDI
+The `lookup-name` element specifies the JNDI
 name of the EJB reference’s target session bean, and is described
-further in section link:Ejb.html#a4057[See Application
-Assembler’s Responsibilities] below.
+further in <<a4057>> below.
 
-See Section link:Ejb.html#a3645[See
-Sharing of Environment Entries] for the name scoping rules of EJB
+See <<a3645>> for the name scoping rules of EJB
 references.
-
-
 
 The following example illustrates the
 declaration of EJB references in the deployment descriptor.
 
+[source, xml]
+----
 ...
-
-<enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>EmployeeService</ejb-name>
-
-
-<ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
-
- ...
-
- <ejb-ref>
-
- <description>
-
- This is a reference to an EJB 2.1 session
-bean that
-
- encapsulates access to employee records.
-
- </description>
-
- <ejb-ref-name>ejb/EmplRecord</ejb-ref-name>
-
- <ejb-ref-type>Session</ejb-ref-type>
-
-
-<home>com.wombat.empl.EmployeeRecordHome</home>
-
-
-<remote>com.wombat.empl.EmployeeRecord</remote>
-
- </ejb-ref>
-
-
-
- <ejb-local-ref>
-
- <description>
-
- This is a reference to the local business
-interface
-
- of an EJB 3.0 session bean that provides a
-payroll
-
- service.
-
- </description>
-
- <ejb-ref-name>ejb/Payroll</ejb-ref-name>
-
- <local>com.aardvark.payroll.Payroll</local>
-
- </ejb-local-ref>
-
-
-
- <ejb-local-ref>
-
- <description>
-
- This is a reference to the local business
-interface
-
- of an EJB 3.0 session bean that provides a
-pension
-
- plan service.
-
- </description>
-
- <ejb-ref-name>ejb/PensionPlan</ejb-ref-name>
-
- <local>com.wombat.empl.PensionPlan</local>
-
- </ejb-local-ref>
-
- ...
-
- </session>
-
- ...
-
-</enterprise-beans>
-
+ <enterprise-beans>
+  <session>
+  ...
+  <ejb-name>EmployeeService</ejb-name>
+  <ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
+  ...
+  <ejb-ref>
+    <description>
+        This is a reference to an EJB 2.1 session 
+        bean that encapsulates access to employee records.
+    </description>
+    <ejb-ref-name>ejb/EmplRecord</ejb-ref-name>
+    <ejb-ref-type>Session</ejb-ref-type>
+    <home>com.wombat.empl.EmployeeRecordHome</home>
+    <remote>com.wombat.empl.EmployeeRecord</remote>
+  </ejb-ref>
+  <ejb-local-ref>
+    <description>
+        This is a reference to the local business interface 
+        of an EJB 3.0 session bean that provides a payroll 
+        service.
+    </description>
+    <ejb-ref-name>ejb/Payroll</ejb-ref-name>
+    <local>com.aardvark.payroll.Payroll</local>
+  </ejb-local-ref>
+  <ejb-local-ref>
+    <description>
+        This is a reference to the local business interface 
+        of an EJB 3.0 session bean that provides a pension 
+        plan service.
+    </description>
+    <ejb-ref-name>ejb/PensionPlan</ejb-ref-name>
+    <local>com.wombat.empl.PensionPlan</local>
+  </ejb-local-ref>
+  ...
+  </session>
+  ...
+ </enterprise-beans>
 ...
+----
 
-=== [[a4057]]Application Assembler’s Responsibilities
+[[a4057]]
+==== Application Assembler’s Responsibilities
 
 The Application
-Assembler can use the ejb-link element in the deployment descriptor to
+Assembler can use the `ejb-link` element in the deployment descriptor to
 link an EJB reference to a target enterprise bean within the same
 application.
 
 The Application Assembler specifies the link
 between two enterprise beans as follows:
 
-The Application Assembler uses the optional
-ejb-link element of the ejb-ref or _ejb-local-ref_ element of the
-referencing enterprise bean. The value of the ejb-link element is the
+* The Application Assembler uses the optional
+`ejb-link` element of the `ejb-ref` or `ejb-local-ref` element of the
+referencing enterprise bean. The value of the `ejb-link` element is the
 name of the target enterprise bean. (This is the bean name as defined by
-metadata annotation (or default) in the bean class or in the _ejb-name_
+metadata annotation (or default) in the bean class or in the `ejb-name`
 element of the target enterprise bean.) The target enterprise bean can
-be in any ejb-jar file or _.war_ file in the same Java EE application as
+be in any ejb-jar file or `.war` file in the same Java EE application as
 the referencing application component.
 
-{empty}Alternatively, to avoid the need to
+* Alternatively, to avoid the need to
 rename enterprise beans to have unique names within an entire Java EE
 application, the Application Assembler may use either of the following
-two syntaxes in the _ejb-link_ element of the referencing application
-component. link:#a10325[105]
+two syntaxes in the `ejb-link` element of the referencing application
+component<<a10325, ^[105]^>>.
 
-The Application Assembler specifies the
-module name of the ejb-jar file or _.war_ file containing the referenced
+** The Application Assembler specifies the
+module name of the ejb-jar file or `.war` file containing the referenced
 enterprise bean and appends the ejb-name of the target bean separated by
-/. The module name is the name of the module in which the enterprise
-bean is packaged, with no filename extension, unless the _module-name_
+`/`. The module name is the name of the module in which the enterprise
+bean is packaged, with no filename extension, unless the `module-name`
 element is specified in the module’s deployment descriptor.
 
-The Application Assembler specifies the path
-name of the ejb-jar file or _.war_ file containing the referenced
+** The Application Assembler specifies the path
+name of the ejb-jar file or `.war` file containing the referenced
 enterprise bean and appends the ejb-name of the target bean separated
-from the path name by _#_ . The path name is relative to the referencing
+from the path name by `#`. The path name is relative to the referencing
 application component jar file. In this manner, multiple beans with the
 same ejb-name may be uniquely identified when the Application Assembler
 cannot change ejb-names.
 
-Rather than using ejb-link to resolve the EJB
-reference, the Application Assembler may use the _lookup-name_ element
+* Rather than using `ejb-link` to resolve the EJB
+reference, the Application Assembler may use the `lookup-name` element
 to reference the target EJB component by means of one of its JNDI names.
-It is an error for both ejb-link and lookup-name to be specified within
-an _ejb-ref_ or _ejb-local-ref_ element.
+It is an error for both ejb-link and `lookup-name` to be specified within
+an `ejb-ref` or `ejb-local-ref` element.
 
-The Application Assembler must ensure that
+* The Application Assembler must ensure that
 the target enterprise bean is type-compatible with the declared EJB
 reference. This means that the target enterprise bean must be of the
-type indicated in the ejb-ref-type element, if present, and that the
+type indicated in the `ejb-ref-type` element, if present, and that the
 business interface, bean class, or home and component interfaces of the
 target enterprise bean must be Java type-compatible with the type
 declared in the EJB reference.
@@ -1275,248 +1177,189 @@ declared in the EJB reference.
 The following illustrates the use of an
 ejb-link in the deployment descriptor.
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>EmployeeService</ejb-name>
-
-
-<ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
-
- ...
-
- <ejb-ref>
-
- <ejb-ref-name>ejb/EmplRecord</ejb-ref-name>
-
- <ejb-ref-type>Session</ejb-ref-type>
-
-
-<home>com.wombat.empl.EmployeeRecordHome</home>
-
-
-<remote>com.wombat.empl.EmployeeRecord</remote>
-
- <ejb-link>EmployeeRecord</ejb-link>
-
- </ejb-ref>
-
- ...
-
- </session>
-
- ...
-
-
-
-
-
- <session>
-
- <ejb-name>EmployeeRecord</ejb-name>
-
-
-<home>com.wombat.empl.EmployeeRecordHome</home>
-
-
-<remote>com.wombat.empl.EmployeeRecord</remote>
-
- ...
-
- </session>
-
- ...
-
+  <session>
+    ...
+    <ejb-name>EmployeeService</ejb-name>
+    <ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
+    ...
+    <ejb-ref>
+      <ejb-ref-name>ejb/EmplRecord</ejb-ref-name>
+      <ejb-ref-type>Session</ejb-ref-type>
+      <home>com.wombat.empl.EmployeeRecordHome</home>
+      <remote>com.wombat.empl.EmployeeRecord</remote>
+      <ejb-link>EmployeeRecord</ejb-link>
+    </ejb-ref>
+    ...
+  </session>
+  ...
+  <session>
+    <ejb-name>EmployeeRecord</ejb-name>
+    <home>com.wombat.empl.EmployeeRecordHome</home>
+    <remote>com.wombat.empl.EmployeeRecord</remote>
+    ...
+  </session>
+  ...
 </enterprise-beans>
-
 ...
+----
 
-The Application Assembler uses the ejb-link
-element to indicate that the EJB reference _EmplRecord_ declared in the
-_EmployeeService_ enterprise bean has been linked to the
-_EmployeeRecord_ enterprise bean.
+The Application Assembler uses the `ejb-link`
+element to indicate that the EJB reference `EmplRecord` declared in the
+`EmployeeService` enterprise bean has been linked to the
+`EmployeeRecord` enterprise bean.
 
 The following example illustrates using the
-_ejb-link_ element to indicate an enterprise bean reference to the
-ProductEJB enterprise bean that is in the same Java EE application unit
+`ejb-link` element to indicate an enterprise bean reference to the
+`ProductEJB` enterprise bean that is in the same Java EE application unit
 but in a different ejb-jar file.
 
+[source, xml]
+----
  <session>
-
- ...
-
- <ejb-name>OrderEJB</ejb-name>
-
-
-<ejb-class>com.wombat.orders.OrderBean</ejb-class>
-
- ...
-
- <ejb-ref>
-
- <ejb-ref-name>ejb/Product</ejb-ref-name>
-
- <ejb-ref-type>Session</ejb-ref-type>
-
- <home>com.acme.orders.ProductHome</home>
-
- <remote>com.acme.orders.Product</remote>
-
-
-<ejb-link>../products/product.jar#ProductEJB</ejb-link>
-
- </ejb-ref>
-
- ...
-
- </session>
+  ...
+  <ejb-name>OrderEJB</ejb-name>
+  <ejb-class>com.wombat.orders.OrderBean</ejb-class>
+  ...
+  <ejb-ref>
+    <ejb-ref-name>ejb/Product</ejb-ref-name>
+    <ejb-ref-type>Session</ejb-ref-type>
+    <home>com.acme.orders.ProductHome</home>
+    <remote>com.acme.orders.Product</remote>
+    <ejb-link>../products/product.jar#ProductEJB</ejb-link>
+  </ejb-ref>
+  ...
+</session>
+----
 
 The following example illustrates using the
-_ejb-link_ element to indicate an enterprise bean reference to the
-_ShoppingCart_ enterprise bean that is in the same Java EE application
+`ejb-link` element to indicate an enterprise bean reference to the
+`ShoppingCart` enterprise bean that is in the same Java EE application
 unit but in a different ejb-jar file. The reference was originally
 declared in the bean’s code using an annotation. The Application
 Assembler provides only the link to the bean.
 
+[source, xml]
+----
 ...
-
 <ejb-ref>
-
-
-<ejb-ref-name>ShoppingService/myCart</ejb-ref-name>
-
- <ejb-link>product/ShoppingCart</ejb-link>
-
+  <ejb-ref-name>ShoppingService/myCart</ejb-ref-name>
+  <ejb-link>product/ShoppingCart</ejb-link>
 </ejb-ref>
-
-
+...
+----
 
 The same effect can be obtained with the
-_lookup-name_ element instead, using an appropriate JNDI name for the
+`lookup-name` element instead, using an appropriate JNDI name for the
 target bean.
 
+[source, xml]
+----
 ...
-
 <ejb-ref>
-
-
-<ejb-ref-name>ShoppingService/myCart</ejb-ref-name>
-
-
-<lookup-name>java:app/products/ShoppingCart</lookup-name>
-
+  <ejb-ref-name>ShoppingService/myCart</ejb-ref-name>
+  <lookup-name>java:app/products/ShoppingCart</lookup-name>
 </ejb-ref>
-
-
-
 ...
+----
 
-
-
-=== Overriding Rules
+===== Overriding Rules
 
 The following rules apply to how a deployment
-descriptor entry may override an _EJB_ annotation:
+descriptor entry may override an `EJB` annotation:
 
-The relevant deployment descriptor entry is
+* The relevant deployment descriptor entry is
 located based on the JNDI name used with the annotation (either
 defaulted or provided explicitly).
 
-The type specified in the deployment
-descriptor via the _remote_ , _local_ , _remote-home_ , or _local-home_
-element and any bean referenced by the _ejb-link_ element must be
+* The type specified in the deployment
+descriptor via the `remote` , `local` , `remote-home` , or `local-home`
+element and any bean referenced by the `ejb-link` element must be
 assignable to the type of the field or property or the type specified by
-the _beanInterface_ element of the _EJB_ annotation.
+the `beanInterface` element of the `EJB` annotation.
 
-The description, if specified, overrides the
+* The description, if specified, overrides the
 description element of the annotation.
 
-The injection target, if specified, must name
+* The injection target, if specified, must name
 exactly the annotated field or property method.
 
-=== [[a4133]]Deployer’s Responsibility
+[[a4133]]
+==== Deployer’s Responsibility
 
 The Deployer is
 responsible for the following:
 
-The Deployer must ensure that all the
+* The Deployer must ensure that all the
 declared EJB references are bound to the business interfaces,
 no-interface views, or home interfaces of enterprise beans that exist in
 the operational environment. For session beans, the Deployer may use the
 information provided by the Bean Provider in the mappedName element of
-the _EJB_ annotation or the mapped-name element of the _ejb-ref_ or
-_ejb-local-ref_ deployment descriptor element in creating this binding.
-link:Ejb.html#a800[See Access in the Global JNDI Namespace]
-describes the syntax for session bean portable global JNDI names. The
-Deployer may also use, for example, the JNDI
-LinkRef mechanism to create a symbolic link to the actual JNDI name of
+the `EJB` annotation or the mapped-name element of the `ejb-ref` or
+`ejb-local-ref` deployment descriptor element in creating this binding.
+<<a800>> describes the syntax for session bean portable global JNDI 
+names. The Deployer may also use, for example, the JNDI
+`LinkRef` mechanism to create a symbolic link to the actual JNDI name of
 the target enterprise bean.
 
-The Deployer must ensure that the target
+* The Deployer must ensure that the target
 enterprise bean is type-compatible with the types declared for the EJB
 reference. This means that the target enterprise bean must be of the
-type indicated by the use of the _EJB_ annotation, by the ejb-ref-type
+type indicated by the use of the `EJB` annotation, by the `ejb-ref-type`
 element (if specified), and that the business interface, no-interface
 view, and/or home and component interfaces of the target enterprise bean
 must be Java type-compatible with the type of the injection target or
 the types declared in the EJB reference.
 
-If an _EJB_ annotation includes the
-_beanName_ element or the _ejb-ref_ or _ejb-local-ref_ element includes
-the ejb-link element, the Deployer should
+* If an `EJB` annotation includes the
+`beanName` element or the `ejb-ref` or `ejb-local-ref` element includes
+the `ejb-link` element, the Deployer should
 bind the enterprise bean reference to the enterprise bean specified as
 the target.
 
-If an EJB annotation includes the lookup
-element or the the _ejb-ref_ or _ejb-local-ref_ element includes the
-_lookup-name_ element, the Deployer should bind the enterprise bean
+* If an `EJB` annotation includes the lookup
+element or the the `ejb-ref` or `ejb-local-ref` element includes the
+`lookup-name` element, the Deployer should bind the enterprise bean
 reference to the enterprise bean specified as the target. It is an error
-for an EJB reference declaration to include both an ejb-link and a
-lookup-name element.
+for an EJB reference declaration to include both an `ejb-link` and a
+`lookup-name` element.
 
 The following example illustrates the use of
-the lookup-name element to bind an EJB reference to a target enterprise
+the `lookup-name` element to bind an EJB reference to a target enterprise
 bean in the operational environment. The reference was originally
 declared in the bean’s code using an annotation. The target enterprise
-bean has ejb-name ShoppingCart and is deployed in the stand-alone module
-products.jar.
+bean has ejb-name `ShoppingCart` and is deployed in the stand-alone module
+`products.jar`.
 
+[source, xml]
+----
 ...
-
 <ejb-ref>
-
-
-<ejb-ref-name>ShoppingService/myCart</ejb-ref-name>
-
-
-<lookup-name>java:global/products/ShoppingCart</lookup-name>
-
+  <ejb-ref-name>ShoppingService/myCart</ejb-ref-name>
+  <lookup-name>java:global/products/ShoppingCart</lookup-name>
 </ejb-ref>
+----
 
-
-
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider must provide the
 deployment tools that allow the Deployer to perform the tasks described
 in the previous subsection. The deployment
 tools provided by the EJB Container Provider must be able to process the
-information supplied in the ejb-ref and _ejb-local-ref_ elements in the
+information supplied in the `ejb-ref` and `ejb-local-ref` elements in the
 deployment descriptor.
 
 At the minimum, the tools must be able to:
 
-Preserve the application assembly information
-in annotations or in the ejb-link elements by binding an EJB reference
+* Preserve the application assembly information
+in annotations or in the `ejb-link` elements by binding an EJB reference
 to the business interface, no-interface view, or the home interface of
 the specified target bean.
 
-Inform the Deployer of any unresolved EJB
+* Inform the Deployer of any unresolved EJB
 references, and allow him or her to resolve an EJB reference by binding
 it to a specified compatible target bean.
 
