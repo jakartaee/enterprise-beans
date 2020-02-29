@@ -333,9 +333,8 @@ Services for Java EE_ specification<<a9879, ^[30]^>>.
 
 :section-refsig:
 
-=== [[a3680]]Responsibilities by EJB Role
-
-
+[[a3680]]
+=== Responsibilities by EJB Role
 
 This section describes the responsibilities
 of the various EJB roles with regard to the specification and handling
@@ -343,20 +342,21 @@ of environment entries. The sections that follow describe the
 responsibilities that are specific to the different types of objects
 that may be stored in the naming context.
 
-=== [[a3682]]Bean Provider’s Responsibilities
+[[a3682]]
+==== Bean Provider’s Responsibilities
 
 The Bean Provider may use Java language
 annotations or deployment descriptor entries to request injection of a
 resource from the naming context, or to declare entries that are needed
-in the naming context. The Bean Provider may also use the _EJBContext_
-_lookup_ method or the JNDI APIs to access entries in the naming
+in the naming context. The Bean Provider may also use the `EJBContext lookup` method or the JNDI APIs to access entries in the naming
 context. Deployment descriptor entries may also be used by the Bean
 Provider to override information provided by annotations.
 
-When using JNDI interfaces directly, an
-enterprise bean instance creates a javax.naming.InitialContext object by
+[none]
+. _When using JNDI interfaces directly, an
+enterprise bean instance creates a `javax.naming.InitialContext` object by
 using the constructor with no arguments, and looks up the environment
-naming via the InitialContext under the name java:comp/env.
+naming via the InitialContext under the name `java:comp/env`._
 
 The enterprise bean’s environment entries are
 stored directly in the environment naming context, or in any of its
@@ -368,7 +368,7 @@ deployment descriptor, or the type of the instance variable or setter
 method parameter of the method with which the metadata annotation is
 associated.
 
-=== Application Assembler’s Responsibility
+==== Application Assembler’s Responsibility
 
 The Application
 Assembler is allowed to modify the values of the environment entries set
@@ -379,7 +379,7 @@ to override settings made by the Bean Provider, whether these were
 defined by the Bean Provider in the deployment descriptor or in the
 source code using annotations.
 
-=== Deployer’s Responsibility
+==== Deployer’s Responsibility
 
 The Deployer must ensure that the values of
 all the environment entries declared by an enterprise bean are created
@@ -391,35 +391,35 @@ set by the Bean Provider and/or Application Assembler, and must set the
 values of those environment entries for
 which no value has been specified.
 
-The description
+The `description`
 elements provided by the Bean Provider or Application Assembler help the
 Deployer with this task.
 
-=== Container Provider Responsibility
+==== Container Provider Responsibility
 
 The Container Provider has the following
 responsibilities:
 
-Provide a deployment tool that allows the
+* Provide a deployment tool that allows the
 Deployer to set and modify the values of the enterprise bean’s
 environment entries.
 
-Implement the java:comp/env, java:module,
-java:app and java:global environment naming contexts, and provide them
+* Implement the `java:comp/env`, `java:module`,
+`java:app` and `java:global` environment naming contexts, and provide them
 to the enterprise bean instances at runtime. The naming context must
 include all the environment entries declared by the Bean Provider, with
 their values supplied in the deployment descriptor or set by the
 Deployer. The environment naming context must allow the Deployer to
 create subcontexts if they are needed by an enterprise bean.
 
-Inject entries from the naming environment,
+* Inject entries from the naming environment,
 as specified by annotations or by the deployment descriptor.
 
-The container must ensure that the enterprise
+* The container must ensure that the enterprise
 bean instances have only read access to their environment variables. The
 container must throw the
-javax.naming.OperationNotSupportedException
-from all the methods of the javax.naming.Context interface that modify
+`javax.naming.OperationNotSupportedException`
+from all the methods of the `javax.naming.Context` interface that modify
 the environment naming context and its subcontexts.
 
 === [[a3701]]Simple Environment Entries
