@@ -2641,23 +2641,21 @@ factories in the EJB server environment.
 _In some scenarios, these tasks can be
 performed by the Deployer._
 
-=== [[a4671]]Persistence Context References
-
-
+[[a4671]]
+=== Persistence Context References
 
 This section describes the metadata
 annotations and deployment descriptor elements that allow the enterprise
 bean code to refer to a container-managed entity manager of a specified
 persistence context type using a logical name called a _persistence
-context reference_ . Persistence context references are special entries
+context reference_. Persistence context references are special entries
 in the enterprise bean’s environment. The Deployer binds the persistence
 context references to container-managed entity managers for persistence
 contexts of the specified type and configured in accordance with their
 persistence unit, as described in the _Java Persistence API_
-specification link:Ejb.html#a9851[See Java™ Persistence API,
-version 2.1. http://jcp.org/en/jsr/detail?id=338.].
+specification<<a9851, ^[2]^>>.
 
-=== Bean Provider’s Responsibilities
+==== Bean Provider’s Responsibilities
 
 This subsection describes the Bean Provider’s
 view of locating container-managed entity managers and defines his or
@@ -2667,20 +2665,20 @@ describes the API for accessing references to container-managed entity
 managers; and the third describes syntax for declaring these references
 in a deployment descriptor.
 
-=== Injection of Persistence Context References
+===== Injection of Persistence Context References
 
 A field or a method of an enterprise bean may
-be annotated with the _PersistenceContext_ annotation. The _name_
+be annotated with the `PersistenceContext` annotation. The `name`
 element specifies the name under which a container-managed entity
 manager for the referenced persistence unit may be located in the JNDI
-naming context. The optional _unitName_ element specifies the name of
-the persistence unit as declared in the _persistence.xml_ file that
-defines the persistence unit. The optional _type_ element specifies
+naming context. The optional `unitName` element specifies the name of
+the persistence unit as declared in the `persistence.xml` file that
+defines the persistence unit. The optional `type` element specifies
 whether a transaction-scoped or extended persistence context is to be
 used. If the type is not specified, a transaction-scoped persistence
 context will be used. References to container-managed entity managers
 with extended persistence contexts can only be injected into stateful
-session beans. The optional _properties_ element specifies configuration
+session beans. The optional `properties` element specifies configuration
 properties to be passed to the persistence provider when the entity
 manager is created.
 
@@ -2688,308 +2686,239 @@ The following code example illustrates how an
 enterprise bean uses annotations to declare persistence context
 references.
 
+[source, java]
+----
 @PersistenceContext(type=EXTENDED)
-
 EntityManager em;
+----
 
-=== Programming Interfaces for Persistence Context References
+===== Programming Interfaces for Persistence Context References
 
 The Bean Provider
 must use persistence context references to obtain references to a
 container-managed entity manager configured for a persistence unit as
 follows:
 
-Assign an entry in the enterprise bean’s
-environment to the persistence context reference. (See subsection
-link:Ejb.html#a4717[See Declaration of Persistence Context
-References in Deployment Descriptor] for information on how persistence
+:section-refsig: subsection
+
+* Assign an entry in the enterprise bean’s
+environment to the persistence context reference. (See <<a4717>> 
+for information on how persistence
 context references are declared in the deployment descriptor.)
 
-The EJB specification recommends, but does
-not require, that all persistence context references be organized in the
-java:comp/env/persistence subcontexts of the bean’s environment.
+:section-refsig: Section
 
-Lookup the container-managed entity manager
+* The EJB specification recommends, but does
+not require, that all persistence context references be organized in the
+`java:comp/env/persistence` subcontexts of the bean’s environment.
+
+* Lookup the container-managed entity manager
 for the persistence unit in the enterprise bean’s environment using the
-_EJBContext_ _lookup_ method or using the JNDI API.
+EJBContext `lookup` method or using the JNDI API.
 
 The following code sample illustrates
 obtaining an entity manager for a persistence context when the
-EJBContext _lookup_ method is used.
+EJBContext `lookup` method is used.
 
+[source, java]
+----
 @PersistenceContext(name="persistence/InventoryAppMgr")
-
 @Stateless
+public class InventoryManagerBean implements InventoryManager {
 
-public class InventoryManagerBean implements
-InventoryManager \{
+ @Resource 
+ SessionContext ctx;
 
- @Resource SessionContext ctx;
-
-
-
- public void updateInventory(...) \{
-
+ public void updateInventory(...) {
  ...
-
- // use context lookup to obtain
-container-managed entity manager
-
- EntityManager em =(EntityManager)
-
- ctx.lookup("persistence/InventoryAppMgr");
-
+ // use context lookup to obtain container-managed entity manager
+ EntityManager em = (EntityManager)
+     ctx.lookup("persistence/InventoryAppMgr");
  ...
-
  }
-
 }
+----
 
 The following code sample illustrates
 obtaining an entity manager when the JNDI APIs are used directly.
 
+[source, java]
+----
 @PersistenceContext(name="persistence/InventoryAppMgr")
-
 @Stateless
-
-public class InventoryManagerBean implements
-InventoryManager \{
+public class InventoryManagerBean implements InventoryManager {
 
  EJBContext ejbContext;
 
-
-
- public void updateInventory(...) \{
-
+ public void updateInventory(...) {
  ...
-
  // obtain the initial JNDI context
-
  Context initCtx = new InitialContext();
 
-
-
- // perform JNDI lookup to obtain
-container-managed entity manager
-
+ // perform JNDI lookup to obtain container-managed entity manager
  EntityManager em = (EntityManager)
-
-
-initCtx.lookup("java:comp/env/persistence/InventoryAppMgr");
-
+     initCtx.lookup("java:comp/env/persistence/InventoryAppMgr");
  ...
-
  }
-
 }
+----
 
-
-
-=== [[a4717]]Declaration of Persistence Context References in Deployment Descriptor
+[[a4717]]
+===== Declaration of Persistence Context References in Deployment Descriptor
 
 Although a persistence context reference is
 an entry in the enterprise bean’s environment, the Bean Provider must
-not use an env-entry element to declare it.
+not use an `env-entry` element to declare it.
 
 Instead, if metadata annotations are not
 used, the Bean Provider must declare all the persistence context
 references in the deployment descriptor using the
-persistence-context-ref elements. This allows the ejb-jar consumer (i.e.
+`persistence-context-ref` elements. This allows the ejb-jar consumer (i.e.
 Application Assembler or Deployer) to discover all the persistence
 context references used by an enterprise bean. Deployment descriptor
 entries may also be used to specify injection of a persistence context
 reference into a bean.
 
 Each
-persistence-context-ref element describes a single container-managed
-entity manager reference. The persistence-context-ref element consists
-of the optional description, persistence-unit-name,
-_persistence-context-type,_ persistence-context-synchronization, and
-_persistence-property_ elements, and the mandatory
-persistence-context-ref-name element.
+`persistence-context-ref` element describes a single container-managed
+entity manager reference. The `persistence-context-ref` element consists
+of the optional description, `persistence-unit-name`,
+`persistence-context-type`, `persistence-context-synchronization`, and
+`persistence-property` elements, and the mandatory
+`persistence-context-ref-name` element.
 
-The persistence-context-ref-name element
+The `persistence-context-ref-name` element
 contains the name of the environment entry used in the enterprise bean’s
-code. The name of the environment entry is relative to the java:comp/env
-context (e.g., the name should be persistence/InventoryAppMgr rather
-than java:comp/env/persistence/InventoryAppMgr). The
-persistence-unit-name element is the name of the persistence unit, as
-specified in the _persistence.xml_ file for the persistence unit. The
-_persistence-context-type_ element specifies whether a
+code. The name of the environment entry is relative to the `java:comp/env`
+context (e.g., the name should be `persistence/InventoryAppMgr` rather
+than `java:comp/env/persistence/InventoryAppMgr`). The
+`persistence-unit-name` element is the name of the persistence unit, as
+specified in the `persistence.xml` file for the persistence unit. The
+`persistence-context-type` element specifies whether a
 transaction-scoped or extended persistence context is to be used. Its
-value is either _Transaction_ or _Extended_ . If the persistence context
+value is either `Transaction` or `Extended`. If the persistence context
 type is not specified, a transaction-scoped persistence context will be
-used. The optional persistence-context-synchronization element specifies
+used. The optional `persistence-context-synchronization` element specifies
 whether the persistence context is automatically synchronized with the
-current transaction. Its value is either Synchronized or Unsynchronized.
+current transaction. Its value is either `Synchronized` or `Unsynchronized`.
 If the persistence context synchronization is not specified, the
 persistence context will be automatically synchronized. The optional
-_persistence-property_ elements specify configuration properties that
+`persistence-property` elements specify configuration properties that
 are passed to the persistence provider when the entity manager is
 created.
 
 The following example is the declaration of a
-persistence context reference used by the InventoryManager enterprise
+persistence context reference used by the `InventoryManager` enterprise
 bean illustrated in the previous subsection.
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>InventoryManagerBean</ejb-name>
-
- <ejb-class>
-
- com.wombat.empl.InventoryManagerBean
-
- </ejb-class>
-
- ...
-
- <persistence-context-ref>
-
- <description>
-
- Persistence context for the inventory
-management
-
- application.
-
- </description>
-
- <persistence-context-ref-name>
-
- persistence/InventoryAppMgr
-
- </persistence-context-ref-name>
-
- <persistence-unit-name>
-
- InventoryManagement
-
- </persistence-unit-name>
-
- </persistence-context-ref>
-
- ...
-
- </session>
-
+  <session>
+    ...
+    <ejb-name>InventoryManagerBean</ejb-name>
+    <ejb-class>
+      com.wombat.empl.InventoryManagerBean
+    </ejb-class>
+    ...
+    <persistence-context-ref>
+      <description>
+        Persistence context for the inventory management
+        application.
+      </description>
+      <persistence-context-ref-name>
+        persistence/InventoryAppMgr
+      </persistence-context-ref-name>
+      <persistence-unit-name>
+        InventoryManagement
+      </persistence-unit-name>
+    </persistence-context-ref>
+    ...
+  </session>
 </enterprise-beans>
-
 ...
+----
 
-
-
-=== Application Assembler’s Responsibilities
+==== Application Assembler’s Responsibilities
 
 The Application Assembler can use the
-_persistence-unit-name_ element in the deployment descriptor to specify
-a reference to a persistence unit using the syntax described in section
-link:Ejb.html#a4621[See Application Assembler’s
-Responsibilities]. In this manner, multiple persistence units with the
+`persistence-unit-name` element in the deployment descriptor to specify
+a reference to a persistence unit using the syntax described in <<a4621>>. 
+In this manner, multiple persistence units with the
 same persistence unit name may be uniquely identified when persistence
 unit names cannot be changed.
 
 For example,
 
-
-
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>InventoryManagerBean</ejb-name>
-
- <ejb-class>
-
- com.wombat.empl.InventoryManagerBean
-
- </ejb-class>
-
- ...
-
- <persistence-context-ref>
-
- <description>
-
- Persistence context for the inventory
-management
-
- application.
-
- </description>
-
- <persistence-context-ref-name>
-
- persistence/InventoryAppMgr
-
- </persistence-context-ref-name>
-
- <persistence-unit-name>
-
- ../lib/inventory.jar#InventoryManagement
-
- </persistence-unit-name>
-
- </persistence-context-ref>
-
- ...
-
- </session>
-
+  <session>
+    ...
+    <ejb-name>InventoryManagerBean</ejb-name>
+    <ejb-class>
+      com.wombat.empl.InventoryManagerBean
+    </ejb-class>
+    ...
+    <persistence-context-ref>
+      <description>
+        Persistence context for the inventory management
+        application.
+      </description>
+      <persistence-context-ref-name>
+        persistence/InventoryAppMgr
+      </persistence-context-ref-name>
+      <persistence-unit-name>
+        ../lib/inventory.jar#InventoryManagement
+      </persistence-unit-name>
+    </persistence-context-ref>
+    ...
+  </session>
 </enterprise-beans>
-
 ...
+----
 
 The Application Assembler uses the
-_persistence-unit-name_ element to link the persistence unit name
-_InventoryManagement_ declared in the _InventoryManagerBean_ to the
-persistence unit named _InventoryManagement_ defined in _inventory.jar_
-.
+`persistence-unit-name` element to link the persistence unit name
+`InventoryManagement` declared in the `InventoryManagerBean` to the
+persistence unit named `InventoryManagement` defined in `inventory.jar`.
 
-=== Overriding Rules
+===== Overriding Rules
 
 The following rules apply to how a deployment
-descriptor entry may override a _PersistenceContext_ annotation:
+descriptor entry may override a `PersistenceContext` annotation:
 
-The relevant deployment descriptor entry is
+* The relevant deployment descriptor entry is
 located based on the JNDI name used with the annotation (either
 defaulted or provided explicitly).
 
-The _persistence-unit-name_ overrides the
-_unitName_ element of the annotation. The Application Assembler or
+* The `persistence-unit-name` overrides the
+`unitName` element of the annotation. The Application Assembler or
 Deployer should exercise caution in changing this value, if specified,
 as doing so is likely to break the application.
 
-The _persistence-context-type_ , if
-specified, overrides the _type_ element of the annotation. In general,
+* The `persistence-context-type`, if
+specified, overrides the `type` element of the annotation. In general,
 the Application Assembler or Deployer should never change the value of
 this element, as doing so is likely to break the application.
 
-The persistence-context-synchronization, if
+* The `persistence-context-synchronization`, if
 specified, overrides the synchronization element of the annotation. In
 general, the Application Assembler or Deployer should never change the
 value of this element, as doing so is likely to break the application.
 
-Any _persistence-property_ elements are added
-to those specified by the _PersistenceContext_ annotation. If the name
+* Any `persistence-property` elements are added
+to those specified by the `PersistenceContext` annotation. If the name
 of a specified property is the same as one specified by the
-_PersistenceContext_ annotation, the value specified in the annotation
+`PersistenceContext` annotation, the value specified in the annotation
 is overridden.
 
-The injection target, if specified, must name
+* The injection target, if specified, must name
 exactly the annotated field or property method.
 
-=== Deployer’s Responsibility
+==== Deployer’s Responsibility
 
 The Deployer uses deployment tools to
 bind a persistence context reference to the
@@ -3001,51 +2930,48 @@ The Deployer must perform the following tasks
 for each persistence context reference declared in the metadata
 annotations or deployment descriptor:
 
-Bind the persistence context reference to a
+* Bind the persistence context reference to a
 container-managed entity manager for a persistence context of the
 specified type and configured for the persistence unit as specified in
-the _persistence.xml_ file for the persistence unit that exists in the
+the `persistence.xml` file for the persistence unit that exists in the
 operational environment. The Deployer may use, for example, the JNDI
-LinkRef mechanism to create a symbolic link to the actual JNDI name of
+`LinkRef` mechanism to create a symbolic link to the actual JNDI name of
 the entity manager.
 
-If the persistence unit name is specified,
+* If the persistence unit name is specified,
 the Deployer should bind the persistence context reference to an entity
 manager for the persistence unit specified as the target.
 
-Provide any additional configuration
+* Provide any additional configuration
 information that the entity manager factory needs for creating such an
 entity manager and for managing the persistence unit, as described in
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
+<<a9851, ^[2]^>>.
 
-=== Container Provider Responsibility
+==== Container Provider Responsibility
 
 The EJB Container
 Provider is responsible for the following:
 
-Provide the
+* Provide the
 deployment tools that allow the Deployer to
 perform the tasks described in the previous subsection.
 
-Provide the implementation of the entity
+* Provide the implementation of the entity
 manager classes for the persistence units that are configured with the
 EJB container. This implementation may be provided by the container
 directory or by the container in conjunction with a third-party
-persistence provider, as described in link:Ejb.html#a9851[See
-Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
+persistence provider, as described in <<a9851, ^[2]^>>.
 
-=== System Administrator’s Responsibility
+==== System Administrator’s Responsibility
 
 The System
 Administrator is typically responsible for the following:
 
-Add, remove, and configure entity manager
+* Add, remove, and configure entity manager
 factories in the EJB server environment.
 
-In some scenarios, these tasks can be
-performed by the Deployer.
+_In some scenarios, these tasks can be
+performed by the Deployer._
 
 === [[a4804]]UserTransaction Interface
 
