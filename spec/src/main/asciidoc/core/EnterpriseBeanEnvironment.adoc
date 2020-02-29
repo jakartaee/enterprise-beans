@@ -8,100 +8,80 @@ or accessed in the JNDI naming context.
 
 === Overview
 
-
-
-The Application Assembler and Deployer should
+_The Application Assembler and Deployer should
 be able to customize an enterprise bean’s business logic without
-accessing the enterprise bean’s source code.
+accessing the enterprise bean’s source code._
 
-In addition, ISVs typically develop
+_In addition, ISVs typically develop
 enterprise beans that are, to a large degree, independent from the
 operational environment in which the application will be deployed. Most
 enterprise beans must access resource managers and external information.
 The key issue is how enterprise beans can locate external information
 without prior knowledge of how the external information is named and
 organized in the target operational environment. The JNDI naming context
-and Java language metadata annotations provide this capability.
+and Java language metadata annotations provide this capability._
 
-The enterprise bean environment mechanism
-attempts to address both of the above issues.
+_The enterprise bean environment mechanism
+attempts to address both of the above issues._
 
-This chapter is organized as follows.
+This chapter is organized as follows:
 
-Section link:Ejb.html#a3635[See
-Enterprise Bean’s Environment as a JNDI Naming Context] defines the
-general rules for the use of the JNDI naming context and its interaction
+:xrefstyle: short
+* <<a3635>> defines the general rules for the use of the JNDI naming context and its interaction
 with Java language annotations that reference entries in the naming
 context.
 
-Section link:Ejb.html#a3680[See
-Responsibilities by EJB Role] defines the general responsibilities for
+* <<a3680>> defines the general responsibilities for
 each of the EJB roles, such as Bean Provider, Application Assembler,
 Deployer, and Container Provider.
 
-Section link:Ejb.html#a3701[See
-Simple Environment Entries] defines the basic mechanisms and interfaces
+* <<a3701>> defines the basic mechanisms and interfaces
 that specify and access the enterprise bean’s environment. The section
 illustrates the use of the enterprise bean’s environment for generic
 customization of the enterprise bean’s business logic.
 
-Section link:Ejb.html#a3912[See EJB
-References] defines the means for obtaining the business interface,
+* <<a3912>> defines the means for obtaining the business interface,
 no-interface view, or home interface of another enterprise bean using an
-EJB reference. An EJB reference is a special entry in the enterprise
+_EJB reference_. An EJB reference is a special entry in the enterprise
 bean’s environment.
 
-Section link:Ejb.html#a4154[See Web
-Service References] defines the means for obtaining the web service
-interface using a _web service reference_ . A web service reference is a
+* <<a4154>> defines the means for obtaining the web service
+interface using a _web service reference_. A web service reference is a
 special entry in the enterprise bean’s environment.
 
-Section link:Ejb.html#a4159[See
-Resource Manager Connection Factory References] defines the means for
+* <<a4159>> defines the means for
 obtaining a resource manager connection factory using a resource manager
 connection factory reference. A resource manager connection factory
 reference is a special entry in the enterprise bean’s environment.
 
-link:Ejb.html#a4341[See Resource
-Environment References] defines the means for obtaining an administered
-object that is associated with a resource (e.g., a CCI _InteractionSpec_
-) using a _resource environment reference_ . A resource environment
+* <<a4341>> defines the means for obtaining an administered
+object that is associated with a resource (e.g., a CCI `InteractionSpec`) using a _resource environment reference_ . A resource environment
 reference is a special entry in the enterprise bean’s environment.
 
-link:Ejb.html#a4371[See Message
-Destination References] defines the means for obtaining a message
+* <<a4371>> defines the means for obtaining a message
 destination associated with a resource using a _message destination
-reference_ . Message destination references allow the flow of messages
+reference_. Message destination references allow the flow of messages
 within an application to be specified. A message destination reference
 is a special entry in the enterprise bean’s environment.
 
-Section link:Ejb.html#a4533[See
-Persistence Unit References] describes the means for obtaining an entity
-manager factory using a _persistence unit reference_ .
+* <<a4533>> describes the means for obtaining an entity
+manager factory using a _persistence unit reference_.
 
-Section link:Ejb.html#a4671[See
-Persistence Context References] describes the means for obtaining an
-entity manager using a _persistence context reference_ .
+* <<a4671>> describes the means for obtaining an
+entity manager using a _persistence context reference_.
 
-link:Ejb.html#a4804[See
-UserTransaction Interface] describes the use by eligible enterprise
-beans of references to a _UserTransaction_ object in the bean’s
+* <<a4804>> describes the use by eligible enterprise
+beans of references to a `UserTransaction` object in the bean’s
 environment to start, commit, and rollback transactions.
 
-link:Ejb.html#a4855[See ORB
-References] describes the use of references to a CORBA _ORB_ object in
+* <<a4855>> describes the use of references to a CORBA `ORB` object in
 the enterprise bean’s environment.
 
-Section link:Ejb.html#a4885[See
-TimerService References] describes the means for obtaining a
-_TimerService_ object.
+* <<a4885>> describes the means for obtaining a `TimerService` object.
 
-Section link:Ejb.html#a4892[See
-EJBContext References] describes the means for obtaining a bean’s
-_EJBContext_ object.
+* <<a4892>> describes the means for obtaining a bean’s `EJBContext` object.
 
-Section link:Ejb.html#a4901[See
-Support for Other Resources and Configuration Parameters] describes the
+* <<a4901>> describes the
 requirements for other resources and configuration parameters.
 
 === [[a3635]]Enterprise Bean’s Environment as a JNDI Naming Context
