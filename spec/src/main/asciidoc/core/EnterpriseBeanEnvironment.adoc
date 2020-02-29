@@ -1945,305 +1945,267 @@ inform the Deployer of any unresolved resource environment references,
 and allow him or her to resolve a resource environment reference by
 binding it to a specified compatible target object in the environment.
 
-=== [[a4371]]Message Destination References
-
-
+[[a4371]]
+=== Message Destination References
 
 This section describes the programming and
 deployment descriptor interfaces that allow the Bean Provider to refer
-to message destination objects by using “logical” names called _message
-destination references_ . Message destination references are special
+to message destination objects by using "logical" names called _message
+destination references_. Message destination references are special
 entries in the enterprise bean’s environment. The Deployer binds the
 message destination references to administered message destinations in
 the target operational environment.
 
-=== [[a4373]]Bean Provider’s Responsibilities
+[[a4373]]
+==== Bean Provider’s Responsibilities
 
 This subsection describes the Bean Provider’s
 view and responsibilities with respect to message destination
 references.
 
-=== Injection of Message Destination References
+===== Injection of Message Destination References
 
 A field or a method of a bean may be
-annotated with the _Resource_ annotation to request injection of a
+annotated with the `Resource` annotation to request injection of a
 message destination reference. The name and type of the resource
-environment reference are as described in
-link:Ejb.html#a3658[See Annotations for Environment Entries].
-The _authenticationType_ and _shareable_ elements of the _Resource_
+environment reference are as described in <<a3658>>.
+The `authenticationType` and `shareable` elements of the `Resource`
 annotation must not be specified.
 
-Note that when using the _Resource_
+Note that when using the `Resource`
 annotation to declare a message destination reference it is not possible
 to link the reference to other references to the same message
 destination, or to specify whether the destination is used to produce or
 consume messages. The deployment descriptor entries described in
-link:Ejb.html#a4419[See Declaration of Message Destination
-References in Deployment Descriptor] provide a way to associate multiple
+<<a4419>> provide a way to associate multiple
 message destination references with a single message destination and to
 specify whether each message destination reference is used to produce,
 consume, or both produce and consume messsages, so that the entire
 message flow of an application may be specified. The Application
 Assembler may use these message destination links to link together
 message destination references that have been declared using the
-_Resource_ annotation. A message destination reference declared via the
-_Resource_ annotation is assumed to be used to both produce and consume
+`Resource` annotation. A message destination reference declared via the
+`Resource` annotation is assumed to be used to both produce and consume
 messages; this default may be overridden using a deployment descriptor
 entry.
 
 The following example illustrates how an
-enterprise bean uses the _Resource_ annotation to request injection of a
+enterprise bean uses the `Resource` annotation to request injection of a
 message destination reference.
 
-@Resource javax.jms.Queue stockQueue;
+[source, java]
+----
+@Resource
+javax.jms.Queue stockQueue;
+----
 
-=== Message Destination Reference Programming Interfaces
+===== Message Destination Reference Programming Interfaces
 
 The Bean Provider uses message destination
 references to locate message destinations, as follows.
 
-Assign an entry in the enterprise bean’s
-environment to the reference. (See subsection
-link:Ejb.html#a4419[See Declaration of Message Destination
-References in Deployment Descriptor] for information on how message
+:section-refsig: subsection
+
+* Assign an entry in the enterprise bean’s
+environment to the reference. (See <<a4419>> for information on how message
 destination references are declared in the deployment descriptor.)
 
-The EJB specification recommends, but does
+:section-refsig: Section
+
+* The EJB specification recommends, but does
 not require, that all message destination references be organized in the
 appropriate subcontext of the bean’s environment for the messaging
-resource type (e.g. in the __ java:comp/env/jms JNDI context for JMS
+resource type (e.g. in the `java:comp/env/jms` JNDI context for JMS
 Destinations). Note that message destination references declared via
 annotations will not, by default, appear in any subcontext.
 
-Look up the destination in the enterprise
-bean’s environment using the EJBContext _lookup_ method or the JNDI
+* Look up the destination in the enterprise
+bean’s environment using the EJBContext `lookup` method or the JNDI
 APIs.
 
 The following example illustrates how an
 enterprise bean uses a message destination reference to locate a JMS
 Destination.
 
-@Resource(name="jms/StockQueue",
-type=javax.jms.Queue)
+[source, java]
+----
+@Resource(name="jms/StockQueue", type=javax.jms.Queue)
+@Stateless 
+public class StockServiceBean implements StockService {
 
-@Stateless public class StockServiceBean
-implements StockService \{
+ @Resource
+ SessionContext ctx;
 
-
-
- @Resource SessionContext ctx;
-
-
-
- public void processStockInfo(...) \{
-
+ public void processStockInfo(...) {
  ...
-
- // Look up the JMS StockQueue in the
-environment.
-
- Object result =
-ctx.lookup("jms/StockQueue");
-
-
+ // Look up the JMS StockQueue in the environment.
+ Object result = ctx.lookup("jms/StockQueue");
 
  // Convert the result to the proper type.
-
- javax.jms.Queue queue =
-(javax.jms.Queue)result;
-
+ javax.jms.Queue queue = (javax.jms.Queue)result;
  }
-
 }
+----
 
 In the example, the Bean Provider of the
-_StockServiceBean_ enterprise bean has assigned the environment entry
-jms/StockQueue as the message destination reference name to refer to a
+`StockServiceBean` enterprise bean has assigned the environment entry
+`jms/StockQueue` as the message destination reference name to refer to a
 JMS queue.
 
 If the JNDI APIs were used directly, the
 example would be as follows.
 
-@Resource(name="jms/StockQueue",
-type=javax.jms.Queue)
+[source, java]
+----
+@Resource(name="jms/StockQueue", type=javax.jms.Queue)
+@Stateless
+public class StockServiceBean implements StockService {
 
-@Stateless public class StockServiceBean
-implements StockService \{
-
-
-
- public void processStockInfo(...) \{
-
+ public void processStockInfo(...) {
  ...
-
  // Obtain the default initial JNDI context.
-
  Context initCtx = new InitialContext();
 
-
-
- // Look up the JMS StockQueue in the
-environment.
-
+ // Look up the JMS StockQueue in the environment.
  Object result = initCtx.lookup(
-
- "java:comp/env/jms/StockQueue");
-
-
+      "java:comp/env/jms/StockQueue");
 
  // Convert the result to the proper type.
-
- javax.jms.Queue queue =
-(javax.jms.Queue)result;
-
+ javax.jms.Queue queue = (javax.jms.Queue)result;
  ...
-
  }
-
 }
+----
 
-=== [[a4419]]Declaration of Message Destination References in Deployment Descriptor
+[[a4419]]
+===== Declaration of Message Destination References in Deployment Descriptor
 
 Although the message destination reference is
 an entry in the enterprise bean’s environment, the Bean Provider must
-not use a env-entry element to declare it. Instead, the Bean Provider
+not use a `env-entry` element to declare it. Instead, the Bean Provider
 should declare all references to message destinations using either the
-_Resource_ annotation in the bean’s code or the the
-_message-destination-ref_ elements of the deployment descriptor. This
+`Resource` annotation in the bean’s code or the the
+`message-destination-ref` elements of the deployment descriptor. This
 allows the ejb-jar consumer to discover all the message destination
 references used by the enterprise bean. Deployment descriptor entries
 may also be used to specify injection of a message destination reference
 into a bean.
 
-Each message-destination-ref element
+Each `message-destination-ref` element
 describes the requirements that the referencing enterprise bean has for
-the referenced destination. The message-destination-ref element contains
-optional description, message-destination-type, and
-message-destination-usage elements, and the mandatory
-message-destination-ref-name element.
+the referenced destination. The `message-destination-ref` element contains
+optional `description`, `message-destination-type`, and
+`message-destination-usage` elements, and the mandatory
+`message-destination-ref-name` element.
 
-The _message-destination_ -ref-name element
+The `message-destination-ref-name` element
 specifies the message destination reference name: its value is the
 environment entry name used in the enterprise bean code. The name of the
-message destination reference is relative to the _java:comp/env_ context
-(e.g., the name should be _jms/StockQueue_ rather than
-_java:comp/env/jms/StockQueue_ ).
+message destination reference is relative to the `java:comp/env` context
+(e.g., the name should be `jms/StockQueue` rather than
+`java:comp/env/jms/StockQueue` ).
 
-The message-destination-type element
+The `message-destination-type` element
 specifies the expected type of the referenced destination. For example,
-in the case of a JMS Destination, its value might be javax.jms.Queue.
-The _message-destination-type_ element is optional if an injection
+in the case of a JMS Destination, its value might be `javax.jms.Queue`.
+The `message-destination-type` element is optional if an injection
 target is specified for the message destination reference; in this case
-the _message-destination-type_ defaults to the type of the injection
+the `message-destination-type` defaults to the type of the injection
 target.
 
-The _message-destination-usage_ element
+The `message-destination-usage` element
 specifies whether messages are consumed from the message destination,
 produced for the destination, or both. If the
-_message-destination-usage_ element is not specified, messages are
+`message-destination-usage` element is not specified, messages are
 assumed to be both consumed and produced.
 
-See Section link:Ejb.html#a3645[See
-Sharing of Environment Entries] for the name scoping rules of message
+See <<a3645>> for the name scoping rules of message
 destination references.
 
 The following example illustrates the
 declaration of message destination references in the deployment
 descriptor.
 
+[source, xml]
+----
 ...
-
 <message-destination-ref>
-
- <description>
-
- This is a reference to a JMS queue used in
-processing Stock info
-
- </description>
-
- <message-destination-ref-name>
-
- jms/StockInfo
-
- </message-destination-ref-name>
-
- <message-destination-type>
-
- javax.jms.Queue
-
- </message-destination-type>
-
- <message-destination-usage>
-
- Produces
-
- </message-destination-usage>
-
+  <description>
+    This is a reference to a JMS queue used in processing Stock info
+  </description>
+  <message-destination-ref-name>
+    jms/StockInfo
+  </message-destination-ref-name>
+  <message-destination-type>
+    javax.jms.Queue
+  </message-destination-type>
+  <message-destination-usage>
+    Produces
+  </message-destination-usage>
 </message-destination-ref>
-
 ...
+----
 
-=== Application Assembler’s Responsibilities
+==== Application Assembler’s Responsibilities
 
 By means of
 linking message consumers and producers to one or more common logical
 destinations specified in the deployment descriptor, the Application
 Assembler can specify the flow of messages within an application. The
-Application Assembler uses the _message-destination_ element, the
-message-destination-link element of the _message-destination-ref_
-element, and the _message-destination-link_ element of the
-_message-driven_ element to link message destination references to a
+Application Assembler uses the `message-destination` element, the
+`message-destination-link` element of the `message-destination-ref`
+element, and the `message-destination-link` element of the
+`message-driven` element to link message destination references to a
 common logical destination.
 
 The Application Assembler specifies the link
 between message consumers and producers as follows:
 
-The Application Assembler uses the
-_message-destination_ element to specify a logical message destination
-within the application. The _message-destination_ element defines a
-_message-destination-name_ , which is used for the purpose of linking.
+* The Application Assembler uses the
+`message-destination` element to specify a logical message destination
+within the application. The `message-destination` element defines a
+`message-destination-name` , which is used for the purpose of linking.
 
-The Application Assembler uses the
-message-destination-link element of the message-destination-ref element
+* The Application Assembler uses the
+`message-destination-link` element of the `message-destination-ref` element
 of an enterprise bean that produces messages to link it to the target
-destination. The value of the message-destination-link element is the
+destination. The value of the `message-destination-link` element is the
 name of the target destination, as defined in the
-_message-destination-name_ element of the _message-destination_ element.
-The _message-destination_ element can be in any module in the same Java
+`message-destination-name` element of the `message-destination` element.
+The `message-destination` element can be in any module in the same Java
 EE application as the referencing component. The Application Assembler
-uses the _message-destination-usage_ element of the
-_message-destination-ref_ element to indicate that the referencing
+uses the `message-destination-usage` element of the
+`message-destination-ref` element to indicate that the referencing
 enterprise bean produces messages to the referenced destination.
 
-If the consumer of messages from the common
+* If the consumer of messages from the common
 destination is a message-driven bean, the Application Assembler uses the
-_message-destination-link_ element of the _message-driven_ element to
+`message-destination-link` element of the `message-driven` element to
 reference the logical destination. If the Application Assembler links a
 message-driven bean to its source destination, he or she should use the
-_message-destination-type_ element of the _message-driven_ element to
+`message-destination-type` element of the `message-driven` element to
 specify the expected destination type.
 
-If an enterprise bean is otherwise a message
-consumer, the Application Assembler uses the message-destination-link
-element of the message-destination-ref element of the enterprise bean
+* If an enterprise bean is otherwise a message
+consumer, the Application Assembler uses the `message-destination-link`
+element of the `message-destination-ref` element of the enterprise bean
 that consumes messages to link to the common destination. In the latter
-case, the Application Assembler uses the _message-destination-usage_
-element of the _message-destination-ref_ element to indicate that the
+case, the Application Assembler uses the `message-destination-usage`
+element of the `message-destination-ref` element to indicate that the
 enterprise bean consumes messages from the referenced destination.
 
-To avoid the need to rename message
+* To avoid the need to rename message
 destinations to have unique names within an entire Java EE application,
 the Application Assembler may use the following syntax in the
-_message-destination-link_ element of the referencing application
+`message-destination-link` element of the referencing application
 component. The Application Assembler specifies the path name of the
 ejb-jar file containing the referenced message destination and appends
-the _message-destination-name_ of the target destination separated from
-the path name by _#_ . The path name is relative to the referencing
+the `message-destination-name` of the target destination separated from
+the path name by `#`. The path name is relative to the referencing
 application component jar file. In this manner, multiple destinations
-with the same _message-destination-name_ may be uniquely identified.
+with the same `message-destination-name` may be uniquely identified.
 
-When linking message destinations, the
+* When linking message destinations, the
 Application Assembler must ensure that the consumers and producers for
 the destination require a message destination of the same or compatible
 type, as determined by the messaging system.
@@ -2251,185 +2213,119 @@ type, as determined by the messaging system.
 The following example illustrates the use of
 message destination linking in the deployment descriptor.
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
-<session>
-
- ...
-
- <ejb-name>EmployeeService</ejb-name>
-
-
-<ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
-
- ...
-
- <message-destination-ref>
-
- <message-destination-ref-name>
-
- jms/EmployeeReimbursements
-
- </message-destination-ref-name>
-
- <message-destination-type>
-
- javax.jms.Queue
-
- </message-destination-type>
-
- <message-destination-usage>
-
- Produces
-
- </message-destination-usage>
-
- <message-destination-link>
-
- ExpenseProcessingQueue
-
- </message-destination-link>
-
- </message-destination-ref>
-
-</session>
-
-...
-
-
-
-<message-driven>
-
- <ejb-name>ExpenseProcessing</ejb-name>
-
-
-<ejb-class>com.wombat.empl.ExpenseProcessingBean</ejb-class>
-
-
-<messaging-type>javax.jms.MessageListener</messaging-type>
-
- ...
-
- <message-destination-type>
-
- javax.jms.Queue
-
- </message-destination-type>
-
- <message-destination-link>
-
- ExpenseProcessingQueue
-
- </message-destination-link>
-
- ...
-
-</message-driven>
-
- ...
-
+  <session>
+    ...
+    <ejb-name>EmployeeService</ejb-name>
+    <ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
+    ...
+    <message-destination-ref>
+      <message-destination-ref-name>
+        jms/EmployeeReimbursements
+      </message-destination-ref-name>
+      <message-destination-type>
+        javax.jms.Queue
+      </message-destination-type>
+      <message-destination-usage>
+        Produces
+      </message-destination-usage>
+      <message-destination-link>
+        ExpenseProcessingQueue
+      </message-destination-link>
+    </message-destination-ref>
+  </session>
+  ...
+  <message-driven>
+    <ejb-name>ExpenseProcessing</ejb-name>
+    <ejb-class>com.wombat.empl.ExpenseProcessingBean</ejb-class>
+    <messaging-type>javax.jms.MessageListener</messaging-type>
+    ...
+    <message-destination-type>
+      javax.jms.Queue
+    </message-destination-type>
+    <message-destination-link>
+      ExpenseProcessingQueue
+    </message-destination-link>
+    ...
+  </message-driven>
+  ...
 </enterprise-beans>
-
 ...
-
 <assembly-descriptor>
-
- ...
-
- <message-destination>
-
- <message-destination-name>
-
- ExpenseProcessingQueue
-
- </message-destination-name>
-
- </message-destination>
-
- ...
-
+  ...
+  <message-destination>
+    <message-destination-name>
+      ExpenseProcessingQueue
+    </message-destination-name>
+  </message-destination>
+  ...
 </assembly-descriptor>
+----
 
 The Application Assembler uses the
-message-destination-link element to indicate that the message
-destination reference _EmployeeReimbursement_ declared in the
-_EmployeeService_ enterprise bean is linked to the _ExpenseProcessing_
+`message-destination-link` element to indicate that the message
+destination reference `EmployeeReimbursement` declared in the
+`EmployeeService` enterprise bean is linked to the `ExpenseProcessing`
 message-driven bean by means of the common destination
-_ExpenseProcessingQueue_ .
+`ExpenseProcessingQueue`.
 
 The following example illustrates using the
-_message-destination-link_ element to indicate an enterprise bean
-reference to the ExpenseProcessingQueue that is in the same Java EE
+`message-destination-link` element to indicate an enterprise bean
+reference to the `ExpenseProcessingQueue` that is in the same Java EE
 application unit but in a different ejb-jar file.
 
+[source, xml]
+----
 <session>
-
- ...
-
- <ejb-name>EmployeeService</ejb-name>
-
-
-<ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
-
- ...
-
- <message-destination-ref>
-
- <message-destination-ref-name>
-
- jms/EmployeeReimbursements
-
- </message-destination-ref-name>
-
- <message-destination-type>
-
- javax.jms.Queue
-
- </message-destination-type>
-
- <message-destination-usage>
-
- Produces
-
- </message-destination-usage>
-
- <message-destination-link>
-
- finance.jar#ExpenseProcessingQueue
-
- </message-destination-link>
-
- </message-destination-ref>
-
+  ...
+  <ejb-name>EmployeeService</ejb-name>
+  <ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
+  ...
+  <message-destination-ref>
+    <message-destination-ref-name>
+      jms/EmployeeReimbursements
+    </message-destination-ref-name>
+    <message-destination-type>
+      javax.jms.Queue
+    </message-destination-type>
+    <message-destination-usage>
+      Produces
+    </message-destination-usage>
+    <message-destination-link>
+      finance.jar#ExpenseProcessingQueue
+    </message-destination-link>
+  </message-destination-ref>
 </session>
+----
 
-=== Deployer’s Responsibility
+==== Deployer’s Responsibility
 
 The Deployer is responsible for the
 following:
 
-The Deployer must ensure that all the
+* The Deployer must ensure that all the
 declared message destination references are bound to destination objects
 that exist in the operational environment. The Deployer may use, for
-example, the JNDI LinkRef mechanism to
+example, the JNDI `LinkRef` mechanism to
 create a symbolic link to the actual JNDI name of the target object.
 
-The Deployer must ensure that the target
+* The Deployer must ensure that the target
 object is type-compatible with the type declared for the message
 destination reference.
 
-The Deployer must observe the message
+* The Deployer must observe the message
 destination links specified by the Application Assembler.
 
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider must provide the
 deployment tools that allow the Deployer to perform the tasks described
 in the previous subsection. The deployment tools provided by the EJB
 Container Provider must be able to process the information supplied in
-the _message-destination_ -ref and _message-destination-link_ elements
+the `message-destination-ref` and `message-destination-link` elements
 in the deployment descriptor.
 
 The tools must be able to inform the Deployer
