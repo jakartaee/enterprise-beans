@@ -1830,115 +1830,114 @@ in the EJB server environment.
 _In some scenarios, these tasks can be
 performed by the Deployer._
 
-=== [[a4341]]Resource Environment References
-
-
+[[a4341]]
+=== Resource Environment References
 
 This section describes the programming and
 deployment descriptor interfaces that allow the Bean Provider to refer
 to administered objects that are associated with resources (e.g., a
-Connector CCI _InteractionSpec_ instance) by using “logical” names
-called resource environment references.
+Connector CCI `InteractionSpec` instance) by using "logical" names
+called _resource environment references_.
 Resource environment references are special entries in the enterprise
 bean’s environment. The Deployer binds the resource environment
 references to administered objects in the target operational
 environment.
 
-=== [[a4344]]Bean Provider’s Responsibilities
+[[a4344]]
+==== Bean Provider’s Responsibilities
 
 This subsection describes the Bean Provider’s
 view and responsibilities with respect to resource environment
 references.
 
-=== Injection of Resource Environment References
+===== Injection of Resource Environment References
 
 A field or a method of a bean may be
-annotated with the _Resource_ annotation to request injection of a
+annotated with the `Resource` annotation to request injection of a
 resource environment reference. The name and type of the resource
 environment reference are as described in
-link:Ejb.html#a3658[See Annotations for Environment Entries].
-The _authenticationType_ and _shareable_ elements of the _Resource_
+<<a3658>>.
+The `authenticationType` and `shareable` elements of the `Resource`
 annotation must not be specified; resource environment entries are not
-shareable and do not require authentication. The use of the _Resource_
+shareable and do not require authentication. The use of the `Resource`
 annotation to declare a resource environment reference differs from the
-use of the _Resource_ annotation to declare simple environment
+use of the `Resource` annotation to declare simple environment
 references only in that the type of a resource environment reference is
 not one of the Java language types used for simple environment
 references.
 
-=== Resource Environment Reference Programming Interfaces
+===== Resource Environment Reference Programming Interfaces
 
 The Bean Provider must use resource
 environment references to locate administered objects that are
-associated with resources, as follows.
+associated with resources, as follows:
 
-Assign an entry in the enterprise bean’s
-environment to the reference. (See subsection
-link:Ejb.html#a4353[See Declaration of Resource Environment
-References in Deployment Descriptor] for information on how resource
+:section-refsig: subsection
+* Assign an entry in the enterprise bean’s
+environment to the reference. (See <<a4353>> for information on how resource
 environment references are declared in the deployment descriptor.)
 
-The EJB specification recommends, but does
+:section-refsig: Section
+
+* The EJB specification recommends, but does
 not require, that all resource environment references be organized in
 the appropriate subcontext of the bean’s environment for the resource
 type. Note that the resource environment references declared via
 annotations will not, by default, appear in any subcontext.
 
-Look up the administered object in the
-enterprise bean’s environment using the EJBContext _lookup_ method or
+* Look up the administered object in the
+enterprise bean’s environment using the EJBContext `lookup` method or
 the JNDI API.
 
-=== [[a4353]]Declaration of Resource Environment References in Deployment Descriptor
+[[a4353]]
+===== Declaration of Resource Environment References in Deployment Descriptor
 
 Although the
 resource environment reference is an entry
 in the enterprise bean’s environment, the Bean Provider must not use a
-env-entry element to declare it. Instead, the Bean Provider must declare
+`env-entry` element to declare it. Instead, the Bean Provider must declare
 all references to administered objects associated with resources using
 either annotations in the bean’s source code or the
-resource-env-ref elements of the deployment
+`resource-env-ref` elements of the deployment
 descriptor. This allows the ejb-jar consumer to discover all the
 resource environment references used by the enterprise bean. Deployment
 descriptor entries may also be used to specify injection of a resource
 environment reference into a bean.
 
-See Section “Declaration of Resource
-Environment References in Deployment Descriptor” in the Java EE Platform
-specification [link:Ejb.html#a9861[See Java™ Platform,
-Enterprise Edition Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.]] for the description of the
-resource-env-ref element.
+See Section "Declaration of Resource
+Environment References in Deployment Descriptor" in the Java EE Platform
+specification<<a9861, ^[12]^>> for the description of the
+`resource-env-ref` element.
 
-See Section link:Ejb.html#a3645[See
-Sharing of Environment Entries] for the name scoping rules of resource
+See <<a3645>> for the name scoping rules of resource
 environment references.
 
-=== Deployer’s Responsibility
+==== Deployer’s Responsibility
 
 The Deployer is responsible for the
 following:
 
-The Deployer must ensure that all the
+* The Deployer must ensure that all the
 declared resource environment references are
 bound to administered objects that exist in the operational environment.
 The Deployer may use, for example, the JNDI
-LinkRef mechanism to create a symbolic link to the actual JNDI name of
+`LinkRef` mechanism to create a symbolic link to the actual JNDI name of
 the target object.
 
-The Deployer must ensure that the target
+* The Deployer must ensure that the target
 object is type-compatible with the type declared for the resource
 environment reference. This means that the target object must be of the
-type indicated in the _Resource_ annotation or the
-resource-env-ref-type element.
+type indicated in the `Resource` annotation or the
+`resource-env-ref-type` element.
 
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider must provide the
 deployment tools that allow the Deployer to perform the tasks described
 in the previous subsection. The deployment tools provided by the EJB
 Container Provider must be able to process the information supplied in
 the class file annotations and
-resource-env-ref elements in the deployment
+`resource-env-ref` elements in the deployment
 descriptor.
 
 At the minimum, the tools must be able to
