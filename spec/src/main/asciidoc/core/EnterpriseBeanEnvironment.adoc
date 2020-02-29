@@ -1384,33 +1384,33 @@ not require, that all references to web services be organized in the
 `service` subcontext of the bean’s environment (i.e., in the
 `java:comp/env/service` JNDI context).
 
-=== [[a4159]]Resource Manager Connection Factory References
-
-
+[[a4159]]
+=== Resource Manager Connection Factory References
 
 A resource
 manager connection factory is an object that is used to create
 connections to a resource manager. For example, an object that
-implements the javax.sql.DataSource interface is a resource manager
-connection factory for java.sql.Connection objects that implement
+implements the `javax.sql.DataSource` interface is a resource manager
+connection factory for `java.sql.Connection` objects that implement
 connections to a database management system.
 
 This section describes the metadata
 annotations and deployment descriptor elements that allow the enterprise
 bean code to refer to resource factories using logical names called
-resource manager connection factory
-references. The resource manager connection factory references are
+_resource manager connection factory
+references_. The resource manager connection factory references are
 special entries in the enterprise bean’s environment. The Deployer binds
 the resource manager connection factory references to the actual
 resource manager connection factories that are configured in the
 container. Because these resource manager connection factories allow the
 container to affect resource management, the connections acquired
 through the resource manager connection factory references are called
-managed resources (e.g., these resource
+_managed resources_ (e.g., these resource
 manager connection factories allow the container to implement connection
 pooling and automatic enlistment of the connection with a transaction).
 
-=== [[a4164]]Bean Provider’s Responsibilities
+[[a4164]]
+==== Bean Provider’s Responsibilities
 
 This subsection describes the Bean Provider’s
 view of locating resource factories and defines his or her
@@ -1420,13 +1420,12 @@ second describes the API for accessing resource manager connection
 references; and the third describes syntax for declaring the resource
 manager connection references in a deployment descriptor.
 
-=== Injection of Resource Manager Connection Factory References
+===== Injection of Resource Manager Connection Factory References
 
 A field or a method of an enterprise bean may
-be annotated with the _Resource_ annotation. The name and type of the
-factory are as described above in link:Ejb.html#a3658[See
-Annotations for Environment Entries]. The _authenticationType_ and
-_shareable_ elements of the _Resource_ annotation may be used to control
+be annotated with the `Resource` annotation. The name and type of the
+factory are as described above in <<a3658>>. The `authenticationType` and
+`shareable` elements of the `Resource` annotation may be used to control
 the type of authentication desired for the resource and the shareability
 of connections acquired from the factory, as described in the following
 sections.
@@ -1435,73 +1434,65 @@ The following code example illustrates how an
 enterprise bean uses annotations to declare resource manager connection
 factory references.
 
+[source, java]
+----
 //The employee database.
-
-@Resource javax.sql.DataSource employeeAppDB;
-
+@Resource
+javax.sql.DataSource employeeAppDB;
 ...
-
-public void changePhoneNumber(...) \{
-
- ...
-
- // Invoke factory to obtain a resource. The
-security
-
- // principal for the resource is not given,
-and
-
- // therefore it will be configured by the
-Deployer.
-
- java.sql.Connection con =
-employeeAppDB.getConnection();
-
- ...
-
+public void changePhoneNumber(...) {
+  ...
+  // Invoke factory to obtain a resource. The security
+  // principal for the resource is not given, and
+  // therefore it will be configured by the Deployer.
+  java.sql.Connection con = employeeAppDB.getConnection();
+  ...
 }
+----
 
 The same resource manager can be declared
 using the JNDI name of an entry to which the resource being defined will
 be bound.
 
-// The customer database, looked up in the
-application environment.
-
+[source, java]
+----
+// The customer database, looked up in the application environment.
 @Resource(lookup="java:app/env/employeeAppDB")
-
 javax.sql.DataSource employeeAppDB;
+----
 
-=== Programming Interfaces for Resource Manager Connection Factory References
+===== Programming Interfaces for Resource Manager Connection Factory References
 
 The Bean Provider
 must use resource manager connection factory references to obtain
 connections to resources as follows.
 
-Assign an entry in the enterprise bean’s
+:section-refsig: subsection
+* Assign an entry in the enterprise bean’s
 environment to the resource manager connection factory reference. (See
-subsection link:Ejb.html#a4245[See Declaration of Resource
-Manager Connection Factory References in Deployment Descriptor] for
+ <<a4245>> for
 information on how resource manager connection factory references are
 declared in the deployment descriptor.)
 
-The EJB specification recommends, but does
+:section-refsig: Section
+
+* The EJB specification recommends, but does
 not require, that all resource manager connection factory references be
 organized in the subcontexts of the bean’s environment, using a
 different subcontext for each resource manager type. For example, all
-JDBC data source references might be declared in the java:comp/env/jdbc
-subcontext, and all JMS connection factories in the java:comp/env/jms
+JDBC data source references might be declared in the `java:comp/env/jdbc`
+subcontext, and all JMS connection factories in the `java:comp/env/jms`
 subcontext. Also, all JavaMail connection factories might be declared in
-the _java:comp/env/mail_ subcontext and all URL connection factories in
-the _java:comp/env/url_ subcontext. Note that resource manager
+the `java:comp/env/mail` subcontext and all URL connection factories in
+the `java:comp/env/url` subcontext. Note that resource manager
 connection factory references declared via annotations will not, by
 default, appear in any subcontext.
 
-Lookup the resource manager connection
+* Lookup the resource manager connection
 factory object in the enterprise bean’s environment using the EJBContext
-_lookup_ method or using the JNDI API.
+`lookup` method or using the JNDI API.
 
-Invoke the appropriate method on the resource
+* Invoke the appropriate method on the resource
 manager connection factory to obtain a connection to the resource. The
 factory method is specific to the resource type. It is possible to
 obtain multiple connections by calling the factory object multiple
@@ -1514,10 +1505,10 @@ to a resource manager are shareable across
 other enterprise beans in the application that use the same resource in
 the same transaction context. The Bean Provider can specify that
 connections obtained from a resource manager connection factory
-reference are not shareable by specifying the value of the _shareable_
-annotation element to _false_ or the value of the _res-sharing-scope_
+reference are not shareable by specifying the value of the `shareable`
+annotation element to `false` or the value of the `res-sharing-scope`
  deployment descriptor element to be
-_Unshareable_ . The sharing of connections to a resource manager allows
+`Unshareable` . The sharing of connections to a resource manager allows
 the container to optimize the use of connections and enables the
 container’s use of local transaction optimizations.
 
@@ -1525,288 +1516,205 @@ The Bean Provider has two choices with
 respect to dealing with associating a principal with the resource
 manager access:
 
-Allow the Deployer to set up
+* Allow the Deployer to set up
 principal mapping or
 resource manager sign-on information. In
 this case, the enterprise bean code invokes a resource manager
 connection factory method that has no security-related parameters.
 
-Sign on to the resource manager from the bean
+* Sign on to the resource manager from the bean
 code. In this case, the enterprise bean invokes the appropriate resource
 manager connection factory method that takes the sign-on information as
 method parameters.
 
 The Bean Provider
-uses the _authenticationType_ annotation element or the res-auth
+uses the `authenticationType` annotation element or the `res-auth`
 deployment descriptor element to indicate which of the two
 resource manager authentication approaches
 is used.
 
-We expect that the first form (i.e., letting
+_We expect that the first form (i.e., letting
 the Deployer set up the resource manager sign-on information) will be
-the approach used by most enterprise beans.
+the approach used by most enterprise beans._
 
 The following code sample illustrates
-obtaining a JDBC connection when the EJBContext _lookup_ method is used.
+obtaining a JDBC connection when the EJBContext `lookup` method is used.
 
+[source, java]
+----
 @Resource(name="jdbc/EmployeeAppDB",
 type=javax.sql.DataSource)
-
-@Stateless public class EmployeeServiceBean
-
- implements EmployeeService \{
-
- @Resource SessionContext ctx;
-
-
-
- public void changePhoneNumber(...) \{
-
+@Stateless 
+public class EmployeeServiceBean implements EmployeeService {
+ @Resource 
+ SessionContext ctx;
+ public void changePhoneNumber(...) {
  ...
-
- // use context lookup to obtain resource
-manager
-
+ // use context lookup to obtain resource manager
  // connection factory
+ javax.sql.DataSource ds = (javax.sql.DataSource)
+      ctx.lookup("jdbc/EmployeeAppDB");
 
- javax.sql.DataSource ds =
-(javax.sql.DataSource)
-
- ctx.lookup("jdbc/EmployeeAppDB");
-
-
-
- // Invoke factory to obtain a connection.
-The security
-
+ // Invoke factory to obtain a connection. The security
  // principal is not given, and therefore
-
  // it will be configured by the Deployer.
-
- java.sql.Connection con =
-ds.getConnection();
-
+ java.sql.Connection con = ds.getConnection();
  ...
-
  }
-
 }
+----
 
 The following code sample illustrates
 obtaining a JDBC connection when the JNDI APIs are used directly.
 
+[source, java]
+----
 @Resource(name="jdbc/EmployeeAppDB",
 type=javax.sql.DataSource)
-
-@Stateless public class EmployeeServiceBean
-
- implements EmployeeService \{
+@Stateless 
+public class EmployeeServiceBean implements EmployeeService {
 
  EJBContext ejbContext;
 
-
-
- public void changePhoneNumber(...) \{
-
+ public void changePhoneNumber(...) {
  ...
-
  // obtain the initial JNDI context
-
  Context initCtx = new InitialContext();
 
-
-
- // perform JNDI lookup to obtain resource
-manager
-
+ // perform JNDI lookup to obtain resource manager
  // connection factory
+ javax.sql.DataSource ds = (javax.sql.DataSource)
+      initCtx.lookup("java:comp/env/jdbc/EmployeeAppDB");
 
- javax.sql.DataSource ds =
-(javax.sql.DataSource)
-
-
-initCtx.lookup("java:comp/env/jdbc/EmployeeAppDB");
-
-
-
- // Invoke factory to obtain a connection.
-The security
-
+ // Invoke factory to obtain a connection. The security
  // principal is not given, and therefore
-
  // it will be configured by the Deployer.
-
- java.sql.Connection con =
-ds.getConnection();
-
+ java.sql.Connection con = ds.getConnection();
  ...
-
  }
-
 }
+----
 
-=== [[a4245]]Declaration of Resource Manager Connection Factory References in Deployment Descriptor
+[[a4245]]
+===== Declaration of Resource Manager Connection Factory References in Deployment Descriptor
 
 Although a resource manager connection
 factory reference is an entry in the enterprise bean’s environment, the
-Bean Provider must not use an env-entry
+Bean Provider must not use an `env-entry`
 element to declare it.
 
 Instead, if metadata annotations are not
 used, the Bean Provider must declare all the resource manager connection
 factory references in the deployment descriptor using the
-resource-ref elements. This allows the
+`resource-ref` elements. This allows the
 ejb-jar consumer (i.e. Application Assembler or Deployer) to discover
 all the resource manager connection factory references used by an
 enterprise bean. Deployment descriptor entries may also be used to
 specify injection of a resource manager connection factor reference into
 a bean.
 
-See Section “Declaration of Resource Manager
-Connection Factory References in Deployment Descriptor” in the Java EE
-Platform specification [link:Ejb.html#a9861[See Java™ Platform,
-Enterprise Edition Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.]] for the description of the
-resource-ref element.
+See Section "Declaration of Resource Manager
+Connection Factory References in Deployment Descriptor" in the Java EE
+Platform specification<<a9861, ^[12]^>> for the description of the
+`resource-ref` element.
 
-See Section link:Ejb.html#a3645[See
-Sharing of Environment Entries] for the name scoping rules of resource
+See <<a3645>> for the name scoping rules of resource
 manager connection factory references.
 
 The type declaration allows the Deployer to
 identify the type of the resource manager connection factory.
 
-Note that the indicated type is the Java type
-of the resource factory, not the Java type of the resource.
+_Note that the indicated type is the Java type
+of the resource factory, not the Java type of the resource._
 
 The following example is the declaration of
 resource manager connection factory references used by the
-EmployeeService enterprise bean illustrated in the previous subsection.
+`EmployeeService` enterprise bean illustrated in the previous subsection.
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <ejb-name>EmployeeService</ejb-name>
-
-
-<ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
-
- ...
-
- <resource-ref>
-
- <description>
-
- A data source for the database in which
-
- the EmployeeService enterprise bean will
-
- record a log of all transactions.
-
- </description>
-
-
-<res-ref-name>jdbc/EmployeeAppDB</res-ref-name>
-
- <res-type>javax.sql.DataSource</res-type>
-
- <res-auth>Container</res-auth>
-
-
-<res-sharing-scope>Shareable</res-sharing-scope>
-
- </resource-ref>
-
- ...
-
- </session>
-
+  <session>
+    ...
+    <ejb-name>EmployeeService</ejb-name>
+    <ejb-class>com.wombat.empl.EmployeeServiceBean</ejb-class>
+    ...
+    <resource-ref>
+      <description>
+        A data source for the database in which 
+        the EmployeeService enterprise bean will
+        record a log of all transactions.
+      </description>
+      <res-ref-name>jdbc/EmployeeAppDB</res-ref-name>
+      <res-type>javax.sql.DataSource</res-type>
+      <res-auth>Container</res-auth>
+      <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    ...
+  </session>
 </enterprise-beans>
-
 ...
+----
 
 The following example illustrates the
 declaration of JMS resource manager connection factory references.
 
+[source, xml]
+----
 ...
-
 <enterprise-beans>
-
- <session>
-
- ...
-
- <resource-ref>
-
- <description>
-
- A queue connection factory used by the
-
- MySession enterprise bean to send
-
- notifications.
-
- </description>
-
-
-<res-ref-name>jms/qConnFactory</res-ref-name>
-
-
-<res-type>javax.jms.QueueConnectionFactory</res-type>
-
- <res-auth>Container</res-auth>
-
-
-<res-sharing-scope>Unshareable</res-sharing-scope>
-
- </resource-ref>
-
- ...
-
- </session>
-
+  <session>
+    ...
+    <resource-ref>
+      <description>
+        A queue connection factory used by the 
+        MySession enterprise bean to send 
+        notifications.
+      </description>
+      <res-ref-name>jms/qConnFactory</res-ref-name>
+      <res-type>javax.jms.QueueConnectionFactory</res-type>
+      <res-auth>Container</res-auth>
+      <res-sharing-scope>Unshareable</res-sharing-scope>
+    </resource-ref>
+    ...
+  </session>
 </enterprise-beans>
-
 ...
+----
 
-=== Standard Resource Manager Connection Factory Types
+===== Standard Resource Manager Connection Factory Types
 
 The Bean Provider must use the
-javax.sql.DataSource
+`javax.sql.DataSource`
 resource manager connection factory type for
 obtaining JDBC connections, and the
-javax.jms.ConnectionFactory,
-javax.jms.QueueConnectionFactory, or javax.jms.TopicConnectionFactory
+`javax.jms.ConnectionFactory`,
+`javax.jms.QueueConnectionFactory`, or `javax.jms.TopicConnectionFactory`
 for obtaining JMS connections.
 
 The Bean Provider must use the
-_javax.mail.Session_  resource manager
+`javax.mail.Session`  resource manager
 connection factory type for obtaining
-JavaMail connections, and the _java.net.URL_
+JavaMail connections, and the `java.net.URL`
  resource manager connection factory type
 for obtaining URL connections.
 
 It is recommended that the Bean Provider
-names JDBC data sources in the java:comp/env/jdbc subcontext, and JMS
-connection factories in the java:comp/env/jms subcontext. It is also
+names JDBC data sources in the `java:comp/env/jdbc` subcontext, and JMS
+connection factories in the `java:comp/env/jms` subcontext. It is also
 recommended that the Bean Provider name all JavaMail connection
-factories in the _java:comp/env/mail_ subcontext, and all URL connection
-factories in the _java:comp/env/url_ subcontext. Note that resource
+factories in the `java:comp/env/mail` subcontext, and all URL connection
+factories in the `java:comp/env/url` subcontext. Note that resource
 manager connection factory references declared via annotations will not,
 by default, appear in any subcontext.
 
-The Connector architecture
-link:Ejb.html#a9863[See Java EE™ Connector Architecture, version
-1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.] allows an
+_The Connector architecture<<a9863, ^[14]^>> allows an
 enterprise bean to use the API described in this section to obtain
-resource objects that provide access to additional back-end systems.
+resource objects that provide access to additional back-end systems._
 
-=== [[a4312]]Deployer’s Responsibility
+[[a4312]]
+==== Deployer’s Responsibility
 
 The Deployer uses deployment tools to
 bind the
@@ -1818,110 +1726,109 @@ The Deployer must perform the following tasks
 for each resource manager connection factory reference declared in the
 metadata annotations or deployment descriptor:
 
-Bind the resource manager connection factory
+* Bind the resource manager connection factory
 reference to a resource manager connection factory that exists in the
 operational environment. The Deployer may use, for example, the JNDI
-LinkRef mechanism to create a symbolic link to the actual JNDI name of
+`LinkRef` mechanism to create a symbolic link to the actual JNDI name of
 the resource manager connection factory. The resource manager connection
 factory type must be compatible with the type declared in the source
-code or in the res-type element.
+code or in the `res-type` element.
 
-Provide any additional configuration
+* Provide any additional configuration
 information that the resource manager needs for opening and managing the
 resource. The configuration mechanism is resource-manager specific, and
 is beyond the scope of this specification.
 
-If the value of the _Resource_ annotation
-_authenticationType_ element is _AuthenticationType.CONTAINER_ or the
-deployment descriptor res-auth element is
+* If the value of the `Resource` annotation
+`authenticationType` element is `AuthenticationType.CONTAINER` or the
+deployment descriptor `res-auth` element is
 Container, the Deployer is responsible for configuring the sign-on
 information for the resource manager. This is performed in a manner
 specific to the EJB container and resource manager; it is beyond the
 scope of this specification.
 
-For example, if principals must be mapped
+_For example, if principals must be mapped
 from the security domain and principal realm used at the enterprise
 beans application level to the security domain and principal realm of
 the resource manager, the Deployer or System Administrator must define
 the mapping. The mapping is performed in a manner specific to the EJB
 container and resource manager; it is beyond the scope of the current
-EJB specification.
+EJB specification._
 
-=== [[a4322]]Container Provider Responsibility
+[[a4322]]
+==== Container Provider Responsibility
 
 The EJB Container
 Provider is responsible for the following:
 
-Provide the
+* Provide the
 deployment tools that allow the Deployer to
 perform the tasks described in the previous subsection.
 
-Provide the implementation of the resource
+* Provide the implementation of the resource
 manager connection factory classes for the resource managers that are
 configured with the EJB container.
 
-If the Bean Provider sets the
-_authenticationType_ element of the _Resource_ annotation to
-_AuthenticationType.APPLICATION_ or the res-auth deployment descriptor
+* If the Bean Provider sets the
+`authenticationType` element of the `Resource` annotation to
+`AuthenticationType.APPLICATION` or the `res-auth` deployment descriptor
 entry for a resource manager connection factory reference to
 Application, the container must allow the bean to perform explicit
 programmatic sign-on using the resource manager’s API.
 
-If the Bean Provider sets the _shareable_
-element of the _Resource_ annotation to _false_ or sets the
-_res-sharing-scope_ deployment descriptor entry for a resource manager
-connection factory reference to _Unshareable_ , the container must not
+* If the Bean Provider sets the `shareable`
+element of the `Resource` annotation to `false` or sets the
+`res-sharing-scope` deployment descriptor entry for a resource manager
+connection factory reference to `Unshareable`, the container must not
 attempt to share the connections obtained from the resource manager
-connection factory _referencelink:#a10326[106]_ . If the Bean
-Provider sets the _res-sharing-scope_ of a resource manager connection
-factory reference to _Shareable_ or does not specify _res-sharing-scope_
+connection factory reference<<a10326, ^[106]^>>. If the Bean
+Provider sets the `res-sharing-scope` of a resource manager connection
+factory reference to `Shareable` or does not specify `res-sharing-scope`
 , the container must share the connections obtained from the resource
 manager connection factory according to the requirements defined in
-link:Ejb.html#a9861[See Java™ Platform, Enterprise Edition
-Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.].
+<<a9861, ^[12]^>>.
 
-The container must provide tools that allow
+* The container must provide tools that allow
 the Deployer to set up resource manager
 sign-on information for the resource manager references whose annotation
-element _authenticationType_ is set to _AuthenticationType.CONTAINER_ or
-whose res-auth deployment descriptor element
-element is set to Container. The minimum requirement is that the
+element `authenticationType` is set to `AuthenticationType.CONTAINER` or
+whose `res-auth` deployment descriptor element
+element is set to `Container`. The minimum requirement is that the
 Deployer must be able to specify the user/password information for each
 resource manager connection factory reference declared by the enterprise
 bean, and the container must be able to use the user/password
 combination for user authentication when obtaining a connection to the
 resource by invoking the resource manager connection factory.
 
-Although not required by the EJB
+_Although not required by the EJB
 specification, we expect that containers will support some form of a
 single sign-on mechanism that spans the
 application server and the resource managers. The container will allow
 the Deployer to set up the resource managers such that the EJB caller
 principal can be propagated (directly or through principal mapping) to a
-resource manager, if required by the application.
+resource manager, if required by the application._
 
 While not required by the EJB specification,
 most EJB Container Providers also provide the following features:
 
-A tool to allow the System Administrator to
+* A tool to allow the System Administrator to
 add, remove, and configure a resource manager for the EJB server.
 
-A mechanism to pool connections to the
+* A mechanism to pool connections to the
 resources for the enterprise beans and otherwise manage the use of
 resources by the container. The pooling must be transparent to the
 enterprise beans.
 
-=== System Administrator’s Responsibility
+==== System Administrator’s Responsibility
 
 The System
 Administrator is typically responsible for the following:
 
-Add, remove, and configure resource managers
+* Add, remove, and configure resource managers
 in the EJB server environment.
 
-In some scenarios, these tasks can be
-performed by the Deployer.
+_In some scenarios, these tasks can be
+performed by the Deployer._
 
 === [[a4341]]Resource Environment References
 
