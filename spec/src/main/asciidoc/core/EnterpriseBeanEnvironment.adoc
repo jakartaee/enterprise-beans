@@ -2973,135 +2973,101 @@ factories in the EJB server environment.
 _In some scenarios, these tasks can be
 performed by the Deployer._
 
-=== [[a4804]]UserTransaction Interface
-
-
+[[a4804]]
+=== UserTransaction Interface
 
 The container
 must make the UserTransaction interface available to the enterprise
 beans that are allowed to use this interface (only session and
 message-driven beans with bean-managed transaction demarcation are
 allowed to use this interface) either through injection using the
-_Resource_ annotation or in JNDI under the name
-java:comp/UserTransaction, in addition to through the _EJBContext_
-interface. The _authenticationType_ and _shareable_ elements of the
-_Resource_ annotation must not be specified.
+`Resource` annotation or in JNDI under the name
+`java:comp/UserTransaction`, in addition to through the `EJBContext`
+interface. The `authenticationType` and `shareable` elements of the
+`Resource` annotation must not be specified.
 
 The container must not make the
-UserTransaction interface available to the enterprise beans that are not
+`UserTransaction` interface available to the enterprise beans that are not
 allowed to use this interface. The container should throw
-javax.naming.NameNotFoundException if an instance of an enterprise bean
-that is not allowed to use the UserTransaction interface attempts to
+`javax.naming.NameNotFoundException` if an instance of an enterprise bean
+that is not allowed to use the `UserTransaction` interface attempts to
 look up the interface in JNDI using the JNDI APIs.
 
 The following example illustrates how an
-enterprise bean acquires and uses a _UserTransaction_ object via
+enterprise bean acquires and uses a `UserTransaction` object via
 injection.
 
-@Resource UserTransaction tx;
-
+[source, java]
+----
+@Resource 
+UserTransaction tx;
 ...
-
-public void updateData(...) \{
-
+public void updateData(...) {
  ...
-
  // Start a transaction.
-
  tx.begin();
-
  ...
-
  // Perform transactional operations on data.
-
  ...
-
  // Commit the transaction.
-
  tx.commit();
-
  ...
-
 }
+----
 
 The following code example
 
-public MySessionBean implements SessionBean
-\{
-
+[source, java]
+----
+public MySessionBean implements SessionBean {
  ...
-
- public someMethod()
-
- \{
-
+ public someMethod() {
  ...
-
  Context initCtx = new InitialContext();
-
- UserTransaction utx =
-(UserTransaction)initCtx.lookup(
-
- “java:comp/UserTransaction”);
-
+ UserTransaction utx = (UserTransaction)initCtx.lookup(
+    "java:comp/UserTransaction");
  utx.begin();
-
  ...
-
  utx.commit();
-
  }
-
  ...
-
 }
+----
 
 is functionally equivalent to
 
-public MySessionBean implements SessionBean
-\{
-
+[source, java]
+----
+public MySessionBean implements SessionBean {
  ...
-
  SessionContext ctx;
-
  ...
-
- public someMethod()
-
- \{
-
- UserTransaction utx =
-ctx.getUserTransaction();
-
+ public someMethod() {
+ UserTransaction utx = ctx.getUserTransaction();
  utx.begin();
-
  ...
-
  utx.commit();
-
  }
-
  ...
-
 }
+----
 
-A _UserTransaction_ object reference may also
+A `UserTransaction` object reference may also
 be declared in a deployment descriptor in the same way as a resource
 environment reference. Such a deployment descriptor entry may be used to
-specify injection of a _UserTransaction_ object.
+specify injection of a `UserTransaction` object.
 
-=== Bean Provider’s Responsibility
+==== Bean Provider’s Responsibility
 
 The Bean Provider is responsible for
-requesting injection of a _UserTransaction_ object using a _Resource_
-annotation or for using the defined name to lookup the _UserTransaction_
+requesting injection of a `UserTransaction` object using a `Resource`
+annotation or for using the defined name to lookup the `UserTransaction`
 object.
 
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider is responsible for
-providing an appropriate _UserTransaction_ object as required by this
+providing an appropriate `UserTransaction` object as required by this
 specification.
 
 === [[a4855]]ORB References
