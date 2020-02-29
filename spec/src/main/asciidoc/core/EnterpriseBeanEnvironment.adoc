@@ -3070,96 +3070,79 @@ The Container Provider is responsible for
 providing an appropriate `UserTransaction` object as required by this
 specification.
 
-=== [[a4855]]ORB References
-
-
+[[a4855]]
+=== ORB References
 
 Enterprise beans that need to make use of the
 CORBA ORB to perform certain operations can find an appropriate object
-implementing the ORB interface by requesting injection of an _ORB_
-object or by looking up the JNDI name _java:comp/ORB_ . Any such
-reference to an _ORB_ object is only valid within the bean instance that
+implementing the ORB interface by requesting injection of an `ORB`
+object or by looking up the JNDI name `java:comp/ORB`. Any such
+reference to an `ORB` object is only valid within the bean instance that
 performed the lookup.
 
 The following example illustrates how an
-application component acquires and uses an _ORB_ object via injection.
+application component acquires and uses an `ORB` object via injection.
 
-@Resource ORB orb;
+[source, java]
+----
+@Resource 
+ORB orb;
 
-
-
-public void method(...) \{
-
+public void method(...) {
  ...
-
- // Get the POA to use when creating object
-references.
-
- POA rootPOA =
-(POA)orb.resolve_initial_references("RootPOA");
-
+ // Get the POA to use when creating object references.
+ POA rootPOA = (POA)orb.resolve_initial_references("RootPOA");
  ...
-
 }
+----
 
 The following example illustrates how an
-enterprise bean acquires and uses an ORB object using a JNDI lookup.
+enterprise bean acquires and uses an `ORB` object using a JNDI lookup.
 
-public void method(...) \{
-
+[source, java]
+----
+public void method(...) {
  ...
-
  // Obtain the default initial JNDI context.
-
  Context initCtx = new InitialContext();
 
-
-
  // Look up the ORB object.
+ ORB orb = (ORB)initCtx.lookup("java:comp/ORB");
 
- ORB orb =
-(ORB)initCtx.lookup("java:comp/ORB");
-
-
-
- // Get the POA to use when creating object
-references.
-
- POA rootPOA =
-(POA)orb.resolve_initial_references("RootPOA");
-
+ // Get the POA to use when creating object references.
+ POA rootPOA = (POA)orb.resolve_initial_references("RootPOA");
  ...
-
 }
+----
 
-An _ORB_ reference may also be declared in a
+An `ORB` reference may also be declared in a
 deployment descriptor in the same way as a resource manager connection
 factory reference. Such a deployment descriptor entry may be used to
-specify injection of an _ORB_ object.
+specify injection of an `ORB` object.
 
-The _ORB_ instance available under the JNDI
-name _java:comp/ORB_ may always be a shared instance. By default, the
-_ORB_ instance injected into an enterprise bean or declared via a
+The `ORB` instance available under the JNDI
+name `java:comp/ORB` may always be a shared instance. By default, the
+`ORB` instance injected into an enterprise bean or declared via a
 deployment descriptor entry may also be a shared instance. However, the
-application may set the _shareable_ element of the _Resource_ annotation
-to _false_ , or may set the _res-sharing-scope_ element in the
-deployment descriptor to _Unshareable_ , to request a non-shared _ORB_
+application may set the `shareable` element of the `Resource` annotation
+to `false`, or may set the `res-sharing-scope` element in the
+deployment descriptor to `Unshareable`, to request a non-shared `ORB`
 instance.
 
-=== Bean Provider’s Responsibility
+==== Bean Provider’s Responsibility
 
 The Bean Provider is responsible for
-requesting injection of the _ORB_ object using the _Resource_
-annotation, or using the defined name to look up the _ORB_ object. If
-the _shareable_ element of the _Resource_ annotation is set to _false_ ,
-the ORB object injected will not be the shared instance used by other
-components in the application but instead will be a private _ORB_
+requesting injection of the `ORB` object using the `Resource`
+annotation, or using the defined name to look up the `ORB` object. If
+the `shareable` element of the `Resource` annotation is set to `false`,
+the `ORB` object injected will not be the shared instance used by other
+components in the application but instead will be a private `ORB`
 instance used only by the given component.
 
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider is responsible for
-providing an appropriate _ORB_ object as required by this specification.
+providing an appropriate `ORB` object as required by this specification.
 
 === [[a4885]]TimerService References
 
