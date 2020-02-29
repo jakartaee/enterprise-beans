@@ -1363,9 +1363,8 @@ the specified target bean.
 references, and allow him or her to resolve an EJB reference by binding
 it to a specified compatible target bean.
 
-=== [[a4154]]Web Service References
-
-
+[[a4154]]
+=== Web Service References
 
 Web service references allow the Bean
 Provider to refer to external web services. The web service references
@@ -1375,20 +1374,15 @@ interfaces in the target operational environment.
 
 The specification of web service references
 and their usage is defined in the _Java API for XML Web Services_
-(JAX-WS) link:Ejb.html#a9881[See Java™ API for XML-based Web
-Service, version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.] and
-_Web Services for Java EE_ specifications
-link:Ejb.html#a9879[See Web Services for Java EE, version 1.3.
-http://jcp.org/en/jsr/detail?id=109.].
+(JAX-WS)<<a9881, ^[31]^>> and _Web Services for Java EE_ 
+specifications<<a9879, ^[30]^>>.
 
-See Section link:Ejb.html#a3645[See
-Sharing of Environment Entries] for the name scoping rules of web
-service references.
+See <<a3645>> for the name scoping rules of web service references.
 
 The EJB specification recommends, but does
 not require, that all references to web services be organized in the
-_service_ subcontext of the bean’s environment (i.e., in the
-_java:comp/env/service_ JNDI context).
+`service` subcontext of the bean’s environment (i.e., in the
+`java:comp/env/service` JNDI context).
 
 === [[a4159]]Resource Manager Connection Factory References
 
