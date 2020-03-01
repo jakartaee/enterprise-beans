@@ -950,13 +950,10 @@ The Bean Provider
 may use EJB references to locate the business interfaces, no-interface
 views, or home interfaces of other enterprise beans as follows.
 
-:section-refsig: subsection
 * Assign an entry in the enterprise bean’s
 environment to the reference. (See <<a3998>> 
 for information on how EJB references are
 declared in the deployment descriptor.)
-
-:section-refsig: Section
 
 * The EJB specification recommends, but does
 not require, that all references to other enterprise beans be organized
@@ -1466,14 +1463,11 @@ The Bean Provider
 must use resource manager connection factory references to obtain
 connections to resources as follows.
 
-:section-refsig: subsection
 * Assign an entry in the enterprise bean’s
 environment to the resource manager connection factory reference. (See
  <<a4245>> for
 information on how resource manager connection factory references are
 declared in the deployment descriptor.)
-
-:section-refsig: Section
 
 * The EJB specification recommends, but does
 not require, that all resource manager connection factory references be
@@ -1869,12 +1863,9 @@ The Bean Provider must use resource
 environment references to locate administered objects that are
 associated with resources, as follows:
 
-:section-refsig: subsection
 * Assign an entry in the enterprise bean’s
 environment to the reference. (See <<a4353>> for information on how resource
 environment references are declared in the deployment descriptor.)
-
-:section-refsig: Section
 
 * The EJB specification recommends, but does
 not require, that all resource environment references be organized in
@@ -2001,13 +1992,9 @@ javax.jms.Queue stockQueue;
 The Bean Provider uses message destination
 references to locate message destinations, as follows.
 
-:section-refsig: subsection
-
 * Assign an entry in the enterprise bean’s
 environment to the reference. (See <<a4419>> for information on how message
 destination references are declared in the deployment descriptor.)
-
-:section-refsig: Section
 
 * The EJB specification recommends, but does
 not require, that all message destination references be organized in the
@@ -2384,13 +2371,10 @@ The Bean Provider
 must use persistence unit references to obtain references to entity
 manager factories as follows:
 
-:section-refsig: subsection
 * Assign an entry in the enterprise bean’s
 environment to the persistence unit reference. (See <<a4588>> 
 for information on how persistence
 unit references are declared in the deployment descriptor.)
-
-:section-refsig: Section
 
 * The EJB specification recommends, but does
 not require, that all persistence unit references be organized in the
@@ -2696,14 +2680,10 @@ must use persistence context references to obtain references to a
 container-managed entity manager configured for a persistence unit as
 follows:
 
-:section-refsig: subsection
-
 * Assign an entry in the enterprise bean’s
 environment to the persistence context reference. (See <<a4717>> 
 for information on how persistence
 context references are declared in the deployment descriptor.)
-
-:section-refsig: Section
 
 * The EJB specification recommends, but does
 not require, that all persistence context references be organized in the
