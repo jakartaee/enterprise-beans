@@ -204,7 +204,10 @@ defined in the JNDI documentation._
 A field or method of a bean class may be
 annotated to request that an entry from the bean’s environment be
 injected. Any of the types of resources or other environment
-entries<<a10322,^[102]^>> described in this chapter may be
+entriesfootnote:a10322[The term "resource"
+is used generically in this chapter to refer to these other environment
+entries as resources as well. Resources in the non-generic sense are
+described in <<a4159>>.] described in this chapter may be
 injected. Injection may also be requested using entries in the
 deployment descriptor corresponding to each of these resource types. The
 field or method may have any access qualifier (`public`, `private`,
@@ -329,7 +332,7 @@ deployment descriptor entry may override a `PersistenceUnit` or
 <<a4533>> and <<a4671>>. 
 The rules for web services references and how a deployment descriptor entry
 may override a `WebServiceRef` annotation are included in the _Web
-Services for Java EE_ specification<<a9879, ^[30]^>>.
+Services for Java EE_ specification<<a9879>>.
 
 :section-refsig: Section
 
@@ -841,7 +844,9 @@ the resource is to be looked up in the environment.
 interface type. The reference may be to a session bean’s business
 interface, to a session bean’s no-interface view, or to the local home
 interface or remote home interface of a session bean or an entity
-bean<<a10323, ^[103]^>>.
+beanfootnote:a10323[Component contract
+and client view of entity beans are described in the EJB Optional
+Features document<<a9890>>.].
 
 * The `beanName` element references the value of
 the name element of the `Stateful` or `Stateless` annotation (or `ejb-name`
@@ -1041,7 +1046,7 @@ specified.
 The optional
 `ejb-ref-type` element specifies the expected
 type of the enterprise bean: its value must be either
-Entity<<a10324, ^[104]^>> or Session.
+Entityfootnote:a10323[] or Session.
 
 The `home` and `remote` or `local-home`
  and `local`
@@ -1139,7 +1144,9 @@ the referencing application component.
 rename enterprise beans to have unique names within an entire Java EE
 application, the Application Assembler may use either of the following
 two syntaxes in the `ejb-link` element of the referencing application
-component<<a10325, ^[105]^>>.
+componentfootnote:a10325[The Bean Provider
+may also use this syntax in the `beanName` element of the `EJB`
+annotation.].
 
 ** The Application Assembler specifies the
 module name of the ejb-jar file or `.war` file containing the referenced
@@ -1370,8 +1377,8 @@ interfaces in the target operational environment.
 
 The specification of web service references
 and their usage is defined in the _Java API for XML Web Services_
-(JAX-WS)<<a9881, ^[31]^>> and _Web Services for Java EE_ 
-specifications<<a9879, ^[30]^>>.
+(JAX-WS)<<a9881>> and _Web Services for Java EE_ 
+specifications<<a9879>>.
 
 See <<a3645>> for the name scoping rules of web service references.
 
@@ -1606,7 +1613,7 @@ a bean.
 
 See Section "Declaration of Resource Manager
 Connection Factory References in Deployment Descriptor" in the Java EE
-Platform specification<<a9861, ^[12]^>> for the description of the
+Platform specification<<a9861>> for the description of the
 `resource-ref` element.
 
 See <<a3645>> for the name scoping rules of resource
@@ -1700,7 +1707,7 @@ factories in the `java:comp/env/url` subcontext. Note that resource
 manager connection factory references declared via annotations will not,
 by default, appear in any subcontext.
 
-_The Connector architecture<<a9863, ^[14]^>> allows an
+_The Connector architecture<<a9863>> allows an
 enterprise bean to use the API described in this section to obtain
 resource objects that provide access to additional back-end systems._
 
@@ -1772,12 +1779,14 @@ element of the `Resource` annotation to `false` or sets the
 `res-sharing-scope` deployment descriptor entry for a resource manager
 connection factory reference to `Unshareable`, the container must not
 attempt to share the connections obtained from the resource manager
-connection factory reference<<a10326, ^[106]^>>. If the Bean
+connection factory referencefootnote:a10326[Connections obtained
+from the same resource manager connection factory through a different
+resource manager connection factory reference may be shareable.]. If the Bean
 Provider sets the `res-sharing-scope` of a resource manager connection
 factory reference to `Shareable` or does not specify `res-sharing-scope`
 , the container must share the connections obtained from the resource
 manager connection factory according to the requirements defined in
-<<a9861, ^[12]^>>.
+<<a9861>>.
 
 * The container must provide tools that allow
 the Deployer to set up resource manager
@@ -1894,7 +1903,7 @@ environment reference into a bean.
 
 See Section "Declaration of Resource
 Environment References in Deployment Descriptor" in the Java EE Platform
-specification<<a9861, ^[12]^>> for the description of the
+specification<<a9861>> for the description of the
 `resource-env-ref` element.
 
 See <<a3645>> for the name scoping rules of resource
@@ -2330,7 +2339,7 @@ unit references are special entries in the enterprise bean’s
 environment. The Deployer binds the persistence unit references to
 entity manager factories that are configured in accordance with the
 `persistence.xml` specification for the persistence unit, as described
-in the _Java Persistence API_ specification<<a9851, ^[2]^>>.
+in the _Java Persistence API_ specification<<a9851>>.
 
 ==== Bean Provider’s Responsibilities
 
@@ -2593,7 +2602,7 @@ manager factory for the persistence unit specified as the target.
 
 * Provide any additional configuration
 information that the entity manager factory needs for managing the
-persistence unit, as described in <<a9851, ^[2]^>>.
+persistence unit, as described in <<a9851>>.
 
 ==== Container Provider Responsibility
 
@@ -2609,7 +2618,7 @@ manager factory classes for the persistence units that are configured
 with the EJB container. The implementation of the entity manager factory
 classes may be provided by the container directly or by the container in
 conjunction with a third-party persistence provider, as described in
-<<a9851, ^[2]^>>.
+<<a9851>>.
 
 ==== System Administrator’s Responsibility
 
@@ -2634,7 +2643,7 @@ in the enterprise bean’s environment. The Deployer binds the persistence
 context references to container-managed entity managers for persistence
 contexts of the specified type and configured in accordance with their
 persistence unit, as described in the _Java Persistence API_
-specification<<a9851, ^[2]^>>.
+specification<<a9851>>.
 
 ==== Bean Provider’s Responsibilities
 
@@ -2922,7 +2931,7 @@ manager for the persistence unit specified as the target.
 * Provide any additional configuration
 information that the entity manager factory needs for creating such an
 entity manager and for managing the persistence unit, as described in
-<<a9851, ^[2]^>>.
+<<a9851>>.
 
 ==== Container Provider Responsibility
 
@@ -2937,7 +2946,7 @@ perform the tasks described in the previous subsection.
 manager classes for the persistence units that are configured with the
 EJB container. This implementation may be provided by the container
 directory or by the container in conjunction with a third-party
-persistence provider, as described in <<a9851, ^[2]^>>.
+persistence provider, as described in <<a9851>>.
 
 ==== System Administrator’s Responsibility
 
@@ -3192,7 +3201,7 @@ concurrent access to the SessionContext object to be thread-safe.
 
 The container
 must follow the requirements for all other resources and configuration
-parameters specified in the Java EE Platform specification<<a9861, ^[12]^>>.
+parameters specified in the Java EE Platform specification<<a9861>>.
 
 === Deprecated EJBContext.getEnvironment Method
 
