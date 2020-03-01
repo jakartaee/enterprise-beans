@@ -3172,40 +3172,39 @@ The Container Provider is responsible for
 providing an appropriate `TimerService` object as required by this
 specification.
 
-=== [[a4892]]EJBContext References
-
-
+[[a4892]]
+=== EJBContext References
 
 The container
-must make a component’s EJBContext interface available either through
-injection using the _Resource_ annotation or in JNDI under the name
-java:comp/EJBContext. The _authenticationType_ and _shareable_ elements
-of the _Resource_ annotation must not be specified.
+must make a component’s `EJBContext` interface available either through
+injection using the `Resource` annotation or in JNDI under the name
+`java:comp/EJBContext`. The `authenticationType` and `shareable` elements
+of the `Resource` annotation must not be specified.
 
-An _EJBContext_ object reference may also be
+An `EJBContext` object reference may also be
 declared in a deployment descriptor in the same way as a resource
 environment reference. Such a deployment descriptor entry may be used to
-specify injection of an _EJBContext_ object.
+specify injection of an `EJBContext` object.
 
-=== Bean Provider’s Responsibility
+==== Bean Provider’s Responsibility
 
 The Bean Provider is responsible for
-requesting injection of an _EJBContext_ object using a _Resource_
-annotation or using the defined name to lookup the _EJBContext_ object.
+requesting injection of an `EJBContext` object using a `Resource`
+annotation or using the defined name to lookup the `EJBContext` object.
 
- _EJBContext_ objects accessed through the
+`EJBContext` objects accessed through the
 naming environment are only valid within the bean instance that
 performed the lookup.
 
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider is responsible for
-providing an appropriate _EJBContext_ object to the referencing
+providing an appropriate `EJBContext` object to the referencing
 component. The object returned must be of the appropriate specific type
 for the bean requesting injection or performing the lookup—that is, the
-Container Provider must return an instance of the _SessionContext_
+Container Provider must return an instance of the `SessionContext`
 interface to referencing session beans and an instance of the
-_MessageDrivenContext_ interface to message-driven beans.
+`MessageDrivenContext` interface to message-driven beans.
 
 Independent of the singleton session bean’s
 concurrency management type, the Container Provider must ensure
