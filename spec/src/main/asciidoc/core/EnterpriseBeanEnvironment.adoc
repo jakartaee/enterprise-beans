@@ -3210,16 +3210,12 @@ Independent of the singleton session bean’s
 concurrency management type, the Container Provider must ensure
 concurrent access to the SessionContext object to be thread-safe.
 
-=== [[a4901]]Support for Other Resources and Configuration Parameters
-
-
+[[a4901]]
+=== Support for Other Resources and Configuration Parameters
 
 The container
 must follow the requirements for all other resources and configuration
-parameters specified in the Java EE Platform specification
-[link:Ejb.html#a9861[See Java™ Platform, Enterprise Edition
-Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.]].
+parameters specified in the Java EE Platform specification<<a9861, ^[12]^>>.
 
 === Deprecated EJBContext.getEnvironment Method
 
