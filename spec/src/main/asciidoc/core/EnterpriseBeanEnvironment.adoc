@@ -3219,8 +3219,6 @@ parameters specified in the Java EE Platform specification<<a9861, ^[12]^>>.
 
 === Deprecated EJBContext.getEnvironment Method
 
-
-
 The environment
 naming context introduced in EJB 1.1 replaced the EJB 1.0 concept of
 environment properties.
@@ -3228,8 +3226,8 @@ environment properties.
 An EJB 1.1 or
 later compliant container is not required to implement support for the
 EJB 1.0 style environment properties. If the container does not
-implement the functionality, it should throw the _RuntimeException_ (or
-subclass thereof) from the EJBContext.getEnvironment method.
+implement the functionality, it should throw the `RuntimeException` (or
+subclass thereof) from the `EJBContext.getEnvironment` method.
 
 If an EJB 1.1 or later compliant container
 chooses to provide support for the EJB 1.0 style environment properties
@@ -3238,85 +3236,58 @@ specification), it should implement the support as described below.
 
 When the tools convert the EJB 1.0 deployment
 descriptor to the EJB 1.1 XML format, they should place the definitions
-of the environment properties into the ejb10-properties subcontext of
+of the environment properties into the `ejb10-properties` subcontext of
 the environment naming context. The
-env-entry elements should be defined as
-follows: the env-entry-name element contains
+`env-entry` elements should be defined as
+follows: the `env-entry-name` element contains
 the name of the environment property, the
-env-entry-type must be java.lang.String, and
-the optional env-entry-value contains the
+`env-entry-type` must be `java.lang.String`, and
+the optional `env-entry-value` contains the
 environment property value.
 
 For example, an EJB 1.0 enterprise bean with
 two environment properties foo and bar, should declare the following
-env-entry elements in its EJB 1.1 format deployment descriptor.
+`env-entry` elements in its EJB 1.1 format deployment descriptor.
 
+[source, xml]
+----
  ...
-
- <env-entry>
-
-
-env-entry-name>ejb10-properties/foo</env-entry-name>
-
-
-<env-entry-type>java.lang.String</env-entry-type>
-
- </env-entry>
-
- <env-entry>
-
- <description>bar’s description</description>
-
-
-<env-entry-name>ejb10-properties/bar</env-entry-name>
-
-
-<env-entry-type>java.lang.String</env-entry-type>
-
- <env-entry-value>bar value</env-entry-value>
-
- </env-entry>
-
+<env-entry>
+  <env-entry-name>ejb10-properties/foo</env-entry-name>
+  <env-entry-type>java.lang.String</env-entry-type>
+</env-entry>
+<env-entry>
+  <description>bar’s description</description>
+  <env-entry-name>ejb10-properties/bar</env-entry-name>
+  <env-entry-type>java.lang.String</env-entry-type>
+  <env-entry-value>bar value</env-entry-value>
+</env-entry>
  ...
+----
 
 The container should provide the entries
-declared in the ejb10-properties subcontext to the instances as a
-java.util.Properties object that the instances obtain by invoking the
-EJBContext.getEnvironment method.
+declared in the `ejb10-properties` subcontext to the instances as a
+`java.util.Properties` object that the instances obtain by invoking the
+`EJBContext.getEnvironment` method.
 
 The enterprise bean uses the EJB 1.0 API to
 access the properties, as shown by the following example.
 
-public class SomeBean implements SessionBean
-\{
-
+[source, java]
+----
+public class SomeBean implements SessionBean {
  SessionContext ctx;
-
  java.util.Properties env;
 
-
-
- public void setSessionContext(SessionContext
-sc) \{
-
- ctx = sc;
-
- env = ctx.getEnvironment();
-
+ public void setSessionContext(SessionContext sc) {
+  ctx = sc;
+  env = ctx.getEnvironment();
  }
 
-
-
- public someBusinessMethod(...) ... \{
-
- String fooValue = env.getProperty("foo");
-
- String barValue = env.getProperty("bar");
-
+ public someBusinessMethod(...) ... {
+  String fooValue = env.getProperty("foo");
+  String barValue = env.getProperty("bar");
  }
-
  ...
-
-
-
 }
+----
