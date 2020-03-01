@@ -976,8 +976,7 @@ interface of another enterprise bean using the JNDI APIs.
 
 [source, java]
 ----
-@EJB(name="ejb/EmplRecord",
-beanInterface=EmployeeRecordHome.class)
+@EJB(name="ejb/EmplRecord", beanInterface=EmployeeRecordHome.class)
 @Stateless 
 public class EmployeeServiceBean 
         implements EmployeeService {
@@ -1542,8 +1541,7 @@ obtaining a JDBC connection when the EJBContext `lookup` method is used.
 
 [source, java]
 ----
-@Resource(name="jdbc/EmployeeAppDB",
-type=javax.sql.DataSource)
+@Resource(name="jdbc/EmployeeAppDB", type=javax.sql.DataSource)
 @Stateless 
 public class EmployeeServiceBean implements EmployeeService {
  @Resource 
@@ -1569,8 +1567,7 @@ obtaining a JDBC connection when the JNDI APIs are used directly.
 
 [source, java]
 ----
-@Resource(name="jdbc/EmployeeAppDB",
-type=javax.sql.DataSource)
+@Resource(name="jdbc/EmployeeAppDB", type=javax.sql.DataSource)
 @Stateless 
 public class EmployeeServiceBean implements EmployeeService {
 
