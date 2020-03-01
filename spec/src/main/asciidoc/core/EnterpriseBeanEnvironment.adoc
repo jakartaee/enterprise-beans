@@ -3144,33 +3144,32 @@ instance used only by the given component.
 The Container Provider is responsible for
 providing an appropriate `ORB` object as required by this specification.
 
-=== [[a4885]]TimerService References
-
-
+[[a4885]]
+=== TimerService References
 
 The container
 must make the TimerService interface available either through injection
-using the _Resource_ annotation or in JNDI under the name
-java:comp/TimerService, in addition to through the EJBContext interface.
-The _authenticationType_ and _shareable_ elements of the _Resource_
+using the `Resource` annotation or in JNDI under the name
+`java:comp/TimerService`, in addition to through the `EJBContext` interface.
+The `authenticationType` and `shareable` elements of the `Resource`
 annotation must not be specified.
 
-A _TimerService_ object reference may also be
+A `TimerService` object reference may also be
 declared in a deployment descriptor in the same way as a resource
 environment reference. Such a deployment descriptor entry may be used to
-specify injection of a _TimerService_ object.
+specify injection of a `TimerService` object.
 
-=== Bean Provider’s Responsibility
+==== Bean Provider’s Responsibility
 
 The Bean Provider is responsible for
-requesting injection of a _TimerService_ object using a _Resource_
-annotation, or using the defined name to lookup the _TimerService_
+requesting injection of a `TimerService` object using a `Resource`
+annotation, or using the defined name to lookup the `TimerService`
 object.
 
-=== Container Provider’s Responsibility
+==== Container Provider’s Responsibility
 
 The Container Provider is responsible for
-providing an appropriate _TimerService_ object as required by this
+providing an appropriate `TimerService` object as required by this
 specification.
 
 === [[a4892]]EJBContext References
