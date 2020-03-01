@@ -1,137 +1,137 @@
 [[a9849]]
+[bibliography]
 == Related Documents
 
-Enterprise JavaBeans™, version 3.2. (this
+- [[[a9850, 1]]] Enterprise JavaBeans™, version 3.2. (this
 specification) _http://jcp.org/en/jsr/detail?id=3_ 45.
 
-[[a9851]]Java™ Persistence API,
+- [[[a9851, 2]]] Java™ Persistence API,
 version 2.1. _http://jcp.org/en/jsr/detail?id=338_ .
 
-Enterprise JavaBeans™,
+- [[[a9852, 3]]] Enterprise JavaBeans™,
 version 2. (EJB 2.1).
 http://www.oracle.com/technetwork/java/javaee/ejb/index.html.
 
-JavaBeans™.
+- [[[a9853, 4]]] JavaBeans™.
 http://www.oracle.com/technetwork/java/javase/tech/index-jsp-138795.html.
 
-[[a9854]]Java™ Naming and Directory
+- [[[a9854, 5]]] Java™ Naming and Directory
 Interface 1.2 Specification (JNDI).
 http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html.
 
-[[a9855]]Java Remote Method
+- [[[a9855, 6]]] Java Remote Method
 Invocation (RMI).
 http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/.
 
-Java™ Security.
+- [[[a9856, 7]]] Java™ Security.
 http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136007.html.
 
-[[a9857]]Java™ Transaction API,
+- [[[a9857, 8]]] Java™ Transaction API,
 version 1.2 (JTA). http://jcp.org/en/jsr/detail?id=907.
 
-[[a9858]]Java™ Transaction Service,
+- [[[a9858, 9]]] Java™ Transaction Service,
 version 1.0 (JTS).
 http://www.oracle.com/technetwork/java/javaee/jts-spec095-1508547.pdf.
 
-[[a9859]]IDL To Java™ Language
+- [[[a9859, 10]]] IDL To Java™ Language
 Mapping Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.
 
-[[a9860]]Transaction Service
+- [[[a9860, 11]]] Transaction Service
 Specification (OTS). http://www.omg.org/cgi-bin/doc?ptc/2001-11-03.
 
-[[a9861]]Java™ Platform, Enterprise
+- [[[a9861, 12]]] Java™ Platform, Enterprise
 Edition Specification Version 7 (Java EE).
 _http://jcp.org/en/jsr/detail?id=342_ .
 
-[[a9862]]Java™ Message Service,
+- [[[a9862, 13]]] Java™ Message Service,
 version 2.0 (JMS). http://jcp.org/en/jsr/detail?id=343.
 
-[[a9863]]Java EE™ Connector
+- [[[a9863, 14]]] Java EE™ Connector
 Architecture, version 1.7 (Connector).
 _http://jcp.org/en/jsr/detail?id=322_ .
 
-[[a9864]]Enterprise JavaBeans™ to
+- [[[a9864, 15]]] Enterprise JavaBeans™ to
 CORBA Mapping
 v1.1.http://www.oracle.com/technetwork/java/javaee/ejb/index.html.
 
-[[a9865]]CORBA
+- [[[a9865, 16]]] CORBA
 2.3.1 Specification. http://www.omg.org/cgi-bin/doc?formal/99-10-07.
 
-[[a9866]]CORBA Naming Service.
+- [[[a9866, 17]]] CORBA Naming Service.
 http://www.omg.org/spec/NAM/.
 
-[[a9867]]Interoperable Name Service
+- [[[a9867, 18]]]Interoperable Name Service
 FTF document. http://www.omg.org/cgi-bin/doc?ptc/00-08-07.
 
-[[a9868]]RFC 2246: The TLS
+- [[[a9868, 19]]] RFC 2246: The TLS
 Protocol. ftp://ftp.isi.edu/in-notes/rfc2246.txt.
 
-[[a9869]]RFC 2712: Addition of
+- [[[a9869, 20]]] RFC 2712: Addition of
 Kerberos Cipher Suites to Transport Layer Security.
 ftp://ftp.isi.edu/in-notes/rfc2712.txt.
 
-[[a9870]]The SSL Protocol Version
+- [[[a9870, 21]]] The SSL Protocol Version
 3.0. http://tools.ietf.org/html/rfc6101.
 
-[[a9871]]Common Secure
+- [[[a9871, 22]]] Common Secure
 Interoperability Version 2 Final Available Specification.
 http://www.omg.org/cgi-bin/doc?ptc/2001-06-17.
 
-Database Language SQL.
+- [[[a9872, 23]]] Database Language SQL.
 ANSI X3.135-1992 or ISO/IEC 9075:1992.
 
-[[a9873]]Java™ API for XML-based
+- [[[a9873, 24]]] Java™ API for XML-based
 RPC, version 1.1 (JAX-RPC). _http://jcp.org/en/jsr/detail?id=101._
 
-[[a9874]]Web Services Description
+- [[[a9874, 25]]]Web Services Description
 Language (WSDL) 1.1. _http://www.w3.org/TR/wsdl._
 
-[[a9875]]W3C: SOAP 1.2.
+- [[[a9875, 26]]] W3C: SOAP 1.2.
 _http://www.w3.org/TR/SOAP/._
 
-[[a9876]]The Java Virtual Machine
+- [[[a9876, 27]]] The Java Virtual Machine
 Specification.
 
-JDBC™ 4.1 API (JDBC
+- [[[a9877, 28]]] JDBC™ 4.1 API (JDBC
 specification). http://jcp.org/en/jsr/detail?id=221.
 
-[[a9878]]Web Services Metadata for
+- [[[a9878, 29]]] Web Services Metadata for
 the Java Platform, version 2.1. _http://jcp.org/en/jsr/detail?id=181._
 
-[[a9879]]Web Services for Java EE,
+- [[[a9879, 30]]] Web Services for Java EE,
 version 1.3. _http://jcp.org/en/jsr/detail?id=109._
 
- _Java™ API for XML-based Web Service,
+- [[[a9881, 31]]] _Java™ API for XML-based Web Service,
 version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224._
-[[a9881]]
 
-[[a9882]]JAR File Specification,
+- [[[a9882, 32]]] JAR File Specification,
 http://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html.
 
-[[a9883]]Java™ Platform, Standard
+- [[[a9883, 33]]] Java™ Platform, Standard
 Edition, v7 API Specification (Java SE).
 http://docs.oracle.com/javase/7/docs/api/index.html.
 
-Enterprise JavaBeans™, version 3.0. (EJB
-3.0). http://www.oracle.com/technetwork/java/javaee/ejb/index.html. __
+- [[[a9884, 34]]] Enterprise JavaBeans™, version 3.0. (EJB
+3.0). http://www.oracle.com/technetwork/java/javaee/ejb/index.html.
 
-[[a9885]]List of zoneinfo time
+- [[[a9885, 35]]] List of zoneinfo time
 zones: http://en.wikipedia.org/wiki/List_of_tz_zones.
 
-[[a9886]]Managed Beans, version 1.0
+- [[[a9886, 36]]] Managed Beans, version 1.0
 (Managed Beans). _http://jcp.org/en/jsr/detail?id=316._
 
-[[a9887]]Interceptors, version 1.2.
+- [[[a9887, 37]]] Interceptors, version 1.2.
 _http://jcp.org/en/jsr/detail?id=318._
 
-[[a9888]]Contexts and Dependency
+- [[[a9888, 38]]] Contexts and Dependency
 Injection for the Java EE Platform 1.1 (CDI specification)
 http://jcp.org/en/jsr/detail?id=346.
 
-[[a9889]]The Java API for RESTful
+- [[[a9889, 39]]] The Java API for RESTful
 Web Services, version 2.0 (JAX-RS) http://jcp.org/en/jsr/detail?id=339.
 
-[[a9890]]EJB 3.2 Optional Features
-_http://jcp.org/en/jsr/detail?id=345_ .
+- [[[a9890, 40]]] EJB 3.2 Optional Features
+_http://jcp.org/en/jsr/detail?id=345_
 
-[[a9891]]Enterprise JavaBeans™,
+- [[[a9891, 41]]] Enterprise JavaBeans™,
 version 3.1. (EJB 3.1). _http://jcp.org/en/jsr/detail?id=318._
