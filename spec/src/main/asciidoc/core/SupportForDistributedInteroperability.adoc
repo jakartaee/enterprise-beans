@@ -59,7 +59,9 @@ specific to the wire protocol used for the remote invocation.
 
 
 Session beans and
-entitylink:#a10312[93] beans that are deployed in one vendor’s
+entityfootnote:a10313[Component contract and client view of entity beans 
+are described in the EJB Optional Features document <<a9890>>.] beans that 
+are deployed in one vendor’s
 server product may need to be accessed from Java EE client components
 that are deployed in another vendor’s product through the remote client
 view. EJB defines a standard interoperability protocol based on
@@ -100,9 +102,7 @@ this chapter are as follows:_
 
 To allow clients in one application deployed
 in Java EE containers from one Server Provider to access services from
-session and entitylink:Ejb.html#a10313[See Component contract and
-client view of entity beans are described in the EJB Optional Features
-document [40].] beans in another application that is deployed in an EJB
+session and entityfootnote:a10313[] beans in another application that is deployed in an EJB
 container from a different Server Provider. For example, web components
 (JavaServer Pages and servlets) that are deployed on a Java EE compliant
 web server provided by one Server Provider must be able to invoke the
@@ -409,7 +409,9 @@ must be capable of servicing IIOP 1.2 based invocations on EJBObject and
 EJBHome objects. IIOP 1.2 is part of the CORBA 2.3.1 specification
 link:Ejb.html#a9865[See CORBA 2.3.1 Specification.
 http://www.omg.org/cgi-bin/doc?formal/99-10-07.] from the
-OMGlink:#a10314[94]. Containers may additionally support
+OMGfootnote:a10314[CORBA APIs and earlier versions of the IIOP protocol are 
+already included in the J2SE 1.2, J2SE 1.3 and J2EE 1.2 platforms through 
+JavaIDL and RMI-IIOP.]. Containers may additionally support
 vendor-specific protocols.
 
 CORBA Interoperable Object References (IORs)
@@ -448,7 +450,9 @@ The Java Language to IDL Mapping
 specification link:Ejb.html#a9859[See IDL To Java™ Language
 Mapping Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.]
 describes precisely how the remote home and remote component interfaces
-of a session bean or an entity beanlink:#a10315[95] are mapped to
+of a session bean or an entity beanfootnote:a10315[Component contract 
+and client view of entity beans are described in the EJB Optional 
+Features document <<a9890>>.] are mapped to
 IDL. This mapping to IDL is typically implicit when Java RMI over IIOP
 is used to invoke enterprise beans. Java EE clients use only the Java
 RMI APIs to invoke enterprise beans. The client container may use the
@@ -715,7 +719,9 @@ the propagated transaction context (step 3), and may also register an
 OTS Synchronization object (step 2). If the server container does not
 register an OTS Synchronization object, it must still ensure that the
 beforeCompletion method of session beans and ejbStore method of entity
-beanslink:#a10316[96] are called with the proper transaction
+beansfootnote:a10316[Component contract and client view of entity beans 
+are described in the EJB Optional Features document <<a9890>>.] 
+are called with the proper transaction
 context. Containers must participate in the two-phase commit and
 recovery procedures performed by the transaction coordinator /
 terminator (steps 6,7), as described by the OTS specification._
@@ -730,7 +736,11 @@ The OTS1.2
 specification describes the _CosTransactions::OTSPolicy_ and
 _CosTransactions::InvocationPolicy_ structures that are encoded in IORs
 as tagged components. EJBObject and EJBHome references must contain
-these tagged componentslink:#a10317[97] with policy values as
+these tagged componentsfootnote:a10317[One way to include the tagged 
+components in IORs is to create the object references using a Portable 
+Object Adapter (POA) which is initialized with the appropriate 
+transaction policies. Note that POA APIs are not required to be supported 
+by server containers.] with policy values as
 described below.
 
 The transaction attributes of enterprise
@@ -744,7 +754,9 @@ enterprise bean method.
 
 EJBObject and EJBHome references may have the
 InvocationPolicy value as either _CosTransactions::SHARED_ or
-_CosTransactions::EITHER_ link:#a10318[98].
+_CosTransactions::EITHER_footnote:a10318[If the InvocationPolicy is not 
+present in the IOR, it is interpreted by the client as if the policy 
+value was `CosTransactions::EITHER`.].
 
 All EJBObject and EJBHome references must
 have the OTSPolicy value as _CosTransactions::ADAPTS_ . This is
@@ -1071,7 +1083,10 @@ key mechanisms.
 The
 authentication identity (i.e. principal) associated with a Java EE
 component is usually that of the user on whose behalf the component is
-executinglink:#a10319[99]. The principal under which an
+executingfootnote:a10319[When there are concurrent invocations on a 
+component from multiple clients, a different principal may be 
+associated with the thread of execution for each invocation.]. 
+The principal under which an
 enterprise bean invocation is performed is either that of the bean’s
 caller or the run-as principal which was configured by the Deployer.
 When there is a chain of invocations across a web component and
@@ -1115,7 +1130,11 @@ a chain.
 EJB containers are required to provide the
 Deployer or Administrator with the tools to configure
 trust relationships for interactions with
-intermediate web or EJB containerslink:#a10320[100]. If a trust
+intermediate web or EJB containersfootnote:a10320[One way to achieve 
+this is to configure a "trusted container list" for each EJB container 
+which contains the list of intermediate client containers that are trusted. 
+If the list is empty, then the target EJB container does not have a trust 
+relationship with any intermediate container.]. If a trust
 relationship is set up, the containers are usually configured to perform
 mutual authentication, unless the security of the network can be ensured
 by some physical means. If the network is physically secure, the target
@@ -1239,7 +1258,8 @@ TLS_RSA_WITH_RC4_128_MD5
 
 SSL_RSA_WITH_RC4_128_MD5
 
-{empty}TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHAlink:#a10321[101]
+{empty}TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHAfootnote:a10321[This ciphersuite is 
+mandatory for compliant TLS implementations as specified in <<a9868>>.]
 
 SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
 

@@ -705,7 +705,9 @@ application or its deployment descriptor refers to a role named “**”.
 
 Defining the security roles in the metadata
 annotations and/or deployment descriptor is
-optionallink:#a10327[107]. Their omission means that the Bean
+optionalfootnote:a10327[If the Bean Provider and Application Assembler do 
+not define security roles, the Deployer will have to define security roles 
+at deployment time.]. Their omission means that the Bean
 Provider and Application Assembler chose not to pass any security
 deployment related instructions to the Deployer.
 
@@ -842,7 +844,9 @@ Method permissions are defined as a binary
 relation from the set of security roles to the set of methods of the
 business interfaces, home interfaces, component interfaces, no-interface
 views, and/or web service endpoints of session and
-entitylink:#a10328[108] beans, including all their
+entityfootnote:a10328[Component contract and client view of entity beans 
+are described in the EJB Optional Features document <<a9890>>.] beans, 
+including all their
 superinterfaces (including the methods of the EJBHome and EJBObject
 interfaces and/or EJBLocalHome and EJBLocalObject interfaces). The
 method permissions relation includes the pair (R, M) if and only if the
@@ -1641,7 +1645,9 @@ The EJB container must be capable of allowing
 the Deployer to specify that a run-as principal be used for the
 execution of the business, home, and component interfaces, no-interface
 view, and/or web service endpoint methods of a session or an
-entitylink:#a10329[109] bean, or for the message listener methods
+entityfootnote:a10329[Component contract and client view of entity beans 
+are described in the EJB Optional Features document <<a9890>>.] bean, 
+or for the message listener methods
 of a message-driven bean.
 
 ==== Security Methods in javax.ejb.EJBContext
@@ -1725,7 +1731,10 @@ security roles that includes the method in its method permissions
 definition. (That is, it is not meant that the caller must be assigned
 _all_ the roles associated with the method.) If the container denies a
 client access to a business method, the container should throw the
-_javax.ejb.EJBAccessExceptionlink:#a10330[110]_ . If the EJB 2.1
+_javax.ejb.EJBAccessException_footnote:a10330[If the business interface 
+is a remote business interface that extends `java.rmi.Remote`, the 
+`java.rmi.AccessException` is thrown to the client instead.]. 
+If the EJB 2.1
 client view is used, the container must throw the
 java.rmi.RemoteException (or its subclass,
 the _java.rmi.AccessException_ ) to the client if the client is a remote
@@ -1761,7 +1770,9 @@ managers according to the security policy defined by the Deployer.
 
 The container must allow the same enterprise
 bean to be deployed independently multiple times, each time with a
-different security policylink:#a10331[111]. The container must
+different security policyfootnote:a10331[For example, the enterprise 
+bean may be installed each time using a different bean name (as specified 
+by means of the deployment descriptor).]. The container must
 allow multiple-deployed enterprise beans to co-exist at runtime.
 
 [[a5442]]
