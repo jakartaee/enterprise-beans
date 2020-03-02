@@ -105,7 +105,8 @@ and open database cursors. A container cannot retain such open resources
 when a session bean instance is passivated. A developer of a stateful
 session bean must close and open the resources in the _PrePassivate_ and
 _PostActivate_ lifecycle callback interceptor
-methods.link:#a10228[10]
+methods.footnote:a10228[Note that this requirement does not apply to the 
+`EntityManager` and `EntityManagerFactory` objects.]
 
 A container may only passivate a stateful
 session bean instance when the instance is _not_ in a transaction.
@@ -117,7 +118,9 @@ Session Beans] on how to disable passivation of stateful session beans.
 
 {empty}A container must not passivate a
 stateful session bean with an extended persistence context unless the
-following conditions are met:link:#a10229[11]
+following conditions are met:footnote:a10229[The container is not 
+permitted to destroy a stateful session bean instance because it does 
+not meet these requirements.]
 
 All the entities in the persistence context
 are serializable.
@@ -139,7 +142,10 @@ instance’s non- _transient_ fields and the non- _transient_ fields of
 its interceptors after the _PrePassivate_ method completes must be one
 of the following.
 
-A serializable objectlink:#a10230[12].
+A serializable object.footnote:a10230[Note that the Java Serialization 
+protocol dynamically determines whether or not an object is serializable. 
+This means that it is possible to serialize an object of a serializable 
+subclass of a non-serializable declared field type.]
 
 A _null_ .
 
@@ -156,13 +162,13 @@ A reference to an enterprise bean’s remote
 home interface, even if the stub class is not serializable.
 
 A reference to an entity
-bean’slink:#a10230[13] local component interface, even if it is
+bean’sfootnote:a10230[] local component interface, even if it is
 not serializable.
 
 A reference to an entity
-bean’slink:Ejb.html#a10231[See Component contract and client view
-of entity beans are described in the EJB Optional Features document
-[40].] local home interface, even if it is not serializable.
+bean’sfootnote:a10231[Component contract and client view of entity 
+beans are described in the EJB Optional Features document 
+<<a9890>>.] local home interface, even if it is not serializable.
 
 A reference to the _SessionContext_ object,
 even if it is not serializable.
@@ -173,7 +179,8 @@ A reference to the environment naming context
 A reference to the UserTransaction interface.
 
 A reference to a resource manager connection
-factorylink:#a10232[14].
+factory.footnote:a10232[Except for the `javax.mail.Session` resource 
+manager connection factory.]
 
 A reference to a container-managed
 _EntityManager_ object, even if it is not serializable.
@@ -273,7 +280,12 @@ the Serialization protocol for the Java programming language to store
 the state of a passivated session instance, it must achieve the
 equivalent result. The one exception is that containers are not required
 to reset the value of _transient_ fields during
-activationlink:#a10234[15]. Declaring the session bean’s fields
+activation.footnote:a10234[This is to allow the container to swap out an 
+instance’s state through techniques other than the Java Serialization 
+protocol. For example, the container’s Java Virtual Machine implementation 
+may use a block of memory to keep the instance’s variables, and the 
+container swaps the whole memory block to the disk instead of performing 
+Java Serialization on the instance.] Declaring the session bean’s fields
 as transient is, in general, discouraged.
 
 ==== The Effect of Transaction Rollback on Conversational State
@@ -725,7 +737,10 @@ client, passing to the method the input parameters sent from the client.
 If the bean class is written to the EJB 3.x API, and has been adapted
 for use with an earlier client view, this initialization method is a
 matching _Init_ method, as designated by use of the _Init_ annotation,
-or _init-method_ deployment descriptor elementlink:#a10235[16].
+or _init-method_ deployment descriptor element.footnote:a10235[Any 
+initialization methods defined for the bean by means of the `init-method` 
+deployment descriptor element apply in addition to those defined by means 
+of annotations.]
 If the bean class was written to the EJB 2.1 or earlier API, this
 initialization method is a matching _ejbCreate<METHOD>_ method, as
 described in link:Ejb.html#a1498[See ejbCreate<METHOD> Methods].
@@ -776,7 +791,10 @@ request.
 A stateful session bean written to the EJB
 3.x API typically has one or more remove methods designated by means of
 the _Remove_ annotation or _remove-method_ deployment descriptor
-element.link:#a10236[17] Invocation of the remove method causes
+element.footnote:a10236[Any remove methods defined for the bean by means 
+of the `remove-method` deployment descriptor element apply in addition to 
+those defined by means of annotations.]
+Invocation of the remove method causes
 the removal of the stateful session bean after the remove method
 successfully completes. If the _Remove_ annotation specifies the value
 of _retainIfException_ as _true_ and the invocation of the _Remove_
