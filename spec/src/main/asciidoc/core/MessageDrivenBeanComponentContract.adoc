@@ -146,14 +146,14 @@ Since all instances of a message-driven bean
 are equivalent, a client message can be delivered to any available
 instance.
 
-=== Required MessageDrivenBean Metadata
+==== Required MessageDrivenBean Metadata
 
 A message-driven bean must be annotated with
 the _MessageDriven_ annotation or denoted in the deployment descriptor
 as a message-driven bean. The _MessageDriven_ annotation is a
 component-defining annotation and is applied to the bean class.
 
-=== The Required Message Listener Interface
+==== The Required Message Listener Interface
 
 The message-driven bean class must implement
 the appropriate message listener interface for the messaging type that
@@ -188,7 +188,7 @@ the _messageListenerInterface_ element of the _MessageDriven_ annotation
 or the _messaging-type_ element of the _message-driven_ deployment
 descriptor element.
 
-=== Message-Driven Bean with No-Methods Listener Interface
+==== Message-Driven Bean with No-Methods Listener Interface
 
 A message-driven bean is permitted to
 implement a listener interface with no methods. A bean that implements a
@@ -212,7 +212,7 @@ adapter. Attempted invocations of methods with any other access
 modifiers on a proxy provided by the container must result in the
 javax.ejb.EJBException.
 
-=== Dependency Injection
+==== Dependency Injection
 
 A message-driven bean may use dependency
 injection mechanisms to acquire references to resources or other objects
@@ -235,7 +235,8 @@ deployment descriptor element) is used to denote the bean’s dependency
 on the _MessageDrivenContext_ . See link:Ejb.html#a3613[See
 Enterprise Bean Environment].
 
-=== [[a1751]]The MessageDrivenContext Interface
+[[a1751]]
+==== The MessageDrivenContext Interface
 
 If the bean specifies a dependency on the
 _MessageDrivenContext_ interface (or if the bean class implements the
@@ -286,7 +287,7 @@ listener method, lifecycle callback method, or timeout method to
 retrieve or update the interceptor context data associated with its
 invocation.
 
-=== Message-Driven Bean Lifecycle Callback Interceptor Methods
+==== Message-Driven Bean Lifecycle Callback Interceptor Methods
 
 The following lifecycle event callbacks are
 supported for message-driven beans.
@@ -321,7 +322,8 @@ The _PreDestroy_ lifecycle callback
 interceptor method executes in an unspecified transaction and security
 context.
 
-=== [[a1772]]The Optional MessageDrivenBean Interface
+[[a1772]]
+==== The Optional MessageDrivenBean Interface
 
 The message-driven bean class is not required
 to implement the _javax.ejb.MessageDrivenBean_ interface.
@@ -360,7 +362,7 @@ applied to the _ejbRemove_ method. Similar requirements apply to use of
 deployment descriptor metadata as an alternative to the use of
 annotations.
 
-=== Timeout Callbacks
+==== Timeout Callbacks
 
 A message-driven bean can be registered with
 the EJB Timer Service for time-based event notifications. The container
@@ -368,7 +370,7 @@ invokes the appropriate bean instance timeout callback method when a
 timer for the bean has expired. See link:Ejb.html#a5456[See
 Timer Service].
 
-=== Message-Driven Bean Creation
+==== Message-Driven Bean Creation
 
 Except as noted
 below, the container creates an instance of a message-driven bean in
@@ -394,7 +396,7 @@ implements the _ejbCreate_ method, the _ejbCreate_ method is treated as
 the bean’s _PostConstruct_ method, and the _PostConstruct_ annotation
 can only be applied to the _ejbCreate_ method.
 
-=== Message Listener Interceptor Methods for Message-Driven Beans
+==== Message Listener Interceptor Methods for Message-Driven Beans
 
  _AroundInvoke_ interceptor methods are
 supported for message-driven beans. These interceptor methods may be
@@ -404,7 +406,7 @@ handling of the invocation of the bean’s message listener method(s).
 Interceptors are described in
 link:Ejb.html#a2004[See Interceptors].
 
-=== Serializing Message-Driven Bean Methods
+==== Serializing Message-Driven Bean Methods
 
 The container
 serializes calls to each message-driven bean instance. Most containers
@@ -418,7 +420,7 @@ container-invoked callbacks (e.g., lifecycle callback interceptor
 methods and timeout callback methods), and it must serialize these
 callbacks with the message listener method calls.
 
-=== Concurrency of Message Processing
+==== Concurrency of Message Processing
 
 A container
 allows many instances of a message-driven bean class to be executing
@@ -431,7 +433,7 @@ beans should therefore be prepared to handle messages that are out of
 sequence: for example, the message to cancel a reservation may be
 delivered before the message to make the reservation.
 
-=== Transaction Context of Message-Driven Bean Methods
+==== Transaction Context of Message-Driven Bean Methods
 
 A bean’s message
 listener and timeout callback methods are invoked in the scope of a
@@ -458,7 +460,7 @@ link:Ejb.html#a2889[See Handling of Methods that Run with “an
 unspecified transaction context”] for how the container executes methods
 with an unspecified transaction context.
 
-=== Security Context of Message-Driven Bean Methods
+==== Security Context of Message-Driven Bean Methods
 
 A caller principal may propagate into a
 message-driven bean’s message listener methods. Whether this occurs is a
@@ -472,14 +474,14 @@ the bean’s message listener methods and timeout methods. Run-as identity
 behavior is further defined in section link:Ejb.html#a5329[See
 Run-as].
 
-=== Association of a Message-Driven Bean with a Destination or Endpoint
+==== Association of a Message-Driven Bean with a Destination or Endpoint
 
 A message-driven bean is associated with a
 destination or endpoint when the bean is deployed in the container. It
 is the responsibility of the Deployer to associate the message-driven
 bean with a destination or endpoint.
 
-=== Activation Configuration Properties
+==== Activation Configuration Properties
 
 The Bean Provider may provide information to
 the Deployer about the configuration of the message-driven bean in its
@@ -496,7 +498,7 @@ annotation. If a property of the same name is specified in both, the
 deployment descriptor value overrides the value specified in the
 annotation.
 
-=== JMS Message-Driven Beans
+==== JMS Message-Driven Beans
 
 This section describes activation
 configuration properties specific to the JMS message-driven beans.
@@ -512,7 +514,7 @@ adapters are free to support activation properties in addition to those
 listed here. However, applications that use non-standard activation
 properties will not be portable.
 
-=== Message Acknowledgment
+===== Message Acknowledgment
 
 JMS
 message-driven beans should not attempt to use the JMS API for message
@@ -533,7 +535,7 @@ JMS _AUTO_ACKNOWLEDGE_ semantics are assumed. The value of the
 _acknowledgeMode_ property must be either _Auto-acknowledge_ or
 _Dups-ok-acknowledge_ for a JMS message-driven bean.
 
-=== Message Selectors
+===== Message Selectors
 
 The Bean Provider may declare the JMS message
 selector to be used in determining which messages a JMS message-driven
@@ -588,7 +590,7 @@ The Application Assembler may further
 restrict, but not replace, the value of the _messageSelector_ property
 of a JMS message-driven bean.
 
-=== Destination Type
+===== Destination Type
 
 A JMS message-driven bean is associated with
 a JMS Destination (Queue or Topic) when the bean is deployed in the
@@ -604,7 +606,7 @@ name used to specify the destination type associated with the bean is
 _destinationType_ . The value for this property must be either
 _javax.jms.Queue_ or _javax.jms.Topic_ for a JMS message-driven bean.
 
-=== Destination Lookup
+===== Destination Lookup
 
 The Bean Provider or Deployer may specify the
 JMS queue or topic from which a JMS message-driven bean is to receive
@@ -616,7 +618,7 @@ the activationConfig element of the MessageDriven annotation or by using
 the activation-config-property deployment descriptor element. The
 property name used to specify the lookup name is destinationLookup.
 
-=== Connection Factory Lookup
+===== Connection Factory Lookup
 
 The Bean Provider or Deployer may specify the
 JMS connection factory that will be used to connect to the JMS provider
@@ -629,7 +631,7 @@ using the activation-config-property deployment descriptor element. The
 property name used to specify the lookup name is
 connectionFactoryLookup.
 
-=== Subscription Durability
+===== Subscription Durability
 
 If the
 message-driven bean is intended to be used with a topic, the Bean
@@ -663,7 +665,7 @@ should avoid associating more than one message-driven bean with the same
 JMS queue. If there are multiple JMS consumers for a queue, JMS does not
 define how messages are distribued between the queue receivers.
 
-=== Subscription Name
+===== Subscription Name
 
 If the message-driven bean is intended to be
 used with a topic, and the bean provider has indicated that a durable
@@ -680,7 +682,7 @@ subscriptionName.
 The Bean Provider or Deployer cannot specify
 whether a shared or unshared subscription will be used.
 
-=== Client Identifier
+===== Client Identifier
 
 The Bean Provider or Deployer may specify the
 JMS client identifier that will be used when connecting to the JMS
@@ -691,7 +693,7 @@ using the activationConfig element of the MessageDriven annotation or by
 using the activation-config-property deployment descriptor element. The
 property name used to specify the client identifier is clientId.
 
-=== Dealing with Exceptions
+==== Dealing with Exceptions
 
 A message-driven bean’s message listener
 method must not throw the _java.rmi.RemoteException_ .
@@ -721,7 +723,7 @@ The message listener methods of some
 messaging types may throw application exceptions. An application
 exception is propagated by the container to the resource adapter.
 
-=== Missed PreDestroy Callbacks
+==== Missed PreDestroy Callbacks
 
 The Bean Provider
 cannot assume that the container will always invoke the PreDestroy
@@ -742,7 +744,7 @@ the above scenarios. The application using the message-driven bean
 should provide some clean up mechanism to periodically clean up the
 unreleased resources.
 
-=== Replying to a JMS Message
+==== Replying to a JMS Message
 
 In standard JMS usage scenarios, the
 messaging mode of a message’s _JMSReplyTo_
@@ -759,7 +761,8 @@ Provider should use _instanceOf_ to test whether a _JMSReplyTo_
 destination is a Queue or Topic, and then use a matching message
 producer for the reply.
 
-=== [[a1871]]Message-Driven Bean State Diagram
+[[a1871]]
+=== Message-Driven Bean State Diagram
 
 
 
@@ -801,7 +804,7 @@ number of instances in the method-ready pool), the container invokes the
 _PreDestroy_ lifecycle callback methods for it, if any. This ends the
 life of the message-driven bean instance.
 
-=== Operations Allowed in the Methods of a Message-Driven Bean Class
+==== Operations Allowed in the Methods of a Message-Driven Bean Class
 
 link:Ejb.html#a1886[See Operations
 Allowed in the Methods of a Message-Driven Bean] defines the methods of
@@ -1000,7 +1003,7 @@ This section
 describes the responsibilities of the message-driven Bean Provider to
 ensure that a message-driven bean can be deployed in any EJB container.
 
-=== Classes and Interfaces
+==== Classes and Interfaces
 
 The message-driven Bean Provider is
 responsible for providing the following class files:
@@ -1009,7 +1012,7 @@ Message-driven bean class.
 
 Interceptor classes, if any.
 
-=== Message-Driven Bean Class
+==== Message-Driven Bean Class
 
 The following are the requirements for the
 message-driven bean class:
@@ -1060,7 +1063,7 @@ implement other methods (for example, helper methods invoked internally
 by the message listener method) in addition to the methods required by
 the EJB specification.
 
-=== Message-Driven Bean Superclasses
+==== Message-Driven Bean Superclasses
 
 A message-driven bean class is permitted to
 have superclasses that are themselves message-driven bean classes.
@@ -1073,7 +1076,7 @@ message-driven bean classes as superclasses merely represents a
 convenient use of implementation inheritance, but does not have
 component inheritance semantics.
 
-=== Message Listener Method
+==== Message Listener Method
 
 The message-driven bean class must define the
 message listener methods. The signature of a message listener method
@@ -1084,7 +1087,7 @@ The method must be declared as public.
 The method must not be declared as final or
 static.
 
-=== Message-Driven Bean with No-Methods Listener Interface
+==== Message-Driven Bean with No-Methods Listener Interface
 
 The following additional requirements apply
 for a message-driven bean with a no-methods interface:
@@ -1106,7 +1109,8 @@ listener methods be assigned an access type other than public.
 Only private methods of the bean class and
 any superclasses except java.lang.Object may be declared final.
 
-=== [[a1979]]Lifecycle Callback Interceptor Methods
+[[a1979]]
+==== Lifecycle Callback Interceptor Methods
 
 {empty} _PostConstruct_ and _PreDestroy_
 lifecycle callback interceptor methods may be defined for message-driven
@@ -1143,7 +1147,7 @@ deployment tools are provided by the Container Provider. Alternatively,
 the deployment tools may be provided by a different vendor who uses the
 container vendor’s specific API.
 
-=== Generation of Implementation Classes
+==== Generation of Implementation Classes
 
 The deployment tools provided by the
 container are responsible for the generation of additional classes when
@@ -1158,7 +1162,7 @@ class. This code may, for example, help the container to manage the bean
 instances at runtime. Subclassing, delegation, and code generation can
 be used by the tools.
 
-=== Deployment of Message-Driven Beans with No-Methods Listener Interface
+==== Deployment of Message-Driven Beans with No-Methods Listener Interface
 
 The Container Provider must support the
 deployment of a message-driven bean with a no-methods listener
@@ -1170,24 +1174,24 @@ interface and implement all non-static public methods of the bean class
 and of any superclasses except java.lang.Object as message listener
 methods.
 
-=== Deployment of JMS Message-Driven Beans
+==== Deployment of JMS Message-Driven Beans
 
 The Container Provider must support the
 deployment of a JMS message-driven bean as the consumer of a JMS queue
 or topic.
 
-=== Request/Response Messaging Types
+==== Request/Response Messaging Types
 
 If the message listener supports a
 request/response messaging type, it is the container’s responsibility to
 deliver the message response.
 
-=== Non-reentrant Instances
+==== Non-reentrant Instances
 
 The container must ensure that only one
 thread can be executing an instance at any time.
 
-=== Transaction Scoping, Security, Exceptions
+==== Transaction Scoping, Security, Exceptions
 
 The container
 must follow the rules with respect to transaction scoping, security

@@ -22,7 +22,8 @@ Many concepts described in this document are
 system-level issues that are transparent to the Enterprise JavaBeans
 application programmer.
 
-=== [[a6]]What is New in This Release
+[[a6]]
+=== What is New in This Release
 
 
 
@@ -134,7 +135,7 @@ Web Profile.
 A portable global JNDI name syntax for
 looking up EJB components.
 
-=== What was New in EJB 3.0
+==== What was New in EJB 3.0
 
 The Enterprise JavaBeans 3.0 architecture
 extended Enterprise JavaBeans to include the following new functionality
@@ -210,7 +211,8 @@ Jean-Louis Monteiro.
 
 
 
-=== [[a56]]Organization of the Specification Documents
+[[a56]]
+=== Organization of the Specification Documents
 
 
 

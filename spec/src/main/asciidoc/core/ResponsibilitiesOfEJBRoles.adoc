@@ -13,12 +13,12 @@ highlights the requirements for the Bean Provider. Meeting these
 requirements is necessary to ensure that the enterprise beans developed
 by the Bean Provider can be deployed in all compliant EJB containers.
 
-=== API Requirements
+==== API Requirements
 
 The enterprise beans must meet all the API
 requirements defined in the individual chapters of this document.
 
-=== Packaging Requirements
+==== Packaging Requirements
 
 The Bean Provider is responsible for
 packaging the enterprise beans in an ejb-jar
@@ -38,7 +38,8 @@ for the Application Assembler are in defined in
 link:Ejb.html#a5804[See Deployment Descriptor] and
 link:Ejb.html#a9294[See Packaging].
 
-=== [[a9838]]EJB Container Provider’s Responsibilities
+[[a9838]]
+=== EJB Container Provider’s Responsibilities
 
 
 

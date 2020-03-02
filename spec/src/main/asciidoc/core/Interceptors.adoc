@@ -93,7 +93,8 @@ object associated with the timeout being intercepted.
 exceptions, but not application exceptions. See section
 link:Ejb.html#a2031[See Exception Handling] for further details.
 
-=== [[a2023]]Interceptors for LifeCycle Event Callbacks
+[[a2023]]
+=== Interceptors for LifeCycle Event Callbacks
 
 
 
@@ -127,7 +128,8 @@ throw system runtime exceptions, but not application exceptions. See
 section link:Ejb.html#a2031[See Exception Handling] for further
 details.
 
-=== [[a2029]]InvocationContext
+[[a2029]]
+=== InvocationContext
 
 
 
@@ -145,7 +147,8 @@ XML-based Web Service, version 2.2 (JAX-WS).
 http://jcp.org/en/jsr/detail?id=224.]. The lifecycle of the
 _InvocationContext_ instance is otherwise unspecified.
 
-=== [[a2031]]Exception Handling
+[[a2031]]
+=== Exception Handling
 
 
 
@@ -177,7 +180,7 @@ alternative to metadata annotations to specify interceptors and their
 binding to enterprise beans or to override the invocation order of
 interceptors as specified in annotations.
 
-=== Specification of Interceptors
+==== Specification of Interceptors
 
 The _interceptor_ deployment descriptor
 element is used to specify the interceptor methods of an interceptor
@@ -192,7 +195,7 @@ method, a lifecycle callback interceptor method, regardless of whether
 the deployment descriptor is used to define interceptors or whether some
 combination of annotations and deployment descriptor elements is used.
 
-=== Binding of Interceptors to Target Classes
+==== Binding of Interceptors to Target Classes
 
 The _interceptor-binding_ element is used to
 specify the binding of interceptor classes to target classes and their
@@ -358,7 +361,7 @@ If both styles 3 and 4 are used to define
 method-level interceptors for the same bean, the relative ordering of
 those method-level interceptors is undefined.
 
-=== Examples
+===== Examples
 
 Examples of the usage of the
 _interceptor-binding_ syntax are given below.
