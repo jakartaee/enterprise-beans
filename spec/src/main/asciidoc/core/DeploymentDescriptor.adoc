@@ -68,124 +68,124 @@ alter the behavior of an assembled application.
 [[a5815]]
 === Bean Provider’s Responsibilities
 
-
-
 The Bean Provider is responsible for
 providing in the deployment descriptor the following structural
 information for each enterprise bean if this information has not be
 provided in metadata annotations or is to be defaulted.
 
 The Bean Provider
-uses the enterprise-beans element to list the enterprise beans in the
-ejb-jar file or _.war_ file.
+uses the `enterprise-beans` element to list the enterprise beans in the
+ejb-jar file or `.war` file.
 
 NOTE: The following annotations are
 component-defining annotations and cannot be overridden by the
 deployment descriptor:
 
- _Stateless_
+* `Stateless`
 
- _Stateful_
+* `Stateful`
 
-Singleton
+* `Singleton`
 
- _MessageDriven_
+* `MessageDriven`
 
 The Bean Provider
 must provide the following information for each enterprise bean:
 
-Enterprise bean’s name. A logical name is
-assigned to each enterprise bean in the ejb-jar file or _.war_ file. The
+* *Enterprise bean’s name* +
+A logical name is
+assigned to each enterprise bean in the ejb-jar file or `.war` file. The
 Bean Provider can specify the enterprise bean’s name in the ejb-name
 element. If the enterprise bean’s name is not explicitly specified in
 metadata annotations or in the deployment descriptor, it defaults to the
 unqualified name of the bean class.
 
-Enterprise bean’s class. If the bean class
+* *Enterprise bean’s class* +
+If the bean class
 has not been annotated with a component-defining annotation,
-the Bean Provider must use the _ejb-class_
-element of the _session_ or _message-driven_ deployment descriptor
+the Bean Provider must use the `ejb-class`
+element of the `session` or `message-driven` deployment descriptor
 element to specify the fully-qualified name of the Java class that
 implements the enterprise bean’s business methods. The Bean Provider
-specifies the enterprise bean’s class name in the ejb-class element.
+specifies the enterprise bean’s class name in the `ejb-class` element.
 
-Enterprise bean’s local business interface.
+* *Enterprise bean’s local business interface* +
 If the bean class has a local business interface and neither implements
 the business interface nor specifies it as a local business interface
 using metadata annotations on the bean class, the Bean Provider must
 specify the fully-qualified name of the enterprise bean’s local business
-interface in the _business-local_ element.
+interface in the `business-local` element.
 
-Enterprise bean’s remote business interface.
+* *Enterprise bean’s remote business interface* +
 If the bean class has a remote business interface and neither implements
 nor specifies it as a remote business interface using metadata
 annotations on the bean class, the Bean Provider must specify the
 fully-qualified name of the enterprise bean’s remote business interface
-in the _business-remote_ element.
+in the `business-remote` element.
 
-Enterprise bean’s remote home interface. If
-the bean class has a remote home interface, and the remote home
+* *Enterprise bean’s remote home interface* +
+If the bean class has a remote home interface, and the remote home
 interface has not been specified using metadata annotations, the Bean
 Provider must specify the fully-qualified name of the enterprise bean’s
-remote home interface in the home element.
+remote home interface in the `home` element.
 
-Enterprise bean’s remote component interface.
+* *Enterprise bean’s remote component interface* +
 If the bean class has a remote component interface, and the remote home
 interface has not been specified using metadata annotations, the Bean
 Provider must specify the fully-qualified name of the enterprise bean’s
-remote component interface in the remote element.
+remote component interface in the `remote` element.
 
-Enterprise bean’s local home interface. If
-the bean class has a local home interface, and the local home interface
+* *Enterprise bean’s local home interface*. +
+If the bean class has a local home interface, and the local home interface
 has not been specified using metadata annotations, the Bean Provider
 must specify the fully-qualified name of the enterprise bean’s local
-home interface in the _local-home_ element.
+home interface in the `local-home` element.
 
-Enterprise bean’s local component interface.
+* *Enterprise bean’s local component interface* +
 If the bean class has a local component interface, and the local home
 interface has not been specified using metadata annotations, the Bean
 Provider must specify the fully-qualified name of the enterprise bean’s
-local component interface in the local element.
+local component interface in the `local` element.
 
-Enterprise bean’s no-interface view. If the
-bean class exposes a no-interface view and the bean exposes at least one
+* *Enterprise bean’s no-interface view* +
+If the bean class exposes a no-interface view and the bean exposes at least one
 other client view (local, remote, 2.x local home, 2.x remote home, web
 service), or if the bean class does not have an empty implements clause
 and does not specify no-interface view using metadata annotations on the
-bean class, or if the _metadata-complete_ attribute has been set to
-_true_ , the Bean Provider must specify the local-bean element.
+bean class, or if the `metadata-complete` attribute has been set to
+`true`, the Bean Provider must specify the `local-bean` element.
 
- _Enterprise bean’s web service endpoint
-interface._ If the bean class has a web service endpoint interface, and
+* *Enterprise bean’s web service endpoint interface* +
+If the bean class has a web service endpoint interface, and
 the interface has not been specified using metadata annotations on the
 bean class, the Bean Provider must specify the fully-qualified name of
 the enterprise bean’s web service endpoint interface in the
-_service-endpoint_ element. This element may only be used for stateless
+`service-endpoint` element. This element may only be used for stateless
 session beans.
 
-Enterprise bean’s type.
-The enterprise bean types are: session, and
-message-driven. The Bean Provider must use the appropriate session, or
-_message-driven_ element to declare the enterprise bean’s structural
+* *Enterprise bean’s type* +
+The enterprise bean types are: session and message-driven.
+The Bean Provider must use the appropriate `session` or
+`message-driven` element to declare the enterprise bean’s structural
 information if a component-defining annotation has not been used for
 this purpose. If the bean’s type has been specified by means of a
 component-defining annotation, its type cannot be overridden by means of
 the deployment descriptor. The bean’s type (and its session type), if
 specified, must be the same as that specified in annotations.
 
- _Re-entrancy indication_
-. Session beans and message-driven beans are
+* *Re-entrancy indication* +
+Session beans and message-driven beans are
 never re-entrant.
 
-Session bean’s state management type.
+* *Session bean’s state management type* +
 If the enterprise bean is a session bean and
-the bean class has not been annotated with the _Stateful_ , _Stateless_
-_, or_ _Singleton_ _annotation,_ the Bean Provider must use the
-session-type element to declare whether the session bean is a stateful,
+the bean class has not been annotated with the `Stateful`, `Stateless`, 
+or `Singleton` annotation, the Bean Provider must use the
+`session-type` element to declare whether the session bean is a stateful,
 stateless, or singleton session bean.
 
-Session or message-driven bean’s transaction
-demarcation type. If the enterprise bean is
+* *Session or message-driven bean’s transaction demarcation type* +
+If the enterprise bean is
 a session bean or message-driven bean, the Bean Provider may use the
 transaction-type element to declare whether transaction demarcation is
 performed by the enterprise bean or by the container. If the neither the
