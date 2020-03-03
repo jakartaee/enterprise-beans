@@ -105,7 +105,7 @@ and open database cursors. A container cannot retain such open resources
 when a session bean instance is passivated. A developer of a stateful
 session bean must close and open the resources in the _PrePassivate_ and
 _PostActivate_ lifecycle callback interceptor
-methods.footnote:a10228[Note that this requirement does not apply to the 
+methods. footnote:a10228[Note that this requirement does not apply to the 
 `EntityManager` and `EntityManagerFactory` objects.]
 
 A container may only passivate a stateful
@@ -118,7 +118,7 @@ Session Beans] on how to disable passivation of stateful session beans.
 
 {empty}A container must not passivate a
 stateful session bean with an extended persistence context unless the
-following conditions are met:footnote:a10229[The container is not 
+following conditions are met: footnote:a10229[The container is not 
 permitted to destroy a stateful session bean instance because it does 
 not meet these requirements.]
 
@@ -142,7 +142,7 @@ instance’s non- _transient_ fields and the non- _transient_ fields of
 its interceptors after the _PrePassivate_ method completes must be one
 of the following.
 
-A serializable object.footnote:a10230[Note that the Java Serialization 
+A serializable object. footnote:a10230[Note that the Java Serialization 
 protocol dynamically determines whether or not an object is serializable. 
 This means that it is possible to serialize an object of a serializable 
 subclass of a non-serializable declared field type.]
@@ -162,11 +162,11 @@ A reference to an enterprise bean’s remote
 home interface, even if the stub class is not serializable.
 
 A reference to an entity
-bean’s{empty}footnote:a10230[] local component interface, even if it is
+bean’s footnote:a10230[] local component interface, even if it is
 not serializable.
 
 A reference to an entity
-bean’s{empty}footnote:a10231[Component contract and client view of entity 
+bean’s footnote:a10231[Component contract and client view of entity 
 beans are described in the EJB Optional Features document 
 <<a9890>>.] local home interface, even if it is not serializable.
 
@@ -179,7 +179,7 @@ A reference to the environment naming context
 A reference to the UserTransaction interface.
 
 A reference to a resource manager connection
-factory.footnote:a10232[Except for the `javax.mail.Session` resource 
+factory. footnote:a10232[Except for the `javax.mail.Session` resource 
 manager connection factory.]
 
 A reference to a container-managed
@@ -280,7 +280,7 @@ the Serialization protocol for the Java programming language to store
 the state of a passivated session instance, it must achieve the
 equivalent result. The one exception is that containers are not required
 to reset the value of _transient_ fields during
-activation.footnote:a10234[This is to allow the container to swap out an 
+activation. footnote:a10234[This is to allow the container to swap out an 
 instance’s state through techniques other than the Java Serialization 
 protocol. For example, the container’s Java Virtual Machine implementation 
 may use a block of memory to keep the instance’s variables, and the 
@@ -737,7 +737,7 @@ client, passing to the method the input parameters sent from the client.
 If the bean class is written to the EJB 3.x API, and has been adapted
 for use with an earlier client view, this initialization method is a
 matching _Init_ method, as designated by use of the _Init_ annotation,
-or _init-method_ deployment descriptor element.footnote:a10235[Any 
+or _init-method_ deployment descriptor element. footnote:a10235[Any 
 initialization methods defined for the bean by means of the `init-method` 
 deployment descriptor element apply in addition to those defined by means 
 of annotations.]
@@ -791,7 +791,7 @@ request.
 A stateful session bean written to the EJB
 3.x API typically has one or more remove methods designated by means of
 the _Remove_ annotation or _remove-method_ deployment descriptor
-element.footnote:a10236[Any remove methods defined for the bean by means 
+element. footnote:a10236[Any remove methods defined for the bean by means 
 of the `remove-method` deployment descriptor element apply in addition to 
 those defined by means of annotations.]
 Invocation of the remove method causes
@@ -881,7 +881,7 @@ required to serialize such concurrent requests. Note that the container
 never permits multi-threaded access to the actual stateful session bean
 instance. For this reason, Read/Write method locking metadata, as well
 as the bean-managed concurrency mode, are not applicable to stateful
-session beans and must not be used.footnote:a10237[The concurrency 
+session beans and must not be used. footnote:a10237[The concurrency 
 management type `CONTAINER` may be specified for stateful session beans, 
 but doing so has no impact on the semantics of concurrency management 
 for such beans.] See
@@ -898,7 +898,7 @@ another client-invoked call, from the same or different client, arrives
 at the same stateful session bean istance, if the second client is a
 client of the bean’s business interface or no-interface view, the
 concurrent invocation must result in the second client receiving the
-_javax.ejb.ConcurrentAccessException_.footnote:a10238[The 
+_javax.ejb.ConcurrentAccessException_. footnote:a10238[The 
 `javax.ejb.ConcurrentAccessException` is a subclass of the 
 `javax.ejb.EJBException`. If the business interface is a remote business 
 interface that extends `java.rmi.Remote`, the client will receive the 
@@ -1032,7 +1032,7 @@ java:global[/<app-name>]/<module-name>/<bean-name>
 
 {empty}The container is also required to make
 session bean JNDI names available through the java:app and java:module
-namespaces.footnote:a10239[Note that the existence of global JNDI names 
+namespaces. footnote:a10239[Note that the existence of global JNDI names 
 for the local and no-interface client views does not imply that 
 cross-application access to those entries is required. See <<a242>> for 
 more details.]
@@ -1357,7 +1357,7 @@ client obtains a reference to a stateful session bean instance through
 dependency injection or JNDI lookup, or when the client invokes a
 _create<METHOD>_ method on the session bean’s home interface. This
 causes the container to invoke the session bean class constructor to
-create a new session bean instance.footnote:a10240[If an `AroundConstruct` 
+create a new session bean instance. footnote:a10240[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateful session bean, 
 the container follows the rules for the `AroundConstruct` interceptors 
 defined in the _Interceptors_ specification <<a9887>>.] Next, the
@@ -1395,7 +1395,7 @@ An invocation of a transactional method
 causes the instance to be included in a transaction. When the session
 bean instance is included in a transaction, the container issues the
 _afterBegin_ method on it if the session bean has an _afterBegin_
-callback method.footnote:a10241[If a stateful session bean lifecycle 
+callback method. footnote:a10241[If a stateful session bean lifecycle 
 callback interceptor method is invoked in the scope of a transaction, 
 session synchronization callbacks for such transactions are not called 
 on the bean instance — see <<a2750>>.] The _afterBegin_ method is
@@ -1416,9 +1416,9 @@ If a transaction commit has been requested,
 the transaction service notifies the container of the commit request
 before actually committing the transaction, and the container issues the
 _befor_ _eCompletion_ callback on the instance if the session bean has a
-_beforeCompletion_ callback method.footnote:a10241[] When _beforeCompletion_ 
+_beforeCompletion_ callback method. footnote:a10241[] When _beforeCompletion_ 
 is invoked, the instance should write
-any cached updates to the database.footnote:a10242[Note that if the Java 
+any cached updates to the database. footnote:a10242[Note that if the Java 
 Persistence API is used, the persistence provider will use the 
 beforeCompletion notification to automatically flush any updates to the 
 container-managed persistence context to the database. See <<a9851>>.] If a
@@ -1433,7 +1433,7 @@ commit the transaction, resulting in either a commit or rollback.
 
 When the transaction completes, the container
 issues _afterCompletion_ on the instance if the session bean has an
-_afterCompletion_ callback method,footnote:a10241[] specifying the status of the completion (either commit or
+_afterCompletion_ callback method, footnote:a10241[] specifying the status of the completion (either commit or
 rollback). If a rollback occurred, the bean instance may need to reset
 its conversational state back to the value it had at the beginning of
 the transaction.
@@ -1454,7 +1454,7 @@ timeout specified by the Deployer. All
 object references and handles for the session object become invalid. If
 a client attempts to invoke a method on the bean’s business interface,
 the container will throw the
-_javax.ejb.NoSuchEJBException_.footnote:a10243[If the business interface 
+_javax.ejb.NoSuchEJBException_. footnote:a10243[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, 
 the `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
@@ -1476,7 +1476,7 @@ the bean that has been designated as a _Remove_ method on the bean class
 or a _remove_ method on the home or component interface, the container
 invokes _PreDestroy_ lifecycle callback interceptor methods, if any, for
 the bean instance after the _Remove_ method
-completes.footnote:a10244[If the `Remove` annotation specifies the value 
+completes. footnote:a10244[If the `Remove` annotation specifies the value 
 of `retainIfException` as `true`, and the `Remove` method throws an 
 application exception, the instance is not removed (and the `PreDestroy` 
 lifecycle callback interceptor methods are not invoked).] 
@@ -1484,7 +1484,7 @@ This ends the life of the session bean
 instance and the associated session object. If a client subsequently
 attempts to invoke a method on the bean’s business interface, the
 container will throw the
-_javax.ejb.NoSuchEJBException_.footnote:a10245[If the business interface 
+_javax.ejb.NoSuchEJBException_. footnote:a10245[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
@@ -1589,7 +1589,7 @@ JNDI access to java:comp/env
 
 PostConstruct, PreDestroy,
 PrePassivate, PostActivate lifecycle callback interceptor
-methods{empty}footnote:a10246[If a client calls lifecycle callback method 
+methods footnote:a10246[If a client calls lifecycle callback method 
 through a business interface or a no-interface view, the method is 
 treated like a business method.]
 
@@ -1828,7 +1828,7 @@ From the client perspective, the
 corresponding session object does not exist any more. If a client
 subsequently attempts to invoke a method on the bean’s business
 interface or the no-interface view, the container will throw the
-_javax.ejb.NoSuchEJBException_.footnote:a10247[If the business interface is 
+_javax.ejb.NoSuchEJBException_. footnote:a10247[If the business interface is 
 a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
@@ -1926,7 +1926,7 @@ specified in the bean’s metadata annotations and/or the deployment
 descriptor would cause the container to execute the method in a
 different transaction context or in an unspecified transaction context.
 In such a case, the _javax.ejb.EJBException_ will be thrown to a client
-of the bean’s business interface.footnote:a10248[If the business interface 
+of the bean’s business interface. footnote:a10248[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
 If the EJB 2.1
@@ -2036,7 +2036,7 @@ of a stateless session bean instance:
 
 A stateless session bean instance’s life
 starts when the container invokes the session bean class constructor to
-create a new session bean instance.footnote:a10249[If an `AroundConstruct` 
+create a new session bean instance. footnote:a10249[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateless session 
 bean, the container follows the rules for the `AroundConstruct` 
 interceptors defined in the _Interceptors_ specification <<a9887>>.] 
@@ -2130,7 +2130,7 @@ getEJBLocalHome, lookup
 JNDI access to java:comp/env
 
 PostConstruct, PreDestroy lifecycle
-callback interceptor methods{empty}footnote:a10250[If a client calls lifecycle 
+callback interceptor methods footnote:a10250[If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.]
 
@@ -2381,7 +2381,7 @@ of a singleton session bean instance:
 
 A singleton session bean instance’s life
 starts when the container invokes the session bean class constructor to
-create the singleton bean instance.footnote:a10251[If an `AroundConstruct` 
+create the singleton bean instance. footnote:a10251[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the singleton session 
 bean, the container follows the rules for the `AroundConstruct` 
 interceptors defined in the _Interceptors_ specification <<a9887>>.] 
@@ -3000,7 +3000,7 @@ SessionContext methods: lookup
 JNDI access to java:comp/env
 
 PostConstruct, PreDestroy lifecycle
-callback interceptor methods{empty}footnote:a10252[If a client calls lifecycle 
+callback interceptor methods footnote:a10252[If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.]
 
@@ -3224,7 +3224,7 @@ and singleton session beans.
 
 The session Bean
 Provider is responsible for providing the following class
-files:footnote:a10253[Note that the interfaces provided by the Bean 
+files: footnote:a10253[Note that the interfaces provided by the Bean 
 Provider may have been generated by tools.]
 
 Session bean class.
@@ -3288,7 +3288,7 @@ the Java EE Platform 1.1 (CDI specification)
 http://jcp.org/en/jsr/detail?id=346.]).
 
 {empty}The class may implement, directly or
-indirectly, the javax.ejb.SessionBean interface.footnote:a10255[Except 
+indirectly, the javax.ejb.SessionBean interface. footnote:a10255[Except 
 for singleton session beans.]
 
 If the class is a stateful session bean, it
@@ -3376,7 +3376,7 @@ _PreDestroy_ , _PrePassivate_ , and _PostActivate_ lifecycle callback
 interceptor methods may be defined for session beans. If the
 _PrePassivate_ or _PostActivate_ lifecycle callbacks are defined for
 stateless session beans or singleton session beans, they are
-ignored.footnote:a10256[Note that this might result from the use of 
+ignored. footnote:a10256[Note that this might result from the use of 
 default interceptors, for example.]
 
 The AroundConstruct lifecycle callback
@@ -3538,7 +3538,7 @@ timer handles as arguments or results.
 
 {empty}The same business interface cannot be
 both a local and a remote business interface of the
-bean.footnote:a10257[It is also an error if the `Local` and/or `Remote` 
+bean. footnote:a10257[It is also an error if the `Local` and/or `Remote` 
 annotations are specified both on the bean class and on the referenced 
 interface and the values differ.]
 

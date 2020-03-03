@@ -48,7 +48,7 @@ annotation in the enterprise bean class or using the _resource-ref_
 element in the enterprise bean’s deployment descriptor. This includes
 not only database resources, but also other resources, such as JMS
 Connections. These resources are considered to be “managed” by the
-container.footnote:a10263[Note that environment entries other than 
+container. footnote:a10263[Note that environment entries other than 
 resources are specified with the `Resource` annotation and/or 
 `resource-ref` deployment descriptor element as well.] 
 For a discussion about resources used
@@ -306,7 +306,7 @@ the enterprise bean method in the client transaction.
 
 The following figure illustrates such a
 scenario. A non-transactional client invokes the enterprise bean X, and
-the invoked method has the _REQUIRED_{empty}footnote:a10264[In this chapter we 
+the invoked method has the _REQUIRED_ footnote:a10264[In this chapter we 
 use the `TransactionAttribute` annotation values to refer to transaction 
 attributes. The deployment descriptor may be used as an overriding 
 mechanism or an alternative to the use of annotations.] transaction
@@ -333,7 +333,7 @@ transaction at the time X returns a reply to the client.
 listener method is configured with the REQUIRED transaction attribute,
 the container automatically starts a new transaction before the delivery
 of the message and, hence, before the invocation of the
-method.footnote:a10265[The use of the term "container" here encompasses 
+method. footnote:a10265[The use of the term "container" here encompasses 
 both the container and the messaging provider. When the contracts outlined 
 in <<a9863>> are used, it may be the messaging provider that starts the 
 transaction.]
@@ -351,7 +351,7 @@ transaction.
 It is illegal to associate JTA transactional
 interceptors (see link:Ejb.html#a9857[See Java™ Transaction API,
 version 1.2 (JTA). http://jcp.org/en/jsr/detail?id=907.]) with
-Enterprise JavaBeans.footnote:a10266[This restriction may be removed 
+Enterprise JavaBeans. footnote:a10266[This restriction may be removed 
 in a future release of this specification.]
 
 === Bean Provider’s Responsibilities
@@ -469,7 +469,7 @@ _commit_ methods are performed in a transaction. While an instance is in
 a transaction, the instance must not attempt to use the resource-manager
 specific transaction demarcation API (e.g. it must not invoke the commit
 or rollback method on the java.sql.Connection interface or on the
-_javax.jms.Session_ interface).footnote:a10267[However, use of the Java 
+_javax.jms.Session_ interface). footnote:a10267[However, use of the Java 
 Persistence API `EntityTransaction` interface is supported. See <<a9851>> 
 for a discussion of resources used in the Java Persistence API that may be 
 "unaware" of the presence of JTA transactions, and a description of the 
@@ -745,7 +745,7 @@ with the
 {empty}The following code segments illustrate
 a stateful session bean that retains a transaction across three client
 calls, invoked in the following order: _method1_ , _method2_ , and
-_method3_.footnote:a10268[Note that the Bean Provider must use the 
+_method3_. footnote:a10268[Note that the Bean Provider must use the 
 pre-passivate callback method here to close the connections and set 
 the instance variables for the connection to null.]
 
@@ -1006,7 +1006,7 @@ javax.transaction.UserTransaction interface.
 a business method in an enterprise bean with container-managed
 transaction demarcation. The business method updates two databases using
 JDBC™ connections. The container provides transaction demarcation as
-specified by the transaction attribute.footnote:a10269[REQUIRED is the 
+specified by the transaction attribute. footnote:a10269[REQUIRED is the 
 default transaction attribute value for container managed transaction 
 demarcation. The explicit specification of the transaction attribute is 
 therefore not required in this example.]
@@ -1797,14 +1797,14 @@ java:comp/UserTransaction. When an instance uses the
 javax.transaction.UserTransaction interface to demarcate a transaction,
 the container must enlist all the resource managers used by the instance
 between the begin and commit—or rollback—methods with the
-transaction.footnote:a10271[However, use of the Java Persistence API 
+transaction. footnote:a10271[However, use of the Java Persistence API 
 `EntityTransaction` interface is supported. See <<a9851>> for a 
 discussion of resources used in the Java Persistence API that may be 
 "unaware" of the presence of JTA transactions, and a description of 
 the `EntityTransaction` interface and its use.]
 When the instance attempts to commit
 the transaction, the container is responsible for the global
-coordination of the transaction commit.footnote:a10272[The container 
+coordination of the transaction commit. footnote:a10272[The container 
 typically relies on a transaction manager that is part of the EJB server 
 to perform the two-phase commit across all the enlisted resource managers. 
 If only a single resource manager is involved in the transaction and the 
@@ -1837,13 +1837,13 @@ System Administrator.
 Roll back the started transaction.
 
 {empty}If this a stateless session bean,
-discard the bean instance.footnote:a10273[Note that if the bean is a 
+discard the bean instance. footnote:a10273[Note that if the bean is a 
 singleton session bean, the instance must not be discarded unless the 
 exception occurred in an `AroundConstruct`, `PostConstruct` or 
 `PreDestroy` lifecycle interceptor method.]
 
 Throw the
-_javax.ejb.EJBException_.footnote:a10274[If the business interface is a 
+_javax.ejb.EJBException_. footnote:a10274[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
 If the EJB 2.1 client
@@ -2131,7 +2131,7 @@ _REQUIRED_ case.
 
 If the client calls without a transaction
 context, the container throws the
-_javax.ejb.EJBTransactionRequiredException_.footnote:a10275[If the business 
+_javax.ejb.EJBTransactionRequiredException_. footnote:a10275[If the business 
 interface is a remote business interface that extends `java.rmi.Remote`, 
 the `javax.transaction.TransactionRequiredException` is thrown to the 
 client instead.] If
@@ -2150,7 +2150,7 @@ The client is required to call without a transaction context.
 
 If the client calls with a transaction
 context, the container throws the
-_javax.ejb.EJBException_.footnote:a10276[If the business interface is a 
+_javax.ejb.EJBException_. footnote:a10276[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.]
 If the EJB 2.1 client
@@ -2216,7 +2216,7 @@ T2
 
 T1
 
-T1{empty}footnote:a10277[T2 if the method is an asynchronous method.]
+T1 footnote:a10277[T2 if the method is an asynchronous method.]
 
 T1
 
@@ -2498,11 +2498,11 @@ of the transaction attribute is NOT_SUPPORTED, NEVER, or SUPPORTS.
 
 {empty}The execution of a _PostConstruct or
 PreDestroy_ callback method of a stateless session bean with
-container-managed transaction demarcation.footnote:a10278[See <<a608>>.]
+container-managed transaction demarcation. footnote:a10278[See <<a608>>.]
 
 {empty}The execution of a _PostConstruct_ or
 _PreDestroy_ callback method of a message-driven bean with
-container-managed transaction demarcation.footnote:a10279[See <<a1702>>.]
+container-managed transaction demarcation. footnote:a10279[See <<a1702>>.]
 
 The EJB specification does not prescribe how
 the container should manage the execution of a method with an
@@ -2555,7 +2555,7 @@ specifies the container’s behavior required for this scenario.
 ==== Transaction “Diamond” Scenario with an Entity Object
 
 An entity
-object{empty}footnote:a10279[See <<a1702>>.] may be accessed by multiple 
+object footnote:a10279[See <<a1702>>.] may be accessed by multiple 
 clients in the
 same transaction. For example, program A may start a transaction, call
 program B and program C in the transaction context, and then commit the
@@ -2585,7 +2585,7 @@ typically connected to a single process. If clients B and C connect to
 different EJB container processes, and both B and C need to access the
 same entity object in the same transaction, the issue is how the
 container can make it possible for B and C to see a consistent state of
-the entity object within the same transaction.footnote:a10281[This diamond 
+the entity object within the same transaction. footnote:a10281[This diamond 
 problem applies only to the case when B and C are in the same transaction.]
 
 The above example illustrates a simple
@@ -2612,7 +2612,7 @@ topologies that may lead to a diamond involving an entity object.
 
 This subsection specifies the EJB container’s
 responsibilities with respect to the diamond case involving an entity
-object.footnote:a10280[Component contract and client view of entity beans 
+object. footnote:a10280[Component contract and client view of entity beans 
 are described in the EJB Optional Features document <<a9890>>.]
 
 The EJB specification requires that the
@@ -2637,7 +2637,7 @@ remote client view is used).
 
 This subsection specifies the Bean Provider’s
 responsibilities with respect to the diamond case involving an entity
-object.footnote:a10280[Component contract and client view of entity beans 
+object. footnote:a10280[Component contract and client view of entity beans 
 are described in the EJB Optional Features document <<a9890>>.]
 
 The diamond case is transparent to the Bean
@@ -2650,7 +2650,7 @@ bean and does not change the semantics of the bean.
 
 This subsection specifies the Application
 Assembler and Deployer’s responsibilities with respect to the diamond
-case involving an entity object.footnote:a10280[Component contract and 
+case involving an entity object. footnote:a10280[Component contract and 
 client view of entity beans are described in the EJB Optional Features 
 document <<a9890>>.]
 

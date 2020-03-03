@@ -203,7 +203,7 @@ defined in the JNDI documentation._
 A field or method of a bean class may be
 annotated to request that an entry from the bean’s environment be
 injected. Any of the types of resources or other environment
-entriesfootnote:a10322[The term "resource"
+entries footnote:a10322[The term "resource"
 is used generically in this chapter to refer to these other environment
 entries as resources as well. Resources in the non-generic sense are
 described in <<a4159>>.] described in this chapter may be
@@ -839,9 +839,9 @@ the resource is to be looked up in the environment.
 interface type. The reference may be to a session bean’s business
 interface, to a session bean’s no-interface view, or to the local home
 interface or remote home interface of a session bean or an entity
-beanfootnote:a10323[Component contract
+bean. footnote:a10323[Component contract
 and client view of entity beans are described in the EJB Optional
-Features document<<a9890>>.].
+Features document<<a9890>>.]
 
 * The `beanName` element references the value of
 the name element of the `Stateful` or `Stateless` annotation (or `ejb-name`
@@ -1041,7 +1041,7 @@ specified.
 The optional
 `ejb-ref-type` element specifies the expected
 type of the enterprise bean: its value must be either
-Entityfootnote:a10323[] or Session.
+Entity footnote:a10323[] or Session.
 
 The `home` and `remote` or `local-home`
  and `local`
@@ -1139,9 +1139,9 @@ the referencing application component.
 rename enterprise beans to have unique names within an entire Java EE
 application, the Application Assembler may use either of the following
 two syntaxes in the `ejb-link` element of the referencing application
-componentfootnote:a10325[The Bean Provider
+component. footnote:a10325[The Bean Provider
 may also use this syntax in the `beanName` element of the `EJB`
-annotation.].
+annotation.]
 
 ** The Application Assembler specifies the
 module name of the ejb-jar file or `.war` file containing the referenced
@@ -1774,9 +1774,9 @@ element of the `Resource` annotation to `false` or sets the
 `res-sharing-scope` deployment descriptor entry for a resource manager
 connection factory reference to `Unshareable`, the container must not
 attempt to share the connections obtained from the resource manager
-connection factory referencefootnote:a10326[Connections obtained
+connection factory reference. footnote:a10326[Connections obtained
 from the same resource manager connection factory through a different
-resource manager connection factory reference may be shareable.]. If the Bean
+resource manager connection factory reference may be shareable.] If the Bean
 Provider sets the `res-sharing-scope` of a resource manager connection
 factory reference to `Shareable` or does not specify `res-sharing-scope`
 , the container must share the connections obtained from the resource

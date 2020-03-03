@@ -77,9 +77,9 @@ Schedule annotation denotes its the timeout method.
 
 Timers can be created for stateless session
 beans, singleton session beans, message-driven
-beans.footnote:a10332[The calendar-based timer and non-persistent timer 
+beans. footnote:a10332[The calendar-based timer and non-persistent timer 
 functionality is not supported for 2.1 Entity beans.] Timers cannot be 
-created for stateful session beans.footnote:a10333[This functionality may 
+created for stateful session beans. footnote:a10333[This functionality may 
 be added in a future release of this specification.]
 
 The timeout callback method invocation for a
@@ -114,7 +114,7 @@ When the time specified at timer creation
 elapses, the container invokes the associated timeout callback method of
 the bean. A timer may be cancelled before its expiration. If a timer is
 cancelled, its associated timeout callback method is not
-called.footnote:a10334[In the event of race conditions, extraneous calls 
+called. footnote:a10334[In the event of race conditions, extraneous calls 
 to the timeout callback method may occur.] A timer is cancelled by calling 
 its _cancel_ method.
 
@@ -342,7 +342,7 @@ time zone, regardless of the default time zone in which the container is
 executing.
 
 Time zones are specified as an ID
-String.footnote:a10335[Note that annotation `java.lang.String` attributes 
+String. footnote:a10335[Note that annotation `java.lang.String` attributes 
 use the empty string "" as a default, so the expression 
 @Schedule(timezone="", ...) will result in a null value from the 
 corresponding ScheduleExpression.getTimezone() method.] 
@@ -516,7 +516,7 @@ public void sendLunchNotification() \{ ... }
 specify an info string. This string can be retrieved by calling
 Timer.getInfo() on the associated Timer object. If no info string is
 specified, the getInfo() method for a timer created by means of the
-Schedule annotation returns null.footnote:a10336[Note that the default 
+Schedule annotation returns null. footnote:a10336[Note that the default 
 value of the `info` element of the `Schedule` annotation is the empty 
 string "". The expression `@Schedule(info="", ...)` will also result 
 in a null value from the timer’s `getInfo()` method.]
@@ -721,7 +721,7 @@ end date.
 information at timer creation to help it recognize the significance of a
 timer’s expiration. This information is stored by the Timer Service and
 available through the timer. The information object must be
-serializable.footnote:a10337[There is currently no way to set the 
+serializable. footnote:a10337[There is currently no way to set the 
 information object after timer creation. An API to do this may be added 
 in a future release of this specification.]
 
@@ -791,7 +791,7 @@ interface has a single method, _ejbTimeout_ . If the bean implements the
 _TimedObject_ interface, the _Timeout_ annotation or _timeout-method_
 deployment descriptor element can only be used to specify the
 _ejbTimeout_ method. A bean can have at most one timeout method for
-handling programmatic timers.footnote:a10338[This method may be specified 
+handling programmatic timers. footnote:a10338[This method may be specified 
 on the bean class or on a superclass. If the `Timeout` annotation is used 
 or the bean implements the `TimedObject` interface, the `timeout-method` 
 deployment descriptor element, if specified, can only be used to refer to 
@@ -820,13 +820,13 @@ timers can also be associated with the automatically-created timers.
 
 A timeout callback method must have one of
 the two signatures below, where <METHOD> designates the method
-name.footnote:a10339[If the bean implements the `TimedObject` interface, the 
+name. footnote:a10339[If the bean implements the `TimedObject` interface, the 
 `Timeout` annotation may optionally be applied to the `ejbTimeout` method.]
 
 void <METHOD>()
 
 void <METHOD>(Timer
-timer){empty}footnote:a10340[An earlier version of the specification required that 
+timer) footnote:a10340[An earlier version of the specification required that 
 timeout callbacks accept the `Timer` parameter but did not require that this 
 parameter be listed when declared by means of the deployment descriptor. To 
 preserve backward compatibility, a `timeout-method` that does not include a 
