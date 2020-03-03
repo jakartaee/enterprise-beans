@@ -162,11 +162,11 @@ A reference to an enterprise bean’s remote
 home interface, even if the stub class is not serializable.
 
 A reference to an entity
-bean’sfootnote:a10230[] local component interface, even if it is
+bean’s{empty}footnote:a10230[] local component interface, even if it is
 not serializable.
 
 A reference to an entity
-bean’sfootnote:a10231[Component contract and client view of entity 
+bean’s{empty}footnote:a10231[Component contract and client view of entity 
 beans are described in the EJB Optional Features document 
 <<a9890>>.] local home interface, even if it is not serializable.
 
@@ -881,10 +881,10 @@ required to serialize such concurrent requests. Note that the container
 never permits multi-threaded access to the actual stateful session bean
 instance. For this reason, Read/Write method locking metadata, as well
 as the bean-managed concurrency mode, are not applicable to stateful
-session beans and must not be usedfootnote:a10237[The concurrency 
+session beans and must not be used.footnote:a10237[The concurrency 
 management type `CONTAINER` may be specified for stateful session beans, 
 but doing so has no impact on the semantics of concurrency management 
-for such beans.]. See
+for such beans.] See
 link:Ejb.html#a1257[See Singleton Session Bean Concurrency] for
 a description of how these concurrency modes and locking types apply to
 singleton session beans.
@@ -898,11 +898,11 @@ another client-invoked call, from the same or different client, arrives
 at the same stateful session bean istance, if the second client is a
 client of the bean’s business interface or no-interface view, the
 concurrent invocation must result in the second client receiving the
-_javax.ejb.ConcurrentAccessException_footnote:a10238[The 
+_javax.ejb.ConcurrentAccessException_.footnote:a10238[The 
 `javax.ejb.ConcurrentAccessException` is a subclass of the 
 `javax.ejb.EJBException`. If the business interface is a remote business 
 interface that extends `java.rmi.Remote`, the client will receive the 
-`java.rmi.RemoteException` instead.] . If the
+`java.rmi.RemoteException` instead.] If the
 EJB 2.1 client view is used, the container must throw the
 java.rmi.RemoteException if the second client is a remote client, or the
 _javax.ejb.EJBException_ if the second client is a local client.
@@ -1395,10 +1395,10 @@ An invocation of a transactional method
 causes the instance to be included in a transaction. When the session
 bean instance is included in a transaction, the container issues the
 _afterBegin_ method on it if the session bean has an _afterBegin_
-callback methodfootnote:a10241[If a stateful session bean lifecycle 
+callback method.footnote:a10241[If a stateful session bean lifecycle 
 callback interceptor method is invoked in the scope of a transaction, 
 session synchronization callbacks for such transactions are not called 
-on the bean instance — see <<a2750>>.]. The _afterBegin_ method is
+on the bean instance — see <<a2750>>.] The _afterBegin_ method is
 invoked on the instance before any business method or business method
 interceptor method is executed as part of the transaction. The instance
 becomes associated with the transaction and will remain associated with
@@ -1416,12 +1416,12 @@ If a transaction commit has been requested,
 the transaction service notifies the container of the commit request
 before actually committing the transaction, and the container issues the
 _befor_ _eCompletion_ callback on the instance if the session bean has a
-_beforeCompletion_ callback methodfootnote:a10241[]. When _beforeCompletion_ 
+_beforeCompletion_ callback method.footnote:a10241[] When _beforeCompletion_ 
 is invoked, the instance should write
-any cached updates to the databasefootnote:a10242[Note that if the Java 
+any cached updates to the database.footnote:a10242[Note that if the Java 
 Persistence API is used, the persistence provider will use the 
 beforeCompletion notification to automatically flush any updates to the 
-container-managed persistence context to the database. See <<a9851>>.]. If a
+container-managed persistence context to the database. See <<a9851>>.] If a
 transaction rollback had been requested instead, the rollback status is
 reached without the container issuing a _beforeCompletion_ . The
 container may not call the _beforeCompletion_ method if the transaction
@@ -1433,7 +1433,7 @@ commit the transaction, resulting in either a commit or rollback.
 
 When the transaction completes, the container
 issues _afterCompletion_ on the instance if the session bean has an
-_afterCompletion_ callback methodfootnote:a10241[], specifying the status of the completion (either commit or
+_afterCompletion_ callback method,footnote:a10241[] specifying the status of the completion (either commit or
 rollback). If a rollback occurred, the bean instance may need to reset
 its conversational state back to the value it had at the beginning of
 the transaction.
@@ -1454,9 +1454,9 @@ timeout specified by the Deployer. All
 object references and handles for the session object become invalid. If
 a client attempts to invoke a method on the bean’s business interface,
 the container will throw the
-_javax.ejb.NoSuchEJBException_footnote:a10243[If the business interface 
+_javax.ejb.NoSuchEJBException_.footnote:a10243[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, 
-the `java.rmi.NoSuchObjectException` is thrown to the client instead.]. 
+the `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, the container will throw the
 java.rmi.NoSuchObjectException if the client is a remote client, or the
@@ -1484,9 +1484,9 @@ This ends the life of the session bean
 instance and the associated session object. If a client subsequently
 attempts to invoke a method on the bean’s business interface, the
 container will throw the
-_javax.ejb.NoSuchEJBException_footnote:a10245[If the business interface 
+_javax.ejb.NoSuchEJBException_.footnote:a10245[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
-`java.rmi.NoSuchObjectException` is thrown to the client instead.]. 
+`java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, any subsequent attempt causes the
 _java.rmi.NoSuchObjectException_ to be thrown if the client is a remote
@@ -1587,9 +1587,9 @@ getEJBLocalHome, lookup
 
 JNDI access to java:comp/env
 
-{empty}PostConstruct, PreDestroy,
+PostConstruct, PreDestroy,
 PrePassivate, PostActivate lifecycle callback interceptor
-methodsfootnote:a10246[If a client calls lifecycle callback method 
+methods{empty}footnote:a10246[If a client calls lifecycle callback method 
 through a business interface or a no-interface view, the method is 
 treated like a business method.]
 
@@ -1828,9 +1828,9 @@ From the client perspective, the
 corresponding session object does not exist any more. If a client
 subsequently attempts to invoke a method on the bean’s business
 interface or the no-interface view, the container will throw the
-_javax.ejb.NoSuchEJBException_footnote:a10247[If the business interface is 
+_javax.ejb.NoSuchEJBException_.footnote:a10247[If the business interface is 
 a remote business interface that extends `java.rmi.Remote`, the 
-`java.rmi.NoSuchObjectException` is thrown to the client instead.]. 
+`java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, the container will throw the
 java.rmi.NoSuchObjectException if the client is a remote client, or the
@@ -1926,9 +1926,9 @@ specified in the bean’s metadata annotations and/or the deployment
 descriptor would cause the container to execute the method in a
 different transaction context or in an unspecified transaction context.
 In such a case, the _javax.ejb.EJBException_ will be thrown to a client
-of the bean’s business interfacefootnote:a10248[If the business interface 
+of the bean’s business interface.footnote:a10248[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
-`java.rmi.RemoteException` is thrown to the client instead.]. 
+`java.rmi.RemoteException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, the container throws the _java.rmi.RemoteException_
 to the client if the client is a remote client, or the
@@ -2036,10 +2036,10 @@ of a stateless session bean instance:
 
 A stateless session bean instance’s life
 starts when the container invokes the session bean class constructor to
-create a new session bean instancefootnote:a10249[If an `AroundConstruct` 
+create a new session bean instance.footnote:a10249[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateless session 
 bean, the container follows the rules for the `AroundConstruct` 
-interceptors defined in the _Interceptors_ specification <<a9887>>.]. 
+interceptors defined in the _Interceptors_ specification <<a9887>>.] 
 Next, the
 container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
@@ -2129,8 +2129,8 @@ getEJBLocalHome, lookup
 
 JNDI access to java:comp/env
 
-{empty}PostConstruct, PreDestroy lifecycle
-callback interceptor methodsfootnote:a10250[If a client calls lifecycle 
+PostConstruct, PreDestroy lifecycle
+callback interceptor methods{empty}footnote:a10250[If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.]
 
@@ -2381,10 +2381,10 @@ of a singleton session bean instance:
 
 A singleton session bean instance’s life
 starts when the container invokes the session bean class constructor to
-create the singleton bean instancefootnote:a10251[If an `AroundConstruct` 
+create the singleton bean instance.footnote:a10251[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the singleton session 
 bean, the container follows the rules for the `AroundConstruct` 
-interceptors defined in the _Interceptors_ specification <<a9887>>.]. 
+interceptors defined in the _Interceptors_ specification <<a9887>>.] 
 Next, the
 container performs any dependency injection as specified by the metadata
 annotations on the bean class or by the deployment descriptor. The
@@ -2999,8 +2999,8 @@ SessionContext methods: lookup
 
 JNDI access to java:comp/env
 
-{empty}PostConstruct, PreDestroy lifecycle
-callback interceptor methodsfootnote:a10252[If a client calls lifecycle 
+PostConstruct, PreDestroy lifecycle
+callback interceptor methods{empty}footnote:a10252[If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.]
 
@@ -3224,8 +3224,8 @@ and singleton session beans.
 
 The session Bean
 Provider is responsible for providing the following class
-filesfootnote:a10253[Note that the interfaces provided by the Bean 
-Provider may have been generated by tools.]:
+files:footnote:a10253[Note that the interfaces provided by the Bean 
+Provider may have been generated by tools.]
 
 Session bean class.
 

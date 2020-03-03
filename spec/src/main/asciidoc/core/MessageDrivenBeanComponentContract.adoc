@@ -300,9 +300,9 @@ supported for message-driven beans.
 
 The PostConstruct and PreDestroy callback
 methods may be defined directly on the bean class or on a separate
-interceptor classfootnote:a10258[If `PrePassivate` or `PostActivate` 
+interceptor class.footnote:a10258[If `PrePassivate` or `PostActivate` 
 lifecycle callbacks are defined for message-driven beans, they are 
-ignored.]. The AroundConstruct lifecycle
+ignored.] The AroundConstruct lifecycle
 callback interceptor method, if used, must be defined on an interceptor
 class (see link:Ejb.html#a9887[See Interceptors, version 1.2.
 http://jcp.org/en/jsr/detail?id=318.]). See
@@ -789,10 +789,10 @@ of a message-driven bean instance:
 
 A message-driven bean instance’s life starts
 when the container invokes the message-driven bean class constructor to
-create a new instancefootnote:a10259[If an `AroundConstruct` lifecycle 
+create a new instance.footnote:a10259[If an `AroundConstruct` lifecycle 
 callback interceptor is associated with the message-driven bean, the 
 container follows the rules for the `AroundConstruct` interceptors 
-defined in the _Interceptors_ specification <<a9887>>.]. 
+defined in the _Interceptors_ specification <<a9887>>.] 
 Next, the container
 injects the bean’s _MessageDrivenContext_ object, if applicable, and
 performs any other dependency injection as specified by metadata

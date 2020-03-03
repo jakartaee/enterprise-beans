@@ -12,7 +12,7 @@ clients.
 
 Existing EJB 3.1 and earlier applications
 that do not include entity bean components and JAX-RPC based web
-services endpointsfootnote:a10344[See <<a182>>.] must be supported to run
+services endpoints{empty}footnote:a10344[See <<a182>>.] must be supported to run
 unchanged in EJB 3.2 containers.
 
 Full EJB 3.2 implementations must support EJB
