@@ -295,8 +295,6 @@ must use the `afterCompletion` notification to manually reset its state.
 
 === Protocol Between a Session Bean Instance and its Container
 
-
-
 Containers themselves make no actual service
 demands on the session bean instances. The container makes calls on a
 bean instance to provide it with access to container services and to
@@ -307,12 +305,12 @@ deliver notifications issued by the container.
 A session bean must be annotated or denoted
 in the deployment descriptor as a stateless, stateful, or singleton
 session bean. A stateless session bean must be annotated with the
-_Stateless_ annotation or denoted in the deployment descriptor as a
+`Stateless` annotation or denoted in the deployment descriptor as a
 stateless session bean. A stateful session bean must be annotated with
-the _Stateful_ annotation or denoted in the deployment descriptor as a
+the `Stateful` annotation or denoted in the deployment descriptor as a
 stateful session bean. A singleton session bean must be annotated with
-the Singleton annotation or denoted in the deployment descriptor as a
-singleton session bean. The _Stateful_ , _Singleton_ , and _Stateless_
+the `Singleton` annotation or denoted in the deployment descriptor as a
+singleton session bean. The `Stateful`, `Singleton`, and `Stateless`
 annotations are component-defining annotations and are applied to the
 bean class.
 
@@ -320,111 +318,109 @@ bean class.
 
 A session bean may use dependency injection
 mechanisms to acquire references to resources or other objects in its
-environment (see link:Ejb.html#a3613[See Enterprise Bean
-Environment]). If a session bean makes use of dependency injection, the
-container injects these references after the bean instance is created,
-and before any business methods are invoked on the bean instance. If a
-dependency on the _SessionContext_ is declared, or if the bean class
-implements the optional _SessionBean_ interface (see Section
-link:Ejb.html#a722[See The SessionBean Interface]), the
-_SessionContext_ is also injected at this time. If dependency injection
+environment (see <<a3613>>). If a session bean makes use of dependency 
+injection, the container injects these references after the bean instance 
+is created, and before any business methods are invoked on the bean 
+instance. If a dependency on the `SessionContext` is declared, or if the 
+bean class implements the optional `SessionBean` interface (see <<a722>>), 
+the `SessionContext` is also injected at this time. If dependency injection
 fails, the bean instance is discarded.
 
 Under the EJB 3.x API, the bean class may
-acquire the _SessionContext_ interface through dependency injection
-without having to implement the _SessionBean_ interface. In this case,
-the _Resource_ annotation (or _resource-env-ref_ deployment descriptor
-element) is used to denote the bean’s dependency on the _SessionContext_
-. See link:Ejb.html#a3613[See Enterprise Bean Environment].
+acquire the `SessionContext` interface through dependency injection
+without having to implement the `SessionBean` interface. In this case,
+the `Resource` annotation (or `resource-env-ref` deployment descriptor
+element) is used to denote the bean’s dependency on the `SessionContext`
+. See <<a3613>>.
 
 [[a682]]
 ==== The SessionContext Interface
 
 If the bean
-specifies a dependency on the _SessionContext_ interface (or if the bean
-class implements the _SessionBean_ interface), the container must
-provide the session bean instance with a _SessionContext_ object. This
+specifies a dependency on the `SessionContext` interface (or if the bean
+class implements the `SessionBean` interface), the container must
+provide the session bean instance with a `SessionContext` object. This
 gives the session bean instance access to the instance’s context
-maintained by the container. The _SessionContext_ interface has the
+maintained by the container. The `SessionContext` interface has the
 following methods:
 
-The _getCallerPrincipal_ method returns the
-_java.security.Principal_ that identifies the invoker.
+* The `getCallerPrincipal` method returns the
+`java.security.Principal` that identifies the invoker.
 
-The _isCallerInRole_ method tests if the
+* The `isCallerInRole` method tests if the
 session bean instance’s caller has a particular role.
 
-The _setRollbackOnly_ method allows the
+* The `setRollbackOnly` method allows the
 instance to mark the current transaction such that the only outcome of
 the transaction is a rollback. Only instances of a session bean with
 container-managed transaction demarcation are permitted to use this
 method.
 
-The _getRollbackOnly_ method allows the
+* The `getRollbackOnly` method allows the
 instance to test if the current transaction has been marked for
 rollback. Only instances of a session bean with container-managed
 transaction demarcation are permitted to use this method.
 
-The _getUserTransaction_ method returns the
-_javax.transaction.UserTransaction_ interface. The instance can use this
+* The `getUserTransaction` method returns the
+`javax.transaction.UserTransaction` interface. The instance can use this
 interface to demarcate transactions and to obtain transaction status.
 Only instances of a session bean with bean-managed transaction
 demarcation are permitted to use this method.
 
-The _getTimerService_ method returns the
-_javax.ejb.TimerService_ interface. Only stateless session beans and
+* The `getTimerService` method returns the
+`javax.ejb.TimerService` interface. Only stateless session beans and
 singleton session beans are permitted to use this method. Stateful
 session beans cannot be timed objects.
 
-The _getBusinessObject(Class
-businessInterface)_ method returns a business object reference to the
+* The `getBusinessObject(java.lang.Class<T> businessInterface)` method 
+returns a business object reference to the
 session bean’s business interface or no-interface view. In the case of
 the no-interface view, the argument is of the type of the bean class.
 Only session beans with an EJB 3.x business interface or no-interface
-view are permitted to call this method.
+view are permitted to call this method. +
+ +
+If a subsequent invocation is made on the
+result of `getBusinessObject`, then:
 
- If a subsequent invocation is made on the
-result of _getBusinessObject_ , then:
-
-For a stateless session bean, the invocation
+** For a stateless session bean, the invocation
 will be delivered to another stateless session bean instance.
 
-For a stateful session bean or singleton
+** For a stateful session bean or singleton
 session bean, the invocation will be delivered to the bean instance that
 returned the reference. The existing rules regarding reentrancy would
 then apply.
 
-The _getInvokedBusinessInterface_ method
+* The `getInvokedBusinessInterface` method
 returns the session bean business interface or no-interface view (bean
 class) type through which the bean was invoked.
 
-The _getEJBObject_ method returns the session
+* The `getEJBObject` method returns the session
 bean’s remote component interface. Only session beans with a remote
 EJBObject interface are permitted to call this method.
 
-The _getEJBHome_ method returns the session
+* The `getEJBHome` method returns the session
 bean’s remote home interface. Only session beans with a remote home
 interface are permitted to call this method.
 
-The _getEJBLocalObject_ method returns the
+* The `getEJBLocalObject` method returns the
 session bean’s local component interface. Only session beans with a
-local EJBLocalObject interface are permitted to call this method.
+local `EJBLocalObject` interface are permitted to call this method.
 
-The _getEJBLocalHome_ method returns the
+* The `getEJBLocalHome` method returns the
 session bean’s local home interface. Only session beans with a local
 home interface are permitted to call this method.
 
-The _lookup_ method enables the session bean
+* The `lookup` method enables the session bean
 to look up its environment entries in the JNDI naming context.
 
-The wasCancelCalled method enables an
+* The `wasCancelCalled` method enables an
 asynchronous session bean method to check whether the client invoked its
-Future.cancel method. The SessionContext.wasCancelCalled method only
-returns true if the cancel method was invoked on the client Future
+`Future.cancel` method. The `SessionContext.wasCancelCalled` method only
+returns true if the cancel method was invoked on the client `Future`
 object corresponding to the currently executing business method and the
-mayInterruptIfRunning parameter was set to true.
+`mayInterruptIfRunning` parameter was set to true.
 
-The _getContextData_ method enables a
+* The `getContextData` method enables a
 business method, lifecycle callback method, or timeout method to
 retrieve or update the interceptor and/or webservices context data
 associated with its invocation.
@@ -433,88 +429,80 @@ associated with its invocation.
 
 A session bean that implements a web service
 endpoint using the JAX-WS contracts should use the JAX-WS
-_WebServiceContext_ , which can be injected by use of the _Resource_
-annotation. The _WebServiceContext_ interface allows the session bean
+`WebServiceContext`, which can be injected by use of the `Resource`
+annotation. The `WebServiceContext` interface allows the session bean
 instance to see the SOAP message for the web service endpoint, as well
 as the properties set by the JAX-WS message handlers, if any. The
-session bean may use the _WebServiceContext_ interface to set properties
-for the JAX-WS message handlers, if any. See
-link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
-version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.].
+session bean may use the `WebServiceContext` interface to set properties
+for the JAX-WS message handlers, if any. See <<a9881>>.
 
-The javax.xml.ws.handler.MessageContext
-(link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
-version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.]) is also
-accessible to interceptors for session bean web service endpoints. See
-Section link:Ejb.html#a2029[See InvocationContext].
+The `javax.xml.ws.handler.MessageContext`<<a9881>> is also
+accessible to interceptors for session bean web service endpoints. See 
+<<a2029>>.
 
 [[a705]]
 ==== Session Bean Lifecycle Callback Interceptor Methods
 
 The following lifecycle event callbacks are
-supported for session beans. With the exception of AroundConstruct
-lifecycle callback interceptors (see link:Ejb.html#a9887[See
-Interceptors, version 1.2. http://jcp.org/en/jsr/detail?id=318.]), all
+supported for session beans. With the exception of `AroundConstruct`
+lifecycle callback interceptors (see <<a9887>>), all
 interceptor methods may be defined directly on the bean class or on a
-separate interceptor class. See link:Ejb.html#a1487[See
-Lifecycle Callback Interceptor Methods] and Chapter
-link:Ejb.html#a2004[See Interceptors].
+separate interceptor class. See <<a1487>> and <<a2004>>.
 
- _AroundConstruct_
+* `AroundConstruct`
 
- _PostConstruct_
+* `PostConstruct`
 
- _PreDestroy_
+* `PreDestroy`
 
- _PostActivate_
+* `PostActivate`
 
- _PrePassivate_
+* `PrePassivate`
 
-The _PostConstruct_ callback invocations
+The `PostConstruct` callback invocations
 occur before the first business method invocation on the bean instance.
 This is at a point after which any dependency injection has been
 performed by the container.
 
-The _PostConstruct_ lifecycle callback
+The `PostConstruct` lifecycle callback
 interceptor methods execute in an unspecified security context.
 
-The PostConstruct lifecycle callback
+The `PostConstruct` lifecycle callback
 interceptor methods for a stateless session bean execute in an
-unspecified transaction context. The PostConstruct lifecycle callback
+unspecified transaction context. The `PostConstruct` lifecycle callback
 interceptor methods for a singleton session bean execute in a
 transaction context determined by the bean’s transaction management type
-and any applicable transaction attribute. The PostConstruct lifecycle
+and any applicable transaction attribute. The `PostConstruct` lifecycle
 callback interceptor methods for a stateful session bean execute in a
 transaction context determined by the lifecycle callback method's
 transaction attribute.
 
-The _PreDestroy_ callback notification
+The `PreDestroy` callback notification
 signals that the instance is in the process of being removed by the
-container. In the _PreDestroy_ lifecycle callback interceptor methods,
+container. In the `PreDestroy` lifecycle callback interceptor methods,
 the instance typically releases the resources that it has been holding.
 
-The _PreDestroy_ lifecycle callback
+The `PreDestroy` lifecycle callback
 interceptor methods execute in an unspecified security context.
 
-The PreDestroy lifecycle callback interceptor
+The `PreDestroy` lifecycle callback interceptor
 methods for a stateless session bean execute in an unspecified
-transaction context. The PreDestroy lifecycle callback interceptor
+transaction context. The `PreDestroy` lifecycle callback interceptor
 methods for a singleton session bean execute in a transaction context
 determined by the bean’s transaction management type and any applicable
-transaction attribute. The PreDestroy lifecycle callback interceptor
+transaction attribute. The `PreDestroy` lifecycle callback interceptor
 methods for a stateful bean execute in a transaction context determined
 by the lifecycle callback method’s transaction attribute.
 
-The _PrePassivate_ and _PostActivate_
+The `PrePassivate` and `PostActivate`
 lifecycle callback interceptor methods are only called on a stateful
 session bean instance if the bean is passivation capable. By default a
-stateful session bean is passivation capable. See section
-link:Ejb.html#a1053[See Disabling Passivation of Stateful
-Session Beans] on how to disable passivation of a stateful session bean.
+stateful session bean is passivation capable. See <<a1053>> on how to 
+disable passivation of a stateful session bean.
 
-The _PrePassivate_ callback notification
+The `PrePassivate` callback notification
 signals the intent of the container to passivate the instance. The
-_PostActivate_ notification signals the instance it has just been
+`PostActivate` notification signals the instance it has just been
 reactivated. Because containers automatically maintain the
 conversational state of a stateful session bean instance when it is
 passivated, these notifications are not needed for most session beans.
@@ -522,11 +510,11 @@ Their purpose is to allow stateful session beans to maintain those open
 resources that need to be closed prior to an instance’s passivation and
 then reopened during an instance’s activation.
 
-The _PrePassivate_ and _PostActivate_
+The `PrePassivate` and `PostActivate`
 lifecycle callback interceptor methods execute in an unspecified
 security context.
 
-The _PrePassivate_ and _PostActivate_
+The `PrePassivate` and `PostActivate`
 lifecycle callback interceptor methods execute in a transaction context
 determined by the lifecycle callback method's transaction attribute.
 
