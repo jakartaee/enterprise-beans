@@ -26,7 +26,6 @@ attempts to address both of the above issues._
 
 This chapter is organized as follows:
 
-:xrefstyle: short
 * <<a3635>> defines the general rules for the use of the JNDI naming context and its interaction
 with Java language annotations that reference entries in the naming
 context.
@@ -323,18 +322,13 @@ overrides the lookup element of the annotation.
 Restrictions on the overriding of environment
 entry values depend on the type of environment entry.
 
-:!section-refsig:
 The rules for how a deployment descriptor
-entry may override an EJB annotation are described in 
-Section <<a3912>>. The rules for how a
-deployment descriptor entry may override a `PersistenceUnit` or
-`PersistenceContext` annotation are described in Sections 
-<<a4533>> and <<a4671>>. 
-The rules for web services references and how a deployment descriptor entry
-may override a `WebServiceRef` annotation are included in the _Web
-Services for Java EE_ specification<<a9879>>.
-
-:section-refsig: Section
+entry may override an EJB annotation are described in <<a3912>>. 
+The rules for how a deployment descriptor entry may override a 
+`PersistenceUnit` or `PersistenceContext` annotation are described in 
+<<a4533>> and <<a4671>>. The rules for web services references and how 
+a deployment descriptor entry may override a `WebServiceRef` annotation 
+are included in the _Web Services for Java EE_ specification<<a9879>>.
 
 [[a3680]]
 === Responsibilities by EJB Role
@@ -351,7 +345,8 @@ that may be stored in the naming context.
 The Bean Provider may use Java language
 annotations or deployment descriptor entries to request injection of a
 resource from the naming context, or to declare entries that are needed
-in the naming context. The Bean Provider may also use the EJBContext `lookup` method or the JNDI APIs to access entries in the naming
+in the naming context. The Bean Provider may also use the EJBContext 
+`lookup` method or the JNDI APIs to access entries in the naming
 context. Deployment descriptor entries may also be used by the Bean
 Provider to override information provided by annotations.
 
