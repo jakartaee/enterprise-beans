@@ -1,57 +1,54 @@
 [[a5804]]
 == Deployment Descriptor
 
+:!section-refsig:
+
 This chapter defines the EJB deployment
-descriptor. Section link:Ejb.html#a5807[See Overview] provides
+descriptor. Section <<a5807>> provides
 an overview of the deployment descriptor. Sections
-link:Ejb.html#a5815[See Bean Provider’s Responsibilities]
-through link:Ejb.html#a5907[See Container Provider’s
-Responsibilities] describe the information in the deployment descriptor
+<<a5815>> through <<a5907>> describe the information in 
+the deployment descriptor
 from the perspective of the EJB roles responsible for providing the
-information. Section link:Ejb.html#a5910[See Deployment
-Descriptor XML Schema] defines the deployment descriptor’s XML Schema
+information. Section <<a5910>> defines the deployment descriptor’s XML Schema
 elements that are specific to the EJB architecture. The XML Schema
 elements that are common to the Java EE Platform specifications are
-provided in link:Ejb.html#a9861[See Java™ Platform, Enterprise
-Edition Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.].
+provided in <<a9861>>.
+
+:section-refsig: Section
 
 Entity beans elements are described in the
-EJB Optional Features document link:Ejb.html#a9890[See EJB 3.2
-Optional Features http://jcp.org/en/jsr/detail?id=345.].
+EJB Optional Features document <<a9890>>.
 
 [[a5807]]
 === Overview
 
-
-
 The deployment
-descriptor is part of the contract between the ejb-jar and/or _.war_
+descriptor is part of the contract between the ejb-jar and/or `.war`
 file producer and consumer. This contract covers both the passing of
 enterprise beans from the Bean Provider to the Application Assembler,
 and from the Application Assembler to the Deployer.
 
 An ejb-jar file
-or _.war_ file produced by the Bean Provider contains one or more
+or `.war` file produced by the Bean Provider contains one or more
 enterprise beans and typically does not contain application assembly
-instructions. An ejb-jar file or . _war_ file produced by an Application
+instructions. An ejb-jar file or `.war` file produced by an Application
 Assembler contains one or more enterprise beans, plus application
 assembly information describing how the enterprise beans are combined
 into a single application deployment unit.
 
-The Java EE specification defines how
+_The Java EE specification defines how
 enterprise beans and other application components contained in multiple
-such files can be assembled into an application.
+such files can be assembled into an application._
 
 The role of the
 deployment descriptor is to capture declarative information that is not
 included directly in the enterprise beans’ code and that is intended for
-the consumer of the ejb-jar file or _.war_ file.
+the consumer of the ejb-jar file or `.war` file.
 
 There are two
 basic kinds of information in the deployment descriptor:
 
-Enterprise beans’ _structural information_ .
+* _Enterprise beans’ structural information_ +
 Structural information describes the structure of an enterprise bean and
 declares an enterprise bean’s external dependencies. Structural
 information may be provided using metadata annotations in the beans’
@@ -59,12 +56,12 @@ code or in the deployment descriptor. The structural information cannot,
 in general, be changed because doing so could break the enterprise
 bean’s function.
 
-Application _assembly information_ .
+* _Application assembly information_ +
 Application assembly information describes how the enterprise beans in
-the ejb-jar file or _.war_ file are composed into a larger application
+the ejb-jar file or `.war` file are composed into a larger application
 deployment unit. Providing assembly information—whether in metadata
 annotations or in the deployment descriptor—is optional for the ejb-jar
-file or _.war_ file producer. Assembly level information can be changed
+file or `.war` file producer. Assembly level information can be changed
 without breaking the enterprise bean’s function, although doing so may
 alter the behavior of an assembled application.
 
