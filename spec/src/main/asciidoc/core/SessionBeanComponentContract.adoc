@@ -11,8 +11,6 @@ managing session bean state.
 
 === Overview
 
-
-
 A session bean
 instance is an instance of the session bean class. It holds the session
 object’s state.
@@ -20,31 +18,30 @@ object’s state.
 A session bean instance is an extension of
 the client that creates it:
 
-In the case of a stateful session bean, its
-fields contain _conversational state_  on
+* In the case of a stateful session bean, its
+fields contain *conversational state*  on
 behalf of the session object’s client. This state describes the
 conversation represented by a specific client/session object pair.
 
-It typically reads and updates data in a
+* It typically reads and updates data in a
 database on behalf of the client.
 
-In the case of a stateful session bean, its
+* In the case of a stateful session bean, its
 lifetime is controlled by the client.
 
-A container may also terminate a session bean
+_A container may also terminate a session bean
 instance’s life after a Deployer-specified timeout or as a result of the
 failure of the server on which the bean instance is running. For this
 reason, a client should be prepared to recreate a new session object if
-it loses the one it is using.
+it loses the one it is using._
 
 Typically, a session object’s conversational
 state is not written to the database. A session Bean Provider simply
 stores it in the session bean instance’s fields and assumes its value is
 retained for the lifetime of the instance. A developer may use an
 extended persistence context to store a stateful session bean’s
-persistent conversational state. See the document “ _Java Persistence
-API”_ specification link:Ejb.html#a9851[See Java™ Persistence
-API, version 2.1. http://jcp.org/en/jsr/detail?id=338.].
+persistent conversational state. See the document _Java Persistence
+API_ specification <<a9851>>.
 
 A session bean that does not make use of the
 Java Persistence API must explicitly manage
@@ -52,12 +49,11 @@ cached database data. A session bean
 instance must write any cached database updates prior to a transaction
 completion, and it must refresh its copy of any potentially stale
 database data at the beginning of the next transaction. A session bean
-must also refresh any _java.sql_ Statement objects before they are used
+must also refresh any `java.sql.Statement` objects before they are used
 in a new transaction context. Use of the Java Persistence API provides a
 session bean with automatic management of database data, including the
 automatic flushing of cached database updates upon transaction commit.
-See link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
+See <<a9851>>.
 
 The container manages the life cycle of the
 session bean instances. It notifies the instances when bean action may
@@ -66,19 +62,19 @@ the session bean implementation is scalable and can support a large
 number of clients.
 
 A session bean may be invoked either
-synchronously or asynchronously.
+_synchronously_ or _asynchronously_.
 
 A session bean may be either:
 
- _stateless_ —the session bean instances
+* _stateless_—the session bean instances
 contain no conversational state between methods; any instance can be
 used for any client.
 
- _stateful_ —the session bean instances
+* _stateful_—the session bean instances
 contain conversational state which must be retained across methods and
 transactions.
 
-singleton—a single session bean instance is
+* _singleton_—a single session bean instance is
 shared between clients and supports concurrent access.
 
 === Conversational State of a Stateful Session Bean
