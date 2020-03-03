@@ -463,8 +463,6 @@ elsewhere in this specification.
 [[a5907]]
 === Container Provider’s Responsibilities
 
-
-
 The Container Provider provides tools that
 read and import the information contained in the XML deployment
 descriptor.
@@ -473,9 +471,7 @@ All EJB 3.2 implementations must support EJB
 3.1, EJB 3.0, EJB 2.1, EJB 2.0, and EJB 1.1 as well as EJB 3.1
 deployment descriptors. The definitions of the EJB 3.1 EJB 3.0, EJB 2.1,
 EJB 2.0, and EJB 1.1 deployment descriptors can be found in the
-Enterprise JavaBeans 3.1 link:Ejb.html#a9891[See Enterprise
-JavaBeans™, version 3.1. (EJB 3.1).
-http://jcp.org/en/jsr/detail?id=318.] and earlier specifications.
+Enterprise JavaBeans 3.1<<a9891>> and earlier specifications.
 
 [[a5910]]
 === Deployment Descriptor XML Schema
