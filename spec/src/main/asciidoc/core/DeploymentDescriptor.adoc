@@ -1,20 +1,15 @@
 [[a5804]]
 == Deployment Descriptor
 
-:!section-refsig:
-
-This chapter defines the EJB deployment
-descriptor. Section <<a5807>> provides
-an overview of the deployment descriptor. Sections
+This chapter defines the EJB deployment descriptor. 
+<<a5807>> provides an overview of the deployment descriptor. 
 <<a5815>> through <<a5907>> describe the information in 
-the deployment descriptor
-from the perspective of the EJB roles responsible for providing the
-information. Section <<a5910>> defines the deployment descriptor’s XML Schema
-elements that are specific to the EJB architecture. The XML Schema
-elements that are common to the Java EE Platform specifications are
-provided in <<a9861>>.
-
-:section-refsig: Section
+the deployment descriptor from the perspective of the EJB roles 
+responsible for providing the information.
+<<a5910>> defines the deployment descriptor’s XML Schema
+elements that are specific to the EJB architecture.
+The XML Schema elements that are common to the Java EE Platform 
+specifications are provided in <<a9861>>.
 
 Entity beans elements are described in the
 EJB Optional Features document <<a9890>>.
@@ -48,7 +43,7 @@ the consumer of the ejb-jar file or `.war` file.
 There are two
 basic kinds of information in the deployment descriptor:
 
-* _Enterprise beans’ structural information_ +
+* *Enterprise beans’ structural information* +
 Structural information describes the structure of an enterprise bean and
 declares an enterprise bean’s external dependencies. Structural
 information may be provided using metadata annotations in the beans’
@@ -56,7 +51,7 @@ code or in the deployment descriptor. The structural information cannot,
 in general, be changed because doing so could break the enterprise
 bean’s function.
 
-* _Application assembly information_ +
+* *Application assembly information* +
 Application assembly information describes how the enterprise beans in
 the ejb-jar file or `.war` file are composed into a larger application
 deployment unit. Providing assembly information—whether in metadata
@@ -77,9 +72,10 @@ The Bean Provider
 uses the `enterprise-beans` element to list the enterprise beans in the
 ejb-jar file or `.war` file.
 
-NOTE: The following annotations are
-component-defining annotations and cannot be overridden by the
-deployment descriptor:
+[NOTE]
+====
+The following annotations are component-defining annotations and cannot 
+be overridden by the deployment descriptor:
 
 * `Stateless`
 
@@ -88,6 +84,8 @@ deployment descriptor:
 * `Singleton`
 
 * `MessageDriven`
+
+====
 
 The Bean Provider
 must provide the following information for each enterprise bean:
@@ -187,124 +185,108 @@ stateless, or singleton session bean.
 * *Session or message-driven bean’s transaction demarcation type* +
 If the enterprise bean is
 a session bean or message-driven bean, the Bean Provider may use the
-transaction-type element to declare whether transaction demarcation is
+`transaction-type` element to declare whether transaction demarcation is
 performed by the enterprise bean or by the container. If the neither the
-_TransactionType_ annotation is used nor the _transaction-type_
+`TransactionType` annotation is used nor the `transaction-type`
 deployment descriptor element, the bean will have container managed
 transaction demarcation.
 
-Session bean’s concurrency management type.
+* *Session bean’s concurrency management type* +
 If the enterprise bean is a singleton session bean, the Bean Provider
-may use the concurrency-management-type element to declare whether
+may use the `concurrency-management-type` element to declare whether
 concurrency management is handled by the container or is performed by
 the Bean Provider.footnote:a10341[The concurrency-management-type Container 
 may be specified for stateful session beans, but doing so has no impact on 
 the semantics of concurrency management for such beans.] If neither the
-ConcurrencyManagement annotation is used nor the
-concurrency-management-type deployment descriptor element, the singleton
+`ConcurrencyManagement` annotation is used nor the
+`concurrency-management-type` deployment descriptor element, the singleton
 session bean will have container-managed concurrency.
 
-Environment entries. The Bean Provider must
-declare any enterprise bean’s environment
+* *Environment entries* +
+The Bean Provider must declare any enterprise bean’s environment
 entries that have not been defined by means of metadata annotations, as
-specified in Subsection link:Ejb.html#a3682[See Bean Provider’s
-Responsibilities].
+specified in <<a3682>>.
 
-Resource manager connection factory
-references. The Bean Provider must declare any enterprise bean’s
+* *Resource manager connection factory references* +
+The Bean Provider must declare any enterprise bean’s
 resource manager connection factory
 references that have not been defined by means of metadata annotations,
-as specified in Subsection link:Ejb.html#a4164[See Bean
-Provider’s Responsibilities].
+as specified in <<a4164>>.
 
- _Resource environment references_
-. The Bean Provider must declare any
+* *Resource environment references* +
+The Bean Provider must declare any
 enterprise bean’s references to administered objects that are associated
 with resources and that have not been defined by means of metadata
-annotations, as specified in Subsection link:Ejb.html#a4344[See
-Bean Provider’s Responsibilities].
+annotations, as specified in <<a4344>>.
 
-EJB references.
+* *EJB references* +
 The Bean Provider must declare any enterprise bean’s references to the
 remote home or remote business view of other enterprise beans that have
-not been defined by means of metadata annotations, as specified in
-Subsection link:Ejb.html#a3915[See Bean Provider’s
-Responsibilities].
+not been defined by means of metadata annotations, as specified in <<a3915>>.
 
-EJB local
-references. The Bean Provider must declare any enterprise bean’s
+* *EJB local references* +
+The Bean Provider must declare any enterprise bean’s
 references to the local home or local business or no-interface view of
 other enterprise beans that have not been defined by means of metadata
-annotations, as specified in Subsection link:Ejb.html#a3915[See
-Bean Provider’s Responsibilities].
+annotations, as specified in <<a3915>>.
 
- _Web service references_ . The Bean Provider
-must declare any enterprise bean’s references to web service interfaces
-that have not been defined by means of metadata annotations, as
-specified in Subsection link:Ejb.html#a4154[See Web Service
-References].
+* *Web service references* +
+The Bean Provider must declare any enterprise bean’s references to web 
+service interfaces that have not been defined by means of metadata 
+annotations, as specified in <<a4154>>.
 
- _Persistence unit references_ . The Bean
-Provider must declare any enterprise bean’s references to an entity
+* *Persistence unit references* +
+The Bean Provider must declare any enterprise bean’s references to an entity
 manager factory for a persistence unit that have not been defined by
-means of metadata annotations, as specified in Subsection
-link:Ejb.html#a4533[See Persistence Unit References].
+means of metadata annotations, as specified in <<a4533>>.
 
- _Persistence context references_ . The Bean
-Provider must declare any enterprise bean’s references to an entity
+* *Persistence context references* +
+The Bean Provider must declare any enterprise bean’s references to an entity
 manager for a persistence context that have not been defined by means of
-metadata annotations, as specified in Subsection
-link:Ejb.html#a4671[See Persistence Context References].
+metadata annotations, as specified in <<a4671>>.
 
- _Message destination references_ . The Bean
-Provider must declare any enterprise bean’s references to message
+* *Message destination references* +
+The Bean Provider must declare any enterprise bean’s references to message
 destinations that have not been defined by means of metadata
-annotations, as specified in Subsection link:Ejb.html#a4373[See
-Bean Provider’s Responsibilities].
+annotations, as specified in <<a4373>>.
 
-Security role
-references. The Bean Provider must declare any enterprise bean’s
+* *Security role references* +
+The Bean Provider must declare any enterprise bean’s
 references to security roles that have not been defined by means of
-metadata annotations, as specified in Subsection
-link:Ejb.html#a5071[See Declaration of Security Roles Referenced
-from the Bean’s Code].
+metadata annotations, as specified in <<a5071>>.
 
- _Message-driven bean’s configuration
-properties. The Bean Provider may provide input to the Deployer as to
+* *Message-driven bean’s configuration properties* +
+The Bean Provider may provide input to the Deployer as to
 how a message-driven bean should be configured upon activation in its
 operational environment. Activation configuration properties for a JMS
 message-driven bean include information about a bean’s intended
 destination type, its message selector, and its acknowledgement mode.
-Other bean types may make use of different properties. See
-link:Ejb.html#a9863[See Java EE™ Connector Architecture, version
-1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.]._
+Other bean types may make use of different properties. See <<a9863>>.
 
- _Message-driven bean’s destination._ The
-Bean Provider may provide advice to the Application Assembler as to the
-destination type to which a message-driven
-bean should be assigned when linking message destinations
+* *Message-driven bean’s destination* +
+The Bean Provider may provide advice to the Application Assembler as 
+to the destination type to which a message-driven bean should be assigned 
+when linking message destinations
 
- _Interceptors._ The Bean Provider must
-declare any interceptor classes and methods that have not been declared
-by means of metadata annotations.
+* *Interceptors* +
+The Bean Provider must declare any interceptor classes and methods that have 
+not been declared by means of metadata annotations.
 
-Schedule-based timers. The Bean Provider must
-declare any automatic schedule-based timers that have not been declared
-by means of metadata annotations.
+* *Schedule-based timers* +
+The Bean Provider must declare any automatic schedule-based timers that have 
+not been declared by means of metadata annotations.
 
-Asynchronous methods. The Bean Provider must
-declare any asynchronous business methods that have not been designated
-as asynchronous by means of metadata annotions.
+* *Asynchronous methods* +
+The Bean Provider must declare any asynchronous business methods that have 
+not been designated as asynchronous by means of metadata annotions.
 
- _Singleton session bean initialization
-ordering dependencies._ The Bean Provider may provide advice to the
-Application Assembler as to the initialization ordering dependencies
-among singleton session beans.
+* *Singleton session bean initialization ordering dependencies* +
+The Bean Provider may provide advice to the Application Assembler as to the 
+initialization ordering dependencies among singleton session beans.
 
 The deployment
 descriptor produced by the Bean Provider must conform to the XML Schema
-definition in Section link:Ejb.html#a5910[See Deployment
-Descriptor XML Schema] or to the XML Schema or DTD definition from a
+definition in <<a5910>> or to the XML Schema or DTD definition from a
 previous version of this specification. The content of the deployment
 descriptor must conform to the semantics rules specified in the XML
 Schema or DTD comments and elsewhere in this specification.
