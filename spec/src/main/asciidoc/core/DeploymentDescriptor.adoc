@@ -294,102 +294,99 @@ Schema or DTD comments and elsewhere in this specification.
 [[a5865]]
 === Application Assembler’s Responsibility
 
-
-
 The Application Assembler assembles
 enterprise beans into deployment units. The Application Assembler’s
 input is one or more enterprise beans, un-assembled or contained in one
-or more ejb-jar and/or _.war_ files provided by one or more Bean
+or more ejb-jar and/or `.war` files provided by one or more Bean
 Providers. All of the input could be combined into a single output
-ejb-jar file or _.war_ file, or could be be split into multiple output
-ejb-jar and/or _.war_ files. Each output ejb-jar file or _.war_ file is
+ejb-jar file or `.war` file, or could be be split into multiple output
+ejb-jar and/or `.war` files. Each output ejb-jar file or `.war` file is
 either a deployment unit intended for the Deployer or a partially
 assembled application that is intended for another Application
 Assembler.
 
-The Bean Provider and Application Assembler
+_The Bean Provider and Application Assembler
 may be the same person or organization. In such a case, the person or
 organization performs the responsibilities described both in this and
-the previous sections.
+the previous sections._
 
 The Application Assembler may modify the
 following information that was specified by the Bean Provider:
 
-Values of environment entries. The
-Application Assembler may change existing values and/or define new
+* *Values of environment entries* +
+The Application Assembler may change existing values and/or define new
 values of environment properties.
 
-Description fields. The Application Assembler
-may change existing or create new description elements.
+* *Description fields* + 
+The Application Assembler may change existing or create new description
+elements.
 
- _Message-driven bean message selector_ . The
-Application Assembler may further restrict, but not replace, the value
-of the _messageSelector_
-_activation-config-property_ element of a JMS message-driven
-bean—whether this was defined in metadata annotations or the deployment
-descriptor.
+* *Message-driven bean message selector* +
+The Application Assembler may further restrict, but not replace, the value
+of the `messageSelector` `activation-config-property` element of a JMS
+message-driven bean—whether this was defined in metadata annotations or 
+the deployment descriptor.
 
-Timer schedule attributes. The Application
-Assembler may override timer attributes, except for the method to which
-a timer’s timeouts have been assigned.
+* *Timer schedule attributes* +
+The Application Assembler may override timer attributes, except for the 
+method to which a timer’s timeouts have been assigned.
 
 In general, the Application Assembler should
-never modify any of the following.
+never modify any of the following:
 
-Enterprise bean’s abstract schema name. The
-Application Assembler should not change the enterprise bean’s name
-defined in the abstract-schema-name element since EJB QL queries may
+* *Enterprise bean’s abstract schema name* +
+The Application Assembler should not change the enterprise bean’s name
+defined in the `abstract-schema-name` element since EJB QL queries may
 depend on the content of this element.
 
-Relationship role source element. The
-Application Assembler should not change the value of an ejb-name element
-in the _relationship-role-source_  element.
+* *Relationship role source element* +
+The Application Assembler should not change the value of an ejb-name 
+element in the `relationship-role-source` element.
 
 If any of these elements must be modified by
 the Application Assembler in order to resolve name clashes during the
-merging of ejb-jar and/or _.war_ files, the Application Assembler must
-also modify all ejb-ql query strings that depend on the value of the
+merging of ejb-jar and/or `.war` files, the Application Assembler must
+also modify all `ejb-ql` query strings that depend on the value of the
 modified element(s).
 
 The Application Assembler must not, in
-general, modify any other information listed in Section
-link:Ejb.html#a5815[See Bean Provider’s Responsibilities] that
-was provided in the input ejb-jar file or _.war_ file.
+general, modify any other information listed in <<a5815>> that
+was provided in the input ejb-jar file or `.war` file.
 
 The Application
 Assembler may, but is not required to, specify any of the following
 application assembly information:
 
-Binding of enterprise bean references. The
-Application Assembler may link an enterprise
-bean reference to another enterprise bean in the ejb-jar file or _.war_
+* *Binding of enterprise bean references* +
+The Application Assembler may link an enterprise
+bean reference to another enterprise bean in the ejb-jar file or `.war`
 file or in an ejb-jar file in the same Java EE application unit. The
 Application Assembler creates the link by adding the
-ejb-link element to the referencing bean.
-The Application Assembler uses the _ejb-name_ of the referenced bean for
+`ejb-link` element to the referencing bean.
+The Application Assembler uses the `ejb-name` of the referenced bean for
 the link. If there are multiple enterprise beans with the same
-_ejb-name_ , the Application Assembler uses the path name specifying the
+`ejb-name`, the Application Assembler uses the path name specifying the
 location of the ejb-jar file that contains the referenced component. The
-path name is relative to the referencing ejb-jar file or . _war_ file.
-The Application Assembler appends the _ejb-name_ of the referenced bean
-to the path name separated by _#_ . This allows multiple beans with the
+path name is relative to the referencing ejb-jar file or `.war` file.
+The Application Assembler appends the `ejb-name` of the referenced bean
+to the path name separated by `#`. This allows multiple beans with the
 same name to be uniquely identified.
 
-Linking of message destination references.
+* *Linking of message destination references* +
 The Application Assembler may link message consumers and producers
 through common message destinations specified in the ejb-jar file or
-_.war_ file or in the same Java EE application unit. The Application
+`.war` file or in the same Java EE application unit. The Application
 Assembler creates the link by adding the message-destination-link
 element to the referencing bean.
 
-Security roles. The Application Assembler may
-define one or more security roles. The
+* *Security roles* +
+The Application Assembler may define one or more security roles. The
 security roles define the recommended security roles for the clients of
 the enterprise beans. The Application Assembler defines the security
-roles using the security-role elements.
+roles using the `security-role` elements.
 
-Method permissions. The Application Assembler
-may define method permissions. Method
+* *Method permissions* +
+The Application Assembler may define method permissions. Method
 permission is a binary relation between the security roles and the
 methods of the business interfaces, home interfaces, component
 interfaces, and/or web service endpoints of the enterprise beans. The
@@ -399,57 +396,57 @@ Assembler may augment or ovrride method permissions defined by the Bean
 Provider—whether in metadata annotations or in the deployment
 descriptor.
 
-Singleton session bean initialization
-ordering. The Application Assembler may define or override the
+* *Singleton session bean initialization ordering* +
+The Application Assembler may define or override the
 depends-on initialization ordering metadata for a singleton session
 bean.
 
-Stateful timeout. The Application Assembler
-may define or override the stateful timeout.
+* *Stateful timeout* +
+The Application Assembler may define or override the stateful timeout.
 
-Singleton session bean startup. The
-Application Assembler may override the eager startup designation of a
+* *Singleton session bean startup* +
+The Application Assembler may override the eager startup designation of a
 singleton session bean.
 
-Access timeouts. The Application Assembler
-may override the access timeout values for methods governed by
-container-managed concurrency semantics of stateful and singleton
-session beans.
+* *Access timeouts* +
+The Application Assembler may override the access timeout values for 
+methods governed by container-managed concurrency semantics of stateful 
+and singleton session beans.
 
-Linking of security role references. If the
-Application Assembler defines security roles in the deployment
+* *Linking of security role references* +
+If the Application Assembler defines security roles in the deployment
 descriptor, the Application Assembler may link the
 security role references declared by the
 Bean Provider to the security roles. The Application Assembler defines
-these links using the role-link element.
+these links using the `role-link` element.
 
- _Security identity_ . The Application
-Assembler may specify whether the caller’s
+* *Security identity* +
+The Application Assembler may specify whether the caller’s
 security identity should be used for the
 execution of the methods of an enterprise bean or whether a specific
 run-as security identity should be used. The Application Assembler may
 override a security identity defined by the Bean Provider—whether in
 metadata annotations or in the deployment descriptor
 
-Transaction attributes. The Application
-Assembler may define the value of the
+* *Transaction attributes* +
+The Application Assembler may define the value of the
 transaction attributes for the methods of
 the business interface, home interface, component interface,
-no-interface view, web service endpoint, and _TimedObject_ interface of
+no-interface view, web service endpoint, and `TimedObject` interface of
 the enterprise beans that require
 container-managed transaction demarcation.
 All session and message-driven beans declared by the Bean Provider as
-transaction-type Container require container-managed transaction
+transaction-type `Container` require container-managed transaction
 demarcation. The Application Assembler uses the
-container-transaction elements to declare
+`container-transaction` elements to declare
 the transaction attributes.
 
- _Interceptors_ . The Application Assembler
-may override, augment, and/or reorder the interceptor methods defined by
-the Bean Provider—whether in metadata annotations or in the deployment
-descriptor.
+* *Interceptors* +
+The Application Assembler may override, augment, and/or reorder the 
+interceptor methods defined by the Bean Provider—whether in metadata 
+annotations or in the deployment descriptor.
 
-If an input ejb-jar file or _.war_ file
+If an input ejb-jar file or `.war` file
 contains application assembly information, the Application Assembler is
 allowed to change the application assembly information supplied in the
 input file. (This could happen when the input file was produced by
@@ -457,8 +454,7 @@ another Application Assembler.)
 
 The deployment
 descriptor produced by the Bean Provider and/or the Application
-Assembler must conform to the XML Schema definition in Section
-link:Ejb.html#a5910[See Deployment Descriptor XML Schema] or the
+Assembler must conform to the XML Schema definition in <<a5910>> or the
 XML Schema or DTD definition from a previous version of this
 specification. The content of the deployment descriptor must conform to
 the semantics rules specified in the XML Schema or DTD comments and
