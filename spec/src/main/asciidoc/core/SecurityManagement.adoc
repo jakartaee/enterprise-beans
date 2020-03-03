@@ -137,7 +137,7 @@ the security roles for the application, as defined in
 link:Ejb.html#a5121[See Responsibilities of the Bean Provider
 and/or Application Assembler].
 
-=== Invocation of Other Enterprise Beans
+==== Invocation of Other Enterprise Beans
 
 An enterprise bean business method can invoke
 another enterprise bean via the other bean’s business interface,
@@ -153,14 +153,14 @@ The Bean Provider and Application Assembler should describe all the
 requirements for the caller’s principal management of inter-enterprise
 bean invocations as part of the description.
 
-=== Resource Access
+==== Resource Access
 
 Section link:Ejb.html#a4159[See
 Resource Manager Connection Factory References] defines the protocol for
 accessing resource managers, including the requirements for security
 management.
 
-=== Access of Underlying OS Resources
+==== Access of Underlying OS Resources
 
 The EJB architecture does not define the
 operating system principal under which
@@ -175,7 +175,7 @@ databases rather than in resources at the operating system levels.
 Therefore, this rule should not affect the portability of most
 enterprise beans.
 
-=== Programming Style Recommendations
+==== Programming Style Recommendations
 
 The Bean Provider
 should neither implement security mechanisms nor hard-code security
@@ -188,7 +188,7 @@ annotations and/or the deployment descriptor to convey security-related
 information to the Deployer. The information helps the Deployer to set
 up the appropriate security policy for the enterprise bean application.
 
-=== Programmatic Access to Caller’s Security Context
+==== Programmatic Access to Caller’s Security Context
 
 Note: In general, security management should
 be enforced by the container in a manner that is transparent to the
@@ -293,7 +293,7 @@ identity) \{
 
  }
 
-=== Use of getCallerPrincipal
+===== Use of getCallerPrincipal
 
 The purpose of the _getCallerPrincipal_
 method is to allow the enterprise bean methods to obtain the current
@@ -397,7 +397,7 @@ that application has been deployed such that the current caller
 principal contains the primary key used for the identification of
 employees (e.g., employee number).
 
-=== Use of isCallerInRole
+===== Use of isCallerInRole
 
 The main purpose of the
 _isCallerInRole(String_ _roleName)_ method is to allow the Bean Provider
@@ -472,7 +472,8 @@ callers
 
 }
 
-=== [[a5071]]Declaration of Security Roles Referenced from the Bean’s Code
+[[a5071]]
+===== Declaration of Security Roles Referenced from the Bean’s Code
 
 The Bean Provider
 is responsible for declaring all names that may be used to reference
@@ -621,7 +622,8 @@ the same name. See section link:Ejb.html#a5293[See Linking
 Security Role References to Security Roles] for a description of how
 security role references are linked to security roles.
 
-=== [[a5121]]Responsibilities of the Bean Provider and/or Application Assembler
+[[a5121]]
+=== Responsibilities of the Bean Provider and/or Application Assembler
 
 
 
@@ -664,7 +666,8 @@ change the definition of the security roles for an application, or
 completely ignore them and secure the application using a different
 mechanism that is specific to the operational environment.
 
-=== [[a5130]]Security Roles
+[[a5130]]
+==== Security Roles
 
 The Bean Provider
 or Application Assembler can define one or more security roles in the
@@ -823,7 +826,8 @@ functions
 
 </assembly-descriptor>
 
-=== [[a5186]]Method Permissions
+[[a5186]]
+==== Method Permissions
 
 If the Bean Provider and/or Application
 Assembler have defined security roles for the enterprise beans in the
@@ -844,7 +848,7 @@ interfaces and/or EJBLocalHome and EJBLocalObject interfaces). The
 method permissions relation includes the pair (R, M) if and only if the
 security role R is allowed to invoke the method M.
 
-=== Specification of Method Permissions with Metadata Annotations
+===== Specification of Method Permissions with Metadata Annotations
 
 The following is the description of the rules
 for the specification of method permissions using Java language metadata
@@ -933,7 +937,8 @@ link:Ejb.html#a5219[See Specification of Method Permissions in
 the Deployment Descriptor] and link:Ejb.html#a5291[See
 Unspecified Method Permissions]) .
 
-=== [[a5219]]Specification of Method Permissions in the Deployment Descriptor
+[[a5219]]
+===== Specification of Method Permissions in the Deployment Descriptor
 
 The Bean Provider may use the deployment
 descriptor as an alternative to metadata annotations to specify the
@@ -1167,7 +1172,8 @@ descriptor:
 
  ...
 
-=== [[a5291]]Unspecified Method Permissions
+[[a5291]]
+===== Unspecified Method Permissions
 
 It is possible that some methods are not
 assigned to any security roles nor annotated as _DenyAll_ or contained
@@ -1177,7 +1183,8 @@ assigning them to security roles, or by marking them as unchecked. If
 the Deployer does not assigned method permissions to the unspecified
 methods, those methods must be treated by the container as _unchecked_ .
 
-=== [[a5293]]Linking Security Role References to Security Roles
+[[a5293]]
+==== Linking Security Role References to Security Roles
 
 The application's references to security
 roles are linked to the security roles defined for the application. In
@@ -1257,7 +1264,8 @@ security role named payroll-department.
 
  ...
 
-=== [[a5322]]Specification of Security Identities in the Deployment Descriptor
+[[a5322]]
+==== Specification of Security Identities in the Deployment Descriptor
 
 The Bean Provider or Application Assembler
 typically specifies whether the caller’s
@@ -1285,7 +1293,8 @@ If a run-as security identity is not
 specified by the Deployer, the container should use the caller’s
 security identity for the execution of the bean’s methods.
 
-=== [[a5329]]Run-as
+[[a5329]]
+===== Run-as
 
 The Bean Provider can use the _RunAs_
 metadata annotation or the Bean Provider or Application Assembler can
@@ -1380,7 +1389,8 @@ specified as follows.
 
  ...
 
-=== [[a5364]]Deployer’s Responsibilities
+[[a5364]]
+=== Deployer’s Responsibilities
 
 
 
@@ -1404,7 +1414,7 @@ the EJB container.
 The following subsections describe the
 security related tasks performed by the Deployer.
 
-=== Security Domain and Principal Realm Assignment
+==== Security Domain and Principal Realm Assignment
 
 The Deployer is
 responsible for assigning the security domain and principal realm to an
@@ -1415,7 +1425,8 @@ security domain may exist, for example, to separate the realms of
 employees, trading partners, and customers. Multiple security domains
 may exist, for example, in application hosting scenarios.
 
-=== [[a5371]]Assignment of Security Roles
+[[a5371]]
+==== Assignment of Security Roles
 
 The Deployer assigns principals and/or groups
 of principals (such as individual users or user groups) used for
@@ -1454,7 +1465,7 @@ does not assign the logical security roles defined by the application to
 groups in the operational environment, it must be assumed that a logical
 role maps to a principal or principal group of the same name.
 
-=== Principal Delegation
+==== Principal Delegation
 
 The Deployer is
 responsible for configuring the principal delegation for inter-component
@@ -1479,13 +1490,13 @@ that the enterprise bean makes to other beans, and that the run-as
 principal is propagated along the call-chain of those other beans (in
 the absence of the specification of any further run-as elements).
 
-=== Security Management of Resource Access
+==== Security Management of Resource Access
 
 The Deployer’s responsibilities with respect
 to securing resource managers access are defined in subsection
 link:Ejb.html#a4312[See Deployer’s Responsibility].
 
-=== General Notes on Deployment Descriptor Processing
+==== General Notes on Deployment Descriptor Processing
 
 The Deployer can
 use the security view defined in the deployment descriptor by the Bean
@@ -1541,7 +1552,7 @@ security context.
 This section describes the responsibilities
 of the EJB Container Provider and Server Provider.
 
-=== Deployment Tools
+==== Deployment Tools
 
 The EJB Container Provider is responsible for
 providing the deployment tools that the Deployer can use to perform the
@@ -1560,7 +1571,7 @@ The deployment tools’ output is stored in an
 EJB container-specific manner, and is available at runtime to the EJB
 container.
 
-=== Security Domain(s)
+==== Security Domain(s)
 
 The EJB container
 provides a security domain and one or more principal realms to the
@@ -1588,7 +1599,7 @@ Each hosted application can have its own security domain to ensure
 security and management isolation between applications owned by multiple
 organizations.
 
-=== Security Mechanisms
+==== Security Mechanisms
 
 The EJB Container
 Provider must provide the security mechanisms necessary to enforce the
@@ -1607,7 +1618,7 @@ resource manager access.
 Secure communication with remote clients
 (privacy, integrity, etc.).
 
-=== Passing Principals on EJB Calls
+==== Passing Principals on EJB Calls
 
 The EJB Container Provider is responsible for
 providing the deployment tools that allow the Deployer to configure the
@@ -1633,7 +1644,7 @@ view, and/or web service endpoint methods of a session or an
 entitylink:#a10329[109] bean, or for the message listener methods
 of a message-driven bean.
 
-=== Security Methods in javax.ejb.EJBContext
+==== Security Methods in javax.ejb.EJBContext
 
 The EJB container
 must provide access to the caller’s security context information from
@@ -1655,14 +1666,14 @@ caller has not been established, the container returns the container’s
 representation of the unauthenticated identity. The container must never
 return a null from the getCallerPrincipal method.
 
-=== Secure Access to Resource Managers
+==== Secure Access to Resource Managers
 
 The EJB Container Provider is responsible for
 providing secure access to resource managers
 as described in Subsection link:Ejb.html#a4322[See Container
 Provider Responsibility].
 
-=== Principal Mapping
+==== Principal Mapping
 
 If the application requires that its clients
 are deployed in a different security domain, or if multiple applications
@@ -1671,7 +1682,8 @@ Container Provider is responsible for the mechanism and tools that allow
 mapping of principals. The tools are used by the System Administrator to
 configure the security for the application’s environment.
 
-=== [[a5425]]System Principal
+[[a5425]]
+==== System Principal
 
 The EJB specification does not define the
 “system” principal under which the JVM
@@ -1687,7 +1699,7 @@ the same as the application-level principal. Others may use different
 principals, potentially from different principal realms and even
 security domains.
 
-=== Runtime Security Enforcement
+==== Runtime Security Enforcement
 
 The EJB container
 is responsible for enforcing the security policies defined by the
@@ -1752,7 +1764,8 @@ bean to be deployed independently multiple times, each time with a
 different security policylink:#a10331[111]. The container must
 allow multiple-deployed enterprise beans to co-exist at runtime.
 
-=== [[a5442]]Audit Trail
+[[a5442]]
+==== Audit Trail
 
 The EJB container
 may provide a security audit trail mechanism. A security audit trail
@@ -1770,7 +1783,7 @@ responsibilities of the System Administrator. Note that some
 responsibilities may be carried out by the Deployer instead, or may
 require cooperation of the Deployer and the System Administrator.
 
-=== Security Domain Administration
+==== Security Domain Administration
 
 The System Administrator is responsible for
 the administration of principals. Security
@@ -1781,7 +1794,7 @@ responsible for creating a new user account, adding a user to a user
 group, removing a user from a user group, and removing or freezing a
 user account.
 
-=== Principal Mapping
+==== Principal Mapping
 
 If the client is in a different security
 domain than the target enterprise bean, the System Administrator is
@@ -1792,7 +1805,7 @@ available to the Deployer.
 The specification of principal mapping
 techniques is beyond the scope of the EJB architecture.
 
-=== Audit Trail Review
+==== Audit Trail Review
 
 If the EJB container provides an
 audit trail facility, the System

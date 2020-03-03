@@ -82,7 +82,7 @@ Application Assembler.
 The following sections define the six EJB
 roleslink:#a10218[1].
 
-=== Enterprise Bean Provider
+==== Enterprise Bean Provider
 
 The Enterprise
 Bean Provider (Bean Provider for short) is the producer of enterprise
@@ -115,7 +115,7 @@ the EJB container for these services.
 A Bean Provider of multiple enterprise beans
 often performs the EJB role of the Application Assembler.
 
-=== Application Assembler
+==== Application Assembler
 
 The Application
 Assembler combines enterprise beans into larger deployable application
@@ -158,7 +158,7 @@ Although the Assembler must be familiar with the functionality provided
 by the enterprise beans’ client-view, he or she does not need to have
 any knowledge of the enterprise beans’ implementation.
 
-=== Deployer
+==== Deployer
 
 The Deployer
 takes one or more ejb-jar files and/or .war file produced by a Bean
@@ -207,7 +207,7 @@ deployment. Such a Deployer would typically use the Container Provider’s
 tools to write relatively simple application code that wraps the
 enterprise beans’ business methods.
 
-=== EJB Server Provider
+==== EJB Server Provider
 
 The EJB Server
 Provider is a specialist in the area of distributed transaction
@@ -219,7 +219,7 @@ EJB Server Provider and the EJB Container Provider roles are the same
 vendor. Therefore, it does not define any interface requirements for the
 EJB Server Provider.
 
-=== EJB Container Provider
+==== EJB Container Provider
 
 The EJB Container
 Provider (Container Provider for short) provides:
@@ -264,7 +264,7 @@ The Container Provider typically provides
 tools that allow the System Administrator to monitor and manage the
 container and the beans running in the container at runtime.
 
-=== System Administrator
+==== System Administrator
 
 The System
 Administrator is responsible for the configuration and administration of
@@ -280,7 +280,7 @@ beans applications at runtime.
 Enterprise JavaBeans is an architecture for
 component-based transaction-oriented enterprise applications.
 
-=== Characteristics of Enterprise Beans
+==== Characteristics of Enterprise Beans
 
 The essential
 characteristics of an enterprise bean are:
@@ -323,7 +323,7 @@ bean is deployed. This ensures that both the beans and their clients can
 be deployed in multiple execution environments without changes or
 recompilation.
 
-=== Flexible Model
+==== Flexible Model
 
 The enterprise bean architecture is flexible
 enough to implement the following:
@@ -378,7 +378,7 @@ specification and is described in the EJB Optional Features document
 link:Ejb.html#a9890[See EJB 3.2 Optional Features
 http://jcp.org/en/jsr/detail?id=345.].
 
-=== Session Objects
+==== Session Objects
 
 A typical session
 object has the following characteristics:
@@ -409,7 +409,7 @@ stateless, and singleton session beans. There are differences in the API
 between stateful session beans, stateless session beans, and singleton
 session beans.
 
-=== Message-Driven Objects
+==== Message-Driven Objects
 
 A typical
 message-driven object has the following
@@ -440,7 +440,7 @@ A typical EJB container provides a scalable
 runtime environment to execute a large number of message-driven objects
 concurrently.
 
-=== Entity Objects (Optional)
+==== Entity Objects (Optional)
 
 A typical entity
 object has the following characteristics:
@@ -476,7 +476,8 @@ Chapter link:Ejb.html#a3308[See
 Support for Distributed Interoperability] summarizes the requirements
 for support for distribution and interoperability.
 
-=== [[a179]]Mapping to Web Service Protocols
+[[a179]]
+=== Mapping to Web Service Protocols
 
 
 
@@ -500,7 +501,8 @@ EJB Optional Features document link:Ejb.html#a9890[See EJB 3.2
 Optional Features http://jcp.org/en/jsr/detail?id=345.] for the complete
 description.
 
-=== [[a182]]Pruning the EJB API
+[[a182]]
+=== Pruning the EJB API
 
 
 
@@ -559,7 +561,8 @@ A session bean component is a Managed Bean.
 The EJB component model extends the basic _Managed Bean_ model in many
 areas (component definition, naming, lifecycle, threading, etc.)
 
-=== [[a195]]Relationship to Contexts and Dependency Injection (CDI) Specification
+[[a195]]
+=== Relationship to Contexts and Dependency Injection (CDI) Specification
 
 
 

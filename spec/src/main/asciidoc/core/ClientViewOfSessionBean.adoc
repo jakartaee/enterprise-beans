@@ -10,7 +10,8 @@ While classes implemented by the container
 provide the client view of the session bean, the container itself is
 transparent to the client.
 
-=== [[a207]]Overview
+[[a207]]
+=== Overview
 
 
 
@@ -93,7 +94,8 @@ account in determining the client view to be used for a session bean are
 further described in link:Ejb.html#a224[See Local, Remote, and
 Web Service Client Views].
 
-=== [[a224]]Local, Remote, and Web Service Client Views
+[[a224]]
+=== Local, Remote, and Web Service Client Views
 
 
 
@@ -137,7 +139,8 @@ execution. It may be a method exposed by the local or remote business
 interface, by the no-interface view, by the local component interface,
 by the remote component interface, or by the web service client view.
 
-=== [[a235]]Remote Clients
+[[a235]]
+==== Remote Clients
 
 The remote client
 view of an enterprise bean is location independent. A client running in
@@ -162,7 +165,8 @@ interfaces remain available for use with EJB 3.x beans, and are
 described in Section link:Ejb.html#a422[See Remote and Local
 Client View of Session Beans Written to the EJB 2.1 Client View API].
 
-=== [[a242]]Local Clients
+[[a242]]
+==== Local Clients
 
 Session beans may have local clients. A
 local client is a client that is collocated
@@ -222,7 +226,7 @@ interfaces remain available for use with EJB 3.x beans, and are
 described in Section link:Ejb.html#a422[See Remote and Local
 Client View of Session Beans Written to the EJB 2.1 Client View API].
 
-=== Choosing Between a Local or Remote Client View
+==== Choosing Between a Local or Remote Client View
 
 The following considerations should be taken
 into account in determining whether a local or
@@ -304,7 +308,8 @@ While it is possible to provide both a remote
 client view and a local client view for an enterprise bean, more
 typically only one or the other will be provided.
 
-=== [[a271]]Web Service Clients
+[[a271]]
+==== Web Service Clients
 
 Stateless session beans and singleton session
 beans may have web service clients.
@@ -384,7 +389,8 @@ responsible for making the business interfaces and/or home interfaces of
 its deployed enterprise beans available to the client through dependency
 injection and/or through lookup in the JNDI namespace.
 
-=== [[a283]]Client View of Session Beans Written to the EJB 3.x Simplified API
+[[a283]]
+=== Client View of Session Beans Written to the EJB 3.x Simplified API
 
 
 
@@ -399,7 +405,7 @@ or EJBLocalObject interface). A local client may also access a session
 bean through a no-interface view that exposes all non-static public
 methods of the bean class.
 
-=== Obtaining a Session Bean’s Business Interface
+==== Obtaining a Session Bean’s Business Interface
 
 A client can
 obtain a session bean’s business interface through dependency injection
@@ -430,7 +436,7 @@ the actual location of a referenced enterprise bean and EJB container
 are, in general, transparent to the client using the remote business
 interface of the bean.
 
-=== Obtaining a Reference to the No-interface View
+==== Obtaining a Reference to the No-interface View
 
 A client can obtain a reference to a session
 bean’s no-interface view through dependency injection or lookup in the
@@ -460,7 +466,8 @@ Despite the fact that the client reference
 for the no-interface view has the type of the bean class, the client
 never directly uses the _new_ operator to acquire the reference.
 
-=== [[a304]]Session Bean’s Business Interface
+[[a304]]
+==== Session Bean’s Business Interface
 
 The session bean’s business interface is an
 ordinary Java interface. It contains the business methods of the session
@@ -500,7 +507,8 @@ injection and through lookup in the JNDI namespace. Section
 link:Ejb.html#a3912[See EJB References] describes in further
 detail how clients can obtain references to EJB business interfaces.
 
-=== [[a312]]Session Bean’s No-Interface View
+[[a312]]
+==== Session Bean’s No-Interface View
 
 A session bean’s no-interface view is a
 variation of the local view that exposes the non-static public methods
@@ -551,7 +559,7 @@ successfully initialize, attempted invocations on the singleton session
 bean’s no-interface view reference result in the
 javax.ejb.NoSuchEJBException.
 
-=== Client View of Session Object’s Life Cycle
+==== Client View of Session Object’s Life Cycle
 
 From the point of view of the client, a
 session object exists once the client has obtained a reference to its
@@ -581,7 +589,7 @@ The contracts for session bean lifecycle are
 described in link:Ejb.html#a608[See Session Bean Component
 Contract].
 
-=== Example of Obtaining and Using a Session Object
+==== Example of Obtaining and Using a Session Object
 
 An example of the session bean runtime
 objects is illustrated by the following diagram:
@@ -628,14 +636,14 @@ cart.purchase();
 cart.finishShopping();
 
 
-
-=== [[a342]]Session Object Identity
+[[a342]]
+==== Session Object Identity
 
 A client can test two EJB 3.x remote or local
 view references for identity by means of the _Object.equals_ and
 _Object.hashCode_ methods.
 
-=== Stateful Session Beans
+===== Stateful Session Beans
 
 A stateful session object has a unique
 identity that is assigned by the container at the time the object is
@@ -675,7 +683,7 @@ different interface types or between an interface type and a
 no-interface view or to different stateful session bean instances will
 not have the same identity.
 
-=== Stateless Session Beans
+===== Stateless Session Beans
 
 All business object references of the same
 interface type for the same stateless session bean have the same object
@@ -715,7 +723,7 @@ stateless session bean. Stateless session bean references to either
 different business interface types or between an interface type and a
 no-interface view or to different session beans will not be equal.
 
-=== Singleton Session Beans
+===== Singleton Session Beans
 
 
 
@@ -757,7 +765,8 @@ singleton session bean. Session bean references to either different
 business interface types or between an interface type and a no-interface
 view or to different session beans will not be equal.
 
-=== [[a387]]Asynchronous Invocations
+[[a387]]
+==== Asynchronous Invocations
 
 By default, session bean invocations through
 the remote, local, and no-interface views are synchronous. The client
@@ -785,7 +794,7 @@ method execution (e.g. an authorization failure, transaction commit
 failure, application exception, etc.) will be available via the
 _Future<V>_ object.
 
-=== Return Values
+===== Return Values
 
 Asynchronous methods have a return type of
 void or Future<V>, where V represents the result value of the
@@ -803,7 +812,7 @@ link:Ejb.html#a9883[See Java™ Platform, Standard Edition, v7 API
 Specification (Java SE).
 http://docs.oracle.com/javase/7/docs/api/index.html.].
 
-=== Future.cancel(boolean mayInterruptIfRunning)
+====== Future.cancel(boolean mayInterruptIfRunning)
 
 If a client calls cancel on its Future
 object, the container will attempt to cancel the associated asynchronous
@@ -833,7 +842,7 @@ SessionContext, it is the responsibility of the Bean Provider to decide
 how to convey that information to the client. Typically, that is done
 through a special return value or exception delivered via Future.get().
 
-=== Future.get
+====== Future.get
 
 The client calls one of the two Future.get
 methods in order to retrieve the result value or resulting exception
@@ -850,7 +859,7 @@ container maintains result values for completed asynchronous
 invocations. The configuration of such a timeout is beyond the scope of
 this specification.
 
-=== Concurrent Access to Session Bean References
+==== Concurrent Access to Session Bean References
 
 It is permissible to acquire a session bean
 reference and attempt to invoke the same reference object concurrently
@@ -860,7 +869,8 @@ link:Ejb.html#a778[See Serializing Session Bean Methods] and
 link:Ejb.html#a1257[See Singleton Session Bean Concurrency] for
 details of the concurrency behavior for session beans.
 
-=== [[a405]]The Web Service Client View of a Stateless or Singleton Session Bean
+[[a405]]
+=== The Web Service Client View of a Stateless or Singleton Session Bean
 
 
 
@@ -891,7 +901,7 @@ image:EBCore-7.png[image]
 
 
 
-=== JAX-WS Web Service Clients
+==== JAX-WS Web Service Clients
 
 The Java EE web service client obtains a
 reference to the service instance of the _javax.xml.ws.Service_ class
@@ -932,7 +942,8 @@ _WebServiceRef_ annotation are described in further detail in
 link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
 version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.].
 
-=== [[a422]]Remote and Local Client View of Session Beans Written to the EJB 2.1 Client View API
+[[a422]]
+=== Remote and Local Client View of Session Beans Written to the EJB 2.1 Client View API
 
 
 
@@ -943,7 +954,7 @@ client interfaces is required to be provided by implementations of this
 specification. The EJB 2.1 remote and local client views are not
 supported for singleton session beans.
 
-=== Locating a Session Bean’s Home Interface
+==== Locating a Session Bean’s Home Interface
 
 The EJB 2.1 and earlier specifications
 required that the client first obtain a reference to a session bean’s
@@ -1011,7 +1022,7 @@ initialContext.lookup("java:comp/env/ejb/cart");
 
 
 
-=== Session Bean’s Remote Home Interface
+==== Session Bean’s Remote Home Interface
 
 This section is
 specific to session beans that provide a remote client view using the
@@ -1062,7 +1073,7 @@ reference to another application. The receiving application can use the
 home interface in the same way that it would use a remote home object
 reference obtained via JNDI.
 
-=== Creating a Session Object
+===== Creating a Session Object
 
 A home interface
 defines one or more create<METHOD> methods, one for each way to create a
@@ -1103,7 +1114,7 @@ the CartHome interface:
 
 cartHome.create("John", "7506");
 
-=== Removing a Session Object
+===== Removing a Session Object
 
 A remote client
 may remove a session object using the remove() method of the
@@ -1115,7 +1126,7 @@ keys that are accessible to clients, invoking the +
 javax.ejb.EJBHome.remove(Object primaryKey) method on a session results
 in a javax.ejb.RemoveException.
 
-=== Session Bean’s Local Home Interface
+==== Session Bean’s Local Home Interface
 
 This section is
 specific to session beans that provide a local client view using the
@@ -1148,7 +1159,7 @@ A local home object reference cannot be passed as an argument or result
 of a method on an enterprise bean’s remote home or remote component
 interface.
 
-=== Creating a Session Object
+===== Creating a Session Object
 
 A local home
 interface defines one or more create<METHOD> methods, one for each way
@@ -1185,7 +1196,7 @@ the CartHome interface:
 
 cartHome.create("John", "7506");
 
-=== Removing a Session Object
+===== Removing a Session Object
 
 A local client
 may remove a session object using the remove() method of the
@@ -1196,7 +1207,7 @@ keys that are accessible to clients, invoking the +
 javax.ejb.EJBLocalHome.remove(Object primaryKey) method on a session
 results in a javax.ejb.RemoveException.
 
-=== EJBObject and EJBLocalObject
+==== EJBObject and EJBLocalObject
 
 A remote or local client that uses the EJB
 2.1 client view APIs uses the session bean’s component interface to
@@ -1249,7 +1260,8 @@ the javax.ejb.EJBObject and _javax.ejb.EJBLocalObject_ interfaces is
 provided by the container. They are not delegated to the instances of
 the session bean class.
 
-=== [[a519]]Client view of Session Object’s Life Cycle
+[[a519]]
+==== Client view of Session Object’s Life Cycle
 
 From the point of view of a local or remote
 client using the EJB 2.1 and earlier client view API, the life cycle of
@@ -1267,7 +1279,7 @@ A session object does not exist until it is
 created. When a client creates a session object, the client has a
 reference to the newly created session object’s component interface.
 
-=== References to Session Object Remote Component Interfaces
+===== References to Session Object Remote Component Interfaces
 
 A client that has a reference to a session
 object’s remote component interface can then do any of the following:
@@ -1292,7 +1304,7 @@ object that does not exist. Attempted remote invocations on a stateful
 session object that does not exist result in a
 java.rmi.NoSuchObjectException.link:#a10225[7]
 
-=== References to Session Object Local Component Interfaces
+===== References to Session Object Local Component Interfaces
 
 A client that has
 a reference to a session object’s local component interface can then do
@@ -1323,7 +1335,7 @@ A local object reference or local home object reference cannot be passed
 as an argument or result of a method on an enterprise bean’s remote home
 or remote component interface.
 
-=== Creating and Using a Session Object
+==== Creating and Using a Session Object
 
 An example of the session bean runtime
 objects is illustrated by the following diagram:
@@ -1393,7 +1405,8 @@ cart.purchase();
 
 cart.remove();
 
-=== [[a564]]Object Identity
+[[a564]]
+==== Object Identity
 
 Session objects
 are intended to be private resources used only by the client that
@@ -1426,7 +1439,7 @@ performs the usual access checks based on the caller’s principal.
 
 
 
-=== Stateful Session Beans
+===== Stateful Session Beans
 
 A stateful session object has a unique
 identity that is assigned by the container at create time.
@@ -1466,7 +1479,7 @@ must return false
 
 }
 
-=== Stateless Session Beans
+===== Stateless Session Beans
 
 All
 session objects of the same stateless session bean within the same home
@@ -1509,7 +1522,7 @@ returns true
 
 }
 
-=== getPrimaryKey()
+===== getPrimaryKey()
 
 The object
 identifier of a session object is, in general, opaque to the client. The
@@ -1517,7 +1530,7 @@ result of _getPrimaryKey()_ on a session EJBObject reference results in
 _java.rmi.RemoteException_ . The result of _getPrimaryKey()_ on a
 session EJBLocalObject reference results in _javax.ejb.EJBException_ .
 
-=== Type Narrowing
+==== Type Narrowing
 
 {empty}A client
 program that is intended to be interoperable with all compliant EJB

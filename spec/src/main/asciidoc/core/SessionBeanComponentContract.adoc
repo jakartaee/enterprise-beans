@@ -128,7 +128,8 @@ A stateless session bean is never passivated.
 
 A singleton session bean is never passivated.
 
-=== [[a639]]Instance Passivation and Conversational State
+[[a639]]
+==== Instance Passivation and Conversational State
 
 The Bean Provider
 is required to ensure that the _PrePassivate_ method leaves the instance
@@ -275,7 +276,7 @@ to reset the value of _transient_ fields during
 activationlink:#a10234[15]. Declaring the session bean’s fields
 as transient is, in general, discouraged.
 
-=== The Effect of Transaction Rollback on Conversational State
+==== The Effect of Transaction Rollback on Conversational State
 
 A session
 object’s conversational state is not transactional. It is not
@@ -297,7 +298,7 @@ demands on the session bean instances. The container makes calls on a
 bean instance to provide it with access to container services and to
 deliver notifications issued by the container.
 
-=== Required Session Bean Metadata
+==== Required Session Bean Metadata
 
 A session bean must be annotated or denoted
 in the deployment descriptor as a stateless, stateful, or singleton
@@ -311,7 +312,7 @@ singleton session bean. The _Stateful_ , _Singleton_ , and _Stateless_
 annotations are component-defining annotations and are applied to the
 bean class.
 
-=== Dependency Injection
+==== Dependency Injection
 
 A session bean may use dependency injection
 mechanisms to acquire references to resources or other objects in its
@@ -332,7 +333,8 @@ the _Resource_ annotation (or _resource-env-ref_ deployment descriptor
 element) is used to denote the bean’s dependency on the _SessionContext_
 . See link:Ejb.html#a3613[See Enterprise Bean Environment].
 
-=== [[a682]]The SessionContext Interface
+[[a682]]
+==== The SessionContext Interface
 
 If the bean
 specifies a dependency on the _SessionContext_ interface (or if the bean
@@ -423,7 +425,7 @@ business method, lifecycle callback method, or timeout method to
 retrieve or update the interceptor and/or webservices context data
 associated with its invocation.
 
-=== Use of the MessageContext Interface by Session Beans
+===== Use of the MessageContext Interface by Session Beans
 
 A session bean that implements a web service
 endpoint using the JAX-WS contracts should use the JAX-WS
@@ -442,7 +444,8 @@ version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.]) is also
 accessible to interceptors for session bean web service endpoints. See
 Section link:Ejb.html#a2029[See InvocationContext].
 
-=== [[a705]]Session Bean Lifecycle Callback Interceptor Methods
+[[a705]]
+==== Session Bean Lifecycle Callback Interceptor Methods
 
 The following lifecycle event callbacks are
 supported for session beans. With the exception of AroundConstruct
@@ -523,7 +526,8 @@ The _PrePassivate_ and _PostActivate_
 lifecycle callback interceptor methods execute in a transaction context
 determined by the lifecycle callback method's transaction attribute.
 
-=== [[a722]]The SessionBean Interface
+[[a722]]
+==== The SessionBean Interface
 
 The session bean class is not required to
 implement the _SessionBean_ interface or the _Serializable_ interface.
@@ -587,7 +591,8 @@ _PrePassivate_ annotation can only be applied to the _ejbPassivate_
 method. Similar requirements apply to use of deployment descriptor
 metadata as an alternative to the use of annotations.
 
-=== [[a736]]The Session Synchronization Notifications for Stateful Session Beans
+[[a736]]
+==== The Session Synchronization Notifications for Stateful Session Beans
 
 A stateful
 session bean class can optionally implement the javax.ejb.
@@ -660,7 +665,7 @@ backs because the bean is in control of the commit—the bean knows when
 the transaction is about to be committed and it knows the outcome of the
 transaction commit.
 
-=== Timeout Callbacks for Stateless and Singleton Session Beans
+==== Timeout Callbacks for Stateless and Singleton Session Beans
 
 A stateless session bean or singleton session
 bean can be registered with the EJB Timer Service for time-based event
@@ -670,7 +675,7 @@ link:Ejb.html#a5456[See Timer Service]. Stateful session beans
 cannot be registered with the EJB Timer Service, and therefore should
 not implement timeout callback methods.
 
-=== Business Method Delegation
+==== Business Method Delegation
 
 The session bean’s business interface,
 no-interface view, component interface, or web service endpoint defines
@@ -686,7 +691,8 @@ class. The class that handles requests to the web service endpoint
 invokes the session bean method that matches the web service method
 corresponding to the SOAP request.
 
-=== [[a756]]Session Bean Creation
+[[a756]]
+==== Session Bean Creation
 
 Except as noted below, the container creates
 an instance of a session bean as follows. First, the container calls the
@@ -707,7 +713,8 @@ interceptors_ defined in the Interceptors specification
 link:Ejb.html#a9887[See Interceptors, version 1.2.
 http://jcp.org/en/jsr/detail?id=318.].
 
-=== [[a759]]Stateful Session Beans
+[[a759]]
+===== Stateful Session Beans
 
 If the bean is a stateful session bean and
 the client has used one of the create<METHOD> methods defined in the
@@ -731,7 +738,8 @@ represents a specific, private conversation between the bean and its
 client, its initialization parameters typically contain the information
 the client uses to customize the bean instance for its use.
 
-=== [[a762]]Stateless Session Beans
+[[a762]]
+===== Stateless Session Beans
 
 A stateless session bean that has an EJB 2.1
 local or remote client view has a single _create_ method on its home
@@ -762,7 +770,8 @@ the instance’s _PostConstruct_ method, and is invoked when the container
 needs to create a new session bean instance in order to service a client
 request.
 
-=== [[a767]]Stateful Session Bean Removal
+[[a767]]
+==== Stateful Session Bean Removal
 
 A stateful session bean written to the EJB
 3.x API typically has one or more remove methods designated by means of
@@ -779,7 +788,7 @@ annotation. The default value of the _retainIfException_ element is
 _false_ . If there are multiple remove methods, their
 _retainIfException_ values can differ.
 
-=== Stateful Session Bean Timeout
+==== Stateful Session Bean Timeout
 
 A Bean Provider or Deployer may optionally
 assign a timeout value to a stateful session bean. The stateful session
@@ -808,7 +817,7 @@ while it is processing a business method or callback. The full stateful
 session bean life cycle is covered in link:Ejb.html#a921[See
 Stateful Session Beans].
 
-=== Business Method Interceptor Methods for Session Beans
+==== Business Method Interceptor Methods for Session Beans
 
 The _AroundInvoke_ interceptor methods are
 supported for session beans. These interceptor methods may be defined on
@@ -826,7 +835,8 @@ invocations have finished.
 Interceptors are described in
 link:Ejb.html#a2004[See Interceptors].
 
-=== [[a778]]Serializing Session Bean Methods
+[[a778]]
+==== Serializing Session Bean Methods
 
 The following requirements apply to stateless
 and stateful session beans. See section link:Ejb.html#a1257[See
@@ -877,7 +887,7 @@ concurrent client access to stateless session beans because the
 container routes each request to a different instance of the stateless
 session bean class.
 
-=== Stateful Session Bean Concurrent Access Timeouts
+===== Stateful Session Bean Concurrent Access Timeouts
 
 The AccessTimeout annotation is used to
 specify the amount of time a stateful session bean request should block
@@ -896,7 +906,7 @@ the method-level annotation takes precedence.
 An AccessTimeout value of -1 indicates that a
 concurrent client request will block indefinitely until it can proceed.
 
-=== Transaction Context of Session Bean Methods
+==== Transaction Context of Session Bean Methods
 
 The following
 session bean methods are invoked in the scope of a transaction
@@ -941,7 +951,8 @@ transaction is rolled back, the instance is discarded. See section
 link:Ejb.html#a1041[See Dealing with Exceptions] for rules on
 dealing with exceptions in stateful session beans.
 
-=== [[a800]]Access in the Global JNDI Namespace
+[[a800]]
+=== Access in the Global JNDI Namespace
 
 
 
@@ -953,7 +964,7 @@ to components and resources. This specification defines the JNDI names
 by which session beans are required to be registered within these
 namespaces.
 
-=== Syntax
+==== Syntax
 
 Each portable session bean global JNDI name
 has the following syntax:
@@ -998,7 +1009,7 @@ java:global[/<app-name>]/<module-name>/<bean-name>
 session bean JNDI names available through the java:app and java:module
 namespaces. link:#a10239[20]
 
-=== java:app
+===== java:app
 
 The java:app prefix allows a component
 executing within a Java EE application to access an application-specific
@@ -1010,7 +1021,8 @@ Note that <module-name> is a required part of
 the syntax, even for names based on session bean components packaged
 within a stand-alone module.
 
-=== [[a816]]java:module
+[[a816]]
+===== java:module
 
 The _java:_ module prefix allows a component
 executing within a Java EE application to access a module-specific
@@ -1018,12 +1030,12 @@ namespace. The resulting syntax is:
 
 {empty}java:module/<bean-name>[!<fully-qualified-interface-name>]
 
-=== Examples
+==== Examples
 
 The following examples show the resulting
 global JNDI names for various session beans.
 
-=== Session bean exposing a single local business interface
+===== Session bean exposing a single local business interface
 
 
 
@@ -1125,7 +1137,7 @@ java:module/FooBean!com.acme.Foo
 
 
 
-=== Session bean exposing multiple client views
+===== Session bean exposing multiple client views
 
 
 
@@ -1180,7 +1192,7 @@ Asynchronous methods can return a Future<V>
 object that allows the client to retrieve a result value, check for
 exceptions, or attempt to cancel an in-progress invocation.
 
-=== Metadata
+==== Metadata
 
 The Asynchronous annotation is used to
 designate which business methods are asynchronous.
@@ -1201,7 +1213,7 @@ local component, remote component, and web service client views is not
 required by this specification, and applications which expose such views
 with asynchronous methods will not be portable.
 
-=== Method Requirements
+==== Method Requirements
 
 The valid return type of an asynchronous
 method is either void or java.util.concurrent.Future<V>, where V is the
@@ -1211,7 +1223,7 @@ An asynchronous method with return type void
 must not declare any application exceptions. An asynchronous method with
 return type Future<V> is permitted to declare application exceptions.
 
-=== Return Values
+===== Return Values
 
 The Bean Provider makes the result value of
 an asynchronous invocation available to the client by returning a
@@ -1248,7 +1260,7 @@ not given directly to the caller, since by definition the caller already
 has a container-generated Future<V> object that was returned from the
 original invocation.
 
-=== Method cancellation
+===== Method cancellation
 
 A client can request that an asynchronous
 invocation be cancelled by calling the Future<V>.cancel(boolean
@@ -1258,7 +1270,7 @@ SessionContext.wasCancelCalled() method within the context of the
 asynchronous method. See link:Ejb.html#a387[See Asynchronous
 Invocations] for the description of the client Future contract.
 
-=== Transactions
+==== Transactions
 
 The client’s transaction context does not
 propagate with an asynchronous method invocation. From the Bean
@@ -1267,14 +1279,14 @@ in from the client. This means, for example, that the semantics of the
 REQUIRED transaction attribute on an asynchronous method are exactly the
 same as REQUIRES_NEW.
 
-=== Security
+==== Security
 
 The caller security principal propagates with
 an asynchronous method invocation. Caller security principal propagation
 behaves exactly the same for asynchronous method invocations as it does
 for synchronous session bean invocations.
 
-=== Client Exception Behavior
+==== Client Exception Behavior
 
 Client exception behavior depends on whether
 the asynchronous method has return type void or Future<V>.
@@ -1291,11 +1303,12 @@ method invocation is accessible to the client via the getCause() method
 of a java.util.concurrent.ExecutionException thrown from either
 Future.get() method.
 
-=== [[a921]]Stateful Session Beans
+[[a921]]
+=== Stateful Session Beans
 
 
 
-=== Stateful Session Bean Lifecycle State Diagram
+==== Stateful Session Bean Lifecycle State Diagram
 
 The following figure illustrates the life
 cycle of a stateful session bean instance.
@@ -1463,7 +1476,8 @@ implements, directly or indirectly, the SessionSynchronization
 interface, or if the bean class uses the session synchronization
 annotations.
 
-=== [[a947]]Operations Allowed in the Methods of a Stateful Session Bean Class
+[[a947]]
+==== Operations Allowed in the Methods of a Stateful Session Bean Class
 
 Table link:Ejb.html#a953[See
 Operations Allowed in the Methods of a Stateful Session Bean] defines
@@ -1753,7 +1767,8 @@ Invoking the _wasCancelCalled_ method is
 disallowed except when inside the context of the asynchronous methods
 that declare Future<V> object as the returning type.
 
-=== [[a1041]]Dealing with Exceptions
+[[a1041]]
+==== Dealing with Exceptions
 
 A
 RuntimeException that is not an application
@@ -1776,7 +1791,7 @@ client view is used, the container will throw the
 java.rmi.NoSuchObjectException if the client is a remote client, or the
 _javax.ejb.NoSuchObjectLocalException_ if the client is a local client.
 
-=== Missed PreDestroy Calls
+==== Missed `PreDestroy` Calls
 
 The Bean Provider
 cannot assume that the container will always invoke the PreDestroy
@@ -1810,7 +1825,8 @@ cart content in a database, the application should provide a program
 that runs periodically and removes “abandoned” shopping carts from the
 database.
 
-=== [[a1053]]Disabling Passivation of Stateful Session Beans
+[[a1053]]
+==== Disabling Passivation of Stateful Session Beans
 
 By default, the container may passivate a
 stateful session bean instance to a secondary storage to save resources.
@@ -1837,7 +1853,7 @@ container implementation supports failover of stateful session beans
 using bean passivation, the failover capability for not passivation
 capable stateful session beans is not defined.
 
-=== Transaction Semantics of Initialization, Destruction, Activation and Passivation
+==== Transaction Semantics of Initialization, Destruction, Activation and Passivation
 
 By default a stateful session bean’s
 _PostConstruct_ , _PreDestroy_ , _PrePassivate_ and _PostActivate_
@@ -1848,7 +1864,7 @@ demarcation is permitted to have transaction attribute REQUIRES_NEW or
 NOT_SUPPORTED (RequiresNew or NotSupported if the deployment descriptor
 is used to specify the transaction attribute).
 
-=== Restrictions for Transactions
+==== Restrictions for Transactions
 
 The state diagram
 implies the following restrictions on transaction scoping of the client
@@ -1880,7 +1896,8 @@ recover. Note that this restriction only applies to the remove method on
 the session object’s home or component interface, not to the invocation
 of Remove methods.
 
-=== [[a1065]]Stateless Session Beans
+[[a1065]]
+=== Stateless Session Beans
 
 
 
@@ -1947,7 +1964,8 @@ A stateless session bean must not implement
 the javax.ejb.SessionSynchronization interface or use the session
 synchronization annotations.
 
-=== [[a1077]]Stateless Session Bean Lifecycle State Diagram
+[[a1077]]
+==== Stateless Session Bean Lifecycle State Diagram
 
 When a client calls a method on a stateless
 session object or invokes a method on a stateless session bean through
@@ -1988,7 +2006,8 @@ instances in the method-ready pool), the container invokes the
 _PreDestroy_ lifecycle callback interceptor methods for it, if any. This
 ends the life of the stateless session bean instance.
 
-=== [[a1085]]Operations Allowed in the Methods of a Stateless Session Bean Class
+[[a1085]]
+==== Operations Allowed in the Methods of a Stateless Session Bean Class
 
 Table link:Ejb.html#a1091[See
 Operations Allowed in the Methods of a Stateless Session Bean] defines
@@ -2255,7 +2274,7 @@ Invoking the _wasCancelCalled_ method is
 disallowed except when inside the context of the asynchronous methods
 that declare Future<V> object as the returning type.
 
-=== Dealing with Exceptions
+==== Dealing with Exceptions
 
 A
 RuntimeException that is not an application exception thrown from any
@@ -2323,7 +2342,7 @@ container invokes the _PreDestroy_ lifecycle callback interceptor
 methods on the singleton session bean instance, if any. This ends the
 life of the singleton session bean instance.
 
-=== Singleton Session Bean Initialization
+==== Singleton Session Bean Initialization
 
 By default, the container is responsible for
 deciding when to initialize a singleton session bean instance. However,
@@ -2469,7 +2488,7 @@ Circular dependencies within the _DependsOn_
 metadata are not permitted. Circular dependencies are not required to be
 detected by the container but may result in a deployment error.
 
-=== Singleton Session Bean Destruction
+==== Singleton Session Bean Destruction
 
 Any singleton session bean instance that
 successfully completes initialization is removed by the container during
@@ -2481,7 +2500,7 @@ relationship are still available during the PreDestroy callback. After
 the _PreDestroy_ callback completes, the container ends the life of the
 singleton session bean instance.
 
-=== Transaction Semantics of Initialization and Destruction
+==== Transaction Semantics of Initialization and Destruction
 
 The _PostConstruct_ and _PreDestroy_ methods
 of singleton session beans with container-managed transaction
@@ -2506,7 +2525,8 @@ allowed so that specification of a transaction attribute for the
 _singleton session bean’s_ _PostConstruct_ _and_ _PreDestroy_ _methods_
 can be defaulted.
 
-=== [[a1254]]Singleton Session Bean Error Handling
+[[a1254]]
+==== Singleton Session Bean Error Handling
 
 Errors occurring during singleton session
 bean initialization are considered fatal and must result in the
@@ -2526,7 +2546,8 @@ component types, system exceptions thrown from business methods or
 callbacks of a singleton session bean do not result in the destruction
 of the singleton instance.
 
-=== [[a1257]]Singleton Session Bean Concurrency
+[[a1257]]
+==== Singleton Session Bean Concurrency
 
 From the client’s perspective, a singleton
 session bean always supports concurrent access. In general, the client
@@ -2589,7 +2610,7 @@ with caution. Special locking semantics apply to loopback calls on
 singleton session beans with container-managed concurrency as described
 below.
 
-=== Container-Managed Concurrency
+===== Container-Managed Concurrency
 
 With container-managed concurrency, the
 container is responsible for controlling concurrent access to the bean
@@ -2631,7 +2652,7 @@ locking policy decisions supported by a Container Provider and the
 configuration requirements for those policies are outside the scope of
 this specification.
 
-=== Reentrant Locking Behavior
+====== Reentrant Locking Behavior
 
 Special locking semantics apply to loopback
 calls on singleton session beans with container-managed concurrency.
@@ -2659,7 +2680,7 @@ If the target of the loopback call is a write
 method, the javax.ejb.IllegalLoopbackException must be thrown to the
 caller.
 
-=== Bean-Managed Concurrency
+===== Bean-Managed Concurrency
 
 With bean-managed concurrency, the container
 allows full concurrent access to the singleton session bean instance. It
@@ -2669,7 +2690,7 @@ Bean Provider is permitted to use the Java language level
 synchronization primitives such as synchronized and volatile for this
 purpose.
 
-=== Specification of a Concurrency Management Type
+===== Specification of a Concurrency Management Type
 
 By default, a singleton session bean has
 container-managed concurrency. The Bean Provider of a singleton session
@@ -2690,7 +2711,7 @@ it has been explicitly specified or defaulted by the Bean Provider. (See
 Chapter link:Ejb.html#a5804[See Deployment Descriptor] for
 information about the deployment descriptor.)
 
-=== Specification of the Container-Managed Concurrency Metadata for a Bean’s Methods
+===== Specification of the Container-Managed Concurrency Metadata for a Bean’s Methods
 
 The Bean Provider of a singleton session bean
 with container-managed concurrency may specify locking metadata for the
@@ -2827,7 +2848,7 @@ singleton session bean ABean are methods of business interface A, their
 concurrency locking attributes are Lock(WRITE), Lock(READ), and
 Lock(WRITE)respectively.
 
-=== Concurrent Access Timeouts
+===== Concurrent Access Timeouts
 
 A concurrent access attempt that cannot
 immediately acquire the appropriate lock is blocked until it can make
@@ -2853,7 +2874,7 @@ An AccessTimeout value of 0 indicates that
 concurrent access is not allowed. Access attempts on methods with a
 timeout value of 0 result in the javax.ejb.ConcurrentAccessException.
 
-=== Operations Allowed in the Methods of a Singleton Session Bean
+==== Operations Allowed in the Methods of a Singleton Session Bean
 
 Table link:Ejb.html#a1343[See
 Operations Allowed in the Methods of a Singleton Session Bean] defines
@@ -3139,7 +3160,7 @@ that a session bean can be deployed in any EJB container. These
 requirements apply to stateful session beans, stateless session beans,
 and singleton session beans.
 
-=== Classes and Interfaces
+==== Classes and Interfaces
 
 The session Bean
 Provider is responsible for providing the following class
@@ -3171,7 +3192,7 @@ version 1.3. http://jcp.org/en/jsr/detail?id=109.] and
 link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
 version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.].
 
-=== Session Bean Class
+==== Session Bean Class
 
 The following are
 the requirements for the session bean class:
@@ -3235,7 +3256,7 @@ implement other methods (for example helper methods invoked internally
 by the business methods) in addition to the methods required by the EJB
 specification.
 
-=== Session Bean Superclasses
+===== Session Bean Superclasses
 
 A session bean class is permitted to have
 superclasses that are themselves session bean classes. However, there
@@ -3284,7 +3305,8 @@ public class A implements Foo \{ ... }
 public class B extends A implements Foo, Bar
 \{ ... }
 
-=== [[a1487]]Lifecycle Callback Interceptor Methods
+[[a1487]]
+==== Lifecycle Callback Interceptor Methods
 
 {empty}The AroundConstruct, _PostConstruct_ ,
 _PreDestroy_ , _PrePassivate_ , and _PostActivate_ lifecycle callback
@@ -3312,7 +3334,7 @@ Except for these cases, the method names can be arbitrary, but must not
 start with “ejb” to avoid conflicts with the callback methods defined by
 the javax.ejb.EnterpriseBean interfaces.
 
-=== Session Synchronization Methods
+==== Session Synchronization Methods
 
 The bean class (or superclass) of a stateful
 session bean may use one or more of the session synchronization
@@ -3337,7 +3359,8 @@ must take 0 arguments.
 The AfterCompletion method must take a single
 argument of type boolean.
 
-=== [[a1498]]ejbCreate<METHOD> Methods
+[[a1498]]
+==== ejbCreate<METHOD> Methods
 
 The session bean
 class of a session bean that has a home interface may define one or more
@@ -3376,7 +3399,7 @@ link:Ejb.html#a2986[See System Exceptions]). An EJB 2.0 and
 later compliant enterprise bean should not throw the
 java.rmi.RemoteException from the _ejbCreate_ method .
 
-=== Business Methods
+==== Business Methods
 
 The session bean
 class may define zero or more business methods whose signatures must
@@ -3425,7 +3448,8 @@ container (see Section link:Ejb.html#a2986[See System
 Exceptions]). An EJB 2.0 or later compliant enterprise bean should not
 throw the java.rmi.RemoteException from a business method.
 
-=== [[a1518]]Session Bean’s Business Interface
+[[a1518]]
+==== Session Bean’s Business Interface
 
 The following are
 the requirements for the session bean’s business interface:
@@ -3606,7 +3630,7 @@ public interface Bar \{ ... }
 
 public class A implements Foo, Bar \{ ... }
 
-=== Session Bean’s No-Interface View
+==== Session Bean’s No-Interface View
 
 The following are the requirements for a
 session bean that exposes a no-interface view:
@@ -3651,7 +3675,7 @@ java.rmi.RemoteException.
 Only private methods of the bean class and
 any superclasses except java.lang.Object may be declared final.
 
-=== Session Bean’s Remote Component Interface
+==== Session Bean’s Remote Component Interface
 
 The following are
 the requirements for the session bean’s remote component interface:
@@ -3685,7 +3709,7 @@ The remote component interface methods must
 not expose local component interface types, local home interface types,
 timers or timer handles as arguments or results.
 
-=== Session Bean’s Remote Home Interface
+==== Session Bean’s Remote Home Interface
 
 The following are
 the requirements for the session bean’s
@@ -3727,7 +3751,7 @@ method of the remote home interface.
 The _throws_ clause must include
 javax.ejb.CreateException.
 
-=== Session Bean’s Local Component Interface
+==== Session Bean’s Local Component Interface
 
 The following are
 the requirements for the session bean’s local component interface:
@@ -3754,7 +3778,7 @@ All the exceptions defined in the _throws_
 clause of the matching method of the session bean class must be defined
 in the _throws_ clause of the method of the local component interface.
 
-=== Session Bean’s Local Home Interface
+==== Session Bean’s Local Home Interface
 
 The following are
 the requirements for the session bean’s local home interface:
@@ -3792,7 +3816,7 @@ The _throws_
 clause must include
 javax.ejb.CreateException.
 
-=== Session Bean’s Web Service Endpoint Interface
+==== Session Bean’s Web Service Endpoint Interface
 
 The EJB 3.x API does not require the
 definition of a web service endpoint interface for session beans that
@@ -3822,7 +3846,7 @@ deployment tools are provided by the Container Provider. Alternatively,
 the deployment tools may be provided by a different vendor who uses the
 container vendor’s specific API.
 
-=== Generation of Implementation Classes
+==== Generation of Implementation Classes
 
 The deployment tools provided by the
 container are responsible for the generation of additional classes when
@@ -3871,7 +3895,7 @@ environment. For example, a wrapper for a debit function on the
 AccountManager bean may check that the debited amount does not exceed a
 certain limit.
 
-=== Generation of WSDL
+==== Generation of WSDL
 
 Reference link:Ejb.html#a9879[See Web
 Services for Java EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.]
@@ -3880,7 +3904,7 @@ The Java to WSDL mapping must adhere to the requirements of JAX-WS
 link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
 version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.].
 
-=== Session Business Interface Implementation Class
+==== Session Business Interface Implementation Class
 
 The container’s implementation of the
 session business interface, which is
@@ -3897,7 +3921,7 @@ providing the implementation of the _equals_ and _hashCode_ methods for
 the business interface, in conformance with the requirements of section
 link:Ejb.html#a342[See Session Object Identity].
 
-=== No-Interface View Reference Class
+==== No-Interface View Reference Class
 
 The container’s implementation of the
 no-interface view reference, which is generated by the deployment tools,
@@ -3915,7 +3939,7 @@ the no-interface view reference class, in conformance with the
 requirements of section link:Ejb.html#a519[See Client view of
 Session Object’s Life Cycle].
 
-=== Session EJBHome Class
+==== Session EJBHome Class
 
 The session
 EJBHome class, which is generated by the deployment tools, implements
@@ -3926,7 +3950,7 @@ methods specific to the session bean.
 The implementation of each create<METHOD>
 method invokes a matching ejbCreate<METHOD> method.
 
-=== Session EJBObject Class
+==== Session EJBObject Class
 
 The session
 EJBObject class, which is generated by the deployment tools, implements
@@ -3939,7 +3963,7 @@ must activate the instance (if the instance is in the passive state),
 invoke any business method interceptor methods, and invoke the matching
 business method on the instance.
 
-=== Session EJBLocalHome Class
+==== Session EJBLocalHome Class
 
 The session
 EJBLocalHome class, which is generated by the deployment tools,
@@ -3950,7 +3974,7 @@ create<METHOD> methods specific to the session bean.
 The implementation of each create<METHOD>
 method invokes a matching ejbCreate<METHOD> method.
 
-=== Session EJBLocalObject Class
+==== Session EJBLocalObject Class
 
 The session
 EJBLocalObject class, which is generated by the deployment tools,
@@ -3963,7 +3987,7 @@ must activate the instance (if the instance is in the passive state),
 invoke any business method interceptor methods, and invoke the matching
 business method on the instance.
 
-=== Web Service Endpoint Implementation Class
+==== Web Service Endpoint Implementation Class
 
 The implementation class for a stateless
 session bean’s web service endpoint is generated by the container’s
@@ -3972,27 +3996,27 @@ endpoint, unmarshall the SOAP request, invoke any business method
 interceptor methods, and invoke the stateless session bean method that
 matches the web service endpoint method that corresponds to the request.
 
-=== Asynchronous Client Future<V> Return Value Implementation Class
+==== Asynchronous Client Future<V> Return Value Implementation Class
 
 The object returned from an asynchronous
 method with return type _Future<V>_ is implemented by the container’s
 deployment tools.
 
-=== Handle Classes
+==== Handle Classes
 
 The deployment
 tools are responsible for implementing the
 handle classes for the session bean’s remote
 home and remote component interfaces.
 
-=== EJBMetaData Class
+==== EJBMetaData Class
 
 The deployment tools are responsible for
 implementing the class that provides metadata to the remote client view
 contract. The class must be a valid RMI Value class and must implement
 the javax.ejb.EJBMetaData interface.
 
-=== Non-reentrant Instances
+==== Non-reentrant Instances
 
 The container must ensure that only one
 thread can be executing a stateless or stateful session bean
@@ -4001,7 +4025,7 @@ and stateless session beans do not have to be coded as reentrant. One
 implication of this rule is that an application cannot make loopback
 calls to a stateless or stateful session bean instance.
 
-=== Transaction Scoping, Security, Exceptions
+==== Transaction Scoping, Security, Exceptions
 
 The container
 must follow the rules with respect to transaction scoping, security
@@ -4010,7 +4034,7 @@ link:Ejb.html#a2172[See Support for Transactions],
 link:Ejb.html#a4945[See Security Management], and
 link:Ejb.html#a2940[See Exception Handling], respectively.
 
-=== JAX-WS Message Handlers for Web Service Endpoints
+==== JAX-WS Message Handlers for Web Service Endpoints
 
 The container must support the use of JAX-WS
 message handlers for web service endpoints. Container requirements for
@@ -4023,7 +4047,7 @@ http://jcp.org/en/jsr/detail?id=109.].
 If message handlers are present, they must be
 invoked before any business method interceptor methods.
 
-=== SessionContext
+==== SessionContext
 
 The container must implement the
 SessionContext.getEJBObject method such that the bean instance can use

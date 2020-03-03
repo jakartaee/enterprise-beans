@@ -4,8 +4,8 @@
 === Overview and Concepts
 
 
-
-=== [[a2942]]Application Exceptions
+[[a2942]]
+==== Application Exceptions
 
 An
 application exception is an exception
@@ -49,7 +49,7 @@ EJBLocalHome interfaces of components written to the EJB 2.1 client
 view. These exceptions are covered by the rules on application
 exceptions that are defined in this chapter.
 
-=== Goals for Exception Handling
+==== Goals for Exception Handling
 
 The EJB specification for exception handling
 is designed to meet these high-level goals:
@@ -76,7 +76,7 @@ This section describes the view and
 responsibilities of the Bean Provider with respect to exception
 handling.
 
-=== Application Exceptions
+==== Application Exceptions
 
 The Bean Provider
 defines application exceptions. Application exception that is a checked
@@ -185,7 +185,8 @@ that does _not_ cause the transaction to be marked for rollback.
  _ExceptionD_ is not an application
 exception.
 
-=== [[a2986]]System Exceptions
+[[a2986]]
+==== System Exceptions
 
 A system exception is an exception that is a
 _java.rmi.RemoteException_ (or one of its subclasses) or a
@@ -270,7 +271,8 @@ singleton session bean, the Bean Provider does not have to perform any
 cleanup actions before throwing a non-application exception. It is the
 container that is responsible for the cleanup.
 
-=== [[a3001]]Container Provider Responsibilities
+[[a3001]]
+=== Container Provider Responsibilities
 
 
 
@@ -293,7 +295,8 @@ callbacks on the enterprise bean.
 Exceptions from management of
 container-managed transaction demarcation.
 
-=== [[a3008]]Exceptions from a Session Bean’s Business Interface Methods and No-Interface View Methods
+[[a3008]]
+==== Exceptions from a Session Bean’s Business Interface Methods and No-Interface View Methods
 
 Table link:Ejb.html#a3012[See
 Handling of Exceptions Thrown by a Business Interface Method or
@@ -493,7 +496,7 @@ Receives EJBException.
 
 
 
-=== Exceptions from Method Invoked via Session Bean’s 2.1 Client View or through Web Service Client View
+==== Exceptions from Method Invoked via Session Bean’s 2.1 Client View or through Web Service Client View
 
 Business methods in this context are
 considered to be the methods defined in the enterprise bean’s home
@@ -699,7 +702,7 @@ client.
 
 Receives RemoteException or EJBException.
 
-=== Exceptions from AroundConstruct, PostConstruct and PreDestroy Lifecycle Callbacks
+==== Exceptions from AroundConstruct, PostConstruct and PreDestroy Lifecycle Callbacks
 
 link:Ejb.html#a3147[See Handling of
 Exceptions Thrown by a PostConstruct or PreDestroy Method of a Stateful,
@@ -740,7 +743,7 @@ Discard instance.
 
 
 
-=== Exceptions from Message-Driven Bean Message Listener Methods
+==== Exceptions from Message-Driven Bean Message Listener Methods
 
 This section specifies the container’s
 handling of exceptions thrown from a
@@ -871,7 +874,7 @@ Discard instance.
 Throw EJBException that wraps the original
 exception to resource adapter.
 
-=== Exceptions from an Enterprise Bean’s Timeout Callback Method
+==== Exceptions from an Enterprise Bean’s Timeout Callback Method
 
 This section specifies the container’s
 handling of exceptions thrown from an enterprise bean’s timeout callback
@@ -950,7 +953,7 @@ Discard instancelink:#a10307[87].
 
 
 
-=== Exceptions from Other Container-invoked Callbacks
+==== Exceptions from Other Container-invoked Callbacks
 
 This subsection
 specifies the container’s handling of exceptions thrown from the other
@@ -998,7 +1001,8 @@ the _javax.ejb.TransactionRolledbackLocalException_ to a local client,
 because it provides more information to the client. (The client knows
 that it is fruitless to continue the transaction.)
 
-=== [[a3246]]Non-existing Stateful Session Object
+[[a3246]]
+==== Non-existing Stateful Session Object
 
 If a client makes a call to a stateful
 session object that has been removed, the container should throw the
@@ -1008,7 +1012,7 @@ java.rmi.NoSuchObjectException (which is a
 subclass of java.rmi.RemoteException) to a remote client, or the
 _javax.ejb.NoSuchObjectLocalException_ to a local client.
 
-=== Exceptions from the Management of Container-Managed Transactions
+==== Exceptions from the Management of Container-Managed Transactions
 
 The container is
 responsible for starting and committing the container-managed
@@ -1045,7 +1049,7 @@ enterprise bean code. Such a container would throw the
 _javax.ejb.EJBException_ or __ java.rmi.RemoteException or after a
 number of unsuccessful tries.
 
-=== Release of Resources
+==== Release of Resources
 
 When the container discards an instance
 because of a system exception, the container should release all the
@@ -1063,7 +1067,7 @@ instance has opened a TCP/IP connection, most container implementations
 will not be able to release the connection. The connection will be
 eventually released by the JVM garbage collector mechanism.
 
-=== Support for Deprecated Use of java.rmi.RemoteException
+==== Support for Deprecated Use of java.rmi.RemoteException
 
 The EJB 1.0
 specification allowed the business methods, ejbCreate, ejbPostCreate,
@@ -1085,7 +1089,8 @@ the java.rmi.RemoteException. The container should treat the
 java.rmi.RemoteException thrown by an enterprise bean method in the same
 way as it is specified for the javax.ejb.EJBException.
 
-=== [[a3263]]Client’s View of Exceptions
+[[a3263]]
+=== Client’s View of Exceptions
 
 
 
@@ -1124,9 +1129,9 @@ the throws clauses of all its methods must not include the
 java.rmi.RemoteException. The throws clauses may include an arbitrary
 number of application exceptions.
 
-=== Application Exception
+==== Application Exception
 
-=== Local and Remote Clients
+===== Local and Remote Clients
 
 If a client
 program receives an application exception from an enterprise bean
@@ -1156,7 +1161,7 @@ the current transaction has been marked for rollback; other clients may
 use the getStatus method of the javax.transaction.UserTransaction
 interface to obtain the transaction status.
 
-=== Web Service Clients
+===== Web Service Clients
 
 If a stateless session bean throws an
 application exception from one of its web service methods, it is the
@@ -1167,7 +1172,7 @@ the client are described by the mapping rules in
 link:Ejb.html#a9873[See Java™ API for XML-based RPC, version 1.1
 (JAX-RPC). http://jcp.org/en/jsr/detail?id=101.].
 
-=== java.rmi.RemoteException and javax.ejb.EJBException
+==== java.rmi.RemoteException and javax.ejb.EJBException
 
 As described above, a client receives the
 _javax.ejb.EJBException_ or the java.rmi.RemoteException as an
@@ -1236,7 +1241,7 @@ describe the several subclasses of the _javax.ejb.EJBException_ and
 java.rmi.RemoteException that may be thrown by the container to give the
 client more information.
 
-=== javax.ejb.EJBTransactionRolledbackException, javax.ejb.TransactionRolledbackLocalException, and javax.transaction.TransactionRolledbackException
+===== javax.ejb.EJBTransactionRolledbackException, javax.ejb.TransactionRolledbackLocalException, and javax.transaction.TransactionRolledbackException
 
 The
 _javax.ejb.EJBTransactionRolledbackException_ and
@@ -1250,7 +1255,7 @@ the client knows for certain that the transaction has been marked for
 rollback. It would be fruitless for the client to continue the
 transaction because the transaction can never commit.
 
-=== javax.ejb.EJBTransactionRequiredException, javax.ejb.TransactionRequiredLocalException, and javax.transaction.TransactionRequiredException
+===== javax.ejb.EJBTransactionRequiredException, javax.ejb.TransactionRequiredLocalException, and javax.transaction.TransactionRequiredException
 
 The
 _javax.ejb.EJBTransactionRequiredException_ and
@@ -1270,7 +1275,7 @@ context.
 This error usually indicates that the
 application was not properly formed.
 
-=== javax.ejb.NoSuchEJBException, javax.ejb.NoSuchObjectLocalException, and java.rmi.NoSuchObjectException
+===== javax.ejb.NoSuchEJBException, javax.ejb.NoSuchObjectLocalException, and java.rmi.NoSuchObjectException
 
 The
 javax.ejb.NoSuchEJBException is a subclass of the

@@ -33,7 +33,7 @@ Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.]]. This
 makes it possible for EJB container implementors to use RMI-IIOP as the
 object distribution protocol.
 
-=== Client-Side Objects in a Distributed Environment
+==== Client-Side Objects in a Distributed Environment
 
 When the RMI-IIOP
 protocol or similar distribution protocols are used, the remote client
@@ -92,7 +92,7 @@ provide illustrative scenarios
 describe the interoperability requirements
 for remote invocations, transactions, naming, and security.
 
-=== Interoperability Goals
+==== Interoperability Goals
 
  _The goals of the_
 interoperability _requirements specified in
@@ -147,7 +147,8 @@ EJB1.1-to-CORBA mapping document link:Ejb.html#a9864[See
 Enterprise JavaBeans™ to CORBA Mapping
 v1.1.http://www.oracle.com/technetwork/java/javaee/ejb/index.html.].
 
-=== [[a3337]]Interoperability Scenarios
+[[a3337]]
+=== Interoperability Scenarios
 
 
 
@@ -182,7 +183,7 @@ between components hosted in these various container types.
 
 
 
-=== Interactions Between Web Containers and EJB Containers for E-Commerce Applications
+==== Interactions Between Web Containers and EJB Containers for E-Commerce Applications
 
 This scenario occurs for business-to-business
 and business-to-consumer interactions over the Internet.
@@ -224,7 +225,8 @@ propagated to the EJB container and used for authorization checks. The
 enterprise bean completes the updates and commits the transaction. The
 JSP sends back a confirmation page to the customer._
 
-=== [[a3351]]Interactions Between Application Client Containers and EJB Containers Within an Enterprise’s Intranet
+[[a3351]]
+==== Interactions Between Application Client Containers and EJB Containers Within an Enterprise’s Intranet
 
  _Scenario 2.1: An enterprise has an expense
 accounting application used by employees from their desktops. The
@@ -267,7 +269,8 @@ transport protocol layer. At runtime the client container needs to send
 the user’s password to the server during the method invocation to
 authenticate the employee._
 
-=== [[a3356]]Interactions Between Two EJB Containers in an Enterprise’s Intranet
+[[a3356]]
+==== Interactions Between Two EJB Containers in an Enterprise’s Intranet
 
  _Scenario 3: An enterprise has an expense
 accounting application which needs to communicate with a payroll
@@ -309,7 +312,7 @@ accounts bean receives a status reply from the payroll bean. If an error
 occurs in the payroll bean, the accounts bean executes code to recover
 from the error and restore the databases to a consistent state._
 
-=== Intranet Application Interactions Between Web Containers and EJB Containers
+==== Intranet Application Interactions Between Web Containers and EJB Containers
 
  _Scenario 4: This is the same as scenario
 2.1, except that instead of using a “fat-client” desktop application to
@@ -336,7 +339,8 @@ container establishes a secure session with the EJB container with
 mutual authentication and integrity/confidentiality protection between
 the containers, and invokes methods on the enterprise beans._
 
-=== [[a3364]]Overview of Interoperability Requirements
+[[a3364]]
+=== Overview of Interoperability Requirements
 
 
 
@@ -385,7 +389,8 @@ EJB, web, and application client containers
 must support the above requirements separately as well as in
 combinations.
 
-=== [[a3376]]Remote Invocation Interoperability
+[[a3376]]
+=== Remote Invocation Interoperability
 
 
 
@@ -437,7 +442,7 @@ wire formats for IDL types as described in the GIOP specification in
 CORBA 2.3. The following subsections describe the mapping details for
 Java types.
 
-=== Mapping Java Remote Interfaces to IDL
+==== Mapping Java Remote Interfaces to IDL
 
 The Java Language to IDL Mapping
 specification link:Ejb.html#a9859[See IDL To Java™ Language
@@ -450,7 +455,7 @@ RMI APIs to invoke enterprise beans. The client container may use the
 CORBA portable Stub APIs for the client-side stubs. EJB containers may
 create CORBA Tie objects for each EJBObject or EJBHome object.
 
-=== Mapping Value Objects to IDL
+==== Mapping Value Objects to IDL
 
 The Java
 interfaces that are passed by value during remote invocations on
@@ -462,7 +467,7 @@ by remote methods also result in concrete IDL value types. All these
 value types are mapped to IDL abstract value types or abstract
 interfaces using the rules in the Java Language to IDL Mapping.
 
-=== Mapping of System Exceptions
+==== Mapping of System Exceptions
 
 Java system
 exceptions, including the _java.rmi.RemoteException_ and its subclasses,
@@ -504,7 +509,7 @@ message to the appropriate Java exception as specified in the Java
 Language to IDL mapping. This results in the original Java exception
 being received by the client Java EE component.
 
-=== Obtaining Stub and Client View Classes
+==== Obtaining Stub and Client View Classes
 
 When a Java EE
 component (application client, JSP, servlet or enterprise bean) receives
@@ -539,7 +544,8 @@ EJBObject or EJBHome’s IOR, or sent in the IIOP message service context,
 or marshalled with the value type. The URLs for downloading may
 optionally include an HTTPS URL for secure downloading.
 
-=== [[a3410]]System Value Classes
+[[a3410]]
+==== System Value Classes
 
 System value
 classes are serializable value classes
@@ -566,7 +572,7 @@ thread context class loader. The referencing container must make
 application-specific classes available to the system value class
 instance at runtime through the thread context class loader.
 
-=== HandleDelegate SPI
+===== HandleDelegate SPI
 
 The
 javax.ejb.spi.HandleDelegate service
@@ -641,7 +647,8 @@ transaction interoperability _must follow the requirements in section
 link:Ejb.html#a3452[See Interoperating with Containers that do
 not Implement Transaction Interoperability]._
 
-=== [[a3429]]Transaction Interoperability Requirements
+[[a3429]]
+==== Transaction Interoperability Requirements
 
  _A distributed transaction started by a web
 or EJB container must be able to propagate in a remote invocation to an
@@ -649,7 +656,7 @@ enterprise bean in an EJB container provided by a different vendor, and
 the containers must participate in the distributed two-phase commit
 protocol._
 
-=== Transaction Context Wire Format
+===== Transaction Context Wire Format
 
  _Transaction context propagation from client
 to EJB container uses the implicit propagation mechanism described in
@@ -683,7 +690,7 @@ using the rules described in the_ OTS 1.2 specification
 link:Ejb.html#a9860[See Transaction Service Specification (OTS).
 http://www.omg.org/cgi-bin/doc?ptc/2001-11-03.].
 
-=== Two-Phase Commit Protocol
+===== Two-Phase Commit Protocol
 
 The object
 interaction diagram in link:Ejb.html#a3440[See Transaction
@@ -716,7 +723,8 @@ terminator (steps 6,7), as described by the OTS specification._
 Compliant Java EE containers must not use
 nested transactions in interoperability scenarios.
 
-=== [[a3443]]Transactional Policies of Enterprise Bean References
+[[a3443]]
+===== Transactional Policies of Enterprise Bean References
 
 The OTS1.2
 specification describes the _CosTransactions::OTSPolicy_ and
@@ -751,7 +759,7 @@ value _CosTransactions::SHARED_ to allow enterprise beans to do
 transactional work during the _beforeCompletion_ notification from the
 transaction coordinator.
 
-===  _Exception Handling Behavior_
+=====  Exception Handling Behavior
 
  _The exception handling behavior described
 in the OTS1.2 specification must be followed. In particular, if an
@@ -764,7 +772,8 @@ propagated back to the client without rolling back the transaction, as
 required by the exception handling rules in
 link:Ejb.html#a2940[See Exception Handling]._
 
-=== [[a3452]]Interoperating with Containers that do not Implement Transaction Interoperability
+[[a3452]]
+==== Interoperating with Containers that do not Implement Transaction Interoperability
 
 The requirements
 in this subsection are designed to ensure that when a Java EE container
@@ -782,7 +791,8 @@ with a container that does support transaction propagation in the cases
 where the enterprise bean method’s transaction attribute indicates that
 the method would not be executed in the client’s transaction.
 
-=== [[a3455]]Client Container Requirements
+[[a3455]]
+===== Client Container Requirements
 
 If the client in
 another container invokes an enterprise bean’s method when there is no
@@ -820,7 +830,7 @@ diagram above) by throwing a CORBA system exception if the server’s
 Resource object reference indicates that it belongs to another vendor’s
 container.
 
-=== EJB container requirements
+===== EJB container requirements
 
 All EJB
 containers (including those that do not support transaction propagation)
@@ -830,7 +840,7 @@ EJBObject and EJBHome references as described in section
 link:Ejb.html#a3443[See Transactional Policies of Enterprise
 Bean References].
 
-=== Requirements for EJB Containers Supporting Transaction Interoperability
+====== Requirements for EJB Containers Supporting Transaction Interoperability
 
 When an EJB container that supports
 transaction propagation receives the IIOP
@@ -958,7 +968,8 @@ transaction identity or the Coordinator object reference in the
 propagated client transaction context indicate that the client belongs
 to a different vendor’s container.
 
-===  _Naming Interoperability_ [[a3504]]
+[[a3504]]
+===  Naming Interoperability
 
 
 
@@ -1034,7 +1045,8 @@ service to obtain the complete IOR (with SSL information) of the root
 NamingContext, and then initiate an SSL session with the CosNaming
 service, as determined by the client policy._
 
-=== [[a3517]]Security Interoperability
+[[a3517]]
+=== Security Interoperability
 
 
 
@@ -1047,7 +1059,7 @@ CORBA/IIOP protocol.
 protocol rules prescribed by the CSIv2 specification_ Conformance Level
 0 _._
 
-=== Introduction
+==== Introduction
 
 The goal of the secure invocation mechanisms
 is to support the interoperability requirements described earlier in
@@ -1080,7 +1092,7 @@ client is a web or EJB container, the difference between the client
 component’s principal and the client container’s principal is
 significant for interoperability considerations.
 
-=== Trust Relationships Between Containers, Principal Propagation
+===== Trust Relationships Between Containers, Principal Propagation
 
 
 
@@ -1138,7 +1150,7 @@ identity is propagated). This is needed for scenarios 1, 3 and 4 where
 the internet or intranet user’s principal needs to be propagated to the
 target EJB container.
 
-=== Application Client Authentication
+===== Application Client Authentication
 
 Application
 client containers that have authentication infrastructure (such as
@@ -1170,7 +1182,7 @@ authenticates the user by interacting with an authentication service
 (e.g. a secure user/password database). This is similar to the basic
 authentication feature of HTTP.
 
-=== Securing EJB Invocations
+==== Securing EJB Invocations
 
 This subsection
 describes the interoperable protocol requirements for providing
@@ -1196,7 +1208,7 @@ following subsections describe how the CSIv2 features are used to
 realize the scenarios described in section
 link:Ejb.html#a3337[See Interoperability Scenarios].
 
-=== Secure Transport Protocol
+===== Secure Transport Protocol
 
 The Secure
 Sockets Layer (SSL 3.0) protocol link:Ejb.html#a9870[See The SSL
@@ -1253,7 +1265,7 @@ products are already required to support SSL (HTTPS for Internet
 communication), the use of SSL/TLS provides a relatively easy route to
 interoperable security at the transport layer.
 
-=== Security Information in IORs
+===== Security Information in IORs
 
 Before initiating
 a secure connection to the EJB container, the client needs to know the
@@ -1286,7 +1298,7 @@ creating IORs that allow access to enterprise beans over unprotected
 IIOP, based on the security policies set by the Deployer or System
 Administrator._
 
-=== Propagating Principals and Authentication Data in IIOP Messages
+===== Propagating Principals and Authentication Data in IIOP Messages
 
 In scenarios
 where client authentication does not occur at the transport layer it is
@@ -1410,7 +1422,7 @@ propagated or the identity token was absent, then
 _EJBContext.getCallerPrincipal().getName()_ returns a product-specific
 unauthenticated principal name.
 
-===  _Security Configuration for Containers_
+=====  Security Configuration for Containers
 
  _Since the interoperability scenarios
 involve IIOP/SSL usage in intranets, it is assumed that client and
@@ -1448,7 +1460,7 @@ server principals that a client container is allowed to interact with,
 to prevent the client’s private credentials such as password from being
 sent to untrusted servers._
 
-=== Runtime Behavior
+===== Runtime Behavior
 
  _Client containers determine whether to use
 SSL for an enterprise bean invocation by using the security policies

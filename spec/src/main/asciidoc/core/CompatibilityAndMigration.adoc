@@ -5,7 +5,8 @@ This chapter addresses issues of
 compatibility and migration between EJB 3.2 and earlier components and
 clients.
 
-=== [[a9696]]Support for Existing Applications
+[[a9696]]
+=== Support for Existing Applications
 
 
 
@@ -60,7 +61,7 @@ This release of Enterprise JavaBeans supports
 migration and interoperability among client and server components
 written to different versions of the EJB APIs as described below.
 
-=== Clients written to the EJB 2.x APIs
+==== Clients written to the EJB 2.x APIs
 
 An enterprise bean that is written to the EJB
 2.1 or earlier API release may be a client of components written to the
@@ -81,7 +82,7 @@ mechanisms that are used to enable components written to the EJB 3.x API
 to be accessed and utilized by clients written to earlier versions of
 the EJB specification.
 
-=== Clients written to the EJB 3.x API
+==== Clients written to the EJB 3.x API
 
 A client written to the EJB 3.x API may be a
 client of a component written to the EJB 2.1 or earlier API.
@@ -97,14 +98,15 @@ deployment descriptor elements) may be used to specify the injection of
 home interfaces into components that are clients of beans written to the
 earlier EJB client view.
 
-=== Combined use of EJB 2.x and EJB 3.x persistence APIs
+==== Combined use of EJB 2.x and EJB 3.x persistence APIs
 
 {empty}EJB clients may access Java
 Persistence entities and/or the EntityManager together with EJB 2.x
 entity beans within the same transaction as well as within separate
 transactions.link:#a10345[125]
 
-=== [[a9716]]Adapting EJB 3.x Session Beans to Earlier Client Views
+[[a9716]]
+=== Adapting EJB 3.x Session Beans to Earlier Client Views
 
 
 
@@ -132,7 +134,7 @@ In addition, the container implementation
 classes must implement the methods of the home and comonent interfaces
 to apply to the EJB 3.x component being referenced as described below.
 
-=== Stateless Session Beans
+==== Stateless Session Beans
 
 The invocation of the home create() method
 must return the corresponding local component interface or remote
@@ -159,7 +161,8 @@ Diagram]
 The invocations of the business methods of
 the component interface are delegated to the bean class.
 
-=== [[a9726]]Stateful Session Beans
+[[a9726]]
+==== Stateful Session Beans
 
 The invocation of the home create<METHOD>()
 method causes construction of the bean instance, invocation of the

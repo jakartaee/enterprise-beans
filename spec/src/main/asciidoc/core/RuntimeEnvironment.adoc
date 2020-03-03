@@ -27,8 +27,8 @@ enforce security and to allow the container to properly manage the
 runtime environment.
 
 
-
-=== [[a9428]]EJB Lite and Other EJB API Groups
+[[a9428]]
+=== EJB Lite and Other EJB API Groups
 
 
 
@@ -227,7 +227,8 @@ JAX-RPC Web Service Endpoints
 |Optional
 |===
 
-=== [[a9516]]Support for Other EJB API Groups in an EJB Lite Container
+[[a9516]]
+==== Support for Other EJB API Groups in an EJB Lite Container
 
 An EJB Lite container provider may support
 EJB features in addition to the “EJB Lite” group defined in
@@ -274,7 +275,8 @@ Support for deployment descriptor versions
 must observe the rules in link:Ejb.html#a9696[See Support for
 Existing Applications].
 
-=== [[a9527]]Integration with Other Technologies
+[[a9527]]
+==== Integration with Other Technologies
 
 This section describes the additional
 requirements that apply to an EJB Container when combined in a product
@@ -302,7 +304,7 @@ http://jcp.org/en/jsr/detail?id=339.].
 This section describes the view and
 responsibilities of the Bean Provider.
 
-=== APIs Provided by Container
+==== APIs Provided by Container
 
 The requirements
 on APIs provided by the Container are determined by the associated
@@ -311,7 +313,8 @@ link:Ejb.html#a9861[See Java™ Platform, Enterprise Edition
 Specification Version 7 (Java EE). http://jcp.org/en/jsr/detail?id=342.]
 or the Web Profile Specification.
 
-=== [[a9535]]Programming Restrictions
+[[a9535]]
+==== Programming Restrictions
 
 This section
 describes the programming restrictions that a Bean Provider must follow
@@ -478,7 +481,8 @@ Standard EJB Container]. That table defines the minimal functionality
 that a compliant EJB container must provide to the enterprise bean
 instances at runtime.
 
-=== [[a9586]]Container Provider’s Responsibility
+[[a9586]]
+=== Container Provider’s Responsibility
 
 
 
@@ -570,7 +574,8 @@ Security Policy for a Standard EJB Container]. Support for this is not
 required by the EJB specification. Enterprise beans that rely on more or
 fewer permissions will not be portable across all EJB containers.
 
-=== [[a9622]]EJB Interfaces and Annotations Requirements
+[[a9622]]
+==== EJB Interfaces and Annotations Requirements
 
 The container must implement the EJB
 interfaces as defined in this specification.
@@ -585,7 +590,7 @@ _Java Persistence API_ specification link:Ejb.html#a9851[See
 Java™ Persistence API, version 2.1.
 http://jcp.org/en/jsr/detail?id=338.].
 
-=== JNDI Requirements
+==== JNDI Requirements
 
 At the minimum,
 the EJB container must provide a JNDI API name space to the enterprise
@@ -641,7 +646,8 @@ All enterprise beans deployed within the same
 the instances of the same enterprise bean deployed within an ejb-jar
 file must be presented with the same JNDI API name space.
 
-=== [[a9644]]JTA API Requirements
+[[a9644]]
+==== JTA API Requirements
 
 The EJB Container
 must include the JTA javax.transaction API.
@@ -666,7 +672,8 @@ The other JTA interfaces are low-level
 transaction manager and resource manager integration interfaces, and are
 not intended for direct use by enterprise beans.
 
-=== [[a9650]]JDBC™ API Requirements
+[[a9650]]
+==== JDBC™ API Requirements
 
 The EJB Container
 must include the JDBC javax.sql API and provide its functionality to the
@@ -675,7 +682,8 @@ connection pooling interfaces. These low-level interfaces are intended
 for integration of a JDBC driver with an application server, not for
 direct use by enterprise beans.
 
-=== [[a9652]]JMS API Requirements
+[[a9652]]
+==== JMS API Requirements
 
 An implementation requiring the full EJB API
 must include the JMS 2.0 API and provide its
@@ -769,7 +777,7 @@ require, that the container throw the _javax.jms.JMSException_ or a
 javax.jms.JMSRuntimeException (depending on the method signature) if
 enterprise beans call any of the methods listed in this section.
 
-=== Argument Passing Semantics
+==== Argument Passing Semantics
 
 An enterprise
 bean’s remote business interfaces and/or remote home and remote
@@ -793,7 +801,7 @@ container must ensure the semantics for passing arguments across these
 interfaces conforms to the standard argument passing semantics of the
 Java programming language.
 
-=== Other Requirements
+==== Other Requirements
 
 The assertions contained in the Javadoc
 specification of the EJB interfaces are required functionality and must

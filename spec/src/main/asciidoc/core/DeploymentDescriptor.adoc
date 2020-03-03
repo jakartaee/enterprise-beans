@@ -20,7 +20,8 @@ Entity beans elements are described in the
 EJB Optional Features document link:Ejb.html#a9890[See EJB 3.2
 Optional Features http://jcp.org/en/jsr/detail?id=345.].
 
-=== [[a5807]]Overview
+[[a5807]]
+=== Overview
 
 
 
@@ -67,7 +68,8 @@ file or _.war_ file producer. Assembly level information can be changed
 without breaking the enterprise bean’s function, although doing so may
 alter the behavior of an assembled application.
 
-=== [[a5815]]Bean Provider’s Responsibilities
+[[a5815]]
+=== Bean Provider’s Responsibilities
 
 
 
@@ -308,7 +310,8 @@ previous version of this specification. The content of the deployment
 descriptor must conform to the semantics rules specified in the XML
 Schema or DTD comments and elsewhere in this specification.
 
-=== [[a5865]]Application Assembler’s Responsibility
+[[a5865]]
+=== Application Assembler’s Responsibility
 
 
 
@@ -480,7 +483,8 @@ specification. The content of the deployment descriptor must conform to
 the semantics rules specified in the XML Schema or DTD comments and
 elsewhere in this specification.
 
-=== [[a5907]]Container Provider’s Responsibilities
+[[a5907]]
+=== Container Provider’s Responsibilities
 
 
 
@@ -496,7 +500,8 @@ Enterprise JavaBeans 3.1 link:Ejb.html#a9891[See Enterprise
 JavaBeans™, version 3.1. (EJB 3.1).
 http://jcp.org/en/jsr/detail?id=318.] and earlier specifications.
 
-=== [[a5910]]Deployment Descriptor XML Schema
+[[a5910]]
+=== Deployment Descriptor XML Schema
 
 
 

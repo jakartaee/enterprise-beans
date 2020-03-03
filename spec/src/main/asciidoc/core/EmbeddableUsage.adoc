@@ -45,7 +45,8 @@ the enterprise bean modules to be initialized. The client can override
 this behavior during setup by specifying an alternative set of target
 modules.
 
-=== [[a9743]]EJBContainer
+[[a9743]]
+==== EJBContainer
 
 The javax.ejb.embeddable.EJBContainer
 abstract class represents an instance of an embeddable container. It
@@ -132,13 +133,13 @@ Enterprise beans running within the
 embeddable container are loaded using the context class loader active on
 the thread at the time that the createEJBContainer method is called.
 
-=== Standard Initialization Properties
+==== Standard Initialization Properties
 
 The following embeddable container
 initialization properties are required to be supported by all embeddable
 Container Providers.
 
-=== javax.ejb.embeddable.provider
+===== javax.ejb.embeddable.provider
 
 This property holds a String value that
 specifies the fully-qualified name of an embeddable container provider
@@ -148,7 +149,7 @@ should be used for this application.
 The property name is defined as
 EJBContainer.PROVIDER.
 
-=== javax.ejb.embeddable.modules
+===== javax.ejb.embeddable.modules
 
 This property is used to explicitly specify
 the module(s) to be initialized. It can refer to modules that are
@@ -173,7 +174,7 @@ required by these modules.
 The property name is defined as
 EJBContainer.MODULES.
 
-=== javax.ejb.embeddable.appName
+===== javax.ejb.embeddable.appName
 
 This property specifies an application name
 for the EJB modules executing within the embeddable container. If
@@ -185,7 +186,7 @@ EJB module.
 The property name is defined as
 EJBContainer.APP_NAME.
 
-=== Looking Up Session Bean References
+==== Looking Up Session Bean References
 
 The _EJBContainer_ instance can be used to
 retrieve a javax.naming.Context object that supports the lookup of
@@ -213,7 +214,7 @@ ctx.lookup("java:global/foo/FooBean");
 
 
 
-=== Embeddable Container Shutdown
+==== Embeddable Container Shutdown
 
 To shut down an embeddable container instance
 and its associated application, the client may call the
@@ -250,7 +251,8 @@ This section describes the responsibilities
 of the embeddable Container Provider to support an embeddable container
 environment.
 
-=== [[a9799]]Runtime Environment
+[[a9799]]
+==== Runtime Environment
 
 Except for the packaging requirements, the
 embeddable Container Provider is required to support the EJB Lite group
@@ -261,7 +263,7 @@ other EJB API groups within an embeddable container environment. See
 link:Ejb.html#a9428[See EJB Lite and Other EJB API Groups] for
 more details.
 
-=== Naming Lookups
+==== Naming Lookups
 
 The embeddable Container Provider is required
 to support naming lookups of the local and no-interface views of any
@@ -270,7 +272,8 @@ entries for these enterprise beans must conform to the portable global
 JNDI name requirements in link:Ejb.html#a800[See Access in the
 Global JNDI Namespace].
 
-=== [[a9803]]Embeddable Container Bootstrapping
+[[a9803]]
+==== Embeddable Container Bootstrapping
 
 An embeddable Container Provider
 implementation must act as a service provider by supplying a service
@@ -332,7 +335,7 @@ If a provider does not qualify as the
 provider for the embeddable application, it must return null when
 createEJBContainer is invoked on it.
 
-=== Concrete javax.ejb.embeddable.EJBContainer Implementation Class
+==== Concrete javax.ejb.embeddable.EJBContainer Implementation Class
 
 The embeddable Container Provider is required
 to provide a subclass of the javax.ejb.embeddable.EJBContainer class.

@@ -15,7 +15,7 @@ servers from different vendors.
 This section provides a brief overview of
 transactions and illustrates a number of transaction scenarios in EJB.
 
-=== Transactions
+==== Transactions
 
 Transactions are a proven technique for
 simplifying application programming. Transactions free the application
@@ -91,7 +91,7 @@ Specification Version 7 (Java EE). http://jcp.org/en/jsr/detail?id=342.]
 and link:Ejb.html#a9863[See Java EE™ Connector Architecture,
 version 1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.]._
 
-=== Transaction Model
+==== Transaction Model
 
 The Enterprise
 JavaBeans architecture supports flat transactions. A flat transaction
@@ -104,7 +104,7 @@ JavaBeans. If these vendors provide support for nested transactions in
 the future, Enterprise JavaBeans may be enhanced to take advantage of
 nested transactions.
 
-=== Relationship to JTA and JTS
+==== Relationship to JTA and JTS
 
 The Java™ Transaction API (JTA)
 [link:Ejb.html#a9857[See Java™ Transaction API, version 1.2
@@ -142,7 +142,7 @@ This section describes several scenarios that
 illustrate the distributed transaction capabilities of the Enterprise
 JavaBeans architecture.
 
-=== Update of Multiple Databases
+==== Update of Multiple Databases
 
 The Enterprise JavaBeans architecture makes
 it possible for an application program to update data in multiple
@@ -170,7 +170,7 @@ When the transaction commits, the EJB server and the database systems
 perform a two-phase commit protocol to ensure atomic updates across all
 three databases.
 
-=== Messages Sent or Received Over JMS Sessions and Update of Multiple Databases
+==== Messages Sent or Received Over JMS Sessions and Update of Multiple Databases
 
 The Enterprise JavaBeans architecture makes
 it possible for an application program to send messages to or receive
@@ -220,7 +220,7 @@ Multiple Databases
 
 image:EBCore-17.png[image]
 
-=== Update of Databases via Multiple EJB Servers
+==== Update of Databases via Multiple EJB Servers
 
 The Enterprise JavaBeans architecture allows
 updates of data at multiple sites to be performed in a single
@@ -250,7 +250,7 @@ At transaction commit time, the two EJB
 servers use a distributed two-phase commit protocol (if the capability
 exists) to ensure the atomicity of the database updates.
 
-=== Client-Managed Demarcation
+==== Client-Managed Demarcation
 
 A Java client can use the
 javax.transaction.UserTransaction interface
@@ -280,7 +280,7 @@ transaction attributes that either require or support an existing
 transaction context), the EJB server ensures that the updates to
 databases A and B are made as part of the client’s transaction.
 
-=== Container-Managed Demarcation
+==== Container-Managed Demarcation
 
 Whenever a client invokes a method on an
 enterprise bean’s business interface, on the bean no-interface view, on
@@ -351,7 +351,7 @@ Enterprise JavaBeanslink:#a10266[47].
 This section describes the Bean Provider’s
 view of transactions and defines the Bean Provider’s responsibilities.
 
-=== Bean-Managed Versus Container-Managed Transaction Demarcation
+==== Bean-Managed Versus Container-Managed Transaction Demarcation
 
 When designing an
 enterprise bean, the developer must decide whether the enterprise bean
@@ -373,7 +373,7 @@ An enterprise bean instance can access
 resource managers in a transaction only in the enterprise bean’s methods
 in which there is a transaction context available.
 
-=== Non-Transactional Execution
+===== Non-Transactional Execution
 
 Some enterprise beans may need to access
 resource managers that do not support an external transaction
@@ -392,7 +392,7 @@ enterprise bean methods. See Subsection link:Ejb.html#a2889[See
 Handling of Methods that Run with “an unspecified transaction context”]
 for how the container implements this case.
 
-=== Isolation Levels
+==== Isolation Levels
 
 Transactions not only make completion of a
 unit of work atomic, but they also isolate the units of work from each
@@ -437,7 +437,8 @@ enterprise beans access the same resource manager in the same
 transaction. Conflicts in the requested isolation levels must be
 avoided.
 
-=== [[a2250]]Enterprise Beans Using Bean-Managed Transaction Demarcation
+[[a2250]]
+==== Enterprise Beans Using Bean-Managed Transaction Demarcation
 
 This subsection describes the requirements
 for the Bean Provider of an enterprise bean with bean-managed
@@ -944,7 +945,7 @@ ut;
 
 }
 
-=== getRollbackOnly and setRollbackOnly Methods
+===== getRollbackOnly and setRollbackOnly Methods
 
 An enterprise bean with
 bean-managed transaction demarcation must
@@ -963,7 +964,7 @@ An enterprise bean with bean-managed
 transaction demarcation can rollback a transaction using the rollback
 method of the javax.transaction.UserTransaction interface.
 
-=== Enterprise Beans Using Container-Managed Transaction Demarcation
+==== Enterprise Beans Using Container-Managed Transaction Demarcation
 
 This subsection describes the requirements
 for the Bean Provider of an enterprise bean using container-managed
@@ -1076,7 +1077,7 @@ the
 
 }
 
-=== javax.ejb.SessionSynchronization Interface
+===== javax.ejb.SessionSynchronization Interface
 
 A stateful
 session bean with container-managed transaction demarcation can
@@ -1085,7 +1086,7 @@ use the session synchronization annotations. Their use is described in
 Subsection link:Ejb.html#a736[See The Session Synchronization
 Notifications for Stateful Session Beans].
 
-=== javax.ejb.EJBContext.setRollbackOnly Method
+===== javax.ejb.EJBContext.setRollbackOnly Method
 
 An enterprise
 bean with container-managed transaction demarcation can use the
@@ -1101,7 +1102,7 @@ debits one account and credits another account could mark a transaction
 for rollback if it successfully performs the debit operation, but
 encounters a failure during the credit operation.
 
-=== javax.ejb.EJBContext.getRollbackOnly method
+===== javax.ejb.EJBContext.getRollbackOnly method
 
 An enterprise
 bean with container-managed transaction demarcation can use the
@@ -1111,7 +1112,7 @@ been marked for rollback by the enterprise bean itself, by other
 enterprise beans, or by other components (outside of the EJB
 specification scope) of the transaction processing infrastructure.
 
-=== Use of JMS APIs in Transactions
+==== Use of JMS APIs in Transactions
 
 The Bean Provider should not make use of the
 JMS request/reply paradigm (sending of a JMS message, followed by the
@@ -1139,7 +1140,7 @@ unspecified transaction context”] describes some of the techniques that
 the container can use for the implementation of a method invocation with
 an unspecified transaction context.
 
-=== Specification of a Bean’s Transaction Management Type
+==== Specification of a Bean’s Transaction Management Type
 
 By default, a session bean or message-driven
 bean has container managed transaction demarcation if the transaction
@@ -1165,7 +1166,8 @@ specified or defaulted by the Bean Provider. (See Chapter
 link:Ejb.html#a5804[See Deployment Descriptor] for information
 about the deployment descriptor.)
 
-=== [[a2538]]Specification of the Transaction Attributes for a Bean’s Methods
+[[a2538]]
+==== Specification of the Transaction Attributes for a Bean’s Methods
 
 The Bean Provider
 of an enterprise bean with container-managed transaction demarcation may
@@ -1347,7 +1349,8 @@ that the enterprise bean is invoked only in a transaction. If the bean
 were invoked without a transaction, the container would not be able to
 send the transaction synchronization calls.
 
-=== [[a2583]]Specification of Transaction Attributes with Metadata Annotations
+[[a2583]]
+===== Specification of Transaction Attributes with Metadata Annotations
 
 The following rules apply for the
 specification of transaction attributes using Java language metadata
@@ -1447,7 +1450,7 @@ Assuming _aMethod_ , _bMethod_ , _cMethod_
 are methods of interface _A_ , their transaction attributes are
 _REQUIRED_ , _SUPPORTS_ , and _REQUIRES_NEW_ respectively.
 
-=== Specification of Transaction Attributes in the Deployment Descriptor
+===== Specification of Transaction Attributes in the Deployment Descriptor
 
 The following rules apply for the
 specification of transaction attributes in the deployment descriptor.
@@ -1467,7 +1470,8 @@ override annotations, and transaction attributes are not specified for
 some methods, the values specified in annotations (whether explicit or
 defaulted) will apply for those methods.
 
-=== [[a2624]]Use of the container-transaction element
+[[a2624]]
+====== Use of the container-transaction element
 
 The container-transaction element may be used
 to define the transaction attributes for the following methods:
@@ -1711,7 +1715,8 @@ container-managed transaction demarcation
 have been assigned a transaction attribute if this has not be specified
 in the deployment descriptor.
 
-=== [[a2695]]Container Provider Responsibilities
+[[a2695]]
+=== Container Provider Responsibilities
 
 
 
@@ -1738,7 +1743,7 @@ as described in the JTA specification and pass it to the transaction
 manager. After the set up is done, the enterprise bean communicates with
 the resource manager without going through the container.
 
-=== Bean-Managed Transaction Demarcation
+==== Bean-Managed Transaction Demarcation
 
 This subsection defines the container’s
 responsibilities for the transaction management of enterprise beans with
@@ -1933,7 +1938,8 @@ bean-managed transaction demarcation attempts to invoke the
 setRollbackOnly or getRollbackOnly method of the javax.ejb.EJBContext
 interface.
 
-=== [[a2748]]Container-Managed Transaction Demarcation for Session Beans
+[[a2748]]
+==== Container-Managed Transaction Demarcation for Session Beans
 
 The container is responsible for providing
 the transaction demarcation for the session beans declared with
@@ -1942,7 +1948,8 @@ the container must demarcate transactions as specified by the
 transaction attribute values specified using metadata annotations in the
 bean class or specified in the deployment descriptor.
 
-=== [[a2750]]Session Synchronization Callbacks
+[[a2750]]
+===== Session Synchronization Callbacks
 
 If a session bean class implements the
 javax.ejb.SessionSynchronization interface or uses the session
@@ -1968,7 +1975,8 @@ afterCompletion(boolean committed) method after the completion of the
 transaction commit protocol to notify the enterprise bean instance of
 the transaction outcome.
 
-=== [[a2755]]Container-Managed Transaction Demarcation for Business Methods
+[[a2755]]
+==== Container-Managed Transaction Demarcation for Business Methods
 
 The following
 subsections define the responsibilities of the container for managing
@@ -1978,7 +1986,7 @@ component interface), no-interface view, or web service endpoint. The
 container’s responsibilities depend on the value of the transaction
 attribute.
 
-=== NOT_SUPPORTED
+===== NOT_SUPPORTED
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
@@ -2001,7 +2009,7 @@ link:Ejb.html#a2889[See Handling of Methods that Run with “an
 unspecified transaction context”] for more details of how the container
 can implement this case.
 
-=== REQUIRED
+===== REQUIRED
 
 The container
 must invoke an enterprise bean method whose transaction attribute is set
@@ -2026,7 +2034,7 @@ invocation. The container attempts to commit the transaction when the
 business method has completed. The container performs the commit
 protocol before the method result is sent to the client.
 
-=== SUPPORTS
+===== SUPPORTS
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
@@ -2046,7 +2054,7 @@ semantics provided by the two possible modes of execution. Only the
 enterprise beans that will execute correctly in both modes should use
 the _SUPPORTS_ transaction attribute.
 
-=== REQUIRES_NEW
+===== REQUIRES_NEW
 
 The container
 must invoke an enterprise bean method whose transaction attribute is set
@@ -2070,7 +2078,7 @@ business method. The container resumes the suspended transaction
 association after the business method and the new transaction have been
 completed.
 
-=== MANDATORY
+===== MANDATORY
 
 The container
 must invoke an enterprise bean method whose transaction attribute is set
@@ -2090,7 +2098,7 @@ is a remote client, and the
 _javax.ejb.TransactionRequiredLocalException_ if the client is a local
 client.
 
-=== NEVER
+===== NEVER
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
@@ -2108,7 +2116,7 @@ If the client calls without a transaction
 context, the container performs the same steps as described in the
 NOT_SUPPORTED case.
 
-=== Transaction Attribute Summary
+===== Transaction Attribute Summary
 
 The following table provides a summary of the
 transaction context that the container passes to the business method and
@@ -2242,7 +2250,7 @@ unspecified transaction context”] for how the container handles the
 “none” case in Table link:Ejb.html#a2786[See Transaction
 Attribute Summary].
 
-=== Handling of setRollbackOnly Method
+===== Handling of setRollbackOnly Method
 
 The container
 must handle the EJBContext.setRollbackOnly method invoked from a
@@ -2268,7 +2276,7 @@ java.lang.IllegalStateException if the EJBContext.setRollbackOnly method
 is invoked from a business method executing with the SUPPORTS,
 NOT_SUPPORTED, or NEVER transaction attribute.
 
-=== Handling of getRollbackOnly Method
+===== Handling of getRollbackOnly Method
 
 The container
 must handle the EJBContext.getRollbackOnly method invoked from a
@@ -2280,21 +2288,22 @@ java.lang.IllegalStateException if the EJBContext.getRollbackOnly method
 is invoked from a business method executing with the SUPPORTS,
 NOT_SUPPORTED, or NEVER transaction attribute.
 
-=== Handling of getUserTransaction Method
+===== Handling of getUserTransaction Method
 
 If an instance of
 an enterprise bean with container-managed transaction demarcation
 attempts to invoke the getUserTransaction method of the EJBContext
 interface, the container must throw the java.lang.IllegalStateException.
 
-=== Timing of Return Value Marshalling with Regard to Transaction Boundaries
+===== Timing of Return Value Marshalling with Regard to Transaction Boundaries
 
 When demarcating a container-managed
 transaction for a business method invocation through a remote view or
 web service view, the container must complete the commit protocol before
 marshalling the return value.
 
-=== [[a2854]]Container-Managed Transaction Demarcation for Message-Driven Beans
+[[a2854]]
+==== Container-Managed Transaction Demarcation for Message-Driven Beans
 
 The container is responsible for providing
 the transaction demarcation for the
@@ -2305,7 +2314,8 @@ by annotations on the bean class or in the deployment descriptor. (See
 Chapter link:Ejb.html#a5804[See Deployment Descriptor] for more
 information about the deployment descriptor.)
 
-=== [[a2858]]Container-Managed Transaction Demarcation for Message Listener Methods
+[[a2858]]
+==== Container-Managed Transaction Demarcation for Message Listener Methods
 
 The following subsections define the
 responsibilities of the container for managing the invocation of a
@@ -2320,7 +2330,7 @@ there is no pre-existing client transaction context ( _REQUIRES_NEW_ ,
 _SUPPORTS_ ) and no client to handle exceptions ( _MANDATORY_ , _NEVER_
 ).
 
-=== NOT_SUPPORTED
+===== NOT_SUPPORTED
 
 The container invokes a message-driven bean
 message listener method whose transaction
@@ -2331,7 +2341,7 @@ If the message listener method invokes other
 enterprise beans, the container passes no transaction context with the
 invocation.
 
-=== REQUIRED
+===== REQUIRED
 
 The container must invoke a message-driven
 bean message listener method whose
@@ -2360,7 +2370,7 @@ invocation. The transaction is committed when the _onMessage_ method has
 completed. If the _onMessage_ method does not successfully complete or
 the transaction is rolled back, message redelivery semantics apply.
 
-=== Handling of setRollbackOnly Method
+===== Handling of setRollbackOnly Method
 
 The container must handle the
 EJBContext.setRollbackOnly method invoked
@@ -2381,7 +2391,7 @@ java.lang.IllegalStateException if the EJBContext.setRollbackOnly method
 is invoked from a message listener method executing with the
 NotSupported transaction attribute
 
-=== Handling of getRollbackOnly Method
+===== Handling of getRollbackOnly Method
 
 The container must handle the
 EJBContext.getRollbackOnly() method invoked
@@ -2393,7 +2403,7 @@ java.lang.IllegalStateException if the EJBContext.getRollbackOnly method
 is invoked from a message listener method executing with the
 NOT_SUPPORTED transaction attribute.
 
-=== Handling of getUserTransaction Method
+===== Handling of getUserTransaction Method
 
 If an instance of a message-driven bean with
 container-managed transaction demarcation attempts to invoke the
@@ -2401,7 +2411,7 @@ getUserTransaction method of the EJBContext
 interface, the container must throw and log the
 java.lang.IllegalStateException.
 
-=== Local Transaction Optimization
+==== Local Transaction Optimization
 
 The container may use a
 local transaction optimization for
@@ -2426,7 +2436,8 @@ http://jcp.org/en/jsr/detail?id=342.] and
 link:Ejb.html#a9863[See Java EE™ Connector Architecture, version
 1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.].
 
-=== [[a2889]]Handling of Methods that Run with “an unspecified transaction context”
+[[a2889]]
+==== Handling of Methods that Run with “an unspecified transaction context”
 
 The term “an
 unspecified transaction context” is used in the EJB specification to
@@ -2495,7 +2506,7 @@ This section describes a more complex
 distributed transaction scenario, and
 specifies the container’s behavior required for this scenario.
 
-=== Transaction “Diamond” Scenario with an Entity Object
+==== Transaction “Diamond” Scenario with an Entity Object
 
 An entity
 objectlink:#a10279[61] may be accessed by multiple clients in the
@@ -2549,7 +2560,7 @@ The following subsections define the
 responsibilities of the EJB Roles when handling distributed transaction
 topologies that may lead to a diamond involving an entity object.
 
-=== Container Provider’s Responsibilities
+==== Container Provider’s Responsibilities
 
 This subsection specifies the EJB container’s
 responsibilities with respect to the diamond case involving an entity
@@ -2575,7 +2586,7 @@ client invocation would lead to a diamond, the container should throw
 the _javax.ejb.EJBException_ (or java.rmi.RemoteException if the EJB 2.1
 remote client view is used).
 
-=== Bean Provider’s Responsibilities
+==== Bean Provider’s Responsibilities
 
 This subsection specifies the Bean Provider’s
 responsibilities with respect to the diamond case involving an entity
@@ -2589,7 +2600,7 @@ differently for the bean to participate in a diamond. Any solution to
 the diamond problem implemented by the container is transparent to the
 bean and does not change the semantics of the bean.
 
-=== Application Assembler and Deployer’s Responsibilities
+==== Application Assembler and Deployer’s Responsibilities
 
 This subsection specifies the Application
 Assembler and Deployer’s responsibilities with respect to the diamond
@@ -2607,7 +2618,7 @@ Deployer should advise the container (using a container-specific API)
 that an entity objects of the entity bean may be involved in distributed
 diamond scenarios.
 
-=== Transaction Diamonds involving Session Objects
+==== Transaction Diamonds involving Session Objects
 
 While it is illegal for two clients to access
 the same session object, it is possible for applications that use

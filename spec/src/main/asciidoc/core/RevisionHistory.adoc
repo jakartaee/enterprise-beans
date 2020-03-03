@@ -527,7 +527,8 @@ Appendix B, “Open Issues and To-Do Items”
 all non-resolved open issues to JIRA
 (http://java.net/jira/browse/EJB_SPEC)]
 
-=== [[a10047]]Public Review Draft 1 & 2
+[[a10047]]
+=== Public Review Draft 1 & 2
 
 
 
