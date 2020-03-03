@@ -79,8 +79,6 @@ shared between clients and supports concurrent access.
 
 === Conversational State of a Stateful Session Bean
 
-
-
 The
 conversational state of a _stateful_ session object is defined as the
 session bean instance’s field values, its associated interceptors and
@@ -92,15 +90,14 @@ To efficiently manage the size of its working
 set, a session bean container may need to temporarily transfer the state
 of an idle _stateful_ session bean instance to some form of secondary
 storage. The transfer from the working set to secondary storage is
-called instance _passivation_ . The transfer back is called _activation_
-.
+called instance _passivation_. The transfer back is called _activation_.
 
-{empty}In advanced cases, a session object’s
+In advanced cases, a session object’s
 conversational state may contain open resources, such as open sockets
 and open database cursors. A container cannot retain such open resources
 when a session bean instance is passivated. A developer of a stateful
-session bean must close and open the resources in the _PrePassivate_ and
-_PostActivate_ lifecycle callback interceptor
+session bean must close and open the resources in the `PrePassivate` and
+`PostActivate` lifecycle callback interceptor
 methods.footnote:a10228[Note that this requirement does not apply to the 
 `EntityManager` and `EntityManagerFactory` objects.]
 
@@ -108,20 +105,19 @@ A container may only passivate a stateful
 session bean instance when the instance is _not_ in a transaction.
 
 A container must not passivate a stateful
-session bean that is designated as not passivation capable. See section
-link:Ejb.html#a1053[See Disabling Passivation of Stateful
-Session Beans] on how to disable passivation of stateful session beans.
+session bean that is designated as not passivation capable. See <<a1053>> 
+on how to disable passivation of stateful session beans.
 
-{empty}A container must not passivate a
+A container must not passivate a
 stateful session bean with an extended persistence context unless the
 following conditions are met:footnote:a10229[The container is not 
 permitted to destroy a stateful session bean instance because it does 
 not meet these requirements.]
 
-All the entities in the persistence context
+* All the entities in the persistence context
 are serializable.
 
-The EntityManager is serializable.
+* The EntityManager is serializable.
 
 A stateless session bean is never passivated.
 
@@ -131,151 +127,151 @@ A singleton session bean is never passivated.
 ==== Instance Passivation and Conversational State
 
 The Bean Provider
-is required to ensure that the _PrePassivate_ method leaves the instance
+is required to ensure that the `PrePassivate` method leaves the instance
 fields and the fields of its associated interceptors ready to be
 serialized by the container. The objects that are assigned to the
-instance’s non- _transient_ fields and the non- _transient_ fields of
-its interceptors after the _PrePassivate_ method completes must be one
+instance’s _non-transient_ fields and the _non-transient_ fields of
+its interceptors after the `PrePassivate` method completes must be one
 of the following.
 
-A serializable object.footnote:a10230[Note that the Java Serialization 
+* A serializable object.footnote:a10230[Note that the Java Serialization 
 protocol dynamically determines whether or not an object is serializable. 
 This means that it is possible to serialize an object of a serializable 
 subclass of a non-serializable declared field type.]
 
-A _null_ .
+* A `null`.
 
-A reference to an enterprise bean’s local or
+* A reference to an enterprise bean’s local or
 remote business interface.
 
-A reference to an enterprise bean’s
+* A reference to an enterprise bean’s
 no-interface view.
 
-A reference to an enterprise bean’s remote
+* A reference to an enterprise bean’s remote
 component interface, even if the stub class is not serializable.
 
-A reference to an enterprise bean’s remote
+* A reference to an enterprise bean’s remote
 home interface, even if the stub class is not serializable.
 
-A reference to an entity
+* A reference to an entity
 bean’s footnote:a10230[] local component interface, even if it is
 not serializable.
 
-A reference to an entity
+* A reference to an entity
 bean’s footnote:a10231[Component contract and client view of entity 
 beans are described in the EJB Optional Features document 
 <<a9890>>.] local home interface, even if it is not serializable.
 
-A reference to the _SessionContext_ object,
+* A reference to the `SessionContext` object,
 even if it is not serializable.
 
-A reference to the environment naming context
-(that is, the java:comp/env JNDI context) or any of its subcontexts.
+* A reference to the environment naming context
+(that is, the `java:comp/env` JNDI context) or any of its subcontexts.
 
-A reference to the UserTransaction interface.
+* A reference to the `UserTransaction` interface.
 
-A reference to a resource manager connection
+* A reference to a resource manager connection
 factory.footnote:a10232[Except for the `javax.mail.Session` resource 
 manager connection factory.]
 
-A reference to a container-managed
-_EntityManager_ object, even if it is not serializable.
+* A reference to a container-managed
+`EntityManager` object, even if it is not serializable.
 
-A reference to an _EntityManagerFactory_
+* A reference to an `EntityManagerFactory`
 object obtained via injection or JNDI lookup, even if it is not
 serializable.
 
-A reference to a _javax.ejb.Timer_ object.
+* A reference to a `javax.ejb.Timer` object.
 
-An object that is not directly serializable,
+* An object that is not directly serializable,
 but becomes serializable by replacing the references to an enterprise
 bean’s business interface, an enterprise bean’s home and component
-interfaces, the references to the _SessionContext_ object, the
-references to the _java:comp/env_ JNDI context and its subcontexts, the
-references to the _UserTransaction_ interface, and the references to the
-_EntityManager_ and/or _EntityManagerFactory_ by serializable objects
+interfaces, the references to the `SessionContext` object, the
+references to the `java:comp/env` JNDI context and its subcontexts, the
+references to the `UserTransaction` interface, and the references to the
+`EntityManager` and/or `EntityManagerFactory` by serializable objects
 during the object’s serialization.
 
-This means, for example, that the Bean
-Provider must close all JDBC™ connections in the _PrePassivate_ method
-and assign the instance’s fields storing the connections to _null_ .
+_This means, for example, that the Bean
+Provider must close all JDBC(TM) connections in the `PrePassivate` method
+and assign the instance’s fields storing the connections to `null`._
 
-The last bulleted item covers cases such as
-storing Collections of component interfaces in the conversational state.
+_The last bulleted item covers cases such as
+storing Collections of component interfaces in the conversational state._
 
 The Bean Provider must assume that the
-content of transient fields may be lost between the _PrePassivate_ and
-_PostActivate_ notifications. Therefore, the Bean Provider should not
-store in a transient field a reference to any of the following objects:
-_SessionContext_ object; environment JNDI naming context and any its
+content of `transient` fields may be lost between the `PrePassivate` and
+`PostActivate` notifications. Therefore, the Bean Provider should not
+store in a `transient` field a reference to any of the following objects:
+`SessionContext` object; environment JNDI naming context and any its
 subcontexts; business interfaces; home and component interfaces;
-_EntityManager_ interface; _EntityManagerFactory_ interface;
-UserTransaction interface.
+`EntityManager` interface; `EntityManagerFactory` interface;
+`UserTransaction` interface.
 
-The restrictions on the use of transient
+_The restrictions on the use of transient
 fields ensure that containers can use Java Serialization during
-passivation and activation.
+passivation and activation._
 
 The following are
-the requirements for the container.
+the requirements for the container:
 
-The container performs the Java programming
+* The container performs the Java programming
 language Serialization (or its equivalent) of the instance’s state (and
-its interceptors’ state) after it invokes the PrePassivate method on the
+its interceptors’ state) after it invokes the `PrePassivate` method on the
 instance and its interceptors.
 
-The container must be able to properly save
+* The container must be able to properly save
 and restore the reference to the business interfaces and home and
 component interfaces of the enterprise beans stored in the instance’s
 state even if the classes that implement the object references are not
 serializable.
 
-The container may use, for example, the
+* The container may use, for example, the
 object replacement technique that is part of the
-_java.io.ObjectOutputStream_ and _java.io.ObjectInputStream_ protocol to
+`java.io.ObjectOutputStream` and `java.io.ObjectInputStream` protocol to
 externalize the home and component references.
 
-The container must be able to properly save
+* The container must be able to properly save
 and restore references to timers stored in the instance’s state even if
 the classes that implement the timers are not serializable.
 
-If the session bean instance stores in its
+* If the session bean instance stores in its
 conversational state an object reference to the
-_javax.ejb.SessionContext_ interface, the container must be able to save
+`javax.ejb.SessionContext` interface, the container must be able to save
 and restore the reference across the instance’s passivation. The
-container can replace the original _SessionContext_ object with a
-different and functionally equivalent _SessionContext_ object during
+container can replace the original `SessionContext` object with a
+different and functionally equivalent `SessionContext` object during
 activation.
 
-If the session bean instance stores in its
-conversational state an object reference to the _java:comp/env_ JNDI
+* If the session bean instance stores in its
+conversational state an object reference to the `java:comp/env` JNDI
 context or its subcontext, the container must be able to save and
 restore the object reference across the instance’s passivation. The
 container can replace the original object with a different and
 functionally equivalent object during activation.
 
-If the session
+* If the session
 bean instance stores in its conversational state an object reference to
-the _UserTransaction_ interface, the container must be able to save and
+the `UserTransaction` interface, the container must be able to save and
 restore the object reference across the instance’s passivation. The
 container can replace the original object with a different and
 functionally equivalent object during activation.
 
-If the session
+* If the session
 bean instance stores in its conversational state an object reference to
-a container-managed _EntityManager_ or to an _EntityManagerFactory_
+a container-managed `EntityManager` or to an `EntityManagerFactory`
 obtained via injection or JNDI lookup, the container must be able to
 save and restore the object reference across the instance’s passivation.
 
-The container may destroy a session bean
+* The container may destroy a session bean
 instance if the instance does not meet the requirements for
-serialization after PrePassivate.
+serialization after `PrePassivate`.
 
-While the container is not required to use
+* While the container is not required to use
 the Serialization protocol for the Java programming language to store
 the state of a passivated session instance, it must achieve the
 equivalent result. The one exception is that containers are not required
-to reset the value of _transient_ fields during
+to reset the value of `transient` fields during
 activation.footnote:a10234[This is to allow the container to swap out an 
 instance’s state through techniques other than the Java Serialization 
 protocol. For example, the container’s Java Virtual Machine implementation 
@@ -295,7 +291,7 @@ If a rollback
 could result in an inconsistency between a session object’s
 conversational state and the state of the underlying database, the bean
 developer (or the application development tools used by the developer)
-must use the _afterCompletion_ notification to manually reset its state.
+must use the `afterCompletion` notification to manually reset its state.
 
 === Protocol Between a Session Bean Instance and its Container
 
