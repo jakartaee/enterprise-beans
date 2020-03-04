@@ -137,7 +137,7 @@ of the following.
 * A serializable object.footnote:a10230[Note that the Java Serialization 
 protocol dynamically determines whether or not an object is serializable. 
 This means that it is possible to serialize an object of a serializable 
-subclass of a non-serializable declared field type.]
+subclass of a non-serializable declared field type.
 
 * A `null`.
 
@@ -947,8 +947,6 @@ rules on dealing with exceptions in stateful session beans._
 [[a800]]
 === Access in the Global JNDI Namespace
 
-
-
 The Java EE Platform Specification defines a
 standardized global JNDI namespace and a series of related namespaces
 that map to the various scopes of a Java EE application. These
@@ -962,28 +960,28 @@ namespaces.
 Each portable session bean global JNDI name
 has the following syntax:
 
-{empty}java:global[/<app-name>]/<module-name>/<bean-name>[!<fully-qualified-interface-name>]
+`java:global[/<app-name>]/<module-name>/<bean-name>[!<fully-qualified-interface-name>]`
 
-<app-name> only applies if the session bean
-is packaged within an .ear file. It defaults to the base name of the
-_.ear_ file with no filename extension, unless specified by the
-application.xml deployment descriptor.
+* `<app-name>` only applies if the session bean
+is packaged within an `.ear` file. It defaults to the base name of the
+`.ear` file with no filename extension, unless specified by the
+`application.xml` deployment descriptor.
 
-<module-name> is the name of the module in
+* `<module-name>` is the name of the module in
 which the session bean is packaged. In a stand-alone ejb-jar file or
-.war file, <module-name> defaults to the base name of the module with
-any filename extension removed. In an ear file, the <module-name>
+`.war` file, `<module-name>` defaults to the base name of the module with
+any filename extension removed. In an ear file, the `<module-name>`
 defaults to the pathname of the module with any filename extension
 removed, but with any directory names included. The default module name
-can be overridden using the module-name element of ejb-jar.xml file (for
-_ejb-jar_ files) or web.xml file (for _.war_ files).
+can be overridden using the module-name element of `ejb-jar.xml` file (for
+`ejb-jar` files) or `web.xml` file (for `.war` files).
 
-<bean-name> is the ejb-name of the enterprise
+* `<bean-name>` is the ejb-name of the enterprise
 bean. For enterprise beans defined via annotations, it defaults to the
-unqualified name of the session bean class, unless otherwise specified
-by the _name_ element of the Stateless, Stateful, or Singleton
-annotation. For enterprise beans defined via the _ejb-jar.xml_ file, it
-is specified in the ejb-name deployment descriptor element.
+_unqualified_ name of the session bean class, unless otherwise specified
+by the `name` element of the `Stateless`, `Stateful`, or `Singleton`
+annotation. For enterprise beans defined via the `ejb-jar.xml` file, it
+is specified in the `ejb-name` deployment descriptor element.
 
 The container registers a separate JNDI name
 entry for each local business interface, each remote business interface,
@@ -996,10 +994,10 @@ the bean exposes only one of the applicable client interfaces (or,
 alternatively has only a no-interface view), the container registers an
 entry for that view with the following syntax:
 
-java:global[/<app-name>]/<module-name>/<bean-name>
+`java:global[/<app-name>]/<module-name>/<bean-name>`
 
-{empty}The container is also required to make
-session bean JNDI names available through the java:app and java:module
+The container is also required to make
+session bean JNDI names available through the `java:app` and `java:module`
 namespaces.footnote:a10239[Note that the existence of global JNDI names 
 for the local and no-interface client views does not imply that 
 cross-application access to those entries is required. See <<a242>> for 
@@ -1007,24 +1005,24 @@ more details.]
 
 ===== java:app
 
-The java:app prefix allows a component
+The `java:app` prefix allows a component
 executing within a Java EE application to access an application-specific
 namespace. The resulting syntax is:
 
-{empty}java:app/<module-name>/<bean-name>[!<fully-qualified-interface-name>]
+`java:app/<module-name>/<bean-name>[!<fully-qualified-interface-name>]`
 
-Note that <module-name> is a required part of
+Note that `<module-name>` is a required part of
 the syntax, even for names based on session bean components packaged
 within a stand-alone module.
 
 [[a816]]
 ===== java:module
 
-The _java:_ module prefix allows a component
+The `java:module` prefix allows a component
 executing within a Java EE application to access a module-specific
 namespace. The resulting syntax is:
 
-{empty}java:module/<bean-name>[!<fully-qualified-interface-name>]
+`java:module/<bean-name>[!<fully-qualified-interface-name>]`
 
 ==== Examples
 
@@ -1032,146 +1030,100 @@ The following examples show the resulting
 global JNDI names for various session beans.
 
 ===== Session bean exposing a single local business interface
-
-
-
+[source, java]
+----
 package com.acme;
 
-
-
 @Stateless
+public class FooBean implements Foo { ... }
+----
 
-public class FooBean implements Foo \{ ... }
-
-
-
-If FooBean is packaged in fooejb.jar without
+If `FooBean` is packaged in `fooejb.jar` without
 a deployment descriptor and deployed as a stand-alone module, the
 resulting JNDI name entries are:
 
+[source]
+----
 java:global/fooejb/FooBean
-
 java:global/fooejb/FooBean!com.acme.Foo
 
-
-
 java:app/fooejb/FooBean
-
 java:app/fooejb/FooBean!com.acme.Foo
 
-
-
 java:module/FooBean
-
 java:module/FooBean!com.acme.Foo
+----
 
-If FooBean is packaged in fooejb.jar within
-fooapp.ear, without the use of any deployment descriptors, the resulting
+If `FooBean` is packaged in `fooejb.jar` within
+`fooapp.ear`, without the use of any deployment descriptors, the resulting
 global JNDI name entries are:
-
+[source]
+----
 java:global/fooapp/fooejb/FooBean
-
 java:global/fooapp/fooejb/FooBean!com.acme.Foo
 
-
-
 java:app/fooejb/FooBean
-
 java:app/fooejb/FooBean!com.acme.Foo
 
-
-
 java:module/FooBean
-
 java:module/FooBean!com.acme.Foo
+----
 
-If FooBean is packaged in a stand-alone
-fooweb.war file, without the use of any deployment descriptors, the
+If `FooBean` is packaged in a stand-alone
+`fooweb.war` file, without the use of any deployment descriptors, the
 resulting global JNDI name entries are:
-
+[source]
+----
 java:global/fooweb/FooBean
-
 java:global/fooweb/FooBean!com.acme.Foo
 
-
-
 java:app/fooweb/FooBean
-
 java:app/fooweb/FooBean!com.acme.Foo
 
-
-
 java:module/FooBean
-
 java:module/FooBean!com.acme.Foo
+----
 
-If FooBean is packaged in fooweb.war within
-fooapp.ear, without the use of any deployment descriptors, the resulting
+If `FooBean` is packaged in `fooweb.war` within
+`fooapp.ear`, without the use of any deployment descriptors, the resulting
 global JNDI name entries are:
-
+[source]
+----
 java:global/fooapp/fooweb/FooBean
-
 java:global/fooapp/fooweb/FooBean!com.acme.Foo
 
-
-
 java:app/fooweb/FooBean
-
 java:app/fooweb/FooBean!com.acme.Foo
 
-
-
 java:module/FooBean
-
 java:module/FooBean!com.acme.Foo
-
-
-
-
-
-
-
-
+----
 
 ===== Session bean exposing multiple client views
-
-
-
+[source, java]
+----
 package com.acme;
 
-
-
 @Singleton(name="Shared")
-
 @LocalBean
-
 @Remote(com.acme.SharedRemote.class)
+public class SharedBean { ... }
+----
 
-public class SharedBean \{ ... }
-
-
-
-If SharedBean is packaged in shared.jar
+If `SharedBean` is packaged in `shared.jar`
 without a deployment descriptor and deployed as a stand-alone module,
 the resulting global JNDI name entries are:
-
+[source]
+----
 java:global/shared/Shared!com.acme.SharedBean
-
 java:global/shared/Shared!com.acme.SharedRemote
 
-
-
 java:app/shared/Shared!com.acme.SharedBean
-
 java:app/shared/Shared!com.acme.SharedRemote
 
-
-
 java:module/Shared!com.acme.SharedBean
-
 java:module/Shared!com.acme.SharedRemote
-
-
+----
 
 === Asynchronous Methods
 
