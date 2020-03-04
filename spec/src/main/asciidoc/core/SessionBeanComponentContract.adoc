@@ -522,11 +522,11 @@ determined by the lifecycle callback method's transaction attribute.
 ==== The SessionBean Interface
 
 The session bean class is not required to
-implement the _SessionBean_ interface or the _Serializable_ interface.
+implement the `SessionBean` interface or the `Serializable` interface.
 Interceptor classes for the bean are likewise not required to implement
-the _Serializable_ interface.
+the `Serializable` interface.
 
- _The SessionBean interface was required to
+_Compatibility Note: The SessionBean interface was required to
 be implemented by the session bean class in earlier versions of the
 Enterprise JavaBeans specification. Under the EJB 3.x API, the
 functionality previously provided by the SessionBean interface is
@@ -534,52 +534,52 @@ available to the bean class through selective use of dependency
 injection (of the SessionContext) and optional lifecycle callback
 interceptor methods._
 
-The _SessionBean_ interface defines four
-methods: _setSessionContext_ , _ejbRemove_ , _ejbPassivate_ , and
-_ejbActivate_ .
+The `SessionBean` interface defines four
+methods: `setSessionContext`, `ejbRemove`, `ejbPassivate`, and
+`ejbActivate`.
 
-The _setSessionContext_
- method is called by the bean’s container to
+The `setSessionContext` method is called by the bean’s container to
 associate a session bean instance with its context maintained by the
 container. Typically a session bean instance retains its session context
 as part of its state.
 
-The _ejbRemove_ notification signals that the
+The `ejbRemove` notification signals that the
 instance is in the process of being removed by the container. In the
-_ejbRemove_  method, the instance typically
-releases the same resources that it releases in the _ejbPassivate_
- method.
+`ejbRemove`  method, the instance typically releases the same resources 
+that it releases in the `ejbPassivate` method.
 
-Under the EJB 3.x API, the bean class may
-optionally define a _PreDestroy_ lifecycle callback interceptor method
-for notification of the container’s removal of the bean instance.
+{empty}::
+_Under the EJB 3.x API, the bean class may
+optionally define a `PreDestroy` lifecycle callback interceptor method
+for notification of the container’s removal of the bean instance._
 
-The _ejbPassivate_ notification signals the
-intent of the container to passivate the instance. The _ejbActivate_
+The `ejbPassivate` notification signals the
+intent of the container to passivate the instance. The `ejbActivate`
 notification signals the instance it has just been reactivated. Their
 purpose is to allow stateful session beans to maintain those open
 resources that need to be closed prior to an instance’s passivation and
-then reopened during an instance’s activation. The _ejbPassivate_ and
-_ejbActivate_ methods are only called on stateful session bean
+then reopened during an instance’s activation. The `ejbPassivate` and
+`ejbActivate` methods are only called on stateful session bean
 instances.
 
-Under the EJB 3.x API, the bean class may
-optionally define _PrePassivate_ and/or _PostActivate_ lifecycle
+{empty}::
+_Under the EJB 3.x API, the bean class may
+optionally define `PrePassivate` and/or `PostActivate` lifecycle
 callback interceptor methods for notification of the
-passivation/activation of the bean instance.
+passivation/activation of the bean instance._
 
 This specification requires that the
-_ejbRemove_ , _ejbActivate_ , and _ejbPassivate_ methods of the
-_SessionBean_ interface, and the _ejbCreate_ method of a stateless
-session bean be treated as _PreDestroy_ , _PostActivate_ ,
-_PrePassivate_ and _PostConstruct_ life cycle callback interceptor
+`ejbRemove`, `ejbActivate`, and `ejbPassivate` methods of the
+`SessionBean` interface, and the `ejbCreate` method of a stateless
+session bean be treated as `PreDestroy`, `PostActivate`,
+`PrePassivate` and `PostConstruct` life cycle callback interceptor
 methods, respectively.
 
 If the session bean implements the
-_SessionBean_ interface, the _PreDestroy_ annotation on the bean class
-can only be applied to the _ejbRemove_ method; the _PostActivate_
-annotation can only be applied to the _ejbActivate_ method; the
-_PrePassivate_ annotation can only be applied to the _ejbPassivate_
+`SessionBean` interface, the `PreDestroy` annotation on the bean class
+can only be applied to the `ejbRemove` method; the `PostActivate`
+annotation can only be applied to the `ejbActivate` method; the
+`PrePassivate` annotation can only be applied to the `ejbPassivate`
 method. Similar requirements apply to use of deployment descriptor
 metadata as an alternative to the use of annotations.
 
@@ -587,9 +587,9 @@ metadata as an alternative to the use of annotations.
 ==== The Session Synchronization Notifications for Stateful Session Beans
 
 A stateful
-session bean class can optionally implement the javax.ejb.
-_SessionSynchronization_ interface or annotate methods using the
-individual AfterBegin, BeforeCompletion, and AfterCompletion
+session bean class can optionally implement the 
+`javax.ejb.SessionSynchronization` interface or annotate methods using the
+individual `AfterBegin`, `BeforeCompletion`, and `AfterCompletion`
 annotations. The deployment descriptor may also be used to declare the
 individual session synchronization methods. These provide the session
 bean instances with transaction
@@ -597,65 +597,63 @@ synchronization notifications. The instances can use these
 notifications, for example, to manage database data they may cache
 within transactions—e.g., if the Java Persistence API is not used. A
 stateful session bean class may use either the
-javax.ejb.SessionSynchronization interface or the session
+`javax.ejb.SessionSynchronization` interface or the session
 synchronization annotations, but not both. If annotation are used, there
-must be at most one _AfterBegin_ method, one _BeforeCompletion_ method,
-and one _AfterCompletion_ method for the bean.
+must be at most one `AfterBegin` method, one `BeforeCompletion` method,
+and one `AfterCompletion` method for the bean.
 
-The _afterBegin_
+The `afterBegin`
 notification signals a session bean instance that a new transaction has
 begun. The container invokes this method before the first business
 method within a transaction (which is not necessarily at the beginning
-of the transaction). The _afterBegin_ notification is invoked with the
+of the transaction). The `afterBegin` notification is invoked with the
 transaction context. The instance may do any database work it requires
 within the scope of the transaction.
 
-The _beforeCompletion_
- notification is issued when a session bean
+The `beforeCompletion` notification is issued when a session bean
 instance’s client has completed work on its current transaction but
 prior to committing the resource managers used by the instance. At this
 time, the instance should write out any database updates it has cached.
 The instance can cause the transaction to roll back by invoking the
-setRollbackOnly method on its
-_SessionContext_ object.
+`setRollbackOnly` method on its
+`SessionContext` object.
 
-The _afterCompletion_
- notification signals that the current
-transaction has completed. A completion status of _true_ indicates that
-the transaction has committed. A status of _false_ indicates that a
+The `afterCompletion` notification signals that the current
+transaction has completed. A completion status of `true` indicates that
+the transaction has committed. A status of `false` indicates that a
 rollback has occurred. Since a session bean instance’s conversational
 state is not transactional, it may need to manually reset its state if a
 rollback occurred.
 
-All Container Providers must support the __
+All Container Providers must support the 
 session synchronization notifications. If a
-bean class implements the _SessionSynchronization_ interface, the
-container must invoke the _afterBegin_ , _beforeCompletion_ , and
-_afterCompletion_ notifications as required by the specification. If the
+bean class implements the `SessionSynchronization` interface, the
+container must invoke the `afterBegin`, `beforeCompletion`, and
+`afterCompletion` notifications as required by the specification. If the
 bean implementor uses the session synchronization annotations, the
 container must invoke only the notifications corresponding to the
 annotations that have been used.
 
-If a stateful session bean's PostConstruct,
-PreDestroy, PrePassivate or PostActivate lifecycle callback interceptor
+If a stateful session bean's `PostConstruct`,
+`PreDestroy`, `PrePassivate` or `PostActivate` lifecycle callback interceptor
 method is invoked in the scope of a transaction, session synchronization
 callbacks for the transaction are not called on the bean instance.
 
 A session synchronization method can have
-public, private, protected, or package level access. A session
-synchronization method must not be declared as _final_ or _static_ .
+`public`, `private`, `protected`, or `package` level access. A session
+synchronization method must not be declared as `final` or `static`.
 
 Only a stateful session bean with
 container-managed transaction demarcation can receive session
 synchronization notifications. Stateless session beans and singleton
-session beans must not implement the _SessionSynchronization_ interface
+session beans must not implement the `SessionSynchronization` interface
 or use the session synchronization annotations.
 
-There is no need for a session bean with
+_There is no need for a session bean with
 bean-managed transaction demarcation to rely on the synchronization call
 backs because the bean is in control of the commit—the bean knows when
 the transaction is about to be committed and it knows the outcome of the
-transaction commit.
+transaction commit._
 
 ==== Timeout Callbacks for Stateless and Singleton Session Beans
 
@@ -663,7 +661,7 @@ A stateless session bean or singleton session
 bean can be registered with the EJB Timer Service for time-based event
 notifications. The container invokes the appropriate bean instance
 timeout callback method when a timer for the bean has expired. See
-link:Ejb.html#a5456[See Timer Service]. Stateful session beans
+<<a5456>>. Stateful session beans
 cannot be registered with the EJB Timer Service, and therefore should
 not implement timeout callback methods.
 
@@ -673,7 +671,8 @@ The session bean’s business interface,
 no-interface view, component interface, or web service endpoint defines
 the business methods callable by a client.
 
-The container classes that implement these
+{empty}::
+_The container classes that implement these
 are generated by the container tools. The class that implements the
 session bean’s business interface and the class that implements the
 session bean’s no-interface view and the class that implements a session
@@ -681,7 +680,7 @@ bean’s component interface delegate an invocation of a business method
 to the matching business method that is implemented in the session bean
 class. The class that handles requests to the web service endpoint
 invokes the session bean method that matches the web service method
-corresponding to the SOAP request.
+corresponding to the SOAP request._
 
 [[a756]]
 ==== Session Bean Creation
@@ -691,39 +690,36 @@ an instance of a session bean as follows. First, the container calls the
 bean class constructor to create a new session bean instance. Second,
 the container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. This
-includes the bean’s SessionContext, if applicable. Third, the container
-calls the _PostConstruct_ lifecycle callback interceptor methods for the
-bean, if any. The additional steps described below in sections
-link:Ejb.html#a759[See Stateful Session Beans] and
-link:Ejb.html#a762[See Stateless Session Beans] apply if the
-session bean is invoked through the EJB 2.1 client view APIs.
+includes the bean’s `SessionContext`, if applicable. Third, the container
+calls the `PostConstruct` lifecycle callback interceptor methods for the
+bean, if any. The additional steps described below in <<a759>> 
+and <<a762>> apply if the session bean is invoked through the EJB 2.1 
+client view APIs.
 
 If an interceptor associated with the session
-bean declares an _AroundConstruct_ lifecycle callback interceptor
-method, the container follows the rules for the _AroundConstruct
-interceptors_ defined in the Interceptors specification
-link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.].
+bean declares an `AroundConstruct` lifecycle callback interceptor
+method, the container follows the rules for the `AroundConstruct`
+interceptors defined in the _Interceptors_ specification <<a9887>>.
 
 [[a759]]
 ===== Stateful Session Beans
 
 If the bean is a stateful session bean and
-the client has used one of the create<METHOD> methods defined in the
+the client has used one of the `create<METHOD>` methods defined in the
 session bean’s home or local home interface to create the bean, the
 container then calls the instance’s initialization method whose
-signature matches the signature of the _create<METHOD>_ invoked by the
+signature matches the signature of the `create<METHOD>` invoked by the
 client, passing to the method the input parameters sent from the client.
 If the bean class is written to the EJB 3.x API, and has been adapted
 for use with an earlier client view, this initialization method is a
-matching _Init_ method, as designated by use of the _Init_ annotation,
-or _init-method_ deployment descriptor element.footnote:a10235[Any 
+matching `Init` method, as designated by use of the `Init` annotation,
+or `init-method` deployment descriptor element.footnote:a10235[Any 
 initialization methods defined for the bean by means of the `init-method` 
 deployment descriptor element apply in addition to those defined by means 
 of annotations.]
 If the bean class was written to the EJB 2.1 or earlier API, this
-initialization method is a matching _ejbCreate<METHOD>_ method, as
-described in link:Ejb.html#a1498[See ejbCreate<METHOD> Methods].
+initialization method is a matching `ejbCreate<METHOD>` method, as
+described in <<a1498>>.
 
 Each stateful session bean class that has a
 home interface must have at least one such initialization method. The
@@ -737,31 +733,30 @@ the client uses to customize the bean instance for its use.
 ===== Stateless Session Beans
 
 A stateless session bean that has an EJB 2.1
-local or remote client view has a single _create_ method on its home
+local or remote client view has a single `create` method on its home
 interface. In this case, EJB 2.1 required the stateless session bean
-class to have a single no-arg _ejbCreate_ method. Under the EJB 3.x API,
-it is not required that a stateless session bean have an _ejbCreate_
+class to have a single no-arg `ejbCreate` method. Under the EJB 3.x API,
+it is not required that a stateless session bean have an `ejbCreate`
 method, even when it has a home interface. An EJB 3.x stateless session
-bean class may have a _PostConstruct_ method, as described in Section
-link:Ejb.html#a705[See Session Bean Lifecycle Callback
-Interceptor Methods].
+bean class may have a `PostConstruct` method, as described in <<a705>>.
 
 If the stateless session bean instance has an
-_ejbCreate_ method, the container treats the _ejbCreate_ method as the
-instance’s _PostConstruct_ method, and, in this case, the
-_PostConstruct_ annotation (or deployment descriptor metadata) can only
-be applied to the bean’s _ejbCreate_ method.
+`ejbCreate` method, the container treats the `ejbCreate` method as the
+instance’s `PostConstruct` method, and, in this case, the
+`PostConstruct` annotation (or deployment descriptor metadata) can only
+be applied to the bean’s `ejbCreate` method.
 
-Since stateless session bean instances are
-typically pooled, the time of the client’s invocation of the _create_
+{empty}::
+_Since stateless session bean instances are
+typically pooled, the time of the client’s invocation of the `create`
 method need not have any direct relationship to the container’s
-invocation of the _PostConstruct_ / _ejbCreate_ method on the stateless
-session bean instance.
+invocation of the `PostConstruct/ejbCreate` method on the stateless
+session bean instance._
 
 A stateless session bean that provides only a
-web service client view has no _create_ method. If the _ejbCreate_
+web service client view has no `create` method. If the `ejbCreate`
 method required by EJB 2.1 is present, it is treated by the container as
-the instance’s _PostConstruct_ method, and is invoked when the container
+the instance’s `PostConstruct` method, and is invoked when the container
 needs to create a new session bean instance in order to service a client
 request.
 
@@ -770,28 +765,28 @@ request.
 
 A stateful session bean written to the EJB
 3.x API typically has one or more remove methods designated by means of
-the _Remove_ annotation or _remove-method_ deployment descriptor
+the `Remove` annotation or `remove-method` deployment descriptor
 element.footnote:a10236[Any remove methods defined for the bean by means 
 of the `remove-method` deployment descriptor element apply in addition to 
 those defined by means of annotations.]
 Invocation of the remove method causes
 the removal of the stateful session bean after the remove method
-successfully completes. If the _Remove_ annotation specifies the value
-of _retainIfException_ as _true_ and the invocation of the _Remove_
+successfully completes. If the `Remove` annotation specifies the value
+of `retainIfException` as `true` and the invocation of the `Remove`
 method throws an application exception, the instance is not removed. The
-_retain-if-exception_ subelement of the _remove-method_ deployment
+`retain-if-exception` subelement of the `remove-method` deployment
 descriptor element may be explicitly specified to override the
-_retainIfException_ value specified or defaulted by the _Remove_
-annotation. The default value of the _retainIfException_ element is
-_false_ . If there are multiple remove methods, their
-_retainIfException_ values can differ.
+`retainIfException` value specified or defaulted by the `Remove`
+annotation. The default value of the `retainIfException` element is
+`false`. If there are multiple remove methods, their
+`retainIfException` values can differ.
 
 ==== Stateful Session Bean Timeout
 
 A Bean Provider or Deployer may optionally
 assign a timeout value to a stateful session bean. The stateful session
-bean timeout is specified using the StatefulTimeout annotation on the
-bean class. It may also be specified using the stateful-timeout
+bean timeout is specified using the `StatefulTimeout` annotation on the
+bean class. It may also be specified using the `stateful-timeout`
 deployment descriptor element. If both are specified, the deployment
 descriptor value overrides that of the annotation.
 
@@ -812,12 +807,11 @@ the specification.
 A stateful session bean instance must not be
 removed due to timeout while it is associated with a transaction or
 while it is processing a business method or callback. The full stateful
-session bean life cycle is covered in link:Ejb.html#a921[See
-Stateful Session Beans].
+session bean life cycle is covered in <<a921>>.
 
 ==== Business Method Interceptor Methods for Session Beans
 
-The _AroundInvoke_ interceptor methods are
+The `AroundInvoke` interceptor methods are
 supported for session beans. These interceptor methods may be defined on
 the bean class and/or on interceptor classes, and apply to the handling
 of the invocation of the business methods of the bean’s business
@@ -825,20 +819,18 @@ interface, no-interface view, component interface, and/or web service
 endpoint.
 
 For stateful session beans that use the
-session synchronization notifications, the _afterBegin_ notification
-occurs before any _AroundInvoke_ method invocations, and the
-_beforeCompletion_ notification occurs after all _AroundInvoke_
+session synchronization notifications, the `afterBegin` notification
+occurs before any `AroundInvoke` method invocations, and the
+`beforeCompletion` notification occurs after all `AroundInvoke`
 invocations have finished.
 
-Interceptors are described in
-link:Ejb.html#a2004[See Interceptors].
+Interceptors are described in <<a2004>>.
 
 [[a778]]
 ==== Serializing Session Bean Methods
 
 The following requirements apply to stateless
-and stateful session beans. See section link:Ejb.html#a1257[See
-Singleton Session Bean Concurrency] for singleton session bean
+and stateful session beans. See <<a1257>> for singleton session bean
 concurrency requirements.
 
 The container serializes calls to each
@@ -851,7 +843,7 @@ coded as reentrant.
 The container must serialize all the
 container-invoked callbacks (that is, the
 business method interceptor methods, lifecycle callback interceptor
-methods, timeout callback methods, beforeCompletion methods, and so on),
+methods, timeout callback methods, `beforeCompletion` methods, and so on),
 and it must serialize these callbacks with the client-invoked business
 method calls.
 
@@ -864,28 +856,27 @@ as the bean-managed concurrency mode, are not applicable to stateful
 session beans and must not be used.footnote:a10237[The concurrency 
 management type `CONTAINER` may be specified for stateful session beans, 
 but doing so has no impact on the semantics of concurrency management 
-for such beans.] See
-link:Ejb.html#a1257[See Singleton Session Bean Concurrency] for
+for such beans.] See <<a1257>> for
 a description of how these concurrency modes and locking types apply to
 singleton session beans.
 
 The Bean Provider may optionally specify that
 concurrent client requests to a stateful session bean are prohibited.
-This is done using the AccessTimeout annotation or the _access-timeout_
-deployment descriptor element with a value of 0. In this case, if a
+This is done using the `AccessTimeout` annotation or the `access-timeout`
+deployment descriptor element with a value of `0`. In this case, if a
 client-invoked business method is in progress on an instance when
 another client-invoked call, from the same or different client, arrives
 at the same stateful session bean istance, if the second client is a
 client of the bean’s business interface or no-interface view, the
 concurrent invocation must result in the second client receiving the
-_javax.ejb.ConcurrentAccessException_.footnote:a10238[The 
+`javax.ejb.ConcurrentAccessException`.footnote:a10238[The 
 `javax.ejb.ConcurrentAccessException` is a subclass of the 
 `javax.ejb.EJBException`. If the business interface is a remote business 
 interface that extends `java.rmi.Remote`, the client will receive the 
 `java.rmi.RemoteException` instead.] If the
 EJB 2.1 client view is used, the container must throw the
-java.rmi.RemoteException if the second client is a remote client, or the
-_javax.ejb.EJBException_ if the second client is a local client.
+`java.rmi.RemoteException` if the second client is a remote client, or the
+`javax.ejb.EJBException` if the second client is a local client.
 
 There is no need for any restrictions against
 concurrent client access to stateless session beans because the
@@ -894,21 +885,21 @@ session bean class.
 
 ===== Stateful Session Bean Concurrent Access Timeouts
 
-The AccessTimeout annotation is used to
+The `AccessTimeout` annotation is used to
 specify the amount of time a stateful session bean request should block
 in the case that it cannot immediately access a bean instance that is
 already processing a different request. If an access attempt times out,
-the container throws the javax.ejb.ConcurrentAccessTimeoutException to
+the container throws the `javax.ejb.ConcurrentAccessTimeoutException` to
 the client.
 
-The AccessTimeout annotation can be specified
+The `AccessTimeout` annotation can be specified
 on a business method or on the bean class (or superclass). The
-AccessTimeout annotation specified on a class applies the access timeout
-to all business methods of that class. If the AccessTimeout annotation
+`AccessTimeout` annotation specified on a class applies the access timeout
+to all business methods of that class. If the `AccessTimeout` annotation
 is specified on both the class and on a business method of that class,
 the method-level annotation takes precedence.
 
-An AccessTimeout value of -1 indicates that a
+An `AccessTimeout` value of `-1` indicates that a
 concurrent client request will block indefinitely until it can proceed.
 
 ==== Transaction Context of Session Bean Methods
@@ -918,43 +909,40 @@ session bean methods are invoked in the scope of a transaction
 determined by the transaction attribute specified in the bean’s metadata
 annotations or deployment descriptor.
 
-An implementation of a method defined in a
+* An implementation of a method defined in a
 session bean’s business interface or component interface or no-interface
 view.
 
-A web service method.
+* A web service method.
 
-A timeout callback method
+* A timeout callback method
 
-A singleton session bean’s PostConstruct or
-PreDestroy lifecycle callback interceptor method.
+*A singleton session bean’s `PostConstruct` or
+`PreDestroy` lifecycle callback interceptor method.
 
-A stateful session bean's PostConstruct,
-PreDestroy, PrePassivate or PostActivate lifecycle callback interceptor
+A stateful session bean's `PostConstruct`,
+`PreDestroy`, `PrePassivate` or `PostActivate` lifecycle callback interceptor
 method is invoked in the scope of a transaction determined by the
 transaction attribute specified in the lifecycle callback method's
 metadata annotations or deployment descriptor.
 
-A stateful session bean’s _afterBegin_ and
-_beforeCompletion_ methods are always called with the same transaction
-context as the business methods executed between the _afterBegin_ and
-_beforeCompletion_ methods.
+A stateful session bean’s `afterBegin` and
+`beforeCompletion` methods are always called with the same transaction
+context as the business methods executed between the `afterBegin` and
+`beforeCompletion` methods.
 
-A session bean’s _constructor_ ,
-_setSessionContext_ , other dependency injection methods, other life
-cycle callback interceptor methods, and _afterCompletion_ methods are
-called with an unspecified transaction context. Refer to section
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] for how the container executes methods
-with an unspecified transaction context.
+A session bean’s constructor, `setSessionContext`, other dependency 
+injection methods, other life cycle callback interceptor methods, and
+`afterCompletion` methods are called with an unspecified transaction context.
+Refer to <<a2889>> for how the container executes methods with an unspecified 
+transaction context.
 
-If database operations are performed within a
-stateful session bean’s _PostConstruct_ , _PreDestroy_ , _PrePassivate_
-or _PostActivate_ lifecycle callback interceptor methods these
+_If database operations are performed within a
+stateful session bean’s `PostConstruct`, `PreDestroy`, `PrePassivate`
+or `PostActivate` lifecycle callback interceptor methods these
 operations will not be part of the client’s transaction. If such a
-transaction is rolled back, the instance is discarded. See section
-link:Ejb.html#a1041[See Dealing with Exceptions] for rules on
-dealing with exceptions in stateful session beans.
+transaction is rolled back, the instance is discarded. See <<a1041>> for 
+rules on dealing with exceptions in stateful session beans._
 
 [[a800]]
 === Access in the Global JNDI Namespace
