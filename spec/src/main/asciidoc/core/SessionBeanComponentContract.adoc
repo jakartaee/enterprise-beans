@@ -1590,95 +1590,84 @@ JNDI access to java:comp/env
 
 Notes:
 
-The _PostConstruct_ , _PreDestroy_ ,
-_PrePassivate_ , _PostActivate_ , and/or ejbCreate _<METHOD>_ ,
-ejbRemove, ejbPassivate, and ejbActivate methods of a stateful session
+The `PostConstruct`, `PreDestroy`,
+`PrePassivate`, `PostActivate`, and/or `ejbCreate<METHOD>`,
+`ejbRemove`, `ejbPassivate`, and `ejbActivate` methods of a stateful session
 bean with container-managed transaction demarcation are invoked in the
 scope of a transaction determined by the
 transaction attribute specified in the
 bean’s metadata annotations or deployment descriptor.
 
-The _Init methods of a session bean with
+The `Init` methods of a session bean with
 container-managed transaction demarcation execute with an unspecified
-transaction context._ Refer to Subsection
+transaction context. Refer to Subsection
 link:Ejb.html#a2889[See Handling of Methods that Run with “an
 unspecified transaction context”] for how the container executes methods
-with an unspecified transaction context _._
+with an unspecified transaction context.
 
 In some cases, lifecycle callback interceptor
 methods initiated solely by the container without an associated client
-invocation run in an unspecified security context, e.g., a PostConstruct
+invocation run in an unspecified security context, e.g., a `PostConstruct`
 method callback invoked as a side-effect of the injection of a remote or
 local business interface reference. However, the container is still
 required to permit client calls to these methods according to the rules
-in this table (see note on link:Ejb.html#a1516[See Note:
-Callback methods are permitted to have public access type. This raises
-the question of whether a callback method can also be exposed as a
-business method through one or more client views. Doing so is not
-prohibited, but should be done with caution. The runtime context (e.g.
-transaction context, caller principal, operations allowed, etc.) for a
-method invoked as a callback can differ significantly from the context
-for the same method when invoked via a client invocation. As a general
-rule, callback methods should not be exposed as business methods.
-Therefore, it is recommended that all non-business methods be assigned
-an access type other than public.]).
+in this table (see note on <<a1516>>).
 
 Additional restrictions:
 
-The getRollbackOnly and setRollbackOnly
+* The getRollbackOnly and setRollbackOnly
 methods of the SessionContext interface should be used only in the
 session bean methods that execute in the context of a transaction. The
-container must throw the java.lang.IllegalStateException if the methods
+container must throw the `java.lang.IllegalStateException` if the methods
 are invoked while the instance is not associated with a transaction.
 
 The reasons for disallowing the operations in
-Table link:Ejb.html#a953[See Operations Allowed in the Methods
-of a Stateful Session Bean] follow:
+<<a953>> follow:
 
-Invoking the _getBusinessObject_ method is
+* Invoking the `getBusinessObject` method is
 disallowed if the session bean does not define a business interface or a
 no-interface view.
 
-Invoking the _getInvokedBusinessInterface_
+* Invoking the `getInvokedBusinessInterface`
 method is disallowed if the session bean does not define a business
 interface or a no-interface view. It is also disallowed if the current
 business method was not invoked through a business interface or the
 no-interface view.
 
-Invoking the _getEJBObject_ and _getEJBHome_
+* Invoking the `getEJBObject` and `getEJBHome`
 methods is disallowed if the session bean does not define a remote
 component client view.
 
-Invoking the _getEJBLocalObject_ and
-_getEJBLocalHome_ methods is disallowed if the session bean does not
+* Invoking the `getEJBLocalObject` and
+`getEJBLocalHome` methods is disallowed if the session bean does not
 define a local component client view.
 
-Invoking the getRollbackOnly and
-setRollbackOnly methods is disallowed in the session bean methods for
+* Invoking the `getRollbackOnly` and
+`setRollbackOnly` methods is disallowed in the session bean methods for
 which the container does not have a meaningful transaction context, and
 to all session beans with bean-managed transaction demarcation.
 
-Accessing resource managers and enterprise
+* Accessing resource managers and enterprise
 beans is disallowed in the session bean methods for which the container
 does not have a meaningful transaction context and/or client security
 context.
 
-The UserTransaction interface is unavailable
+* The `UserTransaction` interface is unavailable
 to enterprise beans with container-managed transaction demarcation.
 
-The _TimerService_ interface is unavailable
+* The `TimerService` interface is unavailable
 to stateful session beans.
 
-Invoking the _getMessageContext_ method is
+* Invoking the `getMessageContext` method is
 disallowed for stateful session beans.
 
-Invoking the getEJBObject and
-_getEJBLocalObject_ methods is disallowed in the session bean methods in
+* Invoking the `getEJBObject` and
+`getEJBLocalObject` methods is disallowed in the session bean methods in
 which there is no session object identity established for the instance.
 
-Invoking the _wasCancelCalled_ method is
+* Invoking the `wasCancelCalled` method is
 disallowed except when inside the context of the asynchronous methods
-that declare Future<V> object as the returning type.
+that declare `Future<V>` object as the returning type.
 
 [[a1041]]
 ==== Dealing with Exceptions
