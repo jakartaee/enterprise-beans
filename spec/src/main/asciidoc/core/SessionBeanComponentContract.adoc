@@ -1245,28 +1245,21 @@ of a `java.util.concurrent.ExecutionException` thrown from either
 [[a921]]
 === Stateful Session Beans
 
-
-
 ==== Stateful Session Bean Lifecycle State Diagram
 
 The following figure illustrates the life
 cycle of a stateful session bean instance.
 
-===
-
-
-
-Life Cycle of a Stateful Session Bean Instance
-
-image:EBCore-10.png[image]
+.Life Cycle of a Stateful Session Bean Instance
+image::EBCore-10.png[]
 
 The following
 steps describe the life cycle of a stateful session bean instance:
 
-A session bean instance’s life starts when a
+* A session bean instance’s life starts when a
 client obtains a reference to a stateful session bean instance through
 dependency injection or JNDI lookup, or when the client invokes a
-_create<METHOD>_ method on the session bean’s home interface. This
+`create<METHOD>` method on the session bean’s home interface. This
 causes the container to invoke the session bean class constructor to
 create a new session bean instance.footnote:a10240[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateful session bean, 
@@ -1274,48 +1267,44 @@ the container follows the rules for the `AroundConstruct` interceptors
 defined in the _Interceptors_ specification <<a9887>>.] Next, the
 container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
-container then calls the _PostConstruct_ lifecycle callback interceptor
+container then calls the `PostConstruct` lifecycle callback interceptor
 method(s) for the bean, if any. Finally, if the session bean was written
 to the EJB 2.1 client view, the container invokes the matching
-_ejbCreate<METHOD>_ or _Init_ method on the instance. The container then
+`ejbCreate<METHOD>` or `Init` method on the instance. The container then
 returns the session object reference to the client. The instance is now
-in the method ready state.
-
- _NOTE: When a stateful session bean is
+in the method ready state. +
+_NOTE: When a stateful session bean is
 looked up or otherwise obtained through the explicit JNDI lookup
 mechanisms, the container must provide a new stateful session bean
-instance, as required by the Java EE specification (Section “Java Naming
-and Directory Interface (JNDI) Naming Context”
-link:Ejb.html#a9854[See Java™ Naming and Directory Interface 1.2
-Specification (JNDI).
-http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html.])._
+instance, as required by the Java EE specification (Section "Java Naming
+and Directory Interface (JNDI) Naming Context" <<a9854>>)._
 
-The session bean instance is now ready for
+* The session bean instance is now ready for
 client’s business methods. Based on the transaction attributes in the
 session bean’s metadata annotations and/or deployment descriptor and the
 transaction context associated with the client’s invocation, a business
 method is executed either in a transaction context or with an
-unspecified transaction context (shown as “tx method” and “non-tx
-method” in the diagram). See link:Ejb.html#a2172[See Support for
-Transactions] for how the container deals with transactions.
+unspecified transaction context (shown as "tx method" and "non-tx
+method" in the diagram). See <<a2172>> for how the container deals with
+transactions.
 
-A non-transactional method is executed while
+* A non-transactional method is executed while
 the instance is in the method ready state.
 
-An invocation of a transactional method
+* An invocation of a transactional method
 causes the instance to be included in a transaction. When the session
 bean instance is included in a transaction, the container issues the
 _afterBegin_ method on it if the session bean has an _afterBegin_
 callback method.footnote:a10241[If a stateful session bean lifecycle 
 callback interceptor method is invoked in the scope of a transaction, 
 session synchronization callbacks for such transactions are not called 
-on the bean instance — see <<a2750>>.] The _afterBegin_ method is
+on the bean instance — see <<a2750>>.] The `afterBegin` method is
 invoked on the instance before any business method or business method
 interceptor method is executed as part of the transaction. The instance
 becomes associated with the transaction and will remain associated with
 the transaction until the transaction completes.
 
-Session bean methods invoked by the client in
+* Session bean methods invoked by the client in
 this transaction can now be delegated to the bean instance. An error
 occurs if a client attempts to invoke a method on the session object and
 the bean’s metadata annotations and/or deployment descriptor for the
@@ -1323,70 +1312,71 @@ method requires that the container invoke the method in a different
 transaction context than the one with which the instance is currently
 associated or in an unspecified transaction context.
 
-If a transaction commit has been requested,
+* If a transaction commit has been requested,
 the transaction service notifies the container of the commit request
 before actually committing the transaction, and the container issues the
-_befor_ _eCompletion_ callback on the instance if the session bean has a
-_beforeCompletion_ callback method.footnote:a10241[] When _beforeCompletion_ 
+`beforeCompletion` callback on the instance if the session bean has a
+`beforeCompletion` callback method.footnote:a10241[] When `beforeCompletion` 
 is invoked, the instance should write
 any cached updates to the database.footnote:a10242[Note that if the Java 
 Persistence API is used, the persistence provider will use the 
 beforeCompletion notification to automatically flush any updates to the 
 container-managed persistence context to the database. See <<a9851>>.] If a
 transaction rollback had been requested instead, the rollback status is
-reached without the container issuing a _beforeCompletion_ . The
-container may not call the _beforeCompletion_ method if the transaction
+reached without the container issuing a `beforeCompletion` . The
+container may not call the `beforeCompletion` method if the transaction
 has been marked for rollback (nor does the instance write any cached
 updates to the database).
 
-The transaction service then attempts to
+* The transaction service then attempts to
 commit the transaction, resulting in either a commit or rollback.
 
-When the transaction completes, the container
+* When the transaction completes, the container
 issues _afterCompletion_ on the instance if the session bean has an
-_afterCompletion_ callback method,footnote:a10241[] specifying the status of the completion (either commit or
+`afterCompletion` callback method,footnote:a10241[] specifying the 
+status of the completion (either commit or
 rollback). If a rollback occurred, the bean instance may need to reset
 its conversational state back to the value it had at the beginning of
 the transaction.
 
-The container’s caching algorithm may decide
+* The container’s caching algorithm may decide
 that the bean instance should be evicted from memory. (This could be
 done at the end of each method, or by using an LRU policy). The
-container invokes the _PrePassivate_ lifecycle callback interceptor
+container invokes the `PrePassivate` lifecycle callback interceptor
 method(s) for the bean instance, if any. After this completes, the
 container saves the instance’s state to secondary storage. A session
 bean can be passivated only between transactions, and not within a
 transaction.
 
-While the instance is in the
+* While the instance is in the
 passivated state, the container may remove
 the session object after the expiration of a
 timeout specified by the Deployer. All
 object references and handles for the session object become invalid. If
 a client attempts to invoke a method on the bean’s business interface,
 the container will throw the
-_javax.ejb.NoSuchEJBException_.footnote:a10243[If the business interface 
+`javax.ejb.NoSuchEJBException`.footnote:a10243[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, 
 the `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, the container will throw the
-java.rmi.NoSuchObjectException if the client is a remote client, or the
-_javax.ejb.NoSuchObjectLocalException_ if the client is a local client.
+`java.rmi.NoSuchObjectException` if the client is a remote client, or the
+`javax.ejb.NoSuchObjectLocalException` if the client is a local client.
 
-If a client invokes a session object whose
+* If a client invokes a session object whose
 session bean instance has been passivated, the container will activate
 the instance. To activate the session bean instance, the container
 restores the instance’s state from secondary storage and invokes the
-_PostActivate_ method for the instance, if any.
+`PostActivate` method for the instance, if any.
 
-The session bean instance is again ready for
+* The session bean instance is again ready for
 client methods.
 
-When the client calls a business method of
-the bean that has been designated as a _Remove_ method on the bean class
-or a _remove_ method on the home or component interface, the container
-invokes _PreDestroy_ lifecycle callback interceptor methods, if any, for
-the bean instance after the _Remove_ method
+* When the client calls a business method of
+the bean that has been designated as a `Remove` method on the bean class
+or a `remove` method on the home or component interface, the container
+invokes `PreDestroy` lifecycle callback interceptor methods, if any, for
+the bean instance after the `Remove` method
 completes.footnote:a10244[If the `Remove` annotation specifies the value 
 of `retainIfException` as `true`, and the `Remove` method throws an 
 application exception, the instance is not removed (and the `PreDestroy` 
@@ -1395,119 +1385,103 @@ This ends the life of the session bean
 instance and the associated session object. If a client subsequently
 attempts to invoke a method on the bean’s business interface, the
 container will throw the
-_javax.ejb.NoSuchEJBException_.footnote:a10245[If the business interface 
+`javax.ejb.NoSuchEJBException`.footnote:a10245[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, any subsequent attempt causes the
-_java.rmi.NoSuchObjectException_ to be thrown if the client is a remote
-client, or the _javax.ejb.NoSuchObjectLocalException_ if the client is a
-local client. (The _java.rmi.NoSuchObjectException_ is a subclass of the
-_java.rmi.RemoteException_ ; the _javax.ejb.NoSuchObjectLocalException_
-is a subclass of the _javax.ejb.EJBException_ ). If the _Remove_ method
-completes successfully or if the _Remove_ method throws an application
-exception for which _retainIfException_ is not _true_ or if a system
+`java.rmi.NoSuchObjectException` to be thrown if the client is a remote
+client, or the `javax.ejb.NoSuchObjectLocalException` if the client is a
+local client. (The `java.rmi.NoSuchObjectException` is a subclass of the
+`java.rmi.RemoteException`; the `javax.ejb.NoSuchObjectLocalException`
+is a subclass of the `javax.ejb.EJBException`). If the `Remove` method
+completes successfully or if the `Remove` method throws an application
+exception for which `retainIfException` is not `true` or if a system
 exception is thrown, session synchronization methods are not called on
 the bean instance. If an application exception is thrown for which
-_retainIfException_ is _true_ , the bean is neither destroyed nor
+`retainIfException` is `true` , the bean is neither destroyed nor
 discarded, and session synchronization methods, if any, are called on
-the instance at the end of transaction _._ A container can also invoke
-the _PreDestroy_ method on the instance without a client call to remove
+the instance at the end of transaction. A container can also invoke
+the `PreDestroy` method on the instance without a client call to remove
 the session object:
 
-After the lifetime of the EJB object has
+** After the lifetime of the EJB object has
 expired
-
-When the CDI context, to which the EJB object
+** When the CDI context, to which the EJB object
 belongs to, is destroyed.
 
-The container must call the afterBegin,
-beforeCompletion, and afterCompletion methods if the session bean class
-implements, directly or indirectly, the SessionSynchronization
+_The container must call the `afterBegin`,
+`beforeCompletion`, and `afterCompletion` methods if the session bean class
+implements, directly or indirectly, the `SessionSynchronization`
 interface, or if the bean class uses the session synchronization
-annotations.
+annotations._
 
 [[a947]]
 ==== Operations Allowed in the Methods of a Stateful Session Bean Class
 
-Table link:Ejb.html#a953[See
-Operations Allowed in the Methods of a Stateful Session Bean] defines
+<<a953>> defines
 the methods of a stateful session bean class from which the session bean
-instances can access the methods of the javax.ejb.SessionContext
-interface, the java:comp/env environment naming context, resource
-managers, _Timer_ methods, the _EntityManager_ and
-_EntityManagerFactory_ methods, and other enterprise beans.
+instances can access the methods of the `javax.ejb.SessionContext`
+interface, the `java:comp/env` environment naming context, resource
+managers, `Timer` methods, the `EntityManager` and
+`EntityManagerFactory` methods, and other enterprise beans.
 
 If a session bean
-instance attempts to invoke a method of the SessionContext interface,
-and that access is not allowed in Table link:Ejb.html#a953[See
-Operations Allowed in the Methods of a Stateful Session Bean], the
-container must throw the java.lang.IllegalStateException.
+instance attempts to invoke a method of the `SessionContext` interface,
+and that access is not allowed in <<a953>>, the
+container must throw the `java.lang.IllegalStateException`.
 
 If a session bean instance attempts to access
 a resource manager, an enterprise bean, an entity manager or entity
-manager factory, and that access is not allowed in Table
-link:Ejb.html#a953[See Operations Allowed in the Methods of a
-Stateful Session Bean], the behavior is undefined by the EJB
-architecture.
+manager factory, and that access is not allowed in <<a953>>, the behavior 
+is undefined by the EJB architecture.
 
 If a session bean instance attempts to invoke
-a method of the _Timer_ interface and the access is not allowed in Table
-link:Ejb.html#a953[See Operations Allowed in the Methods of a
-Stateful Session Bean], the container must throw the
-_java.lang.IllegalStateException_ .
+a method of the `Timer` interface and the access is not allowed in <<a953>>, 
+the container must throw the `java.lang.IllegalStateException`.
 
-===
-
-
-
-[[a953]]Operations Allowed in the Methods of a Stateful
-Session Bean
-
+[[a953]]
+[cols=3, options=header]
+.Operations Allowed in the Methods of a Stateful Session Bean
+|===
+^.^|
 Bean method
-
-
-
-
-
+2+^.^|
 Bean method can perform the following
 operations
-
-
-
+|
+h|
 Container-managed transaction demarcation
-
+h|
 Bean-managed transaction demarcation
-
+|
 constructor
-
+|
 -
-
+|
 -
-
+|
 dependency injection methods (e.g.,
 setSessionContext)
-
-SessionContext methods: getEJBHome,
-getEJBLocalHome, lookup
-
-JNDI access to java:comp/env
-
-SessionContext methods: getEJBHome,
-getEJBLocalHome, lookup
+a|
+SessionContext methods:: _getEJBHome, getEJBLocalHome, lookup_
 
 JNDI access to java:comp/env
+a|
+SessionContext methods:: _getEJBHome, getEJBLocalHome, lookup_
 
+JNDI access to java:comp/env
+|
 PostConstruct, PreDestroy,
 PrePassivate, PostActivate lifecycle callback interceptor
 methods footnote:a10246[If a client calls lifecycle callback method 
 through a business interface or a no-interface view, the method is 
 treated like a business method.]
-
-SessionContext methods: _getBusinessObject_ ,
-getEJBHome, _getEJBLocalHome_ , getRollbackOnly, setRollbackOnly,
+a|
+SessionContext methods:: _getBusinessObject,
+getEJBHome, getEJBLocalHome, getRollbackOnly, setRollbackOnly,
 getCallerPrincipal, isCallerInRole, getEJBObject, getEJBLocalObject,
-lookup, getContextData
+lookup, getContextData_
 
 JNDI access to java:comp/env
 
@@ -1518,11 +1492,11 @@ Enterprise bean access
 EntityManagerFactory access
 
 EntityManager access
-
-SessionContext methods: _getBusinessObject_ ,
-getEJBHome, _getEJBLocalHome_ , getCallerPrincipal, isCallerInRole,
+a|
+SessionContext methods:: _getBusinessObject,
+getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, lookup,
-getContextData
+getContextData_
 
 UserTransaction methods
 
@@ -1535,24 +1509,16 @@ Enterprise bean access
 EntityManagerFactory access
 
 EntityManager access
-
-
-
-
-
+|
 business method
-
 from business interface or from no-interface
 view or from component interface;
-
 business method interceptor method
-
-SessionContext methods: _getBusinessObject_ ,
-getEJBHome, _getEJBLocalHome_ , getCallerPrincipal, getRollbackOnly,
+a|
+SessionContext methods: _getBusinessObject,
+getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly,
 isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject,
-getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData
-
-
+getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData_
 
 JNDI access to java:comp/env
 
@@ -1565,11 +1531,11 @@ EntityManagerFactory access
 EntityManager access
 
 Timer methods
-
-SessionContext methods: _getBusinessObject_ ,
-getEJBHome, _getEJBLocalHome_ , getCallerPrincipal, isCallerInRole,
+a|
+SessionContext methods: _getBusinessObject,
+getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getInvokedBusinessInterface,
-wasCancelCalled, getUserTransaction, lookup, getContextData
+wasCancelCalled, getUserTransaction, lookup, getContextData_
 
 UserTransaction methods
 
@@ -1584,15 +1550,15 @@ EntityManagerFactory access
 EntityManager access
 
 Timer methods
-
+|
 afterBegin
 
 beforeCompletion
-
-SessionContext methods: _getBusinessObject_ ,
-getEJBHome, _getEJBLocalHome,_ getCallerPrincipal, getRollbackOnly,
+a|
+SessionContext methods: _getBusinessObject,
+getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly,
 isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject,
-lookup, getContextData
+lookup, getContextData_
 
 JNDI access to java:comp/env
 
@@ -1605,28 +1571,22 @@ EntityManagerFactory access
 EntityManager access
 
 Timer methods
-
-
-
-
-
-
-
-
-
+.2+^.^|
 N/A
 
 (a bean with bean-managed transaction
 demarcation cannot implement the SessionSynchronization interface or use
 the session synchronization annotations)
-
+|
 afterCompletion
-
+|
 SessionContext methods: _getBusinessObject_ ,
 getEJBHome, _getEJBLocalHome,_ getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, lookup, getContextData
 
 JNDI access to java:comp/env
+|
+|===
 
 Notes:
 
