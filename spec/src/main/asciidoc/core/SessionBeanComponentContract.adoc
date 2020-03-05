@@ -1444,9 +1444,9 @@ the container must throw the `java.lang.IllegalStateException`.
 [cols=3, options=header]
 .Operations Allowed in the Methods of a Stateful Session Bean
 |===
-^.^|
+^|
 Bean method
-2+^.^|
+2+^|
 Bean method can perform the following
 operations
 |
@@ -1515,7 +1515,7 @@ from business interface or from no-interface
 view or from component interface;
 business method interceptor method
 a|
-SessionContext methods: _getBusinessObject,
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly,
 isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject,
 getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData_
@@ -1532,7 +1532,7 @@ EntityManager access
 
 Timer methods
 a|
-SessionContext methods: _getBusinessObject,
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getInvokedBusinessInterface,
 wasCancelCalled, getUserTransaction, lookup, getContextData_
@@ -1555,7 +1555,7 @@ afterBegin
 
 beforeCompletion
 a|
-SessionContext methods: _getBusinessObject,
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly,
 isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject,
 lookup, getContextData_
@@ -1571,7 +1571,7 @@ EntityManagerFactory access
 EntityManager access
 
 Timer methods
-.2+^.^|
+.2+<.^a|
 N/A
 
 (a bean with bean-managed transaction
@@ -1590,7 +1590,7 @@ JNDI access to java:comp/env
 
 Notes:
 
-The `PostConstruct`, `PreDestroy`,
+* The `PostConstruct`, `PreDestroy`,
 `PrePassivate`, `PostActivate`, and/or `ejbCreate<METHOD>`,
 `ejbRemove`, `ejbPassivate`, and `ejbActivate` methods of a stateful session
 bean with container-managed transaction demarcation are invoked in the
@@ -1598,20 +1598,18 @@ scope of a transaction determined by the
 transaction attribute specified in the
 bean’s metadata annotations or deployment descriptor.
 
-The `Init` methods of a session bean with
+* The `Init` methods of a session bean with
 container-managed transaction demarcation execute with an unspecified
-transaction context. Refer to Subsection
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] for how the container executes methods
+transaction context. Refer to <<a2889>> for how the container executes methods
 with an unspecified transaction context.
 
-In some cases, lifecycle callback interceptor
+* In some cases, lifecycle callback interceptor
 methods initiated solely by the container without an associated client
 invocation run in an unspecified security context, e.g., a `PostConstruct`
 method callback invoked as a side-effect of the injection of a remote or
 local business interface reference. However, the container is still
 required to permit client calls to these methods according to the rules
-in this table (see note on <<a1516>>).
+in this table (<<a1516, see note>>).
 
 Additional restrictions:
 
@@ -1676,11 +1674,10 @@ A
 RuntimeException that is not an application
 exception thrown from any method of the stateful session bean class
 (including the business methods and the lifecycle callback interceptor
-methods invoked by the container) results in the transition to the “does
-not exist” state. Exception handling is described in detail in Chapter
-link:Ejb.html#a2940[See Exception Handling]. See the
-_Interceptors_ specification link:Ejb.html#a9887[See
-Interceptors, version 1.2. http://jcp.org/en/jsr/detail?id=318.] for the
+methods invoked by the container) results in the transition to the "does
+not exist" state. Exception handling is described in detail in 
+<<a2940>>. See the
+_Interceptors_ specification <<a9887>> for the
 rules pertaining to lifecycle callback interceptor methods when more
 than one such method applies to the bean class.
 
@@ -1688,47 +1685,44 @@ From the client perspective, the
 corresponding session object does not exist any more. If a client
 subsequently attempts to invoke a method on the bean’s business
 interface or the no-interface view, the container will throw the
-_javax.ejb.NoSuchEJBException_.footnote:a10247[If the business interface is 
+`javax.ejb.NoSuchEJBException`.footnote:a10247[If the business interface is 
 a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the EJB 2.1
 client view is used, the container will throw the
-java.rmi.NoSuchObjectException if the client is a remote client, or the
-_javax.ejb.NoSuchObjectLocalException_ if the client is a local client.
+`java.rmi.NoSuchObjectException` if the client is a remote client, or the
+`javax.ejb.NoSuchObjectLocalException` if the client is a local client.
 
 ==== Missed `PreDestroy` Calls
 
 The Bean Provider
-cannot assume that the container will always invoke the PreDestroy
-lifecycle callback interceptor method(s) (or _ejbRemove_ method) for a
+cannot assume that the container will always invoke the `PreDestroy`
+lifecycle callback interceptor method(s) (or `ejbRemove` method) for a
 stateful session bean instance. The following scenarios result in the
 PreDestroy lifecycle callback interceptor method(s) not being called for
 an instance:
 
-A crash of the
-EJB container.
+* A crash of the EJB container.
 
-A system
-exception thrown from the instance’s method to the container.
+* A system exception thrown from the instance’s method to the container.
 
-A timeout of
-client inactivity while the instance is in the passive state. The
-timeout is specified by the Deployer in an EJB container
+* A timeout of client inactivity while the instance is in the passive 
+state. The timeout is specified by the Deployer in an EJB container
 implementation-specific way.
 
 If resources are allocated in a
-_PostConstruct_ lifecycle callback interceptor method (or
-ejbCreate<METHOD> method) and/or in the business methods, and normally
-released in a PreDestroy lifecycle callback interceptor method, these
+`PostConstruct` lifecycle callback interceptor method (or
+`ejbCreate<METHOD>` method) and/or in the business methods, and normally
+released in a `PreDestroy` lifecycle callback interceptor method, these
 resources will not be automatically released in the above scenarios. The
 application using the stateful session bean should provide some clean up
 mechanism to periodically clean up the unreleased resources.
 
-For example, if a shopping cart component is
+_For example, if a shopping cart component is
 implemented as a session bean, and the session bean stores the shopping
 cart content in a database, the application should provide a program
 that runs periodically and removes “abandoned” shopping carts from the
-database.
+database._
 
 [[a1053]]
 ==== Disabling Passivation of Stateful Session Beans
@@ -1738,17 +1732,17 @@ stateful session bean instance to a secondary storage to save resources.
 However, the Bean Provider can optionally configure the stateful session
 bean to prevent passivation of its instances.
 
-For example, a stateful session bean instance
+_For example, a stateful session bean instance
 may contain non-serializable attributes which would lead to runtime
 exceptions during passivation, or passivation and activation of such
-instances may cause degradation of application performance.
+instances may cause degradation of application performance._
 
-If the passivationCapable element of the
-Stateful annotation is set to false or the passivation-capable element
-of the session deployment descriptor element is set to false, the
+If the `passivationCapable` element of the
+`Stateful` annotation is set to false or the `passivation-capable` element
+of the session deployment descriptor element is set to `false`, the
 container must not attempt to passivate instances of the bean.
 
-Note: application server vendors may use
+_Note: application server vendors may use
 passivation as a technique to provide high availability of stateful
 session beans by replicating their state from one JVM instance to
 another across which the container is distributed. In a failure
@@ -1756,17 +1750,17 @@ situation, a stateful session bean is made available on a new JVM
 instance by what is commonly called stateful session bean failover. If a
 container implementation supports failover of stateful session beans
 using bean passivation, the failover capability for not passivation
-capable stateful session beans is not defined.
+capable stateful session beans is not defined._
 
 ==== Transaction Semantics of Initialization, Destruction, Activation and Passivation
 
 By default a stateful session bean’s
-_PostConstruct_ , _PreDestroy_ , _PrePassivate_ and _PostActivate_
+`PostConstruct`, `PreDestroy`, `PrePassivate` and `PostActivate`
 methods are executed in an unspecified transactional context. A
-_PostConstruct_ , _PreDestroy_ , _PrePassivate_ and _PostActivate_
+`PostConstruct`, `PreDestroy`, `PrePassivate` and `PostActivate`
 method of a stateful session bean with container-managed transaction
-demarcation is permitted to have transaction attribute REQUIRES_NEW or
-NOT_SUPPORTED (RequiresNew or NotSupported if the deployment descriptor
+demarcation is permitted to have transaction attribute `REQUIRES_NEW` or
+`NOT_SUPPORTED` (`RequiresNew` or `NotSupported` if the deployment descriptor
 is used to specify the transaction attribute).
 
 ==== Restrictions for Transactions
@@ -1776,29 +1770,29 @@ implies the following restrictions on transaction scoping of the client
 invoked business methods. The restrictions are enforced by the container
 and must be observed by the client programmer.
 
-A stateful session bean instance can
+* A stateful session bean instance can
 participate in at most a single transaction at a time.
 
-If a stateful session bean instance is
+* If a stateful session bean instance is
 participating in a transaction, it is an error for a client to invoke a
 method on the session object such that the transaction attribute
 specified in the bean’s metadata annotations and/or the deployment
 descriptor would cause the container to execute the method in a
 different transaction context or in an unspecified transaction context.
-In such a case, the _javax.ejb.EJBException_ will be thrown to a client
+In such a case, the `javax.ejb.EJBException` will be thrown to a client
 of the bean’s business interface.footnote:a10248[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
 If the EJB 2.1
-client view is used, the container throws the _java.rmi.RemoteException_
+client view is used, the container throws the `java.rmi.RemoteException`
 to the client if the client is a remote client, or the
-_javax.ejb.EJBException_ if the client is a local client.
+`javax.ejb.EJBException` if the client is a local client.
 
 If a stateful session bean instance is
 participating in a transaction, it is an error for a client to invoke
-the _remove_ method on the session object’s home or component interface
+the `remove` method on the session object’s home or component interface
 object. The container must detect such an attempt and throw the
-_javax.ejb.RemoveException_ to the client. The container should not mark
+`javax.ejb.RemoveException` to the client. The container should not mark
 the client’s transaction for rollback, thus allowing the client to
 recover. Note that this restriction only applies to the remove method on
 the session object’s home or component interface, not to the invocation
