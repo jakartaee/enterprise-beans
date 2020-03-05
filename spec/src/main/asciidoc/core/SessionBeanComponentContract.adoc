@@ -1801,23 +1801,22 @@ of Remove methods.
 [[a1065]]
 === Stateless Session Beans
 
-
-
 Stateless session
 beans are session beans whose instances have no conversational state.
 This means that all bean instances are equivalent when they are not
 involved in servicing a client-invoked method.
 
-The term “stateless” signifies that an
+_The term "stateless" signifies that an
 instance has no state for a specific client. However, the instance
 variables of the instance can contain the state across client-invoked
 method calls. Examples of such state include an open database connection
-and an object reference to an enterprise bean object.
+and an object reference to an enterprise bean object._
 
-The Bean Provider must exercise caution if
+{empty}::
+_The Bean Provider must exercise caution if
 retaining any application state across method calls. In particular,
 references to bean instance variables should not be returned through
-multiple local interface method calls.
+multiple local interface method calls._
 
 Because all instances of a stateless session
 bean are equivalent, the container can choose to delegate a
@@ -1829,7 +1828,7 @@ instance.
 
 A container only
 needs to retain the number of instances required to service the current
-client load. Due to client “think time,” this number is typically much
+client load. Due to client "think time", this number is typically much
 smaller than the number of active clients. Passivation is not needed or
 used for stateless session beans. The container creates another
 stateless session bean instance if one is needed to handle an increase
@@ -1847,23 +1846,22 @@ There is no fixed mapping between clients and
 stateless instances. The container simply delegates a client’s work to
 any available instance that is method-ready.
 
-Local and remote
-clients using the EJB 2.1 client view interfaces use the create and
-remove methods on the home interface of a stateless session bean in the
+_Compatability Note: Local and remote
+clients using the EJB 2.1 client view interfaces use the `create` and
+`remove` methods on the home interface of a stateless session bean in the
 same way as on a stateful session bean. To the EJB 2.1 client, it
 appears as if the client controls the life cycle of the session object.
-However, the container handles the create and remove calls without
+However, the container handles the `create` and `remove` calls without
 necessarily creating and removing an EJB instance.
 The home interface of a stateless session
-bean must have one create method that takes no arguments. The _create_
+bean must have one create method that takes no arguments. The `create`
 method of the remote home interface must return the session bean’s
-remote interface. The _create_ method of the local home interface must
+remote interface. The `create` method of the local home interface must
 return the session bean’s local interface.
-There can be no other _create_ methods in
-the home interface.
+There can be no other `create` methods in the home interface._
 
 A stateless session bean must not implement
-the javax.ejb.SessionSynchronization interface or use the session
+the `javax.ejb.SessionSynchronization` interface or use the session
 synchronization annotations.
 
 [[a1077]]
@@ -1877,18 +1875,13 @@ method-ready __ instances and delegates the method invocation to it.
 The following figure illustrates the life
 cycle of a stateless session bean instance.
 
-===
-
-
-
-Life Cycle of a Stateless Session Bean
-
-image:EBCore-11.png[image]
+.Life Cycle of a Stateless Session Bean
+image::EBCore-11.png[]
 
 The following steps describe the life cycle
 of a stateless session bean instance:
 
-A stateless session bean instance’s life
+* A stateless session bean instance’s life
 starts when the container invokes the session bean class constructor to
 create a new session bean instance.footnote:a10249[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateless session 
@@ -1897,123 +1890,110 @@ interceptors defined in the _Interceptors_ specification <<a9887>>.]
 Next, the
 container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
-container then calls the _PostConstruct_ lifecycle callback interceptor
+container then calls the `PostConstruct` lifecycle callback interceptor
 methods for the bean, if any. The container can perform the instance
 creation at any time—there is no direct relationship to a client’s
-invocation of a business method or the _create_ method.
+invocation of a business method or the `create` method.
 
-The session bean instance is now ready to be
+* The session bean instance is now ready to be
 delegated a business method call from any client or a call from the
 container to a timeout callback method.
 
-When the container no longer needs the
+* When the container no longer needs the
 instance (usually when the container wants to reduce the number of
 instances in the method-ready pool), the container invokes the
-_PreDestroy_ lifecycle callback interceptor methods for it, if any. This
+`PreDestroy` lifecycle callback interceptor methods for it, if any. This
 ends the life of the stateless session bean instance.
 
 [[a1085]]
 ==== Operations Allowed in the Methods of a Stateless Session Bean Class
 
-Table link:Ejb.html#a1091[See
-Operations Allowed in the Methods of a Stateless Session Bean] defines
+<<a1091>> defines
 the methods of a stateless session bean class in which the session bean
-instances can access the methods of the javax.ejb.SessionContext
-interface, the java:comp/env environment naming context, resource
-managers, _TimerService_ and _Timer_ methods, the _EntityManager_ and
-_EntityManagerFactory_ methods, and other enterprise beans.
+instances can access the methods of the `javax.ejb.SessionContext`
+interface, the `java:comp/env` environment naming context, resource
+managers, `TimerService` and `Timer` methods, the `EntityManager` and
+`EntityManagerFactory` methods, and other enterprise beans.
 
 If a session bean instance attempts to invoke
-a method of the SessionContext interface, and the access is not allowed
-in Table link:Ejb.html#a1091[See Operations Allowed in the
-Methods of a Stateless Session Bean], the container must throw the
-java.lang.IllegalStateException.
+a method of the `SessionContext` interface, and the access is not allowed
+in <<a1091>>, the container must throw the
+`java.lang.IllegalStateException`.
 
 If a session bean instance attempts to invoke
-a method of the _TimerService_ or _Timer_ interface and the access is
-not allowed in Table link:Ejb.html#a1091[See Operations Allowed
-in the Methods of a Stateless Session Bean], the container must throw
-the _java.lang.IllegalStateException_ .
+a method of the `TimerService` or `Timer` interface and the access is
+not allowed in <<a1091>>, the container must throw
+the `java.lang.IllegalStateException`.
 
 If a session bean instance attempts to access
 a resource manager, an enterprise bean, an entity manager or entity
-manager factory, and the access is not allowed in Table
-link:Ejb.html#a1091[See Operations Allowed in the Methods of a
-Stateless Session Bean], the behavior is undefined by the EJB
-architecture.
+manager factory, and the access is not allowed in <<a1091>>, 
+the behavior is undefined by the EJB architecture.
 
-===
-
-
-
-[[a1091]]Operations Allowed in the Methods of a Stateless
-Session Bean
-
+[[a1091]]
+[cols=3, options=header]
+.Operations Allowed in the Methods of a Stateless Session Bean
+|===
+|
 Bean method
-
-
-
-
-
+2+|
 Bean method can perform the following
 operations
-
-
-
+|
+|
 Container-managed transaction demarcation
-
+|
 Bean-managed transaction demarcation
-
+|
 constructor
-
+|
 -
-
+|
 -
-
+|
 dependency injectionmethods (e.g.,
 setSessionContext)
-
-SessionContext methods: getEJBHome,
-getEJBLocalHome, lookup
-
-JNDI access to java:comp/env
-
-SessionContext methods: getEJBHome,
-getEJBLocalHome, lookup
+a|
+SessionContext methods:: _getEJBHome,
+getEJBLocalHome, lookup_
 
 JNDI access to java:comp/env
+a|
+SessionContext methods:: _getEJBHome,
+getEJBLocalHome, lookup_
 
+JNDI access to java:comp/env
+|
 PostConstruct, PreDestroy lifecycle
 callback interceptor methods footnote:a10250[If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.]
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getEJBObject, getEJBLocalObject,
-getTimerService, lookup, getContextData
+getTimerService, lookup, getContextData_
 
 JNDI access to java:comp/env
 
 EntityManagerFactory access
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getEJBObject, getEJBLocalObject,
-getUserTransaction, getTimerService, lookup, getContextData
+getUserTransaction, getTimerService, lookup, getContextData_
 
 JNDI access to java:comp/env
 
 EntityManagerFactory access
-
+|
 business method
-
 from business interface or from no-interface
 view or from component interface; business method interceptor method
-
-SessionContext methods: _getBusinessObject_ ,
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
 getTimerService, getInvokedBusinessInterface, wasCancelCalled, lookup,
-getContextData
+getContextData_
 
 JNDI access to java:comp/env
 
@@ -2026,11 +2006,11 @@ EntityManagerFactory access
 EntityManager access
 
 TimerService and Timer methods
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
-getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData
+getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData_
 
 UserTransaction methods
 
@@ -2045,15 +2025,14 @@ EntityManagerFactory access
 EntityManager access
 
 TimerService and Timer methods
-
+|
 business method
-
 from web service endpoint
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
-getTimerService, getMessageContext, lookup, getContextData
+getTimerService, getMessageContext, lookup, getContextData_
 
 Message context methods
 
@@ -2068,11 +2047,11 @@ EntityManagerFactory access
 EntityManager access
 
 TimerService and Timer methods
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
-getMessageContext, lookup, getContextData
+getMessageContext, lookup, getContextData_
 
 UserTransaction methods
 
@@ -2089,13 +2068,13 @@ EntityManagerFactory access
 EntityManager access
 
 TimerService and Timer methods
-
+|
 timeout callback method
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
-getTimerService, lookup, getContextData
+getTimerService, lookup, getContextData_
 
 JNDI access to java:comp/env
 
@@ -2108,11 +2087,11 @@ EntityManagerFactory access
 EntityManager access
 
 TimerService and Timer methods
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
-lookup, getContextData
+lookup, getContextData_
 
 UserTransaction methods
 
@@ -2127,72 +2106,68 @@ EntityManagerFactory access
 EntityManager access
 
 TimerService and Timer methods
+|===
 
 Additional restrictions:
 
-The getRollbackOnly and setRollbackOnly
-methods of the SessionContext interface should be used only in the
+* The `getRollbackOnly` and `setRollbackOnly`
+methods of the `SessionContext` interface should be used only in the
 session bean methods that execute in the context of a transaction. The
-container must throw the java.lang.IllegalStateException if the methods
+container must throw the `java.lang.IllegalStateException` if the methods
 are invoked while the instance is not associated with a transaction.
 
-The reasons for disallowing operations in
-Table link:Ejb.html#a1091[See Operations Allowed in the Methods
-of a Stateless Session Bean]:
+The reasons for disallowing operations in <<a1091>>:
 
-Invoking the _getBusinessObject_ method is
+* Invoking the `getBusinessObject` method is
 disallowed if the session bean does not define a business interface or a
 no-interface view.
 
-Invoking the _getInvokedBusinessInterface_
+* Invoking the `getInvokedBusinessInterface`
 method is disallowed if the session bean does not define a business
 interface or a no-interface view. It is also disallowed if the current
 business method was not invoked through a business interface or the
 no-interface view.
 
-Invoking the _getEJBObject_ and _getEJBHome_
+* Invoking the `getEJBObject` and `getEJBHome`
 methods is disallowed if the session bean does not define a
 remote component client view.
 
-Invoking the _getEJBLocalObject_ and
-_getEJBLocalHome_ methods is disallowed if the session bean does not
+* Invoking the `getEJBLocalObject` and
+`getEJBLocalHome` methods is disallowed if the session bean does not
 define a local component client view.
 
-Invoking the getRollbackOnly and
-setRollbackOnly methods is disallowed in the session bean methods for
+* Invoking the `getRollbackOnly` and
+`setRollbackOnly` methods is disallowed in the session bean methods for
 which the container does not have a meaningful
 transaction context, and for all session
 beans with bean-managed transaction
 demarcation.
 
-Invoking the _getMessageContext_ method is
+* Invoking the `getMessageContext` method is
 disallowed in session bean methods that were not invoked by the
 container through the session bean’s web service endpoint.
 
-Accessing resource managers, enterprise
+* Accessing resource managers, enterprise
 beans, and the EntityManager is disallowed in the session bean methods
 for which the container does not have a meaningful transaction context
 and/or client security context.
 
-The UserTransaction interface is unavailable
+* The `UserTransaction` interface is unavailable
 to session beans with container-managed
 transaction demarcation.
 
-Invoking the _wasCancelCalled_ method is
+* Invoking the `wasCancelCalled` method is
 disallowed except when inside the context of the asynchronous methods
 that declare Future<V> object as the returning type.
 
 ==== Dealing with Exceptions
 
-A
-RuntimeException that is not an application exception thrown from any
+A `RuntimeException` that is not an application exception thrown from any
 method of the enterprise bean class (including the business methods and
 the lifecycle callback interceptor methods invoked by the container)
-results in the transition to the “does not exist” state. Exception
-handling is described in detail in Chapter
-link:Ejb.html#a2940[See Exception Handling]. See the
-_Interceptors_ specification link:Ejb.html#a9887[See
-Interceptors, version 1.2. http://jcp.org/en/jsr/detail?id=318.] for the
+results in the transition to the "does not exist" state. Exception
+handling is described in detail in <<a2940>>. See the
+_Interceptors_ specification <<a9887>> for the
 rules pertaining to lifecycle callback interceptor methods when more
 than one such method applies to the bean class.
 
