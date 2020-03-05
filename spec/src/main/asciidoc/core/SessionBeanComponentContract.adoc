@@ -1441,14 +1441,13 @@ a method of the `Timer` interface and the access is not allowed in <<a953>>,
 the container must throw the `java.lang.IllegalStateException`.
 
 [[a953]]
-[cols=3, options=header]
+[cols=".^,2*", options=header]
 .Operations Allowed in the Methods of a Stateful Session Bean
 |===
 ^|
 Bean method
 2+^|
-Bean method can perform the following
-operations
+Bean method can perform the following operations
 |
 h|
 Container-managed transaction demarcation
@@ -1461,8 +1460,7 @@ constructor
 |
 -
 |
-dependency injection methods (e.g.,
-setSessionContext)
+dependency injection methods (e.g., setSessionContext)
 a|
 SessionContext methods:: _getEJBHome, getEJBLocalHome, lookup_
 
@@ -1483,14 +1481,10 @@ getEJBHome, getEJBLocalHome, getRollbackOnly, setRollbackOnly,
 getCallerPrincipal, isCallerInRole, getEJBObject, getEJBLocalObject,
 lookup, getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
 EntityManager access
 a|
 SessionContext methods:: _getBusinessObject,
@@ -1498,16 +1492,11 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, lookup,
 getContextData_
 
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
 EntityManager access
 |
 business method
@@ -1520,16 +1509,11 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly,
 isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject,
 getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer methods
 a|
 SessionContext methods:: _getBusinessObject,
@@ -1537,22 +1521,15 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getInvokedBusinessInterface,
 wasCancelCalled, getUserTransaction, lookup, getContextData_
 
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer methods
 |
-afterBegin
-
+afterBegin +
 beforeCompletion
 a|
 SessionContext methods:: _getBusinessObject,
@@ -1560,16 +1537,11 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly,
 isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject,
 lookup, getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer methods
 .2+<.^a|
 N/A
@@ -1931,18 +1903,17 @@ manager factory, and the access is not allowed in <<a1091>>,
 the behavior is undefined by the EJB architecture.
 
 [[a1091]]
-[cols=3, options=header]
+[cols=".^,2*", options=header]
 .Operations Allowed in the Methods of a Stateless Session Bean
 |===
-|
+^|
 Bean method
-2+|
-Bean method can perform the following
-operations
+2+^|
+Bean method can perform the following operations
 |
-|
+h|
 Container-managed transaction demarcation
-|
+h|
 Bean-managed transaction demarcation
 |
 constructor
@@ -1951,8 +1922,7 @@ constructor
 |
 -
 |
-dependency injectionmethods (e.g.,
-setSessionContext)
+dependency injectionmethods (e.g., setSessionContext)
 a|
 SessionContext methods:: _getEJBHome,
 getEJBLocalHome, lookup_
@@ -1973,16 +1943,14 @@ SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getEJBObject, getEJBLocalObject,
 getTimerService, lookup, getContextData_
 
-JNDI access to java:comp/env
-
+JNDI access to java:comp/env +
 EntityManagerFactory access
 a|
 SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getEJBObject, getEJBLocalObject,
 getUserTransaction, getTimerService, lookup, getContextData_
 
-JNDI access to java:comp/env
-
+JNDI access to java:comp/env +
 EntityManagerFactory access
 |
 business method
@@ -1995,16 +1963,11 @@ getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
 getTimerService, getInvokedBusinessInterface, wasCancelCalled, lookup,
 getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
 a|
 SessionContext methods:: _getBusinessObject,
@@ -2012,18 +1975,12 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
 getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData_
 
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
 |
 business method
@@ -2034,18 +1991,12 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
 getTimerService, getMessageContext, lookup, getContextData_
 
-Message context methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+Message context methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
 a|
 SessionContext methods:: _getBusinessObject,
@@ -2053,20 +2004,13 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
 getMessageContext, lookup, getContextData_
 
-UserTransaction methods
-
-Message context methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
+UserTransaction methods +
+Message context methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
 EntityManagerFactory access
-
-EntityManager access
-
+EntityManager access +
 TimerService and Timer methods
 |
 timeout callback method
@@ -2076,16 +2020,11 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
 getTimerService, lookup, getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
 a|
 SessionContext methods:: _getBusinessObject,
@@ -2093,18 +2032,12 @@ getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
 lookup, getContextData_
 
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
 |===
 
@@ -2178,8 +2111,6 @@ another instance.
 
 === Singleton Session Beans
 
-
-
 A singleton session bean is a session bean
 component that is instantiated once per application. In cases where the
 container is distributed over many virtual machines, each application
@@ -2194,21 +2125,16 @@ A singleton session bean is intended to be
 shared, and it supports concurrent access.
 
 A singleton session bean must not implement
-the javax.ejb.SessionSynchronization interface or use the session
+the `javax.ejb.SessionSynchronization` interface or use the session
 synchronization annotations.
 
-===
-
-
-
-Life Cycle of a Singleton Session Bean
-
-image:EBCore-12.png[image]
+.Life Cycle of a Singleton Session Bean
+image::EBCore-12.png[]
 
 The following steps describe the life cycle
 of a singleton session bean instance:
 
-A singleton session bean instance’s life
+* A singleton session bean instance’s life
 starts when the container invokes the session bean class constructor to
 create the singleton bean instance.footnote:a10251[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the singleton session 
@@ -2217,24 +2143,24 @@ interceptors defined in the _Interceptors_ specification <<a9887>>.]
 Next, the
 container performs any dependency injection as specified by the metadata
 annotations on the bean class or by the deployment descriptor. The
-container then calls the _PostConstruct_ lifecycle callback interceptor
+container then calls the `PostConstruct` lifecycle callback interceptor
 methods for the bean, if any.
 
-The singleton bean instance is now ready to
+* The singleton bean instance is now ready to
 be delegated a business method call from any client or a call from the
 container to a timeout callback method.
 
-When the application is shutting down, the
-container invokes the _PreDestroy_ lifecycle callback interceptor
+* When the application is shutting down, the
+container invokes the `PreDestroy` lifecycle callback interceptor
 methods on the singleton session bean instance, if any. This ends the
 life of the singleton session bean instance.
 
 ==== Singleton Session Bean Initialization
 
 By default, the container is responsible for
-deciding when to initialize a singleton session bean instance. However,
+deciding _when_ to initialize a singleton session bean instance. However,
 the Bean Provider can optionally configure the singleton session bean
-for eager initialization. If the Startup annotation appears on the
+for eager initialization. If the `Startup` annotation appears on the
 singleton session bean class or if the singleton session bean has been
 designated via the deployment descriptor as requiring eager
 initialization, the container must initialize the singleton session bean
@@ -2247,47 +2173,36 @@ the application.
 The following example shows a singleton
 session bean with startup logic that initializes its shared state:
 
+[source, java]
+----
 @Startup
-
 @Singleton
-
-public class SharedBean implements Shared \{
-
-
+public class SharedBean implements Shared {
 
  private SharedData state;
 
-
-
  @PostConstruct
-
- void init() \{
-
+ void init() {
  // initialize shared data
-
  ...
-
  }
-
-
-
  ...
-
 }
+----
 
 In some cases, explicit initialization
 ordering dependencies exist between multiple singleton session bean
-components in an application. The DependsOn annotation is used to
-express these dependencies. A DependsOn dependency is used in cases
-where one singleton session bean must initialize before one or more
+components in an application. The `DependsOn` annotation is used to
+express these dependencies. A `DependsOn` dependency is used in cases
+where one singleton session bean must _initialize_ before one or more
 other singleton session beans. The container ensures that all singleton
-session beans with which a singleton session bean has a DependsOn
-relationship have been initialized before the PostConstruct method is
+session beans with which a singleton session bean has a `DependsOn`
+relationship have been initialized before the `PostConstruct` method is
 called.
 
 Note that if one singleton session bean
 merely needs to invoke another singleton session bean from its
-PostConstruct method, no explicit ordering metadata is required. In that
+`PostConstruct` method, no explicit ordering metadata is required. In that
 case, the first singleton session bean would merely use an EJB reference
 to invoke the target singleton session bean. In this case, the
 acquisition of the EJB reference (either through injection or lookup)
@@ -2295,83 +2210,64 @@ does not necessarily imply the actual creation of the corresponding
 singleton session bean instance.
 
 The following examples illustrate the use of
-DependsOn metadata:
+`DependsOn` metadata:
 
+[source, java]
+----
 @Singleton
-
-public class B \{ ... }
-
-
+public class B { ... }
 
 @DependsOn("B")
-
 @Singleton
-
-public class A \{ ... }
-
-
+public class A { ... }
+----
 
 In the above example, the container must
-guarantee that singleton _B_ is initialized before singleton _A_ . The
-DependsOn value attribute holds one or more strings, where each
-specifies the ejb-name of the target singleton session bean.
+guarantee that singleton `B` is initialized before singleton `A`. The
+`DependsOn` value attribute holds one or more strings, where each
+specifies the `ejb-name` of the target singleton session bean.
 
 In the following example, the container must
-guarantee that singletons _B_ and _C_ are initialized before singleton
-_A_ . In the case of multiple values, the ordering in which the target
-ejb-name values are listed is not preserved at runtime. For example, if
-singleton _B_ has an ordering dependency on singleton _C_ , it is
-singleton _B_ ’s responsibility to explicitly capture that in its own
+guarantee that singletons `B` and `C` are initialized before singleton
+`A`. In the case of multiple values, the ordering in which the target
+`ejb-name` values are listed is not preserved at runtime. For example, if
+singleton `B` has an ordering dependency on singleton `C`, it is
+singleton `B`’s responsibility to explicitly capture that in its own
 metadata.
 
+[source, java]
+----
 @Singleton
-
-public class B \{ ... }
-
-
+public class B { ... }
 
 @Singleton(name="Cbean")
+public class C { ... }
 
-public class C \{ ... }
-
-
-
-@DependsOn(\{"B", "Cbean"})
-
+@DependsOn({"B", "Cbean"})
 @Singleton
-
-public class A \{ ... }
-
-
+public class A { ... }
+----
 
 The following example illustrates the use of
-the fully-qualified ejb-name syntax to refer to a singleton session bean
+the fully-qualified `ejb-name` syntax to refer to a singleton session bean
 packaged within a different module in the same application.
 
-// two Singleton components packaged in
-different ejb-jars within
-
+[source, java]
+----
+// two Singleton components packaged in different ejb-jars within
 // the same .ear
 
-
-
 // packaged in b.jar
-
 @Singleton
-
-public class B \{ ... }
-
-
+public class B { ... }
 
 // packaged in a.jar
-
 @DependsOn("b.jar#B")
-
 @Singleton
+public class A { ... }
+----
 
-public class A \{ ... }
-
-Circular dependencies within the _DependsOn_
+Circular dependencies within the `DependsOn`
 metadata are not permitted. Circular dependencies are not required to be
 detected by the container but may result in a deployment error.
 
@@ -2380,37 +2276,37 @@ detected by the container but may result in a deployment error.
 Any singleton session bean instance that
 successfully completes initialization is removed by the container during
 application shutdown. At this time the container must invoke the
-PreDestroy lifecycle callback interceptor methods on the singleton
+`PreDestroy` lifecycle callback interceptor methods on the singleton
 session bean instance, if any. The container ensures that all singleton
 session beans with which a singleton session bean has a DependsOn
-relationship are still available during the PreDestroy callback. After
-the _PreDestroy_ callback completes, the container ends the life of the
+relationship are still available during the `PreDestroy` callback. After
+the `PreDestroy` callback completes, the container ends the life of the
 singleton session bean instance.
 
 ==== Transaction Semantics of Initialization and Destruction
 
-The _PostConstruct_ and _PreDestroy_ methods
+The `PostConstruct` and `PreDestroy` methods
 of singleton session beans with container-managed transaction
 demarcation can be invoked with or without a transaction. From the Bean
-Provider’s view there is no client of a _PostConstruct_ or _PreDestroy_
+Provider’s view there is no client of a `PostConstruct` or `PreDestroy`
 method.
 
-A _PostConstruct_ or _PreDestroy_ method of a
+A `PostConstruct` or `PreDestroy` method of a
 singleton session bean with container-managed transaction demarcation is
-permitted to have transaction attribute _REQUIRED_ , _REQUIRES_NEW_ , or
-_NOT_SUPPORTED_ ( _Required_ , _RequiresNew_ , or _NotSupported_ if the
+permitted to have transaction attribute `REQUIRED`, `REQUIRES_NEW`, or
+`NOT_SUPPORTED` (`Required`, `RequiresNew`, or `NotSupported` if the
 deployment descriptor is used to specify the transaction attribute).
 
- _Note that the container must start a new
-transaction if the_ _REQUIRED_ _(_ _Required_ _)_ _transaction attribute
+_Note that the container must start a new
+transaction if the `REQUIRED` __(`Required`)__ transaction attribute
 is used. This guarantees, for example, that the transactional behavior
-of the_ _PostConstruct_ _method is the same regardless of whether the
+of the `PostConstruct` method is the same regardless of whether the
 singleton session bean instance is initialized eagerly at container
 startup time or as a side effect of a first client invocation on the
-singleton session bean._ The REQUIRED transaction attribute value is
+singleton session bean. The `REQUIRED` transaction attribute value is
 allowed so that specification of a transaction attribute for the
-_singleton session bean’s_ _PostConstruct_ _and_ _PreDestroy_ _methods_
-can be defaulted.
+singleton session bean’s `PostConstruct` and `PreDestroy` methods
+can be defaulted._
 
 [[a1254]]
 ==== Singleton Session Bean Error Handling
@@ -2419,18 +2315,17 @@ Errors occurring during singleton session
 bean initialization are considered fatal and must result in the
 discarding of the singleton session bean instance. Possible
 initialization errors include injection failure, a system exception
-thrown from an AroundConstruct or PostConstruct method, or the failure
-of a PostConstruct method’s container-managed transaction to
+thrown from an `AroundConstruct` or `PostConstruct` method, or the failure
+of a `PostConstruct` method’s container-managed transaction to
 successfully commit. If a singleton session bean fails to initialize,
 attempted invocations on the singleton session bean result in the
-javax.ejb.NoSuchEJBException exception as defined by
-link:Ejb.html#a304[See Session Bean’s Business Interface] and
-link:Ejb.html#a312[See Session Bean’s No-Interface View] .
+`javax.ejb.NoSuchEJBException` exception as defined by <<a304>> 
+and <<a312>>.
 
 The same singleton session bean instance must
 remain active until application shutdown. Unlike instances of other
 component types, system exceptions thrown from business methods or
-callbacks of a singleton session bean do not result in the destruction
+callbacks of a singleton session bean do _not_ result in the destruction
 of the singleton instance.
 
 [[a1257]]
@@ -2446,11 +2341,11 @@ From the Bean Provider’s perspective, there
 are two approaches for controlling singleton session bean concurrency
 behavior:
 
-container-managed concurrency: the container
+* container-managed concurrency: the container
 controls concurrent access to the bean instance based on method-level
 locking metadata
 
-bean-managed concurrency: the container
+* bean-managed concurrency: the container
 allows full concurrent bean instance access and defers state
 synchronization responsibility to the Bean Provider
 
@@ -2481,13 +2376,13 @@ Independent of the bean’s concurrency
 management type, the container must ensure that no concurrent access to
 the singleton session bean instance occurs until after the instance has
 successfully completed its initialization sequence, including any
-PostConstruct lifecycle callback method(s). The container must
+`PostConstruct` lifecycle callback method(s). The container must
 temporarily block any singleton session bean access attempts that arrive
 while the singleton session bean is still initializing.
 
 Independent of the bean’s concurrency
 management type, the container must ensure that concurrent access to the
-SessionContext object is thread-safe.
+`SessionContext` object is thread-safe.
 
 Singleton session beans support reentrant
 calls, i.e., where an outbound call from a singleton session bean method
@@ -2519,7 +2414,7 @@ allowed to proceed due to locking is blocked until it can make forward
 progress. Timeouts can be specified via metadata so that a blocked
 request can be rejected if a lock is not acquired within a certain
 amount of time. If a singleton session bean invocation is rejected due
-to lock timeout the ConcurrentAccessTimeoutException is thrown to the
+to lock timeout the `ConcurrentAccessTimeoutException` is thrown to the
 client.
 
 This specification only mandates the basic
@@ -2527,11 +2422,11 @@ read and write locking semantics outlined above. There are many policy
 decisions that a container could make to affect the performance of the
 locking scheme for a given application. For example:
 
-Determining whether to grant forward progress
+* Determining whether to grant forward progress
 to a read method or write method, when both readers and writers are
 waiting at the time that a write method completes.
 
-Determining whether to allow additional
+* Determining whether to allow additional
 readers while one or more readers is active and a writer is waiting.
 
 The exact set of additional read/write
@@ -2547,11 +2442,11 @@ calls on singleton session beans with container-managed concurrency.
 If a loopback call occurs on a singleton
 session bean that already holds a write lock on the same thread:
 
-If the target of the loopback call is a read
+* If the target of the loopback call is a read
 method, the read lock must always be granted immediately, without
 releasing the original write lock.
 
-If the target of the loopback call is a write
+* If the target of the loopback call is a write
 method, the call must proceed immediately, without releasing the
 original write lock.
 
@@ -2559,12 +2454,12 @@ If a loopback call occurs on a singleton
 session bean that holds a read lock on the same thread (but does not
 also hold a write lock on the same thread):
 
-If the target of the loopback call is a read
+* If the target of the loopback call is a read
 method, the call must proceed immediately, without releasing the
-original Read lock.
+original `Read` lock.
 
-If the target of the loopback call is a write
-method, the javax.ejb.IllegalLoopbackException must be thrown to the
+* If the target of the loopback call is a write
+method, the `javax.ejb.IllegalLoopbackException` must be thrown to the
 caller.
 
 ===== Bean-Managed Concurrency
@@ -2574,14 +2469,14 @@ allows full concurrent access to the singleton session bean instance. It
 is the responsibility of the Bean Provider to guard its state as
 necessary against synchronization errors due to concurrent access. The
 Bean Provider is permitted to use the Java language level
-synchronization primitives such as synchronized and volatile for this
+synchronization primitives such as `synchronized` and `volatile` for this
 purpose.
 
 ===== Specification of a Concurrency Management Type
 
 By default, a singleton session bean has
 container-managed concurrency. The Bean Provider of a singleton session
-bean can use the ConcurrencyManagement annotation on the bean class to
+bean can use the `ConcurrencyManagement` annotation on the bean class to
 declare the bean’s concurrency management type.
 
 Alternatively, the Bean Provider can use the
@@ -2595,8 +2490,7 @@ singleton session bean is determined by the Bean Provider. The
 Application Assembler is not permitted to use the deployment descriptor
 to override a bean’s concurrency management type regardless of whether
 it has been explicitly specified or defaulted by the Bean Provider. (See
-Chapter link:Ejb.html#a5804[See Deployment Descriptor] for
-information about the deployment descriptor.)
+<<a5804>> for information about the deployment descriptor.)
 
 ===== Specification of the Container-Managed Concurrency Metadata for a Bean’s Methods
 
@@ -2609,13 +2503,13 @@ lock (exclusive lock).
 A concurrency locking attribute is a value
 associated with each of the following methods:
 
-a method of a bean’s business interface
+* a method of a bean’s business interface
 
-a method of a bean’s no-interface view
+* a method of a bean’s no-interface view
 
-a timeout callback method
+* a timeout callback method
 
-a web service endpoint method
+* a web service endpoint method
 
 The concurrency locking attribute specifies
 how the container must manage concurrency when a client invokes the
@@ -2624,14 +2518,14 @@ method.
 Concurrency locking attributes are specified
 for the following methods:
 
-For a bean written to the EJB 3.x client view
+* For a bean written to the EJB 3.x client view
 API, the concurrency locking attributes are specified for those methods
 of the bean class that correspond to the bean’s business interface, the
 direct and indirect superinterfaces of the business interface, methods
 exposed through the no-interface view, and for timeout callback methods,
 if any.
 
-For a bean that provides a web service client
+* For a bean that provides a web service client
 view, the concurrency locking attributes are specified for those methods
 of the bean class that correspond to the bean’s web service endpoint
 methods, and for timeout callback methods, if any.
@@ -2639,19 +2533,19 @@ methods, and for timeout callback methods, if any.
 The following rules apply to the
 specification of concurrency attributes.
 
-The Lock(READ) and Lock(WRITE)annotations are
+The `Lock(READ)` and `Lock(WRITE)` annotations are
 used to specify concurrency locking attributes.
 
 The concurrency locking attributes for the
 methods of a bean class may be specified on the class, the business
 methods of the class, or both.
 
-Specifying the Lock annotation on the bean
+Specifying the `Lock` annotation on the bean
 class means that it applies to all applicable business methods of the
 class. If the concurrency locking attribute is not specified, it is
-assumed to be Lock(WRITE). The absence of a concurrency attribute
+assumed to be `Lock(WRITE)`. The absence of a concurrency attribute
 specification on the bean class is equivalent to the specification of
-Lock(WRITE)on the bean class.
+`Lock(WRITE)` on the bean class.
 
 A concurrency locking attribute may be
 specified on a method of the bean class to override the concurrency
@@ -2661,17 +2555,17 @@ class.
 If the bean class has superclasses, the
 following additional rules apply:
 
-A concurrency locking attribute specified on
+* A concurrency locking attribute specified on
 a superclass S appplies to the business methods defined by S. If a
 class-level concurrency attribute is not specified on S, it is
-equivalent to specification of Lock(WRITE)on S.
+equivalent to specification of `Lock(WRITE)` on S.
 
-A concurrency locking attribute may be
+* A concurrency locking attribute may be
 specified on a business method M defined by class S to override for
 method M the concurrency locking attribute value explicitly or
 implicitly specified on the class S.
 
-If a method M of class S overrides a business
+* If a method M of class S overrides a business
 method defined by a superclass of S, the concurrency locking attribute
 of M is determined by the above rules as applied to class S.
 
@@ -2683,7 +2577,7 @@ concurrency locking attributes specified in annotations. If a
 concurrency locking attribute value is not specified in the deployment
 descriptor, it is assumed that the concurrency locking attribute
 specified in annotations applies, or — in the case that no annotation
-has been specified —that the value is Write.
+has been specified —that the value is `Write`.
 
 The Application Assembler is permitted to
 override the concurrency locking attribute values using the bean’s
@@ -2694,348 +2588,270 @@ application, as the concurrency structure of an application is typically
 intrinsic to the semantics of the application.
 
 Example:
-
+[source, java]
+----
 @Lock(READ)
-
-public class SomeClass \{
-
- public void aMethod () \{ ... }
-
- public void bMethod () \{ ... }
-
+public class SomeClass {
+ public void aMethod () { ... }
+ public void bMethod () { ... }
  ...
-
 }
 
+@Singleton 
+public class ABean extends SomeClass implements A {
 
-
-@Singleton public class ABean extends
-SomeClass implements A \{
-
-
-
- public void aMethod () \{ ... }
-
-
+ public void aMethod () { ... }
 
  @Lock(WRITE)
-
- public void cMethod () \{ ... }
-
-
-
+ public void cMethod () { ... }
  ...
-
 }
+----
 
-
-
-Assuming that aMethod, bMethod, cMethod of
-singleton session bean ABean are methods of business interface A, their
-concurrency locking attributes are Lock(WRITE), Lock(READ), and
-Lock(WRITE)respectively.
+Assuming that `aMethod`, `bMethod`, `cMethod` of
+singleton session bean `ABean` are methods of business interface `A`, their
+concurrency locking attributes are `Lock(WRITE)`, `Lock(READ)`, and
+`Lock(WRITE)` respectively.
 
 ===== Concurrent Access Timeouts
 
 A concurrent access attempt that cannot
 immediately acquire the appropriate lock is blocked until it can make
-forward progress. The AccessTimeout annotation is used to specify the
+forward progress. The `AccessTimeout` annotation is used to specify the
 amount of time the access attempt should be blocked before timing out.
 Access timeouts only apply to methods eligible for concurrency locks on
 a singleton session bean with container-managed concurrency. If an
 access attempt times out, the container throws the
-javax.ejb.ConcurrentAccessTimeoutException to the client.
+`javax.ejb.ConcurrentAccessTimeoutException` to the client.
 
-The AccessTimeout annotation can be specified
+The `AccessTimeout` annotation can be specified
 on a business method or on a bean class (or superclass). An
-AccessTimeout annotation specified on a class applies the access timeout
-to all business methods of that class. If the AccessTimeout annotation
+`AccessTimeout` annotation specified on a class applies the access timeout
+to all business methods of that class. If the `AccessTimeout` annotation
 is specified on both a class and on a business method of that class, the
 method-level annotation takes precedence.
 
-An _AccessTimeout_ value of -1 indicates that
+An `AccessTimeout` value of `-1` indicates that
 the client request will block indefinitely until forward progress can be
 made.
 
-An AccessTimeout value of 0 indicates that
+An `AccessTimeout` value of `0` indicates that
 concurrent access is not allowed. Access attempts on methods with a
-timeout value of 0 result in the javax.ejb.ConcurrentAccessException.
+timeout value of `0` result in the `javax.ejb.ConcurrentAccessException`.
 
 ==== Operations Allowed in the Methods of a Singleton Session Bean
 
-Table link:Ejb.html#a1343[See
-Operations Allowed in the Methods of a Singleton Session Bean] defines
+<<a1343>> defines
 the methods of a singleton session bean class in which the session bean
-instances can access the methods of the javax.ejb.SessionContext
-interface, the java:comp/env environment naming context, resource
-managers, _TimerService_ and _Timer_ methods, the _EntityManager_ and
-_EntityManagerFactory_ methods, and other enterprise beans.
+instances can access the methods of the `javax.ejb.SessionContext`
+interface, the `java:comp/env` environment naming context, resource
+managers, `TimerService` and `Timer` methods, the `EntityManager` and
+`EntityManagerFactory` methods, and other enterprise beans.
 
 If a session bean instance attempts to invoke
-a method of the SessionContext interface, and the access is not allowed
-in Table link:Ejb.html#a1343[See Operations Allowed in the
-Methods of a Singleton Session Bean], the container must throw the
-java.lang.IllegalStateException.
+a method of the `SessionContext` interface, and the access is not allowed
+in <<a1343>>, the container must throw the 
+`java.lang.IllegalStateException`.
 
 If a session bean instance attempts to invoke
-a method of the _TimerService_ or _Timer_ interface and the access is
-not allowed in Table link:Ejb.html#a1343[See Operations Allowed
-in the Methods of a Singleton Session Bean], the container must throw
-the _java.lang.IllegalStateException_ .
+a method of the `TimerService` or `Timer` interface and the access is
+not allowed in <<a1343>>, the container must throw
+the `java.lang.IllegalStateException`.
 
 If a session bean instance attempts to access
 a resource manager, an enterprise bean, an entity manager or entity
-manager factory, and the access is not allowed in Table
-link:Ejb.html#a1343[See Operations Allowed in the Methods of a
-Singleton Session Bean], the behavior is undefined by the EJB
-architecture.
+manager factory, and the access is not allowed in <<a1343>>, 
+the behavior is undefined by the EJB architecture.
 
-===
-
-
-
-[[a1343]]Operations Allowed in the Methods of a Singleton
-Session Bean
-
+[[a1343]]
+[cols=".^,2*", options=header]
+.Operations Allowed in the Methods of a Singleton Session Bean
+|===
+^|
 Bean method
-
-
-
-
-
-Bean method can perform the following
-operations
-
-
-
+2+^|
+Bean method can perform the following operations
+|
+h|
 Container-managed transaction demarcation
-
+h|
 Bean-managed transaction demarcation
-
+|
 constructor
-
+|
 -
-
+|
 -
-
-dependency injectionmethods
-
-SessionContext methods: lookup
+|
+dependency injection methods
+a|
+SessionContext methods:: _lookup_
 
 JNDI access to java:comp/env
-
-SessionContext methods: lookup
+a|
+SessionContext methods:: _lookup_
 
 JNDI access to java:comp/env
-
+|
 PostConstruct, PreDestroy lifecycle
 callback interceptor methods footnote:a10252[If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.]
-
-SessionContext methods: _getBusinessObject_ ,
+a|
+SessionContext methods:: _getBusinessObject,
 getRollbackOnly, setRollbackOnly, getTimerService, lookup,
-getContextData
+getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
+a|
+SessionContext methods:: _getBusinessObject,
+getUserTransaction, getTimerService, lookup, getContextData_
 
-SessionContext methods: _getBusinessObject,_
-getUserTransaction, getTimerService, lookup, getContextData
-
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManager access
-
-EntityManagerFactory access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManager access +
+EntityManagerFactory access +
 TimerService and Timer methods
-
+|
 business method
-
 from business interface or from no-interface
-view ; business method interceptor method
-
-SessionContext methods: _getBusinessObject_ ,
+view; business method interceptor method
+a|
+SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getRollbackOnly, setRollbackOnly,
 getTimerService, getInvokedBusinessInterface, wasCancelCalled, lookup,
-getContextData
+getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getUserTransaction, getTimerService,
-getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData
+getInvokedBusinessInterface, wasCancelCalled, lookup, getContextData_
 
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
-
+|
 business method
-
 from web service endpoint
-
-SessionContext methods: _getBusinessObject,_
+a|
+SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getRollbackOnly, setRollbackOnly,
-getTimerService, getMessageContext, lookup, getContextData
+getTimerService, getMessageContext, lookup, getContextData_
 
-Message context methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+Message context methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
-
-SessionContext methods: _getBusinessObject_ ,
+a|
+SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getUserTransaction, getTimerService,
-getMessageContext, lookup, getContextData
+getMessageContext, lookup, getContextData_
 
-UserTransaction methods
-
-Message context methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+Message context methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
-
+|
 timeout callback method
-
-SessionContext methods: _getBusinessObject_ ,
+a|
+SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getRollbackOnly, setRollbackOnly,
-getTimerService, lookup, getContextData
+getTimerService, lookup, getContextData_
 
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
-TimerService and Timer methods
-
-SessionContext methods: _getBusinessObject_ ,
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
+TimerService and Timer methods 
+a|
+SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getUserTransaction, getTimerService,
-lookup, getContextData
+lookup, getContextData_
 
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 TimerService and Timer methods
+|===
 
 Additional restrictions:
 
-The getRollbackOnly and setRollbackOnly
-methods of the SessionContext interface should be used only in the
+* The `getRollbackOnly` and `setRollbackOnly`
+methods of the `SessionContext` interface should be used only in the
 session bean methods that execute in the context of a transaction. The
-container must throw the java.lang.IllegalStateException if the methods
+container must throw the `java.lang.IllegalStateException` if the methods
 are invoked while the current business method is not executing in the
 context of a transaction.
 
-Invoking the _wasCancelCalled_ method is
+* Invoking the `wasCancelCalled` method is
 disallowed except when inside the context of the asynchronous methods
-that declare Future<V> object as the returning type
+that declare `Future<V>` object as the returning type
 
-The reasons for disallowing operations in
-Table link:Ejb.html#a1343[See Operations Allowed in the Methods
-of a Singleton Session Bean]:
+The reasons for disallowing operations in <<a1343>>:
 
-Invoking the _getBusinessObject_ method is
+* Invoking the `getBusinessObject` method is
 disallowed if the session bean does not define a business interface or a
 no-interface view.
 
-Invoking the _getInvokedBusinessInterface_
+* Invoking the `getInvokedBusinessInterface`
 method is disallowed if the session bean does not define a business
 interface or a no-interface view. It is also disallowed if the current
 business method was not invoked through a business interface or the
 no-interface view.
 
-Invoking the _getEJBObject_ and _getEJBHome_
+* Invoking the `getEJBObject` and `getEJBHome`
 methods is disallowed since a singleton session bean does not support
 the EJB 2.x remote client view.
 
-Invoking the _getEJBLocalObject_ and
-_getEJBLocalHome_ methods is disallowed since a singleton session bean
+* Invoking the `getEJBLocalObject` and
+`getEJBLocalHome` methods is disallowed since a singleton session bean
 does not support the EJB 2.x local client view.
 
-Invoking the getRollbackOnly and
-setRollbackOnly methods is disallowed in the session bean methods for
+* Invoking the `getRollbackOnly` and
+`setRollbackOnly` methods is disallowed in the session bean methods for
 which the container does not have a meaningful
 transaction context, and for all session
 beans with bean-managed transaction
 demarcation.
 
-Invoking the _getMessageContext_ method is
+* Invoking the `getMessageContext` method is
 disallowed in session bean methods that were not invoked by the
 container through the session bean’s web service endpoint.
 
-Accessing resource managers, enterprise
-beans, and the EntityManager is disallowed in the session bean methods
+* Accessing resource managers, enterprise
+beans, and the `EntityManager` is disallowed in the session bean methods
 for which the container does not have a meaningful transaction context
 and/or client security context.
 
-The UserTransaction interface is unavailable
+* The `UserTransaction` interface is unavailable
 to session beans with container-managed
 transaction demarcation.
 
