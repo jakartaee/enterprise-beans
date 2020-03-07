@@ -13,8 +13,6 @@ transparent to the client.
 [[a207]]
 === Overview
 
-
-
 For a client, a
 session object is a non-persistent object that implements some business
 logic running on the server. One way to think of a session object is as
@@ -23,8 +21,8 @@ stateless or stateful session bean object is not shared among multiple
 clients.
 
 A client can invoke a session bean
-synchronously or asynchronously. An asynchronous method can return a
-Future<V> object that allows the client to retrieve a result value,
+_synchronously_ or _asynchronously_. An asynchronous method can return a
+`Future<V>` object that allows the client to retrieve a result value,
 check for exceptions, or attempt to cancel an in-progress invocation.
 
 From its creation until destruction, a
@@ -79,65 +77,57 @@ the bean. The local client view is not location-independent.
 
 The client of a stateless session bean or
 singleton session bean may be a web service client. Only a _stateless_
-session bean or singleton session bean may provide a web service client
+session bean or _singleton_ session bean may provide a web service client
 view. A web service client makes use of the enterprise bean’s web
 service client view, as described by a WSDL document. The bean’s client
-view web service endpoint is in terms of a JAX-WS endpoint
-link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
-version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.]. Web service
-clients are discussed in Sections link:Ejb.html#a271[See Web
-Service Clients] and link:Ejb.html#a405[See The Web Service
-Client View of a Stateless or Singleton Session Bean].
+view web service endpoint is in terms of a JAX-WS endpoint <<a9881>>.
+Web service clients are discussed in <<a271>> and <<a405>>.
 
 The considerations that should be taken into
 account in determining the client view to be used for a session bean are
-further described in link:Ejb.html#a224[See Local, Remote, and
-Web Service Client Views].
+further described in <<a224>>.
 
 [[a224]]
 === Local, Remote, and Web Service Client Views
-
-
 
 This section describes some of the
 considerations the Bean Provider should take into account in determining
 the client view to provide for an enterprise bean.
 
- _Terminology note_ _:_
+*_Terminology note:_*
 
-EJB 3.0 significantly simplified the client
+_EJB 3.0 significantly simplified the client
 view of a session bean. This specification distinguishes among the
 client view interfaces that were defined by the EJB 3.0 and later API
-and the EJB 2.1 and earlier API as follows:
+and the EJB 2.1 and earlier API as follows:_
 
- _The term_ _remote business interface_ _is
+* _The term *remote business interface* is
 used to refer to the business interface of an EJB 3.x session bean that
 supports remote access._
 
- _The term_ _remote component interface_ _is
+* _The term *remote component interface* is
 used to refer to the remote component interface of the EJB 2.1 client
 view. This interface is an EJBObject interface._
 
- _The term_ _local business interface_
-_refers to the local business interface of an EJB 3.x session bean that
-supports local access._
+* _The term *local business interface* refers to the local business 
+interface of an EJB 3.x session bean that supports local access._
 
- _The term_ _local component interface_ _is
+* _The term *local component interface* is
 used to refer to the local component interface of the EJB 2.1 client
 view. This interface is an EJBLocalObject interface._
 
-The term _business interface_ is used to
-refer to a local or remote business interface.
+* _The term *business interface* is used to
+refer to a local or remote business interface._
 
-The term _component interface_ is used to
+* _The term *component interface* is used to
 refer to a local or remote component interface (EJBLocalObject or
-EJBObject interface).
+EJBObject interface)._
 
-The term _business method_ is used to refer
+* _The term *business method* is used to refer
 to a method of an enterprise bean that is available for client
 execution. It may be a method exposed by the local or remote business
 interface, by the no-interface view, by the local component interface,
-by the remote component interface, or by the web service client view.
+by the remote component interface, or by the web service client view._
 
 [[a235]]
 ==== Remote Clients
@@ -158,12 +148,11 @@ bean client and component written to the EJB 2.1 and earlier APIs, the
 remote client accesses the session bean through the session bean’s
 remote home and remote component interfaces.
 
-The EJB 2.1 and earlier API required that a
+_Compatibility Note: The EJB 2.1 and earlier API required that a
 remote client access the stateful or stateless session bean by means of
 the session bean’s remote home and remote component interfaces. These
 interfaces remain available for use with EJB 3.x beans, and are
-described in Section link:Ejb.html#a422[See Remote and Local
-Client View of Session Beans Written to the EJB 2.1 Client View API].
+described in <<a422>>._
 
 [[a242]]
 ==== Local Clients
@@ -193,7 +182,7 @@ of this specification. Applications relying on inter-application access
 to the local client view are non-portable.
 
 The arguments and results of the methods of
-the local client view are passed “by reference”.footnote:a10219[More 
+the local client view are passed "by reference".footnote:a10219[More 
 literally, references are passed by value in the JVM: an argument 
 variable of primitive type holds a value of that primitive type; an 
 argument variable of a reference type hold a reference to the object. 
@@ -202,7 +191,8 @@ Enterprise beans that provide a local client view should therefore be
 coded to assume that the state of any Java object that is passed as an
 argument or result is potentially shared by caller and callee.
 
-The Bean Provider must be aware of the
+{empty}::
+_The Bean Provider must be aware of the
 potential sharing of objects passed through invocations of the local
 client view. In particular, the Bean Provider must be careful that the
 state of one enterprise bean is not assigned as the state of another. In
@@ -211,24 +201,23 @@ client view cannot be used outside of the immediate call chain and must
 never be stored as part of the state of another enterprise bean. The
 Bean Provider must also exercise caution in determining which objects to
 pass across the local view. This caution applies particularly in the
-case where there is a change in transaction or security context.
+case where there is a change in transaction or security context._
 
 For a session bean client and component
 written to the EJB 3.x API, a local client accesses a session bean
 through the bean’s local business interface
-or through a no-interface client view representing all non-static public
+or through a no-interface client view representing all _non-static_ `public`
 methods of the bean class. For a session bean client and component
 written to the EJB 2.1 and earlier APIs, the local client accesses the
 enterprise bean through the bean’s local home and local component
 interfaces. The container object that implements a local interface or
 the no-interface local view is a local Java object.
 
-The EJB 2.1 and earlier API required that a
+_Compatibility Note: The EJB 2.1 and earlier API required that a
 local client access a stateful or stateless session bean by means of the
 session bean’s local home and local component interfaces. These
 interfaces remain available for use with EJB 3.x beans, and are
-described in Section link:Ejb.html#a422[See Remote and Local
-Client View of Session Beans Written to the EJB 2.1 Client View API].
+described in <<a422>>._
 
 ==== Choosing Between a Local or Remote Client View
 
@@ -237,42 +226,42 @@ into account in determining whether a local or
 remote access should be used for an
 enterprise bean.
 
-The remote programming model provides
+* The remote programming model provides
 location independence and flexibility with regard to the distribution of
 components in the deployment environment. It provides a loose coupling
 between the client and the bean.
 
-Remote calls
+* Remote calls
 involve pass-by-value. This copy semantics provides a layer of isolation
 between caller and callee, and protects against the inadvertant
 modification of data. The client and the bean may be programmed to
 assume this parameter copying.
 
-Remote calls are potentially expensive. They
+* Remote calls are potentially expensive. They
 involve network latency, overhead of the client and server software
 stacks, argument copying, etc. Remote calls are typically programmed in
 a coarse-grained manner with few interactions between the client and
 bean.
 
-The objects that are passed as parameters on
+* The objects that are passed as parameters on
 remote calls must be serializable.
 
-When the EJB 2.1 and earlier remote home and
+* When the EJB 2.1 and earlier remote home and
 remote component interfaces are used, the narrowing of remote types
-requires the use of javax.rmi.PortableRemoteObject.narrow rather than
+requires the use of `javax.rmi.PortableRemoteObject.narrow` rather than
 Java language casts.
 
-Remote calls may involve error cases due to
+* Remote calls may involve error cases due to
 communication, resource usage on other servers, etc., which are not
 expected in local calls. When the EJB 2.1 and earlier remote home and
 remote component interfaces are used, the client has to explicitly
-program handlers for handling the _java.rmi.RemoteException_ .
+program handlers for handling the `java.rmi.RemoteException`.
 
-Because of the overhead of the remote
+* Because of the overhead of the remote
 programming model, it is typically used for relatively coarse-grained
 component access.
 
-Local calls
+* Local calls
 involve pass-by-reference. The client and the bean may be programmed to
 rely on pass-by-reference semantics. For example, a client may have a
 large document which it wants to pass on to the bean to modify, and the
@@ -284,25 +273,25 @@ returning it, while in the remote programming model the bean does not
 copy the data structure because it assumes that the system will do the
 copy.
 
-Because local calls involve
+* Because local calls involve
 pass-by-reference, the local client and the enterprise bean providing
 the local client view are collocated.
 
-The collocation
+* The collocation
 entailed by the local programming model
 means that the enterprise bean cannot be deployed on a node different
 from that of its client—thus restricting the distribution of components.
 
-Because the local programming model provides
+* Because the local programming model provides
 more lightweight access to a component, it better supports more
-fine-grained component access.
-
-Note that although collocation of the remote
+fine-grained component access. +
+ +
+_Note that although collocation of the remote
 client and the enterprise bean may allow the container to reduce the
 overhead of calls through a remote business interface or remote
 component interface, such calls are still likely to be less efficient
 than calls made using a local interface because any optimizations based
-on collocation must be done transparently.
+on collocation must be done transparently._
 
 The choice between the local and the remote
 programming model is a design decision that the Bean Provider makes when
@@ -323,46 +312,29 @@ through the web service client view. The web service client view is
 described by the WSDL document for the web service that the bean
 implements. WSDL is an XML format for describing a web service as a set
 of endpoints operating on messages. The abstract description of the
-service is bound to an XML based protocol (SOAP
-link:Ejb.html#a9875[See W3C: SOAP 1.2.
-http://www.w3.org/TR/SOAP/.]) and underlying transport (HTTP or HTTPS)
+service is bound to an XML based protocol (SOAP <<a9875>>) 
+and underlying transport (HTTP or HTTPS)
 by means of which the messages are conveyed between client and server.
-(See references link:Ejb.html#a9873[See Java™ API for XML-based
-RPC, version 1.1 (JAX-RPC). http://jcp.org/en/jsr/detail?id=101.],
-link:Ejb.html#a9874[See Web Services Description Language (WSDL)
-1.1. http://www.w3.org/TR/wsdl.], link:Ejb.html#a9878[See Web
-Services Metadata for the Java Platform, version 2.1.
-http://jcp.org/en/jsr/detail?id=181.], link:Ejb.html#a9879[See
-Web Services for Java EE, version 1.3.
-http://jcp.org/en/jsr/detail?id=109.], link:Ejb.html#a9881[See
-Java™ API for XML-based Web Service, version 2.2 (JAX-WS).
-http://jcp.org/en/jsr/detail?id=224.]).
+(See references <<a9873>>, <<a9874>>, <<a9878>>, <<a9879>>, <<a9881>>).
 
 The web service methods of a session bean
 provide the basis of the web service client view of the bean that is
-exported through WSDL. See references link:Ejb.html#a9878[See
-Web Services Metadata for the Java Platform, version 2.1.
-http://jcp.org/en/jsr/detail?id=181.] and
-link:Ejb.html#a9873[See Java™ API for XML-based RPC, version 1.1
-(JAX-RPC). http://jcp.org/en/jsr/detail?id=101.] for a description of
-how Java language metadata annotations may be used to specify a session
-bean’s web services client view.
+exported through WSDL. See references <<a9878>> and <<a9873>> for a
+description of how Java language metadata annotations may be used to 
+specify a session bean’s web services client view.
 
 A bean’s web service client view may be
 initially defined by a WSDL document and then mapped to a web service
 endpoint that conforms to this, or an existing bean may be adapted to
-provide a web service client view. Reference
-link:Ejb.html#a9879[See Web Services for Java EE, version 1.3.
-http://jcp.org/en/jsr/detail?id=109.] describes various design-time
+provide a web service client view. Reference <<a9879>> 
+describes various design-time
 scenarios that may be used for EJB web service endpoints.
 
-EJB 2.1 required the Bean Provider to define
+_Compatibility Note: EJB 2.1 required the Bean Provider to define
 a web service endpoint interface for a stateless session bean when he or
 she wished to expose the functionality of the bean as a web service
 endpoint through WSDL. This requirement to define the web service
-endpoint interface is removed in EJB 3.0 and later. See
-link:Ejb.html#a9878[See Web Services Metadata for the Java
-Platform, version 2.1. http://jcp.org/en/jsr/detail?id=181.].
+endpoint interface is removed in EJB 3.0 and later. See <<a9878>>._
 
 The web service client view of an enterprise
 bean is location independent and remotable.
@@ -383,11 +355,9 @@ requirements of each client view through which it is exposed.
 
 === EJB Container
 
-
-
 An EJB container
 (container for short) is a system that
-functions as the “container” for enterprise beans. Multiple enterprise
+functions as the "container" for enterprise beans. Multiple enterprise
 beans can be deployed in the same container. The container is
 responsible for making the business interfaces and/or home interfaces of
 its deployed enterprise beans available to the client through dependency
@@ -395,8 +365,6 @@ injection and/or through lookup in the JNDI namespace.
 
 [[a283]]
 === Client View of Session Beans Written to the EJB 3.x Simplified API
-
-
 
 The EJB 3.x local or remote client of a
 session bean written to the EJB 3.x API accesses a session bean through
@@ -406,7 +374,7 @@ remote access is provided for the bean. In particular, the EJB 3.x
 session bean business interface is not one of the interface types
 required by earlier versions of the EJB specification (i.e., EJBObject
 or EJBLocalObject interface). A local client may also access a session
-bean through a no-interface view that exposes all non-static public
+bean through a no-interface view that exposes all _non-static_ `public`
 methods of the bean class.
 
 ==== Obtaining a Session Bean’s Business Interface
@@ -415,26 +383,32 @@ A client can
 obtain a session bean’s business interface through dependency injection
 or lookup in the JNDI namespace.
 
-For example, the business interface _Cart_
-for the _CartBean_ session bean may be obtained using dependency
+For example, the business interface `Cart`
+for the `CartBean` session bean may be obtained using dependency
 injection as follows:
 
-@EJB Cart cart;
+[source, java]
+----
+@EJB 
+Cart cart;
+----
 
-The _Cart_ business interface could also be
+The `Cart` business interface could also be
 looked up using JNDI as shown in the following code segment using the
-_lookup_ method provided by the _EJBContext_ interface. In this example,
-a reference to the client bean’s _SessionContext_ object is obtained
+`lookup` method provided by the `EJBContext` interface. In this example,
+a reference to the client bean’s `SessionContext` object is obtained
 through dependency injection:
 
-@Resource SessionContext ctx;
-
+[source, java]
+----
+@Resource 
+SessionContext ctx;
 ...
-
 Cart cart = (Cart)ctx.lookup("cart");
+----
 
 In both cases, the syntax used in obtaining
-the reference to the _Cart_ business interface is independent of whether
+the reference to the `Cart` business interface is independent of whether
 the business interface is local or remote. In the case of remote access,
 the actual location of a referenced enterprise bean and EJB container
 are, in general, transparent to the client using the remote business
@@ -447,28 +421,31 @@ bean’s no-interface view through dependency injection or lookup in the
 JNDI namespace.
 
 For example, the no-interface view of the
-_CartBean_ session bean with bean class _com.acme.CartBean_ may be
+`CartBean` session bean with bean class `com.acme.CartBean` may be
 obtained using dependency injection as follows:
 
-@EJB CartBean cart;
+[source, java]
+----
+@EJB 
+CartBean cart;
+----
 
-The _CartBean_ no-interface view could also
+The `CartBean` no-interface view could also
 be looked up via JNDI as shown in the following code segment using the
-_lookup_ method provided by the EJBContext interface. In this example, a
-reference to the client bean’s SessionContext object is obtained through
+`lookup` method provided by the `EJBContext` interface. In this example, a
+reference to the client bean’s `SessionContext` object is obtained through
 dependency injection:
 
+[source, java]
+----
 @Resource SessionContext ctx;
-
 ...
-
 CartBean cart = (CartBean)ctx.lookup("cart");
-
-
+----
 
 Despite the fact that the client reference
 for the no-interface view has the type of the bean class, the client
-never directly uses the _new_ operator to acquire the reference.
+never directly uses the `new` operator to acquire the reference.
 
 [[a304]]
 ==== Session Bean’s Business Interface
@@ -487,18 +464,17 @@ method.
 The business interface of a stateful session
 bean typically contains a method to initialize the state of the session
 object and a method to indicate that the client has finished using the
-session object and that it can be removed. See
-link:Ejb.html#a608[See Session Bean Component Contract].
+session object and that it can be removed. See <<a608>>.
 
 It is invalid to reference a session object
 that does not exist. If a stateful session bean has been removed,
 attempted invocations on the stateful session bean business interface
 result in the
-javax.ejb.NoSuchEJBException.footnote:a10220[This may not apply to 
+`javax.ejb.NoSuchEJBException`.footnote:a10220[This may not apply to 
 stateless session beans; see <<a1065>>.]
 If a singleton session bean did not successfully initialize, attempted
 invocations on the singleton session bean business interface result in
-the javax.ejb.NoSuchEJBException.
+the `javax.ejb.NoSuchEJBException`.
 
 The container provides an implementation of a
 session bean’s business interface such that when the client invokes a
@@ -506,17 +482,16 @@ method on the instance of the business interface, the business method on
 the session bean instance and any interceptor methods are invoked as
 needed.
 
-The container makes the session bean’s
-business interface available to the EJB 3.x client through dependency
-injection and through lookup in the JNDI namespace. Section
-link:Ejb.html#a3912[See EJB References] describes in further
-detail how clients can obtain references to EJB business interfaces.
+The container makes the session bean’s business interface available to the 
+EJB 3.x client through dependency injection and through lookup in the JNDI 
+namespace. <<a3912>> describes in further detail how clients can obtain 
+references to EJB business interfaces.
 
 [[a312]]
 ==== Session Bean’s No-Interface View
 
 A session bean’s no-interface view is a
-variation of the local view that exposes the non-static public methods
+variation of the local view that exposes the _non-static_ `public` methods
 of the bean class without the use of a separate business interface.
 
 A reference to the no-interface view may be
@@ -528,15 +503,15 @@ reference to a no-interface view such that when the client invokes a
 method on the reference, the business method on the session bean
 instance and any interceptor methods are invoked as needed. As with the
 session bean remote and local views, a client acquires a no-interface
-view reference via lookup or injection only. A client does not directly
-instantiate (use the new operator on) the bean class to acquire a
+view reference via lookup or injection only. A client does _not_ directly
+instantiate (use the `new` operator on) the bean class to acquire a
 reference to the no-interface view.
 
-Only public methods of the bean class and of
-any superclasses except java.lang.Object may be invoked through the
+Only `public` methods of the bean class and of
+any superclasses except `java.lang.Object` may be invoked through the
 no-interface view. Attempted invocations of methods with any other
 access modifiers via the no-interface view reference must result in the
-javax.ejb.EJBException.
+`javax.ejb.EJBException`.
 
 When interacting with a reference to the
 no-interface view, the client must not make any assumptions regarding
@@ -553,16 +528,16 @@ number of times the bean class no-arg constructor will be called. For
 example, it is possible that the acquisition of a client reference to
 the no-interface view will result in the invocation of the bean class
 constructor. It is recommended that the Bean Provider place component
-initialization logic in a PostConstruct method instead of the bean class
+initialization logic in a `PostConstruct` method instead of the bean class
 no-arg constructor.
 
 It is invalid to reference a session object
 that does not exist. If a stateful session bean has been removed,
 attempted invocations on the no-interface view reference must result in
-the javax.ejb.NoSuchEJBException. If a singleton session bean did not
+the `javax.ejb.NoSuchEJBException`. If a singleton session bean did not
 successfully initialize, attempted invocations on the singleton session
 bean’s no-interface view reference result in the
-javax.ejb.NoSuchEJBException.
+`javax.ejb.NoSuchEJBException`.
 
 ==== Client View of Session Object’s Life Cycle
 
@@ -580,7 +555,7 @@ It is not valid to pass a reference to the remote business interface
 through a bean’s remote component interface.]
 
 A client may remove a stateful session bean
-by invoking a method of its business interface designated as a _Remove_
+by invoking a method of its business interface designated as a `Remove`
 method.
 
 The lifecycle of a stateless session bean
@@ -594,48 +569,40 @@ singleton session bean instance is performed by the container,
 transparently to the client.
 
 The contracts for session bean lifecycle are
-described in link:Ejb.html#a608[See Session Bean Component
-Contract].
+described in <<a608>>.
 
 ==== Example of Obtaining and Using a Session Object
 
 An example of the session bean runtime
 objects is illustrated by the following diagram:
 
-===
+.Session Bean Example Objects
+image::EBCore-6.png[]
 
-
-
-Session Bean Example Objects
-
-image:EBCore-6.png[image]
-
-A client obtains a reference to a _Cart_
+A client obtains a reference to a `Cart`
 session object, which provides a shopping service, by means of
 dependency injection or using JNDI lookup. The client then uses this
 session object to fill the cart with items and to purchase its contents.
-_Cart_ is a stateful session.
+`Cart` is a stateful session.
 
 In this example, the client obtains a
-reference to the _Cart_ ’s business interface through dependency
+reference to the `Cart`’s business interface through dependency
 injection. The client then uses the business interface to initialize the
-session object and add a few items to it. The _startShopping_ method is
+session object and add a few items to it. The `startShopping` method is
 a business method that is provided for the initialization of the session
 object.
 
-@EJB Cart cart;
-
+[source, java]
+----
+@EJB 
+Cart cart;
 ...
-
 cart.startShopping();
-
 cart.addItem(66);
-
 cart.addItem(22);
+----
 
-
-
-{empty}Finally the client purchases the
+Finally the client purchases the
 contents of the shopping cart, and finishes the shopping
 activity.footnote:a10222[It is part of the logic of an 
 application designed using stateful session beans to designate 
@@ -644,17 +611,18 @@ a method that causes the removal of the stateful session
 session bean). This example assumes that the `finishShopping` method 
 is such a `Remove` method. See <<a921>> for further discussion.]
 
+[source, java]
+----
 cart.purchase();
-
 cart.finishShopping();
-
+----
 
 [[a342]]
 ==== Session Object Identity
 
 A client can test two EJB 3.x remote or local
-view references for identity by means of the _Object.equals_ and
-_Object.hashCode_ methods.
+view references for identity by means of the `Object.equals` and
+`Object.hashCode` methods.
 
 ===== Stateful Session Beans
 
@@ -662,31 +630,27 @@ A stateful session object has a unique
 identity that is assigned by the container at the time the object is
 created. A client of the stateful session bean business interface can
 determine if two business interface or no-interface view references
-refer to the same session object by use of the _equals_ method.
+refer to the same session object by use of the `equals` method.
 
 For example,
 
-@EJB Cart cart1;
+[source, java]
+----
+@EJB 
+Cart cart1;
 
-@EJB Cart cart2;
-
+@EJB 
+Cart cart2;
 ...
 
-if (cart1.equals(cart1)) \{ // this test must
-return true
-
+if (cart1.equals(cart1)) { // this test must return true
  ...
-
 }
-
 ...
-
-if (cart1.equals(cart2)) \{ // this test must
-return false
-
+if (cart1.equals(cart2)) { // this test must return false
  ...
-
 }
+----
 
 All stateful session bean references to the
 same business interface for the same stateful session bean instance will
@@ -706,39 +670,32 @@ object identity.
 
 For example,
 
-@EJB Cart cart1;
+[source, java]
+----
+@EJB 
+Cart cart1;
 
-@EJB Cart cart2;
-
+@EJB 
+Cart cart2;
 ...
-
-if (cart1.equals(cart1)) \{ // this test must
-return true
-
+if (cart1.equals(cart1)) { // this test must return true
  ...
-
 }
-
 ...
-
-if (cart1.equals(cart2)) \{ // this test must
-also return true
-
+if (cart1.equals(cart2)) { // this test must also return true
  ...
-
 }
+----
 
-The _equals_ method always returns true when
+The `equals` method always returns `true` when
 used to compare references to the same business interface type of the
-same stateless session bean. The equals method always returns true when
+same stateless session bean. The `equals` method always returns `true` when
 used to compare references to the no-interface view of the same
 stateless session bean. Stateless session bean references to either
 different business interface types or between an interface type and a
 no-interface view or to different session beans will not be equal.
 
 ===== Singleton Session Beans
-
-
 
 All business object references of the same
 interface type for the same singleton session bean have the same object
@@ -747,32 +704,26 @@ no-interface view of the same singleton session bean have the same
 object identity.
 
 For example,
+[source, java]
+----
+@EJB 
+Shared shared1;
 
-@EJB Shared shared1;
-
-@EJB Shared shared2;
-
+@EJB 
+Shared shared2;
 ...
-
-if (shared1.equals(shared1)) \{ // this test
-must return true
-
+if (shared1.equals(shared1)) { // this test must return true
  ...
-
 }
-
 ...
-
-if (shared1.equals(shared2)) \{ // this test
-must also return true
-
+if (shared1.equals(shared2)) { // this test must also return true
  ...
-
 }
+----
 
-The _equals_ method always returns true when
+The `equals` method always returns `true` when
 used to compare references to the same business interface type of the
-same singleton session bean. The equals method always returns true when
+same singleton session bean. The `equals` method always returns `true` when
 used to compare references to the no-interface view of the same
 singleton session bean. Session bean references to either different
 business interface types or between an interface type and a no-interface
@@ -785,7 +736,7 @@ By default, session bean invocations through
 the remote, local, and no-interface views are synchronous. The client
 blocks for the duration of the invocation and is returned control only
 after all invocation processing has completed. Clients can achieve
-asynchronous invocation behavior by invoking session bean methods that
+`asynchronous` invocation behavior by invoking session bean methods that
 have been designed to support asynchrony.
 
 When a client invokes an asynchronous method,
@@ -793,7 +744,7 @@ the container returns control to the client immediately and continues
 processing the invocation on a separate thread of execution.
 
 The client should expect to receive a system
-exception (in the form of the javax.ejb.EJBException) on the client
+exception (in the form of the `javax.ejb.EJBException`) on the client
 thread if the container has problems allocating the internal resources
 required to support the asynchronous method.footnote:a10223[If the 
 business interface is a remote business interface that extends 
@@ -808,65 +759,62 @@ client can expect that the container will make an attempt to dispatch
 the asynchronous method. An exception resulting from the asynchronous
 method execution (e.g. an authorization failure, transaction commit
 failure, application exception, etc.) will be available via the
-_Future<V>_ object.
+`Future<V>` object.
 
 ===== Return Values
 
 Asynchronous methods have a return type of
-void or Future<V>, where V represents the result value of the
+`void` or `Future<V>`, where `V` represents the result value of the
 asynchronous invocation.
 
-For Future<V>, the object returned from the
+For `Future<V>`, the object returned from the
 client invocation is a container provided object. This object allows the
 client to retrieve the invocation result value, discover any invocation
 exception, or attempt to cancel the asynchronous invocation.
 
-All methods of the
-java.util.concurrent.Future interface are supported. Unless otherwise
-noted, the behavior matches that described in its javadoc entry
-link:Ejb.html#a9883[See Java™ Platform, Standard Edition, v7 API
-Specification (Java SE).
-http://docs.oracle.com/javase/7/docs/api/index.html.].
+All methods of the `java.util.concurrent.Future` interface are supported. 
+Unless otherwise noted, the behavior matches that described in its 
+javadoc entry <<a9883>>.
 
 ====== Future.cancel(boolean mayInterruptIfRunning)
 
-If a client calls cancel on its Future
+If a client calls `cancel` on its `Future`
 object, the container will attempt to cancel the associated asynchronous
-invocation only if that invocation has not already been dispatched.
+invocation _only if_ that invocation has not already been dispatched.
 There is no guarantee that an asynchronous invocation can be cancelled,
-regardless of how quickly cancel is called after the client receives its
+regardless of how quickly `cancel` is called after the client receives its
 Future object. If the asynchronous invocation cannot be cancelled, the
-method must return false. If the asynchronous invocation is successfully
-cancelled, the method must return true.
+method must return `false`. If the asynchronous invocation is successfully
+cancelled, the method must return `true`.
 
-The mayInterruptIfRunning flag controls
-whether, in the case that the asynchronous invocation can not be
+The `mayInterruptIfRunning` flag controls
+whether, in the case that the asynchronous invocation can _not_ be
 cancelled, the target enterprise bean should have visibility to the
-client’s cancel attempt. If the mayInterruptIfRunning flag is set to
-true, then subsequent calls to the SessionContext.wasCancelCalled method
+client’s cancel attempt. If the `mayInterruptIfRunning` flag is set to
+`true`, then subsequent calls to the `SessionContext.wasCancelCalled` method
 from within the associated dispatched asynchronous invocation must
-return true. If the mayInterruptIfRunning flag is set to false, then
-subsequent calls to the SessionContext.wasCancelCalled method from
+return `true`. If the `mayInterruptIfRunning` flag is set to `false`, then
+subsequent calls to the `SessionContext.wasCancelCalled` method from
 within the associated dispatched asynchronous invocation must return
-false.
+`false`.
 
-Note that all the client Future cancel
-semantics (isCancelled, CancellationException, etc.) depend only on the
-result of Future.cancel. If the dispatched asynchronous method does
+Note that all the client `Future` cancel
+semantics (`isCancelled`, `CancellationException`, etc.) depend only on the
+result of `Future.cancel`. If the dispatched asynchronous method does
 decide to short circuit its processing as a result of checking
-SessionContext, it is the responsibility of the Bean Provider to decide
+`SessionContext`, it is the responsibility of the Bean Provider to decide
 how to convey that information to the client. Typically, that is done
-through a special return value or exception delivered via Future.get().
+through a special return value or exception delivered via `Future.get()`.
 
 ====== Future.get
 
-The client calls one of the two Future.get
+The client calls one of the two `Future.get`
 methods in order to retrieve the result value or resulting exception
 from the associated asynchronous invocation. This specification
 recommends that unless the client successfully cancels the asynchronous
-invocation it should call get on every Future object it receives. If a
+invocation it should call `get` on every `Future` object it receives. If a
 call to get successfully returns a result value or throws an
-ExecutionException, all subsequent calls to get on the same Future
+`ExecutionException`, all subsequent calls to get on the same `Future`
 object must result in that same behavior.
 
 The EJB Container Provider is permitted to
@@ -881,9 +829,8 @@ It is permissible to acquire a session bean
 reference and attempt to invoke the same reference object concurrently
 from multiple threads. However, the resulting client behavior on each
 thread depends on the concurrency semantics of the target bean. See
-link:Ejb.html#a778[See Serializing Session Bean Methods] and
-link:Ejb.html#a1257[See Singleton Session Bean Concurrency] for
-details of the concurrency behavior for session beans.
+<<a778>> and <<a1257>> for details of the concurrency behavior for 
+session beans.
 
 [[a405]]
 === The Web Service Client View of a Stateless or Singleton Session Bean
