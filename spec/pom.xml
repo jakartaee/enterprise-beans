@@ -101,9 +101,6 @@
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
-                            <attributes>
-                                <toc>left</toc>
-                            </attributes>
                         </configuration>
                     </execution>
                     <execution>
@@ -137,9 +134,6 @@
                             <backend>html5</backend>
                             <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
                             <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.html</outputFile>
-                            <attributes>
-                                <toc>left</toc>
-                            </attributes>
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
