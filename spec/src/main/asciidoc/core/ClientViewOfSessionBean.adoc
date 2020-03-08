@@ -438,7 +438,8 @@ dependency injection:
 
 [source, java]
 ----
-@Resource SessionContext ctx;
+@Resource 
+SessionContext ctx;
 ...
 CartBean cart = (CartBean)ctx.lookup("cart");
 ----
@@ -1272,7 +1273,7 @@ items to it:
 [source, java]
 ----
 CartHome cartHome = (CartHome)javax.rmi.PortableRemoteObject.narrow(
-     initialContext.lookup(...), CartHome.class);
+         initialContext.lookup(...), CartHome.class);
 Cart cart = cartHome.createLargeCart(...);
 cart.addItem(66);
 cart.addItem(22);
