@@ -6,8 +6,6 @@ responsibilities of each EJB Role.
 
 === Bean Provider’s Responsibilities
 
-
-
 This section
 highlights the requirements for the Bean Provider. Meeting these
 requirements is necessary to ensure that the enterprise beans developed
@@ -22,26 +20,18 @@ requirements defined in the individual chapters of this document.
 
 The Bean Provider is responsible for
 packaging the enterprise beans in an ejb-jar
-file or _.war_ file in the format described in Chapter
-link:Ejb.html#a9294[See Packaging].
+file or `.war` file in the format described in <<a9294>>.
 
 The deployment descriptor, if present, must
-conform to the requirements of link:Ejb.html#a5804[See
-Deployment Descriptor].
+conform to the requirements of <<a5804>>.
 
 === Application Assembler’s Responsibilities
 
-
-
 The requirements
-for the Application Assembler are in defined in
-link:Ejb.html#a5804[See Deployment Descriptor] and
-link:Ejb.html#a9294[See Packaging].
+for the Application Assembler are in defined in <<a5804>> and <<a9294>>.
 
 [[a9838]]
 === EJB Container Provider’s Responsibilities
-
-
 
 The EJB Container
 Provider is responsible for providing the deployment tools used by the
@@ -52,25 +42,20 @@ chapters of this document.
 The EJB Container Provider is responsible for
 implementing its part of the EJB contracts and its part of the contracts
 described in _Java Persistence API_ specification
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.], and for providing all the runtime
+<<a9851>>, and for providing all the runtime
 services described in the individual chapters of this document.
 
 === Deployer’s Responsibilities
 
-
-
 The Deployer uses
 the deployment tools provided by the EJB Container Provider to deploy
-ejb-jar files or _.war_ files produced by the Bean Providers and
+ejb-jar files or `.war` files produced by the Bean Providers and
 Application Assemblers.
 
 The individual chapters of this document
 describe the responsibilities of the Deployer in more detail.
 
 === System Administrator’s Responsibilities
-
-
 
 The System
 Administrator is responsible for configuring the EJB container and
@@ -83,8 +68,6 @@ describe the responsibilities of the System Administrator in more
 detail.
 
 === Client Programmer’s Responsibilities
-
-
 
 The EJB client programmer writes applications
 that access enterprise beans via their business interfaces, via their
