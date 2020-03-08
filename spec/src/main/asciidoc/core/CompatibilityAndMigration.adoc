@@ -8,8 +8,6 @@ clients.
 [[a9696]]
 === Support for Existing Applications
 
-
-
 Existing EJB 3.1 and earlier applications
 that do not include entity bean components and JAX-RPC based web
 services endpoints footnote:a10344[See <<a182>>.] must be supported to run
@@ -24,38 +22,30 @@ versions of the Enterprise JavaBeans specification.
 
 === Default Stateful Session Bean Concurrency Behavior
 
-
-
 Prior versions of the EJB specification
 allowed the container to choose the default behavior in the event of
 concurrent access attempts to a stateful session bean instance. This
 specification requires a default of serialized requests in the face of
 concurrency. This means by default clients will not receive the
-javax.ejb.ConcurrentAccessException when concurrent access occurs for a
+`javax.ejb.ConcurrentAccessException` when concurrent access occurs for a
 request. This should have minimal impact to correctly written
 applications since even with the prior behavior there was no guarantee
 of receiving such an exception due to the inherent race conditions.
 Applications wishing to receive an exception in the face of concurrency
-can request that behavior through newly defined metadata. See
-link:Ejb.html#a778[See Serializing Session Bean Methods] for
+can request that behavior through newly defined metadata. See <<a778>> for
 more details.
 
 === Default Application Exception Subclassing Behavior
-
-
 
 The EJB 3.0 Specification was ambiguous with
 respect to whether the designation of an unchecked exception as an
 application exception applied to that exception’s subclasses. The EJB
 3.1 specification clarified that, by default, the application exception
 designation is inherited by subclasses. Non-inheriting behavior may be
-specified by means of the _ApplicationException_ annotation and/or the
-deployment descriptor. See link:Ejb.html#a2942[See Application
-Exceptions] for more detail.
+specified by means of the `ApplicationException` annotation and/or the
+deployment descriptor. See <<a2942>> for more detail.
 
 === Interoperability of EJB 3.2 and Earlier Components
-
-
 
 This release of Enterprise JavaBeans supports
 migration and interoperability among client and server components
@@ -76,8 +66,7 @@ Such clients may access components written to
 the EJB 3.x APIs and components written to the earlier EJB APIs within
 the same transaction.
 
-See link:Ejb.html#a9716[See Adapting
-EJB 3.x Session Beans to Earlier Client Views] for a discussion of the
+See <<a9716>> for a discussion of the
 mechanisms that are used to enable components written to the EJB 3.x API
 to be accessed and utilized by clients written to earlier versions of
 the EJB specification.
@@ -93,7 +82,7 @@ the same transaction.
 
 Such clients access components written to the
 earlier EJB APIs using the EJB 2.1 client view home and component
-interfaces. The EJB annotation (or the ejb-ref and ejb-local-ref
+interfaces. The `EJB` annotation (or the `ejb-ref` and `ejb-local-ref`
 deployment descriptor elements) may be used to specify the injection of
 home interfaces into components that are clients of beans written to the
 earlier EJB client view.
@@ -111,8 +100,6 @@ occurs.]
 [[a9716]]
 === Adapting EJB 3.x Session Beans to Earlier Client Views
 
-
-
 Clients written to the EJB 2.1 and earlier
 client view depend upon the existence of a home and component interface.
 
@@ -120,18 +107,18 @@ A session bean written to the EJB 3.x API may
 be adapted to such earlier preexisting client view interfaces.
 
 The session bean designates the interfaces to
-be adapted by using the RemoteHome and LocalHome metadata annotations on
+be adapted by using the `RemoteHome` and `LocalHome` metadata annotations on
 the bean class (or equivalent deployment descriptor elements). The
 corresponding remote and local component interfaces are not explicitly
 specified when using these annotations. Rather, they are derived from
-the Home and LocalHome interfaces respectively.
+the `Home` and `LocalHome` interfaces respectively.
 
 When the client is deployed, the container
 classes that implement the EJB 2.1 home and remote component interfaces
 (or local home and local component interfaces) referenced by the client
-must provide the implementation of the javax.ejb.EJBHome and
-javax.ejb.EJBObject interfaces (or the javax.ejb.EJBLocalHome and
-javax.ejb.EJBLocalObject interfaces) respectively.
+must provide the implementation of the `javax.ejb.EJBHome` and
+`javax.ejb.EJBObject` interfaces (or the `javax.ejb.EJBLocalHome` and
+`javax.ejb.EJBLocalObject` interfaces) respectively.
 
 In addition, the container implementation
 classes must implement the methods of the home and comonent interfaces
@@ -139,7 +126,7 @@ to apply to the EJB 3.x component being referenced as described below.
 
 ==== Stateless Session Beans
 
-The invocation of the home create() method
+The invocation of the home `create()` method
 must return the corresponding local component interface or remote
 component interface of the bean. This may or may not cause the creation
 of the bean instance, depending on the container’s implementation
@@ -147,19 +134,17 @@ strategy. For example, the container may preallocate bean instances
 (e.g., in a pooling strategy) or may defer the creation of the bean
 instance until the first invocation of a business method on the bean
 class. When the bean instance is created, the container invokes the
-setSessionContext method, if any, performs any other dependency
-injection, and invokes the PostConstruct lifecycle callback methods, if
-any, as specified in link:Ejb.html#a756[See Session Bean
-Creation].
+`setSessionContext` method, if any, performs any other dependency
+injection, and invokes the `PostConstruct` lifecycle callback methods, if
+any, as specified in <<a756>>.
 
-{empty}It is likewise
-implementation-dependent as to whether the invocation of the EJBHome
-remove(Handle) or EJBObject or EJBLocalObject remove() methods causes
+It is likewise
+implementation-dependent as to whether the invocation of the `EJBHome
+remove(Handle)` or `EJBObject` or `EJBLocalObject remove()` methods causes
 the immediate removal of the bean instance, depending on the container’s
 implementation strategy. When the bean instance is removed, the
-PreDestroy callback methods, if any, are invoked, as specified in
-link:Ejb.html#a1077[See Stateless Session Bean Lifecycle State
-Diagram]
+`PreDestroy` callback methods, if any, are invoked, as specified in
+<<a1077>>
 
 The invocations of the business methods of
 the component interface are delegated to the bean class.
@@ -167,29 +152,28 @@ the component interface are delegated to the bean class.
 [[a9726]]
 ==== Stateful Session Beans
 
-The invocation of the home create<METHOD>()
+The invocation of the home `create<METHOD>()`
 method causes construction of the bean instance, invocation of the
-PostConstruct lifecycle callbacks, if any, and invocation of the
-matching _Init_ method, and returns the corresponding local component
+`PostConstruct` lifecycle callbacks, if any, and invocation of the
+matching `Init` method, and returns the corresponding local component
 interface or remote component interface of the bean. Invocations of the
-PostConstruct lifecycle callback methods occur in a transaction context
+`PostConstruct` lifecycle callback methods occur in a transaction context
 determined by the methods’ transaction attributes, if any.
 
-The invocation of the EJBHome remove(Handle)
-or the EJBObject or EJBLocalObject remove() method causes the invocation
-of the _PreDestroy_ lifecycle callback method(s), if any, and removal of
-the bean instance, as described in section
-link:Ejb.html#a767[See Stateful Session Bean Removal].
-Invocation of the PreDestroy lifecycle callback methods occur in a
+The invocation of the `EJBHome remove(Handle)`
+or the `EJBObject` or `EJBLocalObject remove()` method causes the invocation
+of the `PreDestroy` lifecycle callback method(s), if any, and removal of
+the bean instance, as described in <<a767>>.
+Invocation of the `PreDestroy` lifecycle callback methods occur in a
 transaction context determined by the methods’ transaction attributes,
 if any.
 
 The invocations of the business methods of
 the component interface are delegated to the bean class.
 
-The Init annotation is used to specify the
-correspondence of a method on the bean class with a _create<METHOD>_
-method of the adapted EJBHome and/or adapted EJBLocalHome interface. The
+The `Init` annotation is used to specify the
+correspondence of a method on the bean class with a `create<METHOD>`
+method of the adapted `EJBHome` and/or adapted `EJBLocalHome` interface. The
 result type of such an Init method is required to be void, and its
 parameter types must be exactly the same as those of the referenced
-create<METHOD> method.
+`create<METHOD>` method.
