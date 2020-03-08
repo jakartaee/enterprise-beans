@@ -835,8 +835,6 @@ session beans.
 [[a405]]
 === The Web Service Client View of a Stateless or Singleton Session Bean
 
-
-
 From the perspective of the client, the
 existence of the stateless session bean or singleton session bean is
 completely hidden behind the web service endpoint that the bean
@@ -846,69 +844,47 @@ The web service client’s access to the web
 service functionality provided by a session bean occurs through a web
 service endpoint. In the case of Java clients, this endpoint is accessed
 as a JAX-WS service endpoint using the JAX-WS client view APIs, as
-described in link:Ejb.html#a9881[See Java™ API for XML-based Web
-Service, version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.].
+described in <<a9881>>.
 
 The following diagram illustrates the view
 that is provided to Java EE web service clients of a stateless session
 bean through the JAX-WS client view APIs.
 
-===
-
-
-
-Web Service Client View of Stateless Session Beans Deployed in a
-Container
-
-image:EBCore-7.png[image]
-
-
+.Web Service Client View of Stateless Session Beans Deployed in a Container
+image::EBCore-7.png[]
 
 ==== JAX-WS Web Service Clients
 
 The Java EE web service client obtains a
-reference to the service instance of the _javax.xml.ws.Service_ class
+reference to the service instance of the `javax.xml.ws.Service` class
 through dependency injection or using JNDI. The service class can be a
-generic _javax.xml.ws.Service_ class or a generated service class which
-extends the _javax.xml.ws.Service_ class. The service instance is then
+generic `javax.xml.ws.Service` class or a generated service class which
+extends the `javax.xml.ws.Service` class. The service instance is then
 used to obtain a port object for the web service endpoint. The
 mechanisms and APIs for client web service access are described in the
-JAX-WS specification link:Ejb.html#a9881[See Java™ API for
-XML-based Web Service, version 2.2 (JAX-WS).
-http://jcp.org/en/jsr/detail?id=224.] and in the Web Services for Java
-EE specification link:Ejb.html#a9879[See Web Services for Java
-EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.].
+JAX-WS specification <<a9881>> and in the Web Services for Java
+EE specification <<a9879>>.
 
 The following example illustrates how a
 JAX-WS client obtains a reference to a web service endpoint, obtains a
 port object for the web service endpoint, and invokes a method on that
 endpoint.
 
+[source, java]
+----
 @WebServiceRef
-
 public StockQuoteService stockQuoteService;
-
 ...
-
-StockQuoteProvider sqp =
-
-
-stockQuoteService.getStockQuoteProviderPort();
-
-float quotePrice =
-sqp.getLastTradePrice("ACME");
-
+StockQuoteProvider sqp = stockQuoteService.getStockQuoteProviderPort();
+float quotePrice = sqp.getLastTradePrice("ACME");
 ...
+----
 
 The use of service references and the
-_WebServiceRef_ annotation are described in further detail in
-link:Ejb.html#a9881[See Java™ API for XML-based Web Service,
-version 2.2 (JAX-WS). http://jcp.org/en/jsr/detail?id=224.].
+`WebServiceRef` annotation are described in further detail in <<a9881>>.
 
 [[a422]]
 === Remote and Local Client View of Session Beans Written to the EJB 2.1 Client View API
-
-
 
 The remainder of this chapter describes the
 session bean client view defined by the EJB 2.1 and earlier
@@ -924,66 +900,59 @@ required that the client first obtain a reference to a session bean’s
 home interface, and then use the home interface to obtain a reference to
 the bean’s component interface. This earlier programming model continues
 to be supported by this specification. Both dependency injection and use
-of the EJBContext _lookup_ method may be used as an alternative to the
+of the EJBContext `lookup` method may be used as an alternative to the
 JNDI APIs to obtain a reference to the home interface.
 
 For example, an EJB 3.x client,
-_com.acme.example.MySessionBean_ , might obtain a reference to a bean’s
+`com.acme.example.MySessionBean`, might obtain a reference to a bean’s
 home interface as follows:
 
-@EJB CartHome cartHome;
+[source, java]
+----
+@EJB 
+CartHome cartHome;
+----
 
 This home interface could be looked up in
-JNDI using the EJBContext _lookup_ method as shown in the following code
+JNDI using the EJBContext `lookup` method as shown in the following code
 segment:
 
-@Resource SessionContext ctx;
-
+[source, java]
+----
+@Resource 
+SessionContext ctx;
 ...
+CartHome cartHome = 
+     (CartHome)ctx.lookup("com.acme.example.MySessionBean/cartHome");
+----
 
-CartHome cartHome =
-
- (CartHome)ctx.lookup("
-_com.acme.example.MySessionBean/_ cartHome");
-
-When the EJBContext _lookup_ method is used
+When the EJBContext `lookup` method is used
 to look up a home interface, the use of
-_javax.rmi.PortableRemoteObject.narrow_ is not required.
+`javax.rmi.PortableRemoteObject.narrow` is not required.
 
 The following code segments illustrate how
 the home interface is obtained when the JNDI APIs are used directly, as
 was required in the EJB 2.1 programming model. For example, the remote
-home interface for the _Cart_ session bean can be located using the
+home interface for the `Cart` session bean can be located using the
 following code segment:
 
-Context initialContext = new
-InitialContext();
+[source, java]
+----
+Context initialContext = new InitialContext();
+CartHome cartHome = (CartHome)javax.rmi.PortableRemoteObject.narrow(
+     initialContext.lookup("java:comp/env/ejb/cart"), CartHome.class);
+----
 
-CartHome cartHome =
-
-
-(CartHome)javax.rmi.PortableRemoteObject.narrow(
-
-
-initialContext.lookup("java:comp/env/ejb/cart"),
-
- CartHome.class);
-
-
-
-If the _Cart_ session bean provides a local
-client view instead of a remote client view and _CartHome_ is a local
+If the `Cart` session bean provides a local
+client view instead of a remote client view and `CartHome` is a local
 home interface, this lookup might be as follows:
 
-Context initialContext = new
-InitialContext();
-
-CartHome cartHome = (CartHome)
-
-
-initialContext.lookup("java:comp/env/ejb/cart");
-
-
+[source, java]
+----
+Context initialContext = new InitialContext();
+CartHome cartHome = 
+     (CartHome)initialContext.lookup("java:comp/env/ejb/cart");
+----
 
 ==== Session Bean’s Remote Home Interface
 
@@ -991,11 +960,11 @@ This section is
 specific to session beans that provide a remote client view using the
 remote component interface and remote home interface.
 
-This was the only way of providing a remote
+{empty}::
+_This was the only way of providing a remote
 client view in the EJB 2.1 and earlier releases. The remote client view
 provided by the business interface under the EJB 3.x API, as described
-in link:Ejb.html#a283[See Client View of Session Beans Written
-to the EJB 3.x Simplified API], is now to be preferred.
+in <<a283>>, is now to be preferred._
 
 The container provides the implementation of
 the remote home interface for each session bean that defines a remote
@@ -1008,18 +977,16 @@ through lookup in the JNDI namespace.
 The remote home interface allows a client to
 do the following:
 
-Create a new session object.
+* Create a new session object.
 
-Remove a session object.
+* Remove a session object.
 
-Get the _javax.ejb.EJBMetaData_
- interface for the session bean. The
-_javax.ejb.EJBMetaData_ interface is intended to allow application
+* Get the `javax.ejb.EJBMetaData` interface for the session bean. The
+`javax.ejb.EJBMetaData` interface is intended to allow application
 assembly tools to discover information about the session bean, and to
 allow loose client/server binding and client-side scripting.
 
-Obtain a handle
-for the remote home interface. The home
+* Obtain a handle for the remote home interface. The home
 handle can be serialized and written to stable storage. Later, possibly
 in a different JVM, the handle can be deserialized from stable storage
 and used to obtain back a reference of the remote home interface.
@@ -1038,56 +1005,48 @@ reference obtained via JNDI.
 
 ===== Creating a Session Object
 
-A home interface
-defines one or more create<METHOD> methods, one for each way to create a
-session object. The arguments of the _create_ methods are typically used
+A home interface 
+defines one or more `create<METHOD>` methods, one for each way to create a
+session object. The arguments of the `create` methods are typically used
 to initialize the state of the created session object.
 
-The return type of a create<METHOD> method on
+The return type of a `create<METHOD>` method on
 the remote home interface is the session bean’s remote component
 interface.
 
 The following example illustrates a remote
-home interface that defines two create<METHOD> methods:
+home interface that defines two `create<METHOD>` methods:
 
-public interface CartHome extends
-javax.ejb.EJBHome \{
-
- Cart create(String customerName, String
-account)
-
- throws RemoteException, BadAccountException,
-
- CreateException;
-
- Cart createLargeCart(String customerName,
-String account)
-
- throws RemoteException, BadAccountException,
-
- CreateException;
-
+[source, java]
+----
+public interface CartHome extends javax.ejb.EJBHome {
+ Cart create(String customerName, String account)
+     throws RemoteException, BadAccountException, CreateException;
+ Cart createLargeCart(String customerName, String account)
+     throws RemoteException, BadAccountException, CreateException;
 }
-
-
+----
 
 The following example illustrates how a
-client creates a new session object using a create _<METHOD>_ method of
-the CartHome interface:
+client creates a new session object using a `create<METHOD>` method of
+the `CartHome` interface:
 
+[source, java]
+----
 cartHome.create("John", "7506");
+----
 
 ===== Removing a Session Object
 
 A remote client
-may remove a session object using the remove() method of the
-javax.ejb.EJBObject interface, or the remove(Handle handle) method of
-the javax.ejb.EJBHome interface.
+may remove a session object using the `remove()` method of the
+`javax.ejb.EJBObject` interface, or the `remove(Handle handle)` method of
+the `javax.ejb.EJBHome` interface.
 
 Because session objects do not have primary
 keys that are accessible to clients, invoking the +
-javax.ejb.EJBHome.remove(Object primaryKey) method on a session results
-in a javax.ejb.RemoveException.
+`javax.ejb.EJBHome.remove(Object primaryKey)` method on a session results
+in a `javax.ejb.RemoveException`.
 
 ==== Session Bean’s Local Home Interface
 
@@ -1095,11 +1054,11 @@ This section is
 specific to session beans that provide a local client view using the
 local component interface and local home interface.
 
-This was the only way of providing a local
+{empty}::
+_This was the only way of providing a local
 client view in the EJB 2.1 and earlier releases. The local client view
 provided by the business interface under the EJB 3.x API, as described
-in link:Ejb.html#a283[See Client View of Session Beans Written
-to the EJB 3.x Simplified API], is now to be preferred.
+in <<a283>>, is now to be preferred._
 
 The container
 provides the implementation of the local home interface for each session
@@ -1112,9 +1071,9 @@ available to the client through JNDI.
 The local home interface allows a local
 client to do the following:
 
-Create a new session object.
+* Create a new session object.
 
-Remove a session object.
+* Remove a session object.
 
 A client can pass a local home object
 reference to another application through its local component interface.
@@ -1125,50 +1084,46 @@ interface.
 ===== Creating a Session Object
 
 A local home
-interface defines one or more create<METHOD> methods, one for each way
-to create a session object. The arguments of the _create_ methods are
+interface defines one or more `create<METHOD>` methods, one for each way
+to create a session object. The arguments of the `create` methods are
 typically used to initialize the state of the created session object.
 
-The return type of a create<METHOD> method on
+The return type of a `create<METHOD>` method on
 the local home interface is the session bean’s local component
 interface.
 
 The following example illustrates a local
-home interface that defines two create<METHOD> methods:
+home interface that defines two `create<METHOD>` methods:
 
-public interface CartHome extends
-javax.ejb.EJBLocalHome \{
-
- Cart create(String customerName, String
-account)
-
- throws BadAccountException, CreateException;
-
- Cart createLargeCart(String customerName,
-String account)
-
- throws BadAccountException, CreateException;
-
+[source, java]
+----
+public interface CartHome extends javax.ejb.EJBLocalHome {
+ Cart create(String customerName, String account)
+     throws BadAccountException, CreateException;
+ Cart createLargeCart(String customerName, String account)
+     throws BadAccountException, CreateException;
 }
-
-
+----
 
 The following example illustrates how a
-client creates a new session object using a create _<METHOD>_ method of
-the CartHome interface:
+client creates a new session object using a `create<METHOD>` method of
+the `CartHome` interface:
 
+[source, java]
+----
 cartHome.create("John", "7506");
+----
 
 ===== Removing a Session Object
 
 A local client
-may remove a session object using the remove() method of the
-javax.ejb.EJBLocalObject interface.
+may remove a session object using the `remove()` method of the
+`javax.ejb.EJBLocalObject` interface.
 
 Because session objects do not have primary
 keys that are accessible to clients, invoking the +
-javax.ejb.EJBLocalHome.remove(Object primaryKey) method on a session
-results in a javax.ejb.RemoveException.
+`javax.ejb.EJBLocalHome.remove(Object primaryKey)` method on a session
+results in a `javax.ejb.RemoveException`.
 
 ==== EJBObject and EJBLocalObject
 
@@ -1177,49 +1132,43 @@ A remote or local client that uses the EJB
 access a session bean instance. The class that implements the session
 bean’s component interface is provided by the container. Instances of a
 session bean’s remote component interface are called session
-_EJBObjects_ . Instances of a session bean’s local component interface
-are called session _EJBLocalObjects_ .
+*EJBObjects*. Instances of a session bean’s local component interface
+are called session *EJBLocalObjects*.
 
-A session
-EJBObject supports:
+A session EJBObject supports:
 
-The business logic methods of the object. The
+* The business logic methods of the object. The
 session EJBObject delegates invocation of a business method to the
 session bean instance.
 
-The methods of the _javax.ejb.EJBObject_
+* The methods of the `javax.ejb.EJBObject`
 interface. These methods allow the client to:
 
-Get the session object’s remote home
-interface.
+** Get the session object’s remote home interface.
 
-Get the session object’s handle.
+** Get the session object’s handle.
 
-Test if the session object is identical with
-another session object.
+** Test if the session object is identical with another session object.
 
-Remove the session object.
+** Remove the session object.
 
-A session
-EJBLocalObject supports:
+A session EJBLocalObject supports:
 
-The business logic methods of the object. The
+* The business logic methods of the object. The
 session EJBLocalObject delegates invocation of a business method to the
 session bean instance.
 
-The methods of the _javax.ejb.EJBLocalObject_
+* The methods of the `javax.ejb.EJBLocalObject`
 interface. These methods allow the client to:
 
-Get the session object’s local home
-interface.
+** Get the session object’s local home interface.
 
-Test if the session object is identical with
-another session object.
+** Test if the session object is identical with another session object.
 
-Remove the session object.
+** Remove the session object.
 
 The implementation of the methods defined in
-the javax.ejb.EJBObject and _javax.ejb.EJBLocalObject_ interfaces is
+the `javax.ejb.EJBObject` and `javax.ejb.EJBLocalObject` interfaces is
 provided by the container. They are not delegated to the instances of
 the session bean class.
 
@@ -1230,13 +1179,8 @@ From the point of view of a local or remote
 client using the EJB 2.1 and earlier client view API, the life cycle of
 a session object is illustrated below.
 
-===
-
-
-
-Life Cycle of a Session Object.
-
-image:EBCore-8.png[image]
+.Life Cycle of a Session Object.
+image::EBCore-8.png[]
 
 A session object does not exist until it is
 created. When a client creates a session object, the client has a
@@ -1247,25 +1191,25 @@ reference to the newly created session object’s component interface.
 A client that has a reference to a session
 object’s remote component interface can then do any of the following:
 
-Invoke business methods defined in the
+* Invoke business methods defined in the
 session object’s remote component interface.
 
-Get a reference to the session object’s
+* Get a reference to the session object’s
 remote home interface.
 
-Get a handle for the session object.
+* Get a handle for the session object.
 
-Pass the reference as a parameter or return
+* Pass the reference as a parameter or return
 value within the scope of the client.
 
-Remove the session object. A container may
+* Remove the session object. A container may
 also remove the session object automatically when the session object’s
 lifetime expires.
 
-{empty}It is invalid to reference a session
+It is invalid to reference a session
 object that does not exist. Attempted remote invocations on a stateful
 session object that does not exist result in a
-java.rmi.NoSuchObjectException.footnote:a10225[This may not apply to 
+`java.rmi.NoSuchObjectException`.footnote:a10225[This may not apply to 
 stateless session beans; see <<a1065>>.]
 
 ===== References to Session Object Local Component Interfaces
@@ -1274,23 +1218,23 @@ A client that has
 a reference to a session object’s local component interface can then do
 any of the following:
 
-Invoke business methods defined in the
+* Invoke business methods defined in the
 session object’s local component interface.
 
-Get a reference to the session object’s local
+* Get a reference to the session object’s local
 home interface.
 
-Pass the reference as a parameter or return
+* Pass the reference as a parameter or return
 value of a local component interface method.
 
-Remove the session object. A container may
+* Remove the session object. A container may
 also remove the session object automatically when the session object’s
 lifetime expires.
 
-{empty}It is invalid to reference a session
+It is invalid to reference a session
 object that does not exist. Attempted invocations on a stateful session
 object that does not exist result in
-javax.ejb.NoSuchObjectLocalException.footnote:a10226[This may not apply 
+`javax.ejb.NoSuchObjectLocalException`.footnote:a10226[This may not apply 
 to stateless session beans; see <<a1065>>.]
 
 A client can pass a
@@ -1305,17 +1249,12 @@ or remote component interface.
 An example of the session bean runtime
 objects is illustrated by the following diagram:
 
-===
+.Session Bean Example Objects
+image::EBCore-9.png[]
 
-
-
-Session Bean Example Objects
-
-image:EBCore-9.png[image]
-
-A client creates a remote _Cart_ session
-object, which provides a shopping service, using a create<METHOD> method
-of the _Cart_ ’s remote home interface. The client then uses this
+A client creates a remote `Cart` session
+object, which provides a shopping service, using a `create<METHOD>` method
+of the `Cart`’s remote home interface. The client then uses this
 session object to fill the cart with items and to purchase its contents.
 
 Suppose that the end-user wishes to start the
@@ -1323,52 +1262,44 @@ shopping session, suspend the shopping session temporarily for a day or
 two, and later complete the session. The client might implement this
 feature by getting the session object’s handle, saving the serialized
 handle in persistent storage, and using it later to reestablish access
-to the original _Cart_ .
+to the original `Cart`.
 
 For the following example, we start by
-looking up the _Cart_ ’s remote home interface in JNDI. We then use the
-remote home interface to create a _Cart_ session object and add a few
+looking up the `Cart`’s remote home interface in JNDI. We then use the
+remote home interface to create a `Cart` session object and add a few
 items to it:
 
-CartHome cartHome =
-(CartHome)javax.rmi.PortableRemoteObject.narrow(
-
- initialContext.lookup(...), CartHome.class);
-
+[source, java]
+----
+CartHome cartHome = (CartHome)javax.rmi.PortableRemoteObject.narrow(
+     initialContext.lookup(...), CartHome.class);
 Cart cart = cartHome.createLargeCart(...);
-
 cart.addItem(66);
-
 cart.addItem(22);
-
-
+----
 
 Next we decide to complete this shopping
 session at a later time so we serialize a handle to this cart session
 object and store it in a file:
 
-Handle cartHandle = cart.getHandle();
-
- _//_ _serialize cartHandle, store in a
-file..._
-
-
+[source, java]
+----
+Handle cartHandle = cart.getHandle(); 
+//serialize cartHandle, store in a file...
+----
 
 Finally we deserialize the handle at a later
 time, re-create the reference to the cart session object, and purchase
 the contents of the shopping cart:
 
-Handle cartHandle = ...; _// deserialize from
-a file..._
-
-Cart cart =
-(Cart)javax.rmi.PortableRemoteObject.narrow(
-
- cartHandle.getEJBObject(), Cart.class);
-
+[source, java]
+----
+Handle cartHandle = ...; // deserialize from a file...
+Cart cart = (Cart)javax.rmi.PortableRemoteObject.narrow(
+              cartHandle.getEJBObject(), Cart.class);
 cart.purchase();
-
 cart.remove();
+----
 
 [[a564]]
 ==== Object Identity
@@ -1378,15 +1309,16 @@ are intended to be private resources used only by the client that
 created them. For this reason, session objects, from the client’s
 perspective, appear anonymous. Session objects do not expose their
 identity as a primary key, on the opposite, they hide their identity. As
-a result, the _EJBObject.getPrimaryKey()_
-method results in a _java.rmi.RemoteException_ and the
-_EJBLocalObject.getPrimaryKey()_  method
-results in a _javax.ejb.EJBException_ , and the _EJBHome.remove(Object_
-_primaryKey)_ and the _EJBLocalHome.remove(Object primaryKey)_ methods
-result in a _javax.ejb.RemoveException_ if called on a session bean. If
-the _EJBMetaData.getPrimaryKeyClass()_ method is invoked on a
-EJBMetaData object for a session bean, the method throws the
-_java.lang.RuntimeException_ .Since all session objects hide their
+a result, the `EJBObject.getPrimaryKey()`
+method results in a `java.rmi.RemoteException` and the
+`EJBLocalObject.getPrimaryKey()` method
+results in a `javax.ejb.EJBException`, and the 
+`EJBHome.remove(Object primaryKey)` and the 
+`EJBLocalHome.remove(Object primaryKey)` methods
+result in a `javax.ejb.RemoveException` if called on a session bean. If
+the `EJBMetaData.getPrimaryKeyClass()` method is invoked on a
+`EJBMetaData` object for a session bean, the method throws the
+`java.lang.RuntimeException`.Since all session objects hide their
 identity, there is no need to provide a finder for them. The home
 interface of a session bean must not define any finder methods.
 
@@ -1395,7 +1327,7 @@ the life of a client process by serializing the handle to persistent
 storage. When the handle is later deserialized, the session object it
 returns will work as long as the session object still exists on the
 server. (An earlier timeout or server crash may have destroyed the
-session object.)A handle is not a
+session object.) A handle is not a
 capability, in the security sense, that
 would automatically grant its holder the right to invoke methods on the
 object. When a reference to a session object is obtained from a handle,
@@ -1411,38 +1343,28 @@ identity that is assigned by the container at create time.
 
 A remote client
 can determine if two remote object references refer to the same session
-object by invoking the _isIdentical(EJBObject_ _otherEJBObject)_ method
+object by invoking the `isIdentical(EJBObject otherEJBObject)` method
 on one of the references. A local client can determine if two local
 object references refer to the same session object by invoking the
-_isIdentical(EJBLocalObject otherEJBLocalObject)_ method.
+`isIdentical(EJBLocalObject otherEJBLocalObject)` method.
 
 The following example illustrates the use of
-the _isIdentical_ method for a stateful session object.
+the `isIdentical` method for a stateful session object.
 
-FooHome fooHome = ...; // obtain home of a
-stateful session bean
-
+[source, java]
+----
+FooHome fooHome = ...; // obtain home of a stateful session bean
 Foo foo1 = fooHome.create(...);
-
 Foo foo2 = fooHome.create(...);
 
-
-
-if (foo1.isIdentical(foo1)) \{ // this test
-must return true
-
+if (foo1.isIdentical(foo1)) \{ // this test must return true
  ...
-
 }
 
-
-
-if (foo1.isIdentical(foo2)) \{ // this test
-must return false
-
+if (foo1.isIdentical(foo2)) \{ // this test must return false
  ...
-
 }
+----
 
 ===== Stateless Session Beans
 
@@ -1454,59 +1376,49 @@ multiple times (each deployment results in the creation of a distinct
 home), session objects from different homes will have a different
 identity.
 
-The _isIdentical(EJBObject_ _otherEJBObject)_
-and _isIdentical(EJBLocalObject otherEJBLocalObject)_ methods always
+The `isIdentical(EJBObject otherEJBObject)`
+and `isIdentical(EJBLocalObject otherEJBLocalObject)` methods always
 returns true when used to compare object references of two session
 objects of the same stateless session bean.
 
 The following example illustrates the use of
-the _isIdentical_ method for a stateless session object.
+the `isIdentical` method for a stateless session object.
 
-FooHome fooHome = ...; // obtain home of a
-stateless session bean
-
+[source, java]
+----
+FooHome fooHome = ...; // obtain home of a stateless session bean
 Foo foo1 = fooHome.create();
-
 Foo foo2 = fooHome.create();
 
-
-
-if (foo1.isIdentical(foo1)) \{ // this test
-returns true
-
+if (foo1.isIdentical(foo1)) { // this test returns true
  ...
-
 }
 
-
-
-if (foo1.isIdentical(foo2)) \{ // this test
-returns true
-
+if (foo1.isIdentical(foo2)) { // this test returns true
  ...
-
 }
+----
 
 ===== getPrimaryKey()
 
 The object
 identifier of a session object is, in general, opaque to the client. The
-result of _getPrimaryKey()_ on a session EJBObject reference results in
-_java.rmi.RemoteException_ . The result of _getPrimaryKey()_ on a
-session EJBLocalObject reference results in _javax.ejb.EJBException_ .
+result of `getPrimaryKey()` on a session EJBObject reference results in
+`java.rmi.RemoteException`. The result of `getPrimaryKey()` on a
+session EJBLocalObject reference results in `javax.ejb.EJBException`.
 
 ==== Type Narrowing
 
-{empty}A client
+A client
 program that is intended to be interoperable with all compliant EJB
 container implementations must use the
-javax.rmi.PortableRemoteObject.narrow method to perform type-narrowing
+`javax.rmi.PortableRemoteObject.narrow` method to perform type-narrowing
 of the client-side representations of the remote home and remote
 component interfaces.footnote:a10227[Use of 
 `javax.rmi.PortableRemoteObject.narrow` is not needed when the 
 EJBContext `lookup` method is used to look up the remote home interface.]
 
-Note: Programs using the cast operator for
+_Note: Programs using the cast operator for
 narrowing the remote component interface and remote home interface are
 likely to fail if the container implementation uses RMI-IIOP as the
-underlying communication transport.
+underlying communication transport._
