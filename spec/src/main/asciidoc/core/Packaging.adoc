@@ -3,16 +3,14 @@
 
 The ejb-jar file is the standard format for
 the packaging of enterprise beans. Enterprise beans can also be packaged
-within a web application module (.war file). The ejb-jar file or .war
+within a web application module (`.war` file). The ejb-jar file or `.war`
 file format is used to package un-assembled enterprise beans (the Bean
 Provider’s output), and to package assembled applications (the
 Application Assembler’s output).
 
 === Overview
 
-
-
-The ejb-jar file and .war file formats serve
+The ejb-jar file and `.war` file formats serve
 as the contract between the Bean Provider and the Application Assembler,
 and between the Application Assembler and the Deployer.
 
@@ -24,10 +22,10 @@ or organization as the Bean Provider) contains one or more enterprise
 beans, plus application assembly information describing how the
 enterprise beans are combined into a single application deployment unit.
 
-A .war file is not required to contain any
-enterprise beans. A .war file produced by a Bean Provider contains one
+A `.war` file is not required to contain any
+enterprise beans. A `.war` file produced by a Bean Provider contains one
 or more enterprise beans that typically do not contain application
-assembly instructions. A .war file produced by an Application Assembler
+assembly instructions. A `.war` file produced by an Application Assembler
 (which can be the same person or organization as the Bean Provider)
 contains one or more enterprise beans, plus application assembly
 information describing how the enterprise beans are combined into a
@@ -35,59 +33,53 @@ single application deployment unit.
 
 An ejb-jar file is designed specifically for
 the packaging of enterprise beans. An ejb-jar file that is packaged
-stand-alone or within an _.ear_ file constitutes a Java EE module.
+stand-alone or within an `.ear` file constitutes a Java EE module.
 
-While the use of an ejb-jar file within a
-_.war_ file is supported by this specification, an ejb-jar file within a
-_.war_ file does not constitute a Java EE module. See section
-link:Ejb.html#a9314[See Enterprise Beans Packaged in a .war
-file].
+{empty}::
+_While the use of an ejb-jar file within a
+`.war` file is supported by this specification, an ejb-jar file within a
+`.war` file does not constitute a Java EE module. See <<a9314>>._
 
 === Deployment Descriptor
-
-
 
 The EJB
 deployment descriptor is optional in either packaging scenario. If a
 deployment descriptor is provided it must conform to the format defined
-in Chapter link:Ejb.html#a5804[See Deployment Descriptor].
+in <<a5804>.
 
-In a .war file, the deployment descriptor is
-stored with the name WEB-INF/ejb-jar.xml.
+In a `.war` file, the deployment descriptor is
+stored with the name `WEB-INF/ejb-jar.xml`.
 
 In an ejb-jar file that is packaged
-stand-alone or within an _.ear_ file, the deployment descriptor is
-stored with the name META-INF/ejb-jar.xml. If the enterprise beans are
-contained in an ejb-jar file packaged within a _.war_ file, the
-deployment descriptor is stored with the name WEB-INF/ejb-jar.xml. When
-enterprise beans are packaged within a _.war_ , the ejb-jar file does
+stand-alone or within an `.ear` file, the deployment descriptor is
+stored with the name `META-INF/ejb-jar.xml`. If the enterprise beans are
+contained in an ejb-jar file packaged within a `.war` file, the
+deployment descriptor is stored with the name `WEB-INF/ejb-jar.xml`. When
+enterprise beans are packaged within a `.war`, the ejb-jar file does
 _not_ constitute a separate module, and there can portably be only one
-_ejb-jar.xml_ file. See section link:Ejb.html#a9314[See
-Enterprise Beans Packaged in a .war file].
+`ejb-jar.xml` file. See <<a9314>>.
 
 [[a9306]]
 === Packaging Requirements
 
-
-
 The ejb-jar file
-or .war file must contain, either by inclusion or by reference, the
+or `.war` file must contain, either by inclusion or by reference, the
 class files of each enterprise bean as follows:
 
-The enterprise bean class.
+* The enterprise bean class.
 
-The enterprise bean business interfaces, web
+* The enterprise bean business interfaces, web
 service endpoint interfaces, and home and component interfaces.
 
-Interceptor classes.
+* Interceptor classes.
 
-We say that a jar file contains a second file
-“by reference” if the second file is named in the Class-Path attribute
+_We say that a jar file contains a second file
+"by reference" if the second file is named in the Class-Path attribute
 in the Manifest file of the referencing jar file or is contained (either
 by inclusion or by reference) in another jar file that is named in the
-Class-Path attribute in the Manifest file of the referencing jar file.
+Class-Path attribute in the Manifest file of the referencing jar file._
 
-The ejb-jar file or .war file must also
+The ejb-jar file or `.war` file must also
 contain, either by inclusion or by reference, the class files for all
 the classes and interfaces that each enterprise bean class and the
 business interfaces, home interfaces, component interfaces, and/or web
@@ -97,82 +89,76 @@ the classes and interfaces used as method parameters, results, and
 exceptions.
 
 The Application Assembler must not package
-the stubs of the EJBHome and EJBObject interfaces in the ejb-jar file or
-.war file. This includes the stubs for the enterprise beans whose
-implementations are provided in the ejb-jar file or .war file as well as
+the stubs of the `EJBHome` and `EJBObject` interfaces in the ejb-jar file or
+`.war` file. This includes the stubs for the enterprise beans whose
+implementations are provided in the ejb-jar file or `.war` file as well as
 the referenced enterprise beans. Generating the stubs is the
 responsibility of the container. The stubs are typically generated by
 the Container Provider’s deployment tools for each class that extends
-the EJBHome or EJBObject interfaces, or they may be generated by the
+the `EJBHome` or `EJBObject` interfaces, or they may be generated by the
 container at runtime.
 
 [[a9314]]
 === Enterprise Beans Packaged in a .war file
 
-
-
 An enterprise bean class with a
 component-defining annotation defines an enterprise bean component when
-packaged within the WEB-INF/classes directory or within a jar file
-within the WEB-INF/lib directory. An enterprise bean can also be defined
-via the WEB-INF/ejb-jar.xml deployment descriptor.
+packaged within the `WEB-INF/classes` directory or within a jar file
+within the `WEB-INF/lib` directory. An enterprise bean can also be defined
+via the `WEB-INF/ejb-jar.xml` deployment descriptor.
 
-A _.war_ file may contain enterprise bean
-classes in a combination of classes within the WEB-INF/classes directory
-and one or more jar files within the WEB-INF/lib directory.
+A `.war` file may contain enterprise bean
+classes in a combination of classes within the `WEB-INF/classes` directory
+and one or more jar files within the `WEB-INF/lib directory`.
 
- _A “ejb-jar” file in the WEB-INF/lib
+*_A "ejb-jar" file in the `WEB-INF/lib`
 directory that contains enterprise beans is not considered an
-independent Java EE “module” in the way that a .war file, stand-alone
+independent Java EE "module" in the way that a `.war` file, stand-alone
 ejb-jar file, or an .ear-level ejb-jar file is considered a module. Such
-an “ejb-jar file” does not define its own module name or its own
+an "ejb-jar" file does not define its own module name or its own
 namespace for ejb-names, environment dependencies, persistence units,
-etc. All such namespaces are scoped to the enclosing .war file. In that
-sense, the packaging of enterprise bean classes in an “ejb-jar” file in
-the WEB-INF/lib directory is merely a convenience. It is semantically
-equivalent to packaging the classes within WEB-INF/classes_ directory
-_._
+etc. All such namespaces are scoped to the enclosing `.war` file. In that
+sense, the packaging of enterprise bean classes in an "ejb-jar" file in
+the `WEB-INF/lib` directory is merely a convenience. It is semantically
+equivalent to packaging the classes within `WEB-INF/classes` directory._*
 
-A _.war_ file may contain an ejb-jar.xml
-file. If present, the ejb-jar.xml is packaged as WEB-INF/ejb-jar.xml. If
-an ejb-jar.xml is present, it applies to all enterprise beans defined by
-the .war file, independently of whether they are packaged with the
-WEB-INF/classes directory or in a jar file within WEB-INF/lib directory.
-The packaging of an _ejb-jar.xml_ file anywhere else within the _.war_
+A `.war` file may contain an `ejb-jar.xml`
+file. If present, the `ejb-jar.xml` is packaged as `WEB-INF/ejb-jar.xml`. If
+an `ejb-jar.xml` is present, it applies to all enterprise beans defined by
+the `.war` file, independently of whether they are packaged with the
+`WEB-INF/classes` directory or in a jar file within `WEB-INF/lib` directory.
+The packaging of an `ejb-jar.xml` file anywhere else within the `.war`
 file is not portable and may result in a deployment error.
 
 ==== Class Loading
 
 Enterprise beans (and any related classes)
-packaged in a .war file have the same class loading requirements as
-other non-enterprise bean classes packaged in a .war file. This means,
-for example, that a servlet packaged within a .war file is guaranteed to
+packaged in a `.war` file have the same class loading requirements as
+other non-enterprise bean classes packaged in a `.war` file. This means,
+for example, that a servlet packaged within a `.war` file is guaranteed to
 have visibility to an enterprise bean component packaged within the same
-.war file, and vice versa. Detailed class loading requirements for web
-modules are covered in the Java EE Platform specification
-[link:Ejb.html#a9861[See Java™ Platform, Enterprise Edition
-Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.]].
+`.war` file, and vice versa. Detailed class loading requirements for web
+modules are covered in the Java EE Platform specification <<a9861>>.
 
 ==== Component Environment
 
-In a .war file, there is a single component
+In a `.war` file, there is a single component
 naming environment shared between all the components (web, enterprise
 bean, etc.) defined by the module. Each enterprise bean defined in the
-.war file shares this single component environment namespace with all
-other enterprise beans defined by the .war file and with all other web
-components defined by the .war file.
+`.war` file shares this single component environment namespace with all
+other enterprise beans defined by the `.war` file and with all other web
+components defined by the `.war` file.
 
 The Bean Provider should be aware of this
 name scoping behavior when selecting names of environment dependencies
-for enterprise beans packaged within a .war file. Unlike enterprise
-beans packaged in an ejb-jar file outside a .war file, the names of
-environment entries defined by an enterprise bean inside a . _war_ file
+for enterprise beans packaged within a `.war` file. Unlike enterprise
+beans packaged in an ejb-jar file outside a `.war` file, the names of
+environment entries defined by an enterprise bean inside a `.war` file
 can clash with names defined by other components. Likewise, enterprise
-beans packaged in a .war file have visiblity to all environment entries
-defined by any other components in the .war file, including any entries
-defined within the _web.xml_ file. This is also true of the advanced
-case in which the ejb-jar.xml file is used to define multiple bean
+beans packaged in a `.war` file have visiblity to all environment entries
+defined by any other components in the `.war` file, including any entries
+defined within the `web.xml` file. This is also true of the advanced
+case in which the `ejb-jar.xml` file is used to define multiple bean
 components based on the same bean class. Extra caution should be used
 when configuring environment dependencies for such bean components.
 
@@ -180,50 +166,47 @@ when configuring environment dependencies for such bean components.
 ==== Visibility of the Local Client View
 
 The local client view (including the
-no-interface view) of an enterprise bean component defined within a .war
+no-interface view) of an enterprise bean component defined within a `.war`
 file is only required to be accessible to components within the same
-.war file. Applications needing access to the local client view of an
-enterprise bean from a different module in the same application should
-use an ejb-jar file outside the _.war_ file to define the enterprise
+`.war` file. Applications needing access to the local client view of an
+enterprise bean from a _different_ module in the same application should
+use an ejb-jar file outside the `.war` file to define the enterprise
 bean that exposes the local client view.
 
 ==== Ejb-names
 
-A .war file has a single namespace for the
-ejb-names of any enterprise beans it defines. This single ejb-name
-namespace applies to all enterprise beans defined in the _.war_ file,
-regardless of where in the .war file the enterprise beans are defined
-and regardless of whether they are defined by means of the ejb-jar.xml
+A `.war` file has a single namespace for the
+`ejb-names` of any enterprise beans it defines. This single `ejb-name`
+namespace applies to all enterprise beans defined in the `.war` file,
+regardless of where in the `.war` file the enterprise beans are defined
+and regardless of whether they are defined by means of the `ejb-jar.xml`
 deployment descriptor or by annotations.
 
 ==== Example
 
+[source, java]
+----
 package com.acme;
 
-
-
 @Stateless
-
 public class FooBean \{
-
  public void foo() \{ ... }
-
 }
+----
 
-FooBean is a stateless session bean with a
+`FooBean` is a stateless session bean with a
 component-defining annotation and a no-interface view. It is packaged in
-a .war file under a WEB-INF/classes subdirectory corresponding to its
-package name. The .war file also contains a Servlet.
+a `.war` file under a `WEB-INF/classes` subdirectory corresponding to its
+package name. The `.war` file also contains a `Servlet`.
 
+[source]
+----
 webejb.war:
-
- WEB-INF/classes/com/acme/FooServlet.class
-
- WEB-INF/classes/com/acme/FooBean.class
+    WEB-INF/classes/com/acme/FooServlet.class
+    WEB-INF/classes/com/acme/FooBean.class
+----
 
 === Deployment Descriptor and Annotation Processing
-
-
 
 The following sections describe the cases
 that the deployment tool must consider when deciding whether to process
@@ -231,111 +214,75 @@ annotations on the enterprise bean classes in a module.
 
 ==== Ejb-jar Deployment Descriptor and Annotation Processing
 
-link:Ejb.html#a9344[See Ejb-jar
-Annotation Processing Requirements] describes the requirements for
+<<a9344>> describes the requirements for
 determining when to process annotations on the classes in a standalone
-ejb-jar file or an ejb-jar file packaged within an . _ear_ file. If the
+ejb-jar file or an ejb-jar file packaged within an `.ear` file. If the
 deployment descriptor is not included or is included but not marked
-_metadata-complete_ , the deployment tool will process annotations.
+`metadata-complete`, the deployment tool will process annotations.
 
-===
-
-
-
-[[a9344]]Ejb-jar Annotation Processing Requirements
-
+[[a9344]]
+.Ejb-jar Annotation Processing Requirements
 [width="100%",cols="34%,33%,33%",options="header",]
 |===
 | Deployment Descriptor
 | metadata-complete?
 | process annotations?
+
 | ejb-jar_2_1 or earlier
 | N/A | No
 
-| ejb-jar_3_x |
-Yes | No
+| ejb-jar_3_x 
+| Yes | No
 
-| ejb-jar_3_x | No
-| Yes
+| ejb-jar_3_x 
+| No | Yes
 
-| none | N/A
-| Yes
+| none 
+| N/A | Yes
 |===
-
-
 
 ==== .war Deployment Descriptor and Annotation Processing
 
-link:Ejb.html#a9360[See .war
-Annotation Processing Requirements for enterprise beans] describes the
+<<a9360>> describes the
 requirements for determining when to process annotations on the
-enterprise bean classes of a .war file. If the _.war_ file contains an
-ejb-jar.xml file, the deployment tool will process annotations unless
-the ejb-jar.xml has been marked metadata-complete. If the . _war_ file
-does not contain an ejb-jar.xml file, the deployment tool will process
-annotations unless the _web.xml_ is marked metadata-complete or its
-version is prior to web-app_2_5.
+enterprise bean classes of a `.war` file. If the `.war` file contains an
+`ejb-jar.xml` file, the deployment tool will process annotations unless
+the `ejb-jar.xml` has been marked `metadata-complete`. If the `.war` file
+does not contain an `ejb-jar.xml` file, the deployment tool will process
+annotations unless the `web.xml` is marked `metadata-complete` or its
+version is prior to `web-app_2_5`.
 
-===
-
-
-
-[[a9360]].war Annotation Processing Requirements for
-enterprise beans
-
+[[a9360]]
+..war Annotation Processing Requirements for enterprise beans
 [width="100%",cols="20%,20%,20%,20%,20%",options="header",]
 |===
-| ejb-jar.xml a|
- ejb-jar.xml
-
- metadata-complete?
-
-| web.xml a|
- web.xml
-
- metadata-complete?
-
+| ejb-jar.xml 
+| ejb-jar.xml metadata-complete?
+| web.xml 
+| web.xml metadata-complete?
 | process annotations?
-| ejb-jar_3_x |
-Yes | N/A | N/A
-| No
 
-| ejb-jar_3_x | No
-| N/A | N/A
-| Yes
+| ejb-jar_3_x 
+| Yes | N/A | N/A | No
 
-| none | N/A a|
- web-app_2_5
+| ejb-jar_3_x 
+| No | N/A | N/A | Yes
 
- or later
+| none 
+| N/A | web-app_2_5 or later | Yes | No
 
-| Yes | No
+| none 
+| N/A | web-app_2_5 or later | No | Yes
 
-| none | N/A a|
- web-app_2_5
+| none 
+| N/A | web-app_2_4 or earlier | N/A | No
 
- or later
-
-| No | Yes
-
-| none | N/A a|
- web-app_2_4
-
- or earlier
-
-| N/A | No
-
-| none | N/A
-| none | N/A
-| Yes
+| none 
+| N/A | none | N/A | Yes
 |===
-
-.
 
 [[a9390]]
 === The Client View and the ejb-client JAR File
-
-
 
 The client view of an enterprise bean is
 comprised of the business interfaces, no-interface view, or home and
@@ -345,12 +292,12 @@ superinterfaces, the classes and interfaces used as method parameters,
 results, and exceptions. The serializable application value classes,
 including the classes which may be used as members of a collection in a
 remote method call to an enterprise bean, are part of the client view.
-An example of an application value class might be an _Address_ class
+An example of an application value class might be an `Address` class
 used as a parameter in a method call.
 
 The ejb-jar file
-or .war file producer can create an ejb-client JAR file for the ejb-jar
-file or _.war_ file. The ejb-client JAR file contains all the class
+or `.war` file producer can create an ejb-client JAR file for the ejb-jar
+file or `.war` file. The ejb-client JAR file contains all the class
 files that a client program needs to use the client view of the
 enterprise beans that are contained in the ejb-jar file or _.war_ file.
 If this option is used, it is the responsibility of the Application
@@ -358,40 +305,36 @@ Assembler to include all the classes necessary to comprise the client
 view of an enterprise bean in the ejb-client JAR file.
 
 The ejb-client JAR file is specified in the
-_ejb-jar.xml_ deployment descriptor of the ejb-jar file or .war file
-using the ejb-client-jar element. The value
-of the ejb-client-jar element is the path name specifying the location
+`ejb-jar.xml` deployment descriptor of the ejb-jar file or .war file
+using the `ejb-client-jar` element. The value
+of the `ejb-client-jar` element is the path name specifying the location
 of the ejb-client JAR file in the containing
-Java EE Enterprise Application Archive (
-_.ear_ ) file. The path name is relative to the location of the
-referencing ejb-jar file or . _war_ file.
+Java EE Enterprise Application Archive (`.ear`) file. 
+The path name is relative to the location of the
+referencing ejb-jar file or `.war` file.
 
 The EJB specification does not specify
-whether an ejb-jar file or .war file should include by copy or by
+whether an ejb-jar file or `.war` file should include by copy or by
 reference the classes that are in an ejb-client JAR file, but they must
 be included either one way or the other. If the by-copy approach is
 used, the producer simply includes all the class files in the ejb-client
-JAR file also in the ejb-jar file or .war file. If the by-reference
-approach is used, the ejb-jar file or .war file producer does not
+JAR file also in the ejb-jar file or `.war` file. If the by-reference
+approach is used, the ejb-jar file or `.war` file producer does not
 duplicate the content of the ejb-client JAR file in the ejb-jar file or
-.war file, but instead uses a Manifest Class-Path entry in the ejb-jar
-file or .war file to specify that the ejb-jar file or .war file depends
+`.war` file, but instead uses a Manifest Class-Path entry in the ejb-jar
+file or `.war` file to specify that the ejb-jar file or `.war` file depends
 on the ejb-client JAR at runtime. The use of the Class-Path entries in
-JAR files and .war files is explained in the Java EE Platform
-specification [link:Ejb.html#a9861[See Java™ Platform,
-Enterprise Edition Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.]].
+JAR files and `.war` files is explained in the Java EE Platform
+specification <<a9861>>.
 
 [[a9397]]
 === Requirements for Clients
-
-
 
 The Application Assembler must construct the
 application to insure that the client view classes are available to the
 client at runtime. The client of an enterprise bean may be another
 enterprise bean packaged in the same ejb-jar or different ejb-jar file,
-another enterprise bean packaged in the same .war file or different .war
+another enterprise bean packaged in the same `.war` file or different `.war`
 file, or the client may be another Java EE component, such as a web
 component.
 
@@ -402,72 +345,58 @@ client view classes of the referenced beans. The client view classes may
 have been packaged in an ejb-client JAR file. In other words, the jar
 file that contains the client should contain one of the following:
 
-a reference to the ejb-client JAR file
+* a reference to the ejb-client JAR file
 
-a reference to the ejb-jar file that contains
+* a reference to the ejb-jar file that contains
 the client view classes
 
-a copy of the client view classes
+* a copy of the client view classes
 
 The client may also require the use of system
 value classes (e.g., the serializable value classes implementing the
-javax.ejb.Handle, javax.ejb.HomeHandle, javax.ejb.EJBMetaData,
-java.util.Enumeration, java.util.Collection, and java.util.Iterator
+`javax.ejb.Handle`, `javax.ejb.HomeHandle`, `javax.ejb.EJBMetaData`,
+`java.util.Enumeration`, `java.util.Collection`, and `java.util.Iterator`
 interfaces), although these are not packaged with the application. It is
 the responsibility of the provider of the container hosting the
 referenced beans to provide the system value classes and make them
-available for use when the client is deployed. See Section
-link:Ejb.html#a3410[See System Value Classes].
+available for use when the client is deployed. See <<a3410>>.
 
 === Example
 
-
-
 In this example, the Bean Provider has chosen
-to package the enterprise bean client view classes in a separate _.jar_
-file and to reference that _.jar_ file from the other _.jar_ files that
-need those classes. Those classes are needed both by _ejb2.jar_ ,
-packaged in the same application as _ejb1.jar_ , and by _ejb3.jar_ ,
+to package the enterprise bean client view classes in a separate `.jar`
+file and to reference that `.jar` file from the other `.jar` files that
+need those classes. Those classes are needed both by `ejb2.jar`,
+packaged in the same application as `ejb1.jar`, and by `ejb3.jar`,
 packaged in a different application. Those classes are also needed by
-_ejb1.jar_ itself because they define the remote interface of the
-enterprise beans in _ejb1.jar_ , and the Bean Provider has chosen the
+`ejb1.jar` itself because they define the remote interface of the
+enterprise beans in `ejb1.jar`, and the Bean Provider has chosen the
 _by reference_ approach to making these classes available.
 
-The deployment descriptor for _ejb1.jar_
-names the client view jar file in the _ejb-client-jar_ element. Because
-_ejb2.jar_ requires these client view classes, it includes a Class-Path
-reference to _ejb1_client.jar_ .
+The deployment descriptor for `ejb1.jar`
+names the client view jar file in the `ejb-client-jar` element. Because
+`ejb2.jar` requires these client view classes, it includes a Class-Path
+reference to `ejb1_client.jar`.
 
 The Class-Path mechanism must be used by
-components in _app2.ear_ to reference the client view jar file that
-corresponds to the enterprise beans packaged in _ejb1.jar_ of _app1.ear_
-. Those enterprise beans are referenced by enterprise beans in
-_ejb3.jar_ . Note that the client view jar file must be included
-directly in the _app2.ear_ file.
+components in `app2.ear` to reference the client view jar file that
+corresponds to the enterprise beans packaged in `ejb1.jar` of `app1.ear`.
+Those enterprise beans are referenced by enterprise beans in
+`ejb3.jar`. Note that the client view jar file must be included
+directly in the `app2.ear` file.
 
+[source]
+----
 app1.ear:
-
- META-INF/application.xml
-
- ejb1.jar Class-Path: ejb1_client.jar
-
- _deployment descriptor contains:_
-
-
-<ejb-client-jar>ejb1_client.jar</ejb-client-jar>
-
- ejb1_client.jar
-
- ejb2.jar Class-Path: ejb1_client.jar
-
-
-
-
+    META-INF/application.xml
+    ejb1.jar       Class-Path: ejb1_client.jar
+        deployment descriptor contains:
+            <ejb-client-jar>ejb1_client.jar</ejb-client-jar>
+    ejb1_client.jar
+    ejb2.jar       Class-Path: ejb1_client.jar
 
 app2.ear:
-
- META-INF/application.xml
-
- ejb1_client.jar
-
- ejb3.jar Class-Path: ejb1_client.jar
+    META-INF/application.xml
+    ejb1_client.jar
+    ejb3.jar       Class-Path: ejb1_client.jar
+----
