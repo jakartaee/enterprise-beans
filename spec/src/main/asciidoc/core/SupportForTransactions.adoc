@@ -2,7 +2,7 @@
 == Support for Transactions
 
 One of the key features of the Enterprise
-JavaBeans™ architecture is support for distributed transactions. The
+JavaBeans(TM) architecture is support for distributed transactions. The
 Enterprise JavaBeans architecture allows an application developer to
 write an application that atomically updates data in multiple databases
 which may be distributed across multiple sites. The sites may use EJB
@@ -10,21 +10,19 @@ servers from different vendors.
 
 === Overview
 
-
-
 This section provides a brief overview of
 transactions and illustrates a number of transaction scenarios in EJB.
 
 ==== Transactions
 
-Transactions are a proven technique for
+_Transactions are a proven technique for
 simplifying application programming. Transactions free the application
 programmer from dealing with the complex issues of failure recovery and
 multi-user programming. The transactional system ensures that a unit of
 work either fully completes, or the work is fully rolled back.
 Furthermore, transactions make it possible for the programmer to design
 the application as if it ran in an environment that executes units of
-work serially.
+work serially._
 
 Support for
 transactions is an essential element of the Enterprise JavaBeans
@@ -32,41 +30,39 @@ architecture. The Enterprise Bean Provider and the client application
 programmer are not exposed to the complexity of distributed
 transactions. The Bean Provider can choose between using programmatic
 transaction demarcation in the enterprise bean code (this style is
-called bean-managed transaction demarcation) or declarative transaction
+called _bean-managed transaction demarcation_) or declarative transaction
 demarcation performed automatically by the EJB container (this style is
-called container-managed transaction demarcation).
+called _container-managed transaction demarcation_).
 
 With bean-managed
 transaction demarcation, the enterprise bean code demarcates
-transactions using the javax.transaction.UserTransaction interface. All
-resource manager accesses between the UserTransaction.begin and
-UserTransaction.commit calls are part of a transaction.
+transactions using the `javax.transaction.UserTransaction` interface. All
+resource manager accesses between the `UserTransaction.begin` and
+`UserTransaction.commit` calls are part of a transaction.
 
-The terms resource and resource manager used
-in this chapter refer to the resources declared using the _Resource_
-annotation in the enterprise bean class or using the _resource-ref_
+{empty}::
+_The terms resource and resource manager used
+in this chapter refer to the resources declared using the `Resource`
+annotation in the enterprise bean class or using the `resource-ref`
 element in the enterprise bean’s deployment descriptor. This includes
 not only database resources, but also other resources, such as JMS
-Connections. These resources are considered to be “managed” by the
+Connections. These resources are considered to be "managed" by the
 container.footnote:a10263[Note that environment entries other than 
 resources are specified with the `Resource` annotation and/or 
 `resource-ref` deployment descriptor element as well.] 
 For a discussion about resources used
-in the Java Persistence API that may be “unaware” of the presence of JTA
-transactions, see link:Ejb.html#a9851[See Java™ Persistence API,
-version 2.1. http://jcp.org/en/jsr/detail?id=338.].
+in the Java Persistence API that may be "unaware" of the presence of JTA
+transactions, see <<a9851>>._
 
 With
 container-managed transaction demarcation, the container demarcates
 transactions per instructions provided by the developer in metadata
 annotations or in the deployment descriptor. These instructions, called
-transaction attributes, tell the container whether it should include the
+_transaction attributes_, tell the container whether it should include the
 work performed by an enterprise bean method in a client’s transaction,
 run the enterprise bean method in a new transaction started by the
-container, or run the method with “no transaction” (Refer to Subsection
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] for the description of the “no
-transaction” case).
+container, or run the method with "no transaction" (Refer to <<a2889>> 
+for the description of the "no transaction" case).
 
 Regardless of whether an enterprise bean uses
 bean-managed or container-managed
@@ -77,7 +73,7 @@ transaction protocols, such as the two-phase commit protocol between a
 transaction manager and a database system or messaging provider,
 transaction context propagation, and distributed two-phase commit.
 
- _Many applications will consist of one or
+_Many applications will consist of one or
 several enterprise beans that all use a single resource manager
 (typically a relational database management system). The EJB container
 can make use of resource manager local transactions as an optimization
@@ -89,10 +85,7 @@ enterprise beans with either container-managed transaction demarcation
 or bean-managed transaction demarcation is not visible to the enterprise
 beans. For a discussion of the use of resource manager local
 transactions as a container optimization strategy, refer to
-link:Ejb.html#a9861[See Java™ Platform, Enterprise Edition
-Specification Version 7 (Java EE). http://jcp.org/en/jsr/detail?id=342.]
-and link:Ejb.html#a9863[See Java EE™ Connector Architecture,
-version 1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.]._
+<<a9861>> and <<a9863>>._
 
 ==== Transaction Model
 
@@ -100,26 +93,23 @@ The Enterprise
 JavaBeans architecture supports flat transactions. A flat transaction
 cannot have any child (nested) transactions.
 
-Note: The decision not to support nested
+{empty}::
+_Note: The decision not to support nested
 transactions allows vendors of existing transaction processing and
 database management systems to incorporate support for Enterprise
 JavaBeans. If these vendors provide support for nested transactions in
 the future, Enterprise JavaBeans may be enhanced to take advantage of
-nested transactions.
+nested transactions._
 
 ==== Relationship to JTA and JTS
 
-The Java™ Transaction API (JTA)
-[link:Ejb.html#a9857[See Java™ Transaction API, version 1.2
-(JTA). http://jcp.org/en/jsr/detail?id=907.]] is a specification of the
+The Java™ Transaction API (JTA) <<a9857>> is a specification of the
 interfaces between a transaction manager and the other parties involved
 in a distributed transaction processing system: the application
 programs, the resource managers, and the application server.
 
 The Java
-Transaction Service (JTS) [link:Ejb.html#a9858[See Java™
-Transaction Service, version 1.0 (JTS).
-http://www.oracle.com/technetwork/java/javaee/jts-spec095-1508547.pdf.]]
+Transaction Service (JTS) <<a9858>>
 API is a Java binding of the CORBA Object Transaction Service (OTS) 1.1
 specification. JTS provides transaction interoperability using the
 standard IIOP protocol for transaction propagation between servers. The
@@ -130,20 +120,14 @@ manager.
 
 The EJB architecture does not require the EJB
 container to support the JTS interfaces. The EJB architecture requires
-that the EJB container support the JTA API defined in
-link:Ejb.html#a9857[See Java™ Transaction API, version 1.2
-(JTA). http://jcp.org/en/jsr/detail?id=907.] and the Connector APIs
-defined in link:Ejb.html#a9863[See Java EE™ Connector
-Architecture, version 1.7 (Connector).
-http://jcp.org/en/jsr/detail?id=322.].
+that the EJB container support the JTA API defined in <<a9857>> 
+and the Connector APIs defined in <<a9863>>.
 
 === Sample Scenarios
 
-
-
-This section describes several scenarios that
+_This section describes several scenarios that
 illustrate the distributed transaction capabilities of the Enterprise
-JavaBeans architecture.
+JavaBeans architecture._
 
 ==== Update of Multiple Databases
 
@@ -151,27 +135,22 @@ The Enterprise JavaBeans architecture makes
 it possible for an application program to update data in multiple
 databases in a single transaction.
 
-In the following figure, a client invokes the
+_In the following figure, a client invokes the
 enterprise bean X. Bean X updates data using two database connections
 that the Deployer configured to connect with two different databases, A
 and B. Then X calls another enterprise bean, Y. Bean Y updates data in
 database C. The EJB server ensures that the updates to databases A, B,
-and C are either all committed or all rolled back.
+and C are either all committed or all rolled back._
 
-===
+.Updates to Simultaneous Databases
+image::EBCore-15.png[]
 
-
-
-Updates to Simultaneous Databases
-
-image:EBCore-15.png[image]
-
-The application programmer does not have to
+_The application programmer does not have to
 do anything to ensure transactional semantics. Behind the scenes, the
 EJB server enlists the database connections as part of the transaction.
 When the transaction commits, the EJB server and the database systems
 perform a two-phase commit protocol to ensure atomic updates across all
-three databases.
+three databases._
 
 ==== Messages Sent or Received Over JMS Sessions and Update of Multiple Databases
 
@@ -180,23 +159,18 @@ it possible for an application program to send messages to or receive
 messages from one or more JMS Destinations
 and/or to update data in one or more databases in a single transaction.
 
-In the following figure, a client invokes the
+_In the following figure, a client invokes the
 enterprise bean X. Bean X sends a message to a JMS queue A and updates
 data in a database B using connections that the Deployer configured to
 connect with a JMS provider and a database. Then X calls another
 enterprise bean, Y. Bean Y updates data in database C. The EJB server
 ensures that the operations on A, B, and C are either all committed, or
-all rolled back.
+all rolled back._
 
-===
+.Message Sent to JMS Queue and Updates to Multiple Databases
+image::EBCore-16.png[]
 
-
-
-Message Sent to JMS Queue and Updates to Multiple Databases
-
-image:EBCore-16.png[image]
-
-The application programmer does not have to
+_The application programmer does not have to
 do anything to ensure transactional semantics. The enterprise beans X
 and Y perform the message send and database updates using the standard
 JMS and JDBC™ APIs. Behind the scenes, the EJB server enlists the
@@ -204,24 +178,18 @@ session on the connection to the JMS provider and the database
 connections as part of the transaction. When the transaction commits,
 the EJB server and the messaging and database systems perform a
 two-phase commit protocol to ensure atomic updates across all the three
-resources.
+resources._
 
-In the following figure, a client sends a
+_In the following figure, a client sends a
 message to the JMS queue A serviced by the message-driven bean X. Bean X
 updates data using two database connections that the Deployer configured
 to connect with two different databases, B and C. The EJB server ensures
 that the dequeuing of the JMS message, its receipt by bean X, and the
 updates to databases B and C are either all committed or all rolled
-back.
+back._
 
-===
-
-
-
-Message Sent to JMS Queue Serviced by Message-Driven Bean and Updates to
-Multiple Databases
-
-image:EBCore-17.png[image]
+.Message Sent to JMS Queue Serviced by Message-Driven Bean and Updates to Multiple Databases
+image::EBCore-17.png[]
 
 ==== Update of Databases via Multiple EJB Servers
 
@@ -229,36 +197,31 @@ The Enterprise JavaBeans architecture allows
 updates of data at multiple sites to be performed in a single
 transaction.
 
-In the following figure, a client invokes the
+_In the following figure, a client invokes the
 enterprise bean X. Bean X updates data in database A, and then calls
 another enterprise bean Y that is installed in a remote EJB server. Bean
 Y updates data in database B. The Enterprise JavaBeans architecture
 makes it possible to perform the updates to databases A and B in a
-single transaction.
+single transaction._
 
-===
+.Updates to Multiple Databases in Same Transaction
+image::EBCore-18.png[]
 
-
-
-Updates to Multiple Databases in Same Transaction
-
-image:EBCore-18.png[image]
-
-When X invokes Y, the two EJB servers
+_When X invokes Y, the two EJB servers
 cooperate to propagate the transaction context from X to Y. This
 transaction context propagation is transparent to the application-level
-code.
+code._
 
-At transaction commit time, the two EJB
+_At transaction commit time, the two EJB
 servers use a distributed two-phase commit protocol (if the capability
-exists) to ensure the atomicity of the database updates.
+exists) to ensure the atomicity of the database updates._
 
 ==== Client-Managed Demarcation
 
 A Java client can use the
-javax.transaction.UserTransaction interface
+`javax.transaction.UserTransaction` interface
 to explicitly demarcate transaction boundaries. The client program
-obtains the javax.transaction.UserTransaction interface through
+obtains the `javax.transaction.UserTransaction` interface through
 dependency injection or lookup in the bean’s EJBContext or in the JNDI
 name space.
 
@@ -268,20 +231,15 @@ perform, via enterprise beans, atomic updates across multiple databases
 residing at multiple EJB servers, as illustrated in the following
 figure.
 
-===
+.Updates on Multiple Databases on Multiple Servers
+image::EBCore-19.png[]
 
-
-
-Updates on Multiple Databases on Multiple Servers
-
-image:EBCore-19.png[image]
-
-The application programmer demarcates the
+_The application programmer demarcates the
 transaction with begin and commit calls. If the enterprise beans X and Y
 are configured to use a client transaction (i.e., their methods have
 transaction attributes that either require or support an existing
 transaction context), the EJB server ensures that the updates to
-databases A and B are made as part of the client’s transaction.
+databases A and B are made as part of the client’s transaction._
 
 ==== Container-Managed Demarcation
 
@@ -291,12 +249,11 @@ a home or component interface, or a message listener method, the
 container interposes on the method invocation. The interposition allows
 the container to control transaction
 demarcation declaratively through the transaction attribute set by the
-developer. (See link:Ejb.html#a2538[See Specification of the
-Transaction Attributes for a Bean’s Methods] for a description of
+developer. (See <<a2538>> for a description of
 transaction attributes.)
 
 For example, if a session bean method is
-configured with the REQUIRED transaction attribute, the container
+configured with the `REQUIRED` transaction attribute, the container
 behaves as follows: If the client request is not associated with a
 transaction context, the container automatically initiates a transaction
 whenever a client invokes an enterprise bean method that requires a
@@ -304,9 +261,9 @@ transaction context. If the client request contains a
 transaction context, the container includes
 the enterprise bean method in the client transaction.
 
-The following figure illustrates such a
+_The following figure illustrates such a
 scenario. A non-transactional client invokes the enterprise bean X, and
-the invoked method has the _REQUIRED_ footnote:a10264[In this chapter we 
+the invoked method has the `REQUIRED` footnote:a10264[In this chapter we 
 use the `TransactionAttribute` annotation values to refer to transaction 
 attributes. The deployment descriptor may be used as an overriding 
 mechanism or an alternative to the use of annotations.] transaction
@@ -316,21 +273,16 @@ dispatching the method on X. Bean X’s work is performed in the context
 of the transaction. When X calls other enterprise beans (Y in our
 example), the work performed by the other enterprise beans is also
 automatically included in the transaction (subject to the transaction
-attribute of the other enterprise bean).
+attribute of the other enterprise bean)._
 
-===
+.Update of Multiple Databases from Non-Transactional Client
+image::EBCore-20.png[]
 
+_The container automatically commits the
+transaction at the time X returns a reply to the client._
 
-
-Update of Multiple Databases from Non-Transactional Client
-
-image:EBCore-20.png[image]
-
-The container automatically commits the
-transaction at the time X returns a reply to the client.
-
-{empty}If a message-driven bean’s message
-listener method is configured with the REQUIRED transaction attribute,
+If a message-driven bean’s message
+listener method is configured with the `REQUIRED` transaction attribute,
 the container automatically starts a new transaction before the delivery
 of the message and, hence, before the invocation of the
 method.footnote:a10265[The use of the term "container" here encompasses 
@@ -338,25 +290,22 @@ both the container and the messaging provider. When the contracts outlined
 in <<a9863>> are used, it may be the messaging provider that starts the 
 transaction.]
 
-JMS requires that the transaction be started
-before the dequeuing of the message. See link:Ejb.html#a9862[See
-Java™ Message Service, version 2.0 (JMS).
-http://jcp.org/en/jsr/detail?id=343.].
+{empty}::
+_JMS requires that the transaction be started
+before the dequeuing of the message. See <<a9862>>._
 
 The container automatically enlists the
 resource manager associated with the arriving message and all the
 resource managers accessed by the message listener method with the
 transaction.
 
-It is illegal to associate JTA transactional
+_It is illegal to associate JTA transactional
 interceptors (see link:Ejb.html#a9857[See Java™ Transaction API,
 version 1.2 (JTA). http://jcp.org/en/jsr/detail?id=907.]) with
 Enterprise JavaBeans.footnote:a10266[This restriction may be removed 
-in a future release of this specification.]
+in a future release of this specification.]_
 
 === Bean Provider’s Responsibilities
-
-
 
 This section describes the Bean Provider’s
 view of transactions and defines the Bean Provider’s responsibilities.
@@ -395,11 +344,10 @@ coordinator.
 If an enterprise bean needs to access a
 resource manager that does not support an external transaction
 coordinator, the Bean Provider should design the enterprise bean with
-container-managed transaction demarcation and assign the NOT_SUPPORTED
+container-managed transaction demarcation and assign the `NOT_SUPPORTED`
 transaction attribute to the bean class or to all the bean’s methods.
 The EJB architecture does not specify the transactional semantics of the
-enterprise bean methods. See Subsection link:Ejb.html#a2889[See
-Handling of Methods that Run with “an unspecified transaction context”]
+enterprise bean methods. See <<a2889>>
 for how the container implements this case.
 
 ==== Isolation Levels
@@ -409,40 +357,40 @@ unit of work atomic, but they also isolate the units of work from each
 other, provided that the system allows concurrent execution of multiple
 units of work.
 
-The isolation
-level describes the degree to which the access to a resource manager by
+The `isolation level` 
+describes the degree to which the access to a resource manager by
 a transaction is isolated from the access to the resource manager by
 other concurrently executing transactions.
 
 The following are guidelines for managing
 isolation levels in enterprise beans.
 
-The API for managing an isolation level is
+* The API for managing an isolation level is
 resource-manager-specific. (Therefore, the EJB architecture does not
 define an API for managing isolation levels.)
 
-If an enterprise bean uses multiple resource
+* If an enterprise bean uses multiple resource
 managers, the Bean Provider may specify the same or different isolation
 level for each resource manager. This means, for example, that if an
 enterprise bean accesses multiple resource managers in a transaction,
 access to each resource manager may be associated with a different
 isolation level.
 
-The Bean Provider must take care when setting
+* The Bean Provider must take care when setting
 an isolation level. Most resource managers require that all accesses to
 the resource manager within a transaction are done with the same
 isolation level. An attempt to change the isolation level in the middle
 of a transaction may cause undesirable behavior, such as an implicit
 sync point (a commit of the changes done so far).
 
-For session beans and message-driven beans
+* For session beans and message-driven beans
 with bean-managed transaction demarcation, the Bean Provider can specify
 the desirable isolation level programmatically in the enterprise bean’s
 methods, using the resource-manager specific API. For example, the Bean
-Provider can use the java.sql.Connection.setTransactionIsolation method
+Provider can use the `java.sql.Connection.setTransactionIsolation` method
 to set the appropriate isolation level for database access.
 
-Additional care must be taken if multiple
+* Additional care must be taken if multiple
 enterprise beans access the same resource manager in the same
 transaction. Conflicts in the requested isolation levels must be
 avoided.
@@ -462,14 +410,15 @@ An instance that
 starts a transaction must complete the transaction before it starts a
 new transaction.
 
-{empty}The Bean Provider uses the
-UserTransaction interface to demarcate transactions. All updates to the
-resource managers between the UserTransaction.begin and UserTransaction.
-_commit_ methods are performed in a transaction. While an instance is in
+The Bean Provider uses the
+`UserTransaction` interface to demarcate transactions. All updates to the
+resource managers between 
+the `UserTransaction.begin` and `UserTransaction.commit` 
+methods are performed in a transaction. While an instance is in
 a transaction, the instance must not attempt to use the resource-manager
 specific transaction demarcation API (e.g. it must not invoke the commit
 or rollback method on the java.sql.Connection interface or on the
-_javax.jms.Session_ interface).footnote:a10267[However, use of the Java 
+`javax.jms.Session` interface).footnote:a10267[However, use of the Java 
 Persistence API `EntityTransaction` interface is supported. See <<a9851>> 
 for a discussion of resources used in the Java Persistence API that may be 
 "unaware" of the presence of JTA transactions, and a description of the 
@@ -481,8 +430,8 @@ returns. If a transaction has not been completed by the end of a
 business method, the container retains the association between the
 transaction and the instance across multiple client calls until the
 instance eventually completes the transaction. A stateful session bean
-instance must commit a transaction before _PostConstruct_ , _PreDestroy_
-, _PrePassivate_ or _PostActivate_ lifecycle callback interceptor method
+instance must commit a transaction before `PostConstruct`, `PreDestroy`, 
+`PrePassivate` or `PostActivate` lifecycle callback interceptor method
 returns.
 
 A stateless
@@ -491,494 +440,295 @@ or timeout callback method returns.
 
 A singleton session bean instance must commit
 a transaction before a business method or timeout callback method or
-PostConstruct or PreDestroy lifecycle callback interceptor method
+`PostConstruct` or `PreDestroy` lifecycle callback interceptor method
 returns.
 
 A message-driven bean instance must commit a
 transaction before a message listener method or timeout callback method
 returns.
 
-If AroundInvoke interceptor methods are
-applied to the business method or AroundTimeout interceptor methods are
+If `AroundInvoke` interceptor methods are
+applied to the business method or `AroundTimeout` interceptor methods are
 applied to the timeout callback method of a singleton or a stateless
 session bean or a message-driven bean, the transaction must be completed
-before the last AroundInvoke or AroundTimeout interceptor method
+before the last `AroundInvoke` or `AroundTimeout` interceptor method
 completes.
 
 The following code segments illustrate a
 business method that performs a transaction involving two database
 connections.
-
+[source, java]
+----
 @Stateless
-
 @TransactionManagement(BEAN)
+public class MySessionBean implements MySession {
+    @Resource 
+    javax.transaction.UserTransaction ut;
+   
+    @Resource 
+    javax.sql.DataSource database1;
+   
+    @Resource 
+    javax.sql.DataSource database2;
+   
+    public void someMethod(...) {
+        java.sql.Connection con1;
+        java.sql.Connection con2;
+        java.sql.Statement stmt1;
+        java.sql.Statement stmt2;
+       
+        try {
+            // obtain con1 object and set it up for transactions
+            con1 = database1.getConnection();
+            stmt1 = con1.createStatement();
+            
+            // obtain con2 object and set it up for transactions
+            con2 = database2.getConnection();
+            stmt2 = con2.createStatement();
+            
+            // Now do a transaction that involves con1 and con2.
+            
+            // start the transaction
+            ut.begin();
 
-public class MySessionBean implements
-MySession \{
-
- @Resource javax.transaction.UserTransaction
-ut;
-
- @Resource javax.sql.DataSource database1;
-
- @Resource javax.sql.DataSource database2;
-
-
-
- public void someMethod(...) \{
-
- java.sql.Connection con1;
-
- java.sql.Connection con2;
-
- java.sql.Statement stmt1;
-
- java.sql.Statement stmt2;
-
-
-
- try \{
-
- // obtain con1 object and set it up for
-transactions
-
- con1 = database1.getConnection();
-
- stmt1 = con1.createStatement();
-
-
-
- // obtain con2 object and set it up for
-transactions
-
- con2 = database2.getConnection();
-
- stmt2 = con2.createStatement();
-
-
-
- // Now do a transaction that involves con1
-and con2.
-
-
-
- // start the transaction
-
- ut.begin();
-
-
-
- // Do some updates to both con1 and con2.
-The container
-
- // automatically enlists con1 and con2 with
-the
-
- // transaction.
-
- stmt1.executeQuery(...);
-
- stmt1.executeUpdate(...);
-
- stmt2.executeQuery(...);
-
- stmt2.executeUpdate(...);
-
- stmt1.executeUpdate(...);
-
- stmt2.executeUpdate(...);
-
-
-
- // commit the transaction
-
- ut.commit();
-
- } catch (...) \{
-
- // handle exception s
-
- ...
-
- } finally \{
-
- // release connections
-
- con1.close();
-
- con2.close();
-
- ...
-
- }
-
- }
-
- ...
-
+            // Do some updates to both con1 and con2. The container
+            // automatically enlists con1 and con2 with the
+            // transaction.
+            stmt1.executeQuery(...);
+            stmt1.executeUpdate(...);
+            stmt2.executeQuery(...);
+            stmt2.executeUpdate(...);
+            stmt1.executeUpdate(...);
+            stmt2.executeUpdate(...);
+           
+            // commit the transaction
+            ut.commit();
+        } catch (...) {
+            // handle exceptions
+            ...
+        } finally {
+            // release connections
+            con1.close();
+            con2.close();
+            ...
+        }
+    }
+    ...
 }
-
+----
 The following code segments illustrate a
 business method that performs a transaction involving both a database
 connection and a JMS connection.
-
+[source, java]
+----
 @Stateless
-
 @TransactionManagement(BEAN)
+public class MySessionBean implements MySession {
 
-public class MySessionBean implements
-MySession \{
-
- @Resource javax.Transaction.UserTransaction
-ut;
-
- @Resource javax.sql.DataSource database1;
-
- @Resource javax.jms.QueueConnectionFactory
-qcf1;
-
- @Resource javax.jms.Queue queue1;
-
-
-
- public void someMethod(...) \{
-
- java.sql.Connection dcon;
-
- java.sql.Statement stmt;
-
- javax.jms.QueueConnection qcon;
-
- javax.jms.QueueSession qsession;
-
- javax.jms.QueueSender qsender;
-
- javax.jms.Message message;
-
-
-
- try \{
-
- // obtain db conn object and set it up for
-transactions
-
- dcon = database1.getConnection();
-
- stmt = dcon.createStatement();
-
-
-
- // obtain jms conn object and set up session
-for
-
- // transactions
-
- qcon = qcf1.createQueueConnection();
-
- qsession = qcon.createQueueSession(true,0);
-
- qsender = qsession.createSender(queue1);
-
- message = qsession.createTextMessage();
-
- message.setText(“some message”);
-
-
-
- // Now do a transaction that involves both
-connections
-
-
-
- // start the transaction
-
- ut.begin();
-
-
-
- // Do database updates and send message. The
-container
-
- // automatically enlists dcon and qsession
-with the
-
- // transaction.
-
- stmt.executeQuery(...);
-
- stmt.executeUpdate(...);
-
- stmt.executeUpdate(...);
-
- qsender.send(message);
-
-
-
- // commit the transaction
-
- ut.commit();
-
- } catch (...) \{
-
- // handle exception s
-
- ...
-
- } finally \{
-
- // release connections
-
- dcon.close();
-
- qcon.close();
-
- ...
-
- }
-
- }
-
- ...
-
+    @Resource 
+    javax.Transaction.UserTransaction ut;
+    
+    @Resource 
+    javax.sql.DataSource database1;
+    
+    @Resource 
+    javax.jms.QueueConnectionFactory qcf1;
+    
+    @Resource 
+    javax.jms.Queue queue1;
+    
+    public void someMethod(...) {
+        java.sql.Connection dcon;
+        java.sql.Statement stmt;
+        javax.jms.QueueConnection qcon;
+        javax.jms.QueueSession qsession;
+        javax.jms.QueueSender qsender;
+        javax.jms.Message message;
+        
+        try {
+            // obtain db conn object and set it up for transactions
+            dcon = database1.getConnection();
+            stmt = dcon.createStatement();
+            
+            // obtain jms conn object and set up session for
+            // transactions
+            qcon = qcf1.createQueueConnection();
+            qsession = qcon.createQueueSession(true,0);
+            qsender = qsession.createSender(queue1);
+            message = qsession.createTextMessage();
+            message.setText("some message");
+            
+            // Now do a transaction that involves both connections
+            
+            // start the transaction
+            ut.begin();
+            
+            // Do database updates and send message. The container
+            // automatically enlists dcon and qsession with the
+            // transaction.
+            stmt.executeQuery(...);
+            stmt.executeUpdate(...);
+            stmt.executeUpdate(...);
+            qsender.send(message);
+            
+            // commit the transaction
+            ut.commit();
+        } catch (...) {
+            // handle exception s
+            ...
+        } finally {
+            // release connections
+            dcon.close();
+            qcon.close();
+            ...
+        }
+    }
+    ...
 }
+----
 
-{empty}The following code segments illustrate
+The following code segments illustrate
 a stateful session bean that retains a transaction across three client
-calls, invoked in the following order: _method1_ , _method2_ , and
-_method3_.footnote:a10268[Note that the Bean Provider must use the 
+calls, invoked in the following order: `method1`, `method2`, and
+`method3`.footnote:a10268[Note that the Bean Provider must use the 
 pre-passivate callback method here to close the connections and set 
 the instance variables for the connection to null.]
-
+[source, java]
+----
 @Stateful
-
 @TransactionManagement(BEAN)
-
-public class MySessionBean implements
-MySession \{
-
- @Resource javax.Transaction.UserTransaction
-ut;
-
- @Resource javax.sql.DataSource database1;
-
- @Resource javax.sql.DataSource database2;
-
- java.sql.Connection con1;
-
- java.sql.Connection con2;
-
-
-
- public void method1(...) \{
-
- java.sql.Statement stmt;
-
-
-
- // start a transaction
-
- ut.begin();
-
-
-
- // make some updates on con1
-
- con1 = database1.getConnection();
-
- stmt = con1.createStatement();
-
- stmt.executeUpdate(...);
-
- stmt.executeUpdate(...);
-
-
-
- //
-
- // The container retains the transaction
-associated with the
-
- // instance to the next client call (which
-is method2(...)).
-
- }
-
-
-
- public void method2(...) \{
-
- java.sql.Statement stmt;
-
-
-
- con2 = database2.getConnection();
-
- stmt = con2.createStatement();
-
- stmt.executeUpdate(...);
-
- stmt.executeUpdate(...);
-
-
-
- // The container retains the transaction
-associated with the
-
- // instance to the next client call (which
-is method3(...)).
-
- }
-
-
-
- public void method3(...) \{
-
- java.sql.Statement stmt;
-
-
-
- // make some more updates on con1 and con2
-
- stmt = con1.createStatement();
-
- stmt.executeUpdate(...);
-
- stmt = con2.createStatement();
-
- stmt.executeUpdate(...);
-
-
-
- try \{
-
- // commit the transaction
-
- ut.commit();
-
- } finally \{
-
- // release connections
-
- con1.close();
-
- con2.close();
-
- ...
-
- }
-
- }
-
- ...
-
+public class MySessionBean implements MySession {
+    @Resource 
+    javax.Transaction.UserTransaction ut;
+    
+    @Resource 
+    javax.sql.DataSource database1;
+    
+    @Resource 
+    javax.sql.DataSource database2;
+    
+    java.sql.Connection con1;
+    java.sql.Connection con2;
+    
+    public void method1(...) {
+        java.sql.Statement stmt;
+        
+        // start a transaction
+        ut.begin();
+       
+        // make some updates on con1
+        con1 = database1.getConnection();
+        stmt = con1.createStatement();
+        stmt.executeUpdate(...);
+        stmt.executeUpdate(...);
+        
+        // The container retains the transaction associated with the
+        // instance to the next client call (which is method2(...)).
+    }
+    public void method2(...) {
+        java.sql.Statement stmt;
+        
+        con2 = database2.getConnection();
+        stmt = con2.createStatement();
+        stmt.executeUpdate(...);
+        stmt.executeUpdate(...);
+        
+        // The container retains the transaction associated with the
+        // instance to the next client call (which is method3(...)).
+    }
+   
+    public void method3(...) {
+        java.sql.Statement stmt;
+        
+        // make some more updates on con1 and con2
+        stmt = con1.createStatement();
+        stmt.executeUpdate(...);
+        stmt = con2.createStatement();
+        stmt.executeUpdate(...);
+        
+        try {
+            // commit the transaction
+            ut.commit();
+        } finally {
+            // release connections
+            con1.close();
+            con2.close();
+            ...
+        }
+    }
+    ...
 }
+----
 
 It is possible for an enterprise bean to open
 and close a database connection in each business method (rather than
 hold the connection open until the end of transaction). The following
 code segments illustrate a stateful session bean for which the client
-executes the sequence of methods ( _method1_ , _method2_ , _method2_ ,
-_method2_ , and _method3_ ). In this scenario, all the database updates
-done by the multiple invocations of _method2_ are performed in the scope
-of the same transaction, which is the transaction started in _method1_
-and committed in _method3._
-
+executes the sequence of methods (`method1`, `method2`, `method2`,
+`method2`, and `method3 ). In this scenario, all the database updates
+done by the multiple invocations of `method2` are performed in the scope
+of the same transaction, which is the transaction started in `method1`
+and committed in `method3`.
+[source, java]
+----
 @Stateful
-
 @TransactionManagement(BEAN)
-
-public class MySessionBean implements
-MySession \{
-
- @Resource javax.Transaction.UserTransaction
-ut;
-
- @Resource javax.sql.DataSource database1;
-
-
-
- public void method1(...) \{
-
- // start a transaction
-
- ut.begin();
-
- }
-
-
-
- public void method2(...) \{
-
- java.sql.Connection con;
-
- java.sql.Statement stmt;
-
-
-
- try \{
-
- // open connection
-
- con = database1.getConnection();
-
-
-
- // make some updates on con
-
- stmt = con.createStatement();
-
- stmt.executeUpdate(...);
-
- stmt.executeUpdate(...);
-
-
-
- } finally \{
-
- // close the connection
-
- con.close();
-
- ...
-
- }
-
- }
-
-
-
- public void method3(...) \{
-
-
-
- // commit the transaction
-
- ut.commit();
-
- }
-
- ...
-
+public class MySessionBean implements MySession {
+    @Resource 
+    javax.Transaction.UserTransaction ut;
+   
+    @Resource 
+    javax.sql.DataSource database1;
+   
+    public void method1(...) {
+        // start a transaction
+        ut.begin();
+    }
+   
+    public void method2(...) {
+        java.sql.Connection con;
+        java.sql.Statement stmt;
+        
+        try {
+            // open connection
+            con = database1.getConnection();
+            
+            // make some updates on con
+            stmt = con.createStatement();
+            stmt.executeUpdate(...);
+            stmt.executeUpdate(...);
+        } finally {
+            // close the connection
+            con.close();
+            ...
+        }
+    }
+    public void method3(...) {
+        // commit the transaction
+        ut.commit();
+    }
+    ...
 }
+----
 
 ===== getRollbackOnly and setRollbackOnly Methods
 
 An enterprise bean with
 bean-managed transaction demarcation must
-not use the getRollbackOnly and setRollbackOnly methods of the
-EJBContext interface.
+not use the `getRollbackOnly` and `setRollbackOnly` methods of the
+`EJBContext` interface.
 
 An enterprise bean with bean-managed
 transaction demarcation has no need to use these methods, because of the
 following reasons:
 
-An enterprise bean with bean-managed
+* An enterprise bean with bean-managed
 transaction demarcation can obtain the status of a transaction by using
-the getStatus method of the javax.transaction.UserTransaction interface.
+the `getStatus` method of the `javax.transaction.UserTransaction` interface.
 
-An enterprise bean with bean-managed
-transaction demarcation can rollback a transaction using the rollback
-method of the javax.transaction.UserTransaction interface.
+* An enterprise bean with bean-managed
+transaction demarcation can rollback a transaction using the `rollback`
+method of the `javax.transaction.UserTransaction` interface.
 
 ==== Enterprise Beans Using Container-Managed Transaction Demarcation
 
@@ -992,17 +742,17 @@ interceptor methods, lifecycle callback interceptor methods, or timeout
 callback methods must not use any resource-manager specific transaction
 management methods that would interfere with the container’s demarcation
 of transaction boundaries. For example, the enterprise bean methods must
-not use the following methods of the java.sql.Connection interface:
-commit, setAutoCommit, and rollback; or the following methods of the
-_javax.jms.Session_ interface: _commit_ and _rollback_ .
+not use the following methods of the `java.sql.Connection` interface:
+`commit`, `setAutoCommit`, and `rollback`; or the following methods of the
+`javax.jms.Session` interface: `commit` and `rollback`.
 
 The enterprise bean’s business methods,
 message listener methods, business method
 interceptor methods, lifecycle callback interceptor methods, or timeout
 callback methods must not attempt to obtain or use the
-javax.transaction.UserTransaction interface.
+`javax.transaction.UserTransaction` interface.
 
-{empty}The following code segments illustrate
+The following code segments illustrate
 a business method in an enterprise bean with container-managed
 transaction demarcation. The business method updates two databases using
 JDBC™ connections. The container provides transaction demarcation as
@@ -1010,122 +760,74 @@ specified by the transaction attribute.footnote:a10269[REQUIRED is the
 default transaction attribute value for container managed transaction 
 demarcation. The explicit specification of the transaction attribute is 
 therefore not required in this example.]
-
-@Stateless public class MySessionBean
-implements MySession \{
-
- ...
-
-
-
- @TransactionAttribute(REQUIRED)
-
- public void someMethod(...) \{
-
- java.sql.Connection con1;
-
- java.sql.Connection con2;
-
- java.sql.Statement stmt1;
-
- java.sql.Statement stmt2;
-
-
-
- try \{
-
- // obtain con1 and con2 connection objects
-
- con1 = ...;
-
- con2 = ...;
-
-
-
- stmt1 = con1.createStatement();
-
- stmt2 = con2.createStatement();
-
-
-
- //
-
- // Perform some updates on con1 and con2.
-The container
-
- // automatically enlists con1 and con2 with
-the
-
- // container-managed transaction.
-
- //
-
- stmt1.executeQuery(...);
-
- stmt1.executeUpdate(...);
-
-
-
- stmt2.executeQuery(...);
-
- stmt2.executeUpdate(...);
-
-
-
- stmt1.executeUpdate(...);
-
- stmt2.executeUpdate(...);
-
-
-
- } finally \{
-
- // release connections
-
- con1.close();
-
- con2.close();
-
- ...
-
- }
-
- }
-
- ...
-
+[source, java]
+----
+@Stateless 
+public class MySessionBean implements MySession {
+    ...
+    @TransactionAttribute(REQUIRED)
+    public void someMethod(...) {
+        java.sql.Connection con1;
+        java.sql.Connection con2;
+        java.sql.Statement stmt1;
+        java.sql.Statement stmt2;
+        
+        try {
+            // obtain con1 and con2 connection objects
+            con1 = ...;
+            con2 = ...;
+            stmt1 = con1.createStatement();
+            stmt2 = con2.createStatement();
+            
+            // Perform some updates on con1 and con2. The container
+            // automatically enlists con1 and con2 with the
+            // container-managed transaction.
+            stmt1.executeQuery(...);
+            stmt1.executeUpdate(...);
+            stmt2.executeQuery(...);
+            stmt2.executeUpdate(...);
+            stmt1.executeUpdate(...);
+            stmt2.executeUpdate(...);
+        } finally \{
+            // release connections
+            con1.close();
+            con2.close();
+            ...
+        }
+    }
+    ...
 }
+----
 
 ===== javax.ejb.SessionSynchronization Interface
 
 A stateful
 session bean with container-managed transaction demarcation can
-optionally implement the javax.ejb.SessionSynchronization interface or
+optionally implement the `javax.ejb.SessionSynchronization` interface or
 use the session synchronization annotations. Their use is described in
-Subsection link:Ejb.html#a736[See The Session Synchronization
-Notifications for Stateful Session Beans].
+<<a736>>.
 
 ===== javax.ejb.EJBContext.setRollbackOnly Method
 
 An enterprise
 bean with container-managed transaction demarcation can use the
-setRollbackOnly method of its EJBContext object to mark the transaction
+`setRollbackOnly` method of its `EJBContext` object to mark the transaction
 such that the transaction can never commit. Typically, an enterprise
 bean marks a transaction for rollback to protect data integrity before
 throwing an application exception, if the application exception class
 has not been specified to automatically cause the container to rollback
 the transaction.
 
-For example, an _AccountTransfer_ bean which
+_For example, an `AccountTransfer` bean which
 debits one account and credits another account could mark a transaction
 for rollback if it successfully performs the debit operation, but
-encounters a failure during the credit operation.
+encounters a failure during the credit operation._
 
 ===== javax.ejb.EJBContext.getRollbackOnly method
 
 An enterprise
 bean with container-managed transaction demarcation can use the
-getRollbackOnly method of its EJBContext object to test if the current
+`getRollbackOnly` method of its `EJBContext` object to test if the current
 transaction has been marked for rollback. The transaction might have
 been marked for rollback by the enterprise bean itself, by other
 enterprise beans, or by other components (outside of the EJB
