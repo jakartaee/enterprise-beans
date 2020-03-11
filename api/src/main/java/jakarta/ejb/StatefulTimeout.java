@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  * is eligible for removal by the container.
  * <p>
  * 
- * The semantics of the <code>value</value> element are as follows:
+ * The semantics of the <code>value</code> element are as follows:
  * <ul>
  * <li>A value <code>&#062;</code>0 indicates a timeout value in the units
  * specified by the <code>unit</code> element.

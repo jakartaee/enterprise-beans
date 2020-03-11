@@ -23,11 +23,12 @@
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
         <version>1.0.6</version>
+        <relativePath />
     </parent>
 
     <groupId>jakarta.ejb</groupId>
     <artifactId>jakarta.ejb-api</artifactId>
-    <version>4.0.0-RC1</version>
+    <version>4.0.0-RC2</version>
 
     <properties>
         <extension.name>jakarta.ejb</extension.name>
@@ -36,7 +37,7 @@
         <findbugs.version>3.0.5</findbugs.version>
         <findbugs.exclude>exclude.xml</findbugs.exclude>
         <findbugs.threshold>Low</findbugs.threshold>
-        <legal.doc.source>.</legal.doc.source>
+        <legal.doc.source>../</legal.doc.source>
     </properties>
 
     <name>Jakarta Enterprise Beans</name>
@@ -52,14 +53,13 @@
             <organizationUrl>http://www.oracle.com/</organizationUrl>
         </developer>
     </developers>
-
     <contributors>
         <contributor>
             <name>Marina Vatkina</name>
             <organization>Oracle Corporation</organization>
             <organizationUrl>http://www.oracle.com/</organizationUrl>
         </contributor>
-      </contributors>
+    </contributors>
 
     <licenses>
         <license>
@@ -81,11 +81,9 @@
         <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
         <url>https://github.com/eclipse-ee4j/ejb-api</url>
-      <tag>HEAD</tag>
-  </scm>
-  
+        <tag>HEAD</tag>
+    </scm>
     <build>
-
         <resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -95,7 +93,6 @@
                 </includes>
             </resource>
         </resources>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -106,11 +103,6 @@
                     <groupId>org.glassfish.build</groupId>
                     <artifactId>spec-version-maven-plugin</artifactId>
                     <version>2.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.glassfish.build</groupId>
-                    <artifactId>glassfishbuild-maven-plugin</artifactId>
-                    <version>3.2.26</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
@@ -124,35 +116,18 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-remote-resources-plugin</artifactId>
-                    <version>1.5</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.1.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
                     <version>${findbugs.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.scm</groupId>
-                            <artifactId>maven-scm-provider-gitexe</artifactId>
-                            <version>1.11.1</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -164,32 +139,20 @@
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>3.0.0-M2</version>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
-                </plugin>
-                <plugin>
-                    <!-- Enables step-by-step staging deployment -->
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.7</version>
-                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-            		<configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-               </configuration>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.glassfish.build</groupId>
                 <artifactId>spec-version-maven-plugin</artifactId>
-                <version>2.1</version>
                 <configuration>
                     <spec>
                         <specVersion>4.0</specVersion>
@@ -249,44 +212,28 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-remote-resources-plugin</artifactId>
-                <executions>
-                  <execution>
-                    <goals>
-                      <goal>process</goal>
-                    </goals>
-                    <configuration>
-                      <resourceBundles>
-                        <resourceBundle>org.glassfish:legal:1.1</resourceBundle>
-                      </resourceBundles>
-                    </configuration>
-                  </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <configuration>
                     <includePom>true</includePom>
                 </configuration>
                 <executions>
                     <execution>
-                       <id>attach-sources</id>
-                       <goals>
-                           <goal>jar-no-fork</goal>
-                       </goals>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8</version>
                 <configuration>
-                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <source>1.8</source>
+                    <doclint>none</doclint>
                     <bottom>
-                    <![CDATA[
-                    <p align="left">Copyright &#169; 2019 Eclipse Foundation.<br>Use is subject to
+                        <![CDATA[
+                    <p align="left">Copyright &#169; 2019-${current.year} Eclipse Foundation.<br>Use is subject to
     <a href="{@docRoot}/doc-files/EFSL.html" target="_top">license terms</a>.]]>
                     </bottom>
                     <docfilessubdirs>true</docfilessubdirs>
@@ -330,10 +277,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <useReleaseProfile>false</useReleaseProfile>
                     <tagNameFormat>@{project.version}</tagNameFormat>
-                    <arguments>${release.arguments}</arguments>
                     <preparationGoals>install</preparationGoals>
                     <goals>deploy</goals>
                 </configuration>
@@ -370,15 +314,11 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>add-legal-resource</id>
@@ -397,6 +337,17 @@
                                     <targetPath>META-INF</targetPath>
                                 </resource>
                             </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <name>current.year</name>
+                            <pattern>yyyy</pattern>
                         </configuration>
                     </execution>
                 </executions>

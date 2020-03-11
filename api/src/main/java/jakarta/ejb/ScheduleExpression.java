@@ -32,7 +32,7 @@ import java.io.Serializable;
  * attribute in the common case that the value is a simple integer value. </p>
  * 
  * <p>For example, <pre>scheduleExpression.second(10)</pre> is semantically equivalent to 
- *      <pre>scheduleExpression.second("10")</pre></p>
+ *      <pre>scheduleExpression.second("10")</pre>
  *
  *
  *
@@ -195,7 +195,7 @@ import java.io.Serializable;
  * <li>  year: "*"
  * <li>  timezone : default JVM time zone
  * <li>  start : upon timer creation
- * <li>  end : no end date</p>
+ * <li>  end : no end date
  * </ul>
  *
  * <p>

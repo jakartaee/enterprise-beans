@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.eclipse.ee4j.ejb-api</groupId>
         <artifactId>ejb-api-parent</artifactId>
-        <version>4.0.0-RC1</version>
+        <version>4.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>enterprise-beans-spec</artifactId>
@@ -101,9 +101,6 @@
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
-                            <attributes>
-                                <toc>left</toc>
-                            </attributes>
                         </configuration>
                     </execution>
                     <execution>
@@ -137,9 +134,6 @@
                             <backend>html5</backend>
                             <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
                             <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.html</outputFile>
-                            <attributes>
-                                <toc>left</toc>
-                            </attributes>
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
@@ -183,23 +177,6 @@
                     </attributes>
                 </configuration>
 
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.2</version>
-                <configuration>
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <arguments>${release.arguments}</arguments>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.scm</groupId>
-                        <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <version>1.9.4</version>
-                    </dependency>
-                </dependencies>
             </plugin>
 
             <!--
