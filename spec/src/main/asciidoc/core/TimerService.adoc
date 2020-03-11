@@ -677,6 +677,7 @@ name.footnote:a10339[If the bean implements the `TimedObject` interface, the
 void <METHOD>()
 
 void <METHOD>(Timer timer) // <1>
+----
 
 // footnote:a10340[] - change footnote to callout
 <1> An earlier version of the specification required that 
