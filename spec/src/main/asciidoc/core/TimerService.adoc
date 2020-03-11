@@ -724,8 +724,12 @@ outstanding when a call to the cancellation method has been made._
 In general, a timeout callback method can
 perform the same operations as business methods from the component
 interface or message listener methods. See <<a1091>>, <<a1886>>,
-<<./enterprise-beans-spec-opt-{revnumber}.adoc#a1367>>, and
-<<./enterprise-beans-spec-opt-{revnumber}.adoc#a2625>> 
+<<./enterprise-beans-spec-opt-{revnumber}.adoc#a1367, 
+Operations Allowed in the Methods of Entity Class in 
+Container-Managed Persistence>>, and
+<<./enterprise-beans-spec-opt-{revnumber}.adoc#a2625, 
+Operations Allowed in the Methods of Entity Class in 
+Bean-Managed Persistence>> 
 for the specification of the
 operations that may be performed by a timeout callback method.
 
