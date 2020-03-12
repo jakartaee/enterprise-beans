@@ -839,7 +839,7 @@ the resource is to be looked up in the environment.
 interface type. The reference may be to a session bean’s business
 interface, to a session bean’s no-interface view, or to the local home
 interface or remote home interface of a session bean or an entity
-bean. footnote:a10323[Component contract
+bean.footnote:a10323[Component contract
 and client view of entity beans are described in the EJB Optional
 Features document<<a9890>>.]
 
@@ -1139,7 +1139,7 @@ the referencing application component.
 rename enterprise beans to have unique names within an entire Java EE
 application, the Application Assembler may use either of the following
 two syntaxes in the `ejb-link` element of the referencing application
-component. footnote:a10325[The Bean Provider
+component.footnote:a10325[The Bean Provider
 may also use this syntax in the `beanName` element of the `EJB`
 annotation.]
 
@@ -1774,7 +1774,7 @@ element of the `Resource` annotation to `false` or sets the
 `res-sharing-scope` deployment descriptor entry for a resource manager
 connection factory reference to `Unshareable`, the container must not
 attempt to share the connections obtained from the resource manager
-connection factory reference. footnote:a10326[Connections obtained
+connection factory reference.footnote:a10326[Connections obtained
 from the same resource manager connection factory through a different
 resource manager connection factory reference may be shareable.] If the Bean
 Provider sets the `res-sharing-scope` of a resource manager connection

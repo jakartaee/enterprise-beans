@@ -409,7 +409,7 @@ must be capable of servicing IIOP 1.2 based invocations on EJBObject and
 EJBHome objects. IIOP 1.2 is part of the CORBA 2.3.1 specification
 link:Ejb.html#a9865[See CORBA 2.3.1 Specification.
 http://www.omg.org/cgi-bin/doc?formal/99-10-07.] from the
-OMG. footnote:a10314[CORBA APIs and earlier versions of the IIOP protocol are 
+OMG.footnote:a10314[CORBA APIs and earlier versions of the IIOP protocol are 
 already included in the J2SE 1.2, J2SE 1.3 and J2EE 1.2 platforms through 
 JavaIDL and RMI-IIOP.] Containers may additionally support
 vendor-specific protocols.
@@ -754,7 +754,7 @@ enterprise bean method.
 
 EJBObject and EJBHome references may have the
 InvocationPolicy value as either _CosTransactions::SHARED_ or
-_CosTransactions::EITHER_. footnote:a10318[If the InvocationPolicy is not 
+_CosTransactions::EITHER_.footnote:a10318[If the InvocationPolicy is not 
 present in the IOR, it is interpreted by the client as if the policy 
 value was `CosTransactions::EITHER`.]
 
@@ -1083,7 +1083,7 @@ key mechanisms.
 The
 authentication identity (i.e. principal) associated with a Java EE
 component is usually that of the user on whose behalf the component is
-executing. footnote:a10319[When there are concurrent invocations on a 
+executing.footnote:a10319[When there are concurrent invocations on a 
 component from multiple clients, a different principal may be 
 associated with the thread of execution for each invocation.] 
 The principal under which an
@@ -1130,7 +1130,7 @@ a chain.
 EJB containers are required to provide the
 Deployer or Administrator with the tools to configure
 trust relationships for interactions with
-intermediate web or EJB containers. footnote:a10320[One way to achieve 
+intermediate web or EJB containers.footnote:a10320[One way to achieve 
 this is to configure a "trusted container list" for each EJB container 
 which contains the list of intermediate client containers that are trusted. 
 If the list is empty, then the target EJB container does not have a trust 

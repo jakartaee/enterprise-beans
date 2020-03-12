@@ -74,7 +74,7 @@ _META-INF/ejb-jar.xml_ file or at least one _.class_ file with an
 enterprise bean component-defining annotation
 
 {empty}Each such matching entry is considered
-an EJB module within the same application. footnote:a10346[Support for 
+an EJB module within the same application.footnote:a10346[Support for 
 more than one module is required for a Full Java EE platform product. 
 Multi-module support is only required for Java EE profiles that require 
 support for .ear files.]

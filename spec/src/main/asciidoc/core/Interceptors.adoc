@@ -29,7 +29,7 @@ transactional interceptors (see link:Ejb.html#a9857[See Java™
 Transaction API, version 1.2 (JTA).
 http://jcp.org/en/jsr/detail?id=907.]) with Enterprise JavaBeans. The
 EJB Container should fail deployment of such
-applications. footnote:a10261[This restriction may be removed in a future 
+applications.footnote:a10261[This restriction may be removed in a future 
 release of this specification.]
 
 Default interceptors are interceptors that
@@ -168,7 +168,7 @@ _InvocationContext.proceed()_ is called.
 If a system exception escapes the interceptor
 chain, the bean instance and any associated interceptor instances are
 discarded (unless the bean is a singleton session
-bean. footnote:a10262[See <<a1254>>.]) The _PreDestroy_ callbacks are not invoked
+bean.footnote:a10262[See <<a1254>>.]) The _PreDestroy_ callbacks are not invoked
 in this case: the interceptor methods in the chain should perform any
 necessary clean-up operations as the interceptor chain unwinds.
 

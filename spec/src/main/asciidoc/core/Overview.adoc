@@ -80,7 +80,7 @@ perform the two EJB Roles of the Enterprise Bean Provider and the
 Application Assembler.
 
 The following sections define the six EJB
-roles. footnote:a10218[Earlier releases of this specification 
+roles.footnote:a10218[Earlier releases of this specification 
 distinguished a seventh role, that of the persistence provider. 
 The role of the persistence provider is independent of that of 
 the EJB specification, which assumes that a Java Persistence 
