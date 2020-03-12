@@ -6,24 +6,22 @@ support for security management.
 
 === Overview
 
+_We set the following goals for the security
+management in the EJB architecture:_
 
-
-We set the following goals for the security
-management in the EJB architecture:
-
-Lessen the burden of the application
+* _Lessen the burden of the application
 developer (i.e. the Bean Provider) for securing the application by
 allowing greater coverage from more qualified EJB roles. The EJB
 Container Provider provides the implementation of the security
 infrastructure; the Deployer and System Administrator define the
-security policies.
+security policies._
 
-Allow the security policies to be set by the
-Application Assembler or Deployer.
+* _Allow the security policies to be set by the
+Application Assembler or Deployer._
 
-Allow the enterprise bean applications to be
+* _Allow the enterprise bean applications to be
 portable across multiple EJB servers that use different security
-mechanisms.
+mechanisms._
 
 The EJB architecture encourages the Bean
 Provider to implement the enterprise bean class without hard-coding the
@@ -35,12 +33,12 @@ for the operational environment of the enterprise.
 
 To make the
 Deployer’s task easier, the Bean Provider or the Application Assembler
-(which could be the same party as the Bean Provider) may define security
-roles for an application composed of one or more enterprise beans. A
+(which could be the same party as the Bean Provider) may define _security
+roles_ for an application composed of one or more enterprise beans. A
 security role is a semantic grouping of permissions that a given type of
 users of the application must have in order to successfully use the
 application. The Bean Provider can define declaratively using metadata
-annotations or the deployment descriptor the method permissions for each
+annotations or the deployment descriptor the _method permissions_ for each
 security role. The Applications Assembler can define, augment, or
 override the method permissions using the deployment descriptor. A
 method permission is a permission to invoke a specified group of methods
@@ -63,7 +61,7 @@ and any methods of other enterprise beans that the bean may call.
 This determines whether the caller principal
 is propagated from the caller to the callee—that is, whether the called
 enterprise bean will see the same returned value of the
-EJBContext.getCallerPrincipal as the calling enterprise bean—or whether
+`EJBContext.getCallerPrincipal` as the calling enterprise bean—or whether
 a security principal that has been assigned to the specified security
 role will be used for the execution of the bean’s methods and will be
 visible as the caller principal in the bean’s callee.
@@ -73,22 +71,20 @@ annotations or the deployment descriptor to specify whether the caller’s
 security identity or a run-as security identity should be used for the
 execution of the bean’s methods.
 
-By default, the caller principal will be
-propagated as the caller identity. The Bean Provider can use the _RunAs_
+* By default, the caller principal will be
+propagated as the caller identity. The Bean Provider can use the `RunAs`
 annotation to specify that a security principal that has been assigned
-to a specified security role be used instead. See Section
-link:Ejb.html#a5322[See Specification of Security Identities in
-the Deployment Descriptor].
+to a specified security role be used instead. See <<a5322>>.
 
-If the deployment descriptor is used to
+* If the deployment descriptor is used to
 specify the security principal, the Bean Provider or the Application
-Assembler can use the _security-identity_ deployment descriptor element
-to specify the security identity. If the _security-identity_ deployment
+Assembler can use the `security-identity` deployment descriptor element
+to specify the security identity. If the `security-identity` deployment
 descriptor element is not specified and if a run-as identity has not
-been specified by the use of the _RunAs_ annotation or if
-_use-caller-identity_ is specified as the value of the
-_security-identity_ element, the caller principal is propagated from the
-caller to the callee. If the _run-as_ element is specified, a security
+been specified by the use of the `RunAs` annotation or if
+`use-caller-identity` is specified as the value of the
+`security-identity` element, the caller principal is propagated from the
+caller to the callee. If the `run-as` element is specified, a security
 principal that has been assigned to the specified security role will be
 used. The Application Assembler is permitted to override a security
 identity value set or defaulted by the Bean Provider.
@@ -109,8 +105,7 @@ client call has been assigned by the Deployer to have at least one
 security role that is allowed to invoke the business method or if the
 Bean Provider or Application Assembler has specified that security
 authorization is not to be checked for the method (i.e., that all roles,
-including any unauthenticated roles, are permitted). See
-link:Ejb.html#a5186[See Method Permissions].
+including any unauthenticated roles, are permitted). See <<a5186>>.
 
 The Container Provider is responsible for
 enforcing the security policies at runtime, providing the tools for
@@ -128,14 +123,10 @@ management.
 
 === Bean Provider’s Responsibilities
 
-
-
 This section defines the Bean Provider’s
 perspective of the EJB architecture support for security, and defines
 his or her responsibilities. In addition, the Bean Provider may define
-the security roles for the application, as defined in
-link:Ejb.html#a5121[See Responsibilities of the Bean Provider
-and/or Application Assembler].
+the security roles for the application, as defined in <<a5121>>.
 
 ==== Invocation of Other Enterprise Beans
 
@@ -145,18 +136,16 @@ no-interface view, or home or component interface. The EJB architecture
 provides no programmatic interfaces for the invoking enterprise bean to
 control the principal passed to the invoked enterprise bean.
 
-The
-management of caller principals passed on
-_inter-enterprise_ bean invocations (i.e. principal delegation) is set
+The management of caller principals passed on
+`inter-enterprise` bean invocations (i.e. principal delegation) is set
 up by the Deployer and System Administrator in a container-specific way.
 The Bean Provider and Application Assembler should describe all the
-requirements for the caller’s principal management of inter-enterprise
+requirements for the caller’s principal management of `inter-enterprise`
 bean invocations as part of the description.
 
 ==== Resource Access
 
-Section link:Ejb.html#a4159[See
-Resource Manager Connection Factory References] defines the protocol for
+<<a4159>> defines the protocol for
 accessing resource managers, including the requirements for security
 management.
 
@@ -166,14 +155,13 @@ The EJB architecture does not define the
 operating system principal under which
 enterprise bean methods execute. Therefore, the Bean Provider cannot
 rely on a specific principal for accessing the underlying OS resources,
-such as files. (See Subsection link:Ejb.html#a5425[See System
-Principal] for the reasons behind this rule.)
+such as files. (See <<a5425>> for the reasons behind this rule.)
 
-We believe that most enterprise business
+_We believe that most enterprise business
 applications store information in resource managers such as relational
 databases rather than in resources at the operating system levels.
 Therefore, this rule should not affect the portability of most
-enterprise beans.
+enterprise beans._
 
 ==== Programming Style Recommendations
 
@@ -190,137 +178,108 @@ up the appropriate security policy for the enterprise bean application.
 
 ==== Programmatic Access to Caller’s Security Context
 
-Note: In general, security management should
+_Note: In general, security management should
 be enforced by the container in a manner that is transparent to the
 enterprise beans’ business methods. The security API described in this
 section should be used only in the less frequent situations in which the
 enterprise bean business methods need to access the security context
-information.
+information._
 
-The
-javax.ejb.EJBContext interface provides two
+The `javax.ejb.EJBContext` interface provides two
 methods (plus two deprecated methods that were defined in EJB 1.0) that
 allow the Bean Provider to access security information about the
 enterprise bean’s caller.
+[source, java]
+----
+public interface javax.ejb.EJBContext {
+    ...
+    //
+    // The following two methods allow the EJB class
+    // to access security information.
+    //
+    java.security.Principal getCallerPrincipal();
+    boolean isCallerInRole(String roleName);
 
-public interface javax.ejb.EJBContext \{
-
- ...
-
-
-
- //
-
- // The following two methods allow the EJB
-class
-
- // to access security information.
-
- //
-
- java.security.Principal
-getCallerPrincipal();
-
- boolean isCallerInRole(String roleName);
-
-
-
-
-
- //
-
- // The following two EJB 1.0 methods are
-deprecated.
-
- //
-
- java.security.Identity getCallerIdentity();
-
- boolean
-isCallerInRole(java.security.Identity role);
-
-
-
- ...
-
-
-
+    //
+    // The following two EJB 1.0 methods are deprecated.
+    //
+    java.security.Identity getCallerIdentity();
+    boolean isCallerInRole(java.security.Identity role);
+    ...
 }
-
+----
 The Bean Provider
-can invoke the getCallerPrincipal and isCallerInRole methods only in the
+can invoke the `getCallerPrincipal` and `isCallerInRole` methods only in the
 enterprise bean’s business methods as specified in
-link:Ejb.html#a953[See Operations Allowed in the Methods of a
-Stateful Session Bean], link:Ejb.html#a1091[See Operations
-Allowed in the Methods of a Stateless Session Bean],
-link:Ejb.html#a1886[See Operations Allowed in the Methods of a
-Message-Driven Bean], link:../Optional/Chapters.html#UNKNOWN[], and
-link:../Optional/Chapters.html#UNKNOWN[]. If they are otherwise invoked
+<<a953>>, <<a1091>>, <<a1886>>, 
+<<./enterprise-beans-spec-opt-{revnumber}.adoc#a1367, Operations Allowed in the Methods of Entity Class in Container-Managed Persistence>>, and
+<<./enterprise-beans-spec-opt-{revnumber}.adoc#a2625, Operations Allowed in the Methods of Entity Class in Bean-Managed Persistence>>. 
+If they are otherwise invoked
 when no security context exists, they should throw the
-_java.lang.IllegalStateException_ runtime exception.
+`java.lang.IllegalStateException` runtime exception.
 
 The
-getCallerIdentity() and isCallerInRole(Identity role) methods were
+`getCallerIdentity()` and `isCallerInRole(Identity role)` methods were
 deprecated in EJB 1.1. The Bean Provider must use the
-getCallerPrincipal() and isCallerInRole(String roleName) methods for new
+`getCallerPrincipal()` and `isCallerInRole(String roleName)` methods for new
 enterprise beans.
 
 An EJB 1.1 or later compliant container may
 choose to implement the two deprecated methods as follows.
 
-A container that does not want to provide
-support for this deprecated method should throw a RuntimeException (or
-subclass of RuntimeException) from the getCallerIdentity method.
+* A container that does not want to provide
+support for this deprecated method should throw a `RuntimeException` (or
+subclass of `RuntimeException`) from the `getCallerIdentity` method.
 
-A container that wants to provide support for
-the getCallerIdentity method should return an instance of a subclass of
-the java.security.Identity abstract class from the method. The getName
+* A container that wants to provide support for
+the `getCallerIdentity` method should return an instance of a subclass of
+the `java.security.Identity` abstract class from the method. The `getName`
 method invoked on the returned object must return the same value that
-getCallerPrincipal().getName() would return.
+`getCallerPrincipal().getName()` would return.
 
-A container that does not want to provide
-support for this deprecated method should throw a RuntimeException (or
-subclass of RuntimeException) from the isCallerInRole(Identity identity)
+* A container that does not want to provide
+support for this deprecated method should throw a `RuntimeException` (or
+subclass of `RuntimeException`) from the `isCallerInRole(Identity identity)`
 method.
 
-A container that wants to implement the
-isCallerInRole(Identity identity) method should implement it as follows:
-
- public boolean isCallerInRole(Identity
-identity) \{
-
- return isCallerInRole(identity.getName());
-
- }
+* A container that wants to implement the
+`isCallerInRole(Identity identity)` method should implement it as follows:
+[source, java]
+----
+public boolean isCallerInRole(Identity identity) {
+    return isCallerInRole(identity.getName());
+}
+----
 
 ===== Use of getCallerPrincipal
 
-The purpose of the _getCallerPrincipal_
+_The purpose of the `getCallerPrincipal`
 method is to allow the enterprise bean methods to obtain the current
 caller principal’s name. The methods might, for example, use the name as
-a key to information in a database.
+a key to information in a database._
 
 An enterprise
-bean can invoke the getCallerPrincipal method to obtain a
-java.security.Principal interface representing the current caller. The
+bean can invoke the `getCallerPrincipal` method to obtain a
+`java.security.Principal` interface representing the current caller. The
 enterprise bean can then obtain the distinguished name of the caller
-principal using the getName method of the java.security.Principal
+principal using the `getName` method of the `java.security.Principal`
 interface. If the security identity has not been established,
-_getCallerPrincipal_ returns the container’s representation of the
+`getCallerPrincipal` returns the container’s representation of the
 unauthenticated identity.
 
-Note that
-getCallerPrincipal returns the principal that represents the caller of
+{empty}::
+_Note that
+`getCallerPrincipal` returns the principal that represents the caller of
 the enterprise bean, not the principal that corresponds to the run-as
-security identity for the bean, if any.
+security identity for the bean, if any._
 
-The meaning of the current caller, the Java
+The meaning of the _current caller_, the Java
 class that implements the
-java.security.Principal interface, and the
-realm of the principals returned by the getCallerPrincipal method depend
+`java.security.Principal` interface, and the
+realm of the principals returned by the `getCallerPrincipal` method depend
 on the operational environment and the configuration of the application.
 
-An enterprise may have a complex security
+_An enterprise may have a complex security
 infrastructure that includes multiple security domains. The security
 infrastructure may perform one or more mapping of principals on the path
 from an EJB caller to the EJB object. For example, an employee accessing
@@ -329,148 +288,111 @@ password (basic authentication), and the security infrastructure may
 authenticate the principal and then map the principal to a Kerberos
 principal that is used on the enterprise’s intranet before delivering
 the method invocation to the EJB object. If the security infrastructure
-performs principal mapping, the _getCallerPrincipal_ method returns the
+performs principal mapping, the `getCallerPrincipal` method returns the
 principal that is the result of the mapping, not the original caller
-principal. (In the previous example, _getCallerPrincipal_ would return
+principal. (In the previous example, `getCallerPrincipal` would return
 the Kerberos principal.) The management of the security infrastructure,
 such as principal mapping, is performed by the System Administrator
-role; it is beyond the scope of the EJB specification.
+role; it is beyond the scope of the EJB specification._
 
 The following code sample illustrates the use
-of the getCallerPrincipal() method.
+of the `getCallerPrincipal()` method.
+[source, java]
+----
+@Stateless 
+public class EmployeeServiceBean implements EmployeeService {
 
+    @Resource 
+    SessionContext ctx;
 
+    @PersistenceContext 
+    EntityManager em;
 
-@Stateless public class EmployeeServiceBean
+    public void changePhoneNumber(...) {
+        ...
+        // obtain the caller principal.
+        callerPrincipal = ctx.getCallerPrincipal();
 
- implements EmployeeService\{
+        // obtain the caller principal’s name.
+        callerKey = callerPrincipal.getName();
 
- @Resource SessionContext ctx;
+        // use callerKey as primary key to find EmployeeRecord 
+        EmployeeRecord myEmployeeRecord =
+            em.find(EmployeeRecord.class, callerKey);
 
- @PersistenceContext EntityManager em;
-
-
-
- public void changePhoneNumber(...) \{
-
- ...
-
-
-
- // obtain the caller principal.
-
- callerPrincipal = ctx.getCallerPrincipal();
-
-
-
- // obtain the caller principal’s name.
-
- callerKey = callerPrincipal.getName();
-
-
-
- // use callerKey as primary key to find
-EmployeeRecord
-
- EmployeeRecord myEmployeeRecord =
-
- em.find(EmployeeRecord.class, callerKey);
-
-
-
- // update phone number
-
- myEmployeeRecord.setPhoneNumber(...);
-
-
-
- ...
-
- }
-
+        // update phone number
+        myEmployeeRecord.setPhoneNumber(...);
+        ...
+    }
 }
+----
 
 In the previous example, the enterprise bean
 obtains the principal name of the current caller and uses it as the
-primary key to locate an _EmployeeRecord_ entity. This example assumes
+primary key to locate an `EmployeeRecord` entity. This example assumes
 that application has been deployed such that the current caller
 principal contains the primary key used for the identification of
 employees (e.g., employee number).
 
 ===== Use of isCallerInRole
 
-The main purpose of the
-_isCallerInRole(String_ _roleName)_ method is to allow the Bean Provider
+_The main purpose of the
+`isCallerInRole(String roleName)` method is to allow the Bean Provider
 to code the security checks that cannot be easily defined declaratively
 in the deployment descriptor using method permissions. Such a check
 might impose a role-based limit on a request, or it might depend on
-information stored in the database.
+information stored in the database._
 
 The enterprise
-bean code can use the isCallerInRole method to test whether the current
+bean code can use the `isCallerInRole` method to test whether the current
 caller has been assigned to a given security role. Security roles are
 defined by the Container, Bean Provider or the Application Assembler
-(see Subsection link:Ejb.html#a5130[See Security Roles]), and
+(see <<a5130>>), and
 are assigned to principals or principal groups that exist in the
 operational environment by the Deployer.
 
 The enterprise bean code can also use the
-isCallerInRole method to test whether the current caller has been
+`isCallerInRole` method to test whether the current caller has been
 authenticated; and without further consideration of whether the
 authenticated caller has been assigned to one or more specific security
-roles. To perform this test, the code passes the value “**” as the
-argument to the isCallerInRole method. As is the case with all calls to
-the isCallerInRole method, the run-time return value of the call will
+roles. To perform this test, the code passes the value `"**"` as the
+argument to the `isCallerInRole` method. As is the case with all calls to
+the `isCallerInRole` method, the run-time return value of the call will
 depend on the security role linked to the reference (as defined in
-section link:Ejb.html#a5293[See Linking Security Role References
-to Security Roles]) and on the principal-to-role mapping configured for
-the linked role (as defined in section link:Ejb.html#a5371[See
-Assignment of Security Roles]).
+<<a5293>>) and on the principal-to-role mapping configured for
+the linked role (as defined in <<a5371>>).
 
-Note that isCallerInRole(String roleName)
+{empty}::
+_Note that `isCallerInRole(String roleName)`
 tests the principal that represents the caller of the enterprise bean,
 not the principal that corresponds to the run-as security identity for
-the bean, if any.
+the bean, if any._
 
 The following code sample illustrates the use
-of the isCallerInRole(String roleName) method.
+of the `isCallerInRole(String roleName)` method.
+[source, java]
+----
+@Stateless 
+public class PayrollBean implements Payroll {
 
-@Stateless public class PayrollBean
-implements Payroll \{
+    @Resource 
+    SessionContext ctx;
 
- @Resource SessionContext ctx;
+    public void updateEmployeeInfo(EmplInfo info) {
 
+        oldInfo = ... read from database;
 
-
- public void updateEmployeeInfo(EmplInfo
-info) \{
-
-
-
- oldInfo = ... read from database;
-
-
-
- // The salary field can be changed only by
-callers
-
- // who have the security role "payroll"
-
- if (info.salary != oldInfo.salary &&
-
- !ctx.isCallerInRole("payroll")) \{
-
- throw new SecurityException(...);
-
- }
-
- ...
-
- }
-
- ...
-
+        // The salary field can be changed only by callers
+        // who have the security role "payroll"
+        if (info.salary != oldInfo.salary &&
+            !ctx.isCallerInRole("payroll")) {
+            throw new SecurityException(...);
+        }
+        ...
+    }
+    ...
 }
+----
 
 [[a5071]]
 ===== Declaration of Security Roles Referenced from the Bean’s Code
@@ -478,15 +400,15 @@ callers
 The Bean Provider
 is responsible for declaring all names that may be used to reference
 security roles from the enterprise bean code. The names of security
-roles defined in the deployment descriptor or used in the RolesAllowed
+roles defined in the deployment descriptor or used in the `RolesAllowed`
 annotation are implicitly declared. The Bean Provider is responsible for
-using either the _DeclareRoles_ annotation or the security-role-ref
+using either the `DeclareRoles` annotation or the `security-role-ref`
 elements of the deployment descriptor to declare all such names that are
 not implicitly declared.
 
-The _DeclareRoles_ annotation is specified on
+The `DeclareRoles` annotation is specified on
 a bean class, where it serves to declare the names of (otherwise
-undeclared) roles that may be tested by calling _isCallerInRole_ from
+undeclared) roles that may be tested by calling `isCallerInRole` from
 within the methods of the annotated class. Declaring the security roles
 allows the Bean Provider, Application Assembler, or Deployer to link
 security role names used in the code to the security roles defined for
@@ -494,132 +416,95 @@ an assembled application. In the absence of this linking step, any
 security role name as used in the code will be assumed to correspond to
 a security role of the same name.
 
-When the Bean Provider uses the DeclareRoles
+When the Bean Provider uses the `DeclareRoles`
 annotation to declare the name of a role used as a parameter to the
-isCallerInRole(String roleName) method, the declared name must be the
+`isCallerInRole(String roleName)` method, the declared name must be the
 same as the parameter value. The Bean Provider may optionally provide a
 description of the named security roles in the description element of
-the _DeclareRoles_ annotation.
+the `DeclareRoles` annotation.
 
-In the following example, the _DeclareRoles_
-annotation is used to indicate that the enterprise bean AardvarkPayroll
-makes the security check using isCallerInRole("payroll") in its business
+In the following example, the `DeclareRoles`
+annotation is used to indicate that the enterprise bean `AardvarkPayroll`
+makes the security check using `isCallerInRole("payroll")` in its business
 method.
-
+[source, java]
+----
 @DeclareRoles("payroll")
+@Stateless 
+public class PayrollBean implements Payroll {
 
-@Stateless public class PayrollBean
-implements Payroll \{
+    @Resource 
+    SessionContext ctx;
 
- @Resource SessionContext ctx;
+    public void updateEmployeeInfo(EmplInfo info) {
 
-
-
- public void updateEmployeeInfo(EmplInfo
-info) \{
-
-
-
- oldInfo = ... read from database;
-
-
-
- // The salary field can be changed only by
-callers
-
- // who have the security role "payroll"
-
- if (info.salary != oldInfo.salary &&
-
- !ctx.isCallerInRole("payroll")) \{
-
- throw new SecurityException(...);
-
- }
-
- ...
-
- }
-
- ...
-
+        oldInfo = ... read from database;
+        // The salary field can be changed only by callers
+        // who have the security role "payroll"
+        if (info.salary != oldInfo.salary &&
+            !ctx.isCallerInRole("payroll")) {
+            throw new SecurityException(...);
+        }
+        ...
+    }
+    ...
 }
-
+----
 The Bean Provider must use the
-_security-role-ref_ elements of the deployment descriptor to declare any
+`security-role-ref` elements of the deployment descriptor to declare any
 security roles referenced in the code and not otherwise declared. The
-security-role-ref elements are defined as follows:
+`security-role-ref` elements are defined as follows:
 
-Declare the name of the security role using
-the role-name element. The name must be the security role name that is
-used as a parameter to the isCallerInRole(String _roleName_ ) method.
+* Declare the name of the security role using
+the `role-name` element. The name must be the security role name that is
+used as a parameter to the `isCallerInRole(String roleName)` method.
 
-Optionally provide a description of the
-security role in the description element.
+* Optionally provide a description of the
+security role in the `description` element.
 
 The following example illustrates how an
 enterprise bean’s references to security roles are declared in the
 deployment descriptor.
-
- ...
-
- <enterprise-beans>
-
- ...
-
- <session>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
-
-<ejb-class>com.aardvark.payroll.PayrollBean</ejb-class>
-
- ...
-
- <security-role-ref>
-
- <description>
-
- This security role should be assigned to the
-
- employees of the payroll department who are
-
- allowed to update employees’ salaries.
-
- </description>
-
- <role-name>payroll</role-name>
-
- </security-role-ref>
-
- ...
-
- </session>
-
- ...
-
- </enterprise-beans>
-
- ...
-
+[source, xml, indent=4]
+----
+...
+<enterprise-beans>
+    ...
+    <session>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <ejb-class>com.aardvark.payroll.PayrollBean</ejb-class>
+        ...
+        <security-role-ref>
+            <description>
+                This security role should be assigned to the
+                employees of the payroll department who are
+                allowed to update employees’ salaries.
+            </description>
+            <role-name>payroll</role-name>
+        </security-role-ref>
+        ...
+    </session>
+    ...
+</enterprise-beans>
+...
+----
 The deployment descriptor above indicates
-that the enterprise bean AardvarkPayroll makes the security check using
-isCallerInRole("payroll") in its business method.
+that the enterprise bean `AardvarkPayroll` makes the security check using
+`isCallerInRole("payroll")` in its business method.
 
 A security role reference, including the name
 defined by the reference, is scoped to the component whose bean class
-contains the _DeclareRoles_ metadata annotation or whose deployment
-descriptor element contains the security-role-ref deployment descriptor
+contains the `DeclareRoles` metadata annotation or whose deployment
+descriptor element contains the `security-role-ref` deployment descriptor
 element.
 
 The Bean Provider (or Application Assembler)
-may also use the security-role-ref elements for those references that
+may also use the `security-role-ref` elements for those references that
 were declared in annotations and which the Bean Provider wishes to have
-linked to a security-role whose name differs from the reference value.
+linked to a `security-role` whose name differs from the reference value.
 If a security role reference is not linked to a security role in this
 way, the container must map the reference name to the security role of
-the same name. See section link:Ejb.html#a5293[See Linking
-Security Role References to Security Roles] for a description of how
+the same name. See <<a5293>> for a description of how
 security role references are linked to security roles.
 
 [[a5121]]
