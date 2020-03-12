@@ -788,7 +788,7 @@ public class MySessionBean implements MySession {
             stmt2.executeUpdate(...);
             stmt1.executeUpdate(...);
             stmt2.executeUpdate(...);
-        } finally \{
+        } finally {
             // release connections
             con1.close();
             con2.close();
@@ -1206,11 +1206,11 @@ There are three legal styles of composing the
 `method` element:
 
 *Style 1:*
-[source, xml]
+[source, xml, subs=+quotes]
 ----
 <method>
-    <ejb-name>EJBNAME</ejb-name>
-    <method-name>*</method-name>
+    <ejb-name>__EJBNAME__</ejb-name>
+    <method-name>__*__</method-name>
 </method>
 ----
 
@@ -1240,129 +1240,101 @@ bean lifecycle callback methods to specify their transaction attributes
 if used with the `method-intf` element value `LifecycleCallback`.
 
 *Style 2:*
-[source, xml]
+[source, xml, subs=+quotes]
 ----
 <method>
-    <ejb-name>EJBNAME</ejb-name>
-    <method-name>METHOD</method-name>
+    <ejb-name>__EJBNAME__</ejb-name>
+    <method-name>__METHOD__</method-name>
 </method>
 ----
 
 This style is used for referring to a specified method of a business,
 home, or component interface method; no-interface view method; message
-listener method; web service endpoint method; singleton PostConstruct
-and PreDestroy methods; or timeout callback method of the specified
+listener method; web service endpoint method; singleton `PostConstruct`
+and `PreDestroy` methods; or timeout callback method of the specified
 enterprise bean. If there are multiple methods with the same overloaded
 name, this style refers to all the methods with the same name.
 
 There must be at most one
-container-transaction element that uses the Style 2 method element for a
-given method name, unless the method-intf element is used with this
+container-transaction element that uses the Style 2 `method` element for a
+given method name, unless the `method-intf` element is used with this
 style. If there is also a container-transaction element that uses Style
 1 element for the same bean, the value specified by the Style 2 element
 takes precedence.
 
 This style may be used to refer to stateful
-session bean PostConstruct, PreDestroy, PrePassivate or PostActivate
+session bean `PostConstruct`, `PreDestroy`, `PrePassivate` or `PostActivate`
 methods to specify their transaction attributes if any of the following
 is true:
 
-There is only one method with this name in
+* There is only one method with this name in
 the specified enterprise bean
 
-All overloaded methods with this name in the
+* All overloaded methods with this name in the
 specified enterprise bean are lifecycle callback methods
 
-The method-intf element is specified and it
-contains LifecycleCallback as the value
+* The `method-intf` element is specified and it
+contains `LifecycleCallback` as the value
 
- +
-<method> +
-<ejb-name>EJBNAME</ejb-name> +
-<method-name>METHOD</method-name> +
-<method-params> +
-<method-param>PARAMETER_1</method-param> +
-... +
-<method-param>PARAMETER_N</method-param> +
-</method-params> +
-</method> +
- +
+*Style 3:*
+[source, xml, subs=+quotes]
+----
+<method>
+    <ejb-name>__EJBNAME__</ejb-name>
+    <method-name>__METHOD__</method-name>
+    <method-params>
+        <method-param>__PARAMETER_1__</method-param>
+        ...
+        <method-param>__PARAMETER_N__</method-param>
+    </method-params>
+</method>
+----
+
 This style is used to refer to a single method within a set of methods
-with an overloaded name. If there is also a container-transaction
+with an overloaded name. If there is also a `container-transaction`
 element that uses the Style 2 element for the method name, or the Style
 1 element for the bean, the value specified by the Style 3 element takes
 precedence.
 
 The following is an example of the
 specification of the transaction attributes in the deployment
-descriptor. The updatePhoneNumber method of the EmployeeRecord
-enterprise bean is assigned the transaction attribute Mandatory; all
-other methods of the EmployeeRecord bean are assigned the attribute
-Required. All the methods of the enterprise bean AardvarkPayroll are
-assigned the attribute RequiresNew.
-
+descriptor. The `updatePhoneNumber` method of the `EmployeeRecord`
+enterprise bean is assigned the transaction attribute `Mandatory`; all
+other methods of the `EmployeeRecord` bean are assigned the attribute
+`Required`. All the methods of the enterprise bean `AardvarkPayroll` are
+assigned the attribute `RequiresNew`.
+[source, xml]
+----
 <ejb-jar>
-
- ...
-
- <assembly-descriptor>
-
- ...
-
- <container-transaction>
-
- <method>
-
- <ejb-name>EmployeeRecord</ejb-name>
-
- <method-name>*</method-name>
-
- </method>
-
- <trans-attribute>Required</trans-attribute>
-
- </container-transaction>
-
-
-
- <container-transaction>
-
- <method>
-
- <ejb-name>EmployeeRecord</ejb-name>
-
- <method-name>updatePhoneNumber</method-name>
-
- </method>
-
- <trans-attribute>Mandatory</trans-attribute>
-
- </container-transaction>
-
-
-
- <container-transaction>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
- <method-name>*</method-name>
-
- </method>
-
-
-<trans-attribute>RequiresNew</trans-attribute>
-
- </container-transaction>
-
- </assembly-descriptor>
-
+    ...
+    <assembly-descriptor>
+        ...
+        <container-transaction>
+            <method>
+                <ejb-name>EmployeeRecord</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>EmployeeRecord</ejb-name>
+                <method-name>updatePhoneNumber</method-name>
+            </method>
+            <trans-attribute>Mandatory</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>AardvarkPayroll</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
 </ejb-jar>
+----
 
 === Application Assembler’s Responsibilities
-
-
 
 This section describes the view and
 responsibilities of the Application Assembler.
@@ -1378,34 +1350,32 @@ deployment descriptor transaction attribute mechanism described above to
 override or change the transaction attributes for enterprise beans using
 container-managed transaction demarcation.
 
-The Application Assembler should exercise
+{empty}::
+_The Application Assembler should exercise
 caution in the changing the transaction attributes, as the behavior
 specified by the transaction attributes is typically an intrinsic part
-of the semantics of an application.
+of the semantics of an application._
 
 === Deployer’s Responsibilities
-
-
 
 The Deployer is permitted to override or
 change the values of transaction attributes at deployment time.
 
-The Deployer should exercise caution in the
+{empty}::
+_The Deployer should exercise caution in the
 changing the transaction attributes, as the behavior specified by the
 transaction attributes is typically an intrinsic part of the semantics
-of an application.
+of an application._
 
-For applications written to the EJB 2.1
+_Compatibility Note: For applications written to the EJB 2.1
 specification (and earlier), the Deployer is responsible for ensuring
 that the methods of the deployed enterprise beans with
 container-managed transaction demarcation
 have been assigned a transaction attribute if this has not be specified
-in the deployment descriptor.
+in the deployment descriptor._
 
 [[a2695]]
 === Container Provider Responsibilities
-
-
 
 This section defines the responsibilities of
 the Container Provider.
@@ -1419,16 +1389,16 @@ used by an enterprise bean is obtained via the container. This managed
 execution environment allows the container to affect the enterprise
 bean’s transaction management.
 
-This does not imply that the container must
+_This does not imply that the container must
 interpose on every resource manager access performed by the enterprise
 bean. Typically, the container interposes only on the resource manager
 connection factory (e.g. a JDBC data source) JNDI look up by registering
 the container-specific implementation of the resource manager connection
 factory object. The resource manager connection factory object allows
-the container to obtain the _javax.transaction.xa.XAResource_ interface
+the container to obtain the `javax.transaction.xa.XAResource` interface
 as described in the JTA specification and pass it to the transaction
 manager. After the set up is done, the enterprise bean communicates with
-the resource manager without going through the container.
+the resource manager without going through the container._
 
 ==== Bean-Managed Transaction Demarcation
 
@@ -1436,8 +1406,8 @@ This subsection defines the container’s
 responsibilities for the transaction management of enterprise beans with
 bean-managed transaction demarcation.
 
-Bean-managed transaction demarcation can be
-used with session and message-driven beans.
+_Bean-managed transaction demarcation can be
+used with session and message-driven beans._
 
 The container
 must manage client invocations to an enterprise bean instance with
@@ -1452,15 +1422,15 @@ methods associated with the bean instances, these actions are taken
 before the interceptor methods are invoked.
 
 The container must make the
-javax.transaction.UserTransaction interface available to the enterprise
+`javax.transaction.UserTransaction` interface available to the enterprise
 bean’s business method, message listener method, interceptor method, or
 timeout callback method via dependency injection into the enterprise
 bean class or interceptor class, through lookup via the
-javax.ejb.EJBContext interface, and in the JNDI naming context under
-java:comp/UserTransaction. When an instance uses the
-javax.transaction.UserTransaction interface to demarcate a transaction,
+`javax.ejb.EJBContext` interface, and in the JNDI naming context under
+`java:comp/UserTransaction`. When an instance uses the
+`javax.transaction.UserTransaction` interface to demarcate a transaction,
 the container must enlist all the resource managers used by the instance
-between the begin and commit—or rollback—methods with the
+between the `begin` and `commit`—or `rollback`—methods with the
 transaction.footnote:a10271[However, use of the Java Persistence API 
 `EntityTransaction` interface is supported. See <<a9851>> for a 
 discussion of resources used in the Java Persistence API that may be 
@@ -1477,7 +1447,7 @@ container may use the local transaction optimization. See <<a9861>> and
 <<a9863>> for further discussion.]
 
 In the case of a
-stateful session bean, it is possible that
+_stateful_ session bean, it is possible that
 the business method or interceptor method that started a transaction
 completes without committing or rolling back the transaction. In such a
 case, the container must retain the association between the transaction
@@ -1487,32 +1457,31 @@ method, the container must invoke the business method (and any
 applicable interceptor methods for the bean) in this transaction
 context.
 
-If a stateless or
-singleton session bean instance starts a transaction in a business
+If a _stateless_ or
+_singleton_ session bean instance starts a transaction in a business
 method or interceptor method, it must commit the transaction before the
 business method (or all its interceptor methods) returns. The container
 must detect the case in which a transaction was started, but not
 completed, in the business method or interceptor method for the business
 method, and handle it as follows:
 
-Log this as an application error to alert the
-System Administrator.
+* Log this as an application error to alert the System Administrator.
 
-Roll back the started transaction.
+* Roll back the started transaction.
 
-{empty}If this a stateless session bean,
+* If this a stateless session bean,
 discard the bean instance.footnote:a10273[Note that if the bean is a 
 singleton session bean, the instance must not be discarded unless the 
 exception occurred in an `AroundConstruct`, `PostConstruct` or 
 `PreDestroy` lifecycle interceptor method.]
 
-Throw the
-_javax.ejb.EJBException_.footnote:a10274[If the business interface is a 
+* Throw the
+`javax.ejb.EJBException`.footnote:a10274[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
 If the EJB 2.1 client
 view is used, the container should throw thejava.rmi.RemoteException if
-the client is a remote client, and the _javax.ejb.EJBException_ if the
+the client is a remote client, and the `javax.ejb.EJBException` if the
 client is a local client.
 
 If a
@@ -1524,13 +1493,11 @@ which a transaction was started, but not completed, in a message
 listener method or interceptor method for the message listener method,
 and handle it as follows:
 
-Log this as an application error to alert the
-System Administrator.
+* Log this as an application error to alert the System Administrator.
 
-Roll back the started transaction.
+* Roll back the started transaction.
 
-Discard the instance of the message-driven
-bean.
+* Discard the instance of the message-driven bean.
 
 If a session bean or message-driven bean
 instance starts a transaction in a timeout callback method, it must
@@ -1538,12 +1505,11 @@ commit the transaction before the timeout callback method returns. The
 container must detect the case in which a transaction was started, but
 not completed, in a timeout callback method, and handle it as follows:
 
-Log this as an application error to alert the
-System Administrator.
+* Log this as an application error to alert the System Administrator.
 
-Roll back the started transaction.
+* Roll back the started transaction.
 
-If this is a stateless session bean or
+* If this is a stateless session bean or
 message-driven bean, discard the instance of the bean.
 
 The actions performed by the container for an
@@ -1553,55 +1519,27 @@ transaction that is currently associated with the instance (i.e. a
 transaction that was started but not completed by a previous business
 method).
 
-===
-
-
-
-Container’s Actions for Methods of Beans with
-Bean-Managed Transaction
-
-Client’s transaction
-
-Transaction currently associated with
-instance
-
-Transaction associated
-
-with the method
-
-none
-
-none
-
-none
-
-T1
-
-none
-
-none
-
-none
-
-T2
-
-T2
-
-T1
-
-T2
-
-T2
+[cols=3, options=header]
+.Container’s Actions for Methods of Beans with Bean-Managed Transaction
+|===
+| Client’s transaction
+| Transaction currently associated with instance
+| Transaction associated with the method
+| none | none | none
+| T1   | none | none
+| none | T2   | T2
+| T1   | T2   | T2
+|===
 
 The following items describe each entry in
 the table:
 
-If the client request is not associated with
+* If the client request is not associated with
 a transaction and the instance is not associated with a transaction, or
 if the bean is a message-driven bean, the container invokes the instance
 with an unspecified transaction context.
 
-If the client request is associated with a
+* If the client request is associated with a
 transaction T1, and the instance is not associated with a transaction,
 the container suspends the client’s transaction association and invokes
 the method with an unspecified transaction context. The container
@@ -1610,14 +1548,14 @@ resumes the client’s transaction association (T1) when the method
 can never happen for a message-driven bean or for the invocation of a
 web service endpoint method of a session bean.
 
-If the client request is not associated with
+* If the client request is not associated with
 a transaction and the instance is already associated with a transaction
 T2, the container invokes the instance with the transaction that is
 associated with the instance (T2). This case can never happen for a
 stateless session bean, singleton session bean, or a message-driven
 bean: it can only happen for a stateful session bean.
 
-If the client is associated with a
+* If the client is associated with a
 transaction T1, and the instance is already associated with a
 transaction T2, the container suspends the client’s transaction
 association and invokes the method with the transaction context that is
@@ -1631,15 +1569,15 @@ The container must allow the enterprise bean
 instance to serially perform several transactions in a method.
 
 When an instance attempts to start a
-transaction using the begin method of the
-javax.transaction.UserTransaction interface while the instance has not
+transaction using the `begin` method of the
+`javax.transaction.UserTransaction` interface while the instance has not
 committed the previous transaction, the container must throw the
-javax.transaction.NotSupportedException in the begin method.
+`javax.transaction.NotSupportedException` in the `begin` method.
 
 The container must throw the
-java.lang.IllegalStateException if an instance of a bean with
+`java.lang.IllegalStateException` if an instance of a bean with
 bean-managed transaction demarcation attempts to invoke the
-setRollbackOnly or getRollbackOnly method of the javax.ejb.EJBContext
+`setRollbackOnly` or `getRollbackOnly` method of the `javax.ejb.EJBContext`
 interface.
 
 [[a2748]]
@@ -1656,26 +1594,26 @@ bean class or specified in the deployment descriptor.
 ===== Session Synchronization Callbacks
 
 If a session bean class implements the
-javax.ejb.SessionSynchronization interface or uses the session
-synchronization annotations, the container must invoke the afterBegin,
-beforeCompletion, and afterCompletion callbacks on the instance as part
+`javax.ejb.SessionSynchronization` interface or uses the session
+synchronization annotations, the container must invoke the `afterBegin`,
+`beforeCompletion`, and `afterCompletion` callbacks on the instance as part
 of the transaction commit protocol. If a stateful session bean's
-PostConstruct, PreDestroy, PrePassivate or PostActivate lifecycle
+`PostConstruct`, `PreDestroy`, `PrePassivate` or `PostActivate` lifecycle
 callback interceptor methods are invoked in the scope of a transaction,
 session synchronization callbacks for such transactions are not called
 on the bean instance.
 
 The container
-invokes the afterBegin method on an instance before it invokes the first
+invokes the `afterBegin` method on an instance before it invokes the first
 business method in a transaction.
 
-The container invokes the beforeCompletion
+The container invokes the `beforeCompletion`
 method to give the enterprise bean instance the last chance to cause the
 transaction to rollback. The instance may cause the transaction to roll
-back by invoking the EJBContext.setRollbackOnly method.
+back by invoking the `EJBContext.setRollbackOnly` method.
 
 The container invokes the
-afterCompletion(boolean committed) method after the completion of the
+`afterCompletion(boolean committed)` method after the completion of the
 transaction commit protocol to notify the enterprise bean instance of
 the transaction outcome.
 
@@ -1694,7 +1632,7 @@ attribute.
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
-the _NOT_SUPPORTED_ value with an unspecified transaction context.
+the `NOT_SUPPORTED` value with an unspecified transaction context.
 
 If a client calls with a transaction context,
 the container suspends the association of the transaction context with
@@ -1708,24 +1646,22 @@ If the business method invokes other
 enterprise beans, the container passes no transaction context with the
 invocation.
 
-Refer to Subsection
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] for more details of how the container
+Refer to <<a2889>> for more details of how the container
 can implement this case.
 
 ===== REQUIRED
 
 The container
 must invoke an enterprise bean method whose transaction attribute is set
-to the _REQUIRED_ value with a valid transaction context.
+to the `REQUIRED` value with a valid transaction context.
 
 If a client invokes the enterprise bean’s
 method while the client is associated with a transaction context, the
 container invokes the enterprise bean’s method in the client’s
 transaction context, unless the method is an asynchronous method. The
 client’s transaction context does not propagate with an asynchronous
-method invocation. The semantics of the REQUIRED transaction attribute
-for an asynchronous method are the same as REQUIRES_NEW.
+method invocation. The semantics of the `REQUIRED` transaction attribute
+for an asynchronous method are the same as `REQUIRES_NEW`.
 
 If the client invokes the enterprise bean’s
 method while the client is not associated with a transaction context,
@@ -1742,27 +1678,27 @@ protocol before the method result is sent to the client.
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
-_SUPPORTS_ as follows.
+`SUPPORTS` as follows.
 
-If the client calls with a transaction
+* If the client calls with a transaction
 context, the container performs the same steps as described in the
-_REQUIRED_ case.
+`REQUIRED` case.
 
-If the client calls without a transaction
+* If the client calls without a transaction
 context, the container performs the same steps as described in the
-_NOT_SUPPORTED_ case.
+`NOT_SUPPORTED` case.
 
-The SUPPORTS transaction attribute must be
+_The `SUPPORTS` transaction attribute must be
 used with caution. This is because of the different transactional
 semantics provided by the two possible modes of execution. Only the
 enterprise beans that will execute correctly in both modes should use
-the _SUPPORTS_ transaction attribute.
+the `SUPPORTS` transaction attribute._
 
 ===== REQUIRES_NEW
 
 The container
 must invoke an enterprise bean method whose transaction attribute is set
-to _REQUIRES_NEW_ with a new transaction context.
+to `REQUIRES_NEW` with a new transaction context.
 
 If the client invokes the enterprise bean’s
 method while the client is not associated with a transaction context,
@@ -1786,45 +1722,45 @@ completed.
 
 The container
 must invoke an enterprise bean method whose transaction attribute is set
-to _MANDATORY_ in a client’s transaction context. The client is required
+to `MANDATORY` in a client’s transaction context. The client is required
 to call with a transaction context.
 
-If the client calls with a transaction
+* If the client calls with a transaction
 context, the container performs the same steps as described in the
-_REQUIRED_ case.
+`REQUIRED` case.
 
 If the client calls without a transaction
 context, the container throws the
-_javax.ejb.EJBTransactionRequiredException_.footnote:a10275[If the business 
+`javax.ejb.EJBTransactionRequiredException`.footnote:a10275[If the business 
 interface is a remote business interface that extends `java.rmi.Remote`, 
 the `javax.transaction.TransactionRequiredException` is thrown to the 
 client instead.] If
 the EJB 2.1 client view is used, the container throws the
-javax.transaction.TransactionRequiredException exception if the client
+`javax.transaction.TransactionRequiredException` exception if the client
 is a remote client, and the
-_javax.ejb.TransactionRequiredLocalException_ if the client is a local
+`javax.ejb.TransactionRequiredLocalException` if the client is a local
 client.
 
 ===== NEVER
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
-_NEVER_ without a transaction context defined by the EJB specification.
+`NEVER` without a transaction context defined by the EJB specification.
 The client is required to call without a transaction context.
 
 If the client calls with a transaction
 context, the container throws the
-_javax.ejb.EJBException_.footnote:a10276[If the business interface is a 
+`javax.ejb.EJBException`.footnote:a10276[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.]
 If the EJB 2.1 client
 view is used, the container throws the java.rmi.RemoteException
 exception if the client is a remote client, and the
-_javax.ejb.EJBException_ if the client is a local client.
+`javax.ejb.EJBException` if the client is a local client.
 
 If the client calls without a transaction
 context, the container performs the same steps as described in the
-NOT_SUPPORTED case.
+`NOT_SUPPORTED` case.
 
 ===== Transaction Attribute Summary
 
@@ -1835,175 +1771,95 @@ transaction attribute and the client’s transaction context. T1 is a
 transaction passed with the client request, while T2 is a transaction
 initiated by the container.
 
-===
-
-
-
-[[a2786]]Transaction Attribute
-Summary
-
-Transaction attribute
-
-Client’s transaction
-
-Transaction associated with business method
-
-Transaction associated
-
-with resource managers
-
-
-
-NOT_SUPPORTED
-
-none
-
-none
-
-none
-
-T1
-
-none
-
-none
-
-
-
-REQUIRED
-
-none
-
-T2
-
-T2
-
-T1
-
-T1 footnote:a10277[T2 if the method is an asynchronous method.]
-
-T1
-
-
-
-SUPPORTS
-
-none
-
-none
-
-none
-
-T1
-
-T1
-
-T1
-
-
-
-REQUIRES_NEW
-
-none
-
-T2
-
-T2
-
-T1
-
-T2
-
-T2
-
-
-
-MANDATORY
-
-none
-
-error
-
-N/A
-
-T1
-
-T1
-
-T1
-
-
-
-NEVER
-
-none
-
-none
-
-none
-
-T1
-
-error
-
-N/A
+[[a2786]]
+[cols=4, options=header]
+.Transaction Attribute Summary
+|===
+| Transaction attribute
+| Client’s transaction
+| Transaction associated with business method
+| Transaction associated with resource managers
+.2+.^| NOT_SUPPORTED  
+| none  | none   | none
+| T1    | none   | none
+.2+.^| REQUIRED
+| none  | T2     | T2
+| T1   
+a| T1 <<a10277,[Note A]>> 
+| T1
+.2+.^| SUPPORTS
+| none  | none   | none
+| T1    | T1     | T1
+.2+.^| REQUIRES_NEW
+| none  | T2     | T2
+| T1    | T2     | T2
+.2+.^| MANDATORY
+| none  
+a| *error*  
+| N/A
+| T1    | T1     | T1
+.2+.^| NEVER
+| none  | none   | none
+| T1    
+a| *error*  
+| N/A
+|===
+*Notes:* +
+[[a10277]] [A]     T2 if the method is an asynchronous method.
 
 If the enterprise bean’s business method
 invokes other enterprise beans via their business interfaces or home and
 component interfaces, the transaction indicated in the column
-“Transaction associated with business method” will be passed as part of
+"Transaction associated with business method" will be passed as part of
 the client context to the target enterprise bean.
 
-See Subsection
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] for how the container handles the
-“none” case in Table link:Ejb.html#a2786[See Transaction
-Attribute Summary].
+See <<a2889>> for how the container handles the
+"none" case in <<a2786>>.
 
 ===== Handling of setRollbackOnly Method
 
 The container
-must handle the EJBContext.setRollbackOnly method invoked from a
-business method executing with the REQUIRED, REQUIRES_NEW, or MANDATORY
+must handle the `EJBContext.setRollbackOnly` method invoked from a
+business method executing with the `REQUIRED`, `REQUIRES_NEW`, or `MANDATORY`
 transaction attribute as follows:
 
-The container must ensure that the
+* The container must ensure that the
 transaction will never commit. Typically, the container instructs the
 transaction manager to mark the transaction for rollback.
 
-If the container initiated the transaction
+* If the container initiated the transaction
 immediately before dispatching the business method to the instance (as
 opposed to the transaction being inherited from the caller), the
-container must note that the instance has invoked the setRollbackOnly
+container must note that the instance has invoked the `setRollbackOnly`
 method. When the business method invocation completes, the container
 must roll back rather than commit the transaction. If the business
 method has returned normally or with an application exception, the
 container must pass the method result or the application exception to
 the client after the container performed the rollback.
 
-The container must throw the
-java.lang.IllegalStateException if the EJBContext.setRollbackOnly method
-is invoked from a business method executing with the SUPPORTS,
-NOT_SUPPORTED, or NEVER transaction attribute.
+* The container must throw the
+`java.lang.IllegalStateException` if the `EJBContext.setRollbackOnly` method
+is invoked from a business method executing with the `SUPPORTS`,
+`NOT_SUPPORTED`, or `NEVER` transaction attribute.
 
 ===== Handling of getRollbackOnly Method
 
 The container
-must handle the EJBContext.getRollbackOnly method invoked from a
-business method executing with the REQUIRED, _REQUIRES_NEW_ , or
-MANDATORY transaction attribute.
+must handle the `EJBContext.getRollbackOnly` method invoked from a
+business method executing with the `REQUIRED`, `REQUIRES_NEW`, or
+`MANDATORY` transaction attribute.
 
 The container must throw the
-java.lang.IllegalStateException if the EJBContext.getRollbackOnly method
-is invoked from a business method executing with the SUPPORTS,
-NOT_SUPPORTED, or NEVER transaction attribute.
+`java.lang.IllegalStateException` if the `EJBContext.getRollbackOnly` method
+is invoked from a business method executing with the `SUPPORTS`,
+`NOT_SUPPORTED`, or `NEVER` transaction attribute.
 
 ===== Handling of getUserTransaction Method
 
 If an instance of
 an enterprise bean with container-managed transaction demarcation
-attempts to invoke the getUserTransaction method of the EJBContext
-interface, the container must throw the java.lang.IllegalStateException.
+attempts to invoke the `getUserTransaction` method of the `EJBContext`
+interface, the container must throw the `java.lang.IllegalStateException`.
 
 ===== Timing of Return Value Marshalling with Regard to Transaction Boundaries
 
@@ -2021,8 +1877,7 @@ message-driven beans that the Bean Provider
 declared as with container-managed transaction demarcation. For these
 enterprise beans, the container must demarcate transactions as specified
 by annotations on the bean class or in the deployment descriptor. (See
-Chapter link:Ejb.html#a5804[See Deployment Descriptor] for more
-information about the deployment descriptor.)
+<<a5804>> for more information about the deployment descriptor.)
 
 [[a2858]]
 ==== Container-Managed Transaction Demarcation for Message Listener Methods
@@ -2032,19 +1887,18 @@ responsibilities of the container for managing the invocation of a
 message-driven bean’s message listener method. The container’s
 responsibilities depend on the value of the transaction attribute.
 
-Only the _NOT_SUPPORTED_ and _REQUIRED_
+Only the `NOT_SUPPORTED` and `REQUIRED`
 transaction attributes may be used for message-driven bean message
 listener methods. The use of the other transaction attributes is not
 meaningful for message-driven bean message listener methods because
-there is no pre-existing client transaction context ( _REQUIRES_NEW_ ,
-_SUPPORTS_ ) and no client to handle exceptions ( _MANDATORY_ , _NEVER_
-).
+there is no pre-existing client transaction context (`REQUIRES_NEW`,
+`SUPPORTS`) and no client to handle exceptions (`MANDATORY`, `NEVER`).
 
 ===== NOT_SUPPORTED
 
 The container invokes a message-driven bean
 message listener method whose transaction
-attribute is set to NOT_SUPPORTED with an unspecified transaction
+attribute is set to `NOT_SUPPORTED` with an unspecified transaction
 context.
 
 If the message listener method invokes other
@@ -2055,7 +1909,7 @@ invocation.
 
 The container must invoke a message-driven
 bean message listener method whose
-transaction attribute is set to REQUIRED
+transaction attribute is set to `REQUIRED`
 with a valid transaction context. The resource managers accessed by the
 message listener method within the transaction are enlisted with the
 transaction. If the message listener method invokes other enterprise
@@ -2069,57 +1923,58 @@ of messages.
 
 The requirement for JMS are as follows:
 
-A transaction must be started before the
+{empty}::
+_A transaction must be started before the
 dequeuing of the JMS message and, hence, before the invocation of the
-message-driven bean’s _onMessage_ method. The resource manager
+message-driven bean’s `onMessage` method. The resource manager
 associated with the arriving message is enlisted with the transaction as
-well as all the resource managers accessed by the _onMessage_ method
-within the transaction. If the _onMessage_ method invokes other
+well as all the resource managers accessed by the `onMessage` method
+within the transaction. If the `onMessage` method invokes other
 enterprise beans, the container passes the transaction context with the
-invocation. The transaction is committed when the _onMessage_ method has
-completed. If the _onMessage_ method does not successfully complete or
-the transaction is rolled back, message redelivery semantics apply.
+invocation. The transaction is committed when the `onMessage` method has
+completed. If the `onMessage` method does not successfully complete or
+the transaction is rolled back, message redelivery semantics apply._
 
 ===== Handling of setRollbackOnly Method
 
 The container must handle the
-EJBContext.setRollbackOnly method invoked
-from a message listener method executing with the REQUIRED transaction
+`EJBContext.setRollbackOnly` method invoked
+from a message listener method executing with the `REQUIRED` transaction
 attribute as follows:
 
-The container must ensure that the
+* The container must ensure that the
 transaction will never commit. Typically, the container instructs the
 transaction manager to mark the transaction for rollback.
 
-The container must note that the instance has
-invoked the setRollbackOnly method. When the method invocation
+* The container must note that the instance has
+invoked the `setRollbackOnly` method. When the method invocation
 completes, the container must roll back rather than commit the
 transaction.
 
 The container must throw and log the
-java.lang.IllegalStateException if the EJBContext.setRollbackOnly method
+`java.lang.IllegalStateException` if the `EJBContext.setRollbackOnly` method
 is invoked from a message listener method executing with the
-NotSupported transaction attribute
+`NotSupported` transaction attribute
 
 ===== Handling of getRollbackOnly Method
 
 The container must handle the
-EJBContext.getRollbackOnly() method invoked
-from a message listener method executing with the REQUIRED transaction
+`EJBContext.getRollbackOnly()` method invoked
+from a message listener method executing with the `REQUIRED` transaction
 attribute.
 
 The container must throw and log the
-java.lang.IllegalStateException if the EJBContext.getRollbackOnly method
+`java.lang.IllegalStateException` if the `EJBContext.getRollbackOnly` method
 is invoked from a message listener method executing with the
-NOT_SUPPORTED transaction attribute.
+`NOT_SUPPORTED` transaction attribute.
 
 ===== Handling of getUserTransaction Method
 
 If an instance of a message-driven bean with
 container-managed transaction demarcation attempts to invoke the
-getUserTransaction method of the EJBContext
+`getUserTransaction` method of the `EJBContext`
 interface, the container must throw and log the
-java.lang.IllegalStateException.
+`java.lang.IllegalStateException`.
 
 ==== Local Transaction Optimization
 
@@ -2127,8 +1982,7 @@ The container may use a
 local transaction optimization for
 enterprise beans whose metadata annotations or deployment descriptor
 indicates that connections to a resource manager are shareable (see
-Section link:Ejb.html#a4245[See Declaration of Resource Manager
-Connection Factory References in Deployment Descriptor]). The container
+<<a4245>>). The container
 manages the use of the local transaction optimization transparently to
 the application.
 
@@ -2136,36 +1990,32 @@ The container may use the optimization for
 transactions initiated by the container for a bean with
 container-managed transaction demarcation and for transactions initiated
 by a bean with bean-managed transaction demarcation with the
-_UserTransaction_ interface. The container cannot apply the optimization
+`UserTransaction` interface. The container cannot apply the optimization
 for transactions imported from a different container.
 
 The use of local transaction optimization
-approach is discussed in link:Ejb.html#a9861[See Java™ Platform,
-Enterprise Edition Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.] and
-link:Ejb.html#a9863[See Java EE™ Connector Architecture, version
-1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.].
+approach is discussed in <<a9861>> and <<a9863>>.
 
 [[a2889]]
-==== Handling of Methods that Run with “an unspecified transaction context”
+==== Handling of Methods that Run with "an unspecified transaction context"
 
-The term “an
-unspecified transaction context” is used in the EJB specification to
+The term 
+"an unspecified transaction context" is used in the EJB specification to
 refer to the cases in which the EJB architecture does not fully define
 the transaction semantics of an enterprise bean method execution.
 
 This includes the following cases:
 
-The execution of a method of an enterprise
+* The execution of a method of an enterprise
 bean with container-managed transaction demarcation for which the value
-of the transaction attribute is NOT_SUPPORTED, NEVER, or SUPPORTS.
+of the transaction attribute is `NOT_SUPPORTED`, `NEVER`, or `SUPPORTS`.
 
-{empty}The execution of a _PostConstruct or
-PreDestroy_ callback method of a stateless session bean with
+* The execution of a `PostConstruct` or
+`PreDestroy` callback method of a stateless session bean with
 container-managed transaction demarcation.footnote:a10278[See <<a608>>.]
 
-{empty}The execution of a _PostConstruct_ or
-_PreDestroy_ callback method of a message-driven bean with
+* The execution of a `PostConstruct` or
+`PreDestroy` callback method of a message-driven bean with
 container-managed transaction demarcation.footnote:a10279[See <<a1702>>.]
 
 The EJB specification does not prescribe how
@@ -2176,26 +2026,26 @@ choose to implement the execution of a method with an unspecified
 transaction context are as follows (the list is not inclusive of all
 possible strategies):
 
-The container may execute the method and
+* The container may execute the method and
 access the underlying resource managers without a transaction context.
 
-The container may treat each call of an
+* The container may treat each call of an
 instance to a resource manager as a single transaction (e.g. the
 container may set the auto-commit option on a JDBC connection).
 
-The container may merge multiple calls of an
+* The container may merge multiple calls of an
 instance to a resource manager into a single transaction.
 
-The container may merge multiple calls of an
+* The container may merge multiple calls of an
 instance to multiple resource managers into a single transaction.
 
-If an instance invokes methods on other
+* If an instance invokes methods on other
 enterprise beans, and the invoked methods are also designated to run
 with an unspecified transaction context, the container may merge the
 resource manager calls from the multiple instances into a single
 transaction.
 
-Any combination of the above.
+* Any combination of the above.
 
 Since the enterprise bean does not know which
 technique the container implements, the enterprise bean must be written
@@ -2210,13 +2060,11 @@ failure.
 
 === Access from Multiple Clients in the Same Transaction Context
 
-
-
 This section describes a more complex
 distributed transaction scenario, and
 specifies the container’s behavior required for this scenario.
 
-==== Transaction “Diamond” Scenario with an Entity Object
+==== Transaction "Diamond" Scenario with an Entity Object
 
 An entity
 object footnote:a10279[See <<a1702>>.] may be accessed by multiple 
@@ -2226,19 +2074,14 @@ program B and program C in the transaction context, and then commit the
 transaction. If programs B and C access the same entity object, the
 topology of the transaction creates a diamond.
 
-===
+.Transaction Diamond Scenario with Entity Object
+image::EBCore-21.png[]
 
-
-
-Transaction Diamond Scenario with Entity Object
-
-image:EBCore-21.png[image]
-
-An example (not realistic in practice) is a
+_An example (not realistic in practice) is a
 client program that tries to perform two purchases at two different
 stores within the same transaction. At each store, the program that is
 processing the client’s purchase request debits the client’s bank
-account.
+account._
 
 It is difficult to implement an EJB server
 that handles the case in which programs B and C access an entity object
@@ -2264,9 +2107,9 @@ entity object in the same transaction context would be considered an
 application programming error, and it would be handled in a
 container-specific way.
 
-Note that the issue of handling diamonds is
+_Note that the issue of handling diamonds is
 not unique to the EJB architecture. This issue exists in all distributed
-transaction processing systems.
+transaction processing systems._
 
 The following subsections define the
 responsibilities of the EJB Roles when handling distributed transaction
@@ -2294,7 +2137,7 @@ the same EJB container as the target entity object.
 If the Container Provider chooses not to
 support distributed diamonds, and if the container can detect that a
 client invocation would lead to a diamond, the container should throw
-the _javax.ejb.EJBException_ (or java.rmi.RemoteException if the EJB 2.1
+the `javax.ejb.EJBException` (or `java.rmi.RemoteException` if the EJB 2.1
 remote client view is used).
 
 ==== Bean Provider’s Responsibilities
@@ -2335,13 +2178,8 @@ the same session object, it is possible for applications that use
 session beans to encounter the diamond case. For example, program A
 starts a transaction and then invokes two different session objects.
 
-===
-
-
-
-Transaction Diamond Scenario with a Session Bean
-
-image:EBCore-22.png[image]
+.Transaction Diamond Scenario with a Session Bean
+image::EBCore-22.png[]
 
 If the session bean instances cache the same
 data item (e.g. the current balance of Account 100) across method
