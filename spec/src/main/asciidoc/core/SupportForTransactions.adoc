@@ -845,19 +845,18 @@ reply within the same transaction will not take place.
 
 Because the container manages the
 transactional enlistment of JMS sessions on behalf of a bean, the
-parameters of the _createSession(boolean_ _transacted,_ _int_
-_acknowledgeMode)_ , _createQueueSession(boolean_ _transacted,_ _int_
-_acknowledgeMode)_ and _createTopicSession(boolean_ _transacted,_ _int_
-_acknowledgeMode)_ methods are ignored. It is recommended that the Bean
-Provider specify that a session is transacted, but provide _0_ for the
+parameters of the `createSession(boolean transacted, int acknowledgeMode)`, 
+`createQueueSession(boolean transacted, int acknowledgeMode)` and 
+`createTopicSession(boolean transacted, int acknowledgeMode)`
+methods are ignored. It is recommended that the Bean
+Provider specify that a session is transacted, but provide `0` for the
 value of the acknowledgment mode.
 
 The Bean Provider should not use the JMS
-_acknowledge_ method either within a transaction or within an
+`acknowledge` method either within a transaction or within an
 unspecified transaction context. Message acknowledgment in an
 unspecified transaction context is handled by the container.
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] describes some of the techniques that
+<<a2889>> describes some of the techniques that
 the container can use for the implementation of a method invocation with
 an unspecified transaction context.
 
@@ -866,15 +865,15 @@ an unspecified transaction context.
 By default, a session bean or message-driven
 bean has container managed transaction demarcation if the transaction
 management type is not specified. The Bean Provider of a session bean or
-a message-driven bean can use the TransactionManagement annotation to
+a message-driven bean can use the `TransactionManagement` annotation to
 declare whether the session bean or message-driven bean uses
 bean-managed or container-managed transaction demarcation. The value of
-the _TransactionManagement_ annotation is either _CONTAINER_ or _BEAN_ .
-The _TransactionManagement_ annotation is applied to the enterprise bean
+the `TransactionManagement` annotation is either `CONTAINER` or `BEAN`.
+The `TransactionManagement` annotation is applied to the enterprise bean
 class.
 
 Alternatively, the Bean Provider can use the
-_transaction-type_ deployment descriptor element to specify the bean’s
+`transaction-type` deployment descriptor element to specify the bean’s
 transaction management type. If the deployment descriptor is used, it is
 only necessary to explicitly specify the bean’s transaction management
 type if bean-managed transaction is used.
@@ -883,8 +882,7 @@ The transaction management type of a bean is
 determined by the Bean Provider. The Application Assembler is not
 permitted to use the deployment descriptor to override a bean’s
 transaction management type regardless of whether it has been explicitly
-specified or defaulted by the Bean Provider. (See Chapter
-link:Ejb.html#a5804[See Deployment Descriptor] for information
+specified or defaulted by the Bean Provider. (See <<a5804>> for information
 about the deployment descriptor.)
 
 [[a2538]]
@@ -901,27 +899,24 @@ explicitly specified in this case.
 A transaction
 attribute is a value associated with each of the following methods
 
-a method of a bean’s business interface
+* a method of a bean’s business interface
 
-a method exposed through the bean class
-no-interface view
+* a method exposed through the bean class no-interface view
 
-a message listener method of a message-driven
-bean
+* a message listener method of a message-driven bean
 
-a timeout callback method
+* a timeout callback method
 
-a stateless or singleton session bean’s web
-service endpoint method
+* a stateless or singleton session bean’s web service endpoint method
 
-for beans written to the EJB 2.1 and earlier
-client view, a method of a session bean’s home or component interface
+* for beans written to the EJB 2.1 and earlier client view, 
+a method of a session bean’s home or component interface
 
-a PostConstruct or PreDestroy lifecycle
+* a `PostConstruct` or `PreDestroy` lifecycle
 callback interceptor method of a singleton session bean
 
-a _PostConstruct_ , _PreDestroy_ ,
-_PrePassivate_ or _PostActivate_ lifecycle callback interceptor method
+* a `PostConstruct`, `PreDestroy`,
+`PrePassivate` or `PostActivate` lifecycle callback interceptor method
 of a stateful session bean
 
 The transaction attribute specifies how the
@@ -931,54 +926,52 @@ the method.
 Transaction attributes are specified for the
 following methods:
 
-For a session bean written to the EJB 3.x
+* For a session bean written to the EJB 3.x
 client view API, the transaction attributes are specified for those
 methods of the session bean class that correspond to the bean’s business
 interface, the direct and indirect superinterfaces of the business
 interface, methods exposed through the bean class no-interface view, and
 for the timeout callback methods, if any.
 
-For a stateless session bean or singleton
+* For a stateless session bean or singleton
 session bean that provides a web service client view, the transaction
 attributes are specified for the bean’s web service endpoint methods,
 and for the timeout callback methods, if any.
 
-For a singleton session bean, the transaction
-attributes are specified for the PostConstruct and PreDestroy lifecycle
+* For a singleton session bean, the transaction
+attributes are specified for the `PostConstruct` and `PreDestroy` lifecycle
 callback interceptor methods, if any. In order to specify the
-transaction attribute for a PostConstuct or PreDestroy method of a
+transaction attribute for a `PostConstuct` or `PreDestroy` method of a
 singleton session bean, the transaction attribute must be specified for
 the method(s) on the bean class, rather than for a superclass or
-PostConstruct or PreDestroy interceptor method.
+`PostConstruct` or `PreDestroy` interceptor method.
 
-For a stateful session bean, the transaction
-attributes are specified for the PostConstruct, PreDestroy, PrePassivate
-or PostActivate lifecycle callback interceptor methods, if any. In order
-to specify the transaction attribute for a PostConstruct, PreDestroy,
-PrePassivate or PostActivate method of a stateful session bean, the
+* For a stateful session bean, the transaction
+attributes are specified for the `PostConstruct`, `PreDestroy`, `PrePassivate`
+or `PostActivate` lifecycle callback interceptor methods, if any. In order
+to specify the transaction attribute for a `PostConstruct`, `PreDestroy`,
+`PrePassivate` or `PostActivate` method of a stateful session bean, the
 transaction attribute must be specified for the method(s) on the bean
-class, rather than for a superclass or PostConstruct, PreDestroy,
-PrePassivate or PostActivate interceptor method.
+class, rather than for a superclass or `PostConstruct`, `PreDestroy`,
+`PrePassivate` or `PostActivate` interceptor method.
 
-For a message-driven bean, the transaction
+* For a message-driven bean, the transaction
 attributes are specified for the message listenermethods on the
 message-driven bean class and for the timeout callback methods, if any.
 
-For a session bean written to the EJB 2.1 and
+* For a session bean written to the EJB 2.1 and
 earlier client view, the transaction attributes are specified for the
 methods of the component interface and all the direct and indirect
 superinterfaces of the component interface, excluding the methods of the
-javax.ejb.EJBObject or javax.ejb.EJBLocalObject interface; and for the
+`javax.ejb.EJBObject` or `javax.ejb.EJBLocalObject` interface; and for the
 timeout callback methods, if any. Transaction attributes must not be
 specified for the methods of a session bean’s home interface.
 
-By default, if a _TransactionAttribute_
+By default, if a `TransactionAttribute`
 annotation is not specified for a method of an enterprise bean with
 container-managed transaction demarcation, the value of the transaction
-attribute for the method is defined to be _REQUIRED_ . The rules for the
-specification of transaction attributes are defined in
-link:Ejb.html#a2583[See Specification of Transaction Attributes
-with Metadata Annotations].
+attribute for the method is defined to be `REQUIRED`. The rules for the
+specification of transaction attributes are defined in <<a2583>>.
 
 The Bean Provider may use the deployment
 descriptor as an alternative to metadata annotations to specify the
@@ -986,7 +979,7 @@ transaction attributes or as a means to supplement or override metadata
 annotations for transaction attributes. If a transaction attribute value
 is not specified in the deployment descriptor, it is assumed that the
 transaction attribute specified in annotations applies, or—in the case
-that no annotation has been specified—that the value is _Required_ .
+that no annotation has been specified—that the value is `Required`.
 
 The Application Assembler is permitted to
 override the transaction attribute values using the bean’s deployment
@@ -997,82 +990,70 @@ transactional structure of an application is typically intrinsic to the
 semantics of the application.
 
 Enterprise
-JavaBeans defines the following values for the _TransactionAttribute_
+JavaBeans defines the following values for the `TransactionAttribute`
 metadata annotation:
 
-MANDATORY
-
-REQUIRED
-
-REQUIRES_NEW
-
-SUPPORTS
-
-NOT_SUPPORTED
-
-NEVER
+* MANDATORY
+* REQUIRED
+* REQUIRES_NEW
+* SUPPORTS
+* NOT_SUPPORTED
+* NEVER
 
 The deployment descriptor values that
 correspond to these annotation values are the following:
 
- _Mandatory_
+* Mandatory
+* Required
+* RequiresNew
+* Supports
+* NotSupported
+* Never
 
- _Required_
-
- _RequiresNew_
-
- _Supports_
-
- _NotSupported_
-
- _Never_
-
- _In this chapter, we use the
-TransactionAttribute annotation values to refer to transaction
+_In this chapter, we use the
+`TransactionAttribute` annotation values to refer to transaction
 attributes. As noted, however, the deployment descriptor may be used._
 
-Refer to
-Subsection link:Ejb.html#a2755[See Container-Managed Transaction
-Demarcation for Business Methods] for the specification of how the value
+Refer to <<a2755>> for the specification of how the value
 of the transaction attribute affects the transaction management
 performed by the container.
 
 For a message-driven bean’s message listener
-methods (or interface), only the _REQUIRED_ and _NOT_SUPPORTED_
+methods (or interface), only the `REQUIRED` and `NOT_SUPPORTED`
 transaction attributes may be used.
 
 For an enterprise bean’s timeout callback
-methods, only the _REQUIRED_ , _REQUIRES_NEW_ and _NOT_SUPPORTED_
+methods, only the `REQUIRED`, `REQUIRES_NEW` and `NOT_SUPPORTED`
 transaction attributes may be used.
 
 For a session bean’s asynchronous business
-methods, only the REQUIRED, REQUIRES_NEW, and NOT_SUPPORTED transaction
+methods, only the `REQUIRED`, `REQUIRES_NEW`, and `NOT_SUPPORTED` transaction
 attributes may be used.
 
-For a singleton session bean’s PostConstruct
-and PreDestroy lifecycle callback interceptor methods, only the
-_REQUIRED_ , _REQUIRES_NEW_ , and _NOT_SUPPORTED_ transaction attributes
+For a singleton session bean’s `PostConstruct`
+and `PreDestroy` lifecycle callback interceptor methods, only the
+`REQUIRED`, `REQUIRES_NEW`, and `NOT_SUPPORTED` transaction attributes
 may be used.
 
-For a stateful session bean’s PostConstruct,
-PreDestroy, PrePassivate or PostActivate lifecycle callback interceptor
-methods, only the _REQUIRES_NEW_ and NOT_SUPPORTED transaction
+For a stateful session bean’s `PostConstruct`,
+`PreDestroy`, `PrePassivate` or `PostActivate` lifecycle callback interceptor
+methods, only the `REQUIRES_NEW` and `NOT_SUPPORTED` transaction
 attributes may be used.
 
 If an enterprise bean implements the
-javax.ejb.SessionSynchronization interface or uses any of the session
+`javax.ejb.SessionSynchronization` interface or uses any of the session
 synchronization annotations, only the following values may be used for
-the transaction attributes of the bean’s methods: _REQUIRED_ ,
-_REQUIRES_NEW_ , _MANDATORY_footnote:a10270[If a stateful session bean's 
+the transaction attributes of the bean’s methods: `REQUIRED`,
+`REQUIRES_NEW`, `MANDATORY`.footnote:a10270[If a stateful session bean's 
 `PostConstruct`, `PreDestroy`, `PrePassivate` or `PostActivate` lifecycle 
 callback interceptor methods are invoked in the scope of a transaction, 
 `SessionSynchronization` callbacks for such transactions are not called 
-on the bean instance.].
+on the bean instance.]
 
-The above restriction is necessary to ensure
+_The above restriction is necessary to ensure
 that the enterprise bean is invoked only in a transaction. If the bean
 were invoked without a transaction, the container would not be able to
-send the transaction synchronization calls.
+send the transaction synchronization calls._
 
 [[a2583]]
 ===== Specification of Transaction Attributes with Metadata Annotations
@@ -1081,38 +1062,31 @@ The following rules apply for the
 specification of transaction attributes using Java language metadata
 annotations.
 
-The _TransactionAttribute_ annotation is used
+The `TransactionAttribute` annotation is used
 to specify a transaction attribute. The value of the transaction
-attribute annotation is given by the enum _TransactionAttributeType:_
-
-public enum TransactionAttributeType \{
-
- MANDATORY,
-
- REQUIRED,
-
- REQUIRES_NEW,
-
- SUPPORTS,
-
- NOT_SUPPORTED,
-
- NEVER
-
+attribute annotation is given by the enum `TransactionAttributeType`:
+[source, java]
+----
+public enum TransactionAttributeType {
+    MANDATORY,
+    REQUIRED,
+    REQUIRES_NEW,
+    SUPPORTS,
+    NOT_SUPPORTED,
+    NEVER
 }
-
-
+----
 
 The transaction attributes for the methods of
 a bean class may be specified on the class, the business methods of the
 class, or both.
 
-Specifying the _TransactionAttribute_
+Specifying the `TransactionAttribute`
 annotation on the bean class means that it applies to all applicable
 business interface methods of the class. If the transaction attribute
-type is not specified, it is assumed to be _REQUIRED_ . The absence of a
+type is not specified, it is assumed to be `REQUIRED`. The absence of a
 transaction attribute specification on the bean class is equivalent to
-the specification of _TransactionAttribute(REQUIRED)_ on the bean class.
+the specification of `TransactionAttribute(REQUIRED)` on the bean class.
 
 A transaction attribute may be specified on a
 method of the bean class to override the transaction attribute value
@@ -1121,74 +1095,58 @@ explicitly or implicitly specified on the bean class.
 If the bean class has superclasses, the
 following additional rules apply.
 
-A transaction attribute specified on a
-superclass _S_ applies to the business methods defined by _S_ . If a
-class-level transaction attribute is not specified on _S_ , it is
-equivalent to specification of _TransactionAttribute(REQUIRED)_ on _S_ .
+* A transaction attribute specified on a
+superclass _S_ applies to the business methods defined by _S_. If a
+class-level transaction attribute is not specified on _S_, it is
+equivalent to specification of `TransactionAttribute(REQUIRED)` on _S_.
 
-A transaction attribute may be specified on a
+* A transaction attribute may be specified on a
 business method _M_ defined by class _S_ to override for method _M_ the
 transaction attribute value explicitly or implicitly specified on the
-class _S_ .
+class _S_.
 
-If a method _M_ of class _S_ overrides a
-business method defined by a superclass of _S_ , the transaction
+* If a method _M_ of class _S_ overrides a
+business method defined by a superclass of _S_, the transaction
 attribute of _M_ is determined by the above rules as applied to class
-_S_ .
+_S_.
 
 Example:
-
+[source, java]
+----
 @TransactionAttribute(SUPPORTS)
-
-public class SomeClass \{
-
- public void aMethod () \{...}
-
- public void bMethod () \{...}
-
- ...
-
+public class SomeClass {
+    public void aMethod() {...}
+    public void bMethod() {...}
+    ...
 }
 
+@Stateless 
+public class ABean extends SomeClass implements A {
+    public void aMethod() {...}
 
-
-@Stateless public class ABean extends
-SomeClass implements A \{
-
-
-
- public void aMethod () \{...}
-
-
-
- @TransactionAttribute(REQUIRES_NEW)
-
- public void cMethod () \{...}
-
- ...
-
+    @TransactionAttribute(REQUIRES_NEW)
+    public void cMethod() {...}
+    ...
 }
 
+----
 
-
-Assuming _aMethod_ , _bMethod_ , _cMethod_
-are methods of interface _A_ , their transaction attributes are
-_REQUIRED_ , _SUPPORTS_ , and _REQUIRES_NEW_ respectively.
+Assuming `aMethod`, `bMethod`, `cMethod`
+are methods of interface `A`, their transaction attributes are
+`REQUIRED`, `SUPPORTS`, and `REQUIRES_NEW` respectively.
 
 ===== Specification of Transaction Attributes in the Deployment Descriptor
 
 The following rules apply for the
 specification of transaction attributes in the deployment descriptor.
-(See Section link:Ejb.html#a5910[See Deployment Descriptor XML
-Schema] for the complete syntax of the deployment descriptor.)
+(See <<a5910>> for the complete syntax of the deployment descriptor.)
 
 Note that even in the absence of the use of
 annotations, it is not necessary to explicitly specify transaction
-attributes for all of the methods listed in section
-link:Ejb.html#a2538[See Specification of the Transaction
-Attributes for a Bean’s Methods]. If a transaction attribute is not
+attributes for all of the methods listed in <<a2538>>. 
+If a transaction attribute is not
 specified for a method in an EJB deployment descriptor, the transaction
-attribute defaults to _Required_ .
+attribute defaults to `Required`.
 
 If the deployment descriptor is used to
 override annotations, and transaction attributes are not specified for
@@ -1198,41 +1156,41 @@ defaulted) will apply for those methods.
 [[a2624]]
 ====== Use of the container-transaction element
 
-The container-transaction element may be used
+The `container-transaction` element may be used
 to define the transaction attributes for the following methods:
 
-business interface methods
+* business interface methods
 
-home interface methods
+* home interface methods
 
-component interface methods
+* component interface methods
 
-message-listener interface methods
+* message-listener interface methods
 
-no-interface view methods
+* no-interface view methods
 
-web service endpoint methods
+* web service endpoint methods
 
-singleton PostConstruct and PreDestroy
+* singleton `PostConstruct` and `PreDestroy`
 methods
 
-stateful session bean PostConstruct,
-PreDestroy, PrePassivate or PostActivate methods (see limitations)
+* stateful session bean `PostConstruct`,
+`PreDestroy`, `PrePassivate` or `PostActivate` methods (see limitations)
 
-timeout callback methods
+* timeout callback methods
 
-Each container-transaction element consists
+Each `container-transaction` element consists
 of a list of one or more method elements, and the trans-attribute
-element. The container-transaction element specifies that all the listed
+element. The `container-transaction` element specifies that all the listed
 methods are assigned the specified transaction attribute value. It is
 required that all the methods specified in a single
-container-transaction element be methods of the same enterprise bean.
+`container-transaction` element be methods of the same enterprise bean.
 
-The method
-element uses the ejb-name, method-intf, method-name, and method-params
+The `method`
+element uses the `ejb-name`, `method-intf`, `method-name`, and `method-params`
 elements to denote one or more methods.
 
-The optional _method-intf_ element can be
+The optional `method-intf` element can be
 used to differentiate between methods with the same name and signature
 that are multiply defined across the business, component, and home
 interfaces, web service endpoint, no-interface view, singleton and
@@ -1245,47 +1203,51 @@ component interface, the same transaction attribute applies to the
 method for both interfaces.
 
 There are three legal styles of composing the
-method element:
+`method` element:
 
- +
-<method> +
-<ejb-name>EJBNAME</ejb-name> +
-<method-name>*</method-name> +
-</method> +
- +
+*Style 1:*
+[source, xml]
+----
+<method>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>*</method-name>
+</method>
+----
+
 This style is used to specify a default value of the transaction
 attribute for the following methods, if any, of the specified enterprise
 bean for which there is no Style 2 or Style 3 element specified:
 
-All methods of the business, home, or
-component interface
+* All methods of the business, home, or component interface
 
-All no-interface view methods
+* All no-interface view methods
 
-All message listener methods
+* All message listener methods
 
-Web service endpoint methods
+* Web service endpoint methods
 
-Singleton PostConstruct and PreDestroy
-methods
+* Singleton `PostConstruct` and `PreDestroy` methods
 
-All timeout callback methods
+* All timeout callback methods
 
 There must be at most one
-container-transaction element that uses the Style 1 method element for a
-given enterprise bean, unless the method-intf element is used with this
+`container-transaction` element that uses the Style 1 `method` element for a
+given enterprise bean, unless the `method-intf` element is used with this
 style.
 
 This style may be used for stateful session
 bean lifecycle callback methods to specify their transaction attributes
-if used with the method-intf element value LifecycleCallback.
+if used with the `method-intf` element value `LifecycleCallback`.
 
- +
-<method> +
-<ejb-name>EJBNAME</ejb-name> +
-<method-name>METHOD</method-name> +
-</method> +
- +
+*Style 2:*
+[source, xml]
+----
+<method>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>METHOD</method-name>
+</method>
+----
+
 This style is used for referring to a specified method of a business,
 home, or component interface method; no-interface view method; message
 listener method; web service endpoint method; singleton PostConstruct
