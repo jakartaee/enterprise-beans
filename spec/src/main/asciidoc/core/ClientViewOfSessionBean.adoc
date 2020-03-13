@@ -191,7 +191,7 @@ Enterprise beans that provide a local client view should therefore be
 coded to assume that the state of any Java object that is passed as an
 argument or result is potentially shared by caller and callee.
 
-{empty}::
+****
 _The Bean Provider must be aware of the
 potential sharing of objects passed through invocations of the local
 client view. In particular, the Bean Provider must be careful that the
@@ -202,11 +202,12 @@ never be stored as part of the state of another enterprise bean. The
 Bean Provider must also exercise caution in determining which objects to
 pass across the local view. This caution applies particularly in the
 case where there is a change in transaction or security context._
+****
 
 For a session bean client and component
 written to the EJB 3.x API, a local client accesses a session bean
-through the bean’s local business interface
-or through a no-interface client view representing all _non-static_ `public`
+through the bean’s local business interface or through a no-interface 
+client view representing all _non-static_ `public`
 methods of the bean class. For a session bean client and component
 written to the EJB 2.1 and earlier APIs, the local client accesses the
 enterprise bean through the bean’s local home and local component
@@ -284,14 +285,16 @@ from that of its client—thus restricting the distribution of components.
 
 * Because the local programming model provides
 more lightweight access to a component, it better supports more
-fine-grained component access. +
- +
+fine-grained component access.
+
+****
 _Note that although collocation of the remote
 client and the enterprise bean may allow the container to reduce the
 overhead of calls through a remote business interface or remote
 component interface, such calls are still likely to be less efficient
 than calls made using a local interface because any optimizations based
 on collocation must be done transparently._
+****
 
 The choice between the local and the remote
 programming model is a design decision that the Bean Provider makes when
@@ -547,7 +550,7 @@ session object exists once the client has obtained a reference to its
 business interface—whether through dependency injection or from lookup
 of the business interface in JNDI.
 
-{empty}A client that has a reference to a
+A client that has a reference to a
 session object’s business interface can then invoke business methods on
 the interface and/or pass the reference as a parameter or return value
 of a business interface method.footnote:a10221[Note that the EJB 3.x 
@@ -643,7 +646,6 @@ Cart cart1;
 @EJB 
 Cart cart2;
 ...
-
 if (cart1.equals(cart1)) { // this test must return true
  ...
 }
@@ -737,7 +739,7 @@ By default, session bean invocations through
 the remote, local, and no-interface views are synchronous. The client
 blocks for the duration of the invocation and is returned control only
 after all invocation processing has completed. Clients can achieve
-`asynchronous` invocation behavior by invoking session bean methods that
+_asynchronous_ invocation behavior by invoking session bean methods that
 have been designed to support asynchrony.
 
 When a client invokes an asynchronous method,
@@ -961,11 +963,12 @@ This section is
 specific to session beans that provide a remote client view using the
 remote component interface and remote home interface.
 
-{empty}::
+****
 _This was the only way of providing a remote
 client view in the EJB 2.1 and earlier releases. The remote client view
 provided by the business interface under the EJB 3.x API, as described
 in <<a283>>, is now to be preferred._
+****
 
 The container provides the implementation of
 the remote home interface for each session bean that defines a remote
@@ -1045,7 +1048,7 @@ may remove a session object using the `remove()` method of the
 the `javax.ejb.EJBHome` interface.
 
 Because session objects do not have primary
-keys that are accessible to clients, invoking the +
+keys that are accessible to clients, invoking the 
 `javax.ejb.EJBHome.remove(Object primaryKey)` method on a session results
 in a `javax.ejb.RemoveException`.
 
@@ -1055,11 +1058,12 @@ This section is
 specific to session beans that provide a local client view using the
 local component interface and local home interface.
 
-{empty}::
+****
 _This was the only way of providing a local
 client view in the EJB 2.1 and earlier releases. The local client view
 provided by the business interface under the EJB 3.x API, as described
 in <<a283>>, is now to be preferred._
+****
 
 The container
 provides the implementation of the local home interface for each session
@@ -1122,7 +1126,7 @@ may remove a session object using the `remove()` method of the
 `javax.ejb.EJBLocalObject` interface.
 
 Because session objects do not have primary
-keys that are accessible to clients, invoking the +
+keys that are accessible to clients, invoking the 
 `javax.ejb.EJBLocalHome.remove(Object primaryKey)` method on a session
 results in a `javax.ejb.RemoveException`.
 
@@ -1335,8 +1339,6 @@ object. When a reference to a session object is obtained from a handle,
 and then a method on the session object is invoked, the container
 performs the usual access checks based on the caller’s principal.
 
-
-
 ===== Stateful Session Beans
 
 A stateful session object has a unique
@@ -1358,12 +1360,12 @@ FooHome fooHome = ...; // obtain home of a stateful session bean
 Foo foo1 = fooHome.create(...);
 Foo foo2 = fooHome.create(...);
 
-if (foo1.isIdentical(foo1)) \{ // this test must return true
- ...
+if (foo1.isIdentical(foo1)) { // this test must return true
+     ...
 }
 
-if (foo1.isIdentical(foo2)) \{ // this test must return false
- ...
+if (foo1.isIdentical(foo2)) { // this test must return false
+     ...
 }
 ----
 
@@ -1392,11 +1394,11 @@ Foo foo1 = fooHome.create();
 Foo foo2 = fooHome.create();
 
 if (foo1.isIdentical(foo1)) { // this test returns true
- ...
+     ...
 }
 
 if (foo1.isIdentical(foo2)) { // this test returns true
- ...
+     ...
 }
 ----
 

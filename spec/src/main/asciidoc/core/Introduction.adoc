@@ -29,7 +29,7 @@ and simplifications to the earlier EJB APIs:
 
 * _Made support for the following features
 optional in this release and moved their description to a separate EJB
-Optional Features<<a9890>> document:_
+Optional Features <<a9890>> document:_
 
 ** _EJB 2.1 and earlier Entity Bean Component
 Contract for Container-Managed Persistence_
@@ -50,7 +50,7 @@ message listener methods._
 for an EJB Lite Container to support other API groups._
 
 * _Added container provided security role named
-“**” to indicate any authenticated caller independent of the actual role
+`"**"` to indicate any authenticated caller independent of the actual role
 name._
 
 * _Extended the EJB Lite Group to include local
@@ -69,10 +69,10 @@ of stateful session beans._
 active timers in the EJB module._
 
 * _Enhanced the embeddable EJBContainer to
-implement AutoClosable interface._
+implement `AutoCloseable` interface._
 
-* _Removed restrictions on javax.ejb.Timer and
-javax.ejb.TimerHandle that required references to be used only inside a
+* _Removed restrictions on `javax.ejb.Timer` and
+`javax.ejb.TimerHandle` that required references to be used only inside a
 bean._
 
 * _Relaxed default rules for a session bean to
@@ -86,13 +86,12 @@ activation properties._
 security role using the ejb deployment descriptor._
 
 * _Removed restriction on obtaining the current
-class loader; replaced '`must not`' with '`should exercise caution`' when
+class loader; replaced 'must not' with 'should exercise caution' when
 using the Java I/O package._
 
 === What was New in EJB 3.1
 
-The Enterprise JavaBeans 3.1
-<<a9891>> architecture extended
+The Enterprise JavaBeans 3.1 <<a9891>> architecture extended
 Enterprise JavaBeans to include the following new functionality and
 simplifications to the earlier EJB APIs:
 
@@ -138,7 +137,7 @@ to provide an EJB deployment descriptor._
 * _Specification of programmatic defaults,
 including for metadata, to reduce the need for the developer to specify
 common, expected behaviors and requirements on the EJB container. A
-“configuration by exception” approach is taken whenever possible._
+"configuration by exception" approach is taken whenever possible._
 
 * _Encapsulation of environmental dependencies
 and JNDI access through the use of annotations, dependency injection
@@ -156,9 +155,8 @@ for a session bean can be a plain Java interface rather than an
 interfaces for session beans._
 
 * _Simplification of entity persistence
-through the Java Persistence API<<a9851>>._
-
-* _Support for light-weight domain modeling, including inheritance and
+through the Java Persistence API <<a9851>>. 
+Support for light-weight domain modeling, including inheritance and
 polymorphism._
 
 * _Specification of Java language metadata
@@ -208,7 +206,7 @@ JavaBeans. These contracts include those for the EJB 3.2 API, as well as
 for the earlier EJB API that is required to be supported in this
 release. See <<a9423>> for coverage of the Enterprise JavaBeans API requirements.
 
-The EJB Optional Features document<<a9890>> defines the contracts and
+The EJB Optional Features document <<a9890>> defines the contracts and
 requirements for the use and implementation of features support for
 which has been made optional as of Enterprise JavaBeans, 3.2. These
 contracts are separated from the core contracts requirements of the EJB

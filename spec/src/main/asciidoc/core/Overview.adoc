@@ -68,12 +68,13 @@ each EJB role is compatible with the product of the other EJB roles. The
 EJB specification focuses on those contracts that are required to
 support the development and deployment of enterprise beans._
 
-{empty}::
+****
 _In some scenarios, a single party may perform
 several EJB Roles. For example, the Container Provider and the EJB
 Server Provider may be the same vendor. Or a single programmer may
 perform the two EJB Roles of the Enterprise Bean Provider and the
 Application Assembler._
+****
 
 _The following sections define the six EJB
 roles.footnote:a10218[Earlier releases of this specification 
@@ -88,8 +89,7 @@ The Enterprise
 Bean Provider (Bean Provider for short) is the producer of enterprise
 beans. His or her output is a set of one or more enterprise beans. These
 beans may be contained in a ejb-jar
-
-or may be contained directly in a .war file.
+or may be contained directly in a `.war` file.
 The Bean Provider is responsible for the Java classes that implement the
 enterprise beans’ business methods; the definition of the beans’ client
 view interfaces, if any; and the declarative specification of the beans’
@@ -193,19 +193,19 @@ _The Deployer uses tools supplied by the EJB
 Container Provider to perform the deployment tasks. The deployment
 process is typically two-stage:_
 
-* The Deployer first generates the additional
+* _The Deployer first generates the additional
 classes and interfaces that enable the container to manage the
-enterprise beans at runtime. These classes are container-specific.
+enterprise beans at runtime. These classes are container-specific._
 
-* The Deployer performs the actual installation
+* _The Deployer performs the actual installation
 of the enterprise beans and the additional classes and interfaces into
-the EJB container.
+the EJB container._
 
-In some cases, a qualified Deployer may
+_In some cases, a qualified Deployer may
 customize the business logic of the enterprise beans at their
 deployment. Such a Deployer would typically use the Container Provider’s
 tools to write relatively simple application code that wraps the
-enterprise beans’ business methods.
+enterprise beans’ business methods._
 
 ==== EJB Server Provider
 
