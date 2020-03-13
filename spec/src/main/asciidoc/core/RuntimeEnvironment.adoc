@@ -495,13 +495,15 @@ deny
 |
 java.net.SocketPermission
 |
-grant "*", "connect"
-footnote:a10342[This permission is necessary, for example, to allow 
-enterprise beans to use the client functionality of the Java IDL and 
-RMI-IIOP packages that are part of the Java 2 platform.]
+grant "*", "connect" <<a10342>>
 
 deny all other
 |===
+*Notes:* +
+[[a10342, Note A]]  [A]  This permission is
+necessary, for example, to allow enterprise beans to use the client
+functionality of the Java IDL and RMI-IIOP packages that are part of the
+Java 2 platform.
 
 _Some containers may allow the Deployer to
 grant more, or fewer, permissions to the enterprise bean instances than
