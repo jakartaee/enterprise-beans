@@ -193,7 +193,11 @@ of this specification. Applications relying on inter-application access
 to the local client view are non-portable.
 
 The arguments and results of the methods of
-the local client view are passed “by reference”link:#a10219[2].
+the local client view are passed “by reference”.footnote:a10219[More 
+literally, references are passed by value in the JVM: an argument 
+variable of primitive type holds a value of that primitive type; an 
+argument variable of a reference type hold a reference to the object. 
+See <<a9876>>.]
 Enterprise beans that provide a local client view should therefore be
 coded to assume that the state of any Java object that is passed as an
 argument or result is potentially shared by caller and callee.
@@ -490,7 +494,8 @@ It is invalid to reference a session object
 that does not exist. If a stateful session bean has been removed,
 attempted invocations on the stateful session bean business interface
 result in the
-javax.ejb.NoSuchEJBException.link:#a10220[3]
+javax.ejb.NoSuchEJBException.footnote:a10220[This may not apply to 
+stateless session beans; see <<a1065>>.]
 If a singleton session bean did not successfully initialize, attempted
 invocations on the singleton session bean business interface result in
 the javax.ejb.NoSuchEJBException.
@@ -569,7 +574,10 @@ of the business interface in JNDI.
 {empty}A client that has a reference to a
 session object’s business interface can then invoke business methods on
 the interface and/or pass the reference as a parameter or return value
-of a business interface method.link:#a10221[4]
+of a business interface method.footnote:a10221[Note that the EJB 3.x 
+session bean business interface is not an `EJBObject`. 
+It is not valid to pass a reference to the remote business interface 
+through a bean’s remote component interface.]
 
 A client may remove a stateful session bean
 by invoking a method of its business interface designated as a _Remove_
@@ -629,7 +637,12 @@ cart.addItem(22);
 
 {empty}Finally the client purchases the
 contents of the shopping cart, and finishes the shopping
-activity.link:#a10222[5]
+activity.footnote:a10222[It is part of the logic of an 
+application designed using stateful session beans to designate 
+a method that causes the removal of the stateful session 
+(and thus allows for the reclamation of resources used by the 
+session bean). This example assumes that the `finishShopping` method 
+is such a `Remove` method. See <<a921>> for further discussion.]
 
 cart.purchase();
 
@@ -782,7 +795,10 @@ processing the invocation on a separate thread of execution.
 The client should expect to receive a system
 exception (in the form of the javax.ejb.EJBException) on the client
 thread if the container has problems allocating the internal resources
-required to support the asynchronous method.link:#a10223[6] If a
+required to support the asynchronous method.footnote:a10223[If the 
+business interface is a remote business interface that extends 
+`java.rmi.Remote`, the `java.rmi.RemoteException` is received instead.] 
+If a
 system exception is received on the client thread, the client can expect
 that the container will not be able to dispatch the asynchronous method.
 The client may wish to retry the asynchronous method at a later time.
@@ -1302,7 +1318,8 @@ lifetime expires.
 {empty}It is invalid to reference a session
 object that does not exist. Attempted remote invocations on a stateful
 session object that does not exist result in a
-java.rmi.NoSuchObjectException.link:#a10225[7]
+java.rmi.NoSuchObjectException.footnote:a10225[This may not apply to 
+stateless session beans; see <<a1065>>.]
 
 ===== References to Session Object Local Component Interfaces
 
@@ -1326,7 +1343,8 @@ lifetime expires.
 {empty}It is invalid to reference a session
 object that does not exist. Attempted invocations on a stateful session
 object that does not exist result in
-javax.ejb.NoSuchObjectLocalException.link:#a10226[8]
+javax.ejb.NoSuchObjectLocalException.footnote:a10226[This may not apply 
+to stateless session beans; see <<a1065>>.]
 
 A client can pass a
 local object reference or local home object
@@ -1537,7 +1555,9 @@ program that is intended to be interoperable with all compliant EJB
 container implementations must use the
 javax.rmi.PortableRemoteObject.narrow method to perform type-narrowing
 of the client-side representations of the remote home and remote
-component interfaces.link:#a10227[9]
+component interfaces.footnote:a10227[Use of 
+`javax.rmi.PortableRemoteObject.narrow` is not needed when the 
+EJBContext `lookup` method is used to look up the remote home interface.]
 
 Note: Programs using the cast operator for
 narrowing the remote component interface and remote home interface are

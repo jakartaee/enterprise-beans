@@ -200,7 +200,9 @@ Session bean’s concurrency management type.
 If the enterprise bean is a singleton session bean, the Bean Provider
 may use the concurrency-management-type element to declare whether
 concurrency management is handled by the container or is performed by
-the Bean Providerlink:#a10341[121]. If neither the
+the Bean Provider.footnote:a10341[The concurrency-management-type Container 
+may be specified for stateful session beans, but doing so has no impact on 
+the semantics of concurrency management for such beans.] If neither the
 ConcurrencyManagement annotation is used nor the
 concurrency-management-type deployment descriptor element, the singleton
 session bean will have container-managed concurrency.

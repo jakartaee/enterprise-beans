@@ -12,7 +12,7 @@ clients.
 
 Existing EJB 3.1 and earlier applications
 that do not include entity bean components and JAX-RPC based web
-services endpointslink:#a10344[124] must be supported to run
+services endpoints footnote:a10344[See <<a182>>.] must be supported to run
 unchanged in EJB 3.2 containers.
 
 Full EJB 3.2 implementations must support EJB
@@ -103,7 +103,10 @@ earlier EJB client view.
 {empty}EJB clients may access Java
 Persistence entities and/or the EntityManager together with EJB 2.x
 entity beans within the same transaction as well as within separate
-transactions.link:#a10345[125]
+transactions.footnote:a10345[In general, the same database data should 
+not be accessed by both Java Persistence entities and EJB 2.x entities 
+within the same application: behavior is unspecified if data aliasing 
+occurs.]
 
 [[a9716]]
 === Adapting EJB 3.x Session Beans to Earlier Client Views

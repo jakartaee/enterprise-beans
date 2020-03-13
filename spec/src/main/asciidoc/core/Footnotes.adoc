@@ -1,608 +1,127 @@
-'''''
-
-[.footnoteNumber]# 1.# [[a10218]]Earlier releases of
-this specification distinguished a seventh role, that of the persistence
-provider. The role of the persistence provider is independent of that of
-the EJB specification, which assumes that a Java Persistence
-implementation may be pluggable. See link:Ejb.html#a9851[See
-Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
-
-[.footnoteNumber]# 2.# [[a10219]]More literally,
-references are passed by value in the JVM: an argument variable of
-primitive type holds a value of that primitive type; an argument
-variable of a reference type hold a reference to the object. See
-link:Ejb.html#a9876[See The Java Virtual Machine
-Specification.].
-
-[.footnoteNumber]# 3.# [[a10220]]This may not apply to
-stateless session beans; see link:Ejb.html#a1065[See Stateless
-Session Beans].
-
-[.footnoteNumber]# 4.# [[a10221]]Note that the EJB 3.x
-session bean business interface is not an EJBObject. It is not valid to
-pass a reference to the remote business interface through a bean’s
-remote component interface.
-
-[.footnoteNumber]# 5.# [[a10222]] It is part of the
-logic of an application designed using stateful session beans to
-designate a method that causes the removal of the stateful session (and
-thus allows for the reclamation of resources used by the session bean).
-This example assumes that the _finishShopping_ method is such a _Remove_
-method. See link:Ejb.html#a921[See Stateful Session Beans] for
-further discussion.
-
-[.footnoteNumber]# 6.# [[a10223]]If the business
-interface is a remote business interface that extends java.rmi.Remote,
-the java.rmi.RemoteExcep-
-
-tion is received instead.
-
-[.footnoteNumber]# 7.# [[a10225]]This may not apply to
-stateless session beans; see link:Ejb.html#a1065[See Stateless
-Session Beans].
-
-[.footnoteNumber]# 8.# [[a10226]]This may not apply to
-stateless session beans; see link:Ejb.html#a1065[See Stateless
-Session Beans].
-
-[.footnoteNumber]# 9.# [[a10227]]Use of
-javax.rmi.PortableRemoteObject.narrow is not needed when the EJBContext
-lookup method is used to look up the remote home interface.
-
-[.footnoteNumber]# 10.# [[a10228]]Note that this
-requirement does not apply to the EntityManager and EntityManagerFactory
-objects.
-
-[.footnoteNumber]# 11.# [[a10229]]The container is not
-permitted to destroy a stateful session bean instance because it does
-not meet these requirements.
-
-[.footnoteNumber]# 12.# [[a10230]]Note that the Java
-Serialization protocol dynamically determines whether or not an object
-is serializable. This means that it is possible to serialize an object
-of a serializable subclass of a non-serializable declared field type.
-
-[.footnoteNumber]# 13.#
-[[a10231]]Component contract and
-client view of entity beans are described in the EJB Optional Features
-document link:Ejb.html#a9890[See EJB 3.2 Optional Features
-http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 14.# [[a10232]]Except for the
-_javax.mail.Session_  resource manager
-connection factory.
-
-[.footnoteNumber]# 15.# [[a10234]]This is to allow the
-container to swap out an instance’s state through techniques other than
-the Java Serialization protocol. For example, the container’s Java
-Virtual Machine implementation may use a block of memory to keep the
-instance’s variables, and the container swaps the whole memory block to
-the disk instead of performing Java Serialization on the instance.
-
-[.footnoteNumber]# 16.# [[a10235]]Any initialization
-methods defined for the bean by means of the _init-method_ deployment
-descriptor element apply in addition to those defined by means of
-annotations.
-
-[.footnoteNumber]# 17.# [[a10236]]Any remove methods
-defined for the bean by means of the _remove-method_ deployment
-descriptor element apply in addition to those defined by means of
-annotations.
-
-[.footnoteNumber]# 18.# [[a10237]]The concurrency
-management type CONTAINER may be specified for stateful session beans,
-but doing so has no impact on the semantics of concurrency management
-for such beans.
-
-[.footnoteNumber]# 19.# [[a10238]]The
-_javax.ejb.ConcurrentAccessException_ is a subclass of the
-_javax.ejb.EJBException_ . If the business interface is a remote
-business interface that extends _java.rmi.Remote_ , the client will
-receive the _java.rmi.RemoteException_ instead.
-
-[.footnoteNumber]# 20.# [[a10239]]Note that the
-existence of global JNDI names for the local and no-interface client
-views does not imply that cross-application access to those entries is
-required. See link:Ejb.html#a242[See Local Clients] for more
-details.
-
-[.footnoteNumber]# 21.# [[a10240]]If an
-_AroundConstruct_ lifecycle callback interceptor is associated with the
-stateful session bean, the container follows the rules for the
-_AroundConstruct interceptors_ defined in the Interceptors specification
-link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.].
-
-[.footnoteNumber]# 22.# [[a10241]]If
-a stateful session bean lifecycle callback interceptor method is invoked
-in the scope of a transaction, session synchronization callbacks for
-such transactions are not called on the bean instance — see section
-link:Ejb.html#a2750[See Session Synchronization Callbacks].
-
-[.footnoteNumber]# 23.# [[a10242]]Note that if the Java
-Persistence API is used, the persistence provider will use the
-beforeCompletion notification to automatically flush any updates to the
-container-managed persistence context to the database. See
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.].
-
-[.footnoteNumber]# 24.# [[a10243]]If
-the business interface is a remote business interface that extends
-_java.rmi.Remote_ , the _java.rmi.NoSuchObjectException_ is thrown to
-the client instead.
-
-[.footnoteNumber]# 25.# [[a10244]]If
-the _Remove_ annotation specifies the value of _retainIfException_ as
-_true_ , and the _Remove_ method throws an application exception, the
-instance is not removed (and the _PreDestroy_ lifecycle callback
-interceptor methods are not invoked).
-
-[.footnoteNumber]# 26.# [[a10245]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.NoSuchObjectException_ is thrown to the client instead.
-
-[.footnoteNumber]# 27.# [[a10246]]If a client calls
-lifecycle callback method through a business interface or a no-interface
-view, the method is treated like a business method.
-
-[.footnoteNumber]# 28.# [[a10247]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.NoSuchObjectException_ is thrown to the client instead.
-
-[.footnoteNumber]# 29.# [[a10248]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.RemoteException_ is thrown to the client instead.
-
-[.footnoteNumber]# 30.# [[a10249]]If an
-_AroundConstruct_ lifecycle callback interceptor is associated with the
-stateless session bean, the container follows the rules for the
-_AroundConstruct interceptors_ defined in the Interceptors specification
-link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.].
-
-[.footnoteNumber]# 31.# [[a10250]]If a client calls
-lifecycle callback method through a business interface or a no-interface
-view, the method is treated like a business method.
-
-[.footnoteNumber]# 32.# [[a10251]]If an
-_AroundConstruct_ lifecycle callback interceptor is associated with the
-singleton session bean, the container follows the rules for the
-_AroundConstruct interceptors_ defined in the Interceptors specification
-link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.].
-
-[.footnoteNumber]# 33.# [[a10252]]If a client calls
-lifecycle callback method through a business interface or a no-interface
-view, the method is treated like a business method.
-
-[.footnoteNumber]# 34.# [[a10253]]Note that the
-interfaces provided by the Bean Provider may have been generated by
-tools.
-
-[.footnoteNumber]# 35.# [[a10254]]Note that the EJB 2.x
-client view is not supported for singleton session beans.
-
-[.footnoteNumber]# 36.# [[a10255]]Except for singleton
-session beans.
-
-[.footnoteNumber]# 37.# [[a10256]]Note that this might
-result from the use of default interceptors, for example.
-
-[.footnoteNumber]# 38.# [[a10257]]It is also an error
-if the _Local_ and/or _Remote_ annotations are specified both on the
-bean class and on the referenced interface and the values differ.
-
-[.footnoteNumber]# 39.# [[a10258]]If _PrePassivate_ or
-_PostActivate_ lifecycle callbacks are defined for message-driven beans,
-they are ignored.
-
-[.footnoteNumber]# 40.# [[a10259]]If an
-_AroundConstruct_ lifecycle callback interceptor is associated with the
-message-driven bean, the container follows the rules for the
-_AroundConstruct interceptors_ defined in the Interceptors specification
-link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.].
-
-[.footnoteNumber]# 41.# [[a10260]]This might result
-from the use of default interceptor classes, for example.
-
-[.footnoteNumber]# 42.# [[a10261]]This restriction may
-be removed in a future release of this specification.
-
-{empty}[.footnoteNumber]# 43.# [[a10262]]See
-link:Ejb.html#a1254[See Singleton Session Bean Error Handling]
-
-[.footnoteNumber]# 44.# [[a10263]]Note that environment
-entries other than resources are specified with the _Resource_
-annotation and/or resource-ref deployment descriptor element as well.
-
-[.footnoteNumber]# 45.# [[a10264]]In this chapter we
-use the _TransactionAttribute_ annotation values to refer to transaction
-attributes. The deployment descriptor may be used as an overriding
-mechanism or an alternative to the use of annotations.
-
-[.footnoteNumber]# 46.# [[a10265]]The use of the term
-“container” here encompasses both the container and the messaging
-provider. When the contracts outlined in link:Ejb.html#a9863[See
-Java EE™ Connector Architecture, version 1.7 (Connector).
-http://jcp.org/en/jsr/detail?id=322.] are used, it may be the messaging
-provider that starts the transaction.
-
-[.footnoteNumber]# 47.# [[a10266]]This restriction may
-be removed in a future release of this specification.
-
-[.footnoteNumber]# 48.# [[a10267]]However, use of the
-Java Persistence API _EntityTransaction_ interface is supported. See
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.] for a discussion of resources used
-in the Java Persistence API that may be “unaware” of the presence of JTA
-transactions, and a description of the EntityTransaction interface and
-its use.
-
-[.footnoteNumber]# 49.# [[a10268]]Note that the Bean
-Provider must use the pre-passivate callback method here to close the
-connections and set the instance variables for the connection to null.
-
-[.footnoteNumber]# 50.# [[a10269]]REQUIRED is the
-default transaction attribute value for container managed transaction
-demarcation. The explicit specification of the transaction attribute is
-therefore not required in this example.
-
-[.footnoteNumber]# 51.# [[a10270]]If a stateful session
-bean's PostConstruct, PreDestroy, PrePassivate or PostActivate lifecycle
-callback interceptor methods are invoked in the scope of a transaction,
-SessionSynchronization callbacks for such transactions are not called on
-the bean instance.
-
-[.footnoteNumber]# 52.# [[a10271]]However, use of the
-Java Persistence API _EntityTransaction_ interface is supported. See
-link:Ejb.html#a9851[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.] for a discussion of resources used
-in the Java Persistence API that may be “unaware” of the presence of JTA
-transactions, and a description of the _EntityTransaction_ interface and
-its use
-
-[.footnoteNumber]# 53.# [[a10272]]The container
-typically relies on a transaction manager that is part of the EJB server
-to perform the two-phase commit across all the enlisted resource
-managers. If only a single resource manager is involved in the
-transaction and the deployment descriptor indicates that connection
-sharing may be used, the container may use the local transaction
-optimization. See link:Ejb.html#a9861[See Java™ Platform,
-Enterprise Edition Specification Version 7 (Java EE).
-http://jcp.org/en/jsr/detail?id=342.] and
-link:Ejb.html#a9863[See Java EE™ Connector Architecture, version
-1.7 (Connector). http://jcp.org/en/jsr/detail?id=322.] for further
-discussion.
-
-[.footnoteNumber]# 54.# [[a10273]]Note that if the bean
-is a singleton session bean, the instance must not be discarded unless
-the exception occurred in an AroundConstruct, _PostConstruct_ or
-_PreDestroy_ lifecycle interceptor method.
-
-[.footnoteNumber]# 55.# [[a10274]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.RemoteException_ is thrown to the client instead.
-
-[.footnoteNumber]# 56.# [[a10275]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _javax.transaction.TransactionRequiredException_ is thrown to the
-client instead.
-
-[.footnoteNumber]# 57.# [[a10276]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.RemoteException_ is thrown to the client instead.
-
-[.footnoteNumber]# 58.# [[a10277]]T2 if the method is
-an asynchronous method.
-
-[.footnoteNumber]# 59.# [[a10278]]See
-link:Ejb.html#a608[See Session Bean Component Contract].
-
-[.footnoteNumber]# 60.# [[a10279]]See
-link:Ejb.html#a1702[See Message-Driven Bean Component Contract].
-
-[.footnoteNumber]# 61.#
-[[a10280]]Component contract and
-client view of entity beans are described in the EJB Optional Features
-document link:Ejb.html#a9890[See EJB 3.2 Optional Features
-http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 62.# [[a10281]]This diamond problem
-applies only to the case when B and C are in the same transaction.
-
-[.footnoteNumber]# 63.# [[a10282]]This may not be the
-case where web services protocols are used. See
-link:Ejb.html#a9873[See Java™ API for XML-based RPC, version 1.1
-(JAX-RPC). http://jcp.org/en/jsr/detail?id=101.].
-
-[.footnoteNumber]# 64.# [[a10283]]If a transaction had
-been marked for rollback, the value of the rollback element has no
-effect.
-
-[.footnoteNumber]# 65.# [[a10284]]Note that the
-enterprise bean business method may attempt to recover from a
-_RemoteException_ . The text in this subsection applies only to the case
-when the business method does not wish to recover from the
-_RemoteException_ .
-
-[.footnoteNumber]# 66.# [[a10285]]A checked exception
-is one that is not a subclass of java.lang.RuntimeException.
-
-[.footnoteNumber]# 67.# [[a10286]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.RemoteException_ is thrown to the client instead.
-
-[.footnoteNumber]# 68.# [[a10287]]The caller can be
-another enterprise bean or an arbitrary client program.
-
-[.footnoteNumber]# 69.# [[a10288]]Log the exception or
-error means that the container logs the exception or error so that the
-System Administrator is alerted of the problem.
-
-[.footnoteNumber]# 70.# [[a10289]]Discard instance
-means that the container must not invoke any business methods or
-container callbacks on the instance. Discarding does not apply if the
-bean is a singleton session bean.
-
-[.footnoteNumber]# 71.# [[a10290]]If the business
-interface is a remote business interface that extends java.rmi.Remote,
-the javax.transaction.TransactionRolledbackException is thrown to the
-client, which will receive this exception.
-
-[.footnoteNumber]# 72.# [[a10291]]If the business
-interface is a remote business interface that extends java.rmi.Remote,
-the java.rmi.RemoteException is thrown to the client, which will receive
-this exception.
-
-[.footnoteNumber]# 73.# [[a10292]]If the business
-interface is a remote business interface that extends java.rmi.Remote,
-the java.rmi.RemoteException is thrown to the client, which will receive
-this exception.
-
-[.footnoteNumber]# 74.# [[a10293]]Discarding does not
-apply if the bean is a singleton session bean.
-
-[.footnoteNumber]# 75.# [[a10294]]If the business
-interface is a remote business interface that extends java.rmi.Remote,
-the java.rmi.RemoteException is thrown to the client, which will receive
-this exception.
-
-
-
-[.footnoteNumber]# 76.# [[a10296]]The caller can be
-another enterprise bean or an arbitrary client program. This case is not
-applicable for methods of the web service endpoint.
-
-[.footnoteNumber]# 77.# [[a10297]]Log the exception or
-error means that the container logs the exception or error so that the
-System Administrator is alerted of the problem.
-
-[.footnoteNumber]# 78.# [[a10298]]Discard instance
-means that the container must not invoke any business methods or
-container callbacks on the instance. Discarding does not apply if the
-bean is a singleton session bean.
-
-[.footnoteNumber]# 79.# [[a10299]]Throw
-_RemoteException_ to web service client means that the container maps
-the _RemoteException_ to the appropriate SOAP fault. See
-link:Ejb.html#a9873[See Java™ API for XML-based RPC, version 1.1
-(JAX-RPC). http://jcp.org/en/jsr/detail?id=101.].
-
-[.footnoteNumber]# 80.# [[a10300]]Discarding does not
-apply if the bean is a singleton session bean.
-
-[.footnoteNumber]# 81.# [[a10301]]Throw
-_RemoteException_ to web service client means that the container maps
-the _RemoteException_ to the appropriate SOAP fault. See
-link:Ejb.html#a9873[See Java™ API for XML-based RPC, version 1.1
-(JAX-RPC). http://jcp.org/en/jsr/detail?id=101.].
-
-[.footnoteNumber]# 82.# [[a10302]]Log the exception or
-error means that the container logs the exception or error so that the
-System Administrator is alerted of the problem.
-
-[.footnoteNumber]# 83.# [[a10303]]Discard instance
-means that the container must not invoke any methods on the instance.
-
-[.footnoteNumber]# 84.# [[a10304]]Log the exception or
-error means that the container logs the exception or error so that the
-System Administrator is alerted of the problem.
-
-[.footnoteNumber]# 85.# [[a10305]]Discard instance
-means that the container must not invoke any methods on the instance.
-Discarding does not apply if the bean is a singleton session bean.
-
-[.footnoteNumber]# 86.# [[a10306]]Log the exception or
-error means that the container logs the exception or error so that the
-System Administrator is alerted of the problem.
-
-[.footnoteNumber]# 87.# [[a10307]]Discard instance
-means that the container must not invoke any methods on the instance.
-Discarding does not apply if the bean is a singleton session bean.
-
-[.footnoteNumber]# 88.# [[a10308]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.RemoteException_ is thrown to the client instead.
-
-[.footnoteNumber]# 89.# [[a10309]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _javax.transaction.TransactionRolledbackException_ is thrown to
-the client instead.
-
-[.footnoteNumber]# 90.# [[a10310]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.NoSuchObjectException_ is thrown to the client instead.
-
-[.footnoteNumber]# 91.# [[a10311]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.RemoteException_ is thrown to the client instead.
-
-[.footnoteNumber]# 92.# [[a10312]]If a transaction had
-been marked for rollback, the setting on the application exception has
-no effect.
-
-[.footnoteNumber]# 93.#
-[[a10313]]Component contract and
-client view of entity beans are described in the EJB Optional Features
-document link:Ejb.html#a9890[See EJB 3.2 Optional Features
-http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 94.# [[a10314]]CORBA APIs and
-earlier versions of the IIOP protocol are already included in the J2SE
-1.2, J2SE 1.3 and J2EE 1.2 platforms through JavaIDL and RMI-IIOP.
-
-[.footnoteNumber]# 95.# [[a10315]]Component contract
-and client view of entity beans are described in the EJB Optional
-Features document link:Ejb.html#a9890[See EJB 3.2 Optional
-Features http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 96.# [[a10316]]Component contract
-and client view of entity beans are described in the EJB Optional
-Features document link:Ejb.html#a9890[See EJB 3.2 Optional
-Features http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 97.# [[a10317]]One way to include
-the tagged components in IORs is to create the object references using a
-Portable Object Adapter (POA) which is initialized with the appropriate
-transaction policies. Note that POA APIs are not required to be
-supported by server containers.
-
-[.footnoteNumber]# 98.# [[a10318]]If the
-InvocationPolicy is not present in the IOR, it is interpreted by the
-client as if the policy value was _CosTransactions::EITHER_ .
-
-[.footnoteNumber]# 99.# [[a10319]]When there are
-concurrent invocations on a component from multiple clients, a different
-principal may be associated with the thread of execution for each
-invocation.
-
-[.footnoteNumber]# 100.# [[a10320]]One way to achieve
-this is to configure a “trusted container list” for each EJB container
-which contains the list of intermediate client containers that are
-trusted. If the list is empty, then the target EJB container does not
-have a trust relationship with any intermediate container.
-
-[.footnoteNumber]# 101.# [[a10321]]This ciphersuite is
-mandatory for compliant TLS implementations as specified in
-link:Ejb.html#a9868[See RFC 2246: The TLS Protocol.
-ftp://ftp.isi.edu/in-notes/rfc2246.txt.].
-
-[.footnoteNumber]# 102.# [[a10322]]The term “resource”
-is used generically in this chapter to refer to these other environment
-entries as resources as well. Resources in the non-generic sense are
-described in section link:Ejb.html#a4159[See Resource Manager
-Connection Factory References].
-
-[.footnoteNumber]# 103.# [[a10323]]Component contract
-and client view of entity beans are described in the EJB Optional
-Features document link:Ejb.html#a9890[See EJB 3.2 Optional
-Features http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 104.# [[a10324]]Component contract
-and client view of entity beans are described in the EJB Optional
-Features document link:Ejb.html#a9890[See EJB 3.2 Optional
-Features http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 105.# [[a10325]]The Bean Provider
-may also use this syntax in the _beanName_ element of the _EJB_
-annotation.
-
-[.footnoteNumber]# 106.# [[a10326]]Connections obtained
-from the same resource manager connection factory through a different
-resource manager connection factory reference may be shareable.
-
-[.footnoteNumber]# 107.# [[a10327]]If the Bean Provider
-and Application Assembler do not define security roles, the Deployer
-will have to define security roles at deployment time.
-
-[.footnoteNumber]# 108.# [[a10328]]Component contract
-and client view of entity beans are described in the EJB Optional
-Features document link:Ejb.html#a9890[See EJB 3.2 Optional
-Features http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 109.# [[a10329]]Component contract
-and client view of entity beans are described in the EJB Optional
-Features document link:Ejb.html#a9890[See EJB 3.2 Optional
-Features http://jcp.org/en/jsr/detail?id=345.].
-
-[.footnoteNumber]# 110.# [[a10330]]If the business
-interface is a remote business interface that extends _java.rmi.Remote_
-, the _java.rmi.AccessException_ is thrown to the client instead.
-
-[.footnoteNumber]# 111.# [[a10331]]For example, the
-enterprise bean may be installed each time using a different bean name
-(as specified by means of the deployment descriptor).
-
-[.footnoteNumber]# 112.# [[a10332]]The calendar-based
-timer and non-persistent timer functionality is not supported for 2.1
-Entity beans.
-
-[.footnoteNumber]# 113.# [[a10333]]This functionality
-may be added in a future release of this specification.
-
-[.footnoteNumber]# 114.# [[a10334]]In the event of race
-conditions, extraneous calls to the timeout callback method may occur.
-
-[.footnoteNumber]# 115.# [[a10335]]Note that annotation
-java.lang.String attributes use the empty string ““ as a default, so the
-expression @Schedule(timezone=””, ...) will result in a null value from
-the corresponding ScheduleExpression.getTimezone() method.
-
-[.footnoteNumber]# 116.# [[a10336]]Note that the
-default value of the _info_ element of the _Schedule_ annotation is the
-empty string "" . The expression _@Schedule(info=_ "" _, ...)_ will also
-result in a null value from the timer’s _getInfo()_ method.
-
-[.footnoteNumber]# 117.# [[a10337]]There is currently
-no way to set the information object after timer creation. An API to do
-this may be added in a future release of this specification.
-
-[.footnoteNumber]# 118.# [[a10338]]This method may be
-specified on the bean class or on a superclass. If the _Timeout_
-annotation is used or the bean implements the _TimedObject_ interface,
-the _timeout-method_ deployment descriptor element, if specified, can
-only be used to refer to the same method.
-
-[.footnoteNumber]# 119.# [[a10339]]If the bean
-implements the _TimedObject_ interface, the _Timeout_ annotation may
-optionally be applied to the _ejbTimeout_ method.
-
-[.footnoteNumber]# 120.# [[a10340]]An earlier version
-of the specification required that timeout callbacks accept the _Timer_
-parameter but did not require that this parameter be listed when
-declared by means of the deployment descriptor. To preserve backward
-compatibility, a _timeout-method_ that does not include a _method-param_
-element for the _javax.ejb.Timer_ parameter may be used to match either
-a timeout method signature with or without a Timer parameter, if there
-is only one method with the specified name. If methods with the
-specified name are overloaded, a timeout-method element with an empty
-method-params element will be used to explicitly refer to a the no-arg
-timeout method.
-
-[.footnoteNumber]# 121.# [[a10341]]The
-concurrency-management-type Container may be specified for stateful
-session beans, but doing so has no impact on the semantics of
-concurrency management for such beans.
-
-[.footnoteNumber]# 122.# [[a10342]]This permission is
-necessary, for example, to allow enterprise beans to use the client
-functionality of the Java IDL and RMI-IIOP packages that are part of the
-Java 2 platform.
-
-[.footnoteNumber]# 123.# [[a10343]]This restriction may
-be removed in a future release of this specification.
-
-{empty}[.footnoteNumber]# 124.# [[a10344]]See
-link:Ejb.html#a182[See Pruning the EJB API]
-
-[.footnoteNumber]# 125.# [[a10345]]In general, the same
-database data should not be accessed by both Java Persistence entities
-and EJB 2.x entities within the same application: behavior is
-unspecified if data aliasing occurs.
-
-[.footnoteNumber]# 126.# [[a10346]]Support for more
-than one module is required for a Full Java EE platform product.
-Multi-module support is only required for Java EE profiles that require
-support for .ear files.
+[literal]
+footnote:a10218[Earlier releases of this specification distinguished a seventh role, that of the persistence provider. The role of the persistence provider is independent of that of the EJB specification, which assumes that a Java Persistence implementation may be pluggable. See <<a9851>>.]
+footnote:a10219[More literally, references are passed by value in the JVM: an argument variable of primitive type holds a value of that primitive type; an argument variable of a reference type hold a reference to the object. See <<a9876>>.]   
+footnote:a10220[This may not apply to stateless session beans; see <<a1065>>.]
+footnote:a10221[Note that the EJB 3.x session bean business interface is not an `EJBObject`. It is not valid to pass a reference to the remote business interface through a bean’s remote component interface.]
+footnote:a10222[It is part of the logic of an application designed using stateful session beans to designate a method that causes the removal of the stateful session (and thus allows for the reclamation of resources used by the session bean). This example assumes that the `finishShopping` method is such a `Remove` method. See <<a921>> for further discussion.]
+footnote:a10223[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is received instead.]
+footnote:a10225[This may not apply to stateless session beans; see <<a1065>>.]
+footnote:a10226[This may not apply to stateless session beans; see <<a1065>>.]
+footnote:a10227[Use of `javax.rmi.PortableRemoteObject.narrow` is not needed when the EJBContext `lookup` method is used to look up the remote home interface.]
+footnote:a10228[Note that this requirement does not apply to the `EntityManager` and `EntityManagerFactory` objects.]
+footnote:a10229[The container is not permitted to destroy a stateful session bean instance because it does not meet these requirements.]
+footnote:a10230[Note that the Java Serialization protocol dynamically determines whether or not an object is serializable. This means that it is possible to serialize an object of a serializable subclass of a non-serializable declared field type.]
+footnote:a10231[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10232[Except for the `javax.mail.Session` resource manager connection factory.]
+footnote:a10234[This is to allow the container to swap out an instance’s state through techniques other than the Java Serialization protocol. For example, the container’s Java Virtual Machine implementation may use a block of memory to keep the instance’s variables, and the container swaps the whole memory block to the disk instead of performing Java Serialization on the instance.]
+footnote:a10235[Any initialization methods defined for the bean by means of the `init-method` deployment descriptor element apply in addition to those defined by means of annotations.]   
+footnote:a10236[Any remove methods defined for the bean by means of the `remove-method` deployment descriptor element apply in addition to those defined by means of annotations.]   
+footnote:a10237[The concurrency management type `CONTAINER` may be specified for stateful session beans, but doing so has no impact on the semantics of concurrency management for such beans.]
+footnote:a10238[The `javax.ejb.ConcurrentAccessException` is a subclass of the `javax.ejb.EJBException`. If the business interface is a remote business interface that extends `java.rmi.Remote`, the client will receive the `java.rmi.RemoteException` instead.]
+footnote:a10239[Note that the existence of global JNDI names for the local and no-interface client views does not imply that cross-application access to those entries is required. See <<a242>> for more details.]
+footnote:a10240[If an `AroundConstruct` lifecycle callback interceptor is associated with the stateful session bean, the container follows the rules for the `AroundConstruct` interceptors defined in the _Interceptors_ specification <<a9887>>.]
+footnote:a10241[If a stateful session bean lifecycle callback interceptor method is invoked in the scope of a transaction, session synchronization callbacks for such transactions are not called on the bean instance — see section <<a2750>>.]
+footnote:a10242[Note that if the Java Persistence API is used, the persistence provider will use the beforeCompletion notification to automatically flush any updates to the container-managed persistence context to the database. See <<a9851>>.]
+footnote:a10243[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.NoSuchObjectException` is thrown to the client instead.]
+footnote:a10244[If the `Remove` annotation specifies the value of `retainIfException` as `true`, and the `Remove` method throws an application exception, the instance is not removed (and the `PreDestroy` lifecycle callback interceptor methods are not invoked).]
+footnote:a10245[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.NoSuchObjectException` is thrown to the client instead.]
+footnote:a10246[If a client calls lifecycle callback method through a business interface or a no-interface view, the method is treated like a business method.]
+footnote:a10247[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.NoSuchObjectException` is thrown to the client instead.]
+footnote:a10248[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+footnote:a10249[If an `AroundConstruct` lifecycle callback interceptor is associated with the stateless session bean, the container follows the rules for the `AroundConstruct` interceptors defined in the _Interceptors_ specification <<a9887>>.]
+footnote:a10250[If a client calls lifecycle callback method through a business interface or a no-interface view, the method is treated like a business method.]
+footnote:a10251[If an `AroundConstruct` lifecycle callback interceptor is associated with the singleton session bean, the container follows the rules for the `AroundConstruct` interceptors defined in the _Interceptors_ specification <<a9887>>.]
+footnote:a10252[If a client calls lifecycle callback method through a business interface or a no-interface view, the method is treated like a business method.]
+footnote:a10253[Note that the interfaces provided by the Bean Provider may have been generated by tools.]
+footnote:a10254[Note that the EJB 2.x client view is not supported for singleton session beans.]
+footnote:a10255[Except for singleton session beans.]
+footnote:a10256[Note that this might result from the use of default interceptors, for example.]
+footnote:a10257[It is also an error if the `Local` and/or `Remote` annotations are specified both on the bean class and on the referenced interface and the values differ.]
+footnote:a10258[If `PrePassivate` or `PostActivate` lifecycle callbacks are defined for message-driven beans, they are ignored.]
+footnote:a10259[If an `AroundConstruct` lifecycle callback interceptor is associated with the message-driven bean, the container follows the rules for the `AroundConstruct` interceptors defined in the _Interceptors_ specification <<a9887>>.]
+footnote:a10260[This might result from the use of default interceptor classes, for example.]
+footnote:a10261[This restriction may be removed in a future release of this specification.]
+footnote:a10262[See <<a1254>>.]
+footnote:a10263[Note that environment entries other than resources are specified with the `Resource` annotation and/or `resource-ref` deployment descriptor element as well.]
+footnote:a10264[In this chapter we use the `TransactionAttribute` annotation values to refer to transaction attributes. The deployment descriptor may be used as an overriding mechanism or an alternative to the use of annotations.]
+footnote:a10265[The use of the term "container" here encompasses both the container and the messaging provider. When the contracts outlined in <<a9863>> are used, it may be the messaging provider that starts the transaction.]
+footnote:a10266[This restriction may be removed in a future release of this specification.]
+footnote:a10267[However, use of the Java Persistence API `EntityTransaction` interface is supported. See <<a9851>> for a discussion of resources used in the Java Persistence API that may be "unaware" of the presence of JTA transactions, and a description of the `EntityTransaction` interface and its use.]
+footnote:a10268[Note that the Bean Provider must use the pre-passivate callback method here to close the connections and set the instance variables for the connection to null.]
+footnote:a10269[REQUIRED is the default transaction attribute value for container managed transaction demarcation. The explicit specification of the transaction attribute is therefore not required in this example.]
+footnote:a10270[If a stateful session bean's `PostConstruct`, `PreDestroy`, `PrePassivate` or `PostActivate` lifecycle callback interceptor methods are invoked in the scope of a transaction, `SessionSynchronization` callbacks for such transactions are not called on the bean instance.]
+footnote:a10271[However, use of the Java Persistence API `EntityTransaction` interface is supported. See <<a9851>> for a discussion of resources used in the Java Persistence API that may be "unaware" of the presence of JTA transactions, and a description of the `EntityTransaction` interface and its use.]
+footnote:a10272[The container typically relies on a transaction manager that is part of the EJB server to perform the two-phase commit across all the enlisted resource managers. If only a single resource manager is involved in the transaction and the deployment descriptor indicates that connection sharing may be used, the container may use the local transaction optimization. See <<a9861>> and <<a9863>> for further discussion.]
+footnote:a10273[Note that if the bean is a singleton session bean, the instance must not be discarded unless the exception occurred in an `AroundConstruct`, `PostConstruct` or `PreDestroy` lifecycle interceptor method.]
+footnote:a10274[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+footnote:a10275[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `javax.transaction.TransactionRequiredException` is thrown to the client instead.]
+footnote:a10276[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+footnote:a10277[T2 if the method is an asynchronous method.]
+footnote:a10278[See <<a608>>.]   
+footnote:a10279[See <<a1702>>.]
+footnote:a10280[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10281[This diamond problem applies only to the case when B and C are in the same transaction.]
+footnote:a10282[This may not be the case where web services protocols are used. See <<a9873>>.]
+footnote:a10283[If a transaction had been marked for rollback, the value of the rollback element has no effect.]
+footnote:a10284[Note that the enterprise bean business method may attempt to recover from a `RemoteException`. The text in this subsection applies only to the case when the business method does not wish to recover from the `RemoteException`.]
+footnote:a10285[A checked exception is one that is not a subclass of `java.lang.RuntimeException`.]
+footnote:a10286[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+footnote:a10287[The caller can be another enterprise bean or an arbitrary client program.]
+footnote:a10288[_Log the exception or error_ means that the container logs the exception or error so that the System Administrator is alerted of the problem.]
+footnote:a10289[_Discard instance_ means that the container must not invoke any business methods or container callbacks on the instance. Discarding does not apply if the bean is a singleton session bean.]
+footnote:a10290[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `javax.transaction.TransactionRolledbackException` is thrown to the client, which will receive this exception.]
+footnote:a10291[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client, which will receive this exception.]
+footnote:a10292[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client, which will receive this exception.]
+footnote:a10293[Discarding does not apply if the bean is a singleton session bean.]
+footnote:a10294[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client, which will receive this exception.]
+footnote:a10296[The caller can be another enterprise bean or an arbitrary client program. This case is not applicable for methods of the web service endpoint.]
+footnote:a10297[_Log the exception or error_ means that the container logs the exception or error so that the System Administrator is alerted of the problem.]
+footnote:a10298[_Discard instance_ means that the container must not invoke any business methods or container callbacks on the instance. Discarding does not apply if the bean is a singleton session bean.]
+footnote:a10299[Throw `RemoteException` to web service client means that the container maps the `RemoteException` to the appropriate SOAP fault. See <<a9873>>.]
+footnote:a10300[Discarding does not apply if the bean is a singleton session bean.]
+footnote:a10301[Throw `RemoteException` to web service client means that the container maps the `RemoteException` to the appropriate SOAP fault. See <<a9873>>.]
+footnote:a10302[_Log the exception or error_ means that the container logs the exception or error so that the System Administrator is alerted of the problem.]
+footnote:a10303[_Discard instance_ means that the container must not invoke any methods on the instance.]
+footnote:a10304[_Log the exception or error_ means that the container logs the exception or error so that the System Administrator is alerted of the problem.]
+footnote:a10305[_Discard instance_ means that the container must not invoke any methods on the instance. Discarding does not apply if the bean is a singleton session bean.]
+footnote:a10306[_Log the exception or error_ means that the container logs the exception or error so that the System Administrator is alerted of the problem.]
+footnote:a10307[_Discard instance_ means that the container must not invoke any methods on the instance. Discarding does not apply if the bean is a singleton session bean.]
+footnote:a10308[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+footnote:a10309[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `javax.transaction.TransactionRolledbackException` is thrown to the client instead.]
+footnote:a10310[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.NoSuchObjectException` is thrown to the client instead.]
+footnote:a10311[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+footnote:a10312[If a transaction had been marked for rollback, the setting on the application exception has no effect.]
+footnote:a10313[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10314[CORBA APIs and earlier versions of the IIOP protocol are already included in the J2SE 1.2, J2SE 1.3 and J2EE 1.2 platforms through JavaIDL and RMI-IIOP.]
+footnote:a10315[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10316[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10317[One way to include the tagged components in IORs is to create the object references using a Portable Object Adapter (POA) which is initialized with the appropriate transaction policies. Note that POA APIs are not required to be supported by server containers.]
+footnote:a10318[If the InvocationPolicy is not present in the IOR, it is interpreted by the client as if the policy value was `CosTransactions::EITHER`.]
+footnote:a10319[When there are concurrent invocations on a component from multiple clients, a different principal may be associated with the thread of execution for each invocation.]
+footnote:a10320[One way to achieve this is to configure a "trusted container list" for each EJB container which contains the list of intermediate client containers that are trusted. If the list is empty, then the target EJB container does not have a trust relationship with any intermediate container.]
+footnote:a10321[This ciphersuite is mandatory for compliant TLS implementations as specified in <<a9868>>.]
+footnote:a10322[The term "resource" is used generically in this chapter to refer to these other environment entries as resources as well. Resources in the non-generic sense are described in section <<a4159>>.]
+footnote:a10323[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10324[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10325[The Bean Provider may also use this syntax in the `beanName` element of the `EJB` annotation.]
+footnote:a10326[Connections obtained from the same resource manager connection factory through a different resource manager connection factory reference may be shareable.]
+footnote:a10327[If the Bean Provider and Application Assembler do not define security roles, the Deployer will have to define security roles at deployment time.]
+footnote:a10328[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10329[Component contract and client view of entity beans are described in the EJB Optional Features document <<a9890>>.]
+footnote:a10330[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.AccessException` is thrown to the client instead.]
+footnote:a10331[For example, the enterprise bean may be installed each time using a different bean name (as specified by means of the deployment descriptor).]
+footnote:a10332[The calendar-based timer and non-persistent timer functionality is not supported for 2.1 Entity beans.]
+footnote:a10333[This functionality may be added in a future release of this specification.]
+footnote:a10334[In the event of race conditions, extraneous calls to the timeout callback method may occur.]
+footnote:a10335[Note that annotation `java.lang.String` attributes use the empty string "" as a default, so the expression @Schedule(timezone="", ...) will result in a null value from the corresponding ScheduleExpression.getTimezone() method.]
+footnote:a10336[Note that the default value of the `info` element of the `Schedule` annotation is the empty string "". The expression `@Schedule(info="", ...)` will also result in a null value from the timer’s `getInfo()` method.]
+footnote:a10337[There is currently no way to set the information object after timer creation. An API to do this may be added in a future release of this specification.]
+footnote:a10338[This method may be specified on the bean class or on a superclass. If the `Timeout` annotation is used or the bean implements the `TimedObject` interface, the `timeout-method` deployment descriptor element, if specified, can only be used to refer to the same method.]
+footnote:a10339[If the bean implements the `TimedObject` interface, the `Timeout` annotation may optionally be applied to the `ejbTimeout` method.]
+footnote:a10340[An earlier version of the specification required that timeout callbacks accept the `Timer` parameter but did not require that this parameter be listed when declared by means of the deployment descriptor. To preserve backward compatibility, a `timeout-method` that does not include a `method-param` element for the `javax.ejb.Timer` parameter may be used to match either a timeout method signature with or without a Timer parameter, if there is only one method with the specified name. If methods with the specified name are overloaded, a `timeout-method` element with an empty `method-params` element will be used to explicitly refer to a the no-arg timeout method.]
+footnote:a10341[The concurrency-management-type Container may be specified for stateful session beans, but doing so has no impact on the semantics of concurrency management for such beans.]
+footnote:a10342[This permission is necessary, for example, to allow enterprise beans to use the client functionality of the Java IDL and RMI-IIOP packages that are part of the Java 2 platform.]
+footnote:a10343[This restriction may be removed in a future release of this specification.]
+footnote:a10344[See <<a182>>.]
+footnote:a10345[In general, the same database data should not be accessed by both Java Persistence entities and EJB 2.x entities within the same application: behavior is unspecified if data aliasing occurs.]
+footnote:a10346[Support for more than one module is required for a Full Java EE platform product. Multi-module support is only required for Java EE profiles that require support for .ear files.]

@@ -563,7 +563,9 @@ deny
 java.net.SocketPermission
 
 {empty}grant ”*”, “connect”
-link:#a10342[122]
+footnote:a10342[This permission is necessary, for example, to allow 
+enterprise beans to use the client functionality of the Java IDL and 
+RMI-IIOP packages that are part of the Java 2 platform.]
 
 deny all other
 
@@ -666,7 +668,8 @@ java:comp/TransactionSynchronizationRegistry.
 
 {empty}It is illegal to associate JTA
 transactional interceptors with Enterprise JavaBeans. The EJB Container
-should fail deployment of such applications.link:#a10343[123]
+should fail deployment of such applications.footnote:a10343[This restriction 
+may be removed in a future release of this specification.]
 
 The other JTA interfaces are low-level
 transaction manager and resource manager integration interfaces, and are
