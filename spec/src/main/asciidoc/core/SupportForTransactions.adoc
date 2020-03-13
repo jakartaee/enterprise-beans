@@ -2067,8 +2067,9 @@ specifies the container’s behavior required for this scenario.
 ==== Transaction "Diamond" Scenario with an Entity Object
 
 An entity
-object footnote:a10279[See <<a1702>>.] may be accessed by multiple 
-clients in the
+object footnote:a10280[Component contract and client view of entity 
+beans are described in the EJB Optional Features document <<a9890>>.] 
+may be accessed by multiple clients in the
 same transaction. For example, program A may start a transaction, call
 program B and program C in the transaction context, and then commit the
 transaction. If programs B and C access the same entity object, the
@@ -2119,8 +2120,7 @@ topologies that may lead to a diamond involving an entity object.
 
 This subsection specifies the EJB container’s
 responsibilities with respect to the diamond case involving an entity
-object.footnote:a10280[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.]
+object.footnote:a10280[]
 
 The EJB specification requires that the
 container provide support for local
@@ -2144,8 +2144,7 @@ remote client view is used).
 
 This subsection specifies the Bean Provider’s
 responsibilities with respect to the diamond case involving an entity
-object.footnote:a10280[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.]
+object.footnote:a10280[]
 
 The diamond case is transparent to the Bean
 Provider—the Bean Provider does not have to code the enterprise bean
@@ -2157,9 +2156,7 @@ bean and does not change the semantics of the bean.
 
 This subsection specifies the Application
 Assembler and Deployer’s responsibilities with respect to the diamond
-case involving an entity object.footnote:a10280[Component contract and 
-client view of entity beans are described in the EJB Optional Features 
-document <<a9890>>.]
+case involving an entity object.footnote:a10280[]
 
 The Application Assembler and Deployer should
 be aware that distributed diamonds might
