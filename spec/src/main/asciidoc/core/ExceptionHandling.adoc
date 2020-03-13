@@ -755,7 +755,7 @@ Discard instance.
 
 Throw `EJBException` that wraps the original exception to resource adapter
 |===
-*Notes:*
+*Notes:* +
 [[a10302, Note A]]  [A] _Log the exception or
 error_ means that the container logs the exception or error so that the
 System Administrator is alerted of the problem. +
