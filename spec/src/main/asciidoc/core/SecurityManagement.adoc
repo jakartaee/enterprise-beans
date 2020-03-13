@@ -510,15 +510,13 @@ security role references are linked to security roles.
 [[a5121]]
 === Responsibilities of the Bean Provider and/or Application Assembler
 
-
-
 The Bean Provider
 and Application Assembler (which could be the same party as the Bean
-Provider) may define a security view of the enterprise beans contained
+Provider) may define a _security view_ of the enterprise beans contained
 in the ejb-jar file. Providing the security view is optional for the
 Bean Provider and Application Assembler.
 
-The main reason for providing the security
+_The main reason for providing the security
 view of the enterprise beans is to simplify the Deployer’s job. In the
 absence of a security view of an application, the Deployer needs
 detailed knowledge of the application in order to deploy the application
@@ -526,30 +524,30 @@ securely. For example, the Deployer would have to know what each
 business method does to determine which users can call it. The security
 view defined by the Bean Provider or Application Assembler presents a
 more consolidated view to the Deployer, allowing the Deployer to be less
-familiar with the application.
+familiar with the application._
 
 The security view consists of a set of
-security roles. A security role is a
+_security roles_. A security role is a
 semantic grouping of permissions that a given type of users of an
 application must have in order to successfully use the application.
 
 The Bean Provider
-or Application Assembler defines method permissions for each security
+or Application Assembler defines _method permissions_ for each security
 role. A method permission is a permission to
 invoke a specified group of methods of the enterprise beans’ business
 interface, no-interface view, home interface, component interface,
 and/or web service endpoint.
 
-It is important to keep in mind that the
+_It is important to keep in mind that the
 security roles are used to define the logical security view of an
 application. They should not be confused with the user groups, users,
 principals, and other concepts that exist in the target enterprise’s
-operational environment.
+operational environment._
 
-In special cases, a qualified Deployer may
+_In special cases, a qualified Deployer may
 change the definition of the security roles for an application, or
 completely ignore them and secure the application using a different
-mechanism that is specific to the operational environment.
+mechanism that is specific to the operational environment._
 
 [[a5130]]
 ==== Security Roles
@@ -564,7 +562,7 @@ security view of the application.
 
 Because the Bean Provider and Application
 Assembler do not, in general, know the security environment of the
-operational environment, the security roles are meant to be logical
+operational environment, the security roles are meant to be _logical_
 roles (or actors), each representing a type of user that should have the
 same access rights to the application.
 
@@ -572,7 +570,7 @@ The Deployer then assigns user groups and/or
 user accounts defined in the operational environment to the security
 roles defined by the Bean Provider and Application Assembler.
 
-A security role with the name “**” is defined
+A security role with the name `"\\**"` is defined
 by the Container, and is intended to be used by the Bean Provider,
 Application Assembler, or Deployer to indicate that the caller must log
 on or authenticate to invoke a method or to perform some processing
@@ -585,8 +583,8 @@ role. Moreover the assignment of principals to the container role with
 this name should not be subject to reconfiguration that would remove any
 authenticated user from membership in the container role. That said,
 when an application defines a security role in its deployment descriptor
-with the name “**”, this application role is applied wherever the
-application or its deployment descriptor refers to a role named “**”.
+with the name `"**"`, this application role is applied wherever the
+application or its deployment descriptor refers to a role named `"**"`.
 
 Defining the security roles in the metadata
 annotations and/or deployment descriptor is
@@ -597,121 +595,73 @@ Provider and Application Assembler chose not to pass any security
 deployment related instructions to the Deployer.
 
 If Java language metadata annotations are
-used, the Bean Provider uses the _DeclareRoles_ and _RolesAllowed_
+used, the Bean Provider uses the `DeclareRoles` and `RolesAllowed`
 annotations to define the security roles. The set of security roles used
 by the application is taken to be the aggregation of the security roles
-defined by the security role names used in the _DeclareRoles_ and
-_RolesAllowed_ annotations. The Bean Provider may augment the set of
+defined by the security role names used in the `DeclareRoles` and
+`RolesAllowed` annotations. The Bean Provider may augment the set of
 security roles defined for the application by annotations in this way by
-means of the _security-role_ deployment descriptor element.
+means of the `security-role` deployment descriptor element.
 
 If the deployment descriptor is used, the
-Bean Provider and/or Application Assembler uses the _security-role_
+Bean Provider and/or Application Assembler uses the `security-role`
 deployment descriptor element as follows:
 
-Define each security role using a
-security-role element. An application
-security role with name “**” should not be defined as the Container must
+* Define each security role using a
+`security-role` element. An application
+security role with name `"**"` should not be defined as the Container must
 provide a container security role with this name.
 
-Use the role-name element to define the name
-of the security role.
+* Use the `role-name` element to define the name of the security role.
 
-Optionally, use the description element to
+* Optionally, use the `description` element to
 provide a description of a security role.
 
 The following example illustrates security
 roles definition in a deployment descriptor.
-
- ...
-
+[source, xml]
+----
+...
 <assembly-descriptor>
-
- <security-role>
-
- <description>
-
- This role includes the employees of the
-
- enterprise who are allowed to access the
-
- employee self-service application. This role
-
- is allowed only to access his/her own
-
- information.
-
- </description>
-
- <role-name>employee</role-name>
-
- </security-role>
-
-
-
- <security-role>
-
- <description>
-
- This role includes the employees of the
-human
-
- resources department. The role is allowed to
-
- view and update all employee records.
-
- </description>
-
- <role-name>hr-department</role-name>
-
- </security-role>
-
-
-
- <security-role>
-
- <description>
-
- This role includes the employees of the
-payroll
-
- department. The role is allowed to view and
-
- update the payroll entry for any employee.
-
- </description>
-
- <role-name>payroll-department</role-name>
-
- </security-role>
-
-
-
- <security-role>
-
- <description>
-
- This role should be assigned to the
-personnel
-
- authorized to perform administrative
-functions
-
- for the employee self-service application.
-
- This role does not have direct access to
-
- sensitive employee and payroll information.
-
- </description>
-
- <role-name>admin</role-name>
-
- </security-role>
-
- ...
-
+    <security-role>
+        <description>
+            This role includes the employees of the
+            enterprise who are allowed to access the
+            employee self-service application. This role
+            is allowed only to access his/her own
+            information.
+        </description>
+        <role-name>employee</role-name>
+    </security-role>
+    <security-role>
+        <description>
+            This role includes the employees of the human
+            resources department. The role is allowed to
+            view and update all employee records.
+        </description>
+        <role-name>hr-department</role-name>
+    </security-role>
+    <security-role>
+        <description>
+            This role includes the employees of the payroll
+            department. The role is allowed to view and
+            update the payroll entry for any employee.
+        </description>
+        <role-name>payroll-department</role-name>
+    </security-role>
+    <security-role>
+        <description>
+            This role should be assigned to the personnel
+            authorized to perform administrative functions
+            for the employee self-service application.
+            This role does not have direct access to
+            sensitive employee and payroll information.
+        </description>
+        <role-name>admin</role-name>
+    </security-role>
+    ...
 </assembly-descriptor>
+----
 
 [[a5186]]
 ==== Method Permissions
@@ -733,9 +683,9 @@ entity footnote:a10328[Component contract and client view of entity beans
 are described in the EJB Optional Features document <<a9890>>.] beans, 
 including all their
 superinterfaces (including the methods of the EJBHome and EJBObject
-interfaces and/or EJBLocalHome and EJBLocalObject interfaces). The
-method permissions relation includes the pair (R, M) if and only if the
-security role R is allowed to invoke the method M.
+interfaces and/or `EJBLocalHome` and `EJBLocalObject` interfaces). The
+method permissions relation includes the pair _(R, M)_ if and only if the
+security role _R_ is allowed to invoke the method _M_.
 
 ===== Specification of Method Permissions with Metadata Annotations
 
@@ -747,18 +697,18 @@ The method permissions for the methods of a
 bean class may be specified on the class, the business methods of the
 class, or both.
 
-The _RolesAllowed_ , _PermitAll_ , and
-_DenyAll_ annotations are used to specify method permissions. The value
-of the _RolesAllowed_ annotation is a list of security role names to be
+The `RolesAllowed`, `PermitAll`, and
+`DenyAll` annotations are used to specify method permissions. The value
+of the `RolesAllowed` annotation is a list of security role names to be
 mapped to the security roles that are permitted to execute the specified
-method(s). The _PermitAll_ annotation specifies that all security roles,
+method(s). The `PermitAll` annotation specifies that all security roles,
 including any unauthenticated roles, are permitted to execute the
-specified method(s). The _DenyAll_ annotation specifies that no security
+specified method(s). The `DenyAll` annotation specifies that no security
 roles, including any unauthenticated roles, are permitted to execute the
 specified method(s).
 
-Specifying the _RolesAllowed_ or _PermitAll_
-or DenyAll annotation on the bean class means that it applies to all
+Specifying the `RolesAllowed` or `PermitAll`
+or `DenyAll` annotation on the bean class means that it applies to all
 applicable business methods of the class.
 
 Method permissions may be specified on a
@@ -768,63 +718,43 @@ specified on the bean class.
 If the bean class has superclasses, the
 following additional rules apply.
 
-A method permissions value specified on a
+* A method permissions value specified on a
 superclass _S_ applies to the business methods defined by _S_ .
 
-A method permissions value may be specified
+* A method permissions value may be specified
 on a business method _M_ defined by class _S_ to override for method _M_
 the method permissions value explicitly or implicitly specified on the
-class _S_ .
+class _S_.
 
-If a method _M_ of class _S_ overrides a
-business method defined by a superclass of _S_ , the method permissions
-value of _M_ is determined by the above rules as applied to class _S_ .
-
-
+* If a method _M_ of class _S_ overrides a
+business method defined by a superclass of _S_, the method permissions
+value of _M_ is determined by the above rules as applied to class _S_.
 
 Example:
-
+[source, java]
+----
 @RolesAllowed("admin")
-
-public class SomeClass \{
-
- public void aMethod () \{...}
-
- public void bMethod () \{...}
-
- ...
-
+public class SomeClass {
+    public void aMethod () {...}
+    public void bMethod () {...}
+    ...
 }
 
+@Stateless 
+public class MyBean extends SomeClass implements A {
+    @RolesAllowed("HR")
+    public void aMethod () {...}
 
-
-@Stateless public class MyBean extends
-SomeClass implements A \{
-
-
-
- @RolesAllowed("HR")
-
- public void aMethod () \{...}
-
-
-
- public void cMethod () \{...}
-
- ...
-
+    public void cMethod () {...}
+    ...
 }
+----
 
-
-
-Assuming _aMethod_ , _bMethod_ , _cMethod_
-are methods of business interface _A_ , the method permissions values of
-methods _aMethod_ and _bMethod_ are _RolesAllowed(_ " _HR_ " _)_ and
-_RolesAllowed(_ " _admin_ " _)_ respectively. The method permissions for
-method _cMethod_ have not been specified (see Sections
-link:Ejb.html#a5219[See Specification of Method Permissions in
-the Deployment Descriptor] and link:Ejb.html#a5291[See
-Unspecified Method Permissions]) .
+Assuming `aMethod`, `bMethod`, `cMethod`
+are methods of business interface `A`, the method permissions values of
+methods `aMethod` and `bMethod` are `RolesAllowed("HR")` and
+`RolesAllowed("admin")` respectively. The method permissions for
+method `cMethod` have not been specified (see <<a5219>> and <<a5291>>).
 
 [[a5219]]
 ===== Specification of Method Permissions in the Deployment Descriptor
@@ -845,92 +775,97 @@ granularity of overriding is on the per-method basis.
 
 The Bean Provider
 or Application Assembler defines the method permissions relation in the
-deployment descriptor using the method-permission elements as follows.
+deployment descriptor using the `method-permission` elements as follows.
 
-Each method-permission element includes a
+* Each `method-permission` element includes a
 list of one or more security roles and a list of one or more methods.
 All the listed security roles are allowed to invoke all the listed
-methods. Each security role in the list is identified by the role-name
+methods. Each security role in the list is identified by the `role-name`
 element, and each method (or a set of methods, as described below) is
-identified by the method element. An optional description can be
-associated with a method-permission element using the description
+identified by the `method` element. An optional description can be
+associated with a `method-permission` element using the description
 element.
 
-If the role name “**” is included in the list
+* If the role name `"**"` is included in the list
 of allowed roles, and the application has not defined in its deployment
 descriptor an application security role with this name, then the list of
 allowed roles includes every and any authenticated user.
 
-The method permissions relation is defined as
+* The method permissions relation is defined as
 the union of all the method permissions defined in the individual
-method-permission elements.
+`method-permission` elements.
 
-A security role or a method may appear in
-multiple method-permission elements.
+* A security role or a method may appear in
+multiple `method-permission` elements.
 
 The Bean Provider or Application Assembler
 can indicate that all roles, including any unauthenticated roles, are
 permitted to execute one or more specified methods (i.e., the methods
 should not be “checked” for authorization prior to invocation by the
-container). The _unchecked_ element is used instead of a role name in
-the _method-permission_ element to indicate that all roles, including
+container). The `unchecked` element is used instead of a role name in
+the `method-permission` element to indicate that all roles, including
 any unauthenticated roles, are permitted.
 
 If the method permission relation specifies
-both the _unchecked_ element for a given method and one or more security
+both the `unchecked` element for a given method and one or more security
 roles, all roles are permitted for the specified methods.
 
-The _exclude-list_
- element can be used to indicate the set of
+The `exclude-list` element can be used to indicate the set of
 methods that should not be called. The Deployer should configure the
 enterprise bean’s security such that no access is permitted to any
-method contained in the _exclude-list_ .
+method contained in the `exclude-list`.
 
 If a given method is specified both in the
-_exclude-list_ element and in the method permission relation, the
+`exclude-list` element and in the method permission relation, the
 Deployer should configure the enterprise bean’s security such that no
 access is permitted to the method.
 
 The method
-element uses the ejb-name, method-name, and method-params elements to
+element uses the `ejb-name`, `method-name`, and `method-params` elements to
 denote one or more methods of an enterprise bean’s business interface,
 home interface, component interface, no-interface view, and/or web
 service endpoint. There are three legal styles for composing the method
 element:
 
- +
-<method> +
-<ejb-name>EJBNAME</ejb-name> +
-<method-name>*</method-name> +
-</method> +
- +
+*Style 1:*
+[source, xml, subs=+quotes]
+----
+<method>
+    <ejb-name>__EJBNAME__</ejb-name>
+    <method-name>__*__</method-name>
+</method>
+----
 This style is used for referring to all of the methods of the business,
 home, and component interfaces, no-interface view, and web service
 endpoint of a specified enterprise bean.
 
- +
-<method> +
-<ejb-name>EJBNAME</ejb-name> +
-<method-name>METHOD</method-name> +
-</method> +
- +
+*Style 2:*
+[source, xml, subs=+quotes]
+----
+<method>
+    <ejb-name>__EJBNAME__</ejb-name>
+    <method-name>__METHOD__</method-name>
+</method>
+----
 This style is used for referring to a specified method of the business,
 home, or component interface, no-interface view, or web service endpoint
 of the specified enterprise bean. If there are multiple methods with the
 same overloaded name, this style refers to all of the overloaded
 methods.
 
- +
-<method> +
-<ejb-name>EJBNAME</ejb-name> +
-<method-name>METHOD</method-name> +
-<method-params> +
-<method-param>PARAMETER_1</method-param> +
-... +
-<method-param>PARAMETER_N</method-param> +
-</method-params> +
-</method> +
- +
+*Style 3:*
+[source, xml, subs=+quotes]
+----
+<method>
+    <ejb-name>__EJBNAME__</ejb-name>
+        <method-name>__METHOD__</method-name>
+        <method-params>
+        <method-param>__PARAMETER_1__</method-param>
+        ...
+        <method-param>__PARAMETER_N__</method-param>
+    </method-params>
+</method>
+----
 This style is used to refer to a specified method within a set of
 methods with an overloaded name. The method must be defined in the
 specified enterprise bean’s business, home, or component interface,
@@ -938,7 +873,7 @@ no-interface view, or web service endpoint. If there are multiple
 methods with the same overloaded name, however, this style refers to all
 of the overloaded methods.
 
-The optional _method-intf_ element can be
+The optional `method-intf` element can be
 used to differentiate between methods with the same name and signature
 that are multiply defined across the business, component, or home
 interfaces, no-interface view, and/or web service endpoint. If the same
@@ -952,125 +887,70 @@ interfaces.
 The following example illustrates how
 security roles are assigned method permissions in the deployment
 descriptor:
-
+[source, xml]
+----
+...
+<method-permission>
+    <role-name>employee</role-name>
+    <method>
+        <ejb-name>EmployeeService</ejb-name>
+        <method-name>*</method-name>
+    </method>
+</method-permission>
+<method-permission>
+    <role-name>employee</role-name>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>findByPrimaryKey</method-name>
+    </method>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>getEmployeeInfo</method-name>
+    </method>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>updateEmployeeInfo</method-name>
+    </method>
+</method-permission>
+<method-permission>
+    <role-name>payroll-department</role-name>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>findByPrimaryKey</method-name>
+    </method>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>getEmployeeInfo</method-name>
+    </method>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>updateEmployeeInfo</method-name>
+    </method>
+    <method>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <method-name>updateSalary</method-name>
+    </method>
+</method-permission>
+<method-permission>
+    <role-name>admin</role-name>
+    <method>
+        <ejb-name>EmployeeServiceAdmin</ejb-name>
+        <method-name>*</method-name>
+    </method>
+</method-permission>
  ...
-
- <method-permission>
-
- <role-name>employee</role-name>
-
- <method>
-
- <ejb-name>EmployeeService</ejb-name>
-
- <method-name>*</method-name>
-
- </method>
-
- </method-permission>
-
-
-
- <method-permission>
-
- <role-name>employee</role-name>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
- <method-name>findByPrimaryKey</method-name>
-
- </method>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
- <method-name>getEmployeeInfo</method-name>
-
- </method>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
-
-<method-name>updateEmployeeInfo</method-name>
-
- </method>
-
- </method-permission>
-
-
-
- <method-permission>
-
- <role-name>payroll-department</role-name>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
- <method-name>findByPrimaryKey</method-name>
-
- </method>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
- <method-name>getEmployeeInfo</method-name>
-
- </method>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
-
-<method-name>updateEmployeeInfo</method-name>
-
- </method>
-
- <method>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
- <method-name>updateSalary</method-name>
-
- </method>
-
- </method-permission>
-
-
-
- <method-permission>
-
- <role-name>admin</role-name>
-
- <method>
-
- <ejb-name>EmployeeServiceAdmin</ejb-name>
-
- <method-name>*</method-name>
-
- </method>
-
- </method-permission>
-
- ...
+----
 
 [[a5291]]
 ===== Unspecified Method Permissions
 
 It is possible that some methods are not
-assigned to any security roles nor annotated as _DenyAll_ or contained
-in the _exclude-list_ element. In this case, the Deployer should assign
+assigned to any security roles nor annotated as `DenyAll` or contained
+in the `exclude-list` element. In this case, the Deployer should assign
 method permissions for all of the unspecified methods, either by
-assigning them to security roles, or by marking them as unchecked. If
+assigning them to security roles, or by marking them as `unchecked`. If
 the Deployer does not assigned method permissions to the unspecified
-methods, those methods must be treated by the container as _unchecked_ .
+methods, those methods must be treated by the container as `unchecked`.
 
 [[a5293]]
 ==== Linking Security Role References to Security Roles
@@ -1079,79 +959,56 @@ The application's references to security
 roles are linked to the security roles defined for the application. In
 the absence of any explicit linking, a security role reference will be
 linked to a security role having the same name. This requirement also
-applies to role references with value “**”, and an explicit mapping
-should only be defined for a role reference with value “**” when the
+applies to role references with value `"\\**"`, and an explicit mapping
+should only be defined for a role reference with value `"**"` when the
 reference needs to be linked to an application role with name other than
-“**”.
+`"**"`.
 
 The Application Assembler uses a
-security-role-ref element to explicitly link a role reference by a
+`security-role-ref` element to explicitly link a role reference by a
 component to a security role defined by annotation and/or by
-security-role element (as described in section
-link:Ejb.html#a5130[See Security Roles]). The linkage is made
-explicit using the role-link element of the security-role-ref element;
-in which case the value of the role-link element must be the name of one
-of the security roles defined by annotation and/or security-role
+`security-role` element (as described in <<a5130>>). The linkage is made
+explicit using the `role-link` element of the `security-role-ref` element;
+in which case the value of the `role-link` element must be the name of one
+of the security roles defined by annotation and/or `security-role`
 element.
 
-A security-role-ref element need not be
+A `security-role-ref` element need not be
 defined for a role reference that is to be mapped to a security-role
-with the same name as the role reference, and when a role-link is not
-specified within a security-role-ref, the reference is implicitly mapped
+with the same name as the role reference, and when a `role-link` is not
+specified within a `security-role-ref`, the reference is implicitly mapped
 to the security role with the same name as the reference.
 
 The following deployment descriptor example
-shows how to link the security role reference named payroll to the
-security role named payroll-department.
-
- ...
-
- <enterprise-beans>
-
- ...
-
- <session>
-
- <ejb-name>AardvarkPayroll</ejb-name>
-
-
-<ejb-class>com.aardvark.payroll.PayrollBean</ejb-class>
-
- ...
-
- <security-role-ref>
-
- <description>
-
- This role should be assigned to the
-
- employees of the payroll department.
-
- Members of this role have access to
-
- anyone’s payroll record.
-
- The role has been linked to the
-
- payroll-department role.
-
- </description>
-
- <role-name>payroll</role-name>
-
- <role-link>payroll-department</role-link>
-
- </security-role-ref>
-
- ...
-
- </session>
-
- ...
-
- </enterprise-beans>
-
- ...
+shows how to link the security role reference named `payroll` to the
+security role named `payroll-department`.
+[source, xml]
+----
+...
+<enterprise-beans>
+    ...
+    <session>
+        <ejb-name>AardvarkPayroll</ejb-name>
+        <ejb-class>com.aardvark.payroll.PayrollBean</ejb-class>
+        ...
+        <security-role-ref>
+            <description>
+                This role should be assigned to the
+                employees of the payroll department.
+                Members of this role have access to
+                anyone’s payroll record.
+                The role has been linked to the
+                payroll-department role.
+            </description>
+            <role-name>payroll</role-name>
+            <role-link>payroll-department</role-link>
+        </security-role-ref>
+        ...
+    </session>
+    ...
+</enterprise-beans>
+...
+----
 
 [[a5322]]
 ==== Specification of Security Identities in the Deployment Descriptor
@@ -1163,14 +1020,13 @@ execution of the methods of an enterprise bean or whether a specific
 run-as identity should be used.
 
 By default the caller’s security identity is
-used. The Bean Provider can use the _RunAs_ metadata annotation to
+used. The Bean Provider can use the `RunAs` metadata annotation to
 specify a run-as identity for the execution of the bean’s methods. If
 the deployment descriptor is used, the Bean Provider or the Application
-Assembler can use the _security-identity_ deployment descriptor element
+Assembler can use the `security-identity` deployment descriptor element
 for this purpose or to override a security identity specified in
-metadata. The value of the _security-identity_
- element is either _use-caller-identity_ or
-_run-as_ .
+metadata. The value of the `security-identity` element is either 
+`use-caller-identity` or `run-as`.
 
 Defining the security identities in the
 deployment descriptor is optional for the Application Assembler. Their
@@ -1185,9 +1041,9 @@ security identity for the execution of the bean’s methods.
 [[a5329]]
 ===== Run-as
 
-The Bean Provider can use the _RunAs_
+The Bean Provider can use the `RunAs`
 metadata annotation or the Bean Provider or Application Assembler can
-use the _run-as_  deployment descriptor
+use the `run-as` deployment descriptor
 element to define a run-as identity for an enterprise bean in the
 deployment descriptor. The run-as identity applies to the enterprise
 bean as a whole, that is, to all methods of the enterprise bean’s
@@ -1196,7 +1052,7 @@ service endpoint; to the message listener methods of a message-driven
 bean; and to the timeout callback methods of an enterprise bean; and all
 internal methods of the bean that they might in turn call.
 
- _Establishing a run-as identity for an
+_Establishing a run-as identity for an
 enterprise bean does not affect the identities of its callers, which are
 the identities tested for permission to access the methods of the
 enterprise bean. The run-as identity establishes the identity the
@@ -1213,70 +1069,54 @@ The Deployer then assigns a security
 principal defined in the operational environment to be used as the
 principal for the run-as identity. The security principal assigned by
 the Deployer should be a principal that has been assigned to the
-security role specified by _RunAs_
-annotation or by the _role-name_ element of the _run-as_ deployment
+security role specified by `RunAs`
+annotation or by the `role-name` element of the `run-as` deployment
 descriptor element.
 
 The Bean Provider and/or Application
 Assembler is responsible for the following in the specification of
 run-as identities:
 
-Use the _RunAs_ metadata annotation or
-_role-name_  element of the _run-as_
+* Use the `RunAs` metadata annotation or
+`role-name` element of the `run-as`
 deployment descriptor element to define the name of the security role.
 
-Optionally, use the
-description element to provide a description
+* Optionally, use the
+`description` element to provide a description
 of the principal that is expected to be bound to the run-as identity in
 terms of its security role.
 
 The following example illustrates the
 definition of a run-as identity using metadata annotations.
-
+[source, java]
+----
 @RunAs("admin")
-
-@Stateless public class EmployeeServiceBean
-
- implements EmployeeService\{
-
+@Stateless 
+public class EmployeeServiceBean implements EmployeeService {
  ...
-
 }
+----
 
-Using the deployment descriptor, this can be
-specified as follows.
-
- ...
-
- <enterprise-beans>
-
- ...
-
- <session>
-
- <ejb-name>EmployeeService</ejb-name>
-
- ...
-
- <security-identity>
-
- <run-as>
-
- <role-name>admin</role-name>
-
- </run-as>
-
- </security-identity>
-
- ...
-
- </session>
-
- ...
-
- </enterprise-beans>
-
- ...
+Using the deployment descriptor, this can be specified as follows.
+[source, xml]
+----
+...
+<enterprise-beans>
+    ...
+    <session>
+        <ejb-name>EmployeeService</ejb-name>
+        ...
+        <security-identity>
+            <run-as>
+                <role-name>admin</role-name>
+            </run-as>
+        </security-identity>
+        ...
+    </session>
+    ...
+</enterprise-beans>
+...
+----
 
 [[a5364]]
 === Deployer’s Responsibilities
