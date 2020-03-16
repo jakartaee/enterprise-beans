@@ -267,11 +267,12 @@ interface. If the security identity has not been established,
 `getCallerPrincipal` returns the container’s representation of the
 unauthenticated identity.
 
-{empty}::
-_Note that
-`getCallerPrincipal` returns the principal that represents the caller of
+****
+_Note that `getCallerPrincipal` 
+returns the principal that represents the caller of
 the enterprise bean, not the principal that corresponds to the run-as
 security identity for the bean, if any._
+****
 
 The meaning of the _current caller_, the Java
 class that implements the
@@ -362,11 +363,12 @@ depend on the security role linked to the reference (as defined in
 <<a5293>>) and on the principal-to-role mapping configured for
 the linked role (as defined in <<a5371>>).
 
-{empty}::
+****
 _Note that `isCallerInRole(String roleName)`
 tests the principal that represents the caller of the enterprise bean,
 not the principal that corresponds to the run-as security identity for
 the bean, if any._
+****
 
 The following code sample illustrates the use
 of the `isCallerInRole(String roleName)` method.
