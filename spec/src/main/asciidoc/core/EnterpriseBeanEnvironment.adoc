@@ -54,7 +54,8 @@ connection factory reference. A resource manager connection factory
 reference is a special entry in the enterprise bean’s environment.
 
 * <<a4341>> defines the means for obtaining an administered
-object that is associated with a resource (e.g., a CCI `InteractionSpec`) using a _resource environment reference_ . A resource environment
+object that is associated with a resource (e.g., a CCI `InteractionSpec`) 
+using a _resource environment reference_ . A resource environment
 reference is a special entry in the enterprise bean’s environment.
 
 * <<a4371>> defines the means for obtaining a message
@@ -131,14 +132,15 @@ context available to the enterprise bean instances at runtime. The
 enterprise bean’s instances can use the EJBContext `lookup` method or
 the JNDI interfaces to obtain the values of the environment entries.
 
-[none]
-. _The container must make an enterprise bean’s
+****
+_The container must make an enterprise bean’s
 environment available to any interceptor class and any JAX-WS message
 handler for the bean as well. The interceptor and web service handler
 classes for an enterprise bean share that bean’s environment. Within the
 context of this chapter, the term "bean" should be construed as
 including a bean’s interceptor and handler classes unless otherwise
 noted._
+****
 
 [[a3645]]
 ==== Sharing of Environment Entries
@@ -350,11 +352,12 @@ in the naming context. The Bean Provider may also use the EJBContext
 context. Deployment descriptor entries may also be used by the Bean
 Provider to override information provided by annotations.
 
-[none]
-. _When using JNDI interfaces directly, an
+****
+_When using JNDI interfaces directly, an
 enterprise bean instance creates a `javax.naming.InitialContext` object by
 using the constructor with no arguments, and looks up the environment
 naming via the InitialContext under the name `java:comp/env`._
+****
 
 The enterprise bean’s environment entries are
 stored directly in the environment naming context, or in any of its
@@ -1041,10 +1044,10 @@ specified.
 The optional
 `ejb-ref-type` element specifies the expected
 type of the enterprise bean: its value must be either
-Entity footnote:a10323[] or Session.
+Entity footnote:a10324[Component contract and client view of entity beans 
+are described in the EJB Optional Features document <<a9890>>.] or Session.
 
-The `home` and `remote` or `local-home`
- and `local`
+The `home` and `remote` or `local-home` and `local`
 elements specify the expected Java types of the referenced enterprise
 bean’s interface(s). If the reference is to an EJB 2.1 remote client
 view interface, the `home` element is required. Likewise, if the
