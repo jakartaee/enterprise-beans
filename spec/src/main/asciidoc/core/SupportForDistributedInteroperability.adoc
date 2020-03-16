@@ -13,7 +13,7 @@ remote client view.
 
 The remote home
 and remote component interfaces of an enterprise bean’s remote client
-view are defined as Java™ RMI <<a9855>>
+view are defined as Java(TM) RMI <<a9855>>
 interfaces. This allows the container to implement the remote home and
 remote component interfaces as _distributed objects_. A client using the
 remote home and remote component interfaces can reside on a different
