@@ -667,7 +667,7 @@ and close a database connection in each business method (rather than
 hold the connection open until the end of transaction). The following
 code segments illustrate a stateful session bean for which the client
 executes the sequence of methods (`method1`, `method2`, `method2`,
-`method2`, and `method3 ). In this scenario, all the database updates
+`method2`, and `method3`). In this scenario, all the database updates
 done by the multiple invocations of `method2` are performed in the scope
 of the same transaction, which is the transaction started in `method1`
 and committed in `method3`.
