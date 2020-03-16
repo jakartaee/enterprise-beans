@@ -91,11 +91,12 @@ to be handled by the client, and not by the System Administrator, they
 should be used only for reporting business logic exceptions, not for
 reporting system level problems.
 
-{empty}::
+****
 _Certain messaging types may define
 application exceptions in their message listener interfaces. The
 resource adapter in use for the particular messaging type determines how
 the exception is processed. See <<a9863>>._
+****
 
 The Bean Provider
 is responsible for throwing the appropriate application exception from
