@@ -35,10 +35,11 @@ An ejb-jar file is designed specifically for
 the packaging of enterprise beans. An ejb-jar file that is packaged
 stand-alone or within an `.ear` file constitutes a Java EE module.
 
-{empty}::
+****
 _While the use of an ejb-jar file within a
 `.war` file is supported by this specification, an ejb-jar file within a
 `.war` file does not constitute a Java EE module. See <<a9314>>._
+****
 
 === Deployment Descriptor
 
@@ -111,7 +112,8 @@ A `.war` file may contain enterprise bean
 classes in a combination of classes within the `WEB-INF/classes` directory
 and one or more jar files within the `WEB-INF/lib directory`.
 
-*_A "ejb-jar" file in the `WEB-INF/lib`
+****
+_A "ejb-jar" file in the `WEB-INF/lib`
 directory that contains enterprise beans is not considered an
 independent Java EE "module" in the way that a `.war` file, stand-alone
 ejb-jar file, or an .ear-level ejb-jar file is considered a module. Such
@@ -120,7 +122,8 @@ namespace for ejb-names, environment dependencies, persistence units,
 etc. All such namespaces are scoped to the enclosing `.war` file. In that
 sense, the packaging of enterprise bean classes in an "ejb-jar" file in
 the `WEB-INF/lib` directory is merely a convenience. It is semantically
-equivalent to packaging the classes within `WEB-INF/classes` directory._*
+equivalent to packaging the classes within `WEB-INF/classes` directory._
+****
 
 A `.war` file may contain an `ejb-jar.xml`
 file. If present, the `ejb-jar.xml` is packaged as `WEB-INF/ejb-jar.xml`. If
