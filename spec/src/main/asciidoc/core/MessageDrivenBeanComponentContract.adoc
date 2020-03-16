@@ -151,10 +151,11 @@ interface using the `MessageDriven` metadata annotation or the
 listener interface that is implemented by a message-driven bean class
 distinguishes the messaging type that the message-driven bean supports.
 
-{empty}::
+****
 _The message-driven bean class’s
 implementation of the `javax.jms.MessageListener` interface
 distinguishes the message-driven bean as a JMS message-driven bean._
+****
 
 The bean’s
 message listener method (e.g., `onMessage` in the case of
@@ -162,11 +163,12 @@ message listener method (e.g., `onMessage` in the case of
 has arrived for the bean to service. The message listener method
 contains the business logic that handles the processing of the message.
 
-{empty}::
+****
 _A bean’s message listener interface may
 define more than one message listener method. If the message listener
 interface contains more than one method, it is the resource adapter that
 determines which method is invoked. See <<a9863>>._
+****
 
 If the message-driven bean class implements
 more than one interface other than `java.io.Serializable`,
@@ -214,12 +216,14 @@ declared, or if the bean class implements the optional
 `MessageDrivenContext` is also injected at this time.
 If dependency injection fails, the bean instance is discarded.
 
+****
 Under the EJB 3.x API, the bean class may
 acquire the `MessageDrivenContext` interface through dependency
 injection without having to implement the `MessageDrivenBean` interface.
 In this case, the `Resource` annotation (or `resource-env-ref`
 deployment descriptor element) is used to denote the bean’s dependency
 on the `MessageDrivenContext`. See <<a3613>>.
+****
 
 [[a1751]]
 ==== The MessageDrivenContext Interface
@@ -331,9 +335,11 @@ instance is in the process of being removed by the container. In the
 `ejbRemove` method, the instance releases the resources that it is
 holding.
 
+****
 Under the EJB 3.x API, the bean class may
 optionally define a `PreDestroy` callback method for notification of the
 container’s removal of the bean instance.
+****
 
 This specification requires that the
 `ejbRemove` and the `ejbCreate` methods of a message-driven bean be
@@ -1005,7 +1011,8 @@ for a message-driven bean with a no-methods interface:
 
 * All _non-static_ `public` methods of the bean
 class and of any superclasses except `java.lang.Object` are exposed as
-message listener methods. +
+message listener methods.
+
 _Note: This includes callback methods. The
 Bean Provider should exercise caution when choosing to expose callback
 methods as message listener methods. The runtime context (e.g.
