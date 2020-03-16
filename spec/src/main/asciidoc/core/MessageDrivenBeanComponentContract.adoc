@@ -11,8 +11,6 @@ for managing message-driven bean state.
 
 === Overview
 
-
-
 A message-driven
 bean is an asynchronous message consumer. A
 message-driven bean is invoked by the container as a result of the
@@ -40,28 +38,24 @@ the container to handle the processing of the messages for which the
 message-driven bean is the consumer. Its lifetime is controlled by the
 container.
 
-A message-driven bean instance has no state
+_A message-driven bean instance has no state
 for a specific client. However, the instance variables of the
 message-driven bean instance can contain state across the handling of
 client messages. Examples of such state include an open database
-connection and a reference to an enterprise bean.
+connection and a reference to an enterprise bean._
 
 === Goals
 
-
-
-The goal of the message-driven bean model is
+_The goal of the message-driven bean model is
 to make developing an enterprise bean that is asynchronously invoked to
 handle the processing of incoming messages as simple as developing the
-same functionality in any other message listener.
+same functionality in any other message listener._
 
-A further goal of the message-driven bean
+_A further goal of the message-driven bean
 model is to allow for the concurrent processing of a stream of messages
-by means of container-provided pooling of message-driven bean instances.
+by means of container-provided pooling of message-driven bean instances._
 
 === Client View of a Message-Driven Bean
-
-
 
 To a client, a
 message-driven bean is simply a message consumer. The client sends
@@ -77,14 +71,8 @@ message-driven bean is the message listener. The following diagram
 illustrates the view that is provided to a message-driven bean’s
 clients.
 
-===
-
-
-
-Client view of Message-Driven Beans Deployed
-in a Container
-
-image:EBCore-13.png[image]
+.Client view of Message-Driven Beans Deployed in a Container
+image::EBCore-13.png[]
 
 A client’s JNDI name space may be configured
 to include the destinations or endpoints of message-driven beans
@@ -98,28 +86,28 @@ injected, or they can be looked up in the client’s JNDI namespace.
 For example, the reference to the queue for a
 JMS message-driven bean might be injected as follows.
 
-@Resource Queue stockInfoQueue;
+[source, java]
+----
+@Resource 
+Queue stockInfoQueue;
+----
 
-Alternatively, the queue for the _StockInfo_
+Alternatively, the queue for the `StockInfo`
 JMS message-driven bean might be located using the following code
 segment:
 
-Context initialContext = new
-InitialContext();
+[source, java]
+----
+Context initialContext = new InitialContext();
+Queue stockInfoQueue = (javax.jms.Queue)initialContext.lookup
+     ("java:comp/env/jms/stockInfoQueue");
+----
 
-Queue stockInfoQueue =
-(javax.jms.Queue)initialContext.lookup +
-(“java:comp/env/jms/stockInfoQueue”);
-
-
-
-The remainder of this chapter describes the
+_The remainder of this chapter describes the
 message-driven bean life cycle in detail and the protocol between the
-message-driven bean and its container.
+message-driven bean and its container._
 
 === Protocol Between a Message-Driven Bean Instance and its Container
-
-
 
 From its creation
 until destruction, a message-driven bean instance lives in a container.
@@ -149,8 +137,8 @@ instance.
 ==== Required MessageDrivenBean Metadata
 
 A message-driven bean must be annotated with
-the _MessageDriven_ annotation or denoted in the deployment descriptor
-as a message-driven bean. The _MessageDriven_ annotation is a
+the `MessageDriven` annotation or denoted in the deployment descriptor
+as a message-driven bean. The `MessageDriven` annotation is a
 component-defining annotation and is applied to the bean class.
 
 ==== The Required Message Listener Interface
@@ -158,42 +146,44 @@ component-defining annotation and is applied to the bean class.
 The message-driven bean class must implement
 the appropriate message listener interface for the messaging type that
 the message-driven bean supports or specify the message listener
-interface using the _MessageDriven_ metadata annotation or the
-_messaging-type_ deployment descriptor element. The specific message
+interface using the `MessageDriven` metadata annotation or the
+`messaging-type` deployment descriptor element. The specific message
 listener interface that is implemented by a message-driven bean class
 distinguishes the messaging type that the message-driven bean supports.
 
-The message-driven bean class’s
-implementation of the _javax.jms.MessageListener_ interface
-distinguishes the message-driven bean as a JMS message-driven bean.
+****
+_The message-driven bean class’s
+implementation of the `javax.jms.MessageListener` interface
+distinguishes the message-driven bean as a JMS message-driven bean._
+****
 
 The bean’s
-message listener method (e.g., _onMessage_ in the case of
-_javax.jms.MessageListener_ ) is called by the container when a message
+message listener method (e.g., `onMessage` in the case of
+`javax.jms.MessageListener`) is called by the container when a message
 has arrived for the bean to service. The message listener method
 contains the business logic that handles the processing of the message.
 
-A bean’s message listener interface may
+****
+_A bean’s message listener interface may
 define more than one message listener method. If the message listener
 interface contains more than one method, it is the resource adapter that
-determines which method is invoked. See link:Ejb.html#a9863[See
-Java EE™ Connector Architecture, version 1.7 (Connector).
-http://jcp.org/en/jsr/detail?id=322.].
+determines which method is invoked. See <<a9863>>._
+****
 
 If the message-driven bean class implements
-more than one interface other than _java.io.Serializable_ ,
-_java.io.Externalizable_ , or any of the interfaces defined by the
-_javax.ejb_ package, the message listener interface must be specified by
-the _messageListenerInterface_ element of the _MessageDriven_ annotation
-or the _messaging-type_ element of the _message-driven_ deployment
+more than one interface other than `java.io.Serializable`,
+`java.io.Externalizable`, or any of the interfaces defined by the
+`javax.ejb` package, the message listener interface must be specified by
+the `messageListenerInterface` element of the `MessageDriven` annotation
+or the `messaging-type` element of the `message-driven` deployment
 descriptor element.
 
 ==== Message-Driven Bean with No-Methods Listener Interface
 
 A message-driven bean is permitted to
 implement a listener interface with no methods. A bean that implements a
-no-methods interface, exposes all non-static public methods of the bean
-class and of any superclasses except java.lang.Object as message
+no-methods interface, exposes all _non-static_ `public` methods of the bean
+class and of any superclasses except `java.lang.Object` as message
 listener methods.
 
 In this case, when requested by a resource
@@ -206,83 +196,80 @@ interceptor methods are invoked as needed. The resource adapter
 determines which message listener method is invoked according to its
 implementation logic.
 
-Only public methods of the bean class and of
-any superclasses except java.lang.Object may be invoked by a resource
+Only `public` methods of the bean class and of
+any superclasses except `java.lang.Object` may be invoked by a resource
 adapter. Attempted invocations of methods with any other access
 modifiers on a proxy provided by the container must result in the
-javax.ejb.EJBException.
+`javax.ejb.EJBException`.
 
 ==== Dependency Injection
 
 A message-driven bean may use dependency
 injection mechanisms to acquire references to resources or other objects
-in its environment (see link:Ejb.html#a3613[See Enterprise Bean
-Environment]). If a message-driven bean makes use of dependency
+in its environment (see <<a3613>>).
+If a message-driven bean makes use of dependency
 injection, the container injects these references after the bean
 instance is created, and before any message-listener methods are invoked
-on the bean instance. If a dependency on the _MessageDrivenContext_ is
+on the bean instance. If a dependency on the `MessageDrivenContext` is
 declared, or if the bean class implements the optional
-_MessageDrivenBean_ interface (see Section
-link:Ejb.html#a1772[See The Optional MessageDrivenBean
-Interface]), the _MessageDrivenContext_ is also injected at this time.
+`MessageDrivenBean` interface (see <<a1772>>), the 
+`MessageDrivenContext` is also injected at this time.
 If dependency injection fails, the bean instance is discarded.
 
+****
 Under the EJB 3.x API, the bean class may
-acquire the _MessageDrivenContext_ interface through dependency
-injection without having to implement the _MessageDrivenBean_ interface.
-In this case, the _Resource_ annotation (or _resource-env-ref_
+acquire the `MessageDrivenContext` interface through dependency
+injection without having to implement the `MessageDrivenBean` interface.
+In this case, the `Resource` annotation (or `resource-env-ref`
 deployment descriptor element) is used to denote the bean’s dependency
-on the _MessageDrivenContext_ . See link:Ejb.html#a3613[See
-Enterprise Bean Environment].
+on the `MessageDrivenContext`. See <<a3613>>.
+****
 
 [[a1751]]
 ==== The MessageDrivenContext Interface
 
 If the bean specifies a dependency on the
-_MessageDrivenContext_ interface (or if the bean class implements the
-_MessageDrivenBean_ interface), the container must provide the
-message-driven bean instance with a _MessageDrivenContext_ . This gives
+`MessageDrivenContext` interface (or if the bean class implements the
+`MessageDrivenBean` interface), the container must provide the
+message-driven bean instance with a `MessageDrivenContext`. This gives
 the message-driven bean instance access to the instance’s context
-maintained by the container. The _MessageDrivenContext_ interface has
+maintained by the container. The `MessageDrivenContext` interface has
 the following methods:
 
-The
-_setRollbackOnly_ method allows the instance to mark the current
+* The `setRollbackOnly` method allows the instance to mark the current
 transaction such that the only outcome of the transaction is a rollback.
 Only instances of a message-driven bean with container-managed
 transaction demarcation can use this method.
 
-The
-_getRollbackOnly_ method allows the instance to test if the current
+* The `getRollbackOnly` method allows the instance to test if the current
 transaction has been marked for rollback. Only instances of a
 message-driven bean with container-managed transaction demarcation can
 use this method.
 
-The
-_getUserTransaction_ method returns the
-_javax.transaction.UserTransaction_ interface that the instance can use
+* The `getUserTransaction` method returns the
+`javax.transaction.UserTransaction` interface that the instance can use
 to demarcate transactions, and to obtain transaction status. Only
 instances of a message-driven bean with bean-managed transaction
 demarcation can use this method.
 
-The _getTimerService_ method returns the
-_javax.ejb.TimerService_ interface.
+* The `getTimerService` method returns the 
+`javax.ejb.TimerService` interface.
 
-The _getCallerPrincipal_ method returns the
-_java.security.Principal_ that is associated with the invocation.
+* The `getCallerPrincipal` method returns the
+`java.security.Principal` that is associated with the invocation.
 
-The
-_isCallerInRole_ method is inherited from the _EJBContext_ interface.
+* The `isCallerInRole` method is inherited from the 
+`EJBContext` interface.
 
-The _getEJBHome_
-and _getEJBLocalHome_ methods are inherited from the _EJBContext_
+* The `getEJBHome`
+and `getEJBLocalHome` methods are inherited from the `EJBContext`
 interface. Message-driven bean instances must not call these methods.
 
-The _lookup_ method enables the
+* The `lookup` method enables the
 message-driven bean to look up its environment entries in the JNDI
 naming context.
 
-The _getContextData_ method enables a message
+* The `getContextData` method enables a message
 listener method, lifecycle callback method, or timeout method to
 retrieve or update the interceptor context data associated with its
 invocation.
@@ -292,35 +279,33 @@ invocation.
 The following lifecycle event callbacks are
 supported for message-driven beans.
 
- _AroundConstruct_
+* `AroundConstruct`
 
- _PostConstruct_
+* `PostConstruct`
 
- _PreDestroy_
+* `PreDestroy`
 
-The PostConstruct and PreDestroy callback
+The `PostConstruct` and `PreDestroy` callback
 methods may be defined directly on the bean class or on a separate
 interceptor class.footnote:a10258[If `PrePassivate` or `PostActivate` 
 lifecycle callbacks are defined for message-driven beans, they are 
 ignored.] The AroundConstruct lifecycle
 callback interceptor method, if used, must be defined on an interceptor
-class (see link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.]). See
-link:Ejb.html#a1979[See Lifecycle Callback Interceptor Methods].
+class (see <<a9887>>). See <<a1979>>.
 
-The _PostConstruct_ callback occurs before
+The `PostConstruct` callback occurs before
 the first message listener method invocation on the bean. This is at a
 point after which any dependency injection has been performed by the
 container.
 
-The _PostConstruct_ lifecycle callback
+The `PostConstruct` lifecycle callback
 interceptor method executes in an unspecified transaction and security
 context.
 
-The _PreDestroy_ callback occurs at the time
+The `PreDestroy` callback occurs at the time
 the bean is removed from the pool or destroyed.
 
-The _PreDestroy_ lifecycle callback
+The `PreDestroy` lifecycle callback
 interceptor method executes in an unspecified transaction and security
 context.
 
@@ -328,39 +313,40 @@ context.
 ==== The Optional MessageDrivenBean Interface
 
 The message-driven bean class is not required
-to implement the _javax.ejb.MessageDrivenBean_ interface.
+to implement the `javax.ejb.MessageDrivenBean` interface.
 
- _The MessageDrivenBean interface was
+_Compatibility Note: The `MessageDrivenBean` interface was
 required by earlier versions of the Enterprise JavaBeans specification.
 Under the EJB 3.x API, the functionality previously provided by the
-MessageDrivenBean interface is available to the bean class through the
-use of dependency injection (of the MessageDrivenContext) and optional
+`MessageDrivenBean` interface is available to the bean class through the
+use of dependency injection (of the `MessageDrivenContext`) and optional
 lifecycle callback methods._
 
-The _MessageDrivenBean_ interface defines two
-methods, _setMessageDrivenContext_ and _ejbRemove_ .
+The `MessageDrivenBean` interface defines two
+methods, `setMessageDrivenContext` and `ejbRemove`.
 
-The _setMessageDrivenContext_
- method is called by the bean’s container to
+The `setMessageDrivenContext` method is called by the bean’s container to
 associate a message-driven bean instance with its context maintained by
 the container. Typically a message-driven bean instance retains its
 message-driven context as part of its state.
 
-The _ejbRemove_ notification signals that the
+The `ejbRemove` notification signals that the
 instance is in the process of being removed by the container. In the
-_ejbRemove_ method, the instance releases the resources that it is
+`ejbRemove` method, the instance releases the resources that it is
 holding.
 
+****
 Under the EJB 3.x API, the bean class may
-optionally define a _PreDestroy_ callback method for notification of the
+optionally define a `PreDestroy` callback method for notification of the
 container’s removal of the bean instance.
+****
 
 This specification requires that the
-_ejbRemove_ and the _ejbCreate_ methods of a message-driven bean be
-treated as the _PreDestroy_ and _PostConstruct_ lifecycle callback
+`ejbRemove` and the `ejbCreate` methods of a message-driven bean be
+treated as the `PreDestroy` and `PostConstruct` lifecycle callback
 methods, respectively. If the message-driven bean implements the
-_MessageDrivenBean_ interface, the _PreDestroy_ annotation can only be
-applied to the _ejbRemove_ method. Similar requirements apply to use of
+`MessageDrivenBean` interface, the `PreDestroy` annotation can only be
+applied to the `ejbRemove` method. Similar requirements apply to use of
 deployment descriptor metadata as an alternative to the use of
 annotations.
 
@@ -369,8 +355,7 @@ annotations.
 A message-driven bean can be registered with
 the EJB Timer Service for time-based event notifications. The container
 invokes the appropriate bean instance timeout callback method when a
-timer for the bean has expired. See link:Ejb.html#a5456[See
-Timer Service].
+timer for the bean has expired. See <<a5456>>.
 
 ==== Message-Driven Bean Creation
 
@@ -378,35 +363,33 @@ Except as noted
 below, the container creates an instance of a message-driven bean in
 three steps. First, the container calls the bean class constructor to
 create a new message-driven bean instance. Second, the container injects
-the bean’s _MessageDrivenContext_ , if applicable, and performs any
+the bean’s `MessageDrivenContext`, if applicable, and performs any
 other dependency injection as specified by metadata annotations on the
 bean class or by the deployment descriptor. Third, the container calls
-the instance’s _PostConstruct_ lifecycle callback methods, if any. See
-link:Ejb.html#a1979[See Lifecycle Callback Interceptor Methods].
+the instance’s `PostConstruct` lifecycle callback methods, if any. See
+<<a1979>>.
 
 If an interceptor associated with the
-message-driven bean declares an _AroundConstruct_ lifecycle callback
+message-driven bean declares an `AroundConstruct` lifecycle callback
 interceptor method, the container follows the rules for the
-_AroundConstruct interceptors_ defined in the Interceptors specification
-link:Ejb.html#a9887[See Interceptors, version 1.2.
-http://jcp.org/en/jsr/detail?id=318.].
+`AroundConstruct` interceptors defined in the _Interceptors_ 
+specification <<a9887>>.
 
-EJB 2.1 required the message-driven bean
-class to implement the _ejbCreate_ method. This requirement has been
+_Compatibility Note: EJB 2.1 required the message-driven bean
+class to implement the `ejbCreate` method. This requirement has been
 removed from the EJB 3.x API. If the message-driven bean class
-implements the _ejbCreate_ method, the _ejbCreate_ method is treated as
-the bean’s _PostConstruct_ method, and the _PostConstruct_ annotation
-can only be applied to the _ejbCreate_ method.
+implements the `ejbCreate` method, the `ejbCreate` method is treated as
+the bean’s `PostConstruct` method, and the `PostConstruct` annotation
+can only be applied to the `ejbCreate` method._
 
 ==== Message Listener Interceptor Methods for Message-Driven Beans
 
- _AroundInvoke_ interceptor methods are
+`AroundInvoke` interceptor methods are
 supported for message-driven beans. These interceptor methods may be
 defined on the bean class or on a interceptor class and apply to the
 handling of the invocation of the bean’s message listener method(s).
 
-Interceptors are described in
-link:Ejb.html#a2004[See Interceptors].
+Interceptors are described in <<a2004>>.
 
 ==== Serializing Message-Driven Bean Methods
 
@@ -442,25 +425,23 @@ listener and timeout callback methods are invoked in the scope of a
 transaction determined by the transaction attribute specified in the
 bean’s metadata annotations or deployment descriptor. If the bean is
 specified as using container-managed transaction demarcation, either the
-_REQUIRED_ or the _NOT_SUPPORTED_ transaction attribute must be used for
-the message listener methods, and either the _REQUIRED_ , _REQUIRES_NEW_
-, or the _NOT_SUPPORTED_ transaction attribute for timeout callback
-methods. See link:Ejb.html#a2172[See Support for Transactions].
+`REQUIRED` or the `NOT_SUPPORTED` transaction attribute must be used for
+the message listener methods, and either the `REQUIRED`, `REQUIRES_NEW`, 
+or the `NOT_SUPPORTED` transaction attribute for timeout callback
+methods. See <<a2172>>.
 
 When a message-driven bean using bean-managed
-transaction demarcation uses the _javax.transaction.UserTransaction_
+transaction demarcation uses the `javax.transaction.UserTransaction`
 interface to demarcate transactions, the message receipt that causes the
 bean to be invoked is not part of the transaction. If the message
 receipt is to be part of the transaction, container-managed transaction
-demarcation with the _REQUIRED_ transaction attribute must be used.
+demarcation with the `REQUIRED` transaction attribute must be used.
 
-The _bean constructor_ , the
-_setMessageDrivenContext_ method, the message-driven bean’s dependency
+The bean constructor, the
+`setMessageDrivenContext` method, the message-driven bean’s dependency
 injection methods, and lifecycle callback methods are called with an
-unspecified transaction context. Refer to Subsection
-link:Ejb.html#a2889[See Handling of Methods that Run with “an
-unspecified transaction context”] for how the container executes methods
-with an unspecified transaction context.
+unspecified transaction context. Refer to <<a2889>> for how the 
+container executes methods with an unspecified transaction context.
 
 ==== Security Context of Message-Driven Bean Methods
 
@@ -469,12 +450,11 @@ message-driven bean’s message listener methods. Whether this occurs is a
 function of the specific message-listener interface and associated
 messaging provider, but is not governed by this specification.
 
-The Bean Provider can use the RunAs metadata
+The Bean Provider can use the `RunAs` metadata
 annotation (or corresponding deployment descriptor element) to define a
 run-as identity for the enterprise bean. The run-as identity applies to
 the bean’s message listener methods and timeout methods. Run-as identity
-behavior is further defined in section link:Ejb.html#a5329[See
-Run-as].
+behavior is further defined in <<a5329>>.
 
 ==== Association of a Message-Driven Bean with a Destination or Endpoint
 
@@ -492,10 +472,10 @@ acknowledgement modes, message selectors, expected destination or
 endpoint types, etc.
 
 Activation configuration properties are
-specified by means of the _activationConfig_ element of the
-_MessageDriven_ annotation or _activation-config_ deployment descriptor
+specified by means of the `activationConfig` element of the
+`MessageDriven` annotation or `activation-config` deployment descriptor
 element. Activation configuration properties specified in the deployment
-descriptor are added to those specified by means of the _MessageDriven_
+descriptor are added to those specified by means of the `MessageDriven`
 annotation. If a property of the same name is specified in both, the
 deployment descriptor value overrides the value specified in the
 annotation.
@@ -527,15 +507,15 @@ of the transaction commit. If bean-managed transaction demarcation is
 used, the message receipt cannot be part of the bean-managed
 transaction, and, in this case, the receipt is acknowledged by the
 container. If bean-managed transaction demarcation is used, the Bean
-Provider can indicate whether JMS _AUTO_ACKNOWLEDGE_ semantics or
-_DUPS_OK_ACKNOWLEDGE_ semantics should apply by using the
-_activationConfig_ element of the _MessageDriven_ annotation or by using
-the _activation-config-property_ deployment descriptor element. The
+Provider can indicate whether JMS `AUTO_ACKNOWLEDGE` semantics or
+`DUPS_OK_ACKNOWLEDGE` semantics should apply by using the
+`activationConfig` element of the `MessageDriven` annotation or by using
+the `activation-config-property` deployment descriptor element. The
 property name used to specify the acknowledgment mode is
-_acknowledgeMode_ . If the _acknowledgeMode_ property is not specified,
-JMS _AUTO_ACKNOWLEDGE_ semantics are assumed. The value of the
-_acknowledgeMode_ property must be either _Auto-acknowledge_ or
-_Dups-ok-acknowledge_ for a JMS message-driven bean.
+`acknowledgeMode`. If the `acknowledgeMode` property is not specified,
+JMS `AUTO_ACKNOWLEDGE` semantics are assumed. The value of the
+`acknowledgeMode` property must be either `Auto-acknowledge` or
+`Dups-ok-acknowledge` for a JMS message-driven bean.
 
 ===== Message Selectors
 
@@ -543,53 +523,39 @@ The Bean Provider may declare the JMS message
 selector to be used in determining which messages a JMS message-driven
 bean is to receive. If the Bean Provider wishes to restrict the messages
 that a JMS message-driven bean receives, the Bean Provider can specify
-the value of the message selector by using the _activationConfig_
-element of the _MessageDriven_ annotation or by using the
-_activation-config-property_ deployment descriptor element. The property
-name used to specify the message selector is _messageSelector_ .
+the value of the message selector by using the `activationConfig`
+element of the `MessageDriven` annotation or by using the
+`activation-config-property` deployment descriptor element. The property
+name used to specify the message selector is `messageSelector`.
 
 For example:
 
-@MessageDriven(activationConfig=\{
-
+[source, java]
+----
+@MessageDriven(activationConfig={
  @ActivationConfigProperty(
-
- propertyName="messageSelector",
-
- propertyValue="JMSType = ‘car’ AND color =
-‘blue’
-
- AND weight > 2500")
-
+    propertyName="messageSelector",
+    propertyValue="JMSType = 'car' AND color = 'blue'
+             AND weight > 2500")
 })
-
-
-
-
-
+----
+[source, xml]
+----
 <activation-config>
-
-<activation-config-property>
-
-<activation-config-property-name>
-
- messageSelector
-
-</activation-config-property-name>
-
-<activation-config-property-value>
-
- JMSType = ‘car’ AND color = ‘blue’ AND
-weight &gt; 2500
-
-</activation-config-property-value>
-
-</activation-config-property>
-
+  <activation-config-property>
+    <activation-config-property-name>
+      messageSelector
+    </activation-config-property-name>
+    <activation-config-property-value>
+      JMSType = 'car' AND color = 'blue' AND
+      weight &gt; 2500
+    </activation-config-property-value>
+  </activation-config-property>
 </activation-config>
+----
 
 The Application Assembler may further
-restrict, but not replace, the value of the _messageSelector_ property
+restrict, but not replace, the value of the `messageSelector` property
 of a JMS message-driven bean.
 
 ===== Destination Type
@@ -601,12 +567,12 @@ message-driven bean with a Queue or Topic.
 
 The Bean Provider may provide advice to the
 Deployer as to whether a message-driven bean is intended to be
-associated with a Queue or a Topic by using the _activationConfig_
-element of the _MessageDriven_ annotation or by using the
-_activation-config-property_ deployment descriptor element. The property
+associated with a Queue or a Topic by using the `activationConfig`
+element of the `MessageDriven` annotation or by using the
+`activation-config-property` deployment descriptor element. The property
 name used to specify the destination type associated with the bean is
-_destinationType_ . The value for this property must be either
-_javax.jms.Queue_ or _javax.jms.Topic_ for a JMS message-driven bean.
+`destinationType`. The value for this property must be either
+`javax.jms.Queue` or `javax.jms.Topic` for a JMS message-driven bean.
 
 ===== Destination Lookup
 
@@ -614,11 +580,11 @@ The Bean Provider or Deployer may specify the
 JMS queue or topic from which a JMS message-driven bean is to receive
 messages.
 
-The lookup name of an
-administratively-defined Queue or Topic object may be specified by using
-the activationConfig element of the MessageDriven annotation or by using
-the activation-config-property deployment descriptor element. The
-property name used to specify the lookup name is destinationLookup.
+The lookup name of an administratively-defined `Queue` or `Topic` 
+object may be specified by using the `activationConfig` element of 
+the `MessageDriven` annotation or by using 
+the `activation-config-property` deployment descriptor element. The
+property name used to specify the lookup name is `destinationLookup`.
 
 ===== Connection Factory Lookup
 
@@ -626,34 +592,34 @@ The Bean Provider or Deployer may specify the
 JMS connection factory that will be used to connect to the JMS provider
 from which a JMS message-driven bean is to receive messages.
 
-The lookup name of an
-administratively-defined ConnectionFactory object may be specified by
-using the activationConfig element of the MessageDriven annotation or by
-using the activation-config-property deployment descriptor element. The
-property name used to specify the lookup name is
-connectionFactoryLookup.
+The lookup name of an administratively-defined `ConnectionFactory` 
+object may be specified by using the `activationConfig` element of 
+the `MessageDriven` annotation or by using 
+the `activation-config-property` deployment descriptor element. The 
+property name used to specify the lookup name is 
+`connectionFactoryLookup`.
 
 ===== Subscription Durability
 
 If the
 message-driven bean is intended to be used with a topic, the Bean
 Provider may further indicate whether a durable or non-durable
-subscription should be used by using the _activationConfig_ element of
-the _MessageDriven_ annotation or by using the
-_activation-config-property_ deployment descriptor element. The property
+subscription should be used by using the `activationConfig` element of
+the `MessageDriven` annotation or by using the
+`activation-config-property` deployment descriptor element. The property
 name used to specify whether a durable or non-durable subscription
-should be used is _subscriptionDurability_ . The value for this property
-must be either _Durable_ or _NonDurable_ for a JMS message-driven bean.
-If a topic subscription is specified and _subscriptionDurability_ is not
+should be used is `subscriptionDurability`. The value for this property
+must be either `Durable` or `NonDurable` for a JMS message-driven bean.
+If a topic subscription is specified and `subscriptionDurability` is not
 specified, a non-durable subscription is assumed.
 
-Durable topic
+* Durable topic
 subscriptions, as well as queues, ensure that messages are not missed
 even if the EJB server is not running. Reliable applications will
 typically make use of queues or durable topic subscriptions rather than
 non-durable topic subscriptions.
 
-If a non-durable
+* If a non-durable
 topic subscription is used, it is the container’s responsibility to make
 sure that the message-driven bean subscription is active (i.e., that
 there is a message-driven bean available to service the message) in
@@ -671,15 +637,14 @@ define how messages are distribued between the queue receivers.
 
 If the message-driven bean is intended to be
 used with a topic, and the bean provider has indicated that a durable
-subscription should be used by specifying the subscriptionDurability
-property to Durable, then the bean provider or deployer may specify the
+subscription should be used by specifying the `subscriptionDurability`
+property to `Durable`, then the bean provider or deployer may specify the
 name of the durable subscription.
 
 The name of the subscription may be specified
-by using the activationConfig element of the MessageDriven annotation or
-by using the activation-config-property deployment descriptor element.
-The property name used to specify the name of the subscription is
-subscriptionName.
+by using the `activationConfig` element of the `MessageDriven` 
+annotation or by using the `activation-config-property` deployment 
+descriptor element. The property name used to specify the name of the subscription is `subscriptionName`.
 
 The Bean Provider or Deployer cannot specify
 whether a shared or unshared subscription will be used.
@@ -691,28 +656,27 @@ JMS client identifier that will be used when connecting to the JMS
 provider from which a JMS message-driven bean is to receive messages.
 
 The client identifier may be specified by
-using the activationConfig element of the MessageDriven annotation or by
-using the activation-config-property deployment descriptor element. The
-property name used to specify the client identifier is clientId.
+using the `activationConfig` element of the `MessageDriven` annotation 
+or by using the `activation-config-property` deployment descriptor 
+element. The property name used to specify the client identifier is 
+`clientId`.
 
 ==== Dealing with Exceptions
 
 A message-driven bean’s message listener
-method must not throw the _java.rmi.RemoteException_ .
+method must not throw the `java.rmi.RemoteException`.
 
 Message-driven beans should not, in general,
-throw _RuntimeExceptions_ .
+throw `RuntimeException`.
 
-A RuntimeException that is not an application
+A `RuntimeException` that is not an application
 exception thrown from any method of the message-driven bean class
 (including a message listener method and the callbacks invoked by the
-container) results in the transition to the “does not exist” state. If a
+container) results in the transition to the "does not exist" state. If a
 message-driven bean uses bean-managed transaction demarcation and throws
-a _RuntimeException_ , the container should not acknowledge the message.
-Exception handling is described in detail in Chapter
-link:Ejb.html#a2940[See Exception Handling]. See the
-_Interceptors_ specification link:Ejb.html#a9887[See
-Interceptors, version 1.2. http://jcp.org/en/jsr/detail?id=318.] for the
+a `RuntimeException`, the container should not acknowledge the message.
+Exception handling is described in detail in <<a2940>>. See the
+_Interceptors_ specification <<a9887>> for the
 rules pertaining to lifecycle callback interceptor methods when more
 than one such method applies to the bean class.
 
@@ -729,60 +693,53 @@ exception is propagated by the container to the resource adapter.
 
 The Bean Provider
 cannot assume that the container will always invoke the PreDestroy
-callback method (or _ejbRemove_ method) for a message-driven bean
+callback method (or `ejbRemove` method) for a message-driven bean
 instance. The following scenarios result in the PreDestroy callback
 method not being called on an instance:
 
-A crash of the EJB container.
+* A crash of the EJB container.
 
-A system exception thrown from the instance’s
+* A system exception thrown from the instance’s
 method to the container.
 
 If the message-driven bean instance allocates
-resources in the PostConstruct lifecycle callback method and/or in the
+resources in the `PostConstruct` lifecycle callback method and/or in the
 message listener method, and releases normally the resources in the
-PreDestroy method, these resources will not be automatically released in
-the above scenarios. The application using the message-driven bean
+`PreDestroy` method, these resources will not be automatically released 
+in the above scenarios. The application using the message-driven bean
 should provide some clean up mechanism to periodically clean up the
 unreleased resources.
 
 ==== Replying to a JMS Message
 
 In standard JMS usage scenarios, the
-messaging mode of a message’s _JMSReplyTo_
+messaging mode of a message’s `JMSReplyTo`
 destination (Queue or Topic) is the same as the mode of the destination
 to which the message has been sent. Although a message-driven bean is
 not directly dependent on the mode of the JMS destination from which it
 is consuming messages, it may contain code that depends on the mode of
-its message’s _JMSReplyTo_ destination. In particular, if a
+its message’s `JMSReplyTo` destination. In particular, if a
 message-driven bean replies to a message,
 the mode of the reply’s message producer and the mode of the
-_JMSReplyTo_ destination must be the same. In order to implement a
-message-driven bean that is independent of _JMSReplyTo_ mode, the Bean
-Provider should use _instanceOf_ to test whether a _JMSReplyTo_
+`JMSReplyTo` destination must be the same. In order to implement a
+message-driven bean that is independent of `JMSReplyTo` mode, the Bean
+Provider should use `instanceOf` to test whether a `JMSReplyTo`
 destination is a Queue or Topic, and then use a matching message
 producer for the reply.
 
 [[a1871]]
 === Message-Driven Bean State Diagram
 
-
-
 When a client
 sends a message to a Destination for which a message-driven bean is the
-consumer, the container selects one of its method-ready __ instances and
+consumer, the container selects one of its method-ready instances and
 invokes the instance’s message listener method.
 
 The following figure illustrates the life
 cycle of a message-driven bean instance.
 
-===
-
-
-
-Life Cycle of a Message-Driven Bean.
-
-image:EBCore-14.png[image]
+.Life Cycle of a Message-Driven Bean
+image::EBCore-14.png[]
 
 The following steps describe the life cycle
 of a message-driven bean instance:
@@ -794,10 +751,10 @@ callback interceptor is associated with the message-driven bean, the
 container follows the rules for the `AroundConstruct` interceptors 
 defined in the _Interceptors_ specification <<a9887>>.] 
 Next, the container
-injects the bean’s _MessageDrivenContext_ object, if applicable, and
+injects the bean’s `MessageDrivenContext` object, if applicable, and
 performs any other dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
-container then calls the bean’s _PostConstruct_ lifecycle callback
+container then calls the bean’s `PostConstruct` lifecycle callback
 methods, if any.
 
 The message-driven bean instance is now ready
@@ -807,203 +764,163 @@ by any client or a call from the container to a timeout callback method.
 When the container no longer needs the
 instance (which usually happens when the container wants to reduce the
 number of instances in the method-ready pool), the container invokes the
-_PreDestroy_ lifecycle callback methods for it, if any. This ends the
+`PreDestroy` lifecycle callback methods for it, if any. This ends the
 life of the message-driven bean instance.
 
 ==== Operations Allowed in the Methods of a Message-Driven Bean Class
 
-link:Ejb.html#a1886[See Operations
-Allowed in the Methods of a Message-Driven Bean] defines the methods of
+<<a1886>> defines the methods of
 a message-driven bean class in which the message-driven bean instances
-can access the methods of the javax.ejb.MessageDrivenContext interface,
-the java:comp/env environment naming context, resource managers,
-_TimerService_ and _Timer_ methods, the _EntityManager_ and
-_EntityManagerFactory_ methods, and other enterprise beans.
+can access the methods of the `javax.ejb.MessageDrivenContext` interface,
+the `java:comp/env` environment naming context, resource managers,
+`TimerService` and `Timer` methods, the `EntityManager` and
+`EntityManagerFactory` methods, and other enterprise beans.
 
 If a
 message-driven bean instance attempts to invoke a method of the
-MessageDrivenContext interface, and the access is not allowed in
-link:Ejb.html#a1886[See Operations Allowed in the Methods of a
-Message-Driven Bean], the container must throw and log the
-java.lang.IllegalStateException.
+`MessageDrivenContext` interface, and the access is not allowed in
+<<a1886>>, the container must throw and log the
+`java.lang.IllegalStateException`.
 
 If a message-driven bean instance attempts to
-invoke a method of the _TimerService_ or _Timer_ interface, and the
-access is not allowed in Table link:Ejb.html#a1886[See
-Operations Allowed in the Methods of a Message-Driven Bean], the
-container must throw the _java.lang.IllegalStateException_ .
+invoke a method of the `TimerService` or `Timer` interface, and the
+access is not allowed in <<a1886>>, the
+container must throw the `java.lang.IllegalStateException`.
 
 If a bean instance attempts to access a
 resource manager, an enterprise bean, or an entity manager or entity
-manager factory, and the access is not allowed in
-link:Ejb.html#a1886[See Operations Allowed in the Methods of a
-Message-Driven Bean], the behavior is undefined by the EJB
-specification.
+manager factory, and the access is not allowed in <<a1886>>, the 
+behavior is undefined by the EJB specification.
 
-
-
-===
-
-
-
-[[a1886]]Operations Allowed in the Methods of a
-Message-Driven Bean
-
+[[a1886]]
+[cols=".^,<,<", options=header]
+.Operations Allowed in the Methods of a Message-Driven Bean
+|===
+|
 Bean method
-
-
-
-
-
+2+|
 Bean method can perform the following
 operations
-
-
-
+|
+h|
 Container-managed transaction demarcation
-
+h|
 Bean-managed transaction demarcation
-
+|
 constructor
-
+|
 -
-
+|
 -
-
+|
 dependency injection methods (e.g.,
 setMessageDrivenContext)
-
-MessageDrivenContext methods: lookup
-
-JNDI access to java:comp/env
-
-MessageDrivenContext methods: lookup
+a|
+MessageDrivenContext methods::
+_lookup_
 
 JNDI access to java:comp/env
+a|
+MessageDrivenContext methods::
+_lookup_
 
+JNDI access to java:comp/env
+|
 PostConstruct, PreDestroy lifecycle callback
 methods
+a|
+MessageDrivenContext methods::
+_getTimerService, lookup, getContextData_
 
-MessageDrivenContext methods:
-_getTimerService_ , lookup, getContextData
-
-JNDI access to java:comp/env
-
+JNDI access to java:comp/env +
 EntityManagerFactory access
+a|
+MessageDrivenContext methods:: 
+_getUserTransaction, getTimerService, lookup, getContextData_
 
-MessageDrivenContext methods: +
-_getUserTransaction, getTimerService_ , lookup, getContextData
-
-JNDI access to java:comp/env
-
+JNDI access to java:comp/env +
 EntityManagerFactory access
-
+|
 message listener method, AroundInvoke
 interceptor method
+a|
+MessageDrivenContext methods::
+_getRollbackOnly, setRollbackOnly, getCallerPrincipal, isCallerInRole,
+getTimerService, lookup, getContextData_
 
-
-
-MessageDrivenContext methods:
-getRollbackOnly, setRollbackOnly, getCallerPrincipal, isCallerInRole,
-getTimerService, lookup, getContextData
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer service or Timer methods
+a|
+MessageDrivenContext methods::
+_getUserTransaction, getCallerPrincipal, isCallerInRole, getTimerService,
+lookup, getContextData_
 
-MessageDrivenContext methods: +
-getUserTransaction, getCallerPrincipal, isCallerInRole, getTimerService,
-lookup, getContextData
-
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer service or Timer methods
-
+|
 timeout callback method
+a|
+MessageDrivenContext methods::
+_getRollbackOnly, setRollbackOnly, getCallerPrincipal, getTimerService,
+lookup, getContextData_
 
-MessageDrivenContext methods:
-getRollbackOnly, setRollbackOnly, getCallerPrincipal, getTimerService,
-lookup, getContextData
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer service or Timer methods
+a|
+MessageDrivenContext methods::
+_getUserTransaction, getCallerPrincipal, getTimerService, lookup,
+getContextData_
 
-MessageDrivenContext methods: +
-getUserTransaction, getCallerPrincipal, getTimerService, lookup,
-getContextData
-
-UserTransaction methods
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
-EntityManager access
-
+UserTransaction methods +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
+EntityManager access +
 Timer service or Timer methods
+|===
 
 Additional restrictions:
 
-The getRollbackOnly and setRollbackOnly
-methods of the MessageDrivenContext interface should be used only in the
+* The `getRollbackOnly` and `setRollbackOnly`
+methods of the `MessageDrivenContext` interface should be used only in the
 message-driven bean methods that execute in the context of a
 transaction. The container must throw the
-java.lang.IllegalStateException if the methods are invoked while the
+`java.lang.IllegalStateException` if the methods are invoked while the
 instance is not associated with a transaction.
 
 The reasons for disallowing operations in
-link:Ejb.html#a1886[See Operations Allowed in the Methods of a
-Message-Driven Bean]:
+<<a1886>>:
 
-Invoking the getRollbackOnly and
+* Invoking the getRollbackOnly and
 setRollbackOnly methods is disallowed in the message-driven bean methods
 for which the container does not have a meaningful transaction context,
 and for all message-driven beans with bean-managed transaction
 demarcation.
 
-The UserTransaction interface is unavailable
+* The `UserTransaction` interface is unavailable
 to message-driven beans with container-managed transaction demarcation.
 
-Invoking _getEJBHome_ or _getEJBLocalHome_ is
+* Invoking `getEJBHome` or `getEJBLocalHome` is
 disallowed in message-driven bean methods because there are no EJBHome
 or EJBLocalHome objects for message-driven beans. The container must
-throw and log the _java.lang.IllegalStateException_ if these methods are
+throw and log the `java.lang.IllegalStateException` if these methods are
 invoked.
 
 === The Responsibilities of the Bean Provider
-
-
 
 This section
 describes the responsibilities of the message-driven Bean Provider to
@@ -1014,55 +931,50 @@ ensure that a message-driven bean can be deployed in any EJB container.
 The message-driven Bean Provider is
 responsible for providing the following class files:
 
-Message-driven bean class.
+* Message-driven bean class.
 
-Interceptor classes, if any.
+* Interceptor classes, if any.
 
 ==== Message-Driven Bean Class
 
 The following are the requirements for the
 message-driven bean class:
 
-The class must implement, directly or
+* The class must implement, directly or
 indirectly, the message listener interface required by the messaging
 type that it supports or the methods of the message listener interface.
-In the case of JMS, this is the javax.jms.MessageListener interface.
+In the case of JMS, this is the `javax.jms.MessageListener` interface.
 
-The class must be defined as public, must not
-be _final_ , and must not be abstract. The class must be a top level
+* The class must be defined as `public`, must not
+be `final`, and must not be `abstract`. The class must be a top level
 class.
 
-The class must have a public constructor that
+* The class must have a `public` constructor that
 takes no arguments. The container uses this constructor to create
 instances of the message-driven bean class.
 
-The class must not define the finalize
-method.
+* The class must not define the `finalize` method.
 
 Optionally:
 
-The class may implement, directly or
-indirectly, the javax.ejb.MessageDrivenBean interface.
+* The class may implement, directly or
+indirectly, the `javax.ejb.MessageDrivenBean` interface.
 
-The class may implement, directly or
-indirectly, the _javax.ejb.TimedObject_ interface.
+* The class may implement, directly or
+indirectly, the `javax.ejb.TimedObject` interface.
 
-The class may implement the ejbCreate method.
+* The class may implement the `ejbCreate` method.
 
-The class may have an additional constructor
-annotated with the Inject annotation (see
-link:Ejb.html#a195[See Relationship to Contexts and Dependency
-Injection (CDI) Specification] and the CDI specification
-link:Ejb.html#a9888[See Contexts and Dependency Injection for
-the Java EE Platform 1.1 (CDI specification)
-http://jcp.org/en/jsr/detail?id=346.]).
+* The class may have an additional constructor
+annotated with the `Inject` annotation (see <<a195>> and the CDI 
+specification <<a9888>>).
 
 The message-driven bean class may have
 superclasses and/or superinterfaces. If the message-driven bean has
 superclasses, the message listener methods, lifecycle callback
-interceptor methods, timeout callback methods, the ejbCreate method, and
-the methods of the MessageDrivenBean interface may be defined in the
-message-driven bean class or in any of its superclasses.
+interceptor methods, timeout callback methods, the `ejbCreate` method, 
+and the methods of the `MessageDrivenBean` interface may be defined in 
+the message-driven bean class or in any of its superclasses.
 
 The message-driven bean class is allowed to
 implement other methods (for example, helper methods invoked internally
@@ -1079,8 +991,8 @@ of processing a particular message-driven bean class, all superclass
 processing is identical regardless of whether the superclasses are
 themselves message-driven bean classes. In this regard, the use of
 message-driven bean classes as superclasses merely represents a
-convenient use of implementation inheritance, but does not have
-component inheritance semantics.
+convenient use of _implementation inheritance_, but does not have
+_component inheritance_ semantics.
 
 ==== Message Listener Method
 
@@ -1088,21 +1000,20 @@ The message-driven bean class must define the
 message listener methods. The signature of a message listener method
 must follow these rules:
 
-The method must be declared as public.
+The method must be declared as `public`.
 
-The method must not be declared as final or
-static.
+The method must not be declared as `final` or `static`.
 
 ==== Message-Driven Bean with No-Methods Listener Interface
 
 The following additional requirements apply
 for a message-driven bean with a no-methods interface:
 
-All non-static public methods of the bean
-class and of any superclasses except java.lang.Object are exposed as
+* All _non-static_ `public` methods of the bean
+class and of any superclasses except `java.lang.Object` are exposed as
 message listener methods.
 
-Note: This includes callback methods. The
+_Note: This includes callback methods. The
 Bean Provider should exercise caution when choosing to expose callback
 methods as message listener methods. The runtime context (e.g.
 transaction context, caller principal, operations allowed, etc.) for a
@@ -1110,37 +1021,34 @@ method invoked as a callback can differ significantly from the context
 for the same method when invoked as a message listener. In general,
 callback methods should not be exposed as message listener methods.
 Therefore, it is recommended that all methods other than message
-listener methods be assigned an access type other than public.
+listener methods be assigned an access type other than public._
 
-Only private methods of the bean class and
-any superclasses except java.lang.Object may be declared final.
+* Only private methods of the bean class and
+any superclasses except `java.lang.Object` may be declared `final`.
 
 [[a1979]]
 ==== Lifecycle Callback Interceptor Methods
 
-{empty} _PostConstruct_ and _PreDestroy_
+`PostConstruct` and `PreDestroy`
 lifecycle callback interceptor methods may be defined for message-driven
-beans. If _PrePassivate_ or _PostActivate_ lifecycle callbacks are
+beans. If `PrePassivate` or `PostActivate` lifecycle callbacks are
 defined, they are ignored.footnote:a10260[This might result from the use 
 of default interceptor classes, for example.]
 
-If the _PostConstruct_ lifecycle callback
-interceptor method is the _ejbCreate_ method, or if the _PreDestroy_
-lifecycle callback interceptor method is the _ejbRemove_ method, these
+_Compatibility Note: If the `PostConstruct` lifecycle callback
+interceptor method is the `ejbCreate` method, or if the `PreDestroy`
+lifecycle callback interceptor method is the `ejbRemove` method, these
 callback methods must be implemented on the bean class itself (or on its
 superclasses). Except for these cases, the method names can be
-arbitrary, but must not start with “ejb” to avoid conflicts with the
-callback methods defined by the javax.ejb.EnterpriseBean interfaces.
+arbitrary, but must not start with "ejb" to avoid conflicts with the
+callback methods defined by the `javax.ejb.EnterpriseBean` interfaces._
 
 Lifecycle callback interceptor methods may be
 defined on the bean class and/or on an interceptor class of the bean.
 Rules applying to the definition of lifecycle callback interceptor
-methods are defined in Section link:Ejb.html#a2023[See
-Interceptors for LifeCycle Event Callbacks] .
+methods are defined in <<a2023>>.
 
 === The Responsibilities of the Container Provider
-
-
 
 This section
 describes the responsibilities of the Container Provider to support a
@@ -1148,11 +1056,11 @@ message-driven bean. The Container Provider is responsible for providing
 the deployment tools, and for managing the message-driven bean instances
 at runtime.
 
-Because the EJB specification does not define
+_Because the EJB specification does not define
 the API between deployment tools and the container, we assume that the
 deployment tools are provided by the Container Provider. Alternatively,
 the deployment tools may be provided by a different vendor who uses the
-container vendor’s specific API.
+container vendor’s specific API._
 
 ==== Generation of Implementation Classes
 
@@ -1177,8 +1085,8 @@ interface.
 
 The container’s implementation class
 generated by the deployment tools must implement the message listener
-interface and implement all non-static public methods of the bean class
-and of any superclasses except java.lang.Object as message listener
+interface and implement all _non-static_ `public` methods of the bean class
+and of any superclasses except `java.lang.Object` as message listener
 methods.
 
 ==== Deployment of JMS Message-Driven Beans
@@ -1202,7 +1110,5 @@ thread can be executing an instance at any time.
 
 The container
 must follow the rules with respect to transaction scoping, security
-checking, and exception handling, as described in Chapters
-link:Ejb.html#a2172[See Support for Transactions],
-link:Ejb.html#a4945[See Security Management], and
-link:Ejb.html#a2940[See Exception Handling].
+checking, and exception handling, as described in <<a2172>>, <<a4945>>, 
+and <<a2940>>.

@@ -1,3 +1,4 @@
+[[a41]]
 == Client View of an Entity Bean
 
 This chapter describes the client view of an

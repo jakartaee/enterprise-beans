@@ -1,3 +1,4 @@
+[[a3071]]
 == EJB 1.1 Entity Bean Component Contract for Container-Managed Persistence
 
 This chapter specifies the EJB 1.1 entity
