@@ -33,12 +33,13 @@ timer notification service that is designed for use in the modeling of
 application-level processes. It is not intended for the modeling of
 real-time events.
 
-{empty}::
+****
 _While timer durations are expressed in
 millisecond units, this is because the millisecond is the unit of time
 granularity used by the APIs of the Java SE platform. It is expected
 that most timed events will correspond to hours, days, or longer periods
 of time._
+****
 
 The following sections describe the Timer
 Service with respect to the various individual EJB roles.
@@ -152,29 +153,32 @@ calendar-based time expression:
 
 * *_dayOfMonth_*: one or more days within a month +
   Allowable values: +
- [1,31] or +
- [-7, -1] or +
- "Last" or +
- {"1st", "2nd", "3rd", "4th", "5th", "Last"} +
- {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"} +
- "Last" means the last day of the month +
+** [1,31] or +
+** [-7, -1] or +
+** "Last" or +
+** {"1st", "2nd", "3rd", "4th", "5th", "Last"} +
+** {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
+
++
+"Last" means the last day of the month +
  -x (where x is in the range [-7, -1]) means 
  x day(s) before the last day of the month +
- "1st","2nd", etc. applied to a day of the 
+"1st","2nd", etc. applied to a day of the 
  week identifies a single occurrence of that day within the month.
 
 * *_month_*: one or more months within a year +
- Allowable values: +
- [1,12] +
- or +
- {"Jan", "Feb", "Mar", ‘’Apr", "May", "Jun",
+Allowable values: +
+** [1,12] or +
+** {"Jan", "Feb", "Mar", ‘’Apr", "May", "Jun",
  "Jul", "Aug", "Sep", "Oct", "Nov", Dec"}
 
 * *_dayOfWeek_*: one or more days within a week +
  Allowable values: +
- [0,7] or +
- {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"} +
- "0" and "7" both refer to Sunday
+** [0,7] or +
+** {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
+
++
+"0" and "7" both refer to Sunday
 
 * *_year_*: a particular calendar year +
  Allowable values: a four-digit calendar year
@@ -709,7 +713,7 @@ information that was supplied when the timer was created. This
 information may be useful in enabling the timed object to recognize the
 significance of the timer expiration.
 
-{empty}::
+****
 _The container interleaves calls to a timeout
 callback method with the calls to the business methods and the life
 cycle callback methods of the bean. The time at which a timeout callback
@@ -720,6 +724,7 @@ must be prepared to handle timeout callbacks that are out of sequence.
 The Bean Provider must be prepared to handle extraneous calls to a
 timeout callback method in the event that a timer expiration is
 outstanding when a call to the cancellation method has been made._
+****
 
 In general, a timeout callback method can
 perform the same operations as business methods from the component
