@@ -40,7 +40,7 @@ transactions using the `javax.transaction.UserTransaction` interface. All
 resource manager accesses between the `UserTransaction.begin` and
 `UserTransaction.commit` calls are part of a transaction.
 
-{empty}::
+****
 _The terms resource and resource manager used
 in this chapter refer to the resources declared using the `Resource`
 annotation in the enterprise bean class or using the `resource-ref`
@@ -53,6 +53,7 @@ resources are specified with the `Resource` annotation and/or
 For a discussion about resources used
 in the Java Persistence API that may be "unaware" of the presence of JTA
 transactions, see <<a9851>>._
+****
 
 With
 container-managed transaction demarcation, the container demarcates
@@ -93,17 +94,18 @@ The Enterprise
 JavaBeans architecture supports flat transactions. A flat transaction
 cannot have any child (nested) transactions.
 
-{empty}::
+****
 _Note: The decision not to support nested
 transactions allows vendors of existing transaction processing and
 database management systems to incorporate support for Enterprise
 JavaBeans. If these vendors provide support for nested transactions in
 the future, Enterprise JavaBeans may be enhanced to take advantage of
 nested transactions._
+****
 
 ==== Relationship to JTA and JTS
 
-The Java™ Transaction API (JTA) <<a9857>> is a specification of the
+The Java(TM) Transaction API (JTA) <<a9857>> is a specification of the
 interfaces between a transaction manager and the other parties involved
 in a distributed transaction processing system: the application
 programs, the resource managers, and the application server.
@@ -173,7 +175,7 @@ image::EBCore-16.png[]
 _The application programmer does not have to
 do anything to ensure transactional semantics. The enterprise beans X
 and Y perform the message send and database updates using the standard
-JMS and JDBC™ APIs. Behind the scenes, the EJB server enlists the
+JMS and JDBC(TM) APIs. Behind the scenes, the EJB server enlists the
 session on the connection to the JMS provider and the database
 connections as part of the transaction. When the transaction commits,
 the EJB server and the messaging and database systems perform a
@@ -290,9 +292,10 @@ both the container and the messaging provider. When the contracts outlined
 in <<a9863>> are used, it may be the messaging provider that starts the 
 transaction.]
 
-{empty}::
+****
 _JMS requires that the transaction be started
 before the dequeuing of the message. See <<a9862>>._
+****
 
 The container automatically enlists the
 resource manager associated with the arriving message and all the
@@ -300,8 +303,7 @@ resource managers accessed by the message listener method with the
 transaction.
 
 _It is illegal to associate JTA transactional
-interceptors (see link:Ejb.html#a9857[See Java™ Transaction API,
-version 1.2 (JTA). http://jcp.org/en/jsr/detail?id=907.]) with
+interceptors (see <<a9857>>) with
 Enterprise JavaBeans.footnote:a10266[This restriction may be removed 
 in a future release of this specification.]_
 
@@ -755,7 +757,7 @@ callback methods must not attempt to obtain or use the
 The following code segments illustrate
 a business method in an enterprise bean with container-managed
 transaction demarcation. The business method updates two databases using
-JDBC™ connections. The container provides transaction demarcation as
+JDBC(TM) connections. The container provides transaction demarcation as
 specified by the transaction attribute.footnote:a10269[REQUIRED is the 
 default transaction attribute value for container managed transaction 
 demarcation. The explicit specification of the transaction attribute is 
@@ -892,7 +894,7 @@ The Bean Provider
 of an enterprise bean with container-managed transaction demarcation may
 specify the transaction attributes for the enterprise bean’s methods. By
 default, the value of the transaction attribute for a method of a bean
-with container-managed transaction demarcation is the _REQUIRED_
+with container-managed transaction demarcation is the `REQUIRED`
 transaction attribute, and the transaction attribute does not need to be
 explicitly specified in this case.
 
@@ -1350,22 +1352,24 @@ deployment descriptor transaction attribute mechanism described above to
 override or change the transaction attributes for enterprise beans using
 container-managed transaction demarcation.
 
-{empty}::
+****
 _The Application Assembler should exercise
 caution in the changing the transaction attributes, as the behavior
 specified by the transaction attributes is typically an intrinsic part
 of the semantics of an application._
+****
 
 === Deployer’s Responsibilities
 
 The Deployer is permitted to override or
 change the values of transaction attributes at deployment time.
 
-{empty}::
+****
 _The Deployer should exercise caution in the
 changing the transaction attributes, as the behavior specified by the
 transaction attributes is typically an intrinsic part of the semantics
 of an application._
+****    
 
 _Compatibility Note: For applications written to the EJB 2.1
 specification (and earlier), the Deployer is responsible for ensuring
@@ -1729,7 +1733,7 @@ to call with a transaction context.
 context, the container performs the same steps as described in the
 `REQUIRED` case.
 
-If the client calls without a transaction
+* If the client calls without a transaction
 context, the container throws the
 `javax.ejb.EJBTransactionRequiredException`.footnote:a10275[If the business 
 interface is a remote business interface that extends `java.rmi.Remote`, 
@@ -1748,7 +1752,7 @@ invokes an enterprise bean method whose transaction attribute is set to
 `NEVER` without a transaction context defined by the EJB specification.
 The client is required to call without a transaction context.
 
-If the client calls with a transaction
+* If the client calls with a transaction
 context, the container throws the
 `javax.ejb.EJBException`.footnote:a10276[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
@@ -1758,7 +1762,7 @@ view is used, the container throws the java.rmi.RemoteException
 exception if the client is a remote client, and the
 `javax.ejb.EJBException` if the client is a local client.
 
-If the client calls without a transaction
+* If the client calls without a transaction
 context, the container performs the same steps as described in the
 `NOT_SUPPORTED` case.
 
@@ -1785,7 +1789,7 @@ initiated by the container.
 .2+.^| REQUIRED
 | none  | T2     | T2
 | T1   
-a| T1 <<a10277,[Note A]>> 
+a| T1 <<a10277>> 
 | T1
 .2+.^| SUPPORTS
 | none  | none   | none
@@ -1805,7 +1809,7 @@ a| *error*
 | N/A
 |===
 *Notes:* +
-[[a10277]] [A]     T2 if the method is an asynchronous method.
+[[a10277, Note A]] [A]     T2 if the method is an asynchronous method.
 
 If the enterprise bean’s business method
 invokes other enterprise beans via their business interfaces or home and
@@ -1923,7 +1927,7 @@ of messages.
 
 The requirement for JMS are as follows:
 
-{empty}::
+****
 _A transaction must be started before the
 dequeuing of the JMS message and, hence, before the invocation of the
 message-driven bean’s `onMessage` method. The resource manager
@@ -1934,6 +1938,7 @@ enterprise beans, the container passes the transaction context with the
 invocation. The transaction is committed when the `onMessage` method has
 completed. If the `onMessage` method does not successfully complete or
 the transaction is rolled back, message redelivery semantics apply._
+****
 
 ===== Handling of setRollbackOnly Method
 
