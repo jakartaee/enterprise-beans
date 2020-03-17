@@ -1327,7 +1327,7 @@ before actually committing the transaction, and the container issues the
 is invoked, the instance should write
 any cached updates to the database.footnote:a10242[Note that if the Java 
 Persistence API is used, the persistence provider will use the 
-beforeCompletion notification to automatically flush any updates to the 
+`beforeCompletion` notification to automatically flush any updates to the 
 container-managed persistence context to the database. See <<a9851>>.] If a
 transaction rollback had been requested instead, the rollback status is
 reached without the container issuing a `beforeCompletion` . The
@@ -2049,7 +2049,7 @@ EntityManager access +
 TimerService and Timer methods
 |===
 *Notes:* +
-[[a10250]]  [A] If a client calls lifecycle 
+[[a10250, Note A]]  [A] If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.
 
@@ -2812,7 +2812,7 @@ EntityManager access +
 TimerService and Timer methods
 |===
 *Notes:* +
-[[a10252]]  [A] If a client calls lifecycle 
+[[a10252, Note A]]  [A] If a client calls lifecycle 
 callback method through a business interface or a no-interface view, 
 the method is treated like a business method.
 
@@ -2939,7 +2939,8 @@ annotated with the `Inject` annotation (see
 
 * The class may implement, directly or
 indirectly, the `javax.ejb.SessionBean` interface.footnote:a10255[Except 
-for singleton session beans.
+for singleton session beans.]
+
 * If the class is a stateful session bean, it
 may implement the `javax.ejb.SessionSynchronization` interface or use one
 or more of the session synchronization annotations.
