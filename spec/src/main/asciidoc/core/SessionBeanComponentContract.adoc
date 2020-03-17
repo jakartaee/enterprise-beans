@@ -703,7 +703,7 @@ client view APIs.
 If an interceptor associated with the session
 bean declares an `AroundConstruct` lifecycle callback interceptor
 method, the container follows the rules for the `AroundConstruct`
-interceptors defined in the _Interceptors_ specification <<a9887>>.
+interceptors defined in the _Jakarta(R) Interceptors_ specification <<a9887>>.
 
 [[a759]]
 ===== Stateful Session Beans
@@ -1269,7 +1269,7 @@ causes the container to invoke the session bean class constructor to
 create a new session bean instance.footnote:a10240[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateful session bean, 
 the container follows the rules for the `AroundConstruct` interceptors 
-defined in the _Interceptors_ specification <<a9887>>.] Next, the
+defined in the _Jakarta Interceptors_ specification <<a9887>>.] Next, the
 container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
 container then calls the `PostConstruct` lifecycle callback interceptor
@@ -1656,7 +1656,7 @@ exception thrown from any method of the stateful session bean class
 methods invoked by the container) results in the transition to the "does
 not exist" state. Exception handling is described in detail in 
 <<a2940>>. See the
-_Interceptors_ specification <<a9887>> for the
+_Jakarta Interceptors_ specification <<a9887>> for the
 rules pertaining to lifecycle callback interceptor methods when more
 than one such method applies to the bean class.
 
@@ -1866,7 +1866,7 @@ starts when the container invokes the session bean class constructor to
 create a new session bean instance.footnote:a10249[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the stateless session 
 bean, the container follows the rules for the `AroundConstruct` 
-interceptors defined in the _Interceptors_ specification <<a9887>>.] 
+interceptors defined in the _Jakarta Interceptors_ specification <<a9887>>.] 
 Next, the
 container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
@@ -2110,7 +2110,7 @@ method of the enterprise bean class (including the business methods and
 the lifecycle callback interceptor methods invoked by the container)
 results in the transition to the "does not exist" state. Exception
 handling is described in detail in <<a2940>>. See the
-_Interceptors_ specification <<a9887>> for the
+_Jakarta Interceptors_ specification <<a9887>> for the
 rules pertaining to lifecycle callback interceptor methods when more
 than one such method applies to the bean class.
 
@@ -2149,7 +2149,7 @@ starts when the container invokes the session bean class constructor to
 create the singleton bean instance.footnote:a10251[If an `AroundConstruct` 
 lifecycle callback interceptor is associated with the singleton session 
 bean, the container follows the rules for the `AroundConstruct` 
-interceptors defined in the _Interceptors_ specification <<a9887>>.] 
+interceptors defined in the _Jakarta Interceptors_ specification <<a9887>>.] 
 Next, the
 container performs any dependency injection as specified by the metadata
 annotations on the bean class or by the deployment descriptor. The
