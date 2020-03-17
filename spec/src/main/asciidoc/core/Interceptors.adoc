@@ -9,20 +9,20 @@ enterprise bean instance.
 
 The general rules for defining Interceptor
 classes, their lifecycle, and associated metadata are described in the
-_Interceptors_ specification <<a9887>>. This
+_Jakarta Interceptors_ specification <<a9887>>. This
 chapter describes the set of requirements that are specific to the use
-of interceptors with Enterprise JavaBeans.
+of interceptors with Enterprise Beans.
 
 For the use of interceptors with Enterprise
-JavaBeans, the interceptor "target class" is the bean class.
+Beans, the interceptor "target class" is the bean class.
 Interceptors may be used with session beans and message-driven beans.
 
 The programming restrictions that apply to
 enterprise bean components apply to interceptors as well. See <<a9535>>.
 
-It is illegal to associate JTA
-transactional interceptors (see <<a9857>>) with Enterprise JavaBeans. The
-EJB Container should fail deployment of such
+It is illegal to associate Jakarta Transactions
+transactional interceptors (see <<a9857>>) with Enterprise Beans. The
+Enterprise Beans Container should fail deployment of such
 applications.footnote:a10261[This restriction may be removed in a future 
 release of this specification.]
 
@@ -40,7 +40,7 @@ activated when the bean instance is activated. See
 
 In addition to the `AroundConstruct`,
 `PostConstruct` and `PreDestroy` callback support required by the
-_Interceptors_ specification <<a9887>>,
+_Jakarta Interceptors_ specification <<a9887>>,
 interceptors associated with stateful session beans may define
 `PostActivate` and `PrePassivate` callbacks. Both the interceptor instance
 and the bean instance are created or activated before any of the
@@ -67,7 +67,7 @@ runtime exceptions or application exceptions that are allowed in the
 === Timer Timeout Method Interceptors
 
 Interceptor methods may be defined for the
-EJB timer timeout methods of session beans and message-driven beans.
+Enterprise Beans timer timeout methods of session beans and message-driven beans.
 Such methods are referred to as `AroundTimeout` methods.
 
 Within an `AroundTimeout` method, the
@@ -118,7 +118,7 @@ invocation chain. The contextual data is not sharable across separate
 business method invocations or lifecycle callback events. If
 interceptors are invoked as a result of the invocation on a web service
 endpoint, the map returned by the `getContextData` method will be the
-JAX-WS MessageContext <<a9881>>. The lifecycle of the
+Jakarta XML Web Services `MessageContext` <<a9881>>. The lifecycle of the
 `InvocationContext` instance is otherwise unspecified.
 
 [[a2031]]

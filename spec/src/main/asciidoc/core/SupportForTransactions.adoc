@@ -2,16 +2,16 @@
 == Support for Transactions
 
 One of the key features of the Enterprise
-JavaBeans(TM) architecture is support for distributed transactions. The
-Enterprise JavaBeans architecture allows an application developer to
+Beans architecture is support for distributed transactions. The
+Enterprise Beans architecture allows an application developer to
 write an application that atomically updates data in multiple databases
-which may be distributed across multiple sites. The sites may use EJB
+which may be distributed across multiple sites. The sites may use Enterprise Beans
 servers from different vendors.
 
 === Overview
 
 This section provides a brief overview of
-transactions and illustrates a number of transaction scenarios in EJB.
+transactions and illustrates a number of transaction scenarios in Enterprise Beans.
 
 ==== Transactions
 
@@ -25,13 +25,13 @@ the application as if it ran in an environment that executes units of
 work serially._
 
 Support for
-transactions is an essential element of the Enterprise JavaBeans
+transactions is an essential element of the Enterprise Beans
 architecture. The Enterprise Bean Provider and the client application
 programmer are not exposed to the complexity of distributed
 transactions. The Bean Provider can choose between using programmatic
 transaction demarcation in the enterprise bean code (this style is
 called _bean-managed transaction demarcation_) or declarative transaction
-demarcation performed automatically by the EJB container (this style is
+demarcation performed automatically by the Enterprise Beans container (this style is
 called _container-managed transaction demarcation_).
 
 With bean-managed
@@ -45,14 +45,14 @@ _The terms resource and resource manager used
 in this chapter refer to the resources declared using the `Resource`
 annotation in the enterprise bean class or using the `resource-ref`
 element in the enterprise bean’s deployment descriptor. This includes
-not only database resources, but also other resources, such as JMS
+not only database resources, but also other resources, such as Jakarta Messaging
 Connections. These resources are considered to be "managed" by the
 container.footnote:a10263[Note that environment entries other than 
 resources are specified with the `Resource` annotation and/or 
 `resource-ref` deployment descriptor element as well.] 
 For a discussion about resources used
-in the Java Persistence API that may be "unaware" of the presence of JTA
-transactions, see <<a9851>>._
+in Jakarta Persistence that may be "unaware" of the presence of 
+Jakarta Transactions, see <<a9851>>._
 ****
 
 With
@@ -68,15 +68,15 @@ for the description of the "no transaction" case).
 Regardless of whether an enterprise bean uses
 bean-managed or container-managed
 transaction demarcation, the burden of
-implementing transaction management is on the EJB Container and Server
-Provider. The EJB container and server implement the necessary low-level
+implementing transaction management is on the Enterprise Beans Container and Server
+Provider. The Enterprise Beans container and server implement the necessary low-level
 transaction protocols, such as the two-phase commit protocol between a
 transaction manager and a database system or messaging provider,
 transaction context propagation, and distributed two-phase commit.
 
 _Many applications will consist of one or
 several enterprise beans that all use a single resource manager
-(typically a relational database management system). The EJB container
+(typically a relational database management system). The Enterprise Beans container
 can make use of resource manager local transactions as an optimization
 technique for enterprise beans for which distributed transactions are
 not needed. A resource manager local transaction does not involve
@@ -91,21 +91,21 @@ transactions as a container optimization strategy, refer to
 ==== Transaction Model
 
 The Enterprise
-JavaBeans architecture supports flat transactions. A flat transaction
+Beans architecture supports flat transactions. A flat transaction
 cannot have any child (nested) transactions.
 
 ****
 _Note: The decision not to support nested
 transactions allows vendors of existing transaction processing and
 database management systems to incorporate support for Enterprise
-JavaBeans. If these vendors provide support for nested transactions in
-the future, Enterprise JavaBeans may be enhanced to take advantage of
+Beans. If these vendors provide support for nested transactions in
+the future, Enterprise Beans may be enhanced to take advantage of
 nested transactions._
 ****
 
-==== Relationship to JTA and JTS
+==== Relationship to Jakarta Transactions
 
-The Java(TM) Transaction API (JTA) <<a9857>> is a specification of the
+The Jakarta(R) Transactions <<a9857>> is a specification of the
 interfaces between a transaction manager and the other parties involved
 in a distributed transaction processing system: the application
 programs, the resource managers, and the application server.
@@ -116,24 +116,24 @@ API is a Java binding of the CORBA Object Transaction Service (OTS) 1.1
 specification. JTS provides transaction interoperability using the
 standard IIOP protocol for transaction propagation between servers. The
 JTS API is intended for vendors who implement transaction processing
-infrastructure for enterprise middleware. For example, an EJB server
+infrastructure for enterprise middleware. For example, an Enterprise Beans server
 vendor may use a JTS implementation as the underlying transaction
 manager.
 
-The EJB architecture does not require the EJB
-container to support the JTS interfaces. The EJB architecture requires
-that the EJB container support the JTA API defined in <<a9857>> 
-and the Connector APIs defined in <<a9863>>.
+The Enterprise Beans architecture does not require the Enterprise Beans
+container to support the JTS interfaces. The Enterprise Beans architecture requires
+that the Enterprise Beans container support the Jakarta Transactions API defined in <<a9857>> 
+and the Jakarta Connectors APIs defined in <<a9863>>.
 
 === Sample Scenarios
 
 _This section describes several scenarios that
 illustrate the distributed transaction capabilities of the Enterprise
-JavaBeans architecture._
+Beans architecture._
 
 ==== Update of Multiple Databases
 
-The Enterprise JavaBeans architecture makes
+The Enterprise Beans architecture makes
 it possible for an application program to update data in multiple
 databases in a single transaction.
 
@@ -141,7 +141,7 @@ _In the following figure, a client invokes the
 enterprise bean X. Bean X updates data using two database connections
 that the Deployer configured to connect with two different databases, A
 and B. Then X calls another enterprise bean, Y. Bean Y updates data in
-database C. The EJB server ensures that the updates to databases A, B,
+database C. The Enterprise Beans server ensures that the updates to databases A, B,
 and C are either all committed or all rolled back._
 
 .Updates to Simultaneous Databases
@@ -149,72 +149,72 @@ image::EBCore-15.png[]
 
 _The application programmer does not have to
 do anything to ensure transactional semantics. Behind the scenes, the
-EJB server enlists the database connections as part of the transaction.
-When the transaction commits, the EJB server and the database systems
+Enterprise Beans server enlists the database connections as part of the transaction.
+When the transaction commits, the Enterprise Beans server and the database systems
 perform a two-phase commit protocol to ensure atomic updates across all
 three databases._
 
-==== Messages Sent or Received Over JMS Sessions and Update of Multiple Databases
+==== Messages Sent or Received Over Jakarta Messaging Sessions and Update of Multiple Databases
 
-The Enterprise JavaBeans architecture makes
+The Enterprise Beans architecture makes
 it possible for an application program to send messages to or receive
-messages from one or more JMS Destinations
+messages from one or more Jakarta Messaging Destinations
 and/or to update data in one or more databases in a single transaction.
 
 _In the following figure, a client invokes the
-enterprise bean X. Bean X sends a message to a JMS queue A and updates
+enterprise bean X. Bean X sends a message to a Jakarta Messaging queue A and updates
 data in a database B using connections that the Deployer configured to
-connect with a JMS provider and a database. Then X calls another
-enterprise bean, Y. Bean Y updates data in database C. The EJB server
+connect with a Jakarta Messaging provider and a database. Then X calls another
+enterprise bean, Y. Bean Y updates data in database C. The Enterprise Beans server
 ensures that the operations on A, B, and C are either all committed, or
 all rolled back._
 
-.Message Sent to JMS Queue and Updates to Multiple Databases
+.Message Sent to Jakarta Messaging Queue and Updates to Multiple Databases
 image::EBCore-16.png[]
 
 _The application programmer does not have to
 do anything to ensure transactional semantics. The enterprise beans X
 and Y perform the message send and database updates using the standard
-JMS and JDBC(TM) APIs. Behind the scenes, the EJB server enlists the
-session on the connection to the JMS provider and the database
+Jakarta Messaging and JDBC(TM) APIs. Behind the scenes, the Enterprise Beans server enlists the
+session on the connection to the Jakarta Messaging provider and the database
 connections as part of the transaction. When the transaction commits,
-the EJB server and the messaging and database systems perform a
+the Enterprise Beans server and the messaging and database systems perform a
 two-phase commit protocol to ensure atomic updates across all the three
 resources._
 
 _In the following figure, a client sends a
-message to the JMS queue A serviced by the message-driven bean X. Bean X
+message to the Jakarta Messaging queue A serviced by the message-driven bean X. Bean X
 updates data using two database connections that the Deployer configured
-to connect with two different databases, B and C. The EJB server ensures
-that the dequeuing of the JMS message, its receipt by bean X, and the
+to connect with two different databases, B and C. The Enterprise Beans server ensures
+that the dequeuing of the Jakarta Messaging message, its receipt by bean X, and the
 updates to databases B and C are either all committed or all rolled
 back._
 
-.Message Sent to JMS Queue Serviced by Message-Driven Bean and Updates to Multiple Databases
+.Message Sent to Jakarta Messaging Queue Serviced by Message-Driven Bean and Updates to Multiple Databases
 image::EBCore-17.png[]
 
-==== Update of Databases via Multiple EJB Servers
+==== Update of Databases via Multiple Enterprise Beans Servers
 
-The Enterprise JavaBeans architecture allows
+The Enterprise Beans architecture allows
 updates of data at multiple sites to be performed in a single
 transaction.
 
 _In the following figure, a client invokes the
 enterprise bean X. Bean X updates data in database A, and then calls
-another enterprise bean Y that is installed in a remote EJB server. Bean
-Y updates data in database B. The Enterprise JavaBeans architecture
+another enterprise bean Y that is installed in a remote Enterprise Beans server. Bean
+Y updates data in database B. The Enterprise Beans architecture
 makes it possible to perform the updates to databases A and B in a
 single transaction._
 
 .Updates to Multiple Databases in Same Transaction
 image::EBCore-18.png[]
 
-_When X invokes Y, the two EJB servers
+_When X invokes Y, the two Enterprise Beans servers
 cooperate to propagate the transaction context from X to Y. This
 transaction context propagation is transparent to the application-level
 code._
 
-_At transaction commit time, the two EJB
+_At transaction commit time, the two Enterprise Beans
 servers use a distributed two-phase commit protocol (if the capability
 exists) to ensure the atomicity of the database updates._
 
@@ -230,7 +230,7 @@ name space.
 A client program using
 explicit transaction demarcation may
 perform, via enterprise beans, atomic updates across multiple databases
-residing at multiple EJB servers, as illustrated in the following
+residing at multiple Enterprise Beans servers, as illustrated in the following
 figure.
 
 .Updates on Multiple Databases on Multiple Servers
@@ -240,7 +240,7 @@ _The application programmer demarcates the
 transaction with begin and commit calls. If the enterprise beans X and Y
 are configured to use a client transaction (i.e., their methods have
 transaction attributes that either require or support an existing
-transaction context), the EJB server ensures that the updates to
+transaction context), the Enterprise Beans server ensures that the updates to
 databases A and B are made as part of the client’s transaction._
 
 ==== Container-Managed Demarcation
@@ -302,9 +302,9 @@ resource manager associated with the arriving message and all the
 resource managers accessed by the message listener method with the
 transaction.
 
-_It is illegal to associate JTA transactional
+_It is illegal to associate Jakarta Transactions transactional
 interceptors (see <<a9857>>) with
-Enterprise JavaBeans.footnote:a10266[This restriction may be removed 
+Enterprise Beans.footnote:a10266[This restriction may be removed 
 in a future release of this specification.]_
 
 === Bean Provider’s Responsibilities
@@ -348,7 +348,7 @@ resource manager that does not support an external transaction
 coordinator, the Bean Provider should design the enterprise bean with
 container-managed transaction demarcation and assign the `NOT_SUPPORTED`
 transaction attribute to the bean class or to all the bean’s methods.
-The EJB architecture does not specify the transactional semantics of the
+The Enterprise Beans architecture does not specify the transactional semantics of the
 enterprise bean methods. See <<a2889>>
 for how the container implements this case.
 
@@ -368,7 +368,7 @@ The following are guidelines for managing
 isolation levels in enterprise beans.
 
 * The API for managing an isolation level is
-resource-manager-specific. (Therefore, the EJB architecture does not
+resource-manager-specific. (Therefore, the Enterprise Beans architecture does not
 define an API for managing isolation levels.)
 
 * If an enterprise bean uses multiple resource
@@ -420,10 +420,10 @@ methods are performed in a transaction. While an instance is in
 a transaction, the instance must not attempt to use the resource-manager
 specific transaction demarcation API (e.g. it must not invoke the commit
 or rollback method on the java.sql.Connection interface or on the
-`javax.jms.Session` interface).footnote:a10267[However, use of the Java 
-Persistence API `EntityTransaction` interface is supported. See <<a9851>> 
-for a discussion of resources used in the Java Persistence API that may be 
-"unaware" of the presence of JTA transactions, and a description of the 
+`javax.jms.Session` interface).footnote:a10267[However, use of 
+Jakarta Persistence `EntityTransaction` interface is supported. See <<a9851>> 
+for a discussion of resources used in Jakarta Persistence that may be 
+"unaware" of the presence of Jakarta Transactions, and a description of the 
 `EntityTransaction` interface and its use.]
 
 A stateful session bean instance may, but is
@@ -520,7 +520,7 @@ public class MySessionBean implements MySession {
 ----
 The following code segments illustrate a
 business method that performs a transaction involving both a database
-connection and a JMS connection.
+connection and a Jakarta Messaging connection.
 [source, java]
 ----
 @Stateless
@@ -832,21 +832,21 @@ bean with container-managed transaction demarcation can use the
 `getRollbackOnly` method of its `EJBContext` object to test if the current
 transaction has been marked for rollback. The transaction might have
 been marked for rollback by the enterprise bean itself, by other
-enterprise beans, or by other components (outside of the EJB
+enterprise beans, or by other components (outside of the Enterprise Beans
 specification scope) of the transaction processing infrastructure.
 
-==== Use of JMS APIs in Transactions
+==== Use of Jakarta Messaging APIs in Transactions
 
 The Bean Provider should not make use of the
-JMS request/reply paradigm (sending of a JMS message, followed by the
+Jakarta Messaging request/reply paradigm (sending of a Jakarta Messaging message, followed by the
 synchronous receipt of a reply to that message) within a single
 transaction. Because a
-JMS message is typically not delivered to
+Jakarta Messaging message is typically not delivered to
 its final destination until the transaction commits, the receipt of the
 reply within the same transaction will not take place.
 
 Because the container manages the
-transactional enlistment of JMS sessions on behalf of a bean, the
+transactional enlistment of Jakarta Messaging sessions on behalf of a bean, the
 parameters of the `createSession(boolean transacted, int acknowledgeMode)`, 
 `createQueueSession(boolean transacted, int acknowledgeMode)` and 
 `createTopicSession(boolean transacted, int acknowledgeMode)`
@@ -854,7 +854,7 @@ methods are ignored. It is recommended that the Bean
 Provider specify that a session is transacted, but provide `0` for the
 value of the acknowledgment mode.
 
-The Bean Provider should not use the JMS
+The Bean Provider should not use the Jakarta Messaging
 `acknowledge` method either within a transaction or within an
 unspecified transaction context. Message acknowledgment in an
 unspecified transaction context is handled by the container.
@@ -911,7 +911,7 @@ attribute is a value associated with each of the following methods
 
 * a stateless or singleton session bean’s web service endpoint method
 
-* for beans written to the EJB 2.1 and earlier client view, 
+* for beans written to the Enterprise Beans 2.1 and earlier client view, 
 a method of a session bean’s home or component interface
 
 * a `PostConstruct` or `PreDestroy` lifecycle
@@ -928,7 +928,7 @@ the method.
 Transaction attributes are specified for the
 following methods:
 
-* For a session bean written to the EJB 3.x
+* For a session bean written to the Enterprise Beans 3.x
 client view API, the transaction attributes are specified for those
 methods of the session bean class that correspond to the bean’s business
 interface, the direct and indirect superinterfaces of the business
@@ -961,7 +961,7 @@ class, rather than for a superclass or `PostConstruct`, `PreDestroy`,
 attributes are specified for the message listenermethods on the
 message-driven bean class and for the timeout callback methods, if any.
 
-* For a session bean written to the EJB 2.1 and
+* For a session bean written to the Enterprise Beans 2.1 and
 earlier client view, the transaction attributes are specified for the
 methods of the component interface and all the direct and indirect
 superinterfaces of the component interface, excluding the methods of the
@@ -992,7 +992,7 @@ transactional structure of an application is typically intrinsic to the
 semantics of the application.
 
 Enterprise
-JavaBeans defines the following values for the `TransactionAttribute`
+Beans defines the following values for the `TransactionAttribute`
 metadata annotation:
 
 * MANDATORY
@@ -1147,7 +1147,7 @@ Note that even in the absence of the use of
 annotations, it is not necessary to explicitly specify transaction
 attributes for all of the methods listed in <<a2538>>. 
 If a transaction attribute is not
-specified for a method in an EJB deployment descriptor, the transaction
+specified for a method in an Enterprise Beans deployment descriptor, the transaction
 attribute defaults to `Required`.
 
 If the deployment descriptor is used to
@@ -1371,7 +1371,7 @@ transaction attributes is typically an intrinsic part of the semantics
 of an application._
 ****    
 
-_Compatibility Note: For applications written to the EJB 2.1
+_Compatibility Note: For applications written to the Enterprise Beans 2.1
 specification (and earlier), the Deployer is responsible for ensuring
 that the methods of the deployed enterprise beans with
 container-managed transaction demarcation
@@ -1400,7 +1400,7 @@ connection factory (e.g. a JDBC data source) JNDI look up by registering
 the container-specific implementation of the resource manager connection
 factory object. The resource manager connection factory object allows
 the container to obtain the `javax.transaction.xa.XAResource` interface
-as described in the JTA specification and pass it to the transaction
+as described in the Jakarta Transactions specification and pass it to the transaction
 manager. After the set up is done, the enterprise bean communicates with
 the resource manager without going through the container._
 
@@ -1435,15 +1435,15 @@ bean class or interceptor class, through lookup via the
 `javax.transaction.UserTransaction` interface to demarcate a transaction,
 the container must enlist all the resource managers used by the instance
 between the `begin` and `commit`—or `rollback`—methods with the
-transaction.footnote:a10271[However, use of the Java Persistence API 
+transaction.footnote:a10271[However, use of Jakarta Persistence 
 `EntityTransaction` interface is supported. See <<a9851>> for a 
-discussion of resources used in the Java Persistence API that may be 
-"unaware" of the presence of JTA transactions, and a description of 
+discussion of resources used in Jakarta Persistence that may be 
+"unaware" of the presence of Jakarta Transactions, and a description of 
 the `EntityTransaction` interface and its use.]
 When the instance attempts to commit
 the transaction, the container is responsible for the global
 coordination of the transaction commit.footnote:a10272[The container 
-typically relies on a transaction manager that is part of the EJB server 
+typically relies on a transaction manager that is part of the Enterprise Beans server 
 to perform the two-phase commit across all the enlisted resource managers. 
 If only a single resource manager is involved in the transaction and the 
 deployment descriptor indicates that connection sharing may be used, the 
@@ -1483,7 +1483,7 @@ exception occurred in an `AroundConstruct`, `PostConstruct` or
 `javax.ejb.EJBException`.footnote:a10274[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
-If the EJB 2.1 client
+If the Enterprise Beans 2.1 client
 view is used, the container should throw thejava.rmi.RemoteException if
 the client is a remote client, and the `javax.ejb.EJBException` if the
 client is a local client.
@@ -1739,7 +1739,7 @@ context, the container throws the
 interface is a remote business interface that extends `java.rmi.Remote`, 
 the `javax.transaction.TransactionRequiredException` is thrown to the 
 client instead.] If
-the EJB 2.1 client view is used, the container throws the
+the Enterprise Beans 2.1 client view is used, the container throws the
 `javax.transaction.TransactionRequiredException` exception if the client
 is a remote client, and the
 `javax.ejb.TransactionRequiredLocalException` if the client is a local
@@ -1749,7 +1749,7 @@ client.
 
 The container
 invokes an enterprise bean method whose transaction attribute is set to
-`NEVER` without a transaction context defined by the EJB specification.
+`NEVER` without a transaction context defined by the Enterprise Beans specification.
 The client is required to call without a transaction context.
 
 * If the client calls with a transaction
@@ -1757,7 +1757,7 @@ context, the container throws the
 `javax.ejb.EJBException`.footnote:a10276[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.]
-If the EJB 2.1 client
+If the Enterprise Beans 2.1 client
 view is used, the container throws the java.rmi.RemoteException
 exception if the client is a remote client, and the
 `javax.ejb.EJBException` if the client is a local client.
@@ -1925,11 +1925,11 @@ Messaging systems may differ in quality of
 service with regard to reliability and transactionality of the dequeuing
 of messages.
 
-The requirement for JMS are as follows:
+The requirement for Jakarta Messaging are as follows:
 
 ****
 _A transaction must be started before the
-dequeuing of the JMS message and, hence, before the invocation of the
+dequeuing of the Jakarta Messaging message and, hence, before the invocation of the
 message-driven bean’s `onMessage` method. The resource manager
 associated with the arriving message is enlisted with the transaction as
 well as all the resource managers accessed by the `onMessage` method
@@ -2005,8 +2005,8 @@ approach is discussed in <<a9861>> and <<a9863>>.
 ==== Handling of Methods that Run with "an unspecified transaction context"
 
 The term 
-"an unspecified transaction context" is used in the EJB specification to
-refer to the cases in which the EJB architecture does not fully define
+"an unspecified transaction context" is used in the Enterprise Beans specification to
+refer to the cases in which the Enterprise Beans architecture does not fully define
 the transaction semantics of an enterprise bean method execution.
 
 This includes the following cases:
@@ -2023,7 +2023,7 @@ container-managed transaction demarcation.footnote:a10278[See <<a608>>.]
 `PreDestroy` callback method of a message-driven bean with
 container-managed transaction demarcation.footnote:a10279[See <<a1702>>.]
 
-The EJB specification does not prescribe how
+The Enterprise Beans specification does not prescribe how
 the container should manage the execution of a method with an
 unspecified transaction context—the transaction semantics are left to
 the container implementation. Some techniques for how the container may
@@ -2059,7 +2059,7 @@ conservatively not to rely on any particular container behavior.
 A failure that occurs in the middle of the
 execution of a method that runs with an unspecified transaction context
 may leave the resource managers accessed from the method in an
-unpredictable state. The EJB architecture does not define how the
+unpredictable state. The Enterprise Beans architecture does not define how the
 application should recover the resource managers’ state after such a
 failure.
 
@@ -2073,7 +2073,7 @@ specifies the container’s behavior required for this scenario.
 
 An entity
 object footnote:a10280[Component contract and client view of entity 
-beans are described in the EJB Optional Features document <<a9890>>.] 
+beans are described in the Enterprise Beans Optional Features document <<a9890>>.] 
 may be accessed by multiple clients in the
 same transaction. For example, program A may start a transaction, call
 program B and program C in the transaction context, and then commit the
@@ -2089,13 +2089,13 @@ stores within the same transaction. At each store, the program that is
 processing the client’s purchase request debits the client’s bank
 account._
 
-It is difficult to implement an EJB server
+It is difficult to implement an Enterprise Beans server
 that handles the case in which programs B and C access an entity object
 through different network paths. This case is challenging because many
-EJB servers implement the EJB container as a collection of multiple
+Enterprise Beans servers implement the Enterprise Beans container as a collection of multiple
 processes, running on the same or multiple machines. Each client is
 typically connected to a single process. If clients B and C connect to
-different EJB container processes, and both B and C need to access the
+different Enterprise Beans container processes, and both B and C need to access the
 same entity object in the same transaction, the issue is how the
 container can make it possible for B and C to see a consistent state of
 the entity object within the same transaction.footnote:a10281[This diamond 
@@ -2114,35 +2114,35 @@ application programming error, and it would be handled in a
 container-specific way.
 
 _Note that the issue of handling diamonds is
-not unique to the EJB architecture. This issue exists in all distributed
+not unique to the Enterprise Beans architecture. This issue exists in all distributed
 transaction processing systems._
 
 The following subsections define the
-responsibilities of the EJB Roles when handling distributed transaction
+responsibilities of the Enterprise Beans Roles when handling distributed transaction
 topologies that may lead to a diamond involving an entity object.
 
 ==== Container Provider’s Responsibilities
 
-This subsection specifies the EJB container’s
+This subsection specifies the Enterprise Beans container’s
 responsibilities with respect to the diamond case involving an entity
 object.footnote:a10280[]
 
-The EJB specification requires that the
+The Enterprise Beans specification requires that the
 container provide support for local
 diamonds. In a local diamond, components A, B, C, and D are deployed in
-the same EJB container.
+the same Enterprise Beans container.
 
-The EJB specification does not require an EJB
+The Enterprise Beans specification does not require an Enterprise Beans
 container to support distributed diamonds.
 In a distributed diamond, a target entity object is accessed from
 multiple clients in the same transaction through multiple network paths,
 and the clients (programs B and C) are not enterprise beans deployed in
-the same EJB container as the target entity object.
+the same Enterprise Beans container as the target entity object.
 
 If the Container Provider chooses not to
 support distributed diamonds, and if the container can detect that a
 client invocation would lead to a diamond, the container should throw
-the `javax.ejb.EJBException` (or `java.rmi.RemoteException` if the EJB 2.1
+the `javax.ejb.EJBException` (or `java.rmi.RemoteException` if the Enterprise Beans 2.1
 remote client view is used).
 
 ==== Bean Provider’s Responsibilities
