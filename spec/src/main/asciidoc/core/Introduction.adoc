@@ -2,7 +2,7 @@
 == Introduction
 
 This is the specification of the Jakarta(R) Enterprise
-Beans architecture. The Enterprise Beans architecture is a
+Beans architecture. The Enterprise Beans architecture is an
 architecture for the development and deployment of component-based
 business applications. Applications written using the Enterprise
 Beans architecture are scalable, transactional, and multi-user
@@ -79,7 +79,7 @@ bean._
 designate its implemented interfaces as local or as remote business
 interfaces._
 
-* _Enhanced the list of standard Jakarta Messaging MDB
+* _Enhanced the list of standard Jakarta(R) Messaging MDB
 activation properties._
 
 * _Simplified requirements for definition of a
@@ -201,8 +201,8 @@ following documents:
 * Enterprise Beans Optional Features
 
 This Enterprise Beans Core Contracts document defines the
-contracts and requirements for the use and implementation of Enterprise
-JavaBeans. These contracts include those for the Enterprise Beans 3.2 API, as well as
+contracts and requirements for the use and implementation of Enterprise Beans. 
+These contracts include those for the Enterprise Beans 3.2 API, as well as
 for the earlier Enterprise Beans API that is required to be supported in this
 release. See <<a9423>> for coverage of the Enterprise Beans API requirements.
 
@@ -214,10 +214,10 @@ contracts are separated from the core contracts requirements of the Enterprise B
 
 === Document Conventions
 
-The regular serif font is used for
+The regular font is used for
 information that is prescriptive by the Enterprise Beans specification.
 
-_The italic serif font is used for paragraphs
+_The italic font is used for paragraphs
 that contain descriptive information, such as notes describing typical
 use, or notes clarifying the text with prescriptive specification._
 
