@@ -2,11 +2,11 @@
 == Support for Distributed Interoperability
 
 This chapter describes the interoperability
-support for accessing an enterprise bean through the EJB 2.1 remote
+support for accessing an enterprise bean through the Enterprise Beans 2.1 remote
 client view from clients distributed over a network, and the distributed
 interoperability requirements for invocations on enterprise beans from
-remote clients that are Java Platform, Enterprise Edition (Java EE)
-components. Distributed Interoperability is not defined for the EJB 3.x
+remote clients that are Jakarta EE Platform
+components. Distributed Interoperability is not defined for the Enterprise Beans 3.x
 remote client view.
 
 === Support for Distribution
@@ -21,10 +21,10 @@ machine than the enterprise bean (location transparency), and the object
 references of the remote home and remote component interfaces can be
 passed over the network to other applications.
 
-The EJB
+The Enterprise Beans
 specification further constrains the Java RMI types that can be used by
 enterprise beans to be legal RMI-IIOP types <<a9859>>. This
-makes it possible for EJB container implementors to use RMI-IIOP as the
+makes it possible for Enterprise Beans container implementors to use RMI-IIOP as the
 object distribution protocol.
 
 ==== Client-Side Objects in a Distributed Environment
@@ -35,7 +35,7 @@ communicates with the enterprise bean using stubs for the server-side
 objects. The stubs implement the remote home and remote component
 interfaces.
 
-.Location of EJB Client Stubs.
+.Location of Enterprise Beans Client Stubs.
 image::EBCore-23.png[]
 
 The communication stubs used on the client
@@ -47,28 +47,28 @@ specific to the wire protocol used for the remote invocation.
 
 Session beans and
 entity footnote:a10313[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.] beans that 
+are described in the Enterprise Beans Optional Features document <<a9890>>.] beans that 
 are deployed in one vendor’s
-server product may need to be accessed from Java EE client components
+server product may need to be accessed from Jakarta EE client components
 that are deployed in another vendor’s product through the remote client
-view. EJB defines a standard interoperability protocol based on
+view. Enterprise Beans defines a standard interoperability protocol based on
 CORBA/IIOP to address this need.
 
 The
 interoperability protocols described here must be supported by
-compatible EJB products. Additional vendor-specific protocols may also
+compatible Enterprise Beans products. Additional vendor-specific protocols may also
 be supported.
 
 <<a3322>> shows a heterogeneous environment that includes systems
-from several vendors to illustrate the interoperability enabled by EJB.
+from several vendors to illustrate the interoperability enabled by Enterprise Beans.
 
 [[a3322]]
-.Heterogeneous EJB Environment
+.Heterogeneous Enterprise Beans Environment
 image::EBCore-24.png[]
 
 The following sections in this chapter
 
-* describe the goals for EJB invocation interoperability
+* describe the goals for Enterprise Beans invocation interoperability
 
 * provide illustrative scenarios
 
@@ -82,22 +82,22 @@ interoperability requirements specified in
 this chapter are as follows:
 
 * To allow clients in one application deployed
-in Java EE containers from one Server Provider to access services from
-session and entity footnote:a10313[] beans in another application that is deployed in an EJB
+in Jakarta EE containers from one Server Provider to access services from
+session and entity footnote:a10313[] beans in another application that is deployed in an Enterprise Beans
 container from a different Server Provider. For example, web components
-(JavaServer Pages and servlets) that are deployed on a Java EE compliant
+(Jakarta Server Pages and servlets) that are deployed on a Jakarta EE compliant
 web server provided by one Server Provider must be able to invoke the
-business methods of enterprise beans that are deployed on a Java EE
-compliant EJB server from another Server Provider.
+business methods of enterprise beans that are deployed on a Jakarta EE
+compliant Enterprise Beans server from another Server Provider.
 
 * To achieve interoperability without any new
-requirements on the Java EE application developer.
+requirements on the Jakarta EE application developer.
 
 * To ensure out-of-the-box interoperability
-between compliant Java EE products. It must be possible for an
-enterprise customer to install multiple Java EE server products from
+between compliant Jakarta EE products. It must be possible for an
+enterprise customer to install multiple Jakarta EE server products from
 different Server Providers (on potentially different operating systems),
-deploy applications in the Java EE servers, and have the multiple
+deploy applications in the Jakarta EE servers, and have the multiple
 applications interoperate.
 
 * To leverage the interoperability work done by
@@ -106,18 +106,18 @@ that customers can work with industry standards and use standard
 protocols to access enterprise beans.
 
 This specification does not address
-interoperability issues between enterprise beans and non-Java-EE
-components. The Java EE platform specification <<a9861>> and 
-JAX-WS specification <<a9881>> describe requirements for
+interoperability issues between enterprise beans and non-Jakarta-EE
+components. The Jakarta EE platform specification <<a9861>> and 
+Jakarta XML Web Services specification <<a9881>> describe requirements for
 interoperability with Internet clients (using HTTP and XML) and
-interoperability with enterprise information systems (using the
-Connector architecture <<a9863>>).
+interoperability with enterprise information systems 
+(using Jakarta Connectors <<a9863>>).
 
 Since the interoperability protocol described
 here is based on CORBA/IIOP, CORBA clients written in Java, C++, or
 other languages can also invoke methods on enterprise beans.
 
-This chapter subsumes the previous EJB1.1-to-CORBA mapping document 
+This chapter subsumes the previous Enterprise Beans 1.1-to-CORBA mapping document 
 <<a9864>>.
 
 [[a3337]]
@@ -127,18 +127,18 @@ This section
 presents a number of interoperability scenarios that motivate the
 interoperability mechanisms described in later sections of this chapter.
 These scenarios are illustrative rather than prescriptive. This section
-does not specify requirements for a Java EE product to support these
+does not specify requirements for a Jakarta EE product to support these
 scenarios in exactly the manner described here.
 
-Java EE applications are multi-tier,
+Jakarta EE applications are multi-tier,
 web-enabled applications. Each application consists of one or more
 components, which are deployed in containers. The four types of
 containers are:
 
-* EJB containers, which host enterprise beans.
+* Enterprise Beans containers, which host enterprise beans.
 
-* Web containers, which host JavaServer Pages
-(JSPs) and servlet components as well as static documents, including
+* Web containers, which host Jakarta Server Pages
+and servlet components as well as static documents, including
 HTML pages.
 
 * Application client containers, which host standalone applications.
@@ -151,58 +151,58 @@ enterprise beans.
 The scenarios below describe interactions
 between components hosted in these various container types.
 
-==== Interactions Between Web Containers and EJB Containers for E-Commerce Applications
+==== Interactions Between Web Containers and Enterprise Beans Containers for E-Commerce Applications
 
 This scenario occurs for business-to-business
 and business-to-consumer interactions over the Internet.
 
 _**Scenario 1:** A customer wants to buy a book
-from an Internet bookstore. The bookstore’s web site consists of a Java
-EE application containing JSPs that form the presentation layer, and
-another Java EE application containing enterprise beans that have the
-business logic and database access code. The JSPs and enterprise beans
+from an Internet bookstore. The bookstore’s web site consists of a 
+Jakarta EE application containing Jakarta Server Pages that form the presentation layer, and
+another Jakarta EE application containing enterprise beans that have the
+business logic and database access code. The Jakarta Server Pages and enterprise beans
 are deployed in containers from different vendors._
 
 _**At deployment time:** The enterprise beans
-are deployed, and their EJBHome objects are published in the EJB
-server’s name service. The Deployer links the EJB reference in the JSP’s
+are deployed, and their EJBHome objects are published in the Enterprise Beans
+server’s name service. The Deployer links the Enterprise Beans reference in the Jakarta Server Page’s
 deployment descriptor to the URL of the enterprise bean’s EJBHome
 object, which can be looked up from the name service. The transaction
 attribute specified in the enterprise bean’s deployment descriptor is
-`RequiresNew` for all business methods. Because the "checkout" JSP
+`RequiresNew` for all business methods. Because the "checkout" Jakarta Server Page
 requires secure access to set up payments for purchases, the bookstore’s
-administrator configures the "checkout" JSP to require access over HTTPS
+administrator configures the "checkout" Jakarta Server Page to require access over HTTPS
 with only server authentication. Customer authentication is done using
-form-based login. The "book search" JSP is accessed over normal HTTP.
-Both JSPs talk with enterprise beans that access the book database. The
-web and EJB containers use the same customer realm and have a trust
-relationship with each other. The network between the web and EJB
+form-based login. The "book search" Jakarta Server Page is accessed over normal HTTP.
+Both Jakarta Server Pages talk with enterprise beans that access the book database. The
+web and Enterprise Beans containers use the same customer realm and have a trust
+relationship with each other. The network between the web and Enterprise Beans
 servers is not guaranteed to be secure from attacks._
 
 _**At runtime:** The customer accesses the book
-search JSP using a browser. The JSP looks up the enterprise bean’s
+search Jakarta Server Pages using a browser. The Jakarta Server Pages looks up the enterprise bean’s
 EJBHome object in a name service, and calls `findBooks(...)` with the
 search criteria as parameters. The web container establishes a secure
-session with the EJB container with mutual authentication between the
+session with the Enterprise Beans container with mutual authentication between the
 containers, and invokes the enterprise bean. The customer then decides
-to buy a book, and accesses the "checkout" JSP. The customer enters the
+to buy a book, and accesses the "checkout" Jakarta Server Pages. The customer enters the
 necessary information in the login form, which is used by the web server
-to authenticate the customer. The JSP invokes the enterprise bean to
+to authenticate the customer. The Jakarta Server Pages invokes the enterprise bean to
 update the book and customer databases. The customer’s principal is
-propagated to the EJB container and used for authorization checks. The
+propagated to the Enterprise Beans container and used for authorization checks. The
 enterprise bean completes the updates and commits the transaction. The
-JSP sends back a confirmation page to the customer._
+Jakarta Server Pages sends back a confirmation page to the customer._
 
 [[a3351]]
-==== Interactions Between Application Client Containers and EJB Containers Within an Enterprise’s Intranet
+==== Interactions Between Application Client Containers and Enterprise Beans Containers Within an Enterprise’s Intranet
 
 _**Scenario 2.1:** An enterprise has an expense
 accounting application used by employees from their desktops. The
-server-side consists of a Java EE application containing enterprise
-beans that are deployed on one vendor's Java EE product, which is hosted
-in a datacenter. The client side consists of another Java EE application
-containing an application client deployed using another vendor's Java EE
-infrastructure. The network between the application client and the EJB
+server-side consists of a Jakarta EE application containing enterprise
+beans that are deployed on one vendor's Jakarta EE product, which is hosted
+in a datacenter. The client side consists of another Jakarta EE application
+containing an application client deployed using another vendor's Jakarta EE
+infrastructure. The network between the application client and the Enterprise Beans
 container is insecure and needs to be protected against spoofing and
 other attacks._
 
@@ -211,7 +211,7 @@ are deployed and their EJBHome objects are published in the enterprise’s
 name service. The application clients are configured with the names of
 the EJBHome objects. The Deployer maps employees to roles that are
 allowed access to the enterprise beans. The System Administrator
-configures the security settings of the application client and EJB
+configures the security settings of the application client and Enterprise Beans
 container to use client and server authentication and message
 protection. The System Administrator also does the necessary client-side
 configuration to allow client authentication._
@@ -223,10 +223,10 @@ the employee’s credentials. The client application does a remote
 invocation to the name server to look up the enterprise bean’s EJBHome
 object, and creates the enterprise beans. The application client
 container uses a secure transport protocol to interact with the name
-server and EJB server, which does mutual authentication and also
+server and Enterprise Beans server, which does mutual authentication and also
 guarantees the confidentiality and integrity of messages. The employee
 then enters the expense information and submits it. This causes remote
-business methods of the enterprise beans to be invoked. The EJB
+business methods of the enterprise beans to be invoked. The Enterprise Beans
 container performs authorization checks and, if they succeed, executes
 the business methods._
 
@@ -238,12 +238,12 @@ the user’s password to the server during the method invocation to
 authenticate the employee._
 
 [[a3356]]
-==== Interactions Between Two EJB Containers in an Enterprise’s Intranet
+==== Interactions Between Two Enterprise Beans Containers in an Enterprise’s Intranet
 
 _**Scenario 3:** An enterprise has an expense
 accounting application which needs to communicate with a payroll
 application. The applications use enterprise beans and are deployed on
-Java EE servers from different vendors. The Java EE servers and
+Jakarta EE servers from different vendors. The Jakarta EE servers and
 naming/authentication services may be in the enterprise's datacenter
 with a physically secure private network between them, or they may need
 to communicate across the intranet, which may be less secure. The
@@ -258,7 +258,7 @@ payroll application. The payroll bean’s deployment descriptor specifies
 the `RequiresNew` transaction attribute for all methods. The applications
 use the same principal-to-role mappings (e.g. the roles may be `Employee`,
 `PayrollDept`, `AccountsDept`). The Deployer of these two applications has
-administratively set up a trust relationship between the two EJB
+administratively set up a trust relationship between the two Enterprise Beans
 containers, so that the containers do not need to authenticate
 principals propagated on calls to enterprise beans from the other
 container. The System Administrator also sets up the message protection
@@ -280,30 +280,30 @@ accounts bean receives a status reply from the payroll bean. If an error
 occurs in the payroll bean, the accounts bean executes code to recover
 from the error and restore the databases to a consistent state._
 
-==== Intranet Application Interactions Between Web Containers and EJB Containers
+==== Intranet Application Interactions Between Web Containers and Enterprise Beans Containers
 
 _**Scenario 4:** This is the same as scenario
 2.1, except that instead of using a "fat-client" desktop application to
 access the enterprise’s expense accounting application, employees use a
-web browser and connect to a web server in the intranet that hosts JSPs.
-The JSPs gather input from the user (e.g., through an HTML form), invoke
+web browser and connect to a web server in the intranet that hosts Jakarta Server Pages.
+The Jakarta Server Pages gather input from the user (e.g., through an HTML form), invoke
 enterprise beans that contain the actual business logic, and format the
 results returned by the enterprise beans (using HTML)._
 
 _**At deployment time:** The enterprise Deployer
-configures its expense accounting JSPs to require access over HTTPS with
-mutual authentication. The web and EJB containers use the same customer
+configures its expense accounting Jakarta Server Pages to require access over HTTPS with
+mutual authentication. The web and Enterprise Beans containers use the same customer
 realm and have a trust relationship with each other._
 
 _**At run-time:**
 The employee logs in to the client desktop, starts the browser, and
-accesses the expense accounting JSP. The browser establishes an HTTPS
+accesses the expense accounting Jakarta Server Page. The browser establishes an HTTPS
 session with the web server. Client authentication is performed (for
 example) using the employee’s credentials which have been established by
 the operating system at login time (the browser interacts with the
-operating system to obtain the employee’s credentials). The JSP looks up
+operating system to obtain the employee’s credentials). The Jakarta Server Page looks up
 the enterprise bean’s EJBHome object in a name service. The web
-container establishes a secure session with the EJB container with
+container establishes a secure session with the Enterprise Beans container with
 mutual authentication and integrity/confidentiality protection between
 the containers, and invokes methods on the enterprise beans._
 
@@ -325,27 +325,27 @@ EJBHome object (scenarios 1,2,3,4), described in <<a3504>>.
 messages (scenarios 1,2,3,4), described in <<a3517>>.
 
 . Authentication between an application client
-and EJB container (described in <<a3517>>):
+and Enterprise Beans container (described in <<a3517>>):
 
 .. Mutual authentication at the transport
 protocol layer when there is client-side authentication infrastructure
 such as certificates (scenario 2.1).
 
 .. Transfer of the user’s authentication data
-from application client to EJB container to allow the EJB container to
+from application client to Enterprise Beans container to allow the Enterprise Beans container to
 authenticate the client when there is no client-side authentication
 infrastructure (scenario 2.2).
 
-. Mutual authentication between two EJB
-containers or between a web and EJB container to establish trust before
+. Mutual authentication between two Enterprise Beans
+containers or between a web and Enterprise Beans container to establish trust before
 principals are propagated (scenarios 1,3,4), described in <<a3517>>.
 
 . Propagation of the Internet or intranet
 user’s principal name for invocations on enterprise beans from web or
-EJB containers when the client and server containers have a trust
+Enterprise Beans containers when the client and server containers have a trust
 relationship (scenarios 1,3,4), described in <<a3517>>.
 
-EJB, web, and application client containers
+Enterprise Beans, web, and application client containers
 must support the above requirements separately as well as in
 combinations.
 
@@ -355,12 +355,12 @@ combinations.
 This section
 describes the interoperability mechanisms that enable remote invocations
 on EJBObject and EJBHome object references when client containers and
-EJB containers are provided by different vendors. This is needed to
+Enterprise Beans containers are provided by different vendors. This is needed to
 satisfy interoperability requirement (1) in <<a3364>>.
 
-All EJB, web, and
+All Enterprise Beans, web, and
 application client containers must support the IIOP 1.2 protocol for
-remote invocations on EJBObject and EJBHome references. EJB containers
+remote invocations on EJBObject and EJBHome references. Enterprise Beans containers
 must be capable of servicing IIOP 1.2 based invocations on EJBObject and
 EJBHome objects. IIOP 1.2 is part of the CORBA 2.3.1 specification
 <<a9865>> from the
@@ -371,26 +371,26 @@ vendor-specific protocols.
 
 CORBA Interoperable Object References (IORs)
 for EJBObject and EJBHome object references must include the GIOP
-version number 1.2. The IIOP infrastructure in all Java EE containers
+version number 1.2. The IIOP infrastructure in all Jakarta EE containers
 must be able to accept fragmented GIOP messages, although sending
 fragmented messages is optional. Bidirectional GIOP messages may
-optionally be supported by Java EE clients and servers: if a Java EE
+optionally be supported by Jakarta EE clients and servers: if a Jakarta EE
 server receives an IIOP message from a client which contains the
 `BiDirIIOPServiceContext` structure, it may or may not use the same
 connection for sending requests back to the client.
 
 Since Java applications use Unicode
-characters by default, Java EE containers are required to support the
+characters by default, Jakarta EE containers are required to support the
 Unicode UTF16 code set for transmission of character and string data (in
-the IDL `wchar` and `wstring` datatypes). Java EE containers may
+the IDL `wchar` and `wstring` datatypes). Jakarta EE containers may
 optionally support additional code sets. EJBObject and EJBHome IORs must
 have the `TAG_CODE_SETS` tagged component which declares the codesets
-supported by the EJB container. IIOP messages which include `wchar` and
+supported by the Enterprise Beans container. IIOP messages which include `wchar` and
 `wstring` datatypes must have the code sets service context field. The
-CORBA 2.3.1 requirements for code set support must be followed by Java
-EE containers.
+CORBA 2.3.1 requirements for code set support must be followed by 
+Jakarta EE containers.
 
-EJB containers are required to translate Java
+Enterprise Beans containers are required to translate Java
 types to their on-the-wire representation in IIOP messages using the
 Java Language to IDL mapping specification <<a9859>> with the
 wire formats for IDL types as described in the GIOP specification in
@@ -402,12 +402,12 @@ Java types.
 The Java Language to IDL Mapping specification <<a9859>>
 describes precisely how the remote home and remote component interfaces
 of a session bean or an entity bean footnote:a10315[Component contract 
-and client view of entity beans are described in the EJB Optional 
+and client view of entity beans are described in the Enterprise Beans Optional 
 Features document <<a9890>>.] are mapped to
 IDL. This mapping to IDL is typically implicit when Java RMI over IIOP
-is used to invoke enterprise beans. Java EE clients use only the Java
+is used to invoke enterprise beans. Jakarta EE clients use only the Java
 RMI APIs to invoke enterprise beans. The client container may use the
-CORBA portable Stub APIs for the client-side stubs. EJB containers may
+CORBA portable Stub APIs for the client-side stubs. Enterprise Beans containers may
 create CORBA Tie objects for each EJBObject or EJBHome object.
 
 ==== Mapping Value Objects to IDL
@@ -426,14 +426,14 @@ interfaces using the rules in the Java Language to IDL Mapping.
 
 Java system 
 exceptions, including the `java.rmi.RemoteException` and its subclasses,
-may be thrown by the EJB container. If the client’s invocation was made
-over IIOP, the EJB server is required to map these exceptions to CORBA
+may be thrown by the Enterprise Beans container. If the client’s invocation was made
+over IIOP, the Enterprise Beans server is required to map these exceptions to CORBA
 system exceptions and send them in the IIOP reply message to the client,
 as specified in the following table
 
 [width="100%",cols="50%,50%",options="header",]
 |===
-|System exception thrown by EJB container
+|System exception thrown by Enterprise Beans container
 |CORBA system exception received by client ORB
 |javax.transaction.TransactionRolledbackException
 |TRANSACTION_ROLLEDBACK
@@ -457,16 +457,16 @@ as specified in the following table
 |UNKNOWN
 |===
 
-For EJB clients, the ORB’s unmarshaling
+For Enterprise Beans clients, the ORB’s unmarshaling
 machinery maps CORBA system exceptions received in the IIOP reply
 message to the appropriate Java exception as specified in the Java
 Language to IDL mapping. This results in the original Java exception
-being received by the client Java EE component.
+being received by the client Jakarta EE component.
 
 ==== Obtaining Stub and Client View Classes
 
-When a Java EE
-component (application client, JSP, servlet or enterprise bean) receives
+When a Jakarta EE
+component (application client, Jakarta Server Page, servlet or enterprise bean) receives
 a reference to an EJBObject or EJBHome object through JNDI lookup or as
 a parameter or return value of an invocation on an enterprise bean, an
 instance of an RMI-IIOP stub class (proxy) for the enterprise bean’s
@@ -506,7 +506,7 @@ implementing the `javax.ejb.Handle`, `javax.ejb.HomeHandle`,
 `javax.ejb.EJBMetaData`, `java.util.Enumeration`, 
 `java.util.Collection`, and `java.util.Iterator` interfaces. 
 These value classes are provided by the
-EJB container vendor. They must be provided in the form of a JAR file by
+Enterprise Beans container vendor. They must be provided in the form of a JAR file by
 the container hosting the referenced bean. For interoperability
 scenarios, if a referencing component would use such
 system value classes at runtime, the
@@ -518,7 +518,7 @@ deploying the system value classes with the referencing component’s
 application by providing them to the deployment tool.
 
 Implementations of these system value classes
-must be portable (they must use only J2SE and Java EE APIs) so that they
+must be portable (they must use only J2SE and Jakarta EE APIs) so that they
 can be instantiated in another vendor’s container. If the system value
 class implementation needs to load application-specific classes (such as
 remote home or remote component interfaces) at runtime, it must use the
@@ -534,11 +534,11 @@ provider interface defines methods that enable portable implementations
 of `Handle` and `HomeHandle` that are instantiated in a different
 vendor’s container to serialize and deserialize EJBObject and EJBHome
 references. The `HandleDelegate` interface is not used by enterprise
-beans or Java EE application components directly.
+beans or Jakarta EE application components directly.
 
-EJB, web and application client containers
+Enterprise Beans, web and application client containers
 must provide implementations of the `HandleDelegate` interface. The
-`HandleDelegate` object must be accessible in the client Java EE
+`HandleDelegate` object must be accessible in the client Jakarta EE
 component’s JNDI namespace at the reserved name 
 `"java:comp/HandleDelegate"`. The HandleDelegate object is not exported
 outside the container that provides it.
@@ -576,7 +576,7 @@ interface format for reading the EJBObject reference. The HandleDelegate
 must ensure that the EJBObject reference is capable of performing
 invocations immediately after deserialization. The Handle maintains a
 reference to the EJBObject as a transient instance variable and returns
-it when the Java EE component calls `Handle.getEJBObject`.
+it when the Jakarta EE component calls `Handle.getEJBObject`.
 
 * The `writeObject` and `readObject` methods of
 HomeHandle implementation classes must be implemented similarly, by
@@ -587,7 +587,7 @@ respectively.
 
 Transaction interoperability between
 containers provided by different vendors is an optional feature in this
-version of the EJB specification. Vendors may choose to not implement
+version of the Enterprise Beans specification. Vendors may choose to not implement
 transaction interoperability. However, vendors who choose to implement
 transaction interoperability must follow the requirements in sections
 <<a3429>> and <<a3452>>, and vendors who choose not to implement
@@ -597,20 +597,20 @@ transaction interoperability must follow the requirements in <<a3452>>.
 ==== Transaction Interoperability Requirements
 
 A distributed transaction started by a web
-or EJB container must be able to propagate in a remote invocation to an
-enterprise bean in an EJB container provided by a different vendor, and
+or Enterprise Beans container must be able to propagate in a remote invocation to an
+enterprise bean in an Enterprise Beans container provided by a different vendor, and
 the containers must participate in the distributed two-phase commit
 protocol.
 
 ===== Transaction Context Wire Format
 
 Transaction context propagation from client
-to EJB container uses the implicit propagation mechanism described in
+to Enterprise Beans container uses the implicit propagation mechanism described in
 the CORBA Object Transaction Service (OTS) v1.2 specification <<a9860>>.
 
 The transaction context format in IIOP
 messages is specified in the `CosTransactions::PropagationContext`
-structure described in the OTS specification. EJB containers that
+structure described in the OTS specification. Enterprise Beans containers that
 support transaction interoperability are required to be capable of
 producing and consuming transaction contexts in IIOP messages in the
 format described in the OTS specification. Web containers that support
@@ -626,9 +626,9 @@ existing transaction manager and the OTS protocol, or an OTS wrapper
 around an existing transaction manager.
 
 The `CosTransactions::PropagationContext`
-structure must be included in IIOP messages sent by web or EJB
+structure must be included in IIOP messages sent by web or Enterprise Beans
 containers when required by the rules described in the OTS 1.2
-specification. The target EJB container must process IIOP invocations
+specification. The target Enterprise Beans container must process IIOP invocations
 based on the transaction policies of EJBObject or EJBHome references
 using the rules described in the OTS 1.2 specification <<a9860>>.
 
@@ -654,13 +654,13 @@ OTS Synchronization object (step 2). If the server container does not
 register an OTS Synchronization object, it must still ensure that the
 beforeCompletion method of session beans and ejbStore method of entity
 beans footnote:a10316[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.] 
+are described in the Enterprise Beans Optional Features document <<a9890>>.] 
 are called with the proper transaction
 context. Containers must participate in the two-phase commit and
 recovery procedures performed by the transaction coordinator /
 terminator (steps 6,7), as described by the OTS specification.
 
-Compliant Java EE containers must not use
+Compliant Jakarta EE containers must not use
 nested transactions in interoperability scenarios.
 
 [[a3443]]
@@ -699,7 +699,7 @@ necessary to allow clients to invoke methods of the
 transaction.
 
 The `CosTransactions::Synchronization` object
-registered by the EJB container with the transaction coordinator should
+registered by the Enterprise Beans container with the transaction coordinator should
 have the OTSPolicy value `CosTransactions::ADAPTS` and InvocationPolicy
 value `CosTransactions::SHARED` to allow enterprise beans to do
 transactional work during the `beforeCompletion` notification from the
@@ -721,12 +721,12 @@ required by the exception handling rules in <<a2940>>.
 ==== Interoperating with Containers that do not Implement Transaction Interoperability
 
 The requirements
-in this subsection are designed to ensure that when a Java EE container
+in this subsection are designed to ensure that when a Jakarta EE container
 does not support transaction interoperability, the failure modes are
 well defined so that the integrity of an application’s data is not
-compromised: at worst the transaction is rolled back. When a Java EE
+compromised: at worst the transaction is rolled back. When a Jakarta EE
 client component expects the client’s transaction to propagate to the
-enterprise bean but the client or EJB container cannot satisfy this
+enterprise bean but the client or Enterprise Beans container cannot satisfy this
 expectation, a `java.rmi.RemoteException` or subclass is thrown, which
 ensures that the client’s transaction will roll back.
 
@@ -743,7 +743,7 @@ If the client in
 another container invokes an enterprise bean’s method when there is no
 active global transaction associated with the client’s thread, the
 client container does not include a transaction context in the IIOP
-request message to the EJB server, i.e., there is no
+request message to the Enterprise Beans server, i.e., there is no
 `CosTransactions::PropagationContext` structure in the IIOP request
 header.
 
@@ -763,8 +763,8 @@ context" such as the transaction identifier, are not interpreted and
 may have any value. The "null transaction context" indicates that there
 is a global client transaction active but the client container is not
 capable of propagating it to the server. The presence of this "null
-transaction context" allows the EJB container to determine whether the
-Java EE client component expects the client’s global transaction to
+transaction context" allows the Enterprise Beans container to determine whether the
+Jakarta EE client component expects the client’s global transaction to
 propagate to the server.
 
 . Client containers that use the OTS
@@ -775,17 +775,17 @@ diagram above) by throwing a CORBA system exception if the server’s
 Resource object reference indicates that it belongs to another vendor’s
 container.
 
-===== EJB container requirements
+===== Enterprise Beans container requirements
 
-All EJB
+All Enterprise Beans
 containers (including those that do not support transaction propagation)
 must include the `CosTransactions::OTSPolicy` and optionally the
 `CosTransactions::InvocationPolicy` tagged component in the IOR for
 EJBObject and EJBHome references as described in <<a3443>>.
 
-====== Requirements for EJB Containers Supporting Transaction Interoperability
+====== Requirements for Enterprise Beans Containers Supporting Transaction Interoperability
 
-When an EJB container that supports
+When an Enterprise Beans container that supports
 transaction propagation receives the IIOP
 request message, it must behave as follows:
 
@@ -800,7 +800,7 @@ described in <<a2695>>.
 * If there is a null transaction context (as
 defined in <<a3455>> above) in the IIOP message, the container’s required
 behavior is described in the table below. The entry "throw
-RemoteException" indicates that the EJB container must throw the
+RemoteException" indicates that the Enterprise Beans container must throw the
 `java.rmi.RemoteException` to the client after the "received request"
 interaction with the server’s transaction manager (after step 1 in the
 object interaction diagram above).
@@ -808,12 +808,12 @@ object interaction diagram above).
 [width="100%",cols="50%,50%",options="header",]
 |===
 a|
-EJB method’s
+Enterprise Beans method’s
 
 Transaction Attribute
 
 a|
-EJB container behavior on receiving
+Enterprise Beans container behavior on receiving
 
 null OTS transaction context
 
@@ -839,9 +839,9 @@ null OTS transaction context
 |follow <<a2695>>
 |===
 
-=== Requirements for EJB Containers not Supporting Transaction Interoperability
+=== Requirements for Enterprise Beans Containers not Supporting Transaction Interoperability
 
-When an EJB container that does not support
+When an Enterprise Beans container that does not support
 transaction interoperability receives the
 IIOP request message, it must behave as follows:
 
@@ -862,12 +862,12 @@ null.
 [width="100%",cols="50%,50%",options="header",]
 |===
 a|
-EJB method’s
+Enterprise Beans method’s
 
 Transaction Attribute
 
 a|
-EJB container behavior on receiving
+Enterprise Beans container behavior on receiving
 
 null or valid OTS transaction context
 
@@ -893,7 +893,7 @@ null or valid OTS transaction context
 |follow <<a2695>>
 |===
 
-EJB containers that accept the OTS
+Enterprise Beans containers that accept the OTS
 transaction context format but still do not support interoperability
 with other vendors’ client containers must follow the column in the
 table above for "null or valid OTS transaction context" if the
@@ -909,7 +909,7 @@ supporting interoperable access to naming services for looking up
 EJBHome object references (interoperability 
 requirement two in <<a3364>>).
 
-EJB containers are required to be able to
+Enterprise Beans containers are required to be able to
 publish EJBHome object references in a CORBA CosNaming service
 <<a9866>>. The CosNaming service must implement the
 IDL interfaces in the CosNaming module defined in
@@ -923,7 +923,7 @@ port, and object key for its root `NamingContext` object. The
 CosNaming service must be able to service IIOP invocations on the root
 `NamingContext` at the advertised host, port, and object key.
 
-Client containers (i.e., EJB, web, or
+Client containers (i.e., Enterprise Beans, web, or
 application client containers) are required to include a JNDI CosNaming
 service provider that uses the mechanisms defined in the Interoperable
 Name Service specification to contact the server’s CosNaming service,
@@ -955,7 +955,7 @@ of the client and server containers.
 
 The advantage of using CosNaming is better
 integration with the IIOP infrastructure that is already required for
-interoperability, as well as interoperability with non-Java-EE CORBA
+interoperability, as well as interoperability with non-Jakarta-EE CORBA
 clients and servers. Since CosNaming stores only CORBA objects it is
 likely that vendors will use other enterprise directory services for
 storing other resources.
@@ -979,7 +979,7 @@ describes the interoperable mechanisms that support secure invocations
 on enterprise beans in intranets. These mechanisms are based on the
 CORBA/IIOP protocol.
 
-EJB containers are required to follow the
+Enterprise Beans containers are required to follow the
 protocol rules prescribed by the 
 CSIv2 specification Conformance Level 0.
 
@@ -993,7 +993,7 @@ Kerberos-based secret key mechanisms and X.509 certificate-based public
 key mechanisms.
 
 The
-authentication identity (i.e. principal) associated with a Java EE
+authentication identity (i.e. principal) associated with a Jakarta EE
 component is usually that of the user on whose behalf the component is
 executing.footnote:a10319[When there are concurrent invocations on a 
 component from multiple clients, a different principal may be 
@@ -1011,11 +1011,11 @@ deployment descriptor.
 The security principal associated with a
 container depends on the type of container. Application client
 containers usually do not have a separate principal associated with them
-(they operate under the user’s principal). Web and EJB containers are
+(they operate under the user’s principal). Web and Enterprise Beans containers are
 typically associated with a security principal of their own (e.g., the
 operating system user for the container’s process) which may be
 configured by the System Administrator at deployment time. When the
-client is a web or EJB container, the difference between the client
+client is a web or Enterprise Beans container, the difference between the client
 component’s principal and the client container’s principal is
 significant for interoperability considerations.
 
@@ -1037,47 +1037,47 @@ using the propagated principal. This procedure also avoids the overhead
 associated with authentication of clients on every remote invocation in
 a chain.
 
-EJB containers are required to provide the
+Enterprise Beans containers are required to provide the
 Deployer or Administrator with the tools to configure
 trust relationships for interactions with
-intermediate web or EJB containers.footnote:a10320[One way to achieve 
-this is to configure a "trusted container list" for each EJB container 
+intermediate web or Enterprise Beans containers.footnote:a10320[One way to achieve 
+this is to configure a "trusted container list" for each Enterprise Beans container 
 which contains the list of intermediate client containers that are trusted. 
-If the list is empty, then the target EJB container does not have a trust 
+If the list is empty, then the target Enterprise Beans container does not have a trust 
 relationship with any intermediate container.] If a trust
 relationship is set up, the containers are usually configured to perform
 mutual authentication, unless the security of the network can be ensured
 by some physical means. If the network is physically secure, the target
-EJB container may be configured to trust all client containers. After a
-trust relationship is set up, the target EJB container does not need to
+Enterprise Beans container may be configured to trust all client containers. After a
+trust relationship is set up, the target Enterprise Beans container does not need to
 independently authenticate the initiating client principal sent by the
 intermediate container on invocations. Thus only the principal name of
 the initiating client (which may include a realm) needs to be
 propagated. After a trust relationship has been established, the target
-EJB container must be able to accept invocations carrying only the
+Enterprise Beans container must be able to accept invocations carrying only the
 principal name of the initiating client.
 
 For the current interoperability needs of
-Java EE, it is assumed that trust
+Jakarta EE, it is assumed that trust
 relationships are transitive, such that if a target container trusts an
 intermediate container, it implicitly trusts all containers trusted by
 the intermediate container.
 
 If no trust relationship has been set up
-between a target EJB container and an intermediate web or EJB container,
+between a target Enterprise Beans container and an intermediate web or Enterprise Beans container,
 the target container must not accept
 principals propagated from that intermediate
 container, hence the target container needs to have access to and
 independently verify the initiating client principal’s authentication
 data.
 
-Web and EJB containers are required to
+Web and Enterprise Beans containers are required to
 support caller propagation mode (where the
 initiating client’s principal is propagated down the chain of calls on
-enterprise beans) and run-as mode (where the web/EJB component’s run-as
+enterprise beans) and run-as mode (where the web/Enterprise Beans component’s run-as
 identity is propagated). This is needed for scenarios 1, 3 and 4 where
 the internet or intranet user’s principal needs to be propagated to the
-target EJB container.
+target Enterprise Beans container.
 
 ===== Application Client Authentication
 
@@ -1096,7 +1096,7 @@ established at system login time from the operating system process, or
 certificate from a client-side store.
 
 These may be
-achieved by plugging in a Java
+achieved by plugging in a Java(TM)
 Authentication and Authorization Service (JAAS) login module for the
 particular authentication service. After authentication is completed, a
 credential is associated with the client’s thread of execution, which is
@@ -1106,12 +1106,12 @@ If there is no authentication infrastructure
 installed in the client’s environment, or the authentication
 infrastructure is not capable of authenticating at the transport
 protocol layer, the client may send its private credentials (e.g.
-password) over a secure connection to the EJB server, which
+password) over a secure connection to the Enterprise Beans server, which
 authenticates the user by interacting with an authentication service
 (e.g. a secure user/password database). This is similar to the basic
 authentication feature of HTTP.
 
-==== Securing EJB Invocations
+==== Securing Enterprise Beans Invocations
 
 This subsection
 describes the interoperable protocol requirements for providing
@@ -1119,17 +1119,17 @@ authentication, protection of integrity and confidentiality, and
 principal propagation for invocations on enterprise beans. The
 invocation takes place over an enterprise’s intranet as described in the
 scenarios in <<a3337>>. 
-Since EJB invocations use the IIOP protocol, we need to
+Since Enterprise Beans invocations use the IIOP protocol, we need to
 secure IIOP messages between client and server containers. The client
-container may be any of the Java EE containers; the server container is
-an EJB container.
+container may be any of the Jakarta EE containers; the server container is
+an Enterprise Beans container.
 
 The secure
-interoperability requirements for EJB 2.0 (and later) and other J2EE 1.3
+interoperability requirements for Enterprise Beans 2.0 (and later) and other J2EE 1.3
 (and later) containers are based on Conformance Level 0 of the Common
 Secure Interoperability version 2 (CSIv2) Final Available specification
 <<a9871>>, which was developed by
-the OMG. EJB, web, and application client containers must support all
+the OMG. Enterprise Beans, web, and application client containers must support all
 requirements of Conformance Level 0 of the CSIv2 specification. The
 following subsections describe how the CSIv2 features are used to
 realize the scenarios described in <<a3337>>.
@@ -1149,7 +1149,7 @@ Thus the TLS specification is
 capable of supporting the two main security technologies that are
 expected to be widely deployed in enterprises.
 
-EJB, web and application client containers
+Enterprise Beans, web and application client containers
 are required to support both SSL 3.0 and TLS 1.0 as security protocols
 for IIOP. This satisfies interoperability requirement 3 in <<a3364>>. 
 Compliant containers must be capable of using the
@@ -1174,7 +1174,7 @@ The SSL handshake layer handles authentication (either mutual or
 server-only) between containers, negotiation of cipher suite for bulk
 data encryption, and optionally provides a compression method. The SSL
 record layer performs confidentiality and integrity protection
-on application data. Since compliant Java EE
+on application data. Since compliant Jakarta EE
 products are already required to support SSL (HTTPS for Internet
 communication), the use of SSL/TLS provides a relatively easy route to
 interoperable security at the transport layer.
@@ -1182,7 +1182,7 @@ interoperable security at the transport layer.
 ===== Security Information in IORs
 
 Before initiating
-a secure connection to the EJB container, the client needs to know the
+a secure connection to the Enterprise Beans container, the client needs to know the
 hostname and port number at which the server is listening for SSL
 connections, and the security protocols supported or required by the
 server object. This information is obtained from the EJBObject or
@@ -1197,14 +1197,14 @@ information for transport layer and service context layer mechanisms.
 This information includes the server’s SSL/TLS port, its security
 principal and supported/required security mechanisms.
 
-EJB containers must be capable of inserting
+Enterprise Beans containers must be capable of inserting
 the CSIv2 tagged components into the IORs for EJBObject and EJBHome
 references, based on the Deployer or System Administrator’s security
-policy settings. Compliant EJB containers must follow the Conformance
+policy settings. Compliant Enterprise Beans containers must follow the Conformance
 Level 0 rules described in the CSIv2 specification for constructing
 these IORs.
 
-EJB containers must also be capable of
+Enterprise Beans containers must also be capable of
 creating IORs that allow access to enterprise beans over unprotected
 IIOP, based on the security policies set by the Deployer or System
 Administrator.
@@ -1230,7 +1230,7 @@ The following cases are required to be supported:
 
 . Application client invocations on enterprise
 beans with mutual authentication between the
-application client and EJB container (C and S1) at the SSL layer
+application client and Enterprise Beans container (C and S1) at the SSL layer
 (scenario 2.1 in section <<a3351>>, 
 interoperability requirement 4.1 in <<a3364>>). 
 For example, this is possible when the enterprise has a
@@ -1241,13 +1241,13 @@ information.
 
 . Application client invocations on enterprise
 beans with server-only authentication
-between the application client and EJB container (C and S1) at the SSL
+between the application client and Enterprise Beans container (C and S1) at the SSL
 layer (scenario 2.2 in <<a3351>>, interoperability requirement 4.2 in
 <<a3364>>). This usually happens when the client cannot authenticate
 in the transport. In this case, the client container must be capable of
 inserting into the IIOP message a CSIv2 security context with a client
 authentication token that contains the client C’s authentication data.
-Once the EJB container S1 has authenticated the client, it may or may
+Once the Enterprise Beans container S1 has authenticated the client, it may or may
 not maintain state about the client, so subsequent invocations from the
 client on the same network connection may need to be authenticated
 again. The client and server containers must follow the Conformance
@@ -1257,7 +1257,7 @@ mechanism is required. Support for other
 GSSAPI mechanisms (such as Kerberos) to
 perform client authentication at the IIOP layer is optional.
 
-. Invocations from Web/EJB clients to
+. Invocations from Web/Enterprise Beans clients to
 enterprise beans with a trust relationship between the client container
 S1 and server container S2 (scenarios 1,3 and 4 in <<a3356>>, 
 interoperability requirements five and six
@@ -1271,7 +1271,7 @@ principal name encoded in the GSS exported name format, as described in
 the CSIv2 specification. The identity propagated is determined as
 follows:
 
-** If the client Web/EJB component is configured
+** If the client Web/Enterprise Beans component is configured
 to use caller identity, and the caller C authenticated itself to S1,
 then the identity token contains the initiating client C’s identity.
 
@@ -1282,7 +1282,7 @@ then the identity token contains the anonymous type.
 ** If the client component is configured to use
 a run-as identity then the identity token contains the run-as identity.
 
-Java EE containers are required to support
+Jakarta EE containers are required to support
 the stateless mode of propagating principal and authentication
 information defined in CSIv2 (where the server does not store any state
 for a particular client principal across invocations), and may
@@ -1373,16 +1373,16 @@ the CSIv2 specification Conformance Level 0 for interpreting security
 information in IORs and including security context information in IIOP
 messages.
 
-When an EJB container receives an IIOP
+When an Enterprise Beans container receives an IIOP
 message, its behavior depends on deployment time configuration, run-time
 information exchanged with the client at the SSL layer, and
 principal/authentication data contained in the IIOP message service
-context. EJB containers are required to follow the protocol rules
+context. Enterprise Beans containers are required to follow the protocol rules
 prescribed by the CSIv2 specification Conformance Level 0.
 
 When the System
 Administrator changes the security policies associated with an
-enterprise bean, the IORs for EJB references should be updated. When the
+enterprise bean, the IORs for Enterprise Beans references should be updated. When the
 bean has existing clients holding IORs, it is recommended that the
 security policy change should be handled by the client and server
 containers transparently to the client application if the old security
