@@ -80,7 +80,7 @@ singleton session bean may be a web service client. Only a _stateless_
 session bean or _singleton_ session bean may provide a web service client
 view. A web service client makes use of the enterprise bean’s web
 service client view, as described by a WSDL document. The bean’s client
-view web service endpoint is in terms of a JAX-WS endpoint <<a9881>>.
+view web service endpoint is in terms of a Jakarta XML Web Services endpoint <<a9881>>.
 Web service clients are discussed in <<a271>> and <<a405>>.
 
 The considerations that should be taken into
@@ -96,24 +96,24 @@ the client view to provide for an enterprise bean.
 
 *_Terminology note:_*
 
-_EJB 3.0 significantly simplified the client
+_Enterprise Beans 3.0 significantly simplified the client
 view of a session bean. This specification distinguishes among the
-client view interfaces that were defined by the EJB 3.0 and later API
-and the EJB 2.1 and earlier API as follows:_
+client view interfaces that were defined by the Enterprise Beans 3.0 and later API
+and the Enterprise Beans 2.1 and earlier API as follows:_
 
 * _The term *remote business interface* is
-used to refer to the business interface of an EJB 3.x session bean that
+used to refer to the business interface of an Enterprise Beans 3.x session bean that
 supports remote access._
 
 * _The term *remote component interface* is
-used to refer to the remote component interface of the EJB 2.1 client
+used to refer to the remote component interface of the Enterprise Beans 2.1 client
 view. This interface is an EJBObject interface._
 
 * _The term *local business interface* refers to the local business 
-interface of an EJB 3.x session bean that supports local access._
+interface of an Enterprise Beans 3.x session bean that supports local access._
 
 * _The term *local component interface* is
-used to refer to the local component interface of the EJB 2.1 client
+used to refer to the local component interface of the Enterprise Beans 2.1 client
 view. This interface is an EJBLocalObject interface._
 
 * _The term *business interface* is used to
@@ -141,17 +141,17 @@ The arguments and results of the methods of
 the remote interfaces are passed by value.
 
 For a session bean client and component
-written to the EJB 3.x API, a remote client
+written to the Enterprise Beans 3.x API, a remote client
 accesses a session bean through the bean’s
 remote business interface. For a session
-bean client and component written to the EJB 2.1 and earlier APIs, the
+bean client and component written to the Enterprise Beans 2.1 and earlier APIs, the
 remote client accesses the session bean through the session bean’s
 remote home and remote component interfaces.
 
-_Compatibility Note: The EJB 2.1 and earlier API required that a
+_Compatibility Note: The Enterprise Beans 2.1 and earlier API required that a
 remote client access the stateful or stateless session bean by means of
 the session bean’s remote home and remote component interfaces. These
-interfaces remain available for use with EJB 3.x beans, and are
+interfaces remain available for use with Enterprise Beans 3.x beans, and are
 described in <<a422>>._
 
 [[a242]]
@@ -205,19 +205,19 @@ case where there is a change in transaction or security context._
 ****
 
 For a session bean client and component
-written to the EJB 3.x API, a local client accesses a session bean
+written to the Enterprise Beans 3.x API, a local client accesses a session bean
 through the bean’s local business interface or through a no-interface 
 client view representing all _non-static_ `public`
 methods of the bean class. For a session bean client and component
-written to the EJB 2.1 and earlier APIs, the local client accesses the
+written to the Enterprise Beans 2.1 and earlier APIs, the local client accesses the
 enterprise bean through the bean’s local home and local component
 interfaces. The container object that implements a local interface or
 the no-interface local view is a local Java object.
 
-_Compatibility Note: The EJB 2.1 and earlier API required that a
+_Compatibility Note: The Enterprise Beans 2.1 and earlier API required that a
 local client access a stateful or stateless session bean by means of the
 session bean’s local home and local component interfaces. These
-interfaces remain available for use with EJB 3.x beans, and are
+interfaces remain available for use with Enterprise Beans 3.x beans, and are
 described in <<a422>>._
 
 ==== Choosing Between a Local or Remote Client View
@@ -247,14 +247,14 @@ bean.
 * The objects that are passed as parameters on
 remote calls must be serializable.
 
-* When the EJB 2.1 and earlier remote home and
+* When the Enterprise Beans 2.1 and earlier remote home and
 remote component interfaces are used, the narrowing of remote types
 requires the use of `javax.rmi.PortableRemoteObject.narrow` rather than
 Java language casts.
 
 * Remote calls may involve error cases due to
 communication, resource usage on other servers, etc., which are not
-expected in local calls. When the EJB 2.1 and earlier remote home and
+expected in local calls. When the Enterprise Beans 2.1 and earlier remote home and
 remote component interfaces are used, the client has to explicitly
 program handlers for handling the `java.rmi.RemoteException`.
 
@@ -331,13 +331,13 @@ initially defined by a WSDL document and then mapped to a web service
 endpoint that conforms to this, or an existing bean may be adapted to
 provide a web service client view. Reference <<a9879>> 
 describes various design-time
-scenarios that may be used for EJB web service endpoints.
+scenarios that may be used for Enterprise Beans web service endpoints.
 
-_Compatibility Note: EJB 2.1 required the Bean Provider to define
+_Compatibility Note: Enterprise Beans 2.1 required the Bean Provider to define
 a web service endpoint interface for a stateless session bean when he or
 she wished to expose the functionality of the bean as a web service
 endpoint through WSDL. This requirement to define the web service
-endpoint interface is removed in EJB 3.0 and later. See <<a9878>>._
+endpoint interface is removed in Enterprise Beans 3.0 and later. See <<a9878>>._
 
 The web service client view of an enterprise
 bean is location independent and remotable.
@@ -345,7 +345,7 @@ bean is location independent and remotable.
 Web service clients may be Java clients
 and/or clients not written in the Java programming language. A web
 service client that is a Java client accesses the web service by means
-of the JAX-WS client APIs. Access through web service clients occurs
+of the Jakarta XML Web Services client APIs. Access through web service clients occurs
 through SOAP 1.1, SOAP 1.2 or plain XML over HTTP(S).
 
 While it is possible to provide a web service
@@ -356,9 +356,9 @@ a web service endpoint interface. In that case it is the Bean Provider’s
 responsibility to ensure that the interface conforms to the type
 requirements of each client view through which it is exposed.
 
-=== EJB Container
+=== Enterprise Beans Container
 
-An EJB container
+An Enterprise Beans container
 (container for short) is a system that
 functions as the "container" for enterprise beans. Multiple enterprise
 beans can be deployed in the same container. The container is
@@ -367,15 +367,15 @@ its deployed enterprise beans available to the client through dependency
 injection and/or through lookup in the JNDI namespace.
 
 [[a283]]
-=== Client View of Session Beans Written to the EJB 3.x Simplified API
+=== Client View of Session Beans Written to the Enterprise Beans 3.x Simplified API
 
-The EJB 3.x local or remote client of a
-session bean written to the EJB 3.x API accesses a session bean through
-its business interface. The business interface of an EJB 3.x session
+The Enterprise Beans 3.x local or remote client of a
+session bean written to the Enterprise Beans 3.x API accesses a session bean through
+its business interface. The business interface of an Enterprise Beans 3.x session
 bean is an ordinary Java interface, regardless of whether local or
-remote access is provided for the bean. In particular, the EJB 3.x
+remote access is provided for the bean. In particular, the Enterprise Beans 3.x
 session bean business interface is not one of the interface types
-required by earlier versions of the EJB specification (i.e., EJBObject
+required by earlier versions of the Enterprise Beans specification (i.e., EJBObject
 or EJBLocalObject interface). A local client may also access a session
 bean through a no-interface view that exposes all _non-static_ `public`
 methods of the bean class.
@@ -413,7 +413,7 @@ Cart cart = (Cart)ctx.lookup("cart");
 In both cases, the syntax used in obtaining
 the reference to the `Cart` business interface is independent of whether
 the business interface is local or remote. In the case of remote access,
-the actual location of a referenced enterprise bean and EJB container
+the actual location of a referenced enterprise bean and Enterprise Beans container
 are, in general, transparent to the client using the remote business
 interface of the bean.
 
@@ -487,9 +487,9 @@ the session bean instance and any interceptor methods are invoked as
 needed.
 
 The container makes the session bean’s business interface available to the 
-EJB 3.x client through dependency injection and through lookup in the JNDI 
+Enterprise Beans 3.x client through dependency injection and through lookup in the JNDI 
 namespace. <<a3912>> describes in further detail how clients can obtain 
-references to EJB business interfaces.
+references to Enterprise Beans business interfaces.
 
 [[a312]]
 ==== Session Bean’s No-Interface View
@@ -553,7 +553,7 @@ of the business interface in JNDI.
 A client that has a reference to a
 session object’s business interface can then invoke business methods on
 the interface and/or pass the reference as a parameter or return value
-of a business interface method.footnote:a10221[Note that the EJB 3.x 
+of a business interface method.footnote:a10221[Note that the Enterprise Beans 3.x 
 session bean business interface is not an `EJBObject`. 
 It is not valid to pass a reference to the remote business interface 
 through a bean’s remote component interface.]
@@ -624,7 +624,7 @@ cart.finishShopping();
 [[a342]]
 ==== Session Object Identity
 
-A client can test two EJB 3.x remote or local
+A client can test two Enterprise Beans 3.x remote or local
 view references for identity by means of the `Object.equals` and
 `Object.hashCode` methods.
 
@@ -820,7 +820,7 @@ call to get successfully returns a result value or throws an
 `ExecutionException`, all subsequent calls to get on the same `Future`
 object must result in that same behavior.
 
-The EJB Container Provider is permitted to
+The Enterprise Beans Container Provider is permitted to
 define a timeout value that governs the maximum amount of time the
 container maintains result values for completed asynchronous
 invocations. The configuration of such a timeout is beyond the scope of
@@ -846,32 +846,31 @@ implements.
 The web service client’s access to the web
 service functionality provided by a session bean occurs through a web
 service endpoint. In the case of Java clients, this endpoint is accessed
-as a JAX-WS service endpoint using the JAX-WS client view APIs, as
+as a Jakarta XML Web Services service endpoint using the client view APIs, as
 described in <<a9881>>.
 
 The following diagram illustrates the view
-that is provided to Java EE web service clients of a stateless session
-bean through the JAX-WS client view APIs.
+that is provided to Jakarta XML Web Services clients of a stateless session
+bean through the client view APIs.
 
 .Web Service Client View of Stateless Session Beans Deployed in a Container
 image::EBCore-7.png[]
 
-==== JAX-WS Web Service Clients
+==== Jakarta XML Web Services Clients
 
-The Java EE web service client obtains a
+The Jakarta XML Web Services client obtains a
 reference to the service instance of the `javax.xml.ws.Service` class
 through dependency injection or using JNDI. The service class can be a
 generic `javax.xml.ws.Service` class or a generated service class which
 extends the `javax.xml.ws.Service` class. The service instance is then
 used to obtain a port object for the web service endpoint. The
 mechanisms and APIs for client web service access are described in the
-JAX-WS specification <<a9881>> and in the Web Services for Java
-EE specification <<a9879>>.
+Jakarta XML Web Services <<a9881>> and in the 
+Jakarta Enterprise Web Services <<a9879>>.
 
-The following example illustrates how a
-JAX-WS client obtains a reference to a web service endpoint, obtains a
-port object for the web service endpoint, and invokes a method on that
-endpoint.
+The following example illustrates how a Jakarta XML Web Services client 
+obtains a reference to a web service endpoint, obtains a port object for 
+the web service endpoint, and invokes a method on that endpoint.
 
 [source, java]
 ----
@@ -887,18 +886,18 @@ The use of service references and the
 `WebServiceRef` annotation are described in further detail in <<a9881>>.
 
 [[a422]]
-=== Remote and Local Client View of Session Beans Written to the EJB 2.1 Client View API
+=== Remote and Local Client View of Session Beans Written to the Enterprise Beans 2.1 Client View API
 
 The remainder of this chapter describes the
-session bean client view defined by the EJB 2.1 and earlier
+session bean client view defined by the Enterprise Beans 2.1 and earlier
 specifications. Support for the definition and use of these earlier
 client interfaces is required to be provided by implementations of this
-specification. The EJB 2.1 remote and local client views are not
+specification. The Enterprise Beans 2.1 remote and local client views are not
 supported for singleton session beans.
 
 ==== Locating a Session Bean’s Home Interface
 
-The EJB 2.1 and earlier specifications
+The Enterprise Beans 2.1 and earlier specifications
 required that the client first obtain a reference to a session bean’s
 home interface, and then use the home interface to obtain a reference to
 the bean’s component interface. This earlier programming model continues
@@ -906,7 +905,7 @@ to be supported by this specification. Both dependency injection and use
 of the EJBContext `lookup` method may be used as an alternative to the
 JNDI APIs to obtain a reference to the home interface.
 
-For example, an EJB 3.x client,
+For example, an Enterprise Beans 3.x client,
 `com.acme.example.MySessionBean`, might obtain a reference to a bean’s
 home interface as follows:
 
@@ -935,7 +934,7 @@ to look up a home interface, the use of
 
 The following code segments illustrate how
 the home interface is obtained when the JNDI APIs are used directly, as
-was required in the EJB 2.1 programming model. For example, the remote
+was required in the Enterprise Beans 2.1 programming model. For example, the remote
 home interface for the `Cart` session bean can be located using the
 following code segment:
 
@@ -965,8 +964,8 @@ remote component interface and remote home interface.
 
 ****
 _This was the only way of providing a remote
-client view in the EJB 2.1 and earlier releases. The remote client view
-provided by the business interface under the EJB 3.x API, as described
+client view in the Enterprise Beans 2.1 and earlier releases. The remote client view
+provided by the business interface under the Enterprise Beans 3.x API, as described
 in <<a283>>, is now to be preferred._
 ****
 
@@ -1060,8 +1059,8 @@ local component interface and local home interface.
 
 ****
 _This was the only way of providing a local
-client view in the EJB 2.1 and earlier releases. The local client view
-provided by the business interface under the EJB 3.x API, as described
+client view in the Enterprise Beans 2.1 and earlier releases. The local client view
+provided by the business interface under the Enterprise Beans 3.x API, as described
 in <<a283>>, is now to be preferred._
 ****
 
@@ -1132,7 +1131,7 @@ results in a `javax.ejb.RemoveException`.
 
 ==== EJBObject and EJBLocalObject
 
-A remote or local client that uses the EJB
+A remote or local client that uses the Enterprise Beans
 2.1 client view APIs uses the session bean’s component interface to
 access a session bean instance. The class that implements the session
 bean’s component interface is provided by the container. Instances of a
@@ -1181,7 +1180,7 @@ the session bean class.
 ==== Client view of Session Object’s Life Cycle
 
 From the point of view of a local or remote
-client using the EJB 2.1 and earlier client view API, the life cycle of
+client using the Enterprise Beans 2.1 and earlier client view API, the life cycle of
 a session object is illustrated below.
 
 .Life Cycle of a Session Object.
@@ -1413,7 +1412,7 @@ session EJBLocalObject reference results in `javax.ejb.EJBException`.
 ==== Type Narrowing
 
 A client
-program that is intended to be interoperable with all compliant EJB
+program that is intended to be interoperable with all compliant Enterprise Beans
 container implementations must use the
 `javax.rmi.PortableRemoteObject.narrow` method to perform type-narrowing
 of the client-side representations of the remote home and remote

@@ -42,17 +42,15 @@ state is not written to the database. A session Bean Provider simply
 stores it in the session bean instance’s fields and assumes its value is
 retained for the lifetime of the instance. A developer may use an
 extended persistence context to store a stateful session bean’s
-persistent conversational state. See the document _"Java Persistence
-API"_ specification <<a9851>>.
+persistent conversational state. See the document _"Jakarta Persistence"_ specification <<a9851>>.
 
-A session bean that does not make use of the
-Java Persistence API must explicitly manage
-cached database data. A session bean
+A session bean that does not make use of Jakarta Persistence must 
+explicitly manage cached database data. A session bean
 instance must write any cached database updates prior to a transaction
 completion, and it must refresh its copy of any potentially stale
 database data at the beginning of the next transaction. A session bean
 must also refresh any `java.sql.Statement` objects before they are used
-in a new transaction context. Use of the Java Persistence API provides a
+in a new transaction context. Use of Jakarta Persistence provides a
 session bean with automatic management of database data, including the
 automatic flushing of cached database updates upon transaction commit.
 See <<a9851>>.
@@ -161,7 +159,7 @@ not serializable.
 
 * A reference to an entity
 bean’s footnote:a10231[Component contract and client view of entity 
-beans are described in the EJB Optional Features document 
+beans are described in the Enterprise Beans Optional Features document 
 <<a9890>>.] local home interface, even if it is not serializable.
 
 * A reference to the `SessionContext` object,
@@ -329,7 +327,7 @@ the `SessionContext` is also injected at this time. If dependency injection
 fails, the bean instance is discarded.
 
 ****
-_Under the EJB 3.x API, the bean class may
+_Under the Enterprise Beans 3.x API, the bean class may
 acquire the `SessionContext` interface through dependency injection
 without having to implement the `SessionBean` interface. In this case,
 the `Resource` annotation (or `resource-env-ref` deployment descriptor
@@ -380,7 +378,7 @@ session beans cannot be timed objects.
 returns a business object reference to the
 session bean’s business interface or no-interface view. In the case of
 the no-interface view, the argument is of the type of the bean class.
-Only session beans with an EJB 3.x business interface or no-interface
+Only session beans with an Enterprise Beans 3.x business interface or no-interface
 view are permitted to call this method. +
 If a subsequent invocation is made on the
 result of `getBusinessObject`, then:
@@ -431,13 +429,13 @@ associated with its invocation.
 ===== Use of the MessageContext Interface by Session Beans
 
 A session bean that implements a web service
-endpoint using the JAX-WS contracts should use the JAX-WS
+endpoint using the Jakarta XML Web Services contracts should use the 
 `WebServiceContext`, which can be injected by use of the `Resource`
 annotation. The `WebServiceContext` interface allows the session bean
 instance to see the SOAP message for the web service endpoint, as well
-as the properties set by the JAX-WS message handlers, if any. The
+as the properties set by the Jakarta XML Web Services message handlers, if any. The
 session bean may use the `WebServiceContext` interface to set properties
-for the JAX-WS message handlers, if any. See <<a9881>>.
+for the Jakarta XML Web Services message handlers, if any. See <<a9881>>.
 
 The `javax.xml.ws.handler.MessageContext`<<a9881>> is also
 accessible to interceptors for session bean web service endpoints. See 
@@ -531,7 +529,7 @@ the `Serializable` interface.
 
 _Compatibility Note: The SessionBean interface was required to
 be implemented by the session bean class in earlier versions of the
-Enterprise JavaBeans specification. Under the EJB 3.x API, the
+Enterprise Beans specification. Under the Enterprise Beans 3.x API, the
 functionality previously provided by the SessionBean interface is
 available to the bean class through selective use of dependency
 injection (of the SessionContext) and optional lifecycle callback
@@ -552,7 +550,7 @@ instance is in the process of being removed by the container. In the
 that it releases in the `ejbPassivate` method.
 
 ****
-_Under the EJB 3.x API, the bean class may
+_Under the Enterprise Beans 3.x API, the bean class may
 optionally define a `PreDestroy` lifecycle callback interceptor method
 for notification of the container’s removal of the bean instance._
 ****
@@ -567,7 +565,7 @@ then reopened during an instance’s activation. The `ejbPassivate` and
 instances.
 
 ****
-_Under the EJB 3.x API, the bean class may
+_Under the Enterprise Beans 3.x API, the bean class may
 optionally define `PrePassivate` and/or `PostActivate` lifecycle
 callback interceptor methods for notification of the
 passivation/activation of the bean instance._
@@ -600,7 +598,7 @@ individual session synchronization methods. These provide the session
 bean instances with transaction
 synchronization notifications. The instances can use these
 notifications, for example, to manage database data they may cache
-within transactions—e.g., if the Java Persistence API is not used. A
+within transactions—e.g., if Jakarta Persistence is not used. A
 stateful session bean class may use either the
 `javax.ejb.SessionSynchronization` interface or the session
 synchronization annotations, but not both. If annotation are used, there
@@ -663,11 +661,11 @@ transaction commit._
 ==== Timeout Callbacks for Stateless and Singleton Session Beans
 
 A stateless session bean or singleton session
-bean can be registered with the EJB Timer Service for time-based event
+bean can be registered with the Enterprise Beans Timer Service for time-based event
 notifications. The container invokes the appropriate bean instance
 timeout callback method when a timer for the bean has expired. See
 <<a5456>>. Stateful session beans
-cannot be registered with the EJB Timer Service, and therefore should
+cannot be registered with the Enterprise Beans Timer Service, and therefore should
 not implement timeout callback methods.
 
 ==== Business Method Delegation
@@ -699,7 +697,7 @@ annotations on the bean class or by the deployment descriptor. This
 includes the bean’s `SessionContext`, if applicable. Third, the container
 calls the `PostConstruct` lifecycle callback interceptor methods for the
 bean, if any. The additional steps described below in <<a759>> 
-and <<a762>> apply if the session bean is invoked through the EJB 2.1 
+and <<a762>> apply if the session bean is invoked through the Enterprise Beans 2.1 
 client view APIs.
 
 If an interceptor associated with the session
@@ -716,14 +714,14 @@ session bean’s home or local home interface to create the bean, the
 container then calls the instance’s initialization method whose
 signature matches the signature of the `create<METHOD>` invoked by the
 client, passing to the method the input parameters sent from the client.
-If the bean class is written to the EJB 3.x API, and has been adapted
+If the bean class is written to the Enterprise Beans 3.x API, and has been adapted
 for use with an earlier client view, this initialization method is a
 matching `Init` method, as designated by use of the `Init` annotation,
 or `init-method` deployment descriptor element.footnote:a10235[Any 
 initialization methods defined for the bean by means of the `init-method` 
 deployment descriptor element apply in addition to those defined by means 
 of annotations.]
-If the bean class was written to the EJB 2.1 or earlier API, this
+If the bean class was written to the Enterprise Beans 2.1 or earlier API, this
 initialization method is a matching `ejbCreate<METHOD>` method, as
 described in <<a1498>>.
 
@@ -738,12 +736,12 @@ the client uses to customize the bean instance for its use.
 [[a762]]
 ===== Stateless Session Beans
 
-A stateless session bean that has an EJB 2.1
+A stateless session bean that has an Enterprise Beans 2.1
 local or remote client view has a single `create` method on its home
-interface. In this case, EJB 2.1 required the stateless session bean
-class to have a single no-arg `ejbCreate` method. Under the EJB 3.x API,
+interface. In this case, Enterprise Beans 2.1 required the stateless session bean
+class to have a single no-arg `ejbCreate` method. Under the Enterprise Beans 3.x API,
 it is not required that a stateless session bean have an `ejbCreate`
-method, even when it has a home interface. An EJB 3.x stateless session
+method, even when it has a home interface. An Enterprise Beans 3.x stateless session
 bean class may have a `PostConstruct` method, as described in <<a705>>.
 
 If the stateless session bean instance has an
@@ -762,7 +760,7 @@ session bean instance._
 
 A stateless session bean that provides only a
 web service client view has no `create` method. If the `ejbCreate`
-method required by EJB 2.1 is present, it is treated by the container as
+method required by Enterprise Beans 2.1 is present, it is treated by the container as
 the instance’s `PostConstruct` method, and is invoked when the container
 needs to create a new session bean instance in order to service a client
 request.
@@ -770,7 +768,7 @@ request.
 [[a767]]
 ==== Stateful Session Bean Removal
 
-A stateful session bean written to the EJB
+A stateful session bean written to the Enterprise Beans
 3.x API typically has one or more remove methods designated by means of
 the `Remove` annotation or `remove-method` deployment descriptor
 element.footnote:a10236[Any remove methods defined for the bean by means 
@@ -881,7 +879,7 @@ concurrent invocation must result in the second client receiving the
 `javax.ejb.EJBException`. If the business interface is a remote business 
 interface that extends `java.rmi.Remote`, the client will receive the 
 `java.rmi.RemoteException` instead.] If the
-EJB 2.1 client view is used, the container must throw the
+Enterprise Beans 2.1 client view is used, the container must throw the
 `java.rmi.RemoteException` if the second client is a remote client, or the
 `javax.ejb.EJBException` if the second client is a local client.
 
@@ -954,9 +952,9 @@ rules on dealing with exceptions in stateful session beans._
 [[a800]]
 === Access in the Global JNDI Namespace
 
-The Java EE Platform Specification defines a
+The Jakarta EE Platform Specification defines a
 standardized global JNDI namespace and a series of related namespaces
-that map to the various scopes of a Java EE application. These
+that map to the various scopes of a Jakarta EE application. These
 namespaces can be used by applications to portably retrieve references
 to components and resources. This specification defines the JNDI names
 by which session beans are required to be registered within these
@@ -1013,7 +1011,7 @@ more details.]
 ===== java:app
 
 The `java:app` prefix allows a component
-executing within a Java EE application to access an application-specific
+executing within a Jakarta EE application to access an application-specific
 namespace. The resulting syntax is:
 
 `java:app/<module-name>/<bean-name>[!<fully-qualified-interface-name>]`
@@ -1026,7 +1024,7 @@ within a stand-alone module.
 ===== java:module
 
 The `java:module` prefix allows a component
-executing within a Java EE application to access a module-specific
+executing within a Jakarta EE application to access a module-specific
 namespace. The resulting syntax is:
 
 `java:module/<bean-name>[!<fully-qualified-interface-name>]`
@@ -1276,14 +1274,14 @@ container performs any dependency injection as specified by metadata
 annotations on the bean class or by the deployment descriptor. The
 container then calls the `PostConstruct` lifecycle callback interceptor
 method(s) for the bean, if any. Finally, if the session bean was written
-to the EJB 2.1 client view, the container invokes the matching
+to the Enterprise Beans 2.1 client view, the container invokes the matching
 `ejbCreate<METHOD>` or `Init` method on the instance. The container then
 returns the session object reference to the client. The instance is now
 in the method ready state. +
 _NOTE: When a stateful session bean is
 looked up or otherwise obtained through the explicit JNDI lookup
 mechanisms, the container must provide a new stateful session bean
-instance, as required by the Java EE specification (Section "Java Naming
+instance, as required by the Jakarta EE specification (Section "Java Naming
 and Directory Interface (JNDI) Naming Context" <<a9854>>)._
 
 * The session bean instance is now ready for
@@ -1365,7 +1363,7 @@ the container will throw the
 `javax.ejb.NoSuchEJBException`.footnote:a10243[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, 
 the `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
-If the EJB 2.1
+If the Enterprise Beans 2.1
 client view is used, the container will throw the
 `java.rmi.NoSuchObjectException` if the client is a remote client, or the
 `javax.ejb.NoSuchObjectLocalException` if the client is a local client.
@@ -1395,7 +1393,7 @@ container will throw the
 `javax.ejb.NoSuchEJBException`.footnote:a10245[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
-If the EJB 2.1
+If the Enterprise Beans 2.1
 client view is used, any subsequent attempt causes the
 `java.rmi.NoSuchObjectException` to be thrown if the client is a remote
 client, or the `javax.ejb.NoSuchObjectLocalException` if the client is a
@@ -1412,9 +1410,9 @@ the instance at the end of transaction. A container can also invoke
 the `PreDestroy` method on the instance without a client call to remove
 the session object:
 
-** After the lifetime of the EJB object has
+** After the lifetime of the Enterprise Beans object has
 expired
-** When the CDI context, to which the EJB object
+** When the CDI context, to which the Enterprise Beans object
 belongs to, is destroyed.
 
 _The container must call the `afterBegin`,
@@ -1441,7 +1439,7 @@ container must throw the `java.lang.IllegalStateException`.
 If a session bean instance attempts to access
 a resource manager, an enterprise bean, an entity manager or entity
 manager factory, and that access is not allowed in <<a953>>, the behavior 
-is undefined by the EJB architecture.
+is undefined by the Enterprise Beans architecture.
 
 If a session bean instance attempts to invoke
 a method of the `Timer` interface and the access is not allowed in <<a953>>, 
@@ -1669,7 +1667,7 @@ interface or the no-interface view, the container will throw the
 `javax.ejb.NoSuchEJBException`.footnote:a10247[If the business interface is 
 a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
-If the EJB 2.1
+If the Enterprise Beans 2.1
 client view is used, the container will throw the
 `java.rmi.NoSuchObjectException` if the client is a remote client, or the
 `javax.ejb.NoSuchObjectLocalException` if the client is a local client.
@@ -1683,12 +1681,12 @@ stateful session bean instance. The following scenarios result in the
 PreDestroy lifecycle callback interceptor method(s) not being called for
 an instance:
 
-* A crash of the EJB container.
+* A crash of the Enterprise Beans container.
 
 * A system exception thrown from the instance’s method to the container.
 
 * A timeout of client inactivity while the instance is in the passive 
-state. The timeout is specified by the Deployer in an EJB container
+state. The timeout is specified by the Deployer in an Enterprise Beans container
 implementation-specific way.
 
 If resources are allocated in a
@@ -1764,7 +1762,7 @@ In such a case, the `javax.ejb.EJBException` will be thrown to a client
 of the bean’s business interface.footnote:a10248[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
-If the EJB 2.1
+If the Enterprise Beans 2.1
 client view is used, the container throws the `java.rmi.RemoteException`
 to the client if the client is a remote client, or the
 `javax.ejb.EJBException` if the client is a local client.
@@ -1829,12 +1827,12 @@ stateless instances. The container simply delegates a client’s work to
 any available instance that is method-ready.
 
 _Compatability Note: Local and remote
-clients using the EJB 2.1 client view interfaces use the `create` and
+clients using the Enterprise Beans 2.1 client view interfaces use the `create` and
 `remove` methods on the home interface of a stateless session bean in the
-same way as on a stateful session bean. To the EJB 2.1 client, it
+same way as on a stateful session bean. To the Enterprise Beans 2.1 client, it
 appears as if the client controls the life cycle of the session object.
 However, the container handles the `create` and `remove` calls without
-necessarily creating and removing an EJB instance.
+necessarily creating and removing an Enterprise Beans instance.
 The home interface of a stateless session
 bean must have one create method that takes no arguments. The `create`
 method of the remote home interface must return the session bean’s
@@ -1910,7 +1908,7 @@ the `java.lang.IllegalStateException`.
 If a session bean instance attempts to access
 a resource manager, an enterprise bean, an entity manager or entity
 manager factory, and the access is not allowed in <<a1091>>, 
-the behavior is undefined by the EJB architecture.
+the behavior is undefined by the Enterprise Beans architecture.
 
 [[a1091]]
 [cols=".^,2*", options=header]
@@ -2215,9 +2213,9 @@ called.
 Note that if one singleton session bean
 merely needs to invoke another singleton session bean from its
 `PostConstruct` method, no explicit ordering metadata is required. In that
-case, the first singleton session bean would merely use an EJB reference
+case, the first singleton session bean would merely use an Enterprise Beans reference
 to invoke the target singleton session bean. In this case, the
-acquisition of the EJB reference (either through injection or lookup)
+acquisition of the Enterprise Beans reference (either through injection or lookup)
 does not necessarily imply the actual creation of the corresponding
 singleton session bean instance.
 
@@ -2377,8 +2375,8 @@ instance. Any state stored in an instance of an interceptor class
 associated with a singleton session bean should be considered when
 devising the concurrency plan for the bean.
 
-It is legal to store Java EE objects that do
-not support concurrent access (e.g. references to Java Persistence
+It is legal to store Jakarta EE objects that do
+not support concurrent access (e.g. references to Jakarta Persistence
 entity managers or stateful session beans) within the singleton session
 bean instance state. However, it is the responsibility of the Bean
 Provider to ensure such objects are not accessed by more than one thread
@@ -2530,7 +2528,7 @@ method.
 Concurrency locking attributes are specified
 for the following methods:
 
-* For a bean written to the EJB 3.x client view
+* For a bean written to the Enterprise Beans 3.x client view
 API, the concurrency locking attributes are specified for those methods
 of the bean class that correspond to the bean’s business interface, the
 direct and indirect superinterfaces of the business interface, methods
@@ -2673,7 +2671,7 @@ the `java.lang.IllegalStateException`.
 If a session bean instance attempts to access
 a resource manager, an enterprise bean, an entity manager or entity
 manager factory, and the access is not allowed in <<a1343>>, 
-the behavior is undefined by the EJB architecture.
+the behavior is undefined by the Enterprise Beans architecture.
 
 [[a1343]]
 [cols=".^,2*", options=header]
@@ -2843,11 +2841,11 @@ no-interface view.
 
 * Invoking the `getEJBObject` and `getEJBHome`
 methods is disallowed since a singleton session bean does not support
-the EJB 2.x remote client view.
+the Enterprise Beans 2.x remote client view.
 
 * Invoking the `getEJBLocalObject` and
 `getEJBLocalHome` methods is disallowed since a singleton session bean
-does not support the EJB 2.x local client view.
+does not support the Enterprise Beans 2.x local client view.
 
 * Invoking the `getRollbackOnly` and
 `setRollbackOnly` methods is disallowed in the session bean methods for
@@ -2873,7 +2871,7 @@ transaction demarcation.
 
 This section
 describes the responsibilities of the session Bean Provider to ensure
-that a session bean can be deployed in any EJB container. These
+that a session bean can be deployed in any Enterprise Beans container. These
 requirements apply to stateful session beans, stateless session beans,
 and singleton session beans.
 
@@ -2887,14 +2885,14 @@ Provider may have been generated by tools.]
 * Session bean class.
 
 * Session bean’s business interface(s), if the
-session bean provides an EJB 3.x local or remote client view.
+session bean provides an Enterprise Beans 3.x local or remote client view.
 
 * Session bean’s remote interface and remote
-home interface, if the session bean provides an EJB 2.1
+home interface, if the session bean provides an Enterprise Beans 2.1
 remote client view.
 
 * Session bean’s local interface and local home
-interface, if the session bean provides an EJB 2.1
+interface, if the session bean provides an Enterprise Beans 2.1
 local client view.
 
 * Session bean’s web service endpoint
@@ -2903,7 +2901,7 @@ interface, if any.
 * Interceptor classes, if any.
 
 The Bean Provider for a session bean that
-provides a web service client view may also define JAX-WS message
+provides a web service client view may also define Jakarta XML Web Services message
 handlers for the bean. The requirements for such message handlers are
 defined in <<a9879>> and <<a9881>>.
 
@@ -2917,7 +2915,7 @@ be `final`, and must not be `abstract`. The class must be a top level
 class.
 
 * The class must have a `public` constructor that
-takes no parameters. The EJB container uses this constructor to create
+takes no parameters. The Enterprise Beans container uses this constructor to create
 instances of the session bean class.
 
 * The class must not define the `finalize()`
@@ -2927,8 +2925,8 @@ method.
 interface(s) or the methods of the bean’s business interface(s), if any.
 
 * The class must implement the business
-methods of the bean’s EJB 2.1 client view interfaces, if any.
-footnote:a10254[Note that the EJB 2.x client view is not supported for 
+methods of the bean’s Enterprise Beans 2.1 client view interfaces, if any.
+footnote:a10254[Note that the Enterprise Beans 2.x client view is not supported for 
 singleton session beans.]
 
 Optionally:
@@ -2964,7 +2962,7 @@ superclasses.
 
 * The session bean class is allowed to
 implement other methods (for example helper methods invoked internally
-by the business methods) in addition to the methods required by the EJB
+by the business methods) in addition to the methods required by the Enterprise Beans
 specification.
 
 ===== Session Bean Superclasses
@@ -3070,7 +3068,7 @@ argument of type `boolean`.
 The session bean
 class of a session bean that has a home interface may define one or more
 `ejbCreate<METHOD>` methods. These `ejbCreate` methods are intended for
-use only with components written to the the EJB 2.1 and earlier APIs.
+use only with components written to the the Enterprise Beans 2.1 and earlier APIs.
 The signatures of the `ejbCreate` methods must follow these rules:
 
 * The method name must have ejbCreate as its
@@ -3094,12 +3092,13 @@ single `ejbCreate` method, with no arguments.
 application exceptions, possibly including the
 `javax.ejb.CreateException`.
 
-_Compatibility Note: EJB 1.0 allowed the `ejbCreate` method to
+_Compatibility Note: Enterprise Beans 1.0 allowed the `ejbCreate` method to
 throw the `java.rmi.RemoteException` to indicate a non-application
-exception. This practice was deprecated in EJB 1.1—an EJB 1.1 or EJB 2.0
+exception. This practice was deprecated in Enterprise Beans 1.1—
+an Enterprise Beans 1.1 or Enterprise Beans 2.0
 or later compliant enterprise bean should throw the
 `javax.ejb.EJBException` or another `RuntimeException` to indicate
-non-application exceptions to the container (see <<a2986>>). An EJB 2.0 and
+non-application exceptions to the container (see <<a2986>>). An Enterprise Beans 2.0 and
 later compliant enterprise bean should not throw the
 `java.rmi.RemoteException` from the `ejbCreate` method._
 
@@ -3111,7 +3110,7 @@ follow these rules:
 
 * The method names can be arbitrary, but they
 must not start with "ejb" to avoid conflicts with the callback methods
-used by the EJB architecture.
+used by the Enterprise Beans architecture.
 
 * The method must be declared as public.
 
@@ -3123,7 +3122,7 @@ business method on the session bean’s remote business interface or
 remote component interface.
 
 * The argument and return value types for a
-method must be legal types for JAX-WS if the method is a web service
+method must be legal types for Jakarta XML Web Services if the method is a web service
 method or corresponds to a method on the session bean’s web service
 endpoint.
 
@@ -3144,12 +3143,13 @@ Therefore, it is recommended that all non-business methods be assigned
 an access type other than `public`._
 ****
 
-_Compatibility Note: EJB 1.0 allowed the business methods to throw
+_Compatibility Note: Enterprise Beans 1.0 allowed the business methods to throw
 the `java.rmi.RemoteException` to indicate a non-application exception.
-This practice was deprecated in EJB 1.1—an EJB 1.1 or EJB 2.0 or later
+This practice was deprecated in Enterprise Beans 1.1—
+an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later
 compliant enterprise bean should throw the `javax.ejb.EJBException` or
 another `RuntimeException` to indicate non-application exceptions to the
-container (see <<a2986>>). An EJB 2.0 or later compliant enterprise bean 
+container (see <<a2986>>). An Enterprise Beans 2.0 or later compliant enterprise bean 
 should not throw the `java.rmi.RemoteException` from a business method._
 
 [[a1518]]
@@ -3482,14 +3482,14 @@ method of the local home interface.
 
 ==== Session Bean’s Web Service Endpoint Interface
 
-The EJB 3.x API does not require the
+The Enterprise Beans 3.x API does not require the
 definition of a web service endpoint interface for session beans that
 implement a web service endpoint.
 
-The JAX-WS and Web Services for Java EE
+The Jakarta XML Web Services and Jakarta Enterprise Web Services
 specifications do not require that a separate interface be defined for a
 web service endpoint. The requirements for web service endpoints under
-JAX-WS and Web Services for Java EE are given in
+Jakarta XML Web Services and Jakarta Enterprise Web Services are given in
 <<a9881>> and <<a9879>>.
 
 === The Responsibilities of the Container Provider
@@ -3499,7 +3499,7 @@ describes the responsibilities of the Container Provider to support a
 session bean. The Container Provider is responsible for providing the
 deployment tools and for managing the session bean instances at runtime.
 
-_Because the EJB specification does not define
+_Because the Enterprise Beans specification does not define
 the API between deployment tools and the container, we assume that the
 deployment tools are provided by the Container Provider. Alternatively,
 the deployment tools may be provided by a different vendor who uses the
@@ -3556,7 +3556,7 @@ certain limit.
 
 Reference <<a9879>>
 describes the generation of a WSDL document for a web service endpoint.
-The Java to WSDL mapping must adhere to the requirements of JAX-WS
+The Java to WSDL mapping must adhere to the requirements of Jakarta XML Web Services
 <<a9881>>.
 
 ==== Session Business Interface Implementation Class
@@ -3683,9 +3683,9 @@ must follow the rules with respect to transaction scoping, security
 checking, and exception handling, as described in 
 <<a2172>>, <<a4945>>, and <<a2940>>, respectively.
 
-==== JAX-WS Message Handlers for Web Service Endpoints
+==== Jakarta XML Web Services Message Handlers for Web Service Endpoints
 
-The container must support the use of JAX-WS
+The container must support the use of Jakarta XML Web Services
 message handlers for web service endpoints. Container requirements for
 support of message handlers are specified in <<a9881>> and <<a9879>>.
 
