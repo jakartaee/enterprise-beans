@@ -76,15 +76,15 @@ image::EBCore-13.png[]
 
 A client’s JNDI name space may be configured
 to include the destinations or endpoints of message-driven beans
-installed in multiple EJB containers located on multiple machines on a
-network. The actual locations of an enterprise bean and EJB container
+installed in multiple Enterprise Beans containers located on multiple machines on a
+network. The actual locations of an enterprise bean and Enterprise Beans container
 are, in general, transparent to the client using the enterprise bean.
 
 References to message destinations can be
 injected, or they can be looked up in the client’s JNDI namespace.
 
 For example, the reference to the queue for a
-JMS message-driven bean might be injected as follows.
+Jakarta Messaging message-driven bean might be injected as follows.
 
 [source, java]
 ----
@@ -93,7 +93,7 @@ Queue stockInfoQueue;
 ----
 
 Alternatively, the queue for the `StockInfo`
-JMS message-driven bean might be located using the following code
+Jakarta Messaging message-driven bean might be located using the following code
 segment:
 
 [source, java]
@@ -154,7 +154,7 @@ distinguishes the messaging type that the message-driven bean supports.
 ****
 _The message-driven bean class’s
 implementation of the `javax.jms.MessageListener` interface
-distinguishes the message-driven bean as a JMS message-driven bean._
+distinguishes the message-driven bean as a Jakarta Messaging message-driven bean._
 ****
 
 The bean’s
@@ -217,7 +217,7 @@ declared, or if the bean class implements the optional
 If dependency injection fails, the bean instance is discarded.
 
 ****
-Under the EJB 3.x API, the bean class may
+Under the Enterprise Beans 3.x API, the bean class may
 acquire the `MessageDrivenContext` interface through dependency
 injection without having to implement the `MessageDrivenBean` interface.
 In this case, the `Resource` annotation (or `resource-env-ref`
@@ -316,8 +316,8 @@ The message-driven bean class is not required
 to implement the `javax.ejb.MessageDrivenBean` interface.
 
 _Compatibility Note: The `MessageDrivenBean` interface was
-required by earlier versions of the Enterprise JavaBeans specification.
-Under the EJB 3.x API, the functionality previously provided by the
+required by earlier versions of the Enterprise Beans specification.
+Under the Enterprise Beans 3.x API, the functionality previously provided by the
 `MessageDrivenBean` interface is available to the bean class through the
 use of dependency injection (of the `MessageDrivenContext`) and optional
 lifecycle callback methods._
@@ -336,7 +336,7 @@ instance is in the process of being removed by the container. In the
 holding.
 
 ****
-Under the EJB 3.x API, the bean class may
+Under the Enterprise Beans 3.x API, the bean class may
 optionally define a `PreDestroy` callback method for notification of the
 container’s removal of the bean instance.
 ****
@@ -353,7 +353,7 @@ annotations.
 ==== Timeout Callbacks
 
 A message-driven bean can be registered with
-the EJB Timer Service for time-based event notifications. The container
+the Enterprise Beans Timer Service for time-based event notifications. The container
 invokes the appropriate bean instance timeout callback method when a
 timer for the bean has expired. See <<a5456>>.
 
@@ -375,9 +375,9 @@ interceptor method, the container follows the rules for the
 `AroundConstruct` interceptors defined in the _Interceptors_ 
 specification <<a9887>>.
 
-_Compatibility Note: EJB 2.1 required the message-driven bean
+_Compatibility Note: Enterprise Beans 2.1 required the message-driven bean
 class to implement the `ejbCreate` method. This requirement has been
-removed from the EJB 3.x API. If the message-driven bean class
+removed from the Enterprise Beans 3.x API. If the message-driven bean class
 implements the `ejbCreate` method, the `ejbCreate` method is treated as
 the bean’s `PostConstruct` method, and the `PostConstruct` annotation
 can only be applied to the `ejbCreate` method._
@@ -480,26 +480,26 @@ annotation. If a property of the same name is specified in both, the
 deployment descriptor value overrides the value specified in the
 annotation.
 
-==== JMS Message-Driven Beans
+==== Jakarta Messaging Message-Driven Beans
 
 This section describes activation
-configuration properties specific to the JMS message-driven beans.
+configuration properties specific to the Jakarta Messaging message-driven beans.
 
 The container may or may not support its
-built-in JMS provider using a resource adapter. However, it must allow
+built-in Jakarta Messaging provider using a resource adapter. However, it must allow
 the application to configure a message-driven bean that uses the
-built-in JMS provider using the activation properties defined by this
+built-in Jakarta Messaging provider using the activation properties defined by this
 specification.
 
-Both the container and any JMS resource
+Both the container and any Jakarta Messaging resource
 adapters are free to support activation properties in addition to those
 listed here. However, applications that use non-standard activation
 properties will not be portable.
 
 ===== Message Acknowledgment
 
-JMS
-message-driven beans should not attempt to use the JMS API for message
+Jakarta Messaging
+message-driven beans should not attempt to use the Jakarta Messaging API for message
 acknowledgment. Message acknowledgment is automatically handled by the
 container. If the message-driven bean uses container-managed transaction
 demarcation, message acknowledgment is handled automatically as a part
@@ -507,22 +507,22 @@ of the transaction commit. If bean-managed transaction demarcation is
 used, the message receipt cannot be part of the bean-managed
 transaction, and, in this case, the receipt is acknowledged by the
 container. If bean-managed transaction demarcation is used, the Bean
-Provider can indicate whether JMS `AUTO_ACKNOWLEDGE` semantics or
+Provider can indicate whether Jakarta Messaging `AUTO_ACKNOWLEDGE` semantics or
 `DUPS_OK_ACKNOWLEDGE` semantics should apply by using the
 `activationConfig` element of the `MessageDriven` annotation or by using
 the `activation-config-property` deployment descriptor element. The
 property name used to specify the acknowledgment mode is
 `acknowledgeMode`. If the `acknowledgeMode` property is not specified,
-JMS `AUTO_ACKNOWLEDGE` semantics are assumed. The value of the
+Jakarta Messaging `AUTO_ACKNOWLEDGE` semantics are assumed. The value of the
 `acknowledgeMode` property must be either `Auto-acknowledge` or
-`Dups-ok-acknowledge` for a JMS message-driven bean.
+`Dups-ok-acknowledge` for a Jakarta Messaging message-driven bean.
 
 ===== Message Selectors
 
-The Bean Provider may declare the JMS message
-selector to be used in determining which messages a JMS message-driven
+The Bean Provider may declare the Jakarta Messaging message
+selector to be used in determining which messages a Jakarta Messaging message-driven
 bean is to receive. If the Bean Provider wishes to restrict the messages
-that a JMS message-driven bean receives, the Bean Provider can specify
+that a Jakarta Messaging message-driven bean receives, the Bean Provider can specify
 the value of the message selector by using the `activationConfig`
 element of the `MessageDriven` annotation or by using the
 `activation-config-property` deployment descriptor element. The property
@@ -556,12 +556,12 @@ For example:
 
 The Application Assembler may further
 restrict, but not replace, the value of the `messageSelector` property
-of a JMS message-driven bean.
+of a Jakarta Messaging message-driven bean.
 
 ===== Destination Type
 
-A JMS message-driven bean is associated with
-a JMS Destination (Queue or Topic) when the bean is deployed in the
+A Jakarta Messaging message-driven bean is associated with
+a Jakarta Messaging Destination (Queue or Topic) when the bean is deployed in the
 container. It is the responsibility of the Deployer to associate the
 message-driven bean with a Queue or Topic.
 
@@ -572,12 +572,12 @@ element of the `MessageDriven` annotation or by using the
 `activation-config-property` deployment descriptor element. The property
 name used to specify the destination type associated with the bean is
 `destinationType`. The value for this property must be either
-`javax.jms.Queue` or `javax.jms.Topic` for a JMS message-driven bean.
+`javax.jms.Queue` or `javax.jms.Topic` for a Jakarta Messaging message-driven bean.
 
 ===== Destination Lookup
 
 The Bean Provider or Deployer may specify the
-JMS queue or topic from which a JMS message-driven bean is to receive
+Jakarta Messaging queue or topic from which a Jakarta Messaging message-driven bean is to receive
 messages.
 
 The lookup name of an administratively-defined `Queue` or `Topic` 
@@ -589,8 +589,8 @@ property name used to specify the lookup name is `destinationLookup`.
 ===== Connection Factory Lookup
 
 The Bean Provider or Deployer may specify the
-JMS connection factory that will be used to connect to the JMS provider
-from which a JMS message-driven bean is to receive messages.
+Jakarta Messaging connection factory that will be used to connect to the Jakarta Messaging provider
+from which a Jakarta Messaging message-driven bean is to receive messages.
 
 The lookup name of an administratively-defined `ConnectionFactory` 
 object may be specified by using the `activationConfig` element of 
@@ -609,13 +609,13 @@ the `MessageDriven` annotation or by using the
 `activation-config-property` deployment descriptor element. The property
 name used to specify whether a durable or non-durable subscription
 should be used is `subscriptionDurability`. The value for this property
-must be either `Durable` or `NonDurable` for a JMS message-driven bean.
+must be either `Durable` or `NonDurable` for a Jakarta Messaging message-driven bean.
 If a topic subscription is specified and `subscriptionDurability` is not
 specified, a non-durable subscription is assumed.
 
 * Durable topic
 subscriptions, as well as queues, ensure that messages are not missed
-even if the EJB server is not running. Reliable applications will
+even if the Enterprise Beans server is not running. Reliable applications will
 typically make use of queues or durable topic subscriptions rather than
 non-durable topic subscriptions.
 
@@ -623,14 +623,14 @@ non-durable topic subscriptions.
 topic subscription is used, it is the container’s responsibility to make
 sure that the message-driven bean subscription is active (i.e., that
 there is a message-driven bean available to service the message) in
-order to ensure that messages are not missed as long as the EJB server
+order to ensure that messages are not missed as long as the Enterprise Beans server
 is running. Messages may be missed, however, when a bean is not
-available to service them. This will occur, for example, if the EJB
+available to service them. This will occur, for example, if the Enterprise Beans
 server goes down for any period of time.
 
 The Deployer
 should avoid associating more than one message-driven bean with the same
-JMS queue. If there are multiple JMS consumers for a queue, JMS does not
+Jakarta Messaging queue. If there are multiple Jakarta Messaging consumers for a queue, Jakarta Messaging does not
 define how messages are distribued between the queue receivers.
 
 ===== Subscription Name
@@ -652,8 +652,8 @@ whether a shared or unshared subscription will be used.
 ===== Client Identifier
 
 The Bean Provider or Deployer may specify the
-JMS client identifier that will be used when connecting to the JMS
-provider from which a JMS message-driven bean is to receive messages.
+Jakarta Messaging client identifier that will be used when connecting to the Jakarta Messaging
+provider from which a Jakarta Messaging message-driven bean is to receive messages.
 
 The client identifier may be specified by
 using the `activationConfig` element of the `MessageDriven` annotation 
@@ -697,7 +697,7 @@ callback method (or `ejbRemove` method) for a message-driven bean
 instance. The following scenarios result in the PreDestroy callback
 method not being called on an instance:
 
-* A crash of the EJB container.
+* A crash of the Enterprise Beans container.
 
 * A system exception thrown from the instance’s
 method to the container.
@@ -710,13 +710,13 @@ in the above scenarios. The application using the message-driven bean
 should provide some clean up mechanism to periodically clean up the
 unreleased resources.
 
-==== Replying to a JMS Message
+==== Replying to a Jakarta Messaging Message
 
-In standard JMS usage scenarios, the
+In standard Jakarta Messaging usage scenarios, the
 messaging mode of a message’s `JMSReplyTo`
 destination (Queue or Topic) is the same as the mode of the destination
 to which the message has been sent. Although a message-driven bean is
-not directly dependent on the mode of the JMS destination from which it
+not directly dependent on the mode of the Jakarta Messaging destination from which it
 is consuming messages, it may contain code that depends on the mode of
 its message’s `JMSReplyTo` destination. In particular, if a
 message-driven bean replies to a message,
@@ -790,7 +790,7 @@ container must throw the `java.lang.IllegalStateException`.
 If a bean instance attempts to access a
 resource manager, an enterprise bean, or an entity manager or entity
 manager factory, and the access is not allowed in <<a1886>>, the 
-behavior is undefined by the EJB specification.
+behavior is undefined by the Enterprise Beans specification.
 
 [[a1886]]
 [cols=".^,<,<", options=header]
@@ -924,7 +924,7 @@ invoked.
 
 This section
 describes the responsibilities of the message-driven Bean Provider to
-ensure that a message-driven bean can be deployed in any EJB container.
+ensure that a message-driven bean can be deployed in any Enterprise Beans container.
 
 ==== Classes and Interfaces
 
@@ -943,7 +943,7 @@ message-driven bean class:
 * The class must implement, directly or
 indirectly, the message listener interface required by the messaging
 type that it supports or the methods of the message listener interface.
-In the case of JMS, this is the `javax.jms.MessageListener` interface.
+In the case of Jakarta Messaging, this is the `javax.jms.MessageListener` interface.
 
 * The class must be defined as `public`, must not
 be `final`, and must not be `abstract`. The class must be a top level
@@ -979,7 +979,7 @@ the message-driven bean class or in any of its superclasses.
 The message-driven bean class is allowed to
 implement other methods (for example, helper methods invoked internally
 by the message listener method) in addition to the methods required by
-the EJB specification.
+the Enterprise Beans specification.
 
 ==== Message-Driven Bean Superclasses
 
@@ -1056,7 +1056,7 @@ message-driven bean. The Container Provider is responsible for providing
 the deployment tools, and for managing the message-driven bean instances
 at runtime.
 
-_Because the EJB specification does not define
+_Because the Enterprise Beans specification does not define
 the API between deployment tools and the container, we assume that the
 deployment tools are provided by the Container Provider. Alternatively,
 the deployment tools may be provided by a different vendor who uses the
@@ -1089,10 +1089,10 @@ interface and implement all _non-static_ `public` methods of the bean class
 and of any superclasses except `java.lang.Object` as message listener
 methods.
 
-==== Deployment of JMS Message-Driven Beans
+==== Deployment of Jakarta Messaging Message-Driven Beans
 
 The Container Provider must support the
-deployment of a JMS message-driven bean as the consumer of a JMS queue
+deployment of a Jakarta Messaging message-driven bean as the consumer of a Jakarta Messaging queue
 or topic.
 
 ==== Request/Response Messaging Types
