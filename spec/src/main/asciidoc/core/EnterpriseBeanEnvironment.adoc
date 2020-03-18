@@ -31,7 +31,7 @@ with Java language annotations that reference entries in the naming
 context.
 
 * <<a3680>> defines the general responsibilities for
-each of the EJB roles, such as Bean Provider, Application Assembler,
+each of the Enterprise Beans roles, such as Bean Provider, Application Assembler,
 Deployer, and Container Provider.
 
 * <<a3701>> defines the basic mechanisms and interfaces
@@ -41,7 +41,7 @@ customization of the enterprise bean’s business logic.
 
 * <<a3912>> defines the means for obtaining the business interface,
 no-interface view, or home interface of another enterprise bean using an
-_EJB reference_. An EJB reference is a special entry in the enterprise
+_enterprise bean reference_. An enterprise bean reference is a special entry in the enterprise
 bean’s environment.
 
 * <<a4154>> defines the means for obtaining the web service
@@ -134,7 +134,7 @@ the JNDI interfaces to obtain the values of the environment entries.
 
 ****
 _The container must make an enterprise bean’s
-environment available to any interceptor class and any JAX-WS message
+environment available to any interceptor class and any Jakarta XML Web Services message
 handler for the bean as well. The interceptor and web service handler
 classes for an enterprise bean share that bean’s environment. Within the
 context of this chapter, the term "bean" should be construed as
@@ -162,7 +162,7 @@ components in the `.war` file.
 Enterprise bean instances are not allowed to
 modify the bean’s environment at runtime.
 
-_Compatibility Note: If an enterprise bean written to the EJB 2.1
+_Compatibility Note: If an enterprise bean written to the Enterprise Beans 2.1
 API specification is deployed multiple times in the same container, each
 deployment results in the creation of a distinct home. The Deployer may
 set different values for the enterprise bean environment entries for
@@ -225,7 +225,7 @@ annotation also allows the JNDI name to be specified explicitly.
 
 * Environment entries may also be injected into
 the bean through bean methods that follow the naming conventions for
-JavaBeans properties. The annotation is applied to the `set` method for
+JavaBeans(TM) properties. The annotation is applied to the `set` method for
 the property, which is the method that is called to inject the
 environment entry. The JavaBeans property name (not the method name) is
 used as the default JNDI name. For example, a method named
@@ -325,18 +325,18 @@ Restrictions on the overriding of environment
 entry values depend on the type of environment entry.
 
 The rules for how a deployment descriptor
-entry may override an EJB annotation are described in <<a3912>>. 
+entry may override an Enterprise Beans annotation are described in <<a3912>>. 
 The rules for how a deployment descriptor entry may override a 
 `PersistenceUnit` or `PersistenceContext` annotation are described in 
 <<a4533>> and <<a4671>>. The rules for web services references and how 
 a deployment descriptor entry may override a `WebServiceRef` annotation 
-are included in the _Web Services for Java EE_ specification<<a9879>>.
+are included in the _Jakarta Enterprise Web Services_ specification<<a9879>>.
 
 [[a3680]]
-=== Responsibilities by EJB Role
+=== Responsibilities by Enterprise Beans Role
 
 This section describes the responsibilities
-of the various EJB roles with regard to the specification and handling
+of the various Enterprise Beans roles with regard to the specification and handling
 of environment entries. The sections that follow describe the
 responsibilities that are specific to the different types of objects
 that may be stored in the naming context.
@@ -433,7 +433,7 @@ following Java types: `String`, `Character`, `Byte`, `Short`, `Integer`, `Long`,
 `Boolean`, `Double`, `Float`, `Class`, and any subclass of `Enum`.
 
 The following subsections describe the
-responsibilities of each EJB role.
+responsibilities of each Enterprise Beans role.
 
 ==== Bean Provider’s Responsibilities
 
@@ -794,24 +794,24 @@ from all the methods of the `javax.naming.Context` interface that modify
 the environment naming context and its subcontexts.
 
 [[a3912]]
-=== EJB References
+=== Enterprise Bean References
 
 This section
 describes the programming and deployment descriptor interfaces that
 allow the Bean Provider to refer to the business interfaces,
 no-interface views, or home interfaces of other enterprise beans using
-"logical" names called _EJB references_. The EJB references are special
-entries in the enterprise bean’s environment. The Deployer binds the EJB
+"logical" names called _enterprise bean references_. The enterprise bean references are special
+entries in the enterprise bean’s environment. The Deployer binds the enterprise bean
 references to the enterprise bean business interfaces, no-interface
 views, or home interfaces in the target operational environment, as
 appropriate.
 
 The deployment descriptor also allows the
-Application Assembler to link an EJB reference declared in one
+Application Assembler to link an enterprise bean reference declared in one
 enterprise bean to another enterprise bean contained in the same ejb-jar
-file, or in another ejb-jar file in the same Java EE application unit.
+file, or in another ejb-jar file in the same Jakarta EE application unit.
 The link is an instruction to the tools used by the Deployer that the
-EJB reference should be bound to the business interface, no-interface
+enterprise bean reference should be bound to the business interface, no-interface
 view, or home interface of the specified target enterprise bean. This
 linking can also be specified by the Bean Provider using annotations in
 the source code of the bean class.
@@ -820,17 +820,17 @@ the source code of the bean class.
 ==== Bean Provider’s Responsibilities
 
 This section describes the Bean Provider’s
-view and responsibilities with respect to EJB references. The first
-subsection describes annotations for injecting EJB references; the
-second describes the API for accessing EJB references; and the third
-describes syntax for declaring the EJB references in a deployment
+view and responsibilities with respect to enterprise bean references. The first
+subsection describes annotations for injecting enterprise bean references; the
+second describes the API for accessing enterprise bean references; and the third
+describes syntax for declaring the enterprise bean references in a deployment
 descriptor.
 
-===== Injection of EJB References
+===== Injection of Enterprise Bean References
 
 The Bean Provider uses the `EJB` annotation
 to annotate a field or setter property method of the bean class as a
-target for the injection of an EJB reference.
+target for the injection of an enterprise bean reference.
 
 `EJB` annotation contains the following
 elements:
@@ -843,7 +843,7 @@ interface type. The reference may be to a session bean’s business
 interface, to a session bean’s no-interface view, or to the local home
 interface or remote home interface of a session bean or an entity
 bean.footnote:a10323[Component contract
-and client view of entity beans are described in the EJB Optional
+and client view of entity beans are described in the Enterprise Beans Optional
 Features document<<a9890>>.]
 
 * The `beanName` element references the value of
@@ -857,10 +857,10 @@ name that the bean reference should be mapped to. Applications that use
 mapped names may not be portable.
 
 * The `lookup` element is a portable lookup
-string containing the JNDI name for the target EJB component.
+string containing the JNDI name for the target enterprise bean component.
 
 Either the `beanName` or the `lookup` element can
-be used to resolve the EJB dependency to the target component. It is an
+be used to resolve the enterprise bean dependency to the target component. It is an
 error to specify values for both `beanName` and `lookup`.
 
 The following example illustrates how an
@@ -871,7 +871,7 @@ bean’s naming context, where `ExampleBean` is the name of the class of
 the referencing bean and `com.acme.example` its package. The target of
 the reference must be resolved by the Deployer, unless there is only one
 session bean component within the same application that exposes a client
-view type which matches the EJB reference.
+view type which matches the enterprise bean reference.
 
 [source, java]
 ----
@@ -902,8 +902,8 @@ context. This reference is linked to a bean named `cart1` .
 private ShoppingCart myCart;
 ----
 
-As an alternative to `beanName` , a reference
-to an EJB can use a session bean JNDI name by means of the lookup
+As an alternative to `beanName`, a reference
+to an enterprise bean can use a session bean JNDI name by means of the lookup
 annotation element. The following example uses a JNDI name in the
 application namespace.
 
@@ -917,7 +917,7 @@ private ShoppingCart myOtherCart;
 ----
 
 If the `ShoppingCart` bean were instead
-written to the EJB 2.1 client view, the EJB reference would be to the
+written to the Enterprise Beans 2.1 client view, the enterprise bean reference would be to the
 bean’s home interface. For example:
 
 [source, java]
@@ -947,18 +947,18 @@ class `ShoppingCartBean.class`, the EJB reference would have type
 private ShoppingCartBean myCart;
 ----
 
-===== EJB Reference Programming Interfaces
+===== Enterprise Bean Reference Programming Interfaces
 
 The Bean Provider
-may use EJB references to locate the business interfaces, no-interface
+may use enterprise bean references to locate the business interfaces, no-interface
 views, or home interfaces of other enterprise beans as follows.
 
 * Assign an entry in the enterprise bean’s
 environment to the reference. (See <<a3998>> 
-for information on how EJB references are
+for information on how enterprise bean references are
 declared in the deployment descriptor.)
 
-* The EJB specification recommends, but does
+* The Enterprise Beans specification recommends, but does
 not require, that all references to other enterprise beans be organized
 in the `ejb` subcontext of the bean’s environment (i.e., in the
 `java:comp/env/ejb` JNDI context). Note that enterprise bean references
@@ -971,7 +971,7 @@ enterprise bean’s environment using the EJBContext `lookup` method or
 the JNDI API.
 
 The following example illustrates how an
-enterprise bean uses an EJB reference to locate the remote home
+enterprise bean uses an enterprise bean reference to locate the remote home
 interface of another enterprise bean using the JNDI APIs.
 
 [source, java]
@@ -1002,20 +1002,20 @@ public class EmployeeServiceBean
 
 In the example, the Bean Provider of the
 `EmployeeServiceBean` enterprise bean assigned the environment entry
-`ejb/EmplRecord` as the EJB reference name to refer to the remote home of
+`ejb/EmplRecord` as the enterprise bean reference name to refer to the remote home of
 another enterprise bean.
 
 [[a3998]]
-===== Declaration of EJB References in Deployment Descriptor
+===== Declaration of Enterprise Bean References in Deployment Descriptor
 
-Although the EJB
+Although the enterprise bean
 reference is an entry in the enterprise bean’s environment, the Bean
 Provider must not use a `env-entry` element to declare it. Instead, the
-Bean Provider must declare all the EJB references using the `ejb-ref` and
+Bean Provider must declare all the enterprise bean references using the `ejb-ref` and
 `ejb-local-ref` elements of the deployment descriptor. This allows the
 ejb-jar consumer (i.e. Application Assembler or Deployer) to discover
-all the EJB references used by the enterprise bean. Deployment
-descriptor entries may also be used to specify injection of an EJB
+all the enterprise bean references used by the enterprise bean. Deployment
+descriptor entries may also be used to specify injection of an enterprise bean
 reference into a bean.
 
 Each `ejb-ref` or `ejb-local-ref`
@@ -1037,7 +1037,7 @@ The `ejb-local-ref` element contains the
 and `lookup-name` elements.
 
 The `ejb-ref-name`
-element specifies the EJB reference name: its value is the environment
+element specifies the enterprise bean reference name: its value is the environment
 entry name used in the enterprise bean code. The `ejb-ref-name` must be
 specified.
 
@@ -1045,34 +1045,34 @@ The optional
 `ejb-ref-type` element specifies the expected
 type of the enterprise bean: its value must be either
 Entity footnote:a10324[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.] or Session.
+are described in the Enterprise Beans Optional Features document <<a9890>>.] or Session.
 
 The `home` and `remote` or `local-home` and `local`
 elements specify the expected Java types of the referenced enterprise
-bean’s interface(s). If the reference is to an EJB 2.1 remote client
+bean’s interface(s). If the reference is to an Enterprise Beans 2.1 remote client
 view interface, the `home` element is required. Likewise, if the
-reference is to an EJB 2.1 local client view interface, the `local-home`
+reference is to an Enterprise Beans 2.1 local client view interface, the `local-home`
 element is required. The `remote` element of the `ejb-ref` element
 refers to either the remote business interface type or the remote
 component interface, depending on whether the reference is to a bean’s
-EJB 3.x or EJB 2.1 remote client view. Likewise, the `local` element of
+Enterprise Beans 3.x or Enterprise Beans 2.1 remote client view. Likewise, the `local` element of
 the `ejb-local-ref` element refers to either the local business
 interface type, bean class type or the local component interface type,
-depending on whether the reference is to a bean’s EJB 3.x local business
-interface, no-interface view, or EJB 2.1 local client view respectively.
+depending on whether the reference is to a bean’s Enterprise Beans 3.x local business
+interface, no-interface view, or Enterprise Beans 2.1 local client view respectively.
 
-The `ejb-link` element is used to like an EJB
+The `ejb-link` element is used to like an enterprise bean
 reference to a target bean, and is described in <<a4057>> below.
 
 The `lookup-name` element specifies the JNDI
-name of the EJB reference’s target session bean, and is described
+name of the enterprise bean reference’s target session bean, and is described
 further in <<a4057>> below.
 
-See <<a3645>> for the name scoping rules of EJB
+See <<a3645>> for the name scoping rules of enterprise bean
 references.
 
 The following example illustrates the
-declaration of EJB references in the deployment descriptor.
+declaration of enterprise bean references in the deployment descriptor.
 
 [source, xml]
 ----
@@ -1085,7 +1085,7 @@ declaration of EJB references in the deployment descriptor.
   ...
   <ejb-ref>
     <description>
-        This is a reference to an EJB 2.1 session 
+        This is a reference to an Enterprise Beans 2.1 session 
         bean that encapsulates access to employee records.
     </description>
     <ejb-ref-name>ejb/EmplRecord</ejb-ref-name>
@@ -1096,7 +1096,7 @@ declaration of EJB references in the deployment descriptor.
   <ejb-local-ref>
     <description>
         This is a reference to the local business interface 
-        of an EJB 3.0 session bean that provides a payroll 
+        of an Enterprise Beans 3.0 session bean that provides a payroll 
         service.
     </description>
     <ejb-ref-name>ejb/Payroll</ejb-ref-name>
@@ -1105,7 +1105,7 @@ declaration of EJB references in the deployment descriptor.
   <ejb-local-ref>
     <description>
         This is a reference to the local business interface 
-        of an EJB 3.0 session bean that provides a pension 
+        of an Enterprise Beans 3.0 session bean that provides a pension 
         plan service.
     </description>
     <ejb-ref-name>ejb/PensionPlan</ejb-ref-name>
@@ -1123,7 +1123,7 @@ declaration of EJB references in the deployment descriptor.
 
 The Application
 Assembler can use the `ejb-link` element in the deployment descriptor to
-link an EJB reference to a target enterprise bean within the same
+link an enterprise bean reference to a target enterprise bean within the same
 application.
 
 The Application Assembler specifies the link
@@ -1135,11 +1135,11 @@ referencing enterprise bean. The value of the `ejb-link` element is the
 name of the target enterprise bean. (This is the bean name as defined by
 metadata annotation (or default) in the bean class or in the `ejb-name`
 element of the target enterprise bean.) The target enterprise bean can
-be in any ejb-jar file or `.war` file in the same Java EE application as
+be in any ejb-jar file or `.war` file in the same Jakarta EE application as
 the referencing application component.
 
 * Alternatively, to avoid the need to
-rename enterprise beans to have unique names within an entire Java EE
+rename enterprise beans to have unique names within an entire Jakarta EE
 application, the Application Assembler may use either of the following
 two syntaxes in the `ejb-link` element of the referencing application
 component.footnote:a10325[The Bean Provider
@@ -1161,19 +1161,19 @@ application component jar file. In this manner, multiple beans with the
 same ejb-name may be uniquely identified when the Application Assembler
 cannot change ejb-names.
 
-* Rather than using `ejb-link` to resolve the EJB
+* Rather than using `ejb-link` to resolve the enterprise bean
 reference, the Application Assembler may use the `lookup-name` element
-to reference the target EJB component by means of one of its JNDI names.
+to reference the target enterprise bean component by means of one of its JNDI names.
 It is an error for both ejb-link and `lookup-name` to be specified within
 an `ejb-ref` or `ejb-local-ref` element.
 
 * The Application Assembler must ensure that
-the target enterprise bean is type-compatible with the declared EJB
+the target enterprise bean is type-compatible with the declared enterprise bean
 reference. This means that the target enterprise bean must be of the
 type indicated in the `ejb-ref-type` element, if present, and that the
 business interface, bean class, or home and component interfaces of the
 target enterprise bean must be Java type-compatible with the type
-declared in the EJB reference.
+declared in the enterprise bean reference.
 
 The following illustrates the use of an
 ejb-link in the deployment descriptor.
@@ -1209,13 +1209,13 @@ ejb-link in the deployment descriptor.
 ----
 
 The Application Assembler uses the `ejb-link`
-element to indicate that the EJB reference `EmplRecord` declared in the
+element to indicate that the enterprise bean reference `EmplRecord` declared in the
 `EmployeeService` enterprise bean has been linked to the
 `EmployeeRecord` enterprise bean.
 
 The following example illustrates using the
 `ejb-link` element to indicate an enterprise bean reference to the
-`ProductEJB` enterprise bean that is in the same Java EE application unit
+`ProductEJB` enterprise bean that is in the same Jakarta EE application unit
 but in a different ejb-jar file.
 
 [source, xml]
@@ -1238,7 +1238,7 @@ but in a different ejb-jar file.
 
 The following example illustrates using the
 `ejb-link` element to indicate an enterprise bean reference to the
-`ShoppingCart` enterprise bean that is in the same Java EE application
+`ShoppingCart` enterprise bean that is in the same Jakarta EE application
 unit but in a different ejb-jar file. The reference was originally
 declared in the bean’s code using an annotation. The Application
 Assembler provides only the link to the bean.
@@ -1295,7 +1295,7 @@ The Deployer is
 responsible for the following:
 
 * The Deployer must ensure that all the
-declared EJB references are bound to the business interfaces,
+declared enterprise bean references are bound to the business interfaces,
 no-interface views, or home interfaces of enterprise beans that exist in
 the operational environment. For session beans, the Deployer may use the
 information provided by the Bean Provider in the mappedName element of
@@ -1307,13 +1307,13 @@ names. The Deployer may also use, for example, the JNDI
 the target enterprise bean.
 
 * The Deployer must ensure that the target
-enterprise bean is type-compatible with the types declared for the EJB
+enterprise bean is type-compatible with the types declared for the enterprise bean
 reference. This means that the target enterprise bean must be of the
 type indicated by the use of the `EJB` annotation, by the `ejb-ref-type`
 element (if specified), and that the business interface, no-interface
 view, and/or home and component interfaces of the target enterprise bean
 must be Java type-compatible with the type of the injection target or
-the types declared in the EJB reference.
+the types declared in the enterprise bean reference.
 
 * If an `EJB` annotation includes the
 `beanName` element or the `ejb-ref` or `ejb-local-ref` element includes
@@ -1325,11 +1325,11 @@ the target.
 element or the the `ejb-ref` or `ejb-local-ref` element includes the
 `lookup-name` element, the Deployer should bind the enterprise bean
 reference to the enterprise bean specified as the target. It is an error
-for an EJB reference declaration to include both an `ejb-link` and a
+for an enterprise bean reference declaration to include both an `ejb-link` and a
 `lookup-name` element.
 
 The following example illustrates the use of
-the `lookup-name` element to bind an EJB reference to a target enterprise
+the `lookup-name` element to bind an enterprise bean reference to a target enterprise
 bean in the operational environment. The reference was originally
 declared in the bean’s code using an annotation. The target enterprise
 bean has ejb-name `ShoppingCart` and is deployed in the stand-alone module
@@ -1349,19 +1349,19 @@ bean has ejb-name `ShoppingCart` and is deployed in the stand-alone module
 The Container Provider must provide the
 deployment tools that allow the Deployer to perform the tasks described
 in the previous subsection. The deployment
-tools provided by the EJB Container Provider must be able to process the
+tools provided by the Container Provider must be able to process the
 information supplied in the `ejb-ref` and `ejb-local-ref` elements in the
 deployment descriptor.
 
 At the minimum, the tools must be able to:
 
 * Preserve the application assembly information
-in annotations or in the `ejb-link` elements by binding an EJB reference
+in annotations or in the `ejb-link` elements by binding an enterprise bean reference
 to the business interface, no-interface view, or the home interface of
 the specified target bean.
 
-* Inform the Deployer of any unresolved EJB
-references, and allow him or her to resolve an EJB reference by binding
+* Inform the Deployer of any unresolved enterprise bean
+references, and allow him or her to resolve an enterprise bean reference by binding
 it to a specified compatible target bean.
 
 [[a4154]]
@@ -1374,13 +1374,13 @@ binds the web service references to the web service classes or
 interfaces in the target operational environment.
 
 The specification of web service references
-and their usage is defined in the _Java API for XML Web Services_
-(JAX-WS)<<a9881>> and _Web Services for Java EE_ 
+and their usage is defined in the _Jakarta XML Web Services_
+<<a9881>> and _Jakarta Enterprise Web Services_ 
 specifications<<a9879>>.
 
 See <<a3645>> for the name scoping rules of web service references.
 
-The EJB specification recommends, but does
+The Enterprise Beans specification recommends, but does
 not require, that all references to web services be organized in the
 `service` subcontext of the bean’s environment (i.e., in the
 `java:comp/env/service` JNDI context).
@@ -1474,13 +1474,13 @@ environment to the resource manager connection factory reference. (See
 information on how resource manager connection factory references are
 declared in the deployment descriptor.)
 
-* The EJB specification recommends, but does
+* The Enterprise Beans specification recommends, but does
 not require, that all resource manager connection factory references be
 organized in the subcontexts of the bean’s environment, using a
 different subcontext for each resource manager type. For example, all
 JDBC data source references might be declared in the `java:comp/env/jdbc`
-subcontext, and all JMS connection factories in the `java:comp/env/jms`
-subcontext. Also, all JavaMail connection factories might be declared in
+subcontext, and all Jakarta Messaging connection factories in the `java:comp/env/jms`
+subcontext. Also, all Jakarta(R) Mail connection factories might be declared in
 the `java:comp/env/mail` subcontext and all URL connection factories in
 the `java:comp/env/url` subcontext. Note that resource manager
 connection factory references declared via annotations will not, by
@@ -1610,8 +1610,8 @@ specify injection of a resource manager connection factor reference into
 a bean.
 
 See Section "Declaration of Resource Manager
-Connection Factory References in Deployment Descriptor" in the Java EE
-Platform specification<<a9861>> for the description of the
+Connection Factory References in Deployment Descriptor" in the 
+Jakarta EE Platform specification <<a9861>> for the description of the
 `resource-ref` element.
 
 See <<a3645>> for the name scoping rules of resource
@@ -1654,7 +1654,7 @@ resource manager connection factory references used by the
 ----
 
 The following example illustrates the
-declaration of JMS resource manager connection factory references.
+declaration of Jakarta Messaging resource manager connection factory references.
 
 [source, xml]
 ----
@@ -1687,25 +1687,25 @@ resource manager connection factory type for
 obtaining JDBC connections, and the
 `javax.jms.ConnectionFactory`,
 `javax.jms.QueueConnectionFactory`, or `javax.jms.TopicConnectionFactory`
-for obtaining JMS connections.
+for obtaining Jakarta Messaging connections.
 
 The Bean Provider must use the
 `javax.mail.Session`  resource manager
 connection factory type for obtaining
-JavaMail connections, and the `java.net.URL`
+Jakarta Mail connections, and the `java.net.URL`
  resource manager connection factory type
 for obtaining URL connections.
 
 It is recommended that the Bean Provider
-names JDBC data sources in the `java:comp/env/jdbc` subcontext, and JMS
+names JDBC data sources in the `java:comp/env/jdbc` subcontext, and Jakarta Messaging
 connection factories in the `java:comp/env/jms` subcontext. It is also
-recommended that the Bean Provider name all JavaMail connection
+recommended that the Bean Provider name all Jakarta Mail connection
 factories in the `java:comp/env/mail` subcontext, and all URL connection
 factories in the `java:comp/env/url` subcontext. Note that resource
 manager connection factory references declared via annotations will not,
 by default, appear in any subcontext.
 
-_The Connector architecture<<a9863>> allows an
+_Jakarta(R) Connectors <<a9863>> allows an
 enterprise bean to use the API described in this section to obtain
 resource objects that provide access to additional back-end systems._
 
@@ -1740,21 +1740,21 @@ is beyond the scope of this specification.
 deployment descriptor `res-auth` element is
 Container, the Deployer is responsible for configuring the sign-on
 information for the resource manager. This is performed in a manner
-specific to the EJB container and resource manager; it is beyond the
+specific to the Enterprise Beans container and resource manager; it is beyond the
 scope of this specification.
 
 _For example, if principals must be mapped
 from the security domain and principal realm used at the enterprise
 beans application level to the security domain and principal realm of
 the resource manager, the Deployer or System Administrator must define
-the mapping. The mapping is performed in a manner specific to the EJB
+the mapping. The mapping is performed in a manner specific to the Enterprise Beans
 container and resource manager; it is beyond the scope of the current
-EJB specification._
+Enterprise Beans specification._
 
 [[a4322]]
 ==== Container Provider Responsibility
 
-The EJB Container
+The Container
 Provider is responsible for the following:
 
 * Provide the
@@ -1763,7 +1763,7 @@ perform the tasks described in the previous subsection.
 
 * Provide the implementation of the resource
 manager connection factory classes for the resource managers that are
-configured with the EJB container.
+configured with the Enterprise Beans container.
 
 * If the Bean Provider sets the
 `authenticationType` element of the `Resource` annotation to
@@ -1798,19 +1798,19 @@ bean, and the container must be able to use the user/password
 combination for user authentication when obtaining a connection to the
 resource by invoking the resource manager connection factory.
 
-_Although not required by the EJB
+_Although not required by the Enterprise Beans
 specification, we expect that containers will support some form of a
 single sign-on mechanism that spans the
 application server and the resource managers. The container will allow
-the Deployer to set up the resource managers such that the EJB caller
+the Deployer to set up the resource managers such that the Enterprise Beans caller
 principal can be propagated (directly or through principal mapping) to a
 resource manager, if required by the application._
 
-While not required by the EJB specification,
-most EJB Container Providers also provide the following features:
+While not required by the Enterprise Beans specification,
+most Enterprise Beans Container Providers also provide the following features:
 
 * A tool to allow the System Administrator to
-add, remove, and configure a resource manager for the EJB server.
+add, remove, and configure a resource manager for the Enterprise Beans server.
 
 * A mechanism to pool connections to the
 resources for the enterprise beans and otherwise manage the use of
@@ -1823,7 +1823,7 @@ The System
 Administrator is typically responsible for the following:
 
 * Add, remove, and configure resource managers
-in the EJB server environment.
+in the Enterprise Beans server environment.
 
 _In some scenarios, these tasks can be
 performed by the Deployer._
@@ -1834,7 +1834,7 @@ performed by the Deployer._
 This section describes the programming and
 deployment descriptor interfaces that allow the Bean Provider to refer
 to administered objects that are associated with resources (e.g., a
-Connector CCI `InteractionSpec` instance) by using "logical" names
+Jakarta Connectors CCI `InteractionSpec` instance) by using "logical" names
 called _resource environment references_.
 Resource environment references are special entries in the enterprise
 bean’s environment. The Deployer binds the resource environment
@@ -1874,7 +1874,7 @@ associated with resources, as follows:
 environment to the reference. (See <<a4353>> for information on how resource
 environment references are declared in the deployment descriptor.)
 
-* The EJB specification recommends, but does
+* The Enterprise Beans specification recommends, but does
 not require, that all resource environment references be organized in
 the appropriate subcontext of the bean’s environment for the resource
 type. Note that the resource environment references declared via
@@ -1900,8 +1900,8 @@ descriptor entries may also be used to specify injection of a resource
 environment reference into a bean.
 
 See Section "Declaration of Resource
-Environment References in Deployment Descriptor" in the Java EE Platform
-specification<<a9861>> for the description of the
+Environment References in Deployment Descriptor" in the 
+Jakarta EE Platform specification <<a9861>> for the description of the
 `resource-env-ref` element.
 
 See <<a3645>> for the name scoping rules of resource
@@ -1929,7 +1929,7 @@ type indicated in the `Resource` annotation or the
 
 The Container Provider must provide the
 deployment tools that allow the Deployer to perform the tasks described
-in the previous subsection. The deployment tools provided by the EJB
+in the previous subsection. The deployment tools provided by the 
 Container Provider must be able to process the information supplied in
 the class file annotations and
 `resource-env-ref` elements in the deployment
@@ -2003,10 +2003,10 @@ references to locate message destinations, as follows.
 environment to the reference. (See <<a4419>> for information on how message
 destination references are declared in the deployment descriptor.)
 
-* The EJB specification recommends, but does
+* The Enterprise Beans specification recommends, but does
 not require, that all message destination references be organized in the
 appropriate subcontext of the bean’s environment for the messaging
-resource type (e.g. in the `java:comp/env/jms` JNDI context for JMS
+resource type (e.g. in the `java:comp/env/jms` JNDI context for Jakarta Messaging
 Destinations). Note that message destination references declared via
 annotations will not, by default, appear in any subcontext.
 
@@ -2015,7 +2015,7 @@ bean’s environment using the EJBContext `lookup` method or the JNDI
 APIs.
 
 The following example illustrates how an
-enterprise bean uses a message destination reference to locate a JMS
+enterprise bean uses a message destination reference to locate a Jakarta Messaging
 Destination.
 
 [source, java]
@@ -2029,7 +2029,7 @@ public class StockServiceBean implements StockService {
 
  public void processStockInfo(...) {
  ...
- // Look up the JMS StockQueue in the environment.
+ // Look up the Jakarta Messaging StockQueue in the environment.
  Object result = ctx.lookup("jms/StockQueue");
 
  // Convert the result to the proper type.
@@ -2041,7 +2041,7 @@ public class StockServiceBean implements StockService {
 In the example, the Bean Provider of the
 `StockServiceBean` enterprise bean has assigned the environment entry
 `jms/StockQueue` as the message destination reference name to refer to a
-JMS queue.
+Jakarta Messaging queue.
 
 If the JNDI APIs were used directly, the
 example would be as follows.
@@ -2057,7 +2057,7 @@ public class StockServiceBean implements StockService {
  // Obtain the default initial JNDI context.
  Context initCtx = new InitialContext();
 
- // Look up the JMS StockQueue in the environment.
+ // Look up the Jakarta Messaging StockQueue in the environment.
  Object result = initCtx.lookup(
       "java:comp/env/jms/StockQueue");
 
@@ -2098,7 +2098,7 @@ message destination reference is relative to the `java:comp/env` context
 
 The `message-destination-type` element
 specifies the expected type of the referenced destination. For example,
-in the case of a JMS Destination, its value might be `javax.jms.Queue`.
+in the case of a Jakarta Messaging Destination, its value might be `javax.jms.Queue`.
 The `message-destination-type` element is optional if an injection
 target is specified for the message destination reference; in this case
 the `message-destination-type` defaults to the type of the injection
@@ -2122,7 +2122,7 @@ descriptor.
 ...
 <message-destination-ref>
   <description>
-    This is a reference to a JMS queue used in processing Stock info
+    This is a reference to a Jakarta Messaging queue used in processing Stock info
   </description>
   <message-destination-ref-name>
     jms/StockInfo
@@ -2163,8 +2163,8 @@ of an enterprise bean that produces messages to link it to the target
 destination. The value of the `message-destination-link` element is the
 name of the target destination, as defined in the
 `message-destination-name` element of the `message-destination` element.
-The `message-destination` element can be in any module in the same Java
-EE application as the referencing component. The Application Assembler
+The `message-destination` element can be in any module in the same 
+Jakarta EE application as the referencing component. The Application Assembler
 uses the `message-destination-usage` element of the
 `message-destination-ref` element to indicate that the referencing
 enterprise bean produces messages to the referenced destination.
@@ -2186,7 +2186,7 @@ element of the `message-destination-ref` element to indicate that the
 enterprise bean consumes messages from the referenced destination.
 
 * To avoid the need to rename message
-destinations to have unique names within an entire Java EE application,
+destinations to have unique names within an entire Jakarta EE application,
 the Application Assembler may use the following syntax in the
 `message-destination-link` element of the referencing application
 component. The Application Assembler specifies the path name of the
@@ -2265,7 +2265,7 @@ message-driven bean by means of the common destination
 
 The following example illustrates using the
 `message-destination-link` element to indicate an enterprise bean
-reference to the `ExpenseProcessingQueue` that is in the same Java EE
+reference to the `ExpenseProcessingQueue` that is in the same Jakarta EE
 application unit but in a different ejb-jar file.
 
 [source, xml]
@@ -2314,7 +2314,7 @@ destination links specified by the Application Assembler.
 
 The Container Provider must provide the
 deployment tools that allow the Deployer to perform the tasks described
-in the previous subsection. The deployment tools provided by the EJB
+in the previous subsection. The deployment tools provided by the
 Container Provider must be able to process the information supplied in
 the `message-destination-ref` and `message-destination-link` elements
 in the deployment descriptor.
@@ -2337,7 +2337,7 @@ unit references are special entries in the enterprise bean’s
 environment. The Deployer binds the persistence unit references to
 entity manager factories that are configured in accordance with the
 `persistence.xml` specification for the persistence unit, as described
-in the _Java Persistence API_ specification<<a9851>>.
+in the _Jakarta Persistence_ specification<<a9851>>.
 
 ==== Bean Provider’s Responsibilities
 
@@ -2383,7 +2383,7 @@ environment to the persistence unit reference. (See <<a4588>>
 for information on how persistence
 unit references are declared in the deployment descriptor.)
 
-* The EJB specification recommends, but does
+* The Enterprise Beans specification recommends, but does
 not require, that all persistence unit references be organized in the
 `java:comp/env/persistence` subcontexts of the bean’s environment.
 
@@ -2515,7 +2515,7 @@ The Application Assembler can use the
 a reference to a persistence unit. The Application Assembler (or Bean
 Provider) may use the following syntax in the `persistence-unit-name`
 element of the referencing application component to avoid the need to
-rename persistence units to have unique names within a Java EE
+rename persistence units to have unique names within a Jakarta EE
 application. The Application Assembler specifies the path name of the
 root of the referenced persistence unit and appends the name of the
 persistence unit separated from the path name by `#`. The path name is
@@ -2604,7 +2604,7 @@ persistence unit, as described in <<a9851>>.
 
 ==== Container Provider Responsibility
 
-The EJB Container
+The Enterprise Beans Container
 Provider is responsible for the following:
 
 * Provide the
@@ -2613,7 +2613,7 @@ perform the tasks described in the previous subsection.
 
 * Provide the implementation of the entity
 manager factory classes for the persistence units that are configured
-with the EJB container. The implementation of the entity manager factory
+with the Enterprise Beans container. The implementation of the entity manager factory
 classes may be provided by the container directly or by the container in
 conjunction with a third-party persistence provider, as described in
 <<a9851>>.
@@ -2624,7 +2624,7 @@ The System
 Administrator is typically responsible for the following:
 
 * Add, remove, and configure entity manager
-factories in the EJB server environment.
+factories in the Enterprise Beans server environment.
 
 _In some scenarios, these tasks can be
 performed by the Deployer._
@@ -2640,7 +2640,7 @@ context reference_. Persistence context references are special entries
 in the enterprise bean’s environment. The Deployer binds the persistence
 context references to container-managed entity managers for persistence
 contexts of the specified type and configured in accordance with their
-persistence unit, as described in the _Java Persistence API_
+persistence unit, as described in the _Jakarta Persistence_
 specification<<a9851>>.
 
 ==== Bean Provider’s Responsibilities
@@ -2692,7 +2692,7 @@ environment to the persistence context reference. (See <<a4717>>
 for information on how persistence
 context references are declared in the deployment descriptor.)
 
-* The EJB specification recommends, but does
+* The Enterprise Beans specification recommends, but does
 not require, that all persistence context references be organized in the
 `java:comp/env/persistence` subcontexts of the bean’s environment.
 
@@ -2933,7 +2933,7 @@ entity manager and for managing the persistence unit, as described in
 
 ==== Container Provider Responsibility
 
-The EJB Container
+The Enterprise Beans Container
 Provider is responsible for the following:
 
 * Provide the
@@ -2942,7 +2942,7 @@ perform the tasks described in the previous subsection.
 
 * Provide the implementation of the entity
 manager classes for the persistence units that are configured with the
-EJB container. This implementation may be provided by the container
+Enterprise Beans container. This implementation may be provided by the container
 directory or by the container in conjunction with a third-party
 persistence provider, as described in <<a9851>>.
 
@@ -2952,7 +2952,7 @@ The System
 Administrator is typically responsible for the following:
 
 * Add, remove, and configure entity manager
-factories in the EJB server environment.
+factories in the Enterprise Beans server environment.
 
 _In some scenarios, these tasks can be
 performed by the Deployer._
@@ -3199,27 +3199,27 @@ concurrent access to the SessionContext object to be thread-safe.
 
 The container
 must follow the requirements for all other resources and configuration
-parameters specified in the Java EE Platform specification<<a9861>>.
+parameters specified in the Jakarta EE Platform specification <<a9861>>.
 
 === Deprecated EJBContext.getEnvironment Method
 
 The environment
-naming context introduced in EJB 1.1 replaced the EJB 1.0 concept of
+naming context introduced in Enterprise Beans 1.1 replaced the Enterprise Beans 1.0 concept of
 environment properties.
 
-An EJB 1.1 or
+An Enterprise Beans 1.1 or
 later compliant container is not required to implement support for the
-EJB 1.0 style environment properties. If the container does not
+Enterprise Beans 1.0 style environment properties. If the container does not
 implement the functionality, it should throw the `RuntimeException` (or
 subclass thereof) from the `EJBContext.getEnvironment` method.
 
-If an EJB 1.1 or later compliant container
-chooses to provide support for the EJB 1.0 style environment properties
-(so that it can support enterprise beans written to the EJB 1.0
+If an Enterprise Beans 1.1 or later compliant container
+chooses to provide support for the Enterprise Beans 1.0 style environment properties
+(so that it can support enterprise beans written to the Enterprise Beans 1.0
 specification), it should implement the support as described below.
 
-When the tools convert the EJB 1.0 deployment
-descriptor to the EJB 1.1 XML format, they should place the definitions
+When the tools convert the Enterprise Beans 1.0 deployment
+descriptor to the Enterprise Beans 1.1 XML format, they should place the definitions
 of the environment properties into the `ejb10-properties` subcontext of
 the environment naming context. The
 `env-entry` elements should be defined as
@@ -3229,9 +3229,9 @@ the name of the environment property, the
 the optional `env-entry-value` contains the
 environment property value.
 
-For example, an EJB 1.0 enterprise bean with
+For example, an Enterprise Beans 1.0 enterprise bean with
 two environment properties foo and bar, should declare the following
-`env-entry` elements in its EJB 1.1 format deployment descriptor.
+`env-entry` elements in its Enterprise Beans 1.1 format deployment descriptor.
 
 [source, xml]
 ----
@@ -3254,7 +3254,7 @@ declared in the `ejb10-properties` subcontext to the instances as a
 `java.util.Properties` object that the instances obtain by invoking the
 `EJBContext.getEnvironment` method.
 
-The enterprise bean uses the EJB 1.0 API to
+The enterprise bean uses the Enterprise Beans 1.0 API to
 access the properties, as shown by the following example.
 
 [source, java]
