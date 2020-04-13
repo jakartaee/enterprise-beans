@@ -830,11 +830,11 @@ service endpoint. There are three legal styles for composing the method
 element:
 
 *Style 1:*
-[source, xml, subs=+quotes]
+[source, xml]
 ----
 <method>
-    <ejb-name>__EJBNAME__</ejb-name>
-    <method-name>__*__</method-name>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>*</method-name>
 </method>
 ----
 This style is used for referring to all of the methods of the business,
@@ -842,11 +842,11 @@ home, and component interfaces, no-interface view, and web service
 endpoint of a specified enterprise bean.
 
 *Style 2:*
-[source, xml, subs=+quotes]
+[source, xml]
 ----
 <method>
-    <ejb-name>__EJBNAME__</ejb-name>
-    <method-name>__METHOD__</method-name>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>METHOD</method-name>
 </method>
 ----
 This style is used for referring to a specified method of the business,
@@ -856,15 +856,15 @@ same overloaded name, this style refers to all of the overloaded
 methods.
 
 *Style 3:*
-[source, xml, subs=+quotes]
+[source, xml]
 ----
 <method>
-    <ejb-name>__EJBNAME__</ejb-name>
-        <method-name>__METHOD__</method-name>
+    <ejb-name>EJBNAME</ejb-name>
+        <method-name>METHOD</method-name>
         <method-params>
-        <method-param>__PARAMETER_1__</method-param>
+        <method-param>PARAMETER_1</method-param>
         ...
-        <method-param>__PARAMETER_N__</method-param>
+        <method-param>PARAMETER_N</method-param>
     </method-params>
 </method>
 ----
