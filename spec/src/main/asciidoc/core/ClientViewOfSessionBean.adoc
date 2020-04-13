@@ -1277,7 +1277,7 @@ items to it:
 [source, java]
 ----
 CartHome cartHome = (CartHome)javax.rmi.PortableRemoteObject.narrow(
-         initialContext.lookup(...), CartHome.class);
+     initialContext.lookup(...), CartHome.class);
 Cart cart = cartHome.createLargeCart(...);
 cart.addItem(66);
 cart.addItem(22);
@@ -1289,7 +1289,7 @@ object and store it in a file:
 
 [source, java]
 ----
-Handle cartHandle = cart.getHandle(); 
+Handle cartHandle = cart.getHandle();
 //serialize cartHandle, store in a file...
 ----
 
