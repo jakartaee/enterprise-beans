@@ -1208,11 +1208,11 @@ There are three legal styles of composing the
 `method` element:
 
 *Style 1:*
-[source, xml, subs=+quotes]
+[source, xml]
 ----
 <method>
-    <ejb-name>__EJBNAME__</ejb-name>
-    <method-name>__*__</method-name>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>*</method-name>
 </method>
 ----
 
@@ -1242,11 +1242,11 @@ bean lifecycle callback methods to specify their transaction attributes
 if used with the `method-intf` element value `LifecycleCallback`.
 
 *Style 2:*
-[source, xml, subs=+quotes]
+[source, xml]
 ----
 <method>
-    <ejb-name>__EJBNAME__</ejb-name>
-    <method-name>__METHOD__</method-name>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>METHOD</method-name>
 </method>
 ----
 
@@ -1279,15 +1279,15 @@ specified enterprise bean are lifecycle callback methods
 contains `LifecycleCallback` as the value
 
 *Style 3:*
-[source, xml, subs=+quotes]
+[source, xml]
 ----
 <method>
-    <ejb-name>__EJBNAME__</ejb-name>
-    <method-name>__METHOD__</method-name>
+    <ejb-name>EJBNAME</ejb-name>
+    <method-name>METHOD</method-name>
     <method-params>
-        <method-param>__PARAMETER_1__</method-param>
+        <method-param>PARAMETER_1</method-param>
         ...
-        <method-param>__PARAMETER_N__</method-param>
+        <method-param>PARAMETER_N</method-param>
     </method-params>
 </method>
 ----
