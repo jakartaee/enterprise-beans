@@ -10,8 +10,6 @@ time, or at specified intervals.
 
 === Overview
 
-
-
 Enterprise applications that model
 workflow-type business processes are dependent on notifications that
 certain temporal events have occurred in order to manage the semantic
@@ -27,7 +25,7 @@ duration, or at specific recurring intervals.
 
 The Timer Service is implemented by the EJB
 container. An enterprise bean accesses this service by means of
-dependency injection, through the _EJBContext_ interface, or through
+dependency injection, through the `EJBContext` interface, or through
 lookup in the JNDI namespace.
 
 The EJB Timer Service is a coarse-grained
@@ -35,19 +33,19 @@ timer notification service that is designed for use in the modeling of
 application-level processes. It is not intended for the modeling of
 real-time events.
 
-While timer durations are expressed in
+****
+_While timer durations are expressed in
 millisecond units, this is because the millisecond is the unit of time
 granularity used by the APIs of the Java SE platform. It is expected
 that most timed events will correspond to hours, days, or longer periods
-of time.
+of time._
+****
 
 The following sections describe the Timer
 Service with respect to the various individual EJB roles.
 
 [[a5465]]
 === Bean Provider’s View of the Timer Service
-
-
 
 The EJB Timer Service is a container-provided
 service that allows enterprise beans to be registered for timer callback
@@ -68,9 +66,9 @@ programmatically-created timers.
 
 For programmatically created timers, the
 timeout callback method must either be a single method that is annotated
-with the _Timeout_ annotation or the bean must implement the
-_javax.ejb.TimedObject_ interface. The _javax.ejb.TimedObject_ interface
-has a single method, the timer callback method _ejbTimeout_ .
+with the `Timeout` annotation or the bean must implement the
+`javax.ejb.TimedObject` interface. The `javax.ejb.TimedObject` interface
+has a single method, the timer callback method `ejbTimeout`.
 
 For automatically created timers, the
 Schedule annotation denotes its the timeout method.
@@ -99,8 +97,8 @@ distributed.
 For each automatically-created persistent
 timer, the container creates a single persistent timer, regardless of
 the number of JVMs across which the container is distributed. For
-automatically-created non-persistent timers, the container creates a new
-non-persistent timer during application initialization for each JVM
+automatically-created non-persistent timers, the container creates a _new_
+non-persistent timer during application initialization for _each_ JVM
 across which the container is distributed.
 
 In the event of a container crash or
@@ -115,8 +113,8 @@ elapses, the container invokes the associated timeout callback method of
 the bean. A timer may be cancelled before its expiration. If a timer is
 cancelled, its associated timeout callback method is not
 called.footnote:a10334[In the event of race conditions, extraneous calls 
-to the timeout callback method may occur.] A timer is cancelled by calling 
-its _cancel_ method.
+to the timeout callback method may occur.] A timer is cancelled by calling its
+`cancel` method.
 
 Invocations of the timeout callback methods
 and the methods of the Timer Service to programmatically create timers
@@ -144,63 +142,45 @@ schedule shares common syntax and defaults.
 There are seven attributes in a
 calendar-based time expression:
 
-second: one or more seconds within a minute
+* *_second_*: one or more seconds within a minute +
+  Allowable values: [0,59]
 
-{empty} Allowable values: [0,59]
+* *_minute_*: one or more minutes within an hour +
+  Allowable values: [0,59]
 
-minute: one or more minutes within an hour
+* *_hour_*: one or more hours within a day +
+  Allowable values: [0,23]
 
-{empty} Allowable values: [0,59]
+* *_dayOfMonth_*: one or more days within a month +
+  Allowable values: +
+** [1,31] or +
+** [-7, -1] or +
+** "Last" or +
+** {"1st", "2nd", "3rd", "4th", "5th", "Last"} +
+** {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
 
-hour: one or more hours within a day
++
+"Last" means the last day of the month +
+ -x (where x is in the range [-7, -1]) means 
+ x day(s) before the last day of the month +
+"1st","2nd", etc. applied to a day of the 
+ week identifies a single occurrence of that day within the month.
 
-{empty} Allowable values: [0,23]
+* *_month_*: one or more months within a year +
+Allowable values: +
+** [1,12] or +
+** {"Jan", "Feb", "Mar", ‘’Apr", "May", "Jun",
+ "Jul", "Aug", "Sep", "Oct", "Nov", Dec"}
 
-dayOfMonth: one or more days within a month
+* *_dayOfWeek_*: one or more days within a week +
+ Allowable values: +
+** [0,7] or +
+** {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
 
- Allowable values:
++
+"0" and "7" both refer to Sunday
 
- [1,31] or
-
- [-7, -1] or
-
- “Last” or
-
- \{“1st”, “2nd”, “3rd”, “4th”, “5th”, “Last”}
-\{“Sun”, “Mon”, “Tue”, “Wed”, “Thu”, “Fri”, “Sat”}
-
- “Last” means the last day of the month
-
- -x (where x is in the range [-7, -1]) means
-x day(s) before the last day of the month
-
- “1st”,”2nd”, etc. applied to a day of the
-week identifies a single occurrence of that day within the month.
-
-month: one or more months within a year
-
- Allowable values:
-
-{empty} [1,12]
-
- or
-
- \{“Jan”, “Feb”, “Mar”, ‘’Apr”, “May”, “Jun”,
-“Jul”, “Aug”, “Sep”, “Oct”, “Nov”, Dec”}
-
-dayOfWeek: one or more days within a week
-
- Allowable values:
-
- [0,7] or
-
- \{“Sun”, “Mon”, “Tue”, “Wed”, “Thu”, “Fri”,
-“Sat”}
-
- “0” and “7” both refer to Sunday
-
-year: a particular calendar year
-
+* *_year_*: a particular calendar year +
  Allowable values: a four-digit calendar year
 
 ===== Attribute Syntax
@@ -213,26 +193,24 @@ one of the following forms:
 Use of a single value constrains the
 attribute to only one of its possible values.
 
- _Examples:_
-
+*Examples:*
+[source, java]
+----
  second = "10"
-
-
-
  month= "Sep"
-
-
+----
 
 ====== Wild Card
 
-The wild card " _*_ " represents all possible
+The wild card `"*"` represents all possible
 values for a given attribute.
 
- _Examples:_
-
- _second = "*"_
-
- _dayOfWeek = "*"_
+*Examples:*
+[source, java]
+----
+ second = "*"
+ dayOfWeek = "*"
+----
 
 ====== List
 
@@ -243,92 +221,86 @@ the list must be an individual attribute value or a range. List items
 cannot themselves be lists, wild-cards, or increments. Duplicate values
 are allowed, but are ignored.
 
- _Examples:_
-
- _second = "10,20,30"_
-
- __
-
- _dayOfWeek = "Mon,Wed,Fri"_
-
-
-
- _minute = "0-10,30,40"_
-
-
+*Examples:*
+[source, java]
+----
+ second = "10,20,30"
+ dayOfWeek = "Mon,Wed,Fri"
+ minute = "0-10,30,40"
+----
 
 ====== Range
 
 A range constrains the attribute to an
-inclusive range of values, with a dash separating both ends of the
+_inclusive_ range of values, with a dash separating both ends of the
 range. Each side of the range must be an individual attribute value.
 Members of a range cannot themselves be lists, wild-cards, ranges, or
-increments. In range "x-y", if _x_ is larger than _y_ , the range is
-equivalent to "x-max, min-y", where max is the largest value of the
-corresponding attribute and min is the smallest. The range "x-x", where
-both range values are the same, is equivalent to the single value x. The
-dayOfWeek range "0-7" is equivalent to " _*_ ".
+increments. In range `"x-y"`, if `x` is larger than `y`, the range is
+equivalent to `"x-max, min-y"`, where max is the largest value of the
+corresponding attribute and min is the smallest. The range `"x-x"`, where
+both range values are the same, is equivalent to the single value `x`. The
+dayOfWeek range `"0-7"` is equivalent to `"*"`.
 
- _Examples:_
-
+Examples:
+[source, java]
+----
  second= "1-10"
-
-
-
  dayOfWeek = "Fri-Mon"
-
-
-
- dayOfMonth = "27-3" (Equivalent to "27-Last,
-1-3")
-
-
+ dayOfMonth = "27-3" (Equivalent to "27-Last, 1-3")
+----
 
 ====== Increments
 
 The forward slash constrains an attribute
 based on a starting point and an interval, and is used to specify every
-N \{ seconds | minutes | hours } within the \{ minute | hour | day }
-respectively. For an expression x/y, the attribute is constrained to
-every yth value within the set of allowable values beginning at time x.
-The x value is inclusive. The wildcard character ( _*_ ) can be used in
-the x position, and is equivalent to 0. Increments are only supported
+N { seconds | minutes | hours } within the { minute | hour | day }
+respectively. For an expression `x/y`, the attribute is constrained to
+every `yth` value within the set of allowable values beginning at time `x`.
+The `x` value is inclusive. The wildcard character (`*`) can be used in
+the `x` position, and is equivalent to `0`. Increments are only supported
 within the second, minute, and hour attributes. For the second and
-minute attributes, x and y must each be in the range [0,59]. For the
-hour attribute, _x_ and y must each be in the range [0,23].
+minute attributes, `x` and `y` must each be in the range `[0,59]`. For the
+hour attribute, `x` and `y` must each be in the range `[0,23]`.
 
- _Example:_ _Every five minutes within the
-hour_
-
+*Example:* Every five minutes within the hour
+[source, java]
+----
  minute = "*/5"
+----
 
 The following is equivalent:
-
+[source, java]
+----
  minute = "0,5,10,15,20,25,30,35,40,45,50,55"
+----
 
- _Example:_ Every 10 seconds within the
-minute, starting at second 30
-
+*Example:* Every 10 seconds within the minute, starting at second 30
+[source, java]
+----
  second = "30/10"
+----
 
 The following is equivalent:
-
+[source, java]
+----
  second = "30,40,50"
+----
 
 Note that the set of matching increment
 values stops once the maximum value for that attribute is exceeded. It
-does not “roll over” past the boundary.
+does not "roll over" past the boundary.
 
- _Example:_ _Every 14 minutes within the
-hour, for the hours of 1 and 2 a.m._
-
+*Example:* Every 14 minutes within the hour, for the hours of 1 and 2 a.m.
+[source, java]
+----
  (minute = "*/14", hour="1,2")
+----
 
 The following is equivalent:
-
+[source, java]
+----
  ( minute = "0,14,28,42,56", hour = "1,2")
-
-
+----
 
 ====== Time Zone Support
 
@@ -348,128 +320,107 @@ use the empty string "" as a default, so the expression
 corresponding ScheduleExpression.getTimezone() method.] 
 The set of required time zone IDs is
 defined by the Zone Name(TZ) column of the public domain zoneinfo
-database link:Ejb.html#a9885[See List of zoneinfo time zones:
-http://en.wikipedia.org/wiki/List_of_tz_zones.].
+database <<a9885>>.
 
 ===== Expression Rules
 
-The second, minute, and hour attributes have
-a default value of " _0_ ".
+The `second`, `minute`, and `hour` attributes have
+a default value of `"0"`.
 
-The dayOfMonth, month, dayOfWeek, and year
-attributes have a default value of " _*_ ".
+The `dayOfMonth`, `month`, `dayOfWeek`, and `year`
+attributes have a default value of `"*"`.
 
-If the dayOfMonth attribute has a
-non-wildcard value and the dayOfWeek attribute has a non-wildcard value,
-then the timer expires when the current day matches either the
-dayOfMonth attribute or the dayOfWeek attribute (i.e. the current day
+If the `dayOfMonth` attribute has a
+non-wildcard value and the `dayOfWeek` attribute has a non-wildcard value,
+then the timer expires when the current day matches _either_ the
+`dayOfMonth` attribute _or_ the `dayOfWeek` attribute (i.e. the current day
 does not need to match of both attributes).
 
 Whitespace is ignored, except for string
 constants and numeric values.
 
 All string constants (" _Sun_ ", " _Jan_ ", "
-_1st_ ", etc.) are case insensitive.
+_1st_ ", etc.) are case _insensitive_.
 
-“5th” is the highest ordinal number allowed
-as the value for the dayOfMonth
+"5th" is the highest ordinal number allowed
+as the value for the `dayOfMonth`
 
 Duplicate values within attributes using the
 list syntax are ignored.
 
 The increments syntax is only supported
-within the second, minute, and hour attributes.
+within the `second`, `minute`, and `hour` attributes.
 
 ===== Examples
 
 These examples illustrate the use of
-attribute syntax in conjunction with the _Schedule_ annotation.
+attribute syntax in conjunction with the `Schedule` annotation.
 
-====== “Every Monday at Midnight”
-
-
-
+====== "Every Monday at Midnight"
+[source, java]
+----
  @Schedule(dayOfWeek="Mon")
-
+----
 The following fully-qualified expression is
 equivalent:
+[source, java]
+----
+ @Schedule(second="0", minute="0", hour="0", dayOfMonth="*", 
+ month="*", dayOfWeek="Mon", year="*")
+----
 
- @Schedule(second="0", minute="0", hour="0",
-dayOfMonth="*", month="*", dayOfWeek="Mon", year="*")
+====== "Every Weekday morning at 3:15"
+[source, java]
+----
+ @Schedule(minute="15", hour="3", dayOfWeek="Mon-Fri")
+----
 
+====== "Every morning at 3:15 U.S. Eastern Time"
+[source, java]
+----
+ @Schedule(minute="15", hour="3", timezone="America/New_York")
+----
 
-
-====== “Every Weekday morning at 3:15”
-
-
-
- @Schedule(minute="15", hour="3",
-dayOfWeek="Mon-Fri")
-
-
-
-====== “Every morning at 3:15 U.S. Eastern Time”
-
-
-
- @Schedule(minute="15", hour="3",
-timezone="America/New_York")
-
-
-
-====== “Every minute of every hour of every day”
-
-
-
+====== "Every minute of every hour of every day"
+[source, java]
+----
  @Schedule(minute="*", hour="*")
+----
 
+====== "Every Monday, Wednesday, and Friday at 30 seconds past noon"
+[source, java]
+----
+ @Schedule(second="30", hour="12", dayOfWeek="Mon,Wed,Fri")
+----
 
-
-====== “Every Monday, Wednesday, and Friday at 30 seconds past noon”
-
-
-
- @Schedule(second="30", hour="12",
-dayOfWeek="Mon,Wed,Fri"
-
-
-
-====== “Every five minutes within the hour”
-
-
-
+====== "Every five minutes within the hour"
+[source, java]
+----
  @Schedule(minute="*/5", hour="*")
-
+----
 The following expression is equivalent:
-
-
+[source, java]
+----
 @Schedule(minute="0,5,10,15,20,25,30,35,40,45,50,55", hour="*")
+----
 
+====== "The last Thursday in November at 2 p.m."
+[source, java]
+----
+ @Schedule(hour="14", dayOfMonth="Last Thu", month="Nov")
+----
 
-
-====== “The last Thursday in November at 2 p.m.”
-
-
-
- @Schedule(hour="14", dayOfMonth="Last Thu",
-month="Nov"}
-
-
-
-====== “The second to last day (one day before the last day) of each month at 1 a.m.”
-
-
-
+====== "The second to last day (one day before the last day) of each month at 1 a.m."
+[source, java]
+----
  @Schedule(hour="1", dayOfMonth="-1")
+----
 
-
-
-====== “Every other hour within the day starting at noon on the 2nd Tuesday of every month.”
-
- __
-
- _@Schedule(hour=_ " _12/2_ " _, dayOfMonth=_
-" _2nd Tue_ ")
+====== "Every other hour within the day starting at noon on the 2nd Tuesday of every month."
+[source, java]
+----
+ @Schedule(hour= "12/2", dayOfMonth="2nd Tue")
+----
 
 ==== Automatic Timer Creation
 
@@ -478,69 +429,53 @@ creation of timers based on annotations to methods of the bean class or
 the deployment descriptor. Automatically created timers are created by
 the container as a result of application deployment.
 
-The Schedule annotation can be used to
+The `Schedule` annotation can be used to
 automatically create a timer with a particular timeout schedule. This
 annotation is applied to a method of a bean class (or superclass) that
 should receive the timer callbacks associated with that schedule.
 
- _Example:_
-
-// Generate account statements at 1 a.m. on
-the 1st of every month
-
+*Example:*
+[source, java]
+----
+// Generate account statements at 1 a.m. on the 1st of every month
 @Schedule(hour="1", dayOfMonth="1")
-
-public void
-generateMonthlyAccountStatements() \{ ... }
-
-
+public void generateMonthlyAccountStatements() { ... }
+----
 
 Multiple automatic timers can be applied to a
-single timeout callback method using the Schedules annotation.
+single timeout callback method using the `Schedules` annotation.
 
- _Example:_
-
+*Example:*
+[source, java]
+----
 @Schedules(
-
-\{ @Schedule(hour="12", dayOfWeek="Mon-Thu"),
-
- @Schedule(hour="11", dayOfWeek="Fri")
-
+ { @Schedule(hour="12", dayOfWeek="Mon-Thu"),
+   @Schedule(hour="11", dayOfWeek="Fri")
 })
+public void sendLunchNotification() { ... }
+----
 
-public void sendLunchNotification() \{ ... }
-
-
-
-{empty}A Schedule annotation can optionally
+A `Schedule` annotation can optionally
 specify an info string. This string can be retrieved by calling
-Timer.getInfo() on the associated Timer object. If no info string is
-specified, the getInfo() method for a timer created by means of the
-Schedule annotation returns null.footnote:a10336[Note that the default 
+`Timer.getInfo()` on the associated Timer object. If no `info` string is
+specified, the `getInfo()` method for a timer created by means of the
+Schedule annotation returns `null`.footnote:a10336[Note that the default 
 value of the `info` element of the `Schedule` annotation is the empty 
 string "". The expression `@Schedule(info="", ...)` will also result 
 in a null value from the timer’s `getInfo()` method.]
 
- _Example:_
-
-// Generate account statements at 1 a.m. on
-the 1st of every month
-
-@Schedule(hour="1", dayOfMonth="1",
-info="AccountStatementTimer")
-
-public void
-generateMonthlyAccountStatements(Timer t) \{
-
+*Example:*
+[source, java]
+----
+// Generate account statements at 1 a.m. on the 1st of every month
+@Schedule(hour="1", dayOfMonth="1", info="AccountStatementTimer")
+public void generateMonthlyAccountStatements(Timer t) {
  String timerInfo = t.getInfo();
-
  ...
-
 }
+----
 
-
-
-By default, each Schedule annotation
+By default, each `Schedule` annotation
 corresponds to a single persistent timer, regardless of the number of
 JVMs across which the container is distributed.
 
@@ -553,149 +488,73 @@ container crash, or a failure/shutdown of the JVM on which the timer was
 started.
 
 Non-persistent timers can be created
-programmatically or created automatically using the Schedule annotation
+programmatically or created automatically using the `Schedule` annotation
 or the deployment descriptor.
 
 Automatically-created non-persistent timers
-can be specified by setting the persistent element of the Schedule
-annotation to false.
+can be specified by setting the persistent element of the `Schedule`
+annotation to `false`.
 
- _Example:_
-
+*Example:*
+[source, java]
+----
 @Singleton
-
-public class CacheBean \{
-
-
-
- Cache cache;
-
-
-
- // Setup an automatic timer to refresh
-
- // the Singleton instance cache every 10
-minutes
-
- @Schedule(minute="*/10", hour="*",
-persistent=false)
-
- public void refresh() \{
-
- // ...
-
- }
-
-
-
+public class CacheBean {
+    Cache cache;
+    
+    // Setup an automatic timer to refresh
+    // the Singleton instance cache every 10 minutes
+    @Schedule(minute="*/10", hour="*", persistent=false)
+    public void refresh() {
+    // ...
+    }
 }
+----
 
 ==== The TimerService Interface
 
-The _TimerService_ object is accessed via
-dependency injection, through the _getTimerService_ method of the
-_EJBContext_ interface, or through lookup in the JNDI namespace. The
-_TimerService_ interface has the following methods:
+The `TimerService` object is accessed via
+dependency injection, through the `getTimerService` method of the
+`EJBContext` interface, or through lookup in the JNDI namespace. The
+`TimerService` interface has the following methods:
 
-public interface javax.ejb.TimerService \{
+[source, java]
+----
+public interface javax.ejb.TimerService {
 
+ public Timer createTimer(long duration, java.io.Serializable info);
 
+ public Timer createTimer(java.util.Date expiration, 
+     java.io.Serializable info);
 
- public Timer createTimer(long duration,
+ public Timer createSingleActionTimer(long duration,
+     TimerConfig timerConfig);
 
- java.io.Serializable info);
+ public Timer createSingleActionTimer(java.util.Date expiration,
+     TimerConfig timerConfig);
 
+ public Timer createTimer(long initialDuration, long intervalDuration,
+     java.io.Serializable info);
 
+ public Timer createTimer(java.util.Date initialExpiration,
+     long intervalDuration, java.io.Serializable info);
 
- public Timer createTimer(java.util.Date
-expiration,
+ public Timer createIntervalTimer(long initialDuration, 
+     long intervalDuration, TimerConfig timerConfig);
 
- java.io.Serializable info);
+ public Timer createIntervalTimer(java.util.Date initialExpiration,
+     long intervalDuration, TimerConfig timerConfig);
 
+ public Timer createCalendarTimer(ScheduleExpression schedule);
 
-
-
-
- public Timer createSingleActionTimer(long
-duration,
-
- TimerConfig timerConfig);
-
-
-
- public Timer
-createSingleActionTimer(java.util.Date expiration,
-
- TimerConfig timerConfig);
-
-
-
-
-
- public Timer createTimer(long
-initialDuration,
-
- long intervalDuration, java.io.Serializable
-info);
-
-
-
- public Timer createTimer(java.util.Date
-initialExpiration,
-
- long intervalDuration, java.io.Serializable
-info);
-
-
-
-
-
- public Timer createIntervalTimer(long
-initialDuration,
-
- long intervalDuration, TimerConfig
-timerConfig);
-
-
-
- public Timer createIntervalTimer(
-
- java.util.Date initialExpiration,
-
- long intervalDuration, TimerConfig
-timerConfig);
-
-
-
-
-
-
-
- public Timer
-createCalendarTimer(ScheduleExpression schedule);
-
-
-
- public Timer
-createCalendarTimer(ScheduleExpression schedule,
-
- TimerConfig timerConfig);
-
-
-
-
+ public Timer createCalendarTimer(ScheduleExpression schedule,
+     TimerConfig timerConfig);
 
  public Collection<Timer> getTimers();
 
-
-
  public Collection<Timer> getAllTimers();
-
-
-
- }
-
-
+}
+----
 
 The timer creation methods allow a timer to
 be programmatically created as a single-event timer, as an interval
@@ -709,15 +568,14 @@ Timer Service begins counting down the timer duration upon timer
 creation.
 
 For calendar-based timers, the schedule is
-expressed by a ScheduleExpression helper object passed as a parameter to
-a createCalendarTimer method. The ScheduleExpression object represents a
+expressed by a `ScheduleExpression` helper object passed as a parameter to
+a `createCalendarTimer` method. The `ScheduleExpression` object represents a
 calendar based timer expression conforming to the requirements in
-section link:Ejb.html#a5478[See Calendar-Based Time
-Expressions]. The ScheduleExpression class has additional methods that
+<<a5478>>. The `ScheduleExpression` class has additional methods that
 further constrain the schedule based on an optional start date and/or
 end date.
 
-{empty}The bean may pass some client-specific
+The bean may pass some client-specific
 information at timer creation to help it recognize the significance of a
 timer’s expiration. This information is stored by the Timer Service and
 available through the timer. The information object must be
@@ -727,22 +585,22 @@ in a future release of this specification.]
 
 By default, all timers created using the
 timer creation methods are persistent. A non-persistent timer can be
-created by calling setPersistent(false) on a TimerConfig object passed
-to a timer creation method. The TimerConfig object also supports the
+created by calling `setPersistent(false)` on a `TimerConfig` object passed
+to a timer creation method. The `TimerConfig` object also supports the
 setting of an info object.
 
-The timer creation methods return a _Timer_
+The timer creation methods return a `Timer`
 object that allows the timer to be cancelled or to obtain information
 about the timer prior to its cancellation and/or expiration.
 
-The _getTimers_ method returns active timers
+The `getTimers` method returns active timers
 associated with the bean. These include all active persistent timers
 regardless of the number of JVMs across which the container is
 distributed, and active non-persistent timers created in the same JVM as
 the executing method. Timers returned by this method include both the
 programmatically-created timers and the automatically-created timers.
 
-The _getAllTimers_ method returns active
+The `getAllTimers` method returns active
 timers associated with the beans in the same module in which the caller
 bean is packaged. These include all active persistent timers regardless
 of the number of JVMs across which the container is distributed, and
@@ -754,14 +612,12 @@ programmatically-created timers and the automatically-created timers.
 
 This code programmatically creates a timer
 that expires every Saturday at 1 a.m.
-
-ScheduleExpression schedule =
-
- new
-ScheduleExpression().dayOfWeek("Sat").hour(1);
-
-Timer timer =
-timerService.createCalendarTimer(schedule);
+[source, java]
+----
+ScheduleExpression schedule = 
+     new ScheduleExpression().dayOfWeek("Sat").hour(1);
+Timer timer = timerService.createCalendarTimer(schedule);
+----
 
 ==== Timeout Callback Methods
 
@@ -772,60 +628,60 @@ one or more timeout callback methods.
 There are two kinds of timeout callback
 methods:
 
-timeout callback methods for timers that are
-programmatically created via a _TimerService_ timer creation method
+* timeout callback methods for timers that are
+programmatically created via a `TimerService` timer creation method
 
-timeout callback methods for timers that are
-automatically created via the Schedule annotation or the deployment
+* timeout callback methods for timers that are
+automatically created via the `Schedule` annotation or the deployment
 descriptor
 
 ===== Timeout Callbacks for Programmatic Timers
 
-{empty}All timers created via one of the
-_TimerService_ timer creation methods for a particular bean must use a
+All timers created via one of the
+`TimerService` timer creation methods for a particular bean must use a
 single timeout callback method. This method must either be a single
-method annotated with the _Timeout_ annotation (or a method specified as
+method annotated with the `Timeout` annotation (or a method specified as
 a timeout method in the deployment descriptor) or the bean must
-implement the _javax.ejb.TimedObject_ interface. The _TimedObject_
-interface has a single method, _ejbTimeout_ . If the bean implements the
-_TimedObject_ interface, the _Timeout_ annotation or _timeout-method_
+implement the `javax.ejb.TimedObject` interface. The `TimedObject`
+interface has a single method, `ejbTimeout`. If the bean implements the
+`TimedObject` interface, the `Timeout` annotation or `timeout-method`
 deployment descriptor element can only be used to specify the
-_ejbTimeout_ method. A bean can have at most one timeout method for
+`ejbTimeout` method. A bean can have at most one timeout method for
 handling programmatic timers.footnote:a10338[This method may be specified 
 on the bean class or on a superclass. If the `Timeout` annotation is used 
 or the bean implements the `TimedObject` interface, the `timeout-method` 
 deployment descriptor element, if specified, can only be used to refer to 
 the same method.]
 
-public interface javax.ejb.TimedObject \{
-
- public void ejbTimeout(Timer timer);
-
+[source, java]
+----
+public interface javax.ejb.TimedObject {
+    public void ejbTimeout(Timer timer);
 }
-
-
+----
 
 ===== Timeout Callbacks for Automatically Created Timers
 
 Each automatically-created timer is
 associated with a single timeout callback method. Each timeout method is
-declared using either the Schedule annotation or the deployment
+declared using either the `Schedule` annotation or the deployment
 descriptor. A timed object can have any number of automatically created
 timers. The timeout callback method for the programmatically-created
 timers can also be associated with the automatically-created timers.
 
 ===== Timeout Callback Method Requirements
 
-
-
 A timeout callback method must have one of
 the two signatures below, where <METHOD> designates the method
 name.footnote:a10339[If the bean implements the `TimedObject` interface, the 
 `Timeout` annotation may optionally be applied to the `ejbTimeout` method.]
 
+[source, java]
+----
 void <METHOD>()
 
 void <METHOD>(Timer timer) // <1>
+----
 
 // footnote:a10340[] - change footnote to callout
 <1> An earlier version of the specification required that 
@@ -841,7 +697,7 @@ timeout method.
 
 A timeout callback method can have public,
 private, protected, or package level access. A timeout callback method
-must not be declared as _final_ or _static_ .
+must not be declared as `final` or `static`.
 
 Timeout callback methods must not throw
 application exceptions.
@@ -852,12 +708,13 @@ passed), the container calls the associated timeout method of the bean
 that was registered for the timer. The timeout method contains the
 business logic that the Bean Provider supplies to handle the timeout
 event. The container calls the timeout method with the timer that has
-expired. The Bean Provider can use the _getInfo_ method to retrieve the
+expired. The Bean Provider can use the `getInfo` method to retrieve the
 information that was supplied when the timer was created. This
 information may be useful in enabling the timed object to recognize the
 significance of the timer expiration.
 
-The container interleaves calls to a timeout
+****
+_The container interleaves calls to a timeout
 callback method with the calls to the business methods and the life
 cycle callback methods of the bean. The time at which a timeout callback
 method is called may therefore not correspond exactly to the time
@@ -865,28 +722,31 @@ specified at timer creation. If multiple timers have been created for a
 bean and will expire at approximately the same times, the Bean Provider
 must be prepared to handle timeout callbacks that are out of sequence.
 The Bean Provider must be prepared to handle extraneous calls to a
-_timeout_ _callback_ method in the event that a timer expiration is
-outstanding when a call to the cancellation method has been made.
+timeout callback method in the event that a timer expiration is
+outstanding when a call to the cancellation method has been made._
+****
 
-In general, _a_ timeout callback method can
+In general, a timeout callback method can
 perform the same operations as business methods from the component
-interface or message listener methods. See Tables
-link:Ejb.html#a1091[See Operations Allowed in the Methods of a
-Stateless Session Bean], link:Ejb.html#a1886[See Operations
-Allowed in the Methods of a Message-Driven Bean],
-link:../Optional/Chapters.html#UNKNOWN[], and
-link:../Optional/Chapters.html#UNKNOWN[] for the specification of the
+interface or message listener methods. See <<a1091>>, <<a1886>>,
+<<./enterprise-beans-spec-opt-{revnumber}.adoc#a1367, 
+Operations Allowed in the Methods of Entity Class in 
+Container-Managed Persistence>>, and
+<<./enterprise-beans-spec-opt-{revnumber}.adoc#a2625, 
+Operations Allowed in the Methods of Entity Class in 
+Bean-Managed Persistence>> 
+for the specification of the
 operations that may be performed by a timeout callback method.
 
 Since a timeout callback method is an
 internal method of the bean class, it has no client security context.
-When _getCallerPrincipal_ is called from within a timeout callback
+When `getCallerPrincipal` is called from within a timeout callback
 method, it returns the container’s representation of the unauthenticated
 identity.
 
 If the timed object needs to make use of the
 identity of the timer to recognize the significance of the timer
-expiration, it may use the _equals_ method to compare it with any other
+expiration, it may use the `equals` method to compare it with any other
 timer references it might have outstanding.
 
 If the timer is a single-action timer, the
@@ -894,7 +754,7 @@ container removes the timer after the timeout callback method has been
 successfully invoked (e.g., when the transaction that has been started
 for the invocation of the timeout callback method commits). If any
 method is invoked on the timer after the termination of the timeout
-callback method, a _NoSuchObjectLocalException_ must be thrown.
+callback method, a `NoSuchObjectLocalException` must be thrown.
 
 If the timer is a calendar-based timer, the
 container removes the timer after the timeout callback method has been
@@ -902,85 +762,54 @@ successfully invoked (e.g., when the transaction that has been started
 for the invocation of the timeout callback method commits) and there are
 no future timeouts corresponding to the timer’s schedule expression. If
 any method is invoked on the timer after it has been removed, the
-_NoSuchObjectLocalException_ must be thrown. If the bean invokes the
-getNextTimeout or getTimeRemaining method on the timer associated with a
-timeout callback while within the timeout callback, and there are no
+`NoSuchObjectLocalException` must be thrown. If the bean invokes the
+`getNextTimeout` or `getTimeRemaining` method on the timer associated with a
+timeout callback while _within_ the timeout callback, and there are no
 future timeouts for this calendar-based timer, the
-NoMoreTimeoutsException must be thrown.
+`NoMoreTimeoutsException` must be thrown.
 
 ==== The Timer and TimerHandle Interfaces
 
-The _javax.ejb.Timer_ interface allows the
+The `javax.ejb.Timer` interface allows the
 caller to cancel a timer and to obtain information about the timer.
 
-The _javax.ejb.TimerHandle_ interface allows
+The `javax.ejb.TimerHandle` interface allows
 the caller to obtain a serializable timer handle that may be persisted.
 Timer handles are only available for persistent timers. Since timers are
 local objects, a TimerHandle must not be passed through a bean’s remote
 business interface, remote interface or web service interface.
 
-The methods of these interfaces are as
-follows:
+The methods of these interfaces are as follows:
+[source, java]
+----
+public interface javax.ejb.Timer {
+    public void cancel();
 
- _public interface javax.ejb.Timer \{_
+    public long getTimeRemaining();
 
+    public java.util.Date getNextTimeout();
 
+    public javax.ejb.ScheduleExpression getSchedule();
 
- _public void cancel();_
+    public javax.ejb.TimerHandle getHandle();
 
+    public java.io.Serializable getInfo();
 
+    public boolean isPersistent();
 
- _public long getTimeRemaining();_
-
-
-
- public java.util.Date getNextTimeout();
-
-
-
- public javax.ejb.ScheduleExpression
-getSchedule();
-
-
-
- _public javax.ejb.TimerHandle getHandle();_
-
-
-
- public java.io.Serializable getInfo();
-
-
-
- public boolean isPersistent();
-
-
-
- public boolean isCalendarTimer();
-
- _}_
-
-
-
-
-
-public interface javax.ejb.TimerHandle
-extends java.io.Serializable \{
-
-
-
- public javax.ejb.Timer getTimer();
-
-
-
+    public boolean isCalendarTimer();
 }
 
-
+public interface javax.ejb.TimerHandle extends java.io.Serializable {
+    public javax.ejb.Timer getTimer();
+}
+----
 
 ==== Timer Identity
 
 Timer instances must be compared using
-Timer.equals(Object obj) method. The _==_ operator should not be used
-for “object equality” of the timers.
+`Timer.equals(Object obj)` method. The `==` operator should not be used
+for "object equality" of the timers.
 
 ==== Transactions
 
@@ -994,13 +823,13 @@ the timer cancellation.
 
 A timeout callback method on a bean with
 container-managed transactions must have transaction attribute
-_REQUIRED_ or _REQUIRES_NEW_ (or _Required_ or _RequiresNew_ if the
+`REQUIRED` or `REQUIRES_NEW` (or `Required` or `RequiresNew` if the
 deployment descriptor is used to specify the transaction attribute). If
 the container-managed transaction is rolled back, the container retries
 the timeout.
 
 Note that the container must start a new
-transaction if the _REQUIRED_ _(_ _Required_ _)_ transaction attribute
+transaction if the `REQUIRED` (`Required`) transaction attribute
 value is used. This transaction attribute value is allowed so that
 specification of a transaction attribute for the timeout callback method
 can be defaulted.
@@ -1010,10 +839,7 @@ section apply to both persistent and non-persistent timers.
 
 === Bean Provider’s Responsibilities
 
-
-
-This section defines the Bean Provider’s
-responsibilities.
+This section defines the Bean Provider’s responsibilities.
 
 ==== Enterprise Bean Class
 
@@ -1025,19 +851,17 @@ the bean class, or in any of its superclasses.
 
 ==== TimerHandle
 
-Since the _TimerHandle_ interface extends
-_java.io.Serializable_ , a client may serialize the handle. The
+Since the `TimerHandle` interface extends
+`java.io.Serializable`, a client may serialize the handle. The
 serialized handle may be used later to obtain a reference to the timer
-identified by the handle. A TimerHandle is intended to be storable in
+identified by the handle. A `TimerHandle` is intended to be storable in
 persistent storage.
 
-A TimerHandle must not be passed as an
+A `TimerHandle` must not be passed as an
 argument or result of an enterprise bean’s remote business interface,
 remote interface, or web service method.
 
 === Container’s Responsibilities
-
-
 
 This section describes the responsibilities
 of the Container Provider to support the EJB Timer Service.
@@ -1045,7 +869,7 @@ of the Container Provider to support the EJB Timer Service.
 ==== TimerService, Timer, and TimerHandle Interfaces
 
 The container must provide the implementation
-of the _TimerService_ , _Timer_ , and _TimerHandle_ interfaces.
+of the `TimerService`, `Timer`, and `TimerHandle` interfaces.
 
 Timer instances must not be serializable.
 
@@ -1053,13 +877,13 @@ The container must implement a timer handle
 to be usable over the lifetime of the timer.
 
 The container must provide suitable
-implementations of the _Timer_ _equals(Object_ _obj)_ and _hashCode()_
+implementations of the `Timer.equals(Object obj)` and `hashCode()`
 methods.
 
 ==== Automatic Timers
 
 The container must create a timer for each
-automatic timer specified by means of the Schedule annotation or the
+automatic timer specified by means of the `Schedule` annotation or the
 deployment descriptor.
 
 ==== Timer Expiration and Timeout Callback Method
@@ -1070,24 +894,24 @@ the timer creation method has passed. The container must also call a
 timeout callback method if a time matching the timer’s schedule
 expression has been reached. The Timer Service must begin to count down
 the timer duration upon timer creation. The container must call a
-timeout callback method with the expired _Timer_ object, unless the
+timeout callback method with the expired `Timer` object, unless the
 method is a no-arg timeout callback method.
 
 If container-managed transaction demarcation
-is used and the _REQUIRED_ or _REQUIRES_NEW_ transaction attribute is
-specified or defaulted ( _Required_ or _RequiresNew_ if the deployment
+is used and the `REQUIRED` or `REQUIRES_NEW` transaction attribute is
+specified or defaulted (`Required` or `RequiresNew` if the deployment
 descriptor is used), the container must begin a new transaction prior to
 invoking the timeout callback method. If the transaction fails or is
 rolled back, the container must retry the timeout at least once.
 
 If the timer is a single-event timer, the
-container must cause the timer to no longer exist. If a javax.ejb.Timer
+container must cause the timer to no longer exist. If a `javax.ejb.Timer`
 interface method is subsequently invoked on the timer after the
 completion of the timeout callback method, the container must throw the
-_javax.ejb.NoSuchObjectLocalException_ .
+`javax.ejb.NoSuchObjectLocalException`.
 
 If the Bean Provider invokes the
-_setRollbackOnly_ method from within the timeout callback method, the
+`setRollbackOnly` method from within the timeout callback method, the
 container must rollback the transaction in which the timeout callback
 method is invoked. This has the effect of rescinding the timer
 expiration. The container must retry the timeout after the transaction
@@ -1105,15 +929,15 @@ once upon restart.
 
 ==== Timer Cancellation
 
-When a timer’s _cancel_ method has been
+When a timer’s `cancel` method has been
 called, the container must cause the timer to no longer exist. If a
-javax.ejb.Timer method is subsequently invoked on the timer, the
-container must throw the _javax.ejb.NoSuchObjectLocalException_ .
+`javax.ejb.Timer` method is subsequently invoked on the timer, the
+container must throw the `javax.ejb.NoSuchObjectLocalException`.
 
-When the cancel method of an automatically
+When the `cancel` method of an automatically
 created non-persistent timer has been called, the container only causes
 the timer in the currently running JVM to no longer exist. The container
-does not nullify the rule that creates a new non-persistent timer upon
+does _not_ nullify the rule that creates a new non-persistent timer upon
 application startup.
 
 If the transaction in which the timer
