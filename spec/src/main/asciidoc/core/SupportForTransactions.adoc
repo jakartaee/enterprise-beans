@@ -36,7 +36,7 @@ called _container-managed transaction demarcation_).
 
 With bean-managed
 transaction demarcation, the enterprise bean code demarcates
-transactions using the `javax.transaction.UserTransaction` interface. All
+transactions using the `jakarta.transaction.UserTransaction` interface. All
 resource manager accesses between the `UserTransaction.begin` and
 `UserTransaction.commit` calls are part of a transaction.
 
@@ -221,9 +221,9 @@ exists) to ensure the atomicity of the database updates._
 ==== Client-Managed Demarcation
 
 A Java client can use the
-`javax.transaction.UserTransaction` interface
+`jakarta.transaction.UserTransaction` interface
 to explicitly demarcate transaction boundaries. The client program
-obtains the `javax.transaction.UserTransaction` interface through
+obtains the `jakarta.transaction.UserTransaction` interface through
 dependency injection or lookup in the bean’s EJBContext or in the JNDI
 name space.
 
@@ -465,7 +465,7 @@ connections.
 @TransactionManagement(BEAN)
 public class MySessionBean implements MySession {
     @Resource 
-    javax.transaction.UserTransaction ut;
+    jakarta.transaction.UserTransaction ut;
    
     @Resource 
     javax.sql.DataSource database1;
@@ -528,7 +528,7 @@ connection and a Jakarta Messaging connection.
 public class MySessionBean implements MySession {
 
     @Resource 
-    javax.Transaction.UserTransaction ut;
+    jakarta.transaction.UserTransaction ut;
     
     @Resource 
     javax.sql.DataSource database1;
@@ -601,7 +601,7 @@ the instance variables for the connection to null.]
 @TransactionManagement(BEAN)
 public class MySessionBean implements MySession {
     @Resource 
-    javax.Transaction.UserTransaction ut;
+    jakarta.transaction.UserTransaction ut;
     
     @Resource 
     javax.sql.DataSource database1;
@@ -677,7 +677,7 @@ and committed in `method3`.
 @TransactionManagement(BEAN)
 public class MySessionBean implements MySession {
     @Resource 
-    javax.Transaction.UserTransaction ut;
+    jakarta.transaction.UserTransaction ut;
    
     @Resource 
     javax.sql.DataSource database1;
@@ -726,11 +726,11 @@ following reasons:
 
 * An enterprise bean with bean-managed
 transaction demarcation can obtain the status of a transaction by using
-the `getStatus` method of the `javax.transaction.UserTransaction` interface.
+the `getStatus` method of the `jakarta.transaction.UserTransaction` interface.
 
 * An enterprise bean with bean-managed
 transaction demarcation can rollback a transaction using the `rollback`
-method of the `javax.transaction.UserTransaction` interface.
+method of the `jakarta.transaction.UserTransaction` interface.
 
 ==== Enterprise Beans Using Container-Managed Transaction Demarcation
 
@@ -752,7 +752,7 @@ The enterprise bean’s business methods,
 message listener methods, business method
 interceptor methods, lifecycle callback interceptor methods, or timeout
 callback methods must not attempt to obtain or use the
-`javax.transaction.UserTransaction` interface.
+`jakarta.transaction.UserTransaction` interface.
 
 The following code segments illustrate
 a business method in an enterprise bean with container-managed
@@ -1426,13 +1426,13 @@ methods associated with the bean instances, these actions are taken
 before the interceptor methods are invoked.
 
 The container must make the
-`javax.transaction.UserTransaction` interface available to the enterprise
+`jakarta.transaction.UserTransaction` interface available to the enterprise
 bean’s business method, message listener method, interceptor method, or
 timeout callback method via dependency injection into the enterprise
 bean class or interceptor class, through lookup via the
 `jakarta.ejb.EJBContext` interface, and in the JNDI naming context under
 `java:comp/UserTransaction`. When an instance uses the
-`javax.transaction.UserTransaction` interface to demarcate a transaction,
+`jakarta.transaction.UserTransaction` interface to demarcate a transaction,
 the container must enlist all the resource managers used by the instance
 between the `begin` and `commit`—or `rollback`—methods with the
 transaction.footnote:a10271[However, use of Jakarta Persistence 
@@ -1574,9 +1574,9 @@ instance to serially perform several transactions in a method.
 
 When an instance attempts to start a
 transaction using the `begin` method of the
-`javax.transaction.UserTransaction` interface while the instance has not
+`jakarta.transaction.UserTransaction` interface while the instance has not
 committed the previous transaction, the container must throw the
-`javax.transaction.NotSupportedException` in the `begin` method.
+`jakarta.transaction.NotSupportedException` in the `begin` method.
 
 The container must throw the
 `java.lang.IllegalStateException` if an instance of a bean with
@@ -1737,10 +1737,10 @@ context, the container performs the same steps as described in the
 context, the container throws the
 `jakarta.ejb.EJBTransactionRequiredException`.footnote:a10275[If the business 
 interface is a remote business interface that extends `java.rmi.Remote`, 
-the `javax.transaction.TransactionRequiredException` is thrown to the 
+the `jakarta.transaction.TransactionRequiredException` is thrown to the 
 client instead.] If
 the Enterprise Beans 2.1 client view is used, the container throws the
-`javax.transaction.TransactionRequiredException` exception if the client
+`jakarta.transaction.TransactionRequiredException` exception if the client
 is a remote client, and the
 `jakarta.ejb.TransactionRequiredLocalException` if the client is a local
 client.

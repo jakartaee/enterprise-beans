@@ -417,7 +417,7 @@ container callbacks on the instance. Discarding does not apply if the
 bean is a singleton session bean. +
 [[a10290, Note D]]  [D] If the business
 interface is a remote business interface that extends `java.rmi.Remote`,
-the `javax.transaction.TransactionRolledbackException` is thrown to the
+the `jakarta.transaction.TransactionRolledbackException` is thrown to the
 client, which will receive this exception. +
 [[a10291, Note E]]  [E] If the business
 interface is a remote business interface that extends `java.rmi.Remote`,
@@ -528,11 +528,11 @@ Mark the transaction for rollback.
 
 Discard instance <<a10298>>.
 
-Throw `javax.transaction.TransactionRolledbackException` to remote client;
+Throw `jakarta.transaction.TransactionRolledbackException` to remote client;
 throw `jakarta.ejb.TransactionRolledbackLocalException` to local client.
 | 
 Receives
-`javax.transaction.TransactionRolledbackException` or
+`jakarta.transaction.TransactionRolledbackException` or
 `jakarta.ejb.TransactionRolledbackLocalException`
 
 Continuing transaction is fruitless.
@@ -907,11 +907,11 @@ local client. If the instance executed in the client’s transaction, the
 container should throw the
 `jakarta.ejb.EJBTransactionRolledbackException`.footnote:a10309[If the 
 business interface is a remote business interface that extends 
-`java.rmi.Remote`, the `javax.transaction.TransactionRolledbackException` 
+`java.rmi.Remote`, the `jakarta.transaction.TransactionRolledbackException` 
 is thrown to the client instead.]
 If the Enterprise Beans 2.1 client view or web service client view is used, the
 container should throw the
-`javax.transaction.TransactionRolledbackException` to a remote client or
+`jakarta.transaction.TransactionRolledbackException` to a remote client or
 the `jakarta.ejb.TransactionRolledbackLocalException` to a local client,
 because it provides more information to the client. (The client knows
 that it is fruitless to continue the transaction.)
@@ -1074,7 +1074,7 @@ the setting on the application exception has no effect.]
 beans with container-managed transaction demarcation can use the
 `getRollbackOnly` method of the `jakarta.ejb.EJBContext` object to learn if
 the current transaction has been marked for rollback; other clients may
-use the `getStatus` method of the `javax.transaction.UserTransaction`
+use the `getStatus` method of the `jakarta.transaction.UserTransaction`
 interface to obtain the transaction status.
 
 ===== Web Service Clients
@@ -1155,13 +1155,13 @@ describe the several subclasses of the `jakarta.ejb.EJBException` and
 `java.rmi.RemoteException` that may be thrown by the container to give the
 client more information.
 
-===== jakarta.ejb.EJBTransactionRolledbackException, jakarta.ejb.TransactionRolledbackLocalException, and javax.transaction.TransactionRolledbackException
+===== jakarta.ejb.EJBTransactionRolledbackException, jakarta.ejb.TransactionRolledbackLocalException, and jakarta.transaction.TransactionRolledbackException
 
 The
 `jakarta.ejb.EJBTransactionRolledbackException` and
 `jakarta.ejb.TransactionRolledbackLocalException` are subclasses of the
 `jakarta.ejb.EJBException`. The
-`javax.transaction.TransactionRolledbackException` is a subclass of the
+`jakarta.transaction.TransactionRolledbackException` is a subclass of the
 `java.rmi.RemoteException`. It is defined in the Jakarta Transactions standard extension.
 
 If a client receives one of these exceptions,
@@ -1169,19 +1169,19 @@ the client knows for certain that the transaction has been marked for
 rollback. It would be fruitless for the client to continue the
 transaction because the transaction can never commit.
 
-===== jakarta.ejb.EJBTransactionRequiredException, jakarta.ejb.TransactionRequiredLocalException, and javax.transaction.TransactionRequiredException
+===== jakarta.ejb.EJBTransactionRequiredException, jakarta.ejb.TransactionRequiredLocalException, and jakarta.transaction.TransactionRequiredException
 
 The
 `jakarta.ejb.EJBTransactionRequiredException` and
 `jakarta.ejb.TransactionRequiredLocalException` are subclasses of the
 `jakarta.ejb.EJBException` . The
-`javax.transaction.TransactionRequiredException` is a subclass of the
+`jakarta.transaction.TransactionRequiredException` is a subclass of the
 `java.rmi.RemoteException`. It is defined in the Jakarta Transactions standard extension.
 
 The
 `jakarta.ejb.EJBTransactionRequiredException` ,
 `jakarta.ejb.TransactionRequiredLocalException` , or
-`javax.transaction.TransactionRequiredException` informs the client that
+`jakarta.transaction.TransactionRequiredException` informs the client that
 the target enterprise bean must be invoked in a client’s transaction,
 and that the client invoked the enterprise bean without a transaction
 context.

@@ -435,13 +435,13 @@ as specified in the following table
 |===
 |System exception thrown by Enterprise Beans container
 |CORBA system exception received by client ORB
-|javax.transaction.TransactionRolledbackException
+|jakarta.transaction.TransactionRolledbackException
 |TRANSACTION_ROLLEDBACK
 
-|javax.transaction.TransactionRequiredException
+|jakarta.transaction.TransactionRequiredException
 |TRANSACTION_REQUIRED
 
-|javax.transaction.InvalidTransactionException
+|jakarta.transaction.InvalidTransactionException
 |INVALID_TRANSACTION
 
 |java.rmi.NoSuchObjectException

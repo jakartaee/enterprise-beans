@@ -581,17 +581,17 @@ file must be presented with the same JNDI API name space.
 ==== Jakarta Transactions API Requirements
 
 The Enterprise Beans Container
-must include the Jakarta Transactions `javax.transaction` API.
+must include the Jakarta Transactions `jakarta.transaction` API.
 
 The Enterprise Beans Container
-must provide the `javax.transaction.UserTransaction` interface to
+must provide the `jakarta.transaction.UserTransaction` interface to
 enterprise beans with bean-managed transaction demarcation by dependency
 injection, through the `jakarta.ejb.EJBContext` interface, and also in JNDI
 under the name `java:comp/UserTransaction`, in the cases required by the
 Enterprise Beans specification.
 
 The Enterprise Beans Container
-must provide the `javax.transaction.TransactionSynchronizationRegistry`
+must provide the `jakarta.transaction.TransactionSynchronizationRegistry`
 interface by dependency injection and in JNDI under the name
 `java:comp/TransactionSynchronizationRegistry`.
 

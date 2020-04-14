@@ -247,7 +247,7 @@ message-driven bean with container-managed transaction demarcation can
 use this method.
 
 * The `getUserTransaction` method returns the
-`javax.transaction.UserTransaction` interface that the instance can use
+`jakarta.transaction.UserTransaction` interface that the instance can use
 to demarcate transactions, and to obtain transaction status. Only
 instances of a message-driven bean with bean-managed transaction
 demarcation can use this method.
@@ -431,7 +431,7 @@ or the `NOT_SUPPORTED` transaction attribute for timeout callback
 methods. See <<a2172>>.
 
 When a message-driven bean using bean-managed
-transaction demarcation uses the `javax.transaction.UserTransaction`
+transaction demarcation uses the `jakarta.transaction.UserTransaction`
 interface to demarcate transactions, the message receipt that causes the
 bean to be invoked is not part of the transaction. If the message
 receipt is to be part of the transaction, container-managed transaction

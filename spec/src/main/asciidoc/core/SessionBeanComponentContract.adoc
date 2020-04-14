@@ -364,7 +364,7 @@ rollback. Only instances of a session bean with container-managed
 transaction demarcation are permitted to use this method.
 
 * The `getUserTransaction` method returns the
-`javax.transaction.UserTransaction` interface. The instance can use this
+`jakarta.transaction.UserTransaction` interface. The instance can use this
 interface to demarcate transactions and to obtain transaction status.
 Only instances of a session bean with bean-managed transaction
 demarcation are permitted to use this method.
