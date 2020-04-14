@@ -540,7 +540,7 @@ the dependency injection and lifecycle management of "managed beans" and
 adds contextual lifecycle management to the Enterprise Beans component model.
 
 An Enterprise Beans packaged into a CDI bean archive and
-not annotated with `javax.enterprise.inject.Vetoed` annotation, is
+not annotated with `jakarta.enterprise.inject.Vetoed` annotation, is
 considered a CDI-enabled bean. The CDI container performs dependency
 injection on all instances of CDI-enabled session and message-driven
 beans, even those which are not contextual instances:
