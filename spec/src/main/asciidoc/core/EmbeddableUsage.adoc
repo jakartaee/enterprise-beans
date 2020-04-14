@@ -2,13 +2,13 @@
 == Embeddable Usage
 
 The embeddable API is designed to support the
-execution of EJB applications within a Java SE environment only. Use of
+execution of Enterprise Beans applications within a Java SE environment only. Use of
 the `javax.ejb.embeddable` package is not allowed from an application
-running in a Java EE environment. Unlike traditional Java EE
+running in a Jakarta EE environment. Unlike traditional Jakarta EE
 server-based execution, embeddable usage allows client code and its
 corresponding enterprise beans to run within the same JVM and class
 loader. This provides better support for testing, offline processing
-(e.g. batch), and the use of the EJB programming model in desktop
+(e.g. batch), and the use of the Enterprise Beans programming model in desktop
 applications.
 
 Support for the embeddable API is not
@@ -18,14 +18,14 @@ adhere to the requirements of this specification.
 === Overview
 
 Embeddable usage requirements allow client
-code to instantiate an EJB container that runs within its own JVM and
+code to instantiate an Enterprise Beans container that runs within its own JVM and
 classloader. The client uses a specification-defined bootstrapping API
-to start the embeddable EJB container and identify the set of enterprise
+to start the embeddable Enterprise Beans container and identify the set of enterprise
 bean components for execution.
 
-The embeddable EJB container provides a
+The embeddable Enterprise Beans container provides a
 managed environment with support for the same basic services that exist
-within a Java EE runtime: injection, access to a component environment,
+within a Jakarta EE runtime: injection, access to a component environment,
 container-managed transactions, etc. In general, enterprise bean
 components are unaware of the kind of managed environment in which they
 are running. This allows maximum reusability of enterprise components
@@ -34,7 +34,7 @@ significant rework.
 
 === Bootstrapping API
 
-The embeddable EJB container is instantiated
+The embeddable Enterprise Beans container is instantiated
 using a bootstrapping API defined within the `javax.ejb` package. By
 default, the embeddable container uses the JVM class path to scan for
 the enterprise bean modules to be initialized. The client can override
@@ -59,12 +59,12 @@ EJBContainer ec = EJBContainer.createEJBContainer();
 
 By default, the embeddable container searches
 the JVM classpath (the value of the Java System property
-`java.class.path`) to find the set of EJB modules for initialization. A
+`java.class.path`) to find the set of Enterprise Beans modules for initialization. A
 classpath entry is considered a matching entry if it meets one of the
 following criteria:
 
 * It is an ejb-jar according to the standard
-module-type identification rules defined by the Java EE platform
+module-type identification rules defined by the Jakarta EE platform
 specification
 
 * It is a directory containing a
@@ -72,9 +72,9 @@ specification
 enterprise bean component-defining annotation
 
 Each such matching entry is considered
-an EJB module within the same application.footnote:a10346[Support for 
-more than one module is required for a Full Java EE platform product. 
-Multi-module support is only required for Java EE profiles that require 
+an Enterprise Beans module within the same application.footnote:a10346[Support for 
+more than one module is required for a Full Jakarta EE platform product. 
+Multi-module support is only required for Jakarta EE profiles that require 
 support for .ear files.]
 
 If an `ejb-jar.xml` file is present the
@@ -176,11 +176,11 @@ The property name is defined as
 ===== javax.ejb.embeddable.appName
 
 This property specifies an application name
-for the EJB modules executing within the embeddable container. If
+for the Enterprise Beans modules executing within the embeddable container. If
 specified, the property value applies to the `<app-name>` portion of the
 portable global JNDI name syntax. It is recommended that this property
 be set whenever an embeddable container is executed with more than one
-EJB module.
+Enterprise Beans module.
 
 The property name is defined as
 `EJBContainer.APP_NAME`.
@@ -238,8 +238,8 @@ the `close()` method, the embeddable container:
 session bean instances in the application
 
 An embeddable Container Provider is only
-required to support one active embeddable EJB container at a time per
-JVM. Attempts to concurrently create multiple active embeddable EJB
+required to support one active embeddable Enterprise Beans container at a time per
+JVM. Attempts to concurrently create multiple active embeddable Enterprise Beans
 containers may result in a container initialization error.
 
 === Embeddable Container Provider’s Responsibilities
@@ -252,10 +252,10 @@ environment.
 ==== Runtime Environment
 
 Except for the packaging requirements, the
-embeddable Container Provider is required to support the EJB Lite group
-of the EJB API within an embeddable container environment. See <<a9743>> 
+embeddable Container Provider is required to support the Enterprise Beans Lite group
+of the Enterprise Beans API within an embeddable container environment. See <<a9743>> 
 for the packaging requirements. An embeddable Container Provider may 
-additionally support other EJB API groups within an embeddable container 
+additionally support other Enterprise Beans API groups within an embeddable container 
 environment. See <<a9428>> for more details.
 
 ==== Naming Lookups

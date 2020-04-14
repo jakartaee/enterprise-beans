@@ -2,57 +2,57 @@
 == Runtime Environment
 
 This chapter defines the application
-programming interfaces (APIs) that a compliant EJB container must make
+programming interfaces (APIs) that a compliant Enterprise Beans container must make
 available to the enterprise bean instances at runtime. These APIs can be
 used by portable enterprise beans because the APIs are guaranteed to be
-available in all EJB containers.
+available in all Enterprise Beans containers.
 
 The set of required APIs is divided into two
 categories: a _complete_ set and a _minimum_ set. The _minimum_ set is also
-referred to as "EJB Lite". This reflects the ability of a Server
-Provider to provide an EJB container within a product that implements
-the Full Java EE Platform or within a subset profile such as the Java EE
+referred to as "Enterprise Beans Lite". This reflects the ability of a Server
+Provider to provide an Enterprise Beans container within a product that implements
+the Full Jakarta EE Platform or within a subset profile such as the Jakarta EE
 Web Profile. The _complete_ set is required within an implementation of
-the Full Java EE Platform. The minimum set must be supported within an
-implementation of the Java EE Web Profile. Profile requirements are
-described within the Java EE Platform specification <<a9861>>.
+the Full Jakarta EE Platform. The minimum set must be supported within an
+implementation of the Jakarta EE Web Profile. Profile requirements are
+described within the Jakarta EE Platform specification <<a9861>>.
 
 The chapter also defines the restrictions
-that the EJB Container Provider can impose on the functionality that it
+that the Enterprise Beans Container Provider can impose on the functionality that it
 provides to the enterprise beans. These restrictions are necessary to
 enforce security and to allow the container to properly manage the
 runtime environment.
 
 [[a9428]]
-=== EJB Lite and Other EJB API Groups
+=== Enterprise Beans Lite and Other Enterprise Beans API Groups
 
-The EJB API is comprised of a large feature
+The Enterprise Beans API is comprised of a large feature
 set with support for implementing business logic in a wide variety of
 enterprise applications. However, the full range of API contracts is not
 always crucial for all runtime environments. In addition, the breadth of
 the full API can present challenges for developers just getting started
-with the Enterprise JavaBeans technology.
+with the Enterprise Beans technology.
 
 For these reasons this specification defines
-a minimal subset of the EJB API known as EJB Lite. EJB Lite is not a
-product. Rather, it is a proper subset of the full EJB API that includes
-a small, powerful selection of EJB features suitable for writing
-portable transactional business logic. The definition of EJB Lite gives
-vendors an option to implement only a portable subset of the EJB API
+a minimal subset of the Enterprise Beans API known as Enterprise Beans Lite. Enterprise Beans Lite is not a
+product. Rather, it is a proper subset of the full Enterprise Beans API that includes
+a small, powerful selection of Enterprise Beans features suitable for writing
+portable transactional business logic. The definition of Enterprise Beans Lite gives
+vendors an option to implement only a portable subset of the Enterprise Beans API
 within their product. The vastly reduced size of the feature set makes
 it suitable for inclusion in a wider range of Java products, many of
 which have much smaller installation and runtime footprints than a
-typical full Java EE implementation.
+typical full Jakarta EE implementation.
 
-An EJB Lite application is merely an EJB
-application whose EJB API usage falls within the EJB Lite subset. There
-are no special APIs defined only for EJB Lite. Therefore, any EJB Lite
-application can be deployed on any Java EE product that implements
-Enterprise JavaBeans technology, whether that product supports EJB Lite
-or the full EJB API.
+An Enterprise Beans Lite application is merely an Enterprise Beans
+application whose Enterprise Beans API usage falls within the Enterprise Beans Lite subset. There
+are no special APIs defined only for Enterprise Beans Lite. Therefore, any Enterprise Beans Lite
+application can be deployed on any Jakarta EE product that implements
+Enterprise Beans technology, whether that product supports Enterprise Beans Lite
+or the full Enterprise Beans API.
 
-As detailed in <<a9442>>, the EJB Lite API is
-composed of the following subset of the EJB API:
+As detailed in <<a9442>>, the Enterprise Beans Lite API is
+composed of the following subset of the Enterprise Beans API:
 
 * Stateless, stateful, and singleton session
 bean components only
@@ -68,17 +68,17 @@ view only
 
 * Local asynchronous session bean invocations
 
-* Non-persistent EJB Timer Service
+* Non-persistent Enterprise Beans Timer Service
 
 * Deployment descriptor support (`ejb-jar.xml`)
 
 [[a9442]]
-.EJB API Groups
+.Enterprise Beans API Groups
 [width="100%",cols="34%,33%,33%",options="header",]
 |===
 |GROUP |CONTENT
-|Full EJB API
-s|EJB Lite a|
+|Full Enterprise Beans API
+s|Enterprise Beans Lite a|
 *COMPONENTS:*
 
 Session Beans (stateful, stateless,
@@ -94,7 +94,7 @@ No-interface
 
 Interceptors
 
-Non-persistent EJB Timer Service
+Non-persistent Enterprise Beans Timer Service
 
 Local asynchronous session bean invocations
 
@@ -122,7 +122,7 @@ Inflow and MessageEndpoint deployment
 
 |Required
 
-s|EJB 3.x Remote a|
+s|Enterprise Beans 3.x Remote a|
 *SESSION BEAN CLIENT VIEWS:*
 
 3.x Remote Business view
@@ -133,32 +133,32 @@ Remote asynchronous session bean invocations
 
 |Required
 
-s|Persistent EJB Timer Service a|
+s|Persistent Enterprise Beans Timer Service a|
 *SERVICES:*
 
-Persistent EJB Timer Service
+Persistent Enterprise Beans Timer Service
 
 |Required
 
-s|JAX-WS Web Service Endpoints a|
+s|Jakarta XML Web Service Endpoints a|
 *SESSION BEAN CLIENT VIEWS:*
 
-JAX-WS Web Service Endpoints
+Jakarta XML Web Service Endpoints
 
 *DEPENDENCIES:*
 
-JAX-WS API
+Jakarta XML Web Services API
 
 |Required
 
-s|Embeddable EJB Container a|
+s|Embeddable Enterprise Beans Container a|
 *SERVICES:*
 
-Embeddable EJB Container
+Embeddable Enterprise Beans Container
 
 |Optional
 
-s|EJB 2.x API a|
+s|Enterprise Beans 2.x API a|
 *COMPONENTS:*
 
 Session Beans
@@ -184,23 +184,23 @@ s|Entity Beans a|
 
 *SERVICES:*
 
-EJB QL
+Enterprise Beans QL
 
 |Optional
 
-s|JAX-RPC Web Service Endpoints a|
+s|Jakarta XML RPC Web Service Endpoints a|
 *SESSION BEAN CLIENT VIEWS:*
 
-JAX-RPC Web Service Endpoints
+Jakarta XML RPC Web Service Endpoints
 
 |Optional
 |===
 
 [[a9516]]
-==== Support for Other EJB API Groups in an EJB Lite Container
+==== Support for Other Enterprise Beans API Groups in an Enterprise Beans Lite Container
 
-An EJB Lite container provider may support
-EJB features in addition to the "EJB Lite" group defined in
+An Enterprise Beans Lite container provider may support
+Enterprise Beans features in addition to the "Enterprise Beans Lite" group defined in
 <<a9442>>. If it does, the
 following rules apply:
 
@@ -211,29 +211,29 @@ whole group must be supported.
 requirements of this specification.
 
 * Except for the programmatic timers in the
-Persistent EJB Timer Service group, the EJB Container must detect that
+Persistent Enterprise Beans Timer Service group, the Enterprise Beans Container must detect that
 an application depends on a feature that is not supported and fail
 deployment of the application. A product may offer a deployment option
-to force deployment of applications that use EJB features not supported
+to force deployment of applications that use Enterprise Beans features not supported
 by the product. Use of these features must fail at runtime.
 
-* If the Persistent EJB Timer Service group is
+* If the Persistent Enterprise Beans Timer Service group is
 not supported, and an application attempts to create a programmatic
-persistent timer, the EJB container must throw the EJBException when the
+persistent timer, the Enterprise Beans container must throw the EJBException when the
 API is invoked.
 
-* If JMS message-driven beans are supported,
-the JMS API (see <<a9862>>) must be supported.
+* If Jakarta Messaging message-driven beans are supported,
+the Jakarta Messaging API (see <<a9862>>) must be supported.
 
-* If JAX-WS Web Service Endpoints are
+* If Jakarta XML Web Service Endpoints are
 supported, the web service interoperability rules specified in
 <<a179>> must be observed.
 
-* To use a session bean written to the EJB 3.x
+* To use a session bean written to the Enterprise Beans 3.x
 API, and adapted for use with an earlier client view, support for the
-EJB 2.x API group is required.
+Enterprise Beans 2.x API group is required.
 
-* To use an application client to access an EJB
+* To use an application client to access an Enterprise Beans
 3.x remote session bean, the application client container must be
 supported.
 
@@ -244,17 +244,17 @@ must observe the rules in <<a9696>>.
 ==== Integration with Other Technologies
 
 This section describes the additional
-requirements that apply to an EJB Container when combined in a product
-that supports other Java EE technologies.
+requirements that apply to an Enterprise Beans Container when combined in a product
+that supports other Jakarta EE technologies.
 
-If Java Persistence API is supported, the EJB
-Container must support the use of the Java Persistence API in
-conformance with the contracts defined in the Java Persistence API
+If Jakarta Persistence is supported, the Enterprise Beans
+Container must support the use of the Jakarta Persistence in
+conformance with the contracts defined in the Jakarta Persistence
 specification <<a9851>> and the rules specified in <<a9838>> must be observed.
 
-If JAX-RS API is supported, singleton and
-stateless session beans must be supported as JAX-RS root resource
-classes, providers and `Application` subclasses as defined by the JAX-RS
+If Jakarta RESTful Web Services API is supported, singleton and
+stateless session beans must be supported as Jakarta RESTful Web Services root resource
+classes, providers and `Application` subclasses as defined by the Jakarta RESTful Web Services
 specification <<a9889>>.
 
 === Bean Provider’s Responsibilities
@@ -266,7 +266,7 @@ responsibilities of the Bean Provider.
 
 The requirements
 on APIs provided by the Container are determined by the associated
-profile specification, e.g. the Java EE specification <<a9861>> 
+profile specification, e.g. the Jakarta EE specification <<a9861>> 
 or the Web Profile Specification.
 
 [[a9535]]
@@ -275,17 +275,17 @@ or the Web Profile Specification.
 This section
 describes the programming restrictions that a Bean Provider must follow
 to ensure that the enterprise bean is _portable_ and can be deployed in
-any compliant EJB container. The restrictions apply to the
+any compliant Enterprise Beans container. The restrictions apply to the
 implementation of the business methods. <<a9586>>,
 which describes the container’s view of these restrictions, defines the
-programming environment that all EJB containers must provide.
+programming environment that all Enterprise Beans containers must provide.
 
 * An enterprise bean must not use read/write
 static fields. Using read-only static fields
 is allowed. Therefore, it is recommended that all static fields in the
 enterprise bean class be declared as `final`. +
 _This rule is required to ensure consistent
-runtime semantics because while some EJB containers may use a single JVM
+runtime semantics because while some Enterprise Beans containers may use a single JVM
 to execute all enterprise bean’s instances, others may distribute the
 instances across multiple JVMs._
 
@@ -294,7 +294,7 @@ thread synchronization primitives to
 synchronize execution of multiple instances, unless it is a singleton
 session bean with bean-managed concurrency. +
 _This is for the same reason as above.
-Synchronization would not work if the EJB container distributed
+Synchronization would not work if the Enterprise Beans container distributed
 enterprise bean’s instances across multiple JVMs._
 
 * An enterprise bean must not use the
@@ -317,11 +317,11 @@ store data._
 * An enterprise bean must not attempt to listen
 on a socket, accept connections on a socket,
 or use a socket for multicast. +
-_The EJB architecture allows an enterprise
+_The Enterprise Beans architecture allows an enterprise
 bean instance to be a network socket client, but it does not allow it to
 be a network server. Allowing the instance to become a network server
 would conflict with the basic function of the enterprise bean— to serve
-the EJB clients._
+the Enterprise Beans clients._
 
 * The enterprise bean must not attempt to query
 a class to obtain information about the declared members that are not
@@ -340,7 +340,7 @@ create a class loader; set the context class
 loader; set security manager; create a new security manager; stop the
 JVM; or change the input, output, and error
 streams. +
-_These functions are reserved for the EJB
+_These functions are reserved for the Enterprise Beans
 container. Allowing the enterprise bean to use these functions could
 compromise security and decrease the container’s ability to properly
 manage the runtime environment._
@@ -349,7 +349,7 @@ manage the runtime environment._
 the socket factory used by ServerSocket,
 Socket, or the stream handler factory used by URL. +
 _These networking functions are reserved for
-the EJB container. Allowing the enterprise bean to use these functions
+the Enterprise Beans container. Allowing the enterprise bean to use these functions
 could compromise security and decrease the container’s ability to
 properly manage the runtime environment._
 
@@ -357,7 +357,7 @@ properly manage the runtime environment._
 manage threads. The enterprise bean must not attempt to start, stop,
 suspend, or resume a thread, or to change a thread’s priority or name.
 The enterprise bean must not attempt to manage thread groups. +
-_These functions are reserved for the EJB
+_These functions are reserved for the Enterprise Beans
 container. Allowing the enterprise bean to manage threads would decrease
 the container’s ability to properly manage the runtime environment._
 
@@ -374,27 +374,27 @@ security policy information would create a security hole._
 
 * The enterprise bean must not attempt to load
 a native library. +
-_This function is reserved for the EJB
+_This function is reserved for the Enterprise Beans
 container. Allowing the enterprise bean to load native code would create
 a security hole._
 
 * The enterprise bean must not attempt to gain
 access to packages and classes that the usual rules of the Java
 programming language make unavailable to the enterprise bean. +
-_This function is reserved for the EJB
+_This function is reserved for the Enterprise Beans
 container. Allowing the enterprise bean to perform this function would
 create a security hole._
 
 * The enterprise bean must not attempt to
 define a class in a package. +
-_This function is reserved for the EJB
+_This function is reserved for the Enterprise Beans
 container. Allowing the enterprise bean to perform this function would
 create a security hole._
 
 * The enterprise bean must not attempt to
 access or modify the security configuration
 objects (Policy, Security, Provider, Signer, and Identity). +
-_These functions are reserved for the EJB
+_These functions are reserved for the Enterprise Beans
 container. Allowing the enterprise bean to use these functions could
 compromise security._
 
@@ -413,10 +413,10 @@ enterprise bean must pass the result of
 
 To guarantee
 portability of the enterprise bean’s implementation across all compliant
-EJB containers, the Bean Provider should test the enterprise bean using
+Enterprise Beans containers, the Bean Provider should test the enterprise bean using
 a container with the security settings defined in <<a9591>>. 
 That table defines the minimal functionality
-that a compliant EJB container must provide to the enterprise bean
+that a compliant Enterprise Beans container must provide to the enterprise bean
 instances at runtime.
 
 [[a9586]]
@@ -426,24 +426,24 @@ This section defines the container’s
 responsibilities for providing the runtime environment to the enterprise
 bean instances. The requirements described here are considered to be the
 minimal requirements; a container may choose to provide additional
-functionality that is not required by the EJB specification.
+functionality that is not required by the Enterprise Beans specification.
 
 The following subsections describes the
 requirements in more detail.
 
-The following table defines the Java 2
-platform security permissions that the EJB container must be able to
+The following table defines the Java SE
+platform security permissions that the Enterprise Beans container must be able to
 grant to the enterprise bean instances at runtime. The term "grant"
 means that the container must be able to grant the permission, the term
 "deny" means that the container should deny the permission.
 
 [[a9591]]
-.Java 2 Platform Security Policy for a Standard EJB Container
+.Java SE Platform Security Policy for a Standard Enterprise Beans Container
 [cols=2, options=header]
 |===
 Permission name
 |
-EJB Container policy
+Enterprise Beans Container policy
 |
 java.security.AllPermission
 |
@@ -503,38 +503,38 @@ deny all other
 [[a10342, Note A]]  [A]  This permission is
 necessary, for example, to allow enterprise beans to use the client
 functionality of the Java IDL and RMI-IIOP packages that are part of the
-Java 2 platform.
+Java SE platform.
 
 _Some containers may allow the Deployer to
 grant more, or fewer, permissions to the enterprise bean instances than
 specified in <<a9591>>. Support for this is not
-required by the EJB specification. Enterprise beans that rely on more or
-fewer permissions will not be portable across all EJB containers._
+required by the Enterprise Beans specification. Enterprise beans that rely on more or
+fewer permissions will not be portable across all Enterprise Beans containers._
 
 [[a9622]]
-==== EJB Interfaces and Annotations Requirements
+==== Enterprise Beans Interfaces and Annotations Requirements
 
-The container must implement the EJB
+The container must implement the Enterprise Beans
 interfaces as defined in this specification.
 
 The container must implement the semantics of
-the metadata annotations that are supported by EJB API as defined by
+the metadata annotations that are supported by Enterprise Beans API as defined by
 this specification.
 
 The container must support the use of the
-Java Persistence API in conformance with the contracts defined in the
-_Java Persistence API_ specification <<a9851>>.
+Jakarta Persistence in conformance with the contracts defined in the
+_Jakarta Persistence_ specification <<a9851>>.
 
 ==== JNDI Requirements
 
 At the minimum,
-the EJB container must provide a JNDI API name space to the enterprise
-bean instances. The EJB container must make the name space available to
+the Enterprise Beans container must provide a JNDI API name space to the enterprise
+bean instances. The Enterprise Beans container must make the name space available to
 an instance when the instance invokes the `javax.naming.InitialContext`
 default (no-arg) constructor.
 
-An EJB container within an implementation of
-the Web Profile or the embeddable EJB container, must make available the
+An Enterprise Beans container within an implementation of
+the Web Profile or the embeddable Enterprise Beans container, must make available the
 following objects in the name space:
 
 * The local business interfaces of other enterprise beans.
@@ -552,8 +552,8 @@ factories used by the enterprise beans.
 
 * TimerService objects for non-persistent timers
 
-An EJB container within an implementation of
-the Full Java EE Platform must make available the following objects in
+An Enterprise Beans container within an implementation of
+the Full Jakarta EE Platform must make available the following objects in
 the name space:
 
 * All objects listed as available in the Web
@@ -578,36 +578,36 @@ the instances of the same enterprise bean deployed within an ejb-jar
 file must be presented with the same JNDI API name space.
 
 [[a9644]]
-==== JTA API Requirements
+==== Jakarta Transactions API Requirements
 
-The EJB Container
-must include the JTA `javax.transaction` API.
+The Enterprise Beans Container
+must include the Jakarta Transactions `javax.transaction` API.
 
-The EJB Container
+The Enterprise Beans Container
 must provide the `javax.transaction.UserTransaction` interface to
 enterprise beans with bean-managed transaction demarcation by dependency
 injection, through the `javax.ejb.EJBContext` interface, and also in JNDI
 under the name `java:comp/UserTransaction`, in the cases required by the
-EJB specification.
+Enterprise Beans specification.
 
-The EJB Container
+The Enterprise Beans Container
 must provide the `javax.transaction.TransactionSynchronizationRegistry`
 interface by dependency injection and in JNDI under the name
 `java:comp/TransactionSynchronizationRegistry`.
 
-It is illegal to associate JTA
-transactional interceptors with Enterprise JavaBeans. The EJB Container
+It is illegal to associate Jakarta Transactions
+transactional interceptors with Enterprise Beans. The Enterprise Beans Container
 should fail deployment of such applications.footnote:a10343[This restriction 
 may be removed in a future release of this specification.]
 
-The other JTA interfaces are low-level
+The other Jakarta Transactions interfaces are low-level
 transaction manager and resource manager integration interfaces, and are
 not intended for direct use by enterprise beans.
 
 [[a9650]]
-==== JDBC™ API Requirements
+==== JDBC(TM) API Requirements
 
-The EJB Container
+The Enterprise Beans Container
 must include the JDBC `javax.sql` API and provide its functionality to the
 enterprise bean instances, with the exception of the low-level XA and
 connection pooling interfaces. These low-level interfaces are intended
@@ -615,12 +615,12 @@ for integration of a JDBC driver with an application server, not for
 direct use by enterprise beans.
 
 [[a9652]]
-==== JMS API Requirements
+==== Jakarta Messaging API Requirements
 
-An implementation requiring the full EJB API
-must include the JMS 2.0 API and provide its
+An implementation requiring the full Enterprise Beans API
+must include the Jakarta Messaging 2.0 API and provide its
 functionality to the enterprise bean instances, with the exception of
-the low-level interfaces that are intended for integration of a JMS
+the low-level interfaces that are intended for integration of a Jakarta Messaging
 provider with an application server, not for direct use by enterprise
 beans. These interfaces include: `javax.jms.ServerSession`,
 `javax.jms.ServerSessionPool`, `javax.jms.ConnectionConsumer`, and all
@@ -696,8 +696,8 @@ component interfaces are _remote interfaces_ for Java RMI. The container
 must ensure the semantics for passing arguments conforms to Java
 RMI-IIOP. Non-remote objects must be passed by value.
 
-Specifically, the EJB container is not
-allowed to pass non-remote objects by reference on inter-EJB invocations
+Specifically, the Enterprise Beans container is not
+allowed to pass non-remote objects by reference on inter-Enterprise Beans invocations
 when the calling and called enterprise beans are collocated in the same
 JVM. Doing so could result in the multiple beans sharing the state of a
 Java object, which would break the enterprise bean’s semantics. Any
@@ -707,7 +707,7 @@ for passing arguments conforms to Java RMI-IIOP.
 An enterprise bean’s local business
 interfaces and/or local home and local interfaces are _local Java
 interfaces_. The caller and callee enterprise beans that make use of
-these local interfaces are typically collocated in the same JVM. The EJB
+these local interfaces are typically collocated in the same JVM. The Enterprise Beans
 container must ensure the semantics for passing arguments across these
 interfaces conforms to the standard argument passing semantics of the
 Java programming language.
@@ -715,5 +715,5 @@ Java programming language.
 ==== Other Requirements
 
 The assertions contained in the Javadoc
-specification of the EJB interfaces are required functionality and must
+specification of the Enterprise Beans interfaces are required functionality and must
 be implemented by compliant containers.
