@@ -865,8 +865,8 @@ generic `javax.xml.ws.Service` class or a generated service class which
 extends the `javax.xml.ws.Service` class. The service instance is then
 used to obtain a port object for the web service endpoint. The
 mechanisms and APIs for client web service access are described in the
-Jakarta XML Web Services <<a9881>> and in the 
-Jakarta Enterprise Web Services <<a9879>>.
+_Jakarta XML Web Services_ <<a9881>> specification and in the 
+_Jakarta Enterprise Web Services_ <<a9879>> specification.
 
 The following example illustrates how a Jakarta XML Web Services client 
 obtains a reference to a web service endpoint, obtains a port object for 
