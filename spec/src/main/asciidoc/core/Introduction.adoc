@@ -71,8 +71,8 @@ active timers in the Enterprise Beans module._
 * _Enhanced the embeddable EJBContainer to
 implement `AutoCloseable` interface._
 
-* _Removed restrictions on `javax.ejb.Timer` and
-`javax.ejb.TimerHandle` that required references to be used only inside a
+* _Removed restrictions on `jakarta.ejb.Timer` and
+`jakarta.ejb.TimerHandle` that required references to be used only inside a
 bean._
 
 * _Relaxed default rules for a session bean to

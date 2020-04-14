@@ -71,7 +71,7 @@ Enterprise Beans timer timeout methods of session beans and message-driven beans
 Such methods are referred to as `AroundTimeout` methods.
 
 Within an `AroundTimeout` method, the
-`InvocationContext.getTimer()` method returns the `javax.ejb.Timer`
+`InvocationContext.getTimer()` method returns the `jakarta.ejb.Timer`
 object associated with the timeout being intercepted.
 
 `AroundTimeout` methods may throw system exceptions, but not 

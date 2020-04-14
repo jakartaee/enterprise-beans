@@ -173,7 +173,7 @@ determines which method is invoked. See <<a9863>>._
 If the message-driven bean class implements
 more than one interface other than `java.io.Serializable`,
 `java.io.Externalizable`, or any of the interfaces defined by the
-`javax.ejb` package, the message listener interface must be specified by
+`jakarta.ejb` package, the message listener interface must be specified by
 the `messageListenerInterface` element of the `MessageDriven` annotation
 or the `messaging-type` element of the `message-driven` deployment
 descriptor element.
@@ -200,7 +200,7 @@ Only `public` methods of the bean class and of
 any superclasses except `java.lang.Object` may be invoked by a resource
 adapter. Attempted invocations of methods with any other access
 modifiers on a proxy provided by the container must result in the
-`javax.ejb.EJBException`.
+`jakarta.ejb.EJBException`.
 
 ==== Dependency Injection
 
@@ -253,7 +253,7 @@ instances of a message-driven bean with bean-managed transaction
 demarcation can use this method.
 
 * The `getTimerService` method returns the 
-`javax.ejb.TimerService` interface.
+`jakarta.ejb.TimerService` interface.
 
 * The `getCallerPrincipal` method returns the
 `java.security.Principal` that is associated with the invocation.
@@ -313,7 +313,7 @@ context.
 ==== The Optional MessageDrivenBean Interface
 
 The message-driven bean class is not required
-to implement the `javax.ejb.MessageDrivenBean` interface.
+to implement the `jakarta.ejb.MessageDrivenBean` interface.
 
 _Compatibility Note: The `MessageDrivenBean` interface was
 required by earlier versions of the Enterprise Beans specification.
@@ -771,7 +771,7 @@ life of the message-driven bean instance.
 
 <<a1886>> defines the methods of
 a message-driven bean class in which the message-driven bean instances
-can access the methods of the `javax.ejb.MessageDrivenContext` interface,
+can access the methods of the `jakarta.ejb.MessageDrivenContext` interface,
 the `java:comp/env` environment naming context, resource managers,
 `TimerService` and `Timer` methods, the `EntityManager` and
 `EntityManagerFactory` methods, and other enterprise beans.
@@ -958,10 +958,10 @@ instances of the message-driven bean class.
 Optionally:
 
 * The class may implement, directly or
-indirectly, the `javax.ejb.MessageDrivenBean` interface.
+indirectly, the `jakarta.ejb.MessageDrivenBean` interface.
 
 * The class may implement, directly or
-indirectly, the `javax.ejb.TimedObject` interface.
+indirectly, the `jakarta.ejb.TimedObject` interface.
 
 * The class may implement the `ejbCreate` method.
 
@@ -1041,7 +1041,7 @@ lifecycle callback interceptor method is the `ejbRemove` method, these
 callback methods must be implemented on the bean class itself (or on its
 superclasses). Except for these cases, the method names can be
 arbitrary, but must not start with "ejb" to avoid conflicts with the
-callback methods defined by the `javax.ejb.EnterpriseBean` interfaces._
+callback methods defined by the `jakarta.ejb.EnterpriseBean` interfaces._
 
 Lifecycle callback interceptor methods may be
 defined on the bean class and/or on an interceptor class of the bean.

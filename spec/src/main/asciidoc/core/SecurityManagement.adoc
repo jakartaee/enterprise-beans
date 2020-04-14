@@ -185,13 +185,13 @@ section should be used only in the less frequent situations in which the
 enterprise bean business methods need to access the security context
 information._
 
-The `javax.ejb.EJBContext` interface provides two
+The `jakarta.ejb.EJBContext` interface provides two
 methods (plus two deprecated methods that were defined in Enterprise Beans 1.0) that
 allow the Bean Provider to access security information about the
 enterprise bean’s caller.
 [source, java]
 ----
-public interface javax.ejb.EJBContext {
+public interface jakarta.ejb.EJBContext {
     ...
     //
     // The following two methods allow the Enterprise Beans class
@@ -1365,7 +1365,7 @@ are described in the Enterprise Beans Optional Features document <<a9890>>.] bea
 or for the message listener methods
 of a message-driven bean.
 
-==== Security Methods in javax.ejb.EJBContext
+==== Security Methods in jakarta.ejb.EJBContext
 
 The Enterprise Beans container
 must provide access to the caller’s security context information from
@@ -1440,15 +1440,15 @@ security roles that includes the method in its method permissions
 definition. (That is, it is not meant that the caller must be assigned
 _all_ the roles associated with the method.) If the container denies a
 client access to a business method, the container should throw the
-`javax.ejb.EJBAccessException`.footnote:a10330[If the business interface 
+`jakarta.ejb.EJBAccessException`.footnote:a10330[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.AccessException` is thrown to the client instead.]
 If the Enterprise Beans 2.1
 client view is used, the container must throw the
 `java.rmi.RemoteException` (or its subclass,
 the `java.rmi.AccessException`) to the client if the client is a remote
-client, or the `javax.ejb.EJBException` (or
-its subclass, the `javax.ejb.AccessLocalException`) if the client is a
+client, or the `jakarta.ejb.EJBException` (or
+its subclass, the `jakarta.ejb.AccessLocalException`) if the client is a
 local client.
 
 * The Enterprise Beans container must isolate an enterprise

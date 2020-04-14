@@ -414,8 +414,8 @@ create CORBA Tie objects for each EJBObject or EJBHome object.
 
 The Java
 interfaces that are passed by value during remote invocations on
-enterprise beans are `javax.ejb.Handle`, `javax.ejb.HomeHandle`, and
-`javax.ejb.EJBMetaData`. There may also be application-specific value
+enterprise beans are `jakarta.ejb.Handle`, `jakarta.ejb.HomeHandle`, and
+`jakarta.ejb.EJBMetaData`. There may also be application-specific value
 types that are passed as parameters or return values on enterprise bean
 invocations. In addition, several Java exception classes that are thrown
 by remote methods also result in concrete IDL value types. All these
@@ -502,8 +502,8 @@ optionally include an HTTPS URL for secure downloading.
 
 System value
 classes are serializable value classes
-implementing the `javax.ejb.Handle`, `javax.ejb.HomeHandle`,
-`javax.ejb.EJBMetaData`, `java.util.Enumeration`, 
+implementing the `jakarta.ejb.Handle`, `jakarta.ejb.HomeHandle`,
+`jakarta.ejb.EJBMetaData`, `java.util.Enumeration`, 
 `java.util.Collection`, and `java.util.Iterator` interfaces. 
 These value classes are provided by the
 Enterprise Beans container vendor. They must be provided in the form of a JAR file by
@@ -529,7 +529,7 @@ instance at runtime through the thread context class loader.
 ===== HandleDelegate SPI
 
 The
-`javax.ejb.spi.HandleDelegate` service
+`jakarta.ejb.spi.HandleDelegate` service
 provider interface defines methods that enable portable implementations
 of `Handle` and `HomeHandle` that are instantiated in a different
 vendor’s container to serialize and deserialize EJBObject and EJBHome
@@ -695,7 +695,7 @@ value was `CosTransactions::EITHER`.]
 All EJBObject and EJBHome references must
 have the OTSPolicy value as `CosTransactions::ADAPTS`. This is
 necessary to allow clients to invoke methods of the
-`javax.ejb.EJBObject` and `javax.ejb.EJBHome` with or without a
+`jakarta.ejb.EJBObject` and `jakarta.ejb.EJBHome` with or without a
 transaction.
 
 The `CosTransactions::Synchronization` object

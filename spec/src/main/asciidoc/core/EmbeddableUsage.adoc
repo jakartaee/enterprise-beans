@@ -3,7 +3,7 @@
 
 The embeddable API is designed to support the
 execution of Enterprise Beans applications within a Java SE environment only. Use of
-the `javax.ejb.embeddable` package is not allowed from an application
+the `jakarta.ejb.embeddable` package is not allowed from an application
 running in a Jakarta EE environment. Unlike traditional Jakarta EE
 server-based execution, embeddable usage allows client code and its
 corresponding enterprise beans to run within the same JVM and class
@@ -35,7 +35,7 @@ significant rework.
 === Bootstrapping API
 
 The embeddable Enterprise Beans container is instantiated
-using a bootstrapping API defined within the `javax.ejb` package. By
+using a bootstrapping API defined within the `jakarta.ejb` package. By
 default, the embeddable container uses the JVM class path to scan for
 the enterprise bean modules to be initialized. The client can override
 this behavior during setup by specifying an alternative set of target
@@ -44,11 +44,11 @@ modules.
 [[a9743]]
 ==== EJBContainer
 
-The `javax.ejb.embeddable.EJBContainer`
+The `jakarta.ejb.embeddable.EJBContainer`
 abstract class represents an instance of an embeddable container. It
 contains factory methods for creating a container instance. The client
 initializes a new embeddable container by calling the `createEJBContainer`
-method of the `javax.ejb.embeddable.EJBContainer` class.
+method of the `jakarta.ejb.embeddable.EJBContainer` class.
 
 For example,
 
@@ -91,11 +91,11 @@ container creation:
 
 [source, java]
 ----
-javax.ejb.embeddable.EJBContainer createEJBContainer(Map<?, ?> properties)
+jakarta.ejb.embeddable.EJBContainer createEJBContainer(Map<?, ?> properties)
 ----
 
 This specification reserves the prefix
-`javax.ejb.` for standard property names. It is expected that embeddable
+`jakarta.ejb.` for standard property names. It is expected that embeddable
 Container Providers will define their own properties as well.
 
 For example, given the following `java` command
@@ -138,7 +138,7 @@ The following embeddable container
 initialization properties are required to be supported by all embeddable
 Container Providers.
 
-===== javax.ejb.embeddable.provider
+===== jakarta.ejb.embeddable.provider
 
 This property holds a String value that
 specifies the fully-qualified name of an embeddable container provider
@@ -148,7 +148,7 @@ should be used for this application.
 The property name is defined as
 `EJBContainer.PROVIDER`.
 
-===== javax.ejb.embeddable.modules
+===== jakarta.ejb.embeddable.modules
 
 This property is used to explicitly specify
 the module(s) to be initialized. It can refer to modules that are
@@ -173,7 +173,7 @@ required by these modules.
 The property name is defined as
 `EJBContainer.MODULES`.
 
-===== javax.ejb.embeddable.appName
+===== jakarta.ejb.embeddable.appName
 
 This property specifies an application name
 for the Enterprise Beans modules executing within the embeddable container. If
@@ -281,10 +281,10 @@ instantiation.
 
 The embeddable Container Provider supplies
 the provider configuration file by creating a text file named
-`javax.ejb.spi.EJBContainerProvider` and placing it in the
+`jakarta.ejb.spi.EJBContainerProvider` and placing it in the
 META-INF/services directory of one of its JAR files. The contents of the
 file must be the name of the embeddable Container Provider
-implementation class of the `javax.ejb.spi.EJBContainerProvider`
+implementation class of the `jakarta.ejb.spi.EJBContainerProvider`
 interface.
 
 *Example:*
@@ -296,13 +296,13 @@ implementation. The JAR includes the provider configuration file:
 [source]
 ----
 acme.jar
-    META-INF/services/javax.ejb.spi.EJBContainerProvider
+    META-INF/services/jakarta.ejb.spi.EJBContainerProvider
     com/acme/EJBContainerProvider.class
     ...
 ----
 
 The contents of the
-`META-INF/services/javax.ejb.spi.EJBContainerProvider` file is nothing
+`META-INF/services/jakarta.ejb.spi.EJBContainerProvider` file is nothing
 more than the name of the implementation class:
 `com.acme.EJBContainerProvider`.
 
@@ -314,30 +314,30 @@ turn until an appropriate backing provider returns an `EJBContainer`
 instance. A provider may deem itself as appropriate for the embeddable
 application if any of the following are true:
 
-* The `javax.ejb.embeddable.provider` property
+* The `jakarta.ejb.embeddable.provider` property
 was included in the Map passed to the createEJBContainer method and the
 value of the property is the provider’s implementation class.
 
-* No `javax.ejb.embeddable.provider` property was
+* No `jakarta.ejb.embeddable.provider` property was
 specified.
 
 If a provider does not qualify as the
 provider for the embeddable application, it must return `null` when
 `createEJBContainer` is invoked on it.
 
-==== Concrete javax.ejb.embeddable.EJBContainer Implementation Class
+==== Concrete jakarta.ejb.embeddable.EJBContainer Implementation Class
 
 The embeddable Container Provider is required
-to provide a subclass of the `javax.ejb.embeddable.EJBContainer` class.
+to provide a subclass of the `jakarta.ejb.embeddable.EJBContainer` class.
 The following are the requirements for this class:
 
 * The class must be defined as public and must not be abstract
 
 * The class must extend either directly or
-indirectly the class `javax.ejb.embeddable.EJBContainer`
+indirectly the class `jakarta.ejb.embeddable.EJBContainer`
 
 * The class must provide implementations of the
-following `javax.ejb.embeddable.EJBContainer` methods:
+following `jakarta.ejb.embeddable.EJBContainer` methods:
 
 ** `getContext()`
 

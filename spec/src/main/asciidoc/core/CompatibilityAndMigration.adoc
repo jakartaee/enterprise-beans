@@ -27,7 +27,7 @@ allowed the container to choose the default behavior in the event of
 concurrent access attempts to a stateful session bean instance. This
 specification requires a default of serialized requests in the face of
 concurrency. This means by default clients will not receive the
-`javax.ejb.ConcurrentAccessException` when concurrent access occurs for a
+`jakarta.ejb.ConcurrentAccessException` when concurrent access occurs for a
 request. This should have minimal impact to correctly written
 applications since even with the prior behavior there was no guarantee
 of receiving such an exception due to the inherent race conditions.
@@ -116,9 +116,9 @@ the `Home` and `LocalHome` interfaces respectively.
 When the client is deployed, the container
 classes that implement the Enterprise Beans 2.1 home and remote component interfaces
 (or local home and local component interfaces) referenced by the client
-must provide the implementation of the `javax.ejb.EJBHome` and
-`javax.ejb.EJBObject` interfaces (or the `javax.ejb.EJBLocalHome` and
-`javax.ejb.EJBLocalObject` interfaces) respectively.
+must provide the implementation of the `jakarta.ejb.EJBHome` and
+`jakarta.ejb.EJBObject` interfaces (or the `jakarta.ejb.EJBLocalHome` and
+`jakarta.ejb.EJBLocalObject` interfaces) respectively.
 
 In addition, the container implementation
 classes must implement the methods of the home and comonent interfaces

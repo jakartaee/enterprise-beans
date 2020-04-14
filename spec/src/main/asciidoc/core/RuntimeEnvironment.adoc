@@ -586,7 +586,7 @@ must include the Jakarta Transactions `javax.transaction` API.
 The Enterprise Beans Container
 must provide the `javax.transaction.UserTransaction` interface to
 enterprise beans with bean-managed transaction demarcation by dependency
-injection, through the `javax.ejb.EJBContext` interface, and also in JNDI
+injection, through the `jakarta.ejb.EJBContext` interface, and also in JNDI
 under the name `java:comp/UserTransaction`, in the cases required by the
 Enterprise Beans specification.
 

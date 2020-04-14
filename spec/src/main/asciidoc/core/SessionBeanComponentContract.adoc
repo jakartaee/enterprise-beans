@@ -181,7 +181,7 @@ manager connection factory.]
 object obtained via injection or JNDI lookup, even if it is not
 serializable.
 
-* A reference to a `javax.ejb.Timer` object.
+* A reference to a `jakarta.ejb.Timer` object.
 
 * An object that is not directly serializable,
 but becomes serializable by replacing the references to an enterprise
@@ -237,7 +237,7 @@ the classes that implement the timers are not serializable.
 
 If the session bean instance stores in its
 conversational state an object reference to the
-`javax.ejb.SessionContext` interface, the container must be able to save
+`jakarta.ejb.SessionContext` interface, the container must be able to save
 and restore the reference across the instance’s passivation. The
 container can replace the original `SessionContext` object with a
 different and functionally equivalent `SessionContext` object during
@@ -370,7 +370,7 @@ Only instances of a session bean with bean-managed transaction
 demarcation are permitted to use this method.
 
 * The `getTimerService` method returns the
-`javax.ejb.TimerService` interface. Only stateless session beans and
+`jakarta.ejb.TimerService` interface. Only stateless session beans and
 singleton session beans are permitted to use this method. Stateful
 session beans cannot be timed objects.
 
@@ -591,7 +591,7 @@ metadata as an alternative to the use of annotations.
 
 A stateful
 session bean class can optionally implement the 
-`javax.ejb.SessionSynchronization` interface or annotate methods using the
+`jakarta.ejb.SessionSynchronization` interface or annotate methods using the
 individual `AfterBegin`, `BeforeCompletion`, and `AfterCompletion`
 annotations. The deployment descriptor may also be used to declare the
 individual session synchronization methods. These provide the session
@@ -600,7 +600,7 @@ synchronization notifications. The instances can use these
 notifications, for example, to manage database data they may cache
 within transactions—e.g., if Jakarta Persistence is not used. A
 stateful session bean class may use either the
-`javax.ejb.SessionSynchronization` interface or the session
+`jakarta.ejb.SessionSynchronization` interface or the session
 synchronization annotations, but not both. If annotation are used, there
 must be at most one `AfterBegin` method, one `BeforeCompletion` method,
 and one `AfterCompletion` method for the bean.
@@ -874,14 +874,14 @@ another client-invoked call, from the same or different client, arrives
 at the same stateful session bean istance, if the second client is a
 client of the bean’s business interface or no-interface view, the
 concurrent invocation must result in the second client receiving the
-`javax.ejb.ConcurrentAccessException`.footnote:a10238[The 
-`javax.ejb.ConcurrentAccessException` is a subclass of the 
-`javax.ejb.EJBException`. If the business interface is a remote business 
+`jakarta.ejb.ConcurrentAccessException`.footnote:a10238[The 
+`jakarta.ejb.ConcurrentAccessException` is a subclass of the 
+`jakarta.ejb.EJBException`. If the business interface is a remote business 
 interface that extends `java.rmi.Remote`, the client will receive the 
 `java.rmi.RemoteException` instead.] If the
 Enterprise Beans 2.1 client view is used, the container must throw the
 `java.rmi.RemoteException` if the second client is a remote client, or the
-`javax.ejb.EJBException` if the second client is a local client.
+`jakarta.ejb.EJBException` if the second client is a local client.
 
 There is no need for any restrictions against
 concurrent client access to stateless session beans because the
@@ -894,7 +894,7 @@ The `AccessTimeout` annotation is used to
 specify the amount of time a stateful session bean request should block
 in the case that it cannot immediately access a bean instance that is
 already processing a different request. If an access attempt times out,
-the container throws the `javax.ejb.ConcurrentAccessTimeoutException` to
+the container throws the `jakarta.ejb.ConcurrentAccessTimeoutException` to
 the client.
 
 The `AccessTimeout` annotation can be specified
@@ -1179,7 +1179,7 @@ return type `Future<V>` is permitted to declare application exceptions.
 The Bean Provider makes the result value of
 an asynchronous invocation available to the client by returning a
 `Future<V>` object for which both `get()` methods return the result value. A
-concrete `Future<V>` implemention called `javax.ejb.AsyncResult<V>` is
+concrete `Future<V>` implemention called `jakarta.ejb.AsyncResult<V>` is
 provided by the container as a convenience. The `AsyncResult<V>` class has
 a constructor that takes the result value as a parameter.
 
@@ -1360,13 +1360,13 @@ timeout specified by the Deployer. All
 object references and handles for the session object become invalid. If
 a client attempts to invoke a method on the bean’s business interface,
 the container will throw the
-`javax.ejb.NoSuchEJBException`.footnote:a10243[If the business interface 
+`jakarta.ejb.NoSuchEJBException`.footnote:a10243[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, 
 the `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the Enterprise Beans 2.1
 client view is used, the container will throw the
 `java.rmi.NoSuchObjectException` if the client is a remote client, or the
-`javax.ejb.NoSuchObjectLocalException` if the client is a local client.
+`jakarta.ejb.NoSuchObjectLocalException` if the client is a local client.
 
 * If a client invokes a session object whose
 session bean instance has been passivated, the container will activate
@@ -1390,16 +1390,16 @@ This ends the life of the session bean
 instance and the associated session object. If a client subsequently
 attempts to invoke a method on the bean’s business interface, the
 container will throw the
-`javax.ejb.NoSuchEJBException`.footnote:a10245[If the business interface 
+`jakarta.ejb.NoSuchEJBException`.footnote:a10245[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the Enterprise Beans 2.1
 client view is used, any subsequent attempt causes the
 `java.rmi.NoSuchObjectException` to be thrown if the client is a remote
-client, or the `javax.ejb.NoSuchObjectLocalException` if the client is a
+client, or the `jakarta.ejb.NoSuchObjectLocalException` if the client is a
 local client. (The `java.rmi.NoSuchObjectException` is a subclass of the
-`java.rmi.RemoteException`; the `javax.ejb.NoSuchObjectLocalException`
-is a subclass of the `javax.ejb.EJBException`). If the `Remove` method
+`java.rmi.RemoteException`; the `jakarta.ejb.NoSuchObjectLocalException`
+is a subclass of the `jakarta.ejb.EJBException`). If the `Remove` method
 completes successfully or if the `Remove` method throws an application
 exception for which `retainIfException` is not `true` or if a system
 exception is thrown, session synchronization methods are not called on
@@ -1426,7 +1426,7 @@ annotations._
 
 <<a953>> defines
 the methods of a stateful session bean class from which the session bean
-instances can access the methods of the `javax.ejb.SessionContext`
+instances can access the methods of the `jakarta.ejb.SessionContext`
 interface, the `java:comp/env` environment naming context, resource
 managers, `Timer` methods, the `EntityManager` and
 `EntityManagerFactory` methods, and other enterprise beans.
@@ -1664,13 +1664,13 @@ From the client perspective, the
 corresponding session object does not exist any more. If a client
 subsequently attempts to invoke a method on the bean’s business
 interface or the no-interface view, the container will throw the
-`javax.ejb.NoSuchEJBException`.footnote:a10247[If the business interface is 
+`jakarta.ejb.NoSuchEJBException`.footnote:a10247[If the business interface is 
 a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
 If the Enterprise Beans 2.1
 client view is used, the container will throw the
 `java.rmi.NoSuchObjectException` if the client is a remote client, or the
-`javax.ejb.NoSuchObjectLocalException` if the client is a local client.
+`jakarta.ejb.NoSuchObjectLocalException` if the client is a local client.
 
 ==== Missed `PreDestroy` Calls
 
@@ -1758,20 +1758,20 @@ method on the session object such that the transaction attribute
 specified in the bean’s metadata annotations and/or the deployment
 descriptor would cause the container to execute the method in a
 different transaction context or in an unspecified transaction context.
-In such a case, the `javax.ejb.EJBException` will be thrown to a client
+In such a case, the `jakarta.ejb.EJBException` will be thrown to a client
 of the bean’s business interface.footnote:a10248[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
 If the Enterprise Beans 2.1
 client view is used, the container throws the `java.rmi.RemoteException`
 to the client if the client is a remote client, or the
-`javax.ejb.EJBException` if the client is a local client.
+`jakarta.ejb.EJBException` if the client is a local client.
 
 If a stateful session bean instance is
 participating in a transaction, it is an error for a client to invoke
 the `remove` method on the session object’s home or component interface
 object. The container must detect such an attempt and throw the
-`javax.ejb.RemoveException` to the client. The container should not mark
+`jakarta.ejb.RemoveException` to the client. The container should not mark
 the client’s transaction for rollback, thus allowing the client to
 recover. Note that this restriction only applies to the remove method on
 the session object’s home or component interface, not to the invocation
@@ -1841,7 +1841,7 @@ return the session bean’s local interface.
 There can be no other `create` methods in the home interface._
 
 A stateless session bean must not implement
-the `javax.ejb.SessionSynchronization` interface or use the session
+the `jakarta.ejb.SessionSynchronization` interface or use the session
 synchronization annotations.
 
 [[a1077]]
@@ -1890,7 +1890,7 @@ ends the life of the stateless session bean instance.
 
 <<a1091>> defines
 the methods of a stateless session bean class in which the session bean
-instances can access the methods of the `javax.ejb.SessionContext`
+instances can access the methods of the `jakarta.ejb.SessionContext`
 interface, the `java:comp/env` environment naming context, resource
 managers, `TimerService` and `Timer` methods, the `EntityManager` and
 `EntityManagerFactory` methods, and other enterprise beans.
@@ -2135,7 +2135,7 @@ A singleton session bean is intended to be
 shared, and it supports concurrent access.
 
 A singleton session bean must not implement
-the `javax.ejb.SessionSynchronization` interface or use the session
+the `jakarta.ejb.SessionSynchronization` interface or use the session
 synchronization annotations.
 
 .Life Cycle of a Singleton Session Bean
@@ -2329,7 +2329,7 @@ thrown from an `AroundConstruct` or `PostConstruct` method, or the failure
 of a `PostConstruct` method’s container-managed transaction to
 successfully commit. If a singleton session bean fails to initialize,
 attempted invocations on the singleton session bean result in the
-`javax.ejb.NoSuchEJBException` exception as defined by <<a304>> 
+`jakarta.ejb.NoSuchEJBException` exception as defined by <<a304>> 
 and <<a312>>.
 
 The same singleton session bean instance must
@@ -2469,7 +2469,7 @@ method, the call must proceed immediately, without releasing the
 original `Read` lock.
 
 * If the target of the loopback call is a write
-method, the `javax.ejb.IllegalLoopbackException` must be thrown to the
+method, the `jakarta.ejb.IllegalLoopbackException` must be thrown to the
 caller.
 
 ===== Bean-Managed Concurrency
@@ -2632,7 +2632,7 @@ amount of time the access attempt should be blocked before timing out.
 Access timeouts only apply to methods eligible for concurrency locks on
 a singleton session bean with container-managed concurrency. If an
 access attempt times out, the container throws the
-`javax.ejb.ConcurrentAccessTimeoutException` to the client.
+`jakarta.ejb.ConcurrentAccessTimeoutException` to the client.
 
 The `AccessTimeout` annotation can be specified
 on a business method or on a bean class (or superclass). An
@@ -2647,13 +2647,13 @@ made.
 
 An `AccessTimeout` value of `0` indicates that
 concurrent access is not allowed. Access attempts on methods with a
-timeout value of `0` result in the `javax.ejb.ConcurrentAccessException`.
+timeout value of `0` result in the `jakarta.ejb.ConcurrentAccessException`.
 
 ==== Operations Allowed in the Methods of a Singleton Session Bean
 
 <<a1343>> defines
 the methods of a singleton session bean class in which the session bean
-instances can access the methods of the `javax.ejb.SessionContext`
+instances can access the methods of the `jakarta.ejb.SessionContext`
 interface, the `java:comp/env` environment naming context, resource
 managers, `TimerService` and `Timer` methods, the `EntityManager` and
 `EntityManagerFactory` methods, and other enterprise beans.
@@ -2936,18 +2936,18 @@ annotated with the `Inject` annotation (see
 <<a195>> and the CDI specification <<a9888>>).
 
 * The class may implement, directly or
-indirectly, the `javax.ejb.SessionBean` interface.footnote:a10255[Except 
+indirectly, the `jakarta.ejb.SessionBean` interface.footnote:a10255[Except 
 for singleton session beans.]
 
 * If the class is a stateful session bean, it
-may implement the `javax.ejb.SessionSynchronization` interface or use one
+may implement the `jakarta.ejb.SessionSynchronization` interface or use one
 or more of the session synchronization annotations.
 
 * The class may implement the session bean’s
 web service endpoint or component interface.
 
 * If the class is a stateless session bean, it
-may implement the `javax.ejb.TimedObject` interface. See <<a5456>>.
+may implement the `jakarta.ejb.TimedObject` interface. See <<a5456>>.
 
 * The class may implement the `ejbCreate` method(s).
 
@@ -3035,7 +3035,7 @@ interceptor method is the `ejbPassivate` method, these callback methods
 must be implemented on the bean class itself (or on its superclasses).
 Except for these cases, the method names can be arbitrary, but must not
 start with "ejb" to avoid conflicts with the callback methods defined by
-the `javax.ejb.EnterpriseBean` interfaces._
+the `jakarta.ejb.EnterpriseBean` interfaces._
 
 ==== Session Synchronization Methods
 
@@ -3090,14 +3090,14 @@ single `ejbCreate` method, with no arguments.
 
 * The `throws` clause may define arbitrary
 application exceptions, possibly including the
-`javax.ejb.CreateException`.
+`jakarta.ejb.CreateException`.
 
 _Compatibility Note: Enterprise Beans 1.0 allowed the `ejbCreate` method to
 throw the `java.rmi.RemoteException` to indicate a non-application
 exception. This practice was deprecated in Enterprise Beans 1.1—
 an Enterprise Beans 1.1 or Enterprise Beans 2.0
 or later compliant enterprise bean should throw the
-`javax.ejb.EJBException` or another `RuntimeException` to indicate
+`jakarta.ejb.EJBException` or another `RuntimeException` to indicate
 non-application exceptions to the container (see <<a2986>>). An Enterprise Beans 2.0 and
 later compliant enterprise bean should not throw the
 `java.rmi.RemoteException` from the `ejbCreate` method._
@@ -3147,7 +3147,7 @@ _Compatibility Note: Enterprise Beans 1.0 allowed the business methods to throw
 the `java.rmi.RemoteException` to indicate a non-application exception.
 This practice was deprecated in Enterprise Beans 1.1—
 an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later
-compliant enterprise bean should throw the `javax.ejb.EJBException` or
+compliant enterprise bean should throw the `jakarta.ejb.EJBException` or
 another `RuntimeException` to indicate non-application exceptions to the
 container (see <<a2986>>). An Enterprise Beans 2.0 or later compliant enterprise bean 
 should not throw the `java.rmi.RemoteException` from a business method._
@@ -3159,7 +3159,7 @@ The following are
 the requirements for the session bean’s business interface:
 
 * The interface must not extend the
-`javax.ejb.EJBObject` or `javax.ejb.EJBLocalObject` interface.
+`jakarta.ejb.EJBObject` or `jakarta.ejb.EJBLocalObject` interface.
 
 If the business interface is a remote
 business interface, the argument and return values must be of valid
@@ -3188,7 +3188,7 @@ in the deployment descriptor. The following rules apply to the
 interfaces implemented by the bean class:
 
 ** `java.io.Serializable`, `java.io.Externalizable` and the interfaces 
-defined by the `javax.ejb` package are excluded when determining whether
+defined by the `jakarta.ejb` package are excluded when determining whether
 the bean class has business interfaces.
 
 ** All business interfaces must be explicitly
@@ -3322,7 +3322,7 @@ descriptor.
 ** The following interfaces are excluded when
 determining whether the bean exposes a no-interface view:
 `java.io.Serializable`; `java.io.Externalizable`; any of the
-interfaces defined by the `javax.ejb` package.
+interfaces defined by the `jakarta.ejb` package.
 
 ** All non-static public methods of the bean
 class and of any superclasses except java.lang.Object are exposed as
@@ -3352,7 +3352,7 @@ any superclasses except `java.lang.Object` may be declared `final`.
 The following are
 the requirements for the session bean’s remote component interface:
 
-* The interface must extend the `javax.ejb.EJBObject` interface.
+* The interface must extend the `jakarta.ejb.EJBObject` interface.
 
 * The methods defined in this interface must
 follow the rules for RMI/IIOP. This means that their argument and return
@@ -3386,7 +3386,7 @@ The following are
 the requirements for the session bean’s
 remote home interface:
 
-* The interface must extend the `javax.ejb.EJBHome` interface.
+* The interface must extend the `jakarta.ejb.EJBHome` interface.
 
 * The methods defined in this interface must
 follow the rules for RMI/IIOP. This means that their argument and return
@@ -3418,14 +3418,14 @@ clause of an `ejbCreate<METHOD>` method of the session bean class must
 be defined in the `throws` clause of the matching `create<METHOD>`
 method of the remote home interface.
 
-* The `throws` clause must include `javax.ejb.CreateException`.
+* The `throws` clause must include `jakarta.ejb.CreateException`.
 
 ==== Session Bean’s Local Component Interface
 
 The following are
 the requirements for the session bean’s local component interface:
 
-* The interface must extend the `javax.ejb.EJBLocalObject` interface.
+* The interface must extend the `jakarta.ejb.EJBLocalObject` interface.
 
 * The `throws` clause of a method defined in
 the local interface must not include the `java.rmi.RemoteException`.
@@ -3451,7 +3451,7 @@ in the `throws` clause of the method of the local component interface.
 The following are
 the requirements for the session bean’s local home interface:
 
-* The interface must extend the javax.ejb.EJBLocalHome interface.
+* The interface must extend the jakarta.ejb.EJBLocalHome interface.
 
 * The `throws` clause of a method in the local
 home interface must not include the `java.rmi.RemoteException`.
@@ -3478,7 +3478,7 @@ clause of an `ejbCreate<METHOD>` method of the session bean class must
 be defined in the `throws` clause of the matching `create<METHOD>`
 method of the local home interface.
 
-* The `throws` clause must include `javax.ejb.CreateException`.
+* The `throws` clause must include `jakarta.ejb.CreateException`.
 
 ==== Session Bean’s Web Service Endpoint Interface
 
@@ -3597,7 +3597,7 @@ requirements of <<a519>>.
 The session
 EJBHome class, which is generated by the deployment tools, implements
 the session bean’s remote home interface. This class implements the
-methods of the `javax.ejb.EJBHome` interface and the `create<METHOD>`
+methods of the `jakarta.ejb.EJBHome` interface and the `create<METHOD>`
 methods specific to the session bean.
 
 The implementation of each `create<METHOD>`
@@ -3608,7 +3608,7 @@ method invokes a matching `ejbCreate<METHOD>` method.
 The session
 EJBObject class, which is generated by the deployment tools, implements
 the session bean’s remote component interface. It implements the methods
-of the `javax.ejb.EJBObject` interface and the business methods specific
+of the `jakarta.ejb.EJBObject` interface and the business methods specific
 to the session bean.
 
 The implementation of each business method
@@ -3621,7 +3621,7 @@ business method on the instance.
 The session
 EJBLocalHome class, which is generated by the deployment tools,
 implements the session bean’s local home interface. This class
-implements the methods of the `javax.ejb.EJBLocalHome` interface and the
+implements the methods of the `jakarta.ejb.EJBLocalHome` interface and the
 `create<METHOD>` methods specific to the session bean.
 
 The implementation of each `create<METHOD>`
@@ -3632,7 +3632,7 @@ method invokes a matching `ejbCreate<METHOD>` method.
 The session
 EJBLocalObject class, which is generated by the deployment tools,
 implements the session bean’s local component interface. It implements
-the methods of the `javax.ejb.EJBLocalObject` interface and the business
+the methods of the `jakarta.ejb.EJBLocalObject` interface and the business
 methods specific to the session bean.
 
 The implementation of each business method
@@ -3665,7 +3665,7 @@ for the session bean’s remote home and remote component interfaces.
 The deployment tools are responsible for
 implementing the class that provides metadata to the remote client view
 contract. The class must be a valid RMI Value class and must implement
-the `javax.ejb.EJBMetaData` interface.
+the `jakarta.ejb.EJBMetaData` interface.
 
 ==== Non-reentrant Instances
 

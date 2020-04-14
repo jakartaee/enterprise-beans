@@ -474,11 +474,11 @@ It is invalid to reference a session object
 that does not exist. If a stateful session bean has been removed,
 attempted invocations on the stateful session bean business interface
 result in the
-`javax.ejb.NoSuchEJBException`.footnote:a10220[This may not apply to 
+`jakarta.ejb.NoSuchEJBException`.footnote:a10220[This may not apply to 
 stateless session beans; see <<a1065>>.]
 If a singleton session bean did not successfully initialize, attempted
 invocations on the singleton session bean business interface result in
-the `javax.ejb.NoSuchEJBException`.
+the `jakarta.ejb.NoSuchEJBException`.
 
 The container provides an implementation of a
 session bean’s business interface such that when the client invokes a
@@ -515,7 +515,7 @@ Only `public` methods of the bean class and of
 any superclasses except `java.lang.Object` may be invoked through the
 no-interface view. Attempted invocations of methods with any other
 access modifiers via the no-interface view reference must result in the
-`javax.ejb.EJBException`.
+`jakarta.ejb.EJBException`.
 
 When interacting with a reference to the
 no-interface view, the client must not make any assumptions regarding
@@ -538,10 +538,10 @@ no-arg constructor.
 It is invalid to reference a session object
 that does not exist. If a stateful session bean has been removed,
 attempted invocations on the no-interface view reference must result in
-the `javax.ejb.NoSuchEJBException`. If a singleton session bean did not
+the `jakarta.ejb.NoSuchEJBException`. If a singleton session bean did not
 successfully initialize, attempted invocations on the singleton session
 bean’s no-interface view reference result in the
-`javax.ejb.NoSuchEJBException`.
+`jakarta.ejb.NoSuchEJBException`.
 
 ==== Client View of Session Object’s Life Cycle
 
@@ -747,7 +747,7 @@ the container returns control to the client immediately and continues
 processing the invocation on a separate thread of execution.
 
 The client should expect to receive a system
-exception (in the form of the `javax.ejb.EJBException`) on the client
+exception (in the form of the `jakarta.ejb.EJBException`) on the client
 thread if the container has problems allocating the internal resources
 required to support the asynchronous method.footnote:a10223[If the 
 business interface is a remote business interface that extends 
@@ -984,8 +984,8 @@ do the following:
 
 * Remove a session object.
 
-* Get the `javax.ejb.EJBMetaData` interface for the session bean. The
-`javax.ejb.EJBMetaData` interface is intended to allow application
+* Get the `jakarta.ejb.EJBMetaData` interface for the session bean. The
+`jakarta.ejb.EJBMetaData` interface is intended to allow application
 assembly tools to discover information about the session bean, and to
 allow loose client/server binding and client-side scripting.
 
@@ -1022,7 +1022,7 @@ home interface that defines two `create<METHOD>` methods:
 
 [source, java]
 ----
-public interface CartHome extends javax.ejb.EJBHome {
+public interface CartHome extends jakarta.ejb.EJBHome {
  Cart create(String customerName, String account)
      throws RemoteException, BadAccountException, CreateException;
  Cart createLargeCart(String customerName, String account)
@@ -1043,13 +1043,13 @@ cartHome.create("John", "7506");
 
 A remote client
 may remove a session object using the `remove()` method of the
-`javax.ejb.EJBObject` interface, or the `remove(Handle handle)` method of
-the `javax.ejb.EJBHome` interface.
+`jakarta.ejb.EJBObject` interface, or the `remove(Handle handle)` method of
+the `jakarta.ejb.EJBHome` interface.
 
 Because session objects do not have primary
 keys that are accessible to clients, invoking the 
-`javax.ejb.EJBHome.remove(Object primaryKey)` method on a session results
-in a `javax.ejb.RemoveException`.
+`jakarta.ejb.EJBHome.remove(Object primaryKey)` method on a session results
+in a `jakarta.ejb.RemoveException`.
 
 ==== Session Bean’s Local Home Interface
 
@@ -1101,7 +1101,7 @@ home interface that defines two `create<METHOD>` methods:
 
 [source, java]
 ----
-public interface CartHome extends javax.ejb.EJBLocalHome {
+public interface CartHome extends jakarta.ejb.EJBLocalHome {
  Cart create(String customerName, String account)
      throws BadAccountException, CreateException;
  Cart createLargeCart(String customerName, String account)
@@ -1122,12 +1122,12 @@ cartHome.create("John", "7506");
 
 A local client
 may remove a session object using the `remove()` method of the
-`javax.ejb.EJBLocalObject` interface.
+`jakarta.ejb.EJBLocalObject` interface.
 
 Because session objects do not have primary
 keys that are accessible to clients, invoking the 
-`javax.ejb.EJBLocalHome.remove(Object primaryKey)` method on a session
-results in a `javax.ejb.RemoveException`.
+`jakarta.ejb.EJBLocalHome.remove(Object primaryKey)` method on a session
+results in a `jakarta.ejb.RemoveException`.
 
 ==== EJBObject and EJBLocalObject
 
@@ -1145,7 +1145,7 @@ A session EJBObject supports:
 session EJBObject delegates invocation of a business method to the
 session bean instance.
 
-* The methods of the `javax.ejb.EJBObject`
+* The methods of the `jakarta.ejb.EJBObject`
 interface. These methods allow the client to:
 
 ** Get the session object’s remote home interface.
@@ -1162,7 +1162,7 @@ A session EJBLocalObject supports:
 session EJBLocalObject delegates invocation of a business method to the
 session bean instance.
 
-* The methods of the `javax.ejb.EJBLocalObject`
+* The methods of the `jakarta.ejb.EJBLocalObject`
 interface. These methods allow the client to:
 
 ** Get the session object’s local home interface.
@@ -1172,7 +1172,7 @@ interface. These methods allow the client to:
 ** Remove the session object.
 
 The implementation of the methods defined in
-the `javax.ejb.EJBObject` and `javax.ejb.EJBLocalObject` interfaces is
+the `jakarta.ejb.EJBObject` and `jakarta.ejb.EJBLocalObject` interfaces is
 provided by the container. They are not delegated to the instances of
 the session bean class.
 
@@ -1238,7 +1238,7 @@ lifetime expires.
 It is invalid to reference a session
 object that does not exist. Attempted invocations on a stateful session
 object that does not exist result in
-`javax.ejb.NoSuchObjectLocalException`.footnote:a10226[This may not apply 
+`jakarta.ejb.NoSuchObjectLocalException`.footnote:a10226[This may not apply 
 to stateless session beans; see <<a1065>>.]
 
 A client can pass a
@@ -1316,10 +1316,10 @@ identity as a primary key, on the opposite, they hide their identity. As
 a result, the `EJBObject.getPrimaryKey()`
 method results in a `java.rmi.RemoteException` and the
 `EJBLocalObject.getPrimaryKey()` method
-results in a `javax.ejb.EJBException`, and the 
+results in a `jakarta.ejb.EJBException`, and the 
 `EJBHome.remove(Object primaryKey)` and the 
 `EJBLocalHome.remove(Object primaryKey)` methods
-result in a `javax.ejb.RemoveException` if called on a session bean. If
+result in a `jakarta.ejb.RemoveException` if called on a session bean. If
 the `EJBMetaData.getPrimaryKeyClass()` method is invoked on a
 `EJBMetaData` object for a session bean, the method throws the
 `java.lang.RuntimeException`.Since all session objects hide their
@@ -1407,7 +1407,7 @@ The object
 identifier of a session object is, in general, opaque to the client. The
 result of `getPrimaryKey()` on a session EJBObject reference results in
 `java.rmi.RemoteException`. The result of `getPrimaryKey()` on a
-session EJBLocalObject reference results in `javax.ejb.EJBException`.
+session EJBLocalObject reference results in `jakarta.ejb.EJBException`.
 
 ==== Type Narrowing
 

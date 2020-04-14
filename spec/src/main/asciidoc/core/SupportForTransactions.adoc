@@ -801,15 +801,15 @@ public class MySessionBean implements MySession {
 }
 ----
 
-===== javax.ejb.SessionSynchronization Interface
+===== jakarta.ejb.SessionSynchronization Interface
 
 A stateful
 session bean with container-managed transaction demarcation can
-optionally implement the `javax.ejb.SessionSynchronization` interface or
+optionally implement the `jakarta.ejb.SessionSynchronization` interface or
 use the session synchronization annotations. Their use is described in
 <<a736>>.
 
-===== javax.ejb.EJBContext.setRollbackOnly Method
+===== jakarta.ejb.EJBContext.setRollbackOnly Method
 
 An enterprise
 bean with container-managed transaction demarcation can use the
@@ -825,7 +825,7 @@ debits one account and credits another account could mark a transaction
 for rollback if it successfully performs the debit operation, but
 encounters a failure during the credit operation._
 
-===== javax.ejb.EJBContext.getRollbackOnly method
+===== jakarta.ejb.EJBContext.getRollbackOnly method
 
 An enterprise
 bean with container-managed transaction demarcation can use the
@@ -965,7 +965,7 @@ message-driven bean class and for the timeout callback methods, if any.
 earlier client view, the transaction attributes are specified for the
 methods of the component interface and all the direct and indirect
 superinterfaces of the component interface, excluding the methods of the
-`javax.ejb.EJBObject` or `javax.ejb.EJBLocalObject` interface; and for the
+`jakarta.ejb.EJBObject` or `jakarta.ejb.EJBLocalObject` interface; and for the
 timeout callback methods, if any. Transaction attributes must not be
 specified for the methods of a session bean’s home interface.
 
@@ -1043,7 +1043,7 @@ methods, only the `REQUIRES_NEW` and `NOT_SUPPORTED` transaction
 attributes may be used.
 
 If an enterprise bean implements the
-`javax.ejb.SessionSynchronization` interface or uses any of the session
+`jakarta.ejb.SessionSynchronization` interface or uses any of the session
 synchronization annotations, only the following values may be used for
 the transaction attributes of the bean’s methods: `REQUIRED`,
 `REQUIRES_NEW`, `MANDATORY`.footnote:a10270[If a stateful session bean's 
@@ -1430,7 +1430,7 @@ The container must make the
 bean’s business method, message listener method, interceptor method, or
 timeout callback method via dependency injection into the enterprise
 bean class or interceptor class, through lookup via the
-`javax.ejb.EJBContext` interface, and in the JNDI naming context under
+`jakarta.ejb.EJBContext` interface, and in the JNDI naming context under
 `java:comp/UserTransaction`. When an instance uses the
 `javax.transaction.UserTransaction` interface to demarcate a transaction,
 the container must enlist all the resource managers used by the instance
@@ -1480,12 +1480,12 @@ exception occurred in an `AroundConstruct`, `PostConstruct` or
 `PreDestroy` lifecycle interceptor method.]
 
 * Throw the
-`javax.ejb.EJBException`.footnote:a10274[If the business interface is a 
+`jakarta.ejb.EJBException`.footnote:a10274[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
 If the Enterprise Beans 2.1 client
 view is used, the container should throw thejava.rmi.RemoteException if
-the client is a remote client, and the `javax.ejb.EJBException` if the
+the client is a remote client, and the `jakarta.ejb.EJBException` if the
 client is a local client.
 
 If a
@@ -1581,7 +1581,7 @@ committed the previous transaction, the container must throw the
 The container must throw the
 `java.lang.IllegalStateException` if an instance of a bean with
 bean-managed transaction demarcation attempts to invoke the
-`setRollbackOnly` or `getRollbackOnly` method of the `javax.ejb.EJBContext`
+`setRollbackOnly` or `getRollbackOnly` method of the `jakarta.ejb.EJBContext`
 interface.
 
 [[a2748]]
@@ -1598,7 +1598,7 @@ bean class or specified in the deployment descriptor.
 ===== Session Synchronization Callbacks
 
 If a session bean class implements the
-`javax.ejb.SessionSynchronization` interface or uses the session
+`jakarta.ejb.SessionSynchronization` interface or uses the session
 synchronization annotations, the container must invoke the `afterBegin`,
 `beforeCompletion`, and `afterCompletion` callbacks on the instance as part
 of the transaction commit protocol. If a stateful session bean's
@@ -1735,14 +1735,14 @@ context, the container performs the same steps as described in the
 
 * If the client calls without a transaction
 context, the container throws the
-`javax.ejb.EJBTransactionRequiredException`.footnote:a10275[If the business 
+`jakarta.ejb.EJBTransactionRequiredException`.footnote:a10275[If the business 
 interface is a remote business interface that extends `java.rmi.Remote`, 
 the `javax.transaction.TransactionRequiredException` is thrown to the 
 client instead.] If
 the Enterprise Beans 2.1 client view is used, the container throws the
 `javax.transaction.TransactionRequiredException` exception if the client
 is a remote client, and the
-`javax.ejb.TransactionRequiredLocalException` if the client is a local
+`jakarta.ejb.TransactionRequiredLocalException` if the client is a local
 client.
 
 ===== NEVER
@@ -1754,13 +1754,13 @@ The client is required to call without a transaction context.
 
 * If the client calls with a transaction
 context, the container throws the
-`javax.ejb.EJBException`.footnote:a10276[If the business interface is a 
+`jakarta.ejb.EJBException`.footnote:a10276[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.]
 If the Enterprise Beans 2.1 client
 view is used, the container throws the java.rmi.RemoteException
 exception if the client is a remote client, and the
-`javax.ejb.EJBException` if the client is a local client.
+`jakarta.ejb.EJBException` if the client is a local client.
 
 * If the client calls without a transaction
 context, the container performs the same steps as described in the
@@ -2142,7 +2142,7 @@ the same Enterprise Beans container as the target entity object.
 If the Container Provider chooses not to
 support distributed diamonds, and if the container can detect that a
 client invocation would lead to a diamond, the container should throw
-the `javax.ejb.EJBException` (or `java.rmi.RemoteException` if the Enterprise Beans 2.1
+the `jakarta.ejb.EJBException` (or `java.rmi.RemoteException` if the Enterprise Beans 2.1
 remote client view is used).
 
 ==== Bean Provider’s Responsibilities

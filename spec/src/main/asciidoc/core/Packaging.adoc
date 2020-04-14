@@ -357,7 +357,7 @@ the client view classes
 
 The client may also require the use of system
 value classes (e.g., the serializable value classes implementing the
-`javax.ejb.Handle`, `javax.ejb.HomeHandle`, `javax.ejb.EJBMetaData`,
+`jakarta.ejb.Handle`, `jakarta.ejb.HomeHandle`, `jakarta.ejb.EJBMetaData`,
 `java.util.Enumeration`, `java.util.Collection`, and `java.util.Iterator`
 interfaces), although these are not packaged with the application. It is
 the responsibility of the provider of the container hosting the
