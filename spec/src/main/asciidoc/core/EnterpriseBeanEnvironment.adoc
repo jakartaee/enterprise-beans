@@ -1690,7 +1690,7 @@ obtaining JDBC connections, and the
 for obtaining Jakarta Messaging connections.
 
 The Bean Provider must use the
-`javax.mail.Session`  resource manager
+`jakarta.mail.Session` resource manager
 connection factory type for obtaining
 Jakarta Mail connections, and the `java.net.URL`
  resource manager connection factory type

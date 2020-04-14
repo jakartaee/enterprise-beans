@@ -171,7 +171,7 @@ even if it is not serializable.
 * A reference to the `UserTransaction` interface.
 
 * A reference to a resource manager connection
-factory.footnote:a10232[Except for the `javax.mail.Session` resource 
+factory.footnote:a10232[Except for the `jakarta.mail.Session` resource 
 manager connection factory.]
 
 * A reference to a container-managed
