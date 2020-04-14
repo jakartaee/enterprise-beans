@@ -8,7 +8,7 @@ the deployment descriptor from the perspective of the Enterprise Beans roles
 responsible for providing the information.
 <<a5910>> defines the deployment descriptor’s XML Schema
 elements that are specific to the Enterprise Beans architecture.
-The XML Schema elements that are common to the Java EE Platform 
+The XML Schema elements that are common to the Jakarta EE Platform 
 specifications are provided in <<a9861>>.
 
 Entity beans elements are described in the
@@ -31,7 +31,7 @@ Assembler contains one or more enterprise beans, plus application
 assembly information describing how the enterprise beans are combined
 into a single application deployment unit.
 
-_The Java EE specification defines how
+_The Jakarta EE specification defines how
 enterprise beans and other application components contained in multiple
 such files can be assembled into an application._
 
@@ -360,7 +360,7 @@ application assembly information:
 * *Binding of enterprise bean references* +
 The Application Assembler may link an enterprise
 bean reference to another enterprise bean in the ejb-jar file or `.war`
-file or in an ejb-jar file in the same Java EE application unit. The
+file or in an ejb-jar file in the same Jakarta EE application unit. The
 Application Assembler creates the link by adding the
 `ejb-link` element to the referencing bean.
 The Application Assembler uses the `ejb-name` of the referenced bean for
@@ -375,7 +375,7 @@ same name to be uniquely identified.
 * *Linking of message destination references* +
 The Application Assembler may link message consumers and producers
 through common message destinations specified in the ejb-jar file or
-`.war` file or in the same Java EE application unit. The Application
+`.war` file or in the same Jakarta EE application unit. The Application
 Assembler creates the link by adding the message-destination-link
 element to the referencing bean.
 
