@@ -437,7 +437,7 @@ as the properties set by the Jakarta XML Web Services message handlers, if any. 
 session bean may use the `WebServiceContext` interface to set properties
 for the Jakarta XML Web Services message handlers, if any. See <<a9881>>.
 
-The `javax.xml.ws.handler.MessageContext`<<a9881>> is also
+The `jakarta.xml.ws.handler.MessageContext`<<a9881>> is also
 accessible to interceptors for session bean web service endpoints. See 
 <<a2029>>.
 
