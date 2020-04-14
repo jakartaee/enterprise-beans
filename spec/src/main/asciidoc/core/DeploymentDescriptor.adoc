@@ -258,7 +258,7 @@ metadata annotations, as specified in <<a5071>>.
 * *Message-driven bean’s configuration properties* +
 The Bean Provider may provide input to the Deployer as to
 how a message-driven bean should be configured upon activation in its
-operational environment. Activation configuration properties for a JMS
+operational environment. Activation configuration properties for a Jakarta Messaging
 message-driven bean include information about a bean’s intended
 destination type, its message selector, and its acknowledgement mode.
 Other bean types may make use of different properties. See <<a9863>>.
@@ -323,7 +323,7 @@ elements.
 
 * *Message-driven bean message selector* +
 The Application Assembler may further restrict, but not replace, the value
-of the `messageSelector` `activation-config-property` element of a JMS
+of the `messageSelector` `activation-config-property` element of a Jakarta Messaging
 message-driven bean—whether this was defined in metadata annotations or 
 the deployment descriptor.
 

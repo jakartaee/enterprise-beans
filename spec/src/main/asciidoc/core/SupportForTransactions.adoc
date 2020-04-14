@@ -293,7 +293,7 @@ in <<a9863>> are used, it may be the messaging provider that starts the
 transaction.]
 
 ****
-_JMS requires that the transaction be started
+_Jakarta Messaging requires that the transaction be started
 before the dequeuing of the message. See <<a9862>>._
 ****
 
