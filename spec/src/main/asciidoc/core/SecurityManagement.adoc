@@ -1,18 +1,18 @@
 [[a4945]]
 == Security Management
 
-This chapter defines the EJB architecture’s
+This chapter defines the Enterprise Beans architecture’s
 support for security management.
 
 === Overview
 
 _We set the following goals for the security
-management in the EJB architecture:_
+management in the Enterprise Beans architecture:_
 
 * _Lessen the burden of the application
 developer (i.e. the Bean Provider) for securing the application by
-allowing greater coverage from more qualified EJB roles. The EJB
-Container Provider provides the implementation of the security
+allowing greater coverage from more qualified Enterprise Beans roles. 
+The Container Provider provides the implementation of the security
 infrastructure; the Deployer and System Administrator define the
 security policies._
 
@@ -20,10 +20,10 @@ security policies._
 Application Assembler or Deployer._
 
 * _Allow the enterprise bean applications to be
-portable across multiple EJB servers that use different security
+portable across multiple Enterprise Beans servers that use different security
 mechanisms._
 
-The EJB architecture encourages the Bean
+The Enterprise Beans architecture encourages the Bean
 Provider to implement the enterprise bean class without hard-coding the
 security policies and mechanisms into the business methods. In most
 cases, the enterprise bean’s business methods should not contain any
@@ -113,18 +113,18 @@ managing security at runtime, and providing the tools used by the
 Deployer to manage security during deployment.
 
 Because not all security policies can be
-expressed declaratively, the EJB architecture provides a simple
+expressed declaratively, the Enterprise Beans architecture provides a simple
 programmatic interface that the Bean Provider may use to access the
 security context from the business methods.
 
 The following sections define the
-responsibilities of the individual EJB roles with respect to security
+responsibilities of the individual Enterprise Beans roles with respect to security
 management.
 
 === Bean Provider’s Responsibilities
 
 This section defines the Bean Provider’s
-perspective of the EJB architecture support for security, and defines
+perspective of the Enterprise Beans architecture support for security, and defines
 his or her responsibilities. In addition, the Bean Provider may define
 the security roles for the application, as defined in <<a5121>>.
 
@@ -132,7 +132,7 @@ the security roles for the application, as defined in <<a5121>>.
 
 An enterprise bean business method can invoke
 another enterprise bean via the other bean’s business interface,
-no-interface view, or home or component interface. The EJB architecture
+no-interface view, or home or component interface. The Enterprise Beans architecture
 provides no programmatic interfaces for the invoking enterprise bean to
 control the principal passed to the invoked enterprise bean.
 
@@ -151,7 +151,7 @@ management.
 
 ==== Access of Underlying OS Resources
 
-The EJB architecture does not define the
+The Enterprise Beans architecture does not define the
 operating system principal under which
 enterprise bean methods execute. Therefore, the Bean Provider cannot
 rely on a specific principal for accessing the underlying OS resources,
@@ -168,7 +168,7 @@ enterprise beans._
 The Bean Provider
 should neither implement security mechanisms nor hard-code security
 policies in the enterprise beans’ business methods. Rather, the Bean
-Provider should rely on the security mechanisms provided by the EJB
+Provider should rely on the security mechanisms provided by the Enterprise Beans
 container.
 
 The Bean Provider can use metadata
@@ -186,7 +186,7 @@ enterprise bean business methods need to access the security context
 information._
 
 The `javax.ejb.EJBContext` interface provides two
-methods (plus two deprecated methods that were defined in EJB 1.0) that
+methods (plus two deprecated methods that were defined in Enterprise Beans 1.0) that
 allow the Bean Provider to access security information about the
 enterprise bean’s caller.
 [source, java]
@@ -194,14 +194,14 @@ enterprise bean’s caller.
 public interface javax.ejb.EJBContext {
     ...
     //
-    // The following two methods allow the EJB class
+    // The following two methods allow the Enterprise Beans class
     // to access security information.
     //
     java.security.Principal getCallerPrincipal();
     boolean isCallerInRole(String roleName);
 
     //
-    // The following two EJB 1.0 methods are deprecated.
+    // The following two Enterprise Beans 1.0 methods are deprecated.
     //
     java.security.Identity getCallerIdentity();
     boolean isCallerInRole(java.security.Identity role);
@@ -220,11 +220,11 @@ when no security context exists, they should throw the
 
 The
 `getCallerIdentity()` and `isCallerInRole(Identity role)` methods were
-deprecated in EJB 1.1. The Bean Provider must use the
+deprecated in Enterprise Beans 1.1. The Bean Provider must use the
 `getCallerPrincipal()` and `isCallerInRole(String roleName)` methods for new
 enterprise beans.
 
-An EJB 1.1 or later compliant container may
+An Enterprise Beans 1.1 or later compliant container may
 choose to implement the two deprecated methods as follows.
 
 * A container that does not want to provide
@@ -283,18 +283,18 @@ on the operational environment and the configuration of the application.
 _An enterprise may have a complex security
 infrastructure that includes multiple security domains. The security
 infrastructure may perform one or more mapping of principals on the path
-from an EJB caller to the EJB object. For example, an employee accessing
+from an Enterprise Beans caller to the Enterprise Beans object. For example, an employee accessing
 his or her company over the Internet may be identified by a userid and
 password (basic authentication), and the security infrastructure may
 authenticate the principal and then map the principal to a Kerberos
 principal that is used on the enterprise’s intranet before delivering
-the method invocation to the EJB object. If the security infrastructure
+the method invocation to the Enterprise Beans object. If the security infrastructure
 performs principal mapping, the `getCallerPrincipal` method returns the
 principal that is the result of the mapping, not the original caller
 principal. (In the previous example, `getCallerPrincipal` would return
 the Kerberos principal.) The management of the security infrastructure,
 such as principal mapping, is performed by the System Administrator
-role; it is beyond the scope of the EJB specification._
+role; it is beyond the scope of the Enterprise Beans specification._
 
 The following code sample illustrates the use
 of the `getCallerPrincipal()` method.
@@ -682,7 +682,7 @@ relation from the set of security roles to the set of methods of the
 business interfaces, home interfaces, component interfaces, no-interface
 views, and/or web service endpoints of session and
 entity footnote:a10328[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.] beans, 
+are described in the Enterprise Beans Optional Features document <<a9890>>.] beans, 
 including all their
 superinterfaces (including the methods of the EJBHome and EJBObject
 interfaces and/or `EJBLocalHome` and `EJBLocalObject` interfaces). The
@@ -1126,10 +1126,10 @@ Using the deployment descriptor, this can be specified as follows.
 The Deployer is responsible for ensuring that
 an assembled application is secure after it has been deployed in the
 target operational environment. This section defines the Deployer’s
-responsibility with respect to EJB security management.
+responsibility with respect to Enterprise Beans security management.
 
 The Deployer uses deployment tools provided
-by the EJB Container Provider to read the security view of the
+by the Container Provider to read the security view of the
 application supplied by the Bean Provider and/or Application Assembler
 in the metadata annotations and/or deployment descriptor. The Deployer’s
 job is to map the security view that was specified by the Bean Provider
@@ -1138,7 +1138,7 @@ security domain in the target operational environment. The output of the
 Deployer’s work includes an application security policy descriptor that
 is specific to the operational environment. The format of this
 descriptor and the information stored in the descriptor are specific to
-the EJB container.
+the Enterprise Beans container.
 
 The following subsections describe the
 security related tasks performed by the Deployer.
@@ -1179,7 +1179,7 @@ security-role `payroll-department`, and the assigned principals and/or
 principal groups would be implicitly assigned also to the linked
 security role reference `payroll`.
 
-_The EJB architecture does not specify how an
+_The Enterprise Beans architecture does not specify how an
 enterprise should implement its security architecture. Therefore, the
 process of assigning the logical security roles defined in the
 application’s deployment descriptor to the operational environment’s
@@ -1241,12 +1241,12 @@ security roles and method permissions for the application.) It is not
 required that the Deployer store the output of this activity in the
 standard ejb-jar file format.
 
-=== EJB Client Responsibilities
+=== Enterprise Beans Client Responsibilities
 
 This section
-defines the rules that the EJB client program must follow to ensure that
+defines the rules that the Enterprise Beans client program must follow to ensure that
 the security context passed on the client calls, and possibly imported
-by the enterprise bean, do not conflict with the EJB server’s
+by the enterprise bean, do not conflict with the Enterprise Beans server’s
 capabilities for association between a security context and
 transactions.
 
@@ -1270,14 +1270,14 @@ intermediary objects or programs in the transaction call-chain), all
 requests within the same transaction must be associated with the same
 security context.
 
-=== EJB Container Provider’s Responsibilities
+=== Container Provider’s Responsibilities
 
 This section describes the responsibilities
-of the EJB Container Provider and Server Provider.
+of the Container Provider and Server Provider.
 
 ==== Deployment Tools
 
-The EJB Container Provider is responsible for
+The Container Provider is responsible for
 providing the deployment tools that the Deployer can use to perform the
 tasks defined in <<a5364>>.
 
@@ -1290,32 +1290,32 @@ annotations and deployment descriptor to the security management
 mechanisms and policies used in the target operational environment.
 
 The deployment tools’ output is stored in an
-EJB container-specific manner, and is available at runtime to the EJB
-container.
+Enterprise Beans container-specific manner, and is available at runtime 
+to the Enterprise Beans container.
 
 ==== Security Domain(s)
 
-The EJB container
+The Enterprise Beans container
 provides a security domain and one or more principal realms to the
-enterprise beans. The EJB architecture does not specify how an EJB
+enterprise beans. The Enterprise Beans architecture does not specify how an Enterprise Beans
 server should implement a security domain, and does not define the scope
 of a security domain.
 
 _A security domain can be implemented,
-managed, and administered by the EJB server. For example, the EJB server
+managed, and administered by the Enterprise Beans server. For example, the Enterprise Beans server
 may store X509 certificates or it might use an external security
 provider such as Kerberos._
 
-_The EJB specification does not define the
+_The Enterprise Beans specification does not define the
 scope of the security domain. For example, the scope may be defined by
-the boundaries of the application, EJB server, operating system,
+the boundaries of the application, Enterprise Beans server, operating system,
 network, or enterprise._
 
-The EJB server can, but is not required to,
+The Enterprise Beans server can, but is not required to,
 provide support for multiple security domains, and/or multiple principal
 realms.
 
-_The case of multiple domains on the same EJB
+_The case of multiple domains on the same Enterprise Beans
 server can happen when a large server is used for application hosting.
 Each hosted application can have its own security domain to ensure
 security and management isolation between applications owned by multiple
@@ -1323,31 +1323,31 @@ organizations._
 
 ==== Security Mechanisms
 
-The EJB Container
+The Container
 Provider must provide the security mechanisms necessary to enforce the
-security policies set by the Deployer. The EJB specification does not
+security policies set by the Deployer. The Enterprise Beans specification does not
 specify the exact mechanisms that must be implemented and supported by
-the EJB server.
+the Enterprise Beans server.
 
-_The typical security functions provided by the EJB server include:_
+_The typical security functions provided by the Enterprise Beans server include:_
 
 * _Authentication of principals._
 
-* _Access authorization for EJB calls and resource manager access._
+* _Access authorization for Enterprise Beans calls and resource manager access._
 
 * _Secure communication with remote clients (privacy, integrity, etc.)._
 
-==== Passing Principals on EJB Calls
+==== Passing Principals on Enterprise Beans Calls
 
-The EJB Container Provider is responsible for
+The Container Provider is responsible for
 providing the deployment tools that allow the Deployer to configure the
 principal delegation for calls from one enterprise bean to another. The
-EJB container is responsible for performing the principal delegation as
+Enterprise Beans container is responsible for performing the principal delegation as
 specified by the Deployer.
 
-The EJB container
+The Enterprise Beans container
 must be capable of allowing the Deployer to specify that, for all calls
-from a single application within a single Java EE product, the caller
+from a single application within a single Jakarta EE product, the caller
 principal is propagated on calls from one enterprise bean to another
 (i.e., the multiple beans in the call chain will see the same return
 value from `getCallerPrincipal`).
@@ -1356,21 +1356,21 @@ _This requirement is necessary for
 applications that need a consistent return value of `getCallerPrincipal`
 across a chain of calls between enterprise beans._
 
-The EJB container must be capable of allowing
+The Enterprise Beans container must be capable of allowing
 the Deployer to specify that a run-as principal be used for the
 execution of the business, home, and component interfaces, no-interface
 view, and/or web service endpoint methods of a session or an
 entity footnote:a10329[Component contract and client view of entity beans 
-are described in the EJB Optional Features document <<a9890>>.] bean, 
+are described in the Enterprise Beans Optional Features document <<a9890>>.] bean, 
 or for the message listener methods
 of a message-driven bean.
 
 ==== Security Methods in javax.ejb.EJBContext
 
-The EJB container
+The Enterprise Beans container
 must provide access to the caller’s security context information from
 the enterprise beans’ instances via the `getCallerPrincipal()` and
-`isCallerInRole(String roleName)` methods. The EJB container must provide
+`isCallerInRole(String roleName)` methods. The Enterprise Beans container must provide
 the caller’s security context information during the execution of a
 business method invoked via the enterprise bean’s business, home,
 component, no-interface view, or messsage listener interface, web
@@ -1386,14 +1386,14 @@ return a `null` from the `getCallerPrincipal` method.
 
 ==== Secure Access to Resource Managers
 
-The EJB Container Provider is responsible for providing secure access to 
+The Container Provider is responsible for providing secure access to 
 resource managers as described in <<a4322>>.
 
 ==== Principal Mapping
 
 If the application requires that its clients
 are deployed in a different security domain, or if multiple applications
-deployed across multiple security domains need to interoperate, the EJB
+deployed across multiple security domains need to interoperate, the 
 Container Provider is responsible for the mechanism and tools that allow
 mapping of principals. The tools are used by the System Administrator to
 configure the security for the application’s environment.
@@ -1401,38 +1401,38 @@ configure the security for the application’s environment.
 [[a5425]]
 ==== System Principal
 
-The EJB specification does not define the "system" principal under which 
+The Enterprise Beans specification does not define the "system" principal under which 
 the  JVM running an enterprise bean’s method executes.
 
 _Leaving the principal undefined makes it
-easier for the EJB container vendors to provide runtime support for EJB
+easier for the Enterprise Beans container vendors to provide runtime support for Enterprise Beans
 on top of their existing server infrastructures. For example, while one
-EJB container implementation can execute all instances of all enterprise
+Enterprise Beans container implementation can execute all instances of all enterprise
 beans in a single JVM, another implementation can use a separate JVM per
-ejb-jar per client. Some EJB containers may make the system principal
+ejb-jar per client. Some Enterprise Beans containers may make the system principal
 the same as the application-level principal. Others may use different
 principals, potentially from different principal realms and even
 security domains._
 
 ==== Runtime Security Enforcement
 
-The EJB container
+The Enterprise Beans container
 is responsible for enforcing the security policies defined by the
-Deployer. The implementation of the enforcement mechanism is EJB
-container implementation-specific. The EJB container may, but does not
+Deployer. The implementation of the enforcement mechanism is Enterprise Beans
+container implementation-specific. The Enterprise Beans container may, but does not
 have to, use the Java programming language security as the enforcement
 mechanism.
 
 _For example, to isolate multiple executing
-enterprise bean instances, the EJB container can load the multiple
+enterprise bean instances, the Enterprise Beans container can load the multiple
 instances into the same JVM and isolate them via using multiple class
 loaders, or it can load each instance into its own JVM and rely on the
 address space protection provided by the operating system._
 
 The general security enforcement requirements
-for the EJB container follow:
+for the Enterprise Beans container follow:
 
-* The EJB container must provide enforcement of
+* The Enterprise Beans container must provide enforcement of
 the client access control per the policy defined by the Deployer. A
 caller is allowed to invoke a method if, and only if, the method is
 specified as `PermitAll` or the caller is assigned _at least one_ of the
@@ -1443,7 +1443,7 @@ client access to a business method, the container should throw the
 `javax.ejb.EJBAccessException`.footnote:a10330[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.AccessException` is thrown to the client instead.]
-If the EJB 2.1
+If the Enterprise Beans 2.1
 client view is used, the container must throw the
 `java.rmi.RemoteException` (or its subclass,
 the `java.rmi.AccessException`) to the client if the client is a remote
@@ -1451,29 +1451,29 @@ client, or the `javax.ejb.EJBException` (or
 its subclass, the `javax.ejb.AccessLocalException`) if the client is a
 local client.
 
-* The EJB container must isolate an enterprise
+* The Enterprise Beans container must isolate an enterprise
 bean instance from other instances and other application components
-running on the server. The EJB container must ensure that other
+running on the server. The Enterprise Beans container must ensure that other
 enterprise bean instances and other application components are allowed
 to access an enterprise bean only via the enterprise bean’s business
 interface, component interface, home interface, no-interface view,
 and/or web service endpoint.
 
-* The EJB container must isolate an enterprise
+* The Enterprise Beans container must isolate an enterprise
 bean instance at runtime such that the instance does not gain
 unauthorized access to privileged system information. Such information
 includes the internal implementation classes of the container, the
 various runtime state and context maintained by the container, object
 references of other enterprise bean instances, or resource managers used
-by other enterprise bean instances. The EJB container must ensure that
+by other enterprise bean instances. The Enterprise Beans container must ensure that
 the interactions between the enterprise beans and the container are only
-through the EJB architected views.
+through the Enterprise Beans architected views.
 
-* The EJB container must ensure
+* The Enterprise Beans container must ensure
 the security of the persistent state of the
 enterprise beans.
 
-* The EJB container must manage the mapping of
+* The Enterprise Beans container must manage the mapping of
 principals on calls to other enterprise beans or on access to resource
 managers according to the security policy defined by the Deployer.
 
@@ -1487,12 +1487,12 @@ allow multiple-deployed enterprise beans to co-exist at runtime.
 [[a5442]]
 ==== Audit Trail
 
-The EJB container
+The Enterprise Beans container
 may provide a security audit trail mechanism. A security audit trail
 mechanism typically logs all `java.security` Exceptions. It also logs
-all denials of access to EJB servers, EJB containers, EJB business
-interfaces, EJB component interfaces, EJB home interfaces, EJB
-no-interface views, and EJB web service endpoints.
+all denials of access to Enterprise Beans servers, Enterprise Beans containers, Enterprise Beans business
+interfaces, Enterprise Beans component interfaces, Enterprise Beans home interfaces, Enterprise Beans
+no-interface views, and Enterprise Beans web service endpoints.
 
 === System Administrator’s Responsibilities
 
@@ -1505,7 +1505,7 @@ require cooperation of the Deployer and the System Administrator.
 
 The System Administrator is responsible for
 the administration of principals. Security
-domain administration is beyond the scope of the EJB specification.
+domain administration is beyond the scope of the Enterprise Beans specification.
 
 _Typically, the System Administrator is
 responsible for creating a new user account, adding a user to a user
@@ -1521,10 +1521,10 @@ principals defined for the enterprise bean. The result of the mapping is
 available to the Deployer.
 
 The specification of principal mapping
-techniques is beyond the scope of the EJB architecture.
+techniques is beyond the scope of the Enterprise Beans architecture.
 
 ==== Audit Trail Review
 
-If the EJB container provides an
+If the Enterprise Beans container provides an
 audit trail facility, the System
 Administrator is responsible for its management.

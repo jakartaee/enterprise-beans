@@ -1,18 +1,18 @@
 [[a5804]]
 == Deployment Descriptor
 
-This chapter defines the EJB deployment descriptor. 
+This chapter defines the Enterprise Beans deployment descriptor. 
 <<a5807>> provides an overview of the deployment descriptor. 
 <<a5815>> through <<a5907>> describe the information in 
-the deployment descriptor from the perspective of the EJB roles 
+the deployment descriptor from the perspective of the Enterprise Beans roles 
 responsible for providing the information.
 <<a5910>> defines the deployment descriptor’s XML Schema
-elements that are specific to the EJB architecture.
+elements that are specific to the Enterprise Beans architecture.
 The XML Schema elements that are common to the Java EE Platform 
 specifications are provided in <<a9861>>.
 
 Entity beans elements are described in the
-EJB Optional Features document <<a9890>>.
+Enterprise Beans Optional Features document <<a9890>>.
 
 [[a5807]]
 === Overview
@@ -219,12 +219,12 @@ enterprise bean’s references to administered objects that are associated
 with resources and that have not been defined by means of metadata
 annotations, as specified in <<a4344>>.
 
-* *EJB references* +
+* *Enterprise bean’s references* +
 The Bean Provider must declare any enterprise bean’s references to the
 remote home or remote business view of other enterprise beans that have
 not been defined by means of metadata annotations, as specified in <<a3915>>.
 
-* *EJB local references* +
+* *Enterprise bean’s local references* +
 The Bean Provider must declare any enterprise bean’s
 references to the local home or local business or no-interface view of
 other enterprise beans that have not been defined by means of metadata
@@ -336,7 +336,7 @@ never modify any of the following:
 
 * *Enterprise bean’s abstract schema name* +
 The Application Assembler should not change the enterprise bean’s name
-defined in the `abstract-schema-name` element since EJB QL queries may
+defined in the `abstract-schema-name` element since Enterprise Beans QL queries may
 depend on the content of this element.
 
 * *Relationship role source element* +
@@ -467,17 +467,17 @@ The Container Provider provides tools that
 read and import the information contained in the XML deployment
 descriptor.
 
-All EJB 3.2 implementations must support EJB
-3.1, EJB 3.0, EJB 2.1, EJB 2.0, and EJB 1.1 as well as EJB 3.1
-deployment descriptors. The definitions of the EJB 3.1 EJB 3.0, EJB 2.1,
-EJB 2.0, and EJB 1.1 deployment descriptors can be found in the
-Enterprise JavaBeans 3.1<<a9891>> and earlier specifications.
+All Enterprise Beans 3.2 implementations must support Enterprise Beans
+3.1, Enterprise Beans 3.0, Enterprise Beans 2.1, Enterprise Beans 2.0, and Enterprise Beans 1.1 as well as Enterprise Beans 3.1
+deployment descriptors. The definitions of the Enterprise Beans 3.1 Enterprise Beans 3.0, Enterprise Beans 2.1,
+Enterprise Beans 2.0, and Enterprise Beans 1.1 deployment descriptors can be found in the
+Enterprise Beans 3.1<<a9891>> and earlier specifications.
 
 [[a5910]]
 === Deployment Descriptor XML Schema
 
 This section
-provides the XML Schema for the EJB deployment descriptor. The comments
+provides the XML Schema for the Enterprise Beans deployment descriptor. The comments
 in the XML Schema specify additional requirements for the syntax and
 semantics that cannot be easily expressed by the XML Schema mechanism.
 

@@ -1,8 +1,8 @@
 [[a5456]]
 == Timer Service
 
-This chapter defines the EJB
-container-managed Timer Service. The EJB Timer Service is a
+This chapter defines the Enterprise Beans
+container-managed Timer Service. The Enterprise Beans Timer Service is a
 container-provided service that allows the Bean Provider to register
 enterprise beans for timer callbacks to occur according to a
 calendar-based schedule, at a specified time, after a specified elapsed
@@ -16,19 +16,19 @@ certain temporal events have occurred in order to manage the semantic
 state transitions that are intrinsic to the business processes that they
 model.
 
-The EJB Timer Service is a container-managed
+The Enterprise Beans Timer Service is a container-managed
 service that allows callbacks to be scheduled for time-based events. The
 container provides a reliable and transactional notification service for
 timed events. Timer notifications may be scheduled to occur according to
 a calendar-based schedule, at a specific time, after a specific elapsed
 duration, or at specific recurring intervals.
 
-The Timer Service is implemented by the EJB
+The Timer Service is implemented by the Enterprise Beans
 container. An enterprise bean accesses this service by means of
 dependency injection, through the `EJBContext` interface, or through
 lookup in the JNDI namespace.
 
-The EJB Timer Service is a coarse-grained
+The Enterprise Beans Timer Service is a coarse-grained
 timer notification service that is designed for use in the modeling of
 application-level processes. It is not intended for the modeling of
 real-time events.
@@ -42,18 +42,18 @@ of time._
 ****
 
 The following sections describe the Timer
-Service with respect to the various individual EJB roles.
+Service with respect to the various individual Enterprise Beans roles.
 
 [[a5465]]
 === Bean Provider’s View of the Timer Service
 
-The EJB Timer Service is a container-provided
+The Enterprise Beans Timer Service is a container-provided
 service that allows enterprise beans to be registered for timer callback
 methods to occur according to a calendar-based schedule, at a specified
 time, after a specified elapsed time, or after specified intervals. The
 Timer Service provides methods for the programmatic creation and
 cancellation of timers, as well as for locating the timers that are
-associated with a bean or with all beans in an EJB module. Timers can
+associated with a bean or with all beans in an Enterprise Beans module. Timers can
 also be created automatically by the container at deployment time based
 on metadata in the bean class or in the deployment descriptor.
 
@@ -864,7 +864,7 @@ remote interface, or web service method.
 === Container’s Responsibilities
 
 This section describes the responsibilities
-of the Container Provider to support the EJB Timer Service.
+of the Container Provider to support the Enterprise Beans Timer Service.
 
 ==== TimerService, Timer, and TimerHandle Interfaces
 
