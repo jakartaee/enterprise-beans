@@ -1323,8 +1323,8 @@ before actually committing the transaction, and the container issues the
 `beforeCompletion` callback on the instance if the session bean has a
 `beforeCompletion` callback method.footnote:a10241[] When `beforeCompletion` 
 is invoked, the instance should write
-any cached updates to the database.footnote:a10242[Note that if the Java 
-Persistence API is used, the persistence provider will use the 
+any cached updates to the database.footnote:a10242[Note that if the Jakarta 
+Persistence is used, the persistence provider will use the 
 `beforeCompletion` notification to automatically flush any updates to the 
 container-managed persistence context to the database. See <<a9851>>.] If a
 transaction rollback had been requested instead, the rollback status is
