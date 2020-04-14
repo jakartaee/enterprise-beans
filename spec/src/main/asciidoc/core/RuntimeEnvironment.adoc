@@ -622,22 +622,22 @@ must include the Jakarta Messaging 2.0 API and provide its
 functionality to the enterprise bean instances, with the exception of
 the low-level interfaces that are intended for integration of a Jakarta Messaging
 provider with an application server, not for direct use by enterprise
-beans. These interfaces include: `javax.jms.ServerSession`,
-`javax.jms.ServerSessionPool`, `javax.jms.ConnectionConsumer`, and all
-the `javax.jms` XA interfaces.
+beans. These interfaces include: `jakarta.jms.ServerSession`,
+`jakarta.jms.ServerSessionPool`, `jakarta.jms.ConnectionConsumer`, and all
+the `jakarta.jms` XA interfaces.
 
 In addition, the following methods are for
 use by the container only. Enterprise beans must not call these methods:
 
 [source, java]
 ----
-javax.jms.Session.setMessageListener
-javax.jms.Session.getMessageListener
-javax.jms.Session.run
-javax.jms.Connection.createConnectionConsumer
-javax.jms.Connection.createSharedConnectionConsumer
-javax.jms.Connection.createDurableConnectionConsumer
-javax.jms.Connection.createSharedDurableConnectionConsumer
+jakarta.jms.Session.setMessageListener
+jakarta.jms.Session.getMessageListener
+jakarta.jms.Session.run
+jakarta.jms.Connection.createConnectionConsumer
+jakarta.jms.Connection.createSharedConnectionConsumer
+jakarta.jms.Connection.createDurableConnectionConsumer
+jakarta.jms.Connection.createSharedDurableConnectionConsumer
 ----
 
 The following methods must not be called by
@@ -646,22 +646,22 @@ management by the container:
 
 [source, java]
 ----
-javax.jms.Connection.setExceptionListener
-javax.jms.Connection.stop
-javax.jms.Connection.setClientID
-javax.jms.JMSContext.setExceptionListener
-javax.jms.JMSContext.stop
-javax.jms.JMSContext.setClientID
+jakarta.jms.Connection.setExceptionListener
+jakarta.jms.Connection.stop
+jakarta.jms.Connection.setClientID
+jakarta.jms.JMSContext.setExceptionListener
+jakarta.jms.JMSContext.stop
+jakarta.jms.JMSContext.setClientID
 ----
 
 Enterprise beans must not call the following methods:
 
 [source, java]
 ----
-javax.jms.MessageConsumer.setMessageListener
-javax.jms.MessageConsumer.getMessageListener
-javax.jms.JMSContext.setMessageListener
-javax.jms.JMSContext.getMessageListener
+jakarta.jms.MessageConsumer.setMessageListener
+jakarta.jms.MessageConsumer.getMessageListener
+jakarta.jms.JMSContext.setMessageListener
+jakarta.jms.JMSContext.getMessageListener
 ----
 
 An asynchronous send is not permitted in an
@@ -670,22 +670,22 @@ enterprise beans:
 
 [source, java]
 ----
-javax.jms.Session.send(Message message,
+jakarta.jms.Session.send(Message message,
      CompletionListener completionListener)
-javax.jms.Session.send(Message message, int deliveryMode,
+jakarta.jms.Session.send(Message message, int deliveryMode,
      int priority, long timeToLive,
      CompletionListener completionListener)
-javax.jms.Session.send(Destination destination, Message message,
+jakarta.jms.Session.send(Destination destination, Message message,
      CompletionListener completionListener)
-javax.jms.Session.send(Destination destination, Message message,
+jakarta.jms.Session.send(Destination destination, Message message,
      int deliveryMode, int priority, long timeToLive,
      CompletionListener completionListener)
-javax.jms.JMSProducer.setAsync
+jakarta.jms.JMSProducer.setAsync
 ----
 
 This specification recommends, but does not
-require, that the container throw the `javax.jms.JMSException` or a
-`javax.jms.JMSRuntimeException` (depending on the method signature) if
+require, that the container throw the `jakarta.jms.JMSException` or a
+`jakarta.jms.JMSRuntimeException` (depending on the method signature) if
 enterprise beans call any of the methods listed in this section.
 
 ==== Argument Passing Semantics

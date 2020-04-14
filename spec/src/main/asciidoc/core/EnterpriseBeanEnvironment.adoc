@@ -1669,7 +1669,7 @@ declaration of Jakarta Messaging resource manager connection factory references.
         notifications.
       </description>
       <res-ref-name>jms/qConnFactory</res-ref-name>
-      <res-type>javax.jms.QueueConnectionFactory</res-type>
+      <res-type>jakarta.jms.QueueConnectionFactory</res-type>
       <res-auth>Container</res-auth>
       <res-sharing-scope>Unshareable</res-sharing-scope>
     </resource-ref>
@@ -1685,8 +1685,8 @@ The Bean Provider must use the
 `javax.sql.DataSource`
 resource manager connection factory type for
 obtaining JDBC connections, and the
-`javax.jms.ConnectionFactory`,
-`javax.jms.QueueConnectionFactory`, or `javax.jms.TopicConnectionFactory`
+`jakarta.jms.ConnectionFactory`,
+`jakarta.jms.QueueConnectionFactory`, or `jakarta.jms.TopicConnectionFactory`
 for obtaining Jakarta Messaging connections.
 
 The Bean Provider must use the
@@ -1991,7 +1991,7 @@ message destination reference.
 [source, java]
 ----
 @Resource
-javax.jms.Queue stockQueue;
+jakarta.jms.Queue stockQueue;
 ----
 
 ===== Message Destination Reference Programming Interfaces
@@ -2020,7 +2020,7 @@ Destination.
 
 [source, java]
 ----
-@Resource(name="jms/StockQueue", type=javax.jms.Queue)
+@Resource(name="jms/StockQueue", type=jakarta.jms.Queue)
 @Stateless 
 public class StockServiceBean implements StockService {
 
@@ -2033,7 +2033,7 @@ public class StockServiceBean implements StockService {
  Object result = ctx.lookup("jms/StockQueue");
 
  // Convert the result to the proper type.
- javax.jms.Queue queue = (javax.jms.Queue)result;
+ jakarta.jms.Queue queue = (jakarta.jms.Queue)result;
  }
 }
 ----
@@ -2048,7 +2048,7 @@ example would be as follows.
 
 [source, java]
 ----
-@Resource(name="jms/StockQueue", type=javax.jms.Queue)
+@Resource(name="jms/StockQueue", type=jakarta.jms.Queue)
 @Stateless
 public class StockServiceBean implements StockService {
 
@@ -2062,7 +2062,7 @@ public class StockServiceBean implements StockService {
       "java:comp/env/jms/StockQueue");
 
  // Convert the result to the proper type.
- javax.jms.Queue queue = (javax.jms.Queue)result;
+ jakarta.jms.Queue queue = (jakarta.jms.Queue)result;
  ...
  }
 }
@@ -2098,7 +2098,7 @@ message destination reference is relative to the `java:comp/env` context
 
 The `message-destination-type` element
 specifies the expected type of the referenced destination. For example,
-in the case of a Jakarta Messaging Destination, its value might be `javax.jms.Queue`.
+in the case of a Jakarta Messaging Destination, its value might be `jakarta.jms.Queue`.
 The `message-destination-type` element is optional if an injection
 target is specified for the message destination reference; in this case
 the `message-destination-type` defaults to the type of the injection
@@ -2128,7 +2128,7 @@ descriptor.
     jms/StockInfo
   </message-destination-ref-name>
   <message-destination-type>
-    javax.jms.Queue
+    jakarta.jms.Queue
   </message-destination-type>
   <message-destination-usage>
     Produces
@@ -2218,7 +2218,7 @@ message destination linking in the deployment descriptor.
         jms/EmployeeReimbursements
       </message-destination-ref-name>
       <message-destination-type>
-        javax.jms.Queue
+        jakarta.jms.Queue
       </message-destination-type>
       <message-destination-usage>
         Produces
@@ -2232,10 +2232,10 @@ message destination linking in the deployment descriptor.
   <message-driven>
     <ejb-name>ExpenseProcessing</ejb-name>
     <ejb-class>com.wombat.empl.ExpenseProcessingBean</ejb-class>
-    <messaging-type>javax.jms.MessageListener</messaging-type>
+    <messaging-type>jakarta.jms.MessageListener</messaging-type>
     ...
     <message-destination-type>
-      javax.jms.Queue
+      jakarta.jms.Queue
     </message-destination-type>
     <message-destination-link>
       ExpenseProcessingQueue
@@ -2280,7 +2280,7 @@ application unit but in a different ejb-jar file.
       jms/EmployeeReimbursements
     </message-destination-ref-name>
     <message-destination-type>
-      javax.jms.Queue
+      jakarta.jms.Queue
     </message-destination-type>
     <message-destination-usage>
       Produces

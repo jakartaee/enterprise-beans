@@ -99,7 +99,7 @@ segment:
 [source, java]
 ----
 Context initialContext = new InitialContext();
-Queue stockInfoQueue = (javax.jms.Queue)initialContext.lookup
+Queue stockInfoQueue = (jakarta.jms.Queue)initialContext.lookup
      ("java:comp/env/jms/stockInfoQueue");
 ----
 
@@ -153,13 +153,13 @@ distinguishes the messaging type that the message-driven bean supports.
 
 ****
 _The message-driven bean class’s
-implementation of the `javax.jms.MessageListener` interface
+implementation of the `jakarta.jms.MessageListener` interface
 distinguishes the message-driven bean as a Jakarta Messaging message-driven bean._
 ****
 
 The bean’s
 message listener method (e.g., `onMessage` in the case of
-`javax.jms.MessageListener`) is called by the container when a message
+`jakarta.jms.MessageListener`) is called by the container when a message
 has arrived for the bean to service. The message listener method
 contains the business logic that handles the processing of the message.
 
@@ -572,7 +572,7 @@ element of the `MessageDriven` annotation or by using the
 `activation-config-property` deployment descriptor element. The property
 name used to specify the destination type associated with the bean is
 `destinationType`. The value for this property must be either
-`javax.jms.Queue` or `javax.jms.Topic` for a Jakarta Messaging message-driven bean.
+`jakarta.jms.Queue` or `jakarta.jms.Topic` for a Jakarta Messaging message-driven bean.
 
 ===== Destination Lookup
 
@@ -943,7 +943,7 @@ message-driven bean class:
 * The class must implement, directly or
 indirectly, the message listener interface required by the messaging
 type that it supports or the methods of the message listener interface.
-In the case of Jakarta Messaging, this is the `javax.jms.MessageListener` interface.
+In the case of Jakarta Messaging, this is the `jakarta.jms.MessageListener` interface.
 
 * The class must be defined as `public`, must not
 be `final`, and must not be `abstract`. The class must be a top level

@@ -420,7 +420,7 @@ methods are performed in a transaction. While an instance is in
 a transaction, the instance must not attempt to use the resource-manager
 specific transaction demarcation API (e.g. it must not invoke the commit
 or rollback method on the java.sql.Connection interface or on the
-`javax.jms.Session` interface).footnote:a10267[However, use of 
+`jakarta.jms.Session` interface).footnote:a10267[However, use of 
 Jakarta Persistence `EntityTransaction` interface is supported. See <<a9851>> 
 for a discussion of resources used in Jakarta Persistence that may be 
 "unaware" of the presence of Jakarta Transactions, and a description of the 
@@ -534,18 +534,18 @@ public class MySessionBean implements MySession {
     javax.sql.DataSource database1;
     
     @Resource 
-    javax.jms.QueueConnectionFactory qcf1;
+    jakarta.jms.QueueConnectionFactory qcf1;
     
     @Resource 
-    javax.jms.Queue queue1;
+    jakarta.jms.Queue queue1;
     
     public void someMethod(...) {
         java.sql.Connection dcon;
         java.sql.Statement stmt;
-        javax.jms.QueueConnection qcon;
-        javax.jms.QueueSession qsession;
-        javax.jms.QueueSender qsender;
-        javax.jms.Message message;
+        jakarta.jms.QueueConnection qcon;
+        jakarta.jms.QueueSession qsession;
+        jakarta.jms.QueueSender qsender;
+        jakarta.jms.Message message;
         
         try {
             // obtain db conn object and set it up for transactions
@@ -746,7 +746,7 @@ management methods that would interfere with the container’s demarcation
 of transaction boundaries. For example, the enterprise bean methods must
 not use the following methods of the `java.sql.Connection` interface:
 `commit`, `setAutoCommit`, and `rollback`; or the following methods of the
-`javax.jms.Session` interface: `commit` and `rollback`.
+`jakarta.jms.Session` interface: `commit` and `rollback`.
 
 The enterprise bean’s business methods,
 message listener methods, business method
