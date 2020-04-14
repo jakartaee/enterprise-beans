@@ -566,7 +566,7 @@ as Web resources.
 
 In a product that supports the RESTful Web Services specification, 
 stateless and singleton session beans must be supported
-as root resource classes, providers, and `javax.ws.rs.core.Application`
+as root resource classes, providers, and `jakarta.ws.rs.core.Application`
 subclasses. RESTful Web Services annotations may be applied to a 
 session bean class, methods of a session bean’s no-interface view, or 
 a session bean’s local business interface.
