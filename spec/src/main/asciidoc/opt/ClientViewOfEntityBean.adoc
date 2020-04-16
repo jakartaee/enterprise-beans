@@ -1,480 +1,276 @@
 [[a41]]
 == Client View of an Entity Bean
 
-This chapter describes the client view of an
-entity bean. It is actually a contract fulfilled by the container in
-which the entity bean is deployed. Only the business methods are
-supplied by the enterprise bean itself.
+This chapter describes the client view of an entity bean. It is actually a contract fulfilled by the container in which the entity bean is deployed.
+Only the business methods are supplied by the enterprise bean itself.
 
-Although the client view of the deployed
-entity beans is provided by classes implemented by the container, the
-container itself is transparent to the client.
+Although the client view of the deployed entity beans is provided by classes implemented by the container, the container itself is transparent to the client.
 
 === Overview
 
+For a client, an entity bean is a component that represents an object-oriented view of some entities stored in a persistent storage, such as a database, or entities that are implemented by an existing enterprise application.
 
+The client of an entity bean may be a local client or the client may be a remote client.
 
-For a client, an
-entity bean is a component that represents an object-oriented view of
-some entities stored in a persistent storage, such as a database, or
-entities that are implemented by an existing enterprise application.
+This section provides an overview of the entity bean client view that is independent of whether the client is a remote client or a local client.
+The differences between remote clients and local clients are discussed in the following sections.
 
-The client of an
-entity bean may be a local client or the
-client may be a remote client.
+From its creation until its destruction, an entity object lives in a container.
+Transparently to the client, the container provides security, concurrency, transactions, persistence, and other services for the entity objects that live in the container.
+The container is transparent to the client—there is no API that a client can use to manipulate the container.
 
-This section provides an overview of the
-entity bean client view that is independent of whether the client is a
-remote client or a local client. The differences between remote clients
-and local clients are discussed in the following sections.
+Multiple clients can access an entity object concurrently. The container in which the entity bean is deployed properly synchronizes access to the entity object’s state using transactions.
 
-From its creation until its destruction, an
-entity object lives in a container. Transparently to the client, the
-container provides security, concurrency, transactions, persistence, and
-other services for the entity objects that live in the container. The
-container is transparent to the client—there is no API that a client can
-use to manipulate the container.
+Each entity object has an identity which, in general, survives a crash and restart of the container in which the entity object has been created.
+The object identity is implemented by the container with the cooperation of the enterprise bean class.
 
-Multiple clients can access an entity object
-concurrently. The container in which the entity bean is deployed
-properly synchronizes access to the entity object’s state using
-transactions.
+Multiple enterprise beans can be deployed in a container.
+For each entity bean deployed in a container, the container provides a class that implements a home interface for the entity bean.
+This interface allows the client to create, find, and remove entity objects within the enterprise bean’s home as well as to execute home business methods, which are not specific to a particular entity bean object.
+A client can obtain the entity bean’s home interface through dependency injection, or the client can look up the entity bean’s home interface through JNDI.
+It is the responsibility of the container to make the entity bean’s home interface available in the JNDI name space.
 
-Each entity
-object has an identity which, in general, survives a crash and restart
-of the container in which the entity object has been created. The object
-identity is implemented by the container with the cooperation of the
-enterprise bean class.
-
-Multiple enterprise beans can be deployed in
-a container. For each entity bean deployed in a container, the container
-provides a class that implements a home interface for the entity bean.
-This interface allows the client to create, find, and remove entity
-objects within the enterprise bean’s home as well as to execute home
-business methods, which are not specific to a particular entity bean
-object. A client can obtain the entity bean’s home interface through
-dependency injection, or the client can look up the
-entity bean’s home interface through JNDI.
-It is the responsibility of the container to make the entity bean’s home
-interface available in the JNDI name space.
-
-A client view of an entity bean is
-independent of the implementation of the entity bean and its container.
-This ensures that a client application is portable across all container
-implementations in which the entity bean might be deployed.
-
+A client view of an entity bean is independent of the implementation of the entity bean and its container.
+This ensures that a client application is portable across all container implementations in which the entity bean might be deployed.
 
 === Remote Clients
 
+A remote client accesses an entity bean through the entity bean’s remote and remote home interfaces.
+The remote and remote home interfaces of the entity bean provide the remote client view.
 
+The remote client view of an entity bean is location independent.
+A client running in the same JVM as an entity bean instance uses the same API to access the entity bean as a client running in a different JVM on the same or different machine.
 
-A remote client
-accesses an entity bean through the entity bean’s remote and remote home
-interfaces. The remote and remote home interfaces of the entity bean
-provide the remote client view.
+The container provides classes that implement the entity bean’s remote and remote home interfaces.
+The objects that implement the remote home and remote objects are remote Java objects, and are accessible from a client through the standard Java™ APIs for remote object invocation <<a3327>>.
 
-The remote client view of an entity bean is
-location independent. A client running in the same JVM as an entity bean
-instance uses the same API to access the entity bean as a client running
-in a different JVM on the same or different machine.
-
-The container provides classes that implement
-the entity bean’s remote and remote home interfaces. The objects that
-implement the remote home and remote objects are remote Java objects,
-and are accessible from a client through the standard Java™ APIs for
-remote object invocation [link:Ejb.html#a3327[See Java Remote
-Method Invocation (RMI).
-http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/.]].
-
-A remote client of an entity object can be
-another enterprise bean deployed in the same or different container or
-can be an arbitrary Java program, such as an application, applet, or
-servlet. The remote client view of an entity bean can also be mapped to
-non-Java client environments, such as CORBA clients not written in the
-Java programming language.
+A remote client of an entity object can be another enterprise bean deployed in the same or different container or can be an arbitrary Java program, such as an application, applet, or servlet.
+The remote client view of an entity bean can also be mapped to non-Java client environments, such as CORBA clients not written in the Java programming language.
 
 === Local Clients
 
+Entity beans may also have local clients.
+A local client is a client that is collocated with the entity bean and which may be tightly coupled to the bean.
 
+Unlike the remote client view, the local client view of an entity bean is not location independent.
+The local client view requires the collocation in the same JVM of both the local client and the entity bean that provides the local client view. The local client view therefore does not provide the location transparency provided by the remote client view.
 
-Entity beans may
-also have local clients. A local client is a client that is collocated
-with the entity bean and which may be tightly coupled to the bean.
+A local client accesses an entity bean through the entity bean’s local home and local component interfaces.
+The container provides classes that implement the entity bean’s local home and local component interfaces. The objects that implement the local home and local component interfaces are local Java objects.
 
-Unlike the remote client view, the
-local client view of an entity bean is not
-location independent. The local client view requires the collocation in
-the same JVM of both the local client and the entity bean that provides
-the local client view. The local client view therefore does not provide
-the location transparency provided by the remote client view.
+The arguments of the methods of the local component interface and local home interface are passed by reference.
+footnote:a3365[More literally, references are passed by value in the JVM: an argument variable of primitive type holds a value of that primitive type; an argument variable of a reference type hold a reference to the object. See <<a3334>>.]
+Such entity beans and their clients must be coded to assume that the state of any Java object that is passed as an argument or result is potentially shared by caller and callee.
 
-A local client accesses an entity bean
-through the entity bean’s local home and local component interfaces. The
-container provides classes that implement the entity bean’s local home
-and local component interfaces. The objects that implement the local
-home and local component interfaces are local Java objects.
+A local client of an entity bean may be a session bean, a message-driven bean, another entity bean, or a web-tier component.
 
-The arguments of the methods of the
-local component interface and
-local home interface are passed by
-referencelink:#a3365[1]. Such entity beans and their clients
-must be coded to assume that the state of any Java object that is passed
-as an argument or result is potentially shared by caller and callee.
+The choice between the use of a local or remote programming model is a design decision that the Bean Provider
+makes when developing the entity bean application.
+In general, however, entity beans are intended to be used with local clients.
+While it is possible to provide both a client view and a local client view for an entity bean with container-managed persistence, it is more likely that the entity bean will be designed with the local view in mind.
 
-A local client of an entity bean may be a
-session bean, a message-driven bean, another entity bean, or a web-tier
-component.
-
-The choice between the use of a local or
-remote programming model is a design decision that the Bean Provider
-makes when developing the entity bean application. In general, however,
-entity beans are intended to be used with local clients. While it is
-possible to provide both a client view and a local client view for an
-entity bean with container-managed persistence, it is more likely that
-the entity bean will be designed with the local view in mind.
-
-Entity beans that have
-container-managed relationships with other
-entity beans, as described in link:Ejb.html#a384[See EJB 2.1
-Entity Bean Component Contract for Container-Managed Persistence], must
-be accessed in the same local scope as those related beans, and
-therefore typically provide a local client view. In order to be the
-target of a container-managed relationship, an entity bean with
-container-managed persistence must provide a local component interface.
+Entity beans that have container-managed relationships with other entity beans, as described in <<a384>>, must be accessed in the same local scope as those related beans, and therefore typically provide a local client view.
+In order to be the target of a container-managed relationship, an entity bean with container-managed persistence must provide a local component interface.
 
 === Choosing Between a Local or Remote Client View
 
+The following considerations should be taken into account in determining whether a local or remote access should be used for an entity bean:
 
+* When the Enterprise Beans 2.1 and earlier remote home and remote component interfaces are used, the narrowing of remote types requires the use of `javax.rmi.PortableRemoteObject.narrow` rather than Java language casts.
 
-The following considerations should be taken
-into account in determining whether a local or
-remote access should be used for an entity
-bean:
+* Remote calls may involve error cases due to communication, resource usage on other servers, etc., which are not expected in local calls. 
+When the Enterprise Beans 2.1 and earlier remote home and remote component interfaces are used, the client has to explicitly program handlers for handling the `java.rmi.RemoteException`
 
-When the EJB 2.1 and earlier remote home and
-remote component interfaces are used, the narrowing of remote types
-requires the use of javax.rmi.PortableRemoteObject.narrow rather than
-Java language casts.
+* Methods of a session bean’s remote business interface must not expose entity beans local interface types, or the managed collection classes that are used for Enterprise Beans 2.1 entity beans with container-managed persistence as arguments or results.
 
-Remote calls may involve error cases due to
-communication, resource usage on other servers, etc., which are not
-expected in local calls. When the EJB 2.1 and earlier remote home and
-remote component interfaces are used, the client has to explicitly
-program handlers for handling the _java.rmi.RemoteException_
+See Enterprise Beans Core Contracts and Requirements
+document <<a3339>> Subsection "Choosing Between a Local or Remote Client View" for the more considerations.
 
-Methods of a session bean’s remote business
-interface must not expose entity beans local interface types, or the
-managed collection classes that are used for EJB 2.1 entity beans with
-container-managed persistence as arguments or results.
+=== Enterprise Beans Container
 
-See EJB Core Contracts and Requirements
-document link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
-Requirements. http://jcp.org/en/jsr/detail?id=345] Subsection “Choosing
-Between a Local or Remote Client View” for the more considerations.
+An Enterprise Beans container (container for short) is a system that functions as a runtime container for enterprise beans.
 
+Multiple enterprise beans can be deployed in a single container.
+For each entity bean deployed in a container, the container provides a home interface that allows the client to create, find, and remove entity objects that belong to the entity bean.
+The home interface may also provide home business methods, which are not specific to a particular entity bean object.
+The container makes the entity bean’s home interface (defined by the Bean Provider and implemented by the Container Provider) available in the JNDI name space for clients.
 
-
-=== EJB Container
-
-
-
-An EJB container (container for short) is a
-system that functions as a runtime container for enterprise beans.
-
-Multiple
-enterprise beans can be deployed in a single container. For each entity
-bean deployed in a container, the container provides a home interface
-that allows the client to create, find, and remove entity objects that
-belong to the entity bean. The home interface may also provide home
-business methods, which are not specific to a particular entity bean
-object. The container makes the entity bean’s home interface (defined by
-the Bean Provider and implemented by the Container Provider) available
-in the JNDI name space for clients.
-
-An EJB server may host one or multiple EJB
-containers. The containers are transparent to the client: there is no
-client-level API to manipulate the container.
+An Enterprise Beans server may host one or multiple Enterprise Beans containers.
+The containers are transparent to the client: there is no client-level API to manipulate the container.
 
 ==== Locating an Entity Bean’s Home Interface
 
-A client obtains
-an entity bean’s home interface through dependency injection, or the
-client locates an entity bean’s home interface using
-JNDI. A client’s JNDI name space may be
-configured to include the home interfaces of enterprise beans deployed
-in multiple EJB containers located on multiple machines on a network.
-The actual location of an EJB container is, in general, transparent to
-the client.
+A client obtains an entity bean’s home interface through dependency injection, or the client locates an entity bean’s home interface using JNDI.
+A client’s JNDI name space may be configured to include the home interfaces of enterprise beans deployed in multiple Enterprise Beans containers located on multiple machines on a network.
+The actual location of an Enterprise Beans container is, in general, transparent to the client.
 
 For example, the local home interface for the
-_Account_ entity bean can be located using the following code segment:
-
-Context initialContext = new
-InitialContext();
-
+`Account` entity bean can be located using the following code segment:
+[source, java]
+----
+Context initialContext = new InitialContext();
 AccountHome accountHome = (AccountHome)
+              initialContext.lookup("java:comp/env/ejb/accounts");
+----
 
-
-initialContext.lookup(“java:comp/env/ejb/accounts”);
-
-If dependency injection were used, the home
-interface could be obtained as follows:
-
-@EJB AccountHome accountHome;
+If dependency injection were used, the home interface could be obtained as follows:
+[source, java]
+----
+@EJB 
+AccountHome accountHome;
+----
 
 ==== What a Container Provides
 
-The following diagram illustrates the view
-that a container provides to the client of the entity beans deployed in
-the container. Note that a client may be a local client of some entity
-beans and a remote client of others.
+The following diagram illustrates the view that a container provides to the client of the entity beans deployed in the container.
+Note that a client may be a local client of some entity beans and a remote client of others.
 
-===
-
-
-
-Client View of Entity Beans Deployed in a Container
-
-image:EBOpt-6.png[image]
+.Client View of Entity Beans Deployed in a Container
+image::EBOpt-6.png[]
 
 === Entity Bean’s Remote Home Interface
 
+This section is specific to entity beans that provide a remote client view.
+Local home interfaces are described in <<a179>>.
 
+The container provides the implementation of the remote home interface for each entity bean deployed in the container that defines a remote home interface.
+An object that implements an entity bean’s remote home interface is called an *EJBHome* object.
 
-This section is specific to entity beans that
-provide a remote client view. Local home
-interfaces are described in link:Ejb.html#a179[See Entity
-Bean’s Local Home Interface].
+The entity bean’s remote home interface allows a client to do the following:
 
-The container provides the implementation of
-the remote home interface for each entity bean deployed in the container
-that defines a remote home interface. An object that implements an
-entity bean’s remote home interface is called an _EJBHome object._
+* Create new entity objects within the home.
 
-The entity bean’s
-remote home interface allows a client to do the following:
+* Find existing entity objects within the home.
 
-Create new entity objects within the home.
+* Remove an entity object from the home.
 
-Find existing entity objects within the home.
+* Execute a home business method.
 
-Remove an entity object from the home.
+* Get the `jakarta.ejb.EJBMetaData` interface for the entity bean.
+The `jakarta.ejb.EJBMetaData` interface is intended to allow application assembly tools to discover the metadata information about the entity bean.
+The metadata information allows loose client/server binding and scripting.
 
-Execute a home business method.
+* Obtain a handle for the home interface.
+The home handle can be serialized and written to stable storage.
+Later, possibly in a different JVM, the handle can be deserialized from stable storage and used to obtain a reference to the home interface.
 
-Get the _javax.ejb.EJBMetaData_ interface for
-the entity bean. The _javax.ejb.EJBMetaData_ interface is intended to
-allow application assembly tools to discover the metadata information
-about the entity bean. The metadata information allows loose
-client/server binding and scripting.
-
-Obtain a handle for the home interface. The
-home handle can be serialized and written to
-stable storage. Later, possibly in a different JVM, the
-handle can be deserialized from stable
-storage and used to obtain a reference to the home interface.
-
-An entity bean’s remote home interface must
-extend the javax.ejb.EJBHome interface and follow the standard rules for
-Java programming language remote interfaces.
+An entity bean’s remote home interface must extend the `jakarta.ejb.EJBHome` interface and follow the standard rules for Java programming language remote interfaces.
 
 ==== Create Methods
 
-An entity bean’s remote home interface can
-define zero or more create<METHOD> methods,
-one for each way to create an entity object. The arguments of the create
-methods are typically used to initialize the state of the created entity
-object. The name of each create method starts with the prefix “ _create_
-”.
+An entity bean’s remote home interface can define zero or more `create<METHOD>` methods, one for each way to create an entity object.
+The arguments of the `create` methods are typically used to initialize the state of the created entity object.
+The name of each `create` method starts with the prefix "```create```".
 
-The return type
-of a create _<METHOD>_ method on the remote home interface is the entity
-bean’s remote interface.
+The return type of a `create<METHOD>` method on the remote home interface is the entity bean’s remote interface.
 
-The _throws_ clause of every create
-_<METHOD>_ method on the remote home interface includes the
-java.rmi.RemoteException and the javax.ejb.CreateException. It may
-include additional application-level exceptions.
+The `throws` clause of every `create<METHOD>` method on the remote home interface includes the `java.rmi.RemoteException` and the `jakarta.ejb.CreateException`.
+It may include additional application-level exceptions.
 
-The following home interface illustrates
-three possible create methods:
-
-public interface AccountHome extends
-javax.ejb.EJBHome \{
-
- public Account create(String firstName,
-String lastName,
-
- double initialBalance)
-
- throws RemoteException, CreateException;
-
- public Account create(String accountNumber,
-
- double initialBalance)
-
- throws RemoteException, CreateException,
-
- LowInitialBalanceException;
-
- public Account createLargeAccount(String
-firstname,
-
- String lastname, double initialBalance)
-
- throws RemoteException, CreateException;
-
- ...
-
+The following home interface illustrates three possible create methods:
+[source, java]
+----
+public interface AccountHome extends jakarta.ejb.EJBHome {
+    public Account create(String firstName, String lastName,
+        double initialBalance)
+         throws RemoteException, CreateException;
+    public Account create(String accountNumber, 
+        double initialBalance)
+         throws RemoteException, CreateException,
+             LowInitialBalanceException;
+    public Account createLargeAccount(String firstname, 
+        String lastname, double initialBalance)
+         throws RemoteException, CreateException;
+     ...
 }
+----
 
-
-
-The following example illustrates how a
-client creates a new entity object:
-
+The following example illustrates how a client creates a new entity object:
+[source, java]
+----
 AccountHome accountHome = ...;
-
-Account account = accountHome.create(“John”,
-“Smith”, 500.00);
-
-
+Account account = accountHome.create("John", "Smith", 500.00);
+----
 
 ==== Finder Methods
 
-An entity bean’s
-remote home interface defines one or more finder
-methodslink:#a3366[2], one for each way to find an entity object
-or collection of entity objects within the home. The name of each finder
-method starts with the prefix “ _find_ ”, such as _findLargeAccounts_ .
-The arguments of a finder method are used by the entity bean
-implementation to locate the requested entity objects. The return type
-of a finder method on the remote home interface must be the entity
-bean’s remote interface, or a type representing a collection of objects
-that implement the entity bean’s remote interface (see Subsections
-link:Ejb.html#a1446[See Finder Methods] and
-link:Ejb.html#a2729[See Finder Method Return Type]).
+An entity bean’s remote home interface defines one or more finder methods
+footnote:a3366[The `findByPrimaryKey` method is mandatory for the remote home interface of all entity beans.]
+, one for each way to find an entity object or collection of entity objects within the home.
+The name of each finder method starts with the prefix "```find```", such as `findLargeAccounts`.
+The arguments of a finder method are used by the entity bean implementation to locate the requested entity objects.
+The return type of a finder method on the remote home interface must be the entity bean’s remote interface, or a type representing a collection of objects that implement the entity bean’s remote interface (see <<a1446>> and <<a2729>>).
 
-The _throws_ clause of every finder method on
-the remote home interface includes the java.rmi.RemoteException and the
-javax.ejb.FinderException exceptions.
+The `throws` clause of every finder method on the remote home interface includes the `java.rmi.RemoteException` and the `jakarta.ejb.FinderException` exceptions.
 
-The remote home
-interface includes the findByPrimaryKey(primaryKey) method, which allows
-a client to locate an entity object using a primary key. The name of the
-method is always findByPrimaryKey; it has a single argument that is the
-same type as the entity bean’s primary key type, and its return type is
-the entity bean’s remote interface. There is a unique
-findByPrimaryKey(primaryKey) method for an entity bean on its remote
-home interface; this method must not be overloaded. The implementation
-of the findByPrimaryKey(primaryKey) method must ensure that the entity
-object exists.
+The remote home interface includes the `findByPrimaryKey(primaryKey)` method, which allows a client to locate an entity object using a primary key.
+The name of the method is always `findByPrimaryKey`; it has a single argument that is the same type as the entity bean’s primary key type, and its return type is the entity bean’s remote interface.
+There is a unique `findByPrimaryKey(primaryKey)` method for an entity bean on its remote home interface; this method must not be overloaded.
+The implementation of the `findByPrimaryKey(primaryKey)` method must ensure that the entity object exists.
 
-The following example shows the
-findByPrimaryKey method:
-
-public interface AccountHome extends
-javax.ejb.EJBHome \{
-
- ...
-
- public Account findByPrimaryKey(String
-AccountNumber)
-
- throws RemoteException, FinderException;
-
+The following example shows the `findByPrimaryKey` method:
+[source, java]
+----
+public interface AccountHome extends jakarta.ejb.EJBHome {
+     ...
+    public Account findByPrimaryKey(String AccountNumber)
+        throws RemoteException, FinderException;
 }
+----
 
-The following example illustrates how a
-client uses the findByPrimaryKey method:
-
+The following example illustrates how a client uses the `findByPrimaryKey` method:
+[source, java]
+----
 AccountHome = ...;
-
-Account account =
-accountHome.findByPrimaryKey(“100-3450-3333”);
+Account account = accountHome.findByPrimaryKey("100-3450-3333");
+----
 
 ==== Remove Methods
 
-The
-javax.ejb.EJBHome interface defines several methods that allow the
-client to remove an entity object.
-
-public interface EJBHome extends Remote \{
-
- void remove(Handle handle) throws
-RemoteException,
-
- RemoveException;
-
- void remove(Object primaryKey) throws
-RemoteException,
-
- RemoveException;
-
+The `jakarta.ejb.EJBHome` interface defines several methods that allow the client to remove an entity object.
+[source, java]
+----
+public interface EJBHome extends Remote {
+    void remove(Handle handle) throws RemoteException,
+        RemoveException;
+    void remove(Object primaryKey) throws RemoteException,
+        RemoveException;
 }
+----
 
-After an entity object has been removed,
-subsequent attempts to access the entity object by a remote client
-result in the java.rmi.NoSuchObjectException.
+After an entity object has been removed, subsequent attempts to access the entity object by a remote client result in the `java.rmi.NoSuchObjectException`.
 
 ==== Home Methods
 
-An entity bean’s
-remote home interface may define one or more
-home methods. Home methods are methods that
-the Bean Provider supplies for business logic that is not specific to an
-entity bean instance.
+An entity bean’s remote home interface may define one or more
+home methods.
+Home methods are methods that the Bean Provider supplies for business logic that is not specific to an entity bean instance.
 
-Home methods on the remote home interface can
-have arbitrary method names, but they must not start with “ _create_ ”,
-“ _find_ ”, or “ _remove_ ”.The arguments of a home method are used by
-the entity bean implementation in computations that do not depend on a
-specific entity bean instance. The method arguments and return value
-types of a home method on the remote home interface must be legal types
-for RMI-IIOP.
+Home methods on the remote home interface can have arbitrary method names, but they must not start with "```create```", "```find```", or "```remove```".
+The arguments of a home method are used by the entity bean implementation in computations that do not depend on a specific entity bean instance.
+The method arguments and return value types of a home method on the remote home interface must be legal types for RMI-IIOP.
 
-The _throws_ clause of every home method on
-the remote home interface includes the java.rmi.RemoteException. It may
-also include additional application-level exceptions.
+The `throws` clause of every home method on the remote home interface includes the `java.rmi.RemoteException`.
+It may also include additional application-level exceptions.
 
 The following example shows two home methods:
+[source, java]
+----
+public interface EmployeeHome extends jakarta.ejb.EJBHome {
+    ...
+    // this method returns a living index depending on
+    // the state and the base salary of an employee:
+    // the method is not specific to an instance
+    public float livingIndex(String state, float salary)
+        throws RemoteException;
 
-public interface EmployeeHome extends
-javax.ejb.EJBHome \{
-
- ...
-
- // this method returns a living index
-depending on
-
- // the state and the base salary of an
-employee:
-
- // the method is not specific to an instance
-
- public float livingIndex(String state, float
-Salary)
-
- throws RemoteException;
-
-
-
- // this method adds a bonus to all of the
-employees
-
- // based on a company profit-sharing index
-
- public void addBonus(float
-company_share_index)
-
- throws RemoteException,
-ShareIndexOutOfRangeException;
-
-
-
- ...
-
+    // this method adds a bonus to all of the employees
+    // based on a company profit-sharing index
+    public void addBonus(float company_share_index)
+        throws RemoteException, ShareIndexOutOfRangeException;
+    ...
 }
+----
 
 [[a179]]
 === Entity Bean’s Local Home Interface
