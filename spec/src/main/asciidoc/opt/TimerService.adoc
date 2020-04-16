@@ -15,23 +15,23 @@ with the entity bean’s identity.
 Use of the EJB Timer Service is not supported
 for an EJB 1.1 entity bean with container-managed persistence.
 
-=== Calendar-Based Time Expressions
+==== Calendar-Based Time Expressions
 
 Calendar based timers are not supported for
 entity beans.
 
-=== Non-persistent Timers
+==== Non-persistent Timers
 
 Non-persistent timers are not supported for
 entity beans.
 
-=== The TimerService Interface
+==== The TimerService Interface
 
 For an EJB 2.1 entity bean, the result of
 _getTimers_ is a collection of those timers that are associated with the
 bean’s identity.
 
-=== Timer Expiration and Timeout Callback Method
+==== Timer Expiration and Timeout Callback Method
 
 If a timer for an EJB 2.1 entity bean
 expires, and the bean has been passivated, the container must call the
@@ -40,7 +40,7 @@ calling the timeout callback method, as described in Sections
 link:Ejb.html#a1279[See Container’s View] and
 link:Ejb.html#a2553[See Container’s View].
 
-=== Entity Bean Removal
+==== Entity Bean Removal
 
 If an entity bean is removed, the container
 must remove the timers for that bean.

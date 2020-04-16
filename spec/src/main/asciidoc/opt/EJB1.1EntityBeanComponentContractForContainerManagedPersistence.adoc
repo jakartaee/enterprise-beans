@@ -30,7 +30,7 @@ the _javax.ejb.TimedObject_ interface. Use of dependency injection,
 interceptors, and any Java language metadata annotations is not
 supported for EJB 1.1 entity beans.
 
-=== Container-Managed Fields
+==== Container-Managed Fields
 
 An EJB 1.1 entity bean with container-managed
 persistence relies on the Container Provider’s tools to generate methods
@@ -110,7 +110,7 @@ EJB specification, and do not have to be supported by an EJB compliant
 container. (The container may simply use the Java serialization protocol
 in all cases).
 
-=== ejbCreate, ejbPostCreate
+==== ejbCreate, ejbPostCreate
 
 With bean-managed persistence, the entity
 Bean Provider is responsible for writing the code that inserts a record
@@ -171,7 +171,7 @@ DuplicateKeyException if the newly created entity object would have the
 same primary key as one of the existing entity objects within the same
 home.
 
-=== ejbRemove
+==== ejbRemove
 
 The container invokes the ejbRemove method on
 an entity bean instance with container-managed persistence in response
@@ -198,7 +198,7 @@ EJB 3.2 Core Contracts and Requirements.
 http://jcp.org/en/jsr/detail?id=345] Subsection “Container-Managed
 Transaction Demarcation for Business Methods”.
 
-=== ejbLoad
+==== ejbLoad
 
 When the container needs to synchronize the
 state of an enterprise bean instance with the entity object’s state in
@@ -213,7 +213,7 @@ can use the ejbLoad method, for instance, to perform some computation on
 the values of the fields that were read by the container (for example,
 uncompressing text fields).
 
-=== ejbStore
+==== ejbStore
 
 When the container needs to synchronize the
 state of the entity object in the database with the state of the
@@ -227,7 +227,7 @@ just before the container writes them to the database. For example, the
 ejbStore method may perform compression of text before the text is
 stored in the database.
 
-=== Finder Hethods
+==== Finder Hethods
 
 The entity Bean Provider does not write the
 finder (ejbFind<METHOD>) methods.
@@ -250,17 +250,17 @@ methods based in the description supplied by the Bean Provider. The
 EJB1.1 component contract for container-managed persistence does not
 specify the format of the finder method description.
 
-=== Home Methods
+==== Home Methods
 
 The EJB1.1 entity bean contract does not
 support _ejbHome_ methods.
 
-=== Create Methods
+==== Create Methods
 
 The EJB1.1 entity bean contract does not
 support _create<METHOD>_ methods.
 
-=== Primary Key Type
+==== Primary Key Type
 
 The container must be able to manipulate the
 primary key type. Therefore, the primary key type for an entity bean
@@ -282,14 +282,14 @@ implementing compound keys, and the first method is convenient for
 single-field keys. Without the first method, simple types such as
 _String_ would have to be wrapped in a user-defined class.
 
-=== Primary Key that Maps to a Single Field in the Entity Bean Class
+===== Primary Key that Maps to a Single Field in the Entity Bean Class
 
 The Bean Provider uses the primkey-field
 element of the deployment descriptor to specify the container-managed
 field of the entity bean class that contains the primary key. The
 field’s type must be the primary key type.
 
-=== Primary Key that Maps to Multiple Fields in the Entity Bean Class
+===== Primary Key that Maps to Multiple Fields in the Entity Bean Class
 
 The primary key class must be public, and
 must have a public constructor with no parameters.
@@ -302,7 +302,7 @@ class must be a subset of the names of the container-managed fields.
 (This allows the container to extract the primary key fields from an
 instance’s container-managed fields, and vice versa.)
 
-=== Special Case: Unknown Primary Key Class
+===== Special Case: Unknown Primary Key Class
 
 In special situations, the entity Bean
 Provider may choose not to specify the primary key class for an entity

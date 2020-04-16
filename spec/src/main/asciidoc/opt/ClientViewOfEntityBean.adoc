@@ -195,7 +195,7 @@ An EJB server may host one or multiple EJB
 containers. The containers are transparent to the client: there is no
 client-level API to manipulate the container.
 
-=== Locating an Entity Bean’s Home Interface
+==== Locating an Entity Bean’s Home Interface
 
 A client obtains
 an entity bean’s home interface through dependency injection, or the
@@ -222,7 +222,7 @@ interface could be obtained as follows:
 
 @EJB AccountHome accountHome;
 
-=== What a Container Provides
+==== What a Container Provides
 
 The following diagram illustrates the view
 that a container provides to the client of the entity beans deployed in
@@ -278,7 +278,7 @@ An entity bean’s remote home interface must
 extend the javax.ejb.EJBHome interface and follow the standard rules for
 Java programming language remote interfaces.
 
-=== Create Methods
+==== Create Methods
 
 An entity bean’s remote home interface can
 define zero or more create<METHOD> methods,
@@ -340,7 +340,7 @@ Account account = accountHome.create(“John”,
 
 
 
-=== Finder Methods
+==== Finder Methods
 
 An entity bean’s
 remote home interface defines one or more finder
@@ -393,7 +393,7 @@ AccountHome = ...;
 Account account =
 accountHome.findByPrimaryKey(“100-3450-3333”);
 
-=== Remove Methods
+==== Remove Methods
 
 The
 javax.ejb.EJBHome interface defines several methods that allow the
@@ -417,7 +417,7 @@ After an entity object has been removed,
 subsequent attempts to access the entity object by a remote client
 result in the java.rmi.NoSuchObjectException.
 
-=== Home Methods
+==== Home Methods
 
 An entity bean’s
 remote home interface may define one or more
@@ -476,7 +476,8 @@ ShareIndexOutOfRangeException;
 
 }
 
-=== [[a179]]Entity Bean’s Local Home Interface
+[[a179]]
+=== Entity Bean’s Local Home Interface
 
 
 
@@ -499,7 +500,7 @@ Execute a home business method.
 An entity bean’s local home interface must
 extend the javax.ejb.EJBLocalHome interface.
 
-=== Create Methods
+==== Create Methods
 
 An entity bean’s local home interface can
 define zero or more create<METHOD> methods, one for each way to create
@@ -555,7 +556,7 @@ AccountHome accountHome = ...;
 Account account = accountHome.create(“John”,
 “Smith”, 500.00);
 
-=== Finder Methods
+==== Finder Methods
 
 An entity bean’s
 local home interface defines one or more finder
@@ -607,7 +608,7 @@ AccountHome = ...;
 Account account =
 accountHome.findByPrimaryKey(“100-3450-3333”);
 
-=== Remove Methods
+==== Remove Methods
 
 The
 javax.ejb.EJBLocalHome interface defines the _remove_ method to allow
@@ -626,7 +627,7 @@ After an entity object has been removed,
 subsequent attempts to access the local entity object by the local
 client result in the javax.ejb.NoSuchObjectLocalException.
 
-=== Home Methods
+==== Home Methods
 
 An entity bean’s
 local home interface may define one or more
@@ -731,7 +732,7 @@ Multiple clients
 can access the same entity object concurrently. Transactions are used to
 isolate the clients’ work from each other.
 
-=== References to Entity Object Remote Interfaces
+==== References to Entity Object Remote Interfaces
 
 A client can get a reference to an existing
 entity object’s remote interface in any of
@@ -770,7 +771,7 @@ not exist are invalid. All attempted invocations on an entity object
 that does not exist result in an java.rmi.NoSuchObjectException being
 thrown.
 
-=== References to Entity Object Local Interfaces
+==== References to Entity Object Local Interfaces
 
 A local client can get a reference to an
 existing entity object’s local interface in
@@ -806,7 +807,7 @@ javax.ejb.NoSuchObjectLocalException being thrown.
 A local interface type must not be passed as
 an argument or result of a remote interface method.
 
-=== References to Entity Object and Stateful Session Bean Instance Passivation and Conversational State
+==== References to Entity Object and Stateful Session Bean Instance Passivation and Conversational State
 
 If an entity bean is
 referenced from a stateful session bean, the
@@ -1014,7 +1015,8 @@ _javax.ejb.TimedObject_ interface to the local client. These methods are
 not intended for the local client—they are used by the container to
 manage the enterprise bean instances.
 
-=== [[a349]]Entity Bean’s Handle
+[[a349]]
+=== Entity Bean’s Handle
 
 
 

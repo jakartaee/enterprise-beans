@@ -113,7 +113,7 @@ is defined.
 An EJB QL query is statically defined in the
 _ejb-ql_ deployment descriptor element.
 
-=== Abstract Schema Types and Query Domains
+==== Abstract Schema Types and Query Domains
 
 EJB QL is a typed language whose design is
 based on the type model of EJB 2.0 container-managed persistence. Every
@@ -173,7 +173,7 @@ abstract schema type determine navigability. Using the cmr-fields and
 their values, a query can select related entity beans and use their
 abstract schema types in the query.
 
-=== Query Methods
+==== Query Methods
 
 EJB QL is used for two types of query
 methods:
@@ -202,7 +202,7 @@ a collection of EJBLocalObjects), an EJBObject (or a collection of
 EJBObjects), a cmp-field value (or a collection of such), or the result
 of an aggregate function.
 
-=== Naming
+==== Naming
 
 Entity beans are
 designated in EJB QL query strings by their abstract schema names.
@@ -211,7 +211,8 @@ schema names to entity beans as part of the development process so that
 they can be used within queries. These unique names are scoped within
 the deployment descriptor file.
 
-=== [[a1882]]Examples
+[[a1882]]
+==== Examples
 
 The following convention refers to the names
 used for entity beans in subsequent examples: An entity bean as a whole
@@ -306,7 +307,7 @@ designates the abstract schema type over which the query ranges. The
 basis for the navigation is provided by the cmr-fields _lineItems_ and
 _product_ of the abstract schema types Order and LineItem respectively.
 
-=== The FROM Clause and Navigational Declarations
+==== The FROM Clause and Navigational Declarations
 
 The FROM clause
 of an EJB QL query defines the domain of the query by declaring
@@ -334,7 +335,7 @@ abstract_schema_name [ _AS_ ] identifier
 The following subsections discuss the
 constructs used in the FROM clause.
 
-=== Identifiers
+===== Identifiers
 
 An
 identifier is a character sequence of unlimited length. The character
@@ -362,7 +363,8 @@ use other SQL reserved words as identification variables in EJB QL
 queries because they may be used as EJB QL reserved identifiers in
 future versions of the EJB specification.
 
-=== [[a1914]]Identification Variables
+[[a1914]]
+===== Identification Variables
 
 An identification
 variable is a valid identifier declared in the
@@ -426,7 +428,7 @@ evaluated from left to right in the FROM clause. A collection member
 identification variable declaration can use the result of a preceding
 identification variable declaration of the query string.
 
-=== Range Variable Declarations
+===== Range Variable Declarations
 
 The EJB QL syntax
 for declaring an identification variable as a range variable is similar
@@ -465,7 +467,7 @@ WHERE o1.quantity > o2.quantity AND
 
 
 
-=== Collection Member Declarations
+===== Collection Member Declarations
 
 An identification
 variable declared by a collection_member_declaration ranges over values
@@ -502,7 +504,7 @@ variable _l_ designates a member of this collection, a single LineItem
 abstract schema type instance. In this example, _o_ is an identification
 variable of the abstract schema type Order.
 
-=== Example
+===== Example
 
 The following FROM clause contains two
 identification variable declaration clauses. The identification variable
@@ -516,7 +518,8 @@ variable _l_ can utilize the results of the navigation on _o_ .
 
  FROM Order AS o, IN(o.lineItems) l
 
-=== [[a1956]]Path Expressions
+[[a1956]]
+===== Path Expressions
 
 An identification
 variable followed by the navigation operator ( _._ ) and a cmp-field or
@@ -597,7 +600,7 @@ WHERE l.product.name = ‘widget’
 
 
 
-=== WHERE Clause and Conditional Expressions
+==== WHERE Clause and Conditional Expressions
 
 The WHERE clause
 of a query consists of a conditional expression used to select objects
@@ -613,7 +616,7 @@ The following sections describe the language
 constructs that can be used in a conditional expression of the WHERE
 clause.
 
-=== Literals
+===== Literals
 
 A string literal
 is enclosed in single quotes—for example: ‘literal’. A string literal
@@ -643,7 +646,7 @@ literals are _TRUE_ and _FALSE_ .
 Although predefined reserved literals appear
 in upper case, they are case insensitive.
 
-=== Identification Variables
+===== Identification Variables
 
 All
 identification variables used in the WHERE clause of an EJB QL query
@@ -656,7 +659,7 @@ that an identification variable represents a member of a collection or
 an instance of an entity bean’s abstract schema type. An identification
 variable never designates a collection in its entirety.
 
-=== Path Expressions
+===== Path Expressions
 
 It is illegal to
 use a _collection_valued_path_expression_ within a WHERE clause as part
@@ -664,7 +667,7 @@ of a conditional expression except in an
 _empty_collection_comparison_expression or collection_member_expression_
 .
 
-=== Input Parameters
+===== Input Parameters
 
 The following
 rules apply to input parameters. Input parameters can only be used in
@@ -692,7 +695,7 @@ null, comparison operations or arithmetic operations involving the input
 parameter will return an unknown value. See
 link:Ejb.html#a2207[See Null Values].
 
-=== Conditional Expression Composition
+===== Conditional Expression Composition
 
 Conditional
 expressions are composed of other conditional expressions, comparison
@@ -727,7 +730,7 @@ empty_collection_comparison_expression |
 
  collection_member_expression
 
-=== Operators and Operator Precedence
+===== Operators and Operator Precedence
 
 The operators are
 listed below in order of decreasing precedence.
@@ -750,7 +753,7 @@ Logical operators: _NOT_ , _AND_ , _OR_
 The following sections describe other
 operators used in specific expressions.
 
-=== Between _Expressions_
+===== Between _Expressions_
 
  _The syntax for the use of the comparison
 operator [NOT] BETWEEN in an conditional expression is as follows:_
@@ -779,7 +782,7 @@ _p.age >= 15 AND p.age <= 19_
  _p.age NOT BETWEEN 15 and 19_ is equivalent
 to _p.age < 15 OR p.age > 19_
 
-=== In Expressions
+===== In Expressions
 
 The syntax for
 the use of the comparison operator [NOT] IN in a conditional expression
@@ -813,7 +816,7 @@ If the value of a _cmp_path_expression_ in an
 IN or NOT IN expression is _NULL_ or unknown, the value of the
 expression is unknown.
 
-=== Like _Expressions_
+===== Like _Expressions_
 
  _The syntax for the use of the comparison
 operator [NOT] LIKE in a conditional expression is as follows:_
@@ -852,7 +855,7 @@ or _pattern_value_ is _NULL_ or unknown, the value of the LIKE
 expression is unknown. If the _escape_character_ is specified and is
 _NULL_ , the value of the LIKE expression is unknown.
 
-=== Null Comparison Expressions
+===== Null Comparison Expressions
 
 The syntax for
 the use of the comparison operator IS NULL in a conditional expression
@@ -865,7 +868,7 @@ A null comparison expression tests whether or
 not the single-valued path expression or input parameter is a _NULL_
 value.
 
-=== Empty Collection Comparison Expressions
+===== Empty Collection Comparison Expressions
 
 The syntax for
 the use of the comparison operator IS EMPTY in an
@@ -901,7 +904,7 @@ If the value of the collection-valued path
 expression in an empty collection comparison expression is unknown, the
 value of the empty comparison expression is unknown.
 
-=== Collection Member Expressions
+===== Collection Member Expressions
 
 The syntax for
 the use of the comparison operator MEMBER OFlink:#a3381[17] in
@@ -929,7 +932,7 @@ expression or single-valued cmr path expression in the collection member
 expression is unknown, the value of the collection member expression is
 unknown.
 
-=== Functional Expressions
+===== Functional Expressions
 
 EJB QL includes
 the following built-in functionslink:#a3382[18], which may be
@@ -968,7 +971,7 @@ If the value of any argument to a functional
 expression is null or unknown, the value of the functional expression is
 unknown.
 
-=== SELECT Clause
+==== SELECT Clause
 
 The SELECT clause
 denotes the query result. The SELECT clause contains either a single
@@ -1034,7 +1037,7 @@ that are returned by the finder or select method with which the query is
 associated and to materialize those return types, as described in
 link:Ejb.html#a2190[See Return Value Types].
 
-=== Null Values in the Query Result
+===== Null Values in the Query Result
 
 If the result of an EJB QL query corresponds
 to a cmr-field or cmp-field whose value is null, the container must
@@ -1058,7 +1061,7 @@ to allow null values for cmp-fields, he or she should specify those
 cmp-fields to have the equivalent Java object types instead of primitive
 types, e.g., _Integer_ rather than _int_ .)
 
-=== Aggregate Functions in the SELECT Clause
+===== Aggregate Functions in the SELECT Clause
 
 The result of an EJB QL query may be the
 result of an aggregate function applied to a path expression.
@@ -1086,7 +1089,7 @@ Null values are eliminated before the
 aggregate function is applied, regardless of whether the keyword
 DISTINCT is specified.
 
-=== Examples
+===== Examples
 
 The following example returns all line items
 related to some order:
@@ -1159,7 +1162,7 @@ o.customer.firstname = ‘John’
 
 AND l.price IS NOT NULL
 
-=== ORDER BY Clause
+==== ORDER BY Clause
 
 The ORDER BY clause allows the objects or
 values that are returned by the query to be ordered.
@@ -1251,7 +1254,8 @@ It is the container’s responsibility to
 ensure that the ordering of the query result is preserved in the result
 of the finder or select method if the ORDER BY clause is used.
 
-=== [[a2190]]Return Value Types
+[[a2190]]
+==== Return Value Types
 
 The value of a query result, specified by the
 SELECT clause, is an entity bean abstract
@@ -1335,7 +1339,8 @@ The result of a finder or select method may
 contain a null value if a cmp-field or cmr-field in the query result is
 null.
 
-=== [[a2207]]Null Values
+[[a2207]]
+==== Null Values
 
 When the target
 of a reference does not exist in the persistent store, its value is
@@ -1479,7 +1484,8 @@ persistent stores. The Bean Provider should therefore not rely on the
 semantics of EJB QL comparisons involving the empty string and NULL
 value.
 
-=== [[a2265]]Equality and Comparison Semantics
+[[a2265]]
+==== Equality and Comparison Semantics
 
 EJB QL only
 permits the values of _like_ types to be compared. A type is _like_
@@ -1500,7 +1506,7 @@ Two entity objects of the same abstract
 schema type are equal if and only if they have the same primary key
 value.
 
-=== Restrictions
+==== Restrictions
 
 Date and time
 values should use the standard Java _long_ millisecond value. The
@@ -1537,7 +1543,7 @@ examples illustrate the syntax and semantics of EJB QL. These examples
 are based on the example presented in link:Ejb.html#a1882[See
 Examples].
 
-=== Simple Queries
+==== Simple Queries
 
 Find all orders:
 
@@ -1564,7 +1570,7 @@ SELECT DISTINCT o.shipping_address.state
 
 FROM Order o
 
-=== Queries with Relationships
+==== Queries with Relationships
 
 Find all orders that have line items:
 
@@ -1654,7 +1660,7 @@ Platform’
 
 
 
-=== Queries Using Input Parameters
+==== Queries Using Input Parameters
 
 The following query finds the orders for a
 product whose name is designated by an input parameter:
@@ -1668,7 +1674,7 @@ WHERE l.product.name = ?1
 For this query, the input parameter must be
 of the type of the cmp-field name, i.e., a string.
 
-=== Queries for Select Methods
+==== Queries for Select Methods
 
 The following select queries illustrate the
 selection of values other than entity beans.
@@ -1712,7 +1718,7 @@ orders. The result type of the select method, which is either
 _java.util.Collection_ or _java.util.Set_ , determines whether the query
 may return duplicate city names.
 
-=== EJB QL and SQL
+==== EJB QL and SQL
 
 EJB QL, like SQL,
 treats the FROM clause as a cartesian product. The

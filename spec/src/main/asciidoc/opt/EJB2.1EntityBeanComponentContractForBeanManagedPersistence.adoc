@@ -46,7 +46,7 @@ Client View of Underlying Data Sources Accessed Through Entity Bean
 
 image:EBOpt-38.png[image]
 
-=== Entity Bean Provider’s View of Persistence
+==== Entity Bean Provider’s View of Persistence
 
 Using
 bean-managed persistence, the entity Bean Provider writes database
@@ -75,7 +75,7 @@ for data access objects, strategies for tailoring and deploying data
 access components or ensuring portability of these components for
 bean-managed persistence.
 
-=== Runtime Execution Model
+==== Runtime Execution Model
 
 This section describes the runtime model and
 the classes used in the description of the contract between an entity
@@ -110,7 +110,7 @@ Provider’s tools at deployment time. The entity EJBHome or EJBLocalHome
 object implements the entity bean’s home interface that was defined by
 the Bean Provider.
 
-=== Instance Life Cycle
+==== Instance Life Cycle
 
 ===
 
@@ -238,12 +238,12 @@ example of a possible implementation, but it is not the required
 implementation. Whether the container uses a pool or not has no bearing
 on the entity bean coding style.
 
-=== The Entity Bean Component Contract
+==== The Entity Bean Component Contract
 
 This section specifies the contract between
 an entity bean with bean-managed persistence and its container.
 
-=== Entity Bean Instance’s View
+===== Entity Bean Instance’s View
 
 The following describes the entity bean
 instance’s view of the contract:
@@ -492,7 +492,8 @@ allows the instance to execute the business logic to handle it.
 The _ejbTimeout_ method executes in the
 transaction context determined by its transaction attribute.
 
-=== [[a2553]]Container’s View
+[[a2553]]
+===== Container’s View
 
 This subsection
 describes the container’s view of the state
@@ -723,7 +724,8 @@ and transitioning it to the ready state.
 The container invokes the _ejbTimeout_ method
 in the context of a transaction determined by its transaction attribute.
 
-=== [[a2598]]Read-only Entity Beans
+[[a2598]]
+==== Read-only Entity Beans
 
 Compliant implementations of this
 specification may optionally support read-only entity beans. A read-only
@@ -746,7 +748,7 @@ Read-only beans are designated by
 vendor-specific means that are outside the scope of this specification,
 and their use is therefore not portable.
 
-=== The EntityContext Interface
+==== The EntityContext Interface
 
 A container
 provides the entity bean instances with an _EntityContext_ , which gives
@@ -792,7 +794,7 @@ must not call this method.
 The _lookup_ method enables the entity bean
 to look up its environment entries in the JNDI naming context.
 
-=== Operations Allowed in the Methods of the Entity Bean Class
+==== Operations Allowed in the Methods of the Entity Bean Class
 
 Table link:Ejb.html#a2625[See
 Operations Allowed in the Methods of an Entity Bean] defines the methods
@@ -1039,7 +1041,7 @@ beans is disallowed in the entity bean methods for which the container
 does not have a meaningful transaction context or client security
 context.
 
-=== Caching of Entity State and the ejbLoad and ejbStore Methods
+==== Caching of Entity State and the ejbLoad and ejbStore Methods
 
 An instance of an
 entity bean with bean-managed persistence can cache the entity object’s
@@ -1096,7 +1098,7 @@ entity bean class. We expect that they will rely on application
 development tools to provide various data access components that
 encapsulate data access and provide state caching.
 
-=== ejbLoad and ejbStore with the NotSupported Transaction Attribute
+===== ejbLoad and ejbStore with the NotSupported Transaction Attribute
 
 The use of the
 ejbLoad and ejbStore methods for caching an
@@ -1137,9 +1139,10 @@ ejbStore methods should be a no-op (i.e., an empty method), and each
 business method should access the entity object’s state directly in the
 database.
 
-=== [[a2729]]Finder Method Return Type
+[[a2729]]
+==== Finder Method Return Type
 
-=== Single-Object Finder
+===== Single-Object Finder
 
 Some finder
 methods (such as ejbFindByPrimaryKey) are designed to return at most one
@@ -1197,7 +1200,7 @@ ejbFindByPrimaryKey(
 
 }
 
-=== Multi-Object Finders
+===== Multi-Object Finders
 
 Some finder methods are designed to return
 multiple entity objects. For multi-object
@@ -1327,7 +1330,7 @@ ejbFindLargeAccounts(
 
 }
 
-=== Timer Notifications
+==== Timer Notifications
 
 An entity bean can be registered with the EJB
 Timer Service for time-based event notifications if it implements the
@@ -1335,7 +1338,8 @@ _javax.ejb.TimedObject_ interface. The container invokes the bean
 instance’s _ejbTimeout_ method when a timer for the bean has expired.
 See link:Ejb.html#a3258[See Timer Service].
 
-=== [[a2806]]Standard Application Exceptions for Entities
+[[a2806]]
+==== Standard Application Exceptions for Entities
 
 The EJB
 specification defines the following standard application exceptions:
@@ -1350,7 +1354,7 @@ javax.ejb.ObjectNotFoundException
 
 javax.ejb.RemoveException
 
-=== CreateException
+===== CreateException
 
 From the client’s
 perspective, a CreateException (or a subclass of CreateException)
@@ -1382,7 +1386,7 @@ The container treats the CreateException as
 any other application exception. See Section
 link:Ejb.html#a3227[See Container Provider Responsibilities].
 
-=== DuplicateKeyException
+===== DuplicateKeyException
 
 The
 DuplicateKeyException is a subclass of CreateException. It is thrown by
@@ -1399,7 +1403,7 @@ DuplicateKeyException, the client knows that the entity was not created,
 and that the client’s transaction has not typically been marked for
 rollback.
 
-=== FinderException
+===== FinderException
 
 From the client’s
 perspective, a FinderException (or a subclass of FinderException)
@@ -1417,7 +1421,7 @@ The container treats the FinderException as
 any other application exception. See Section
 link:Ejb.html#a3227[See Container Provider Responsibilities].
 
-=== ObjectNotFoundException
+===== ObjectNotFoundException
 
 The
 ObjectNotFoundException is a subclass of FinderException. It is thrown
@@ -1430,7 +1434,7 @@ this exception. Multi-object finders must not throw this exception.
 Multi-object finders should return an empty collection as an indication
 that no matching objects were found.
 
-=== RemoveException
+===== RemoveException
 
 From the client’s
 perspective, a RemoveException (or a subclass of RemoveException)
@@ -1458,7 +1462,7 @@ treats the RemoveException as any other application exception. See
 Section link:Ejb.html#a3227[See Container Provider
 Responsibilities].
 
-=== Commit Options
+==== Commit Options
 
 The Entity Bean
 protocol is designed to give the container the flexibility to select the
@@ -1541,7 +1545,7 @@ transparent to the entity bean implementation—the entity bean will work
 correctly regardless of the commit-time option chosen by the container.
 The Bean Provider writes the entity bean in the same way.
 
-=== Concurrent Access from Multiple Transactions
+==== Concurrent Access from Multiple Transactions
 
 When writing the entity bean business
 methods, the Bean Provider does not have to worry about
@@ -1596,7 +1600,8 @@ Multiple Clients Can Access the Same Entity Object Using Single Instance
 
 image:EBOpt-42.png[image]
 
-=== Non-reentrant and R[[a2872]]e-entrant Instances
+[[a2872]]
+==== Non-reentrant and Re-entrant Instances
 
 An entity Bean
 Provider can specify that an entity bean is non-reentrant. If an
@@ -1652,7 +1657,7 @@ This section describes the responsibilities
 of a bean-managed persistence entity Bean Provider to ensure that the
 entity bean can be deployed in any EJB container.
 
-=== Classes and Interfaces
+==== Classes and Interfaces
 
 The Bean Provider is responsible for
 providing the following class files:
@@ -1673,7 +1678,7 @@ interface for the bean. The Bean Provider may provide a remote
 interface, remote home interface, local interface, and local home
 interface for the bean. Other combinations are not allowed.
 
-=== Enterprise Bean Class
+==== Enterprise Bean Class
 
 The following are
 the requirements for an entity bean class:
@@ -1723,7 +1728,7 @@ other methods (for example helper methods
 invoked internally by the business methods) in addition to the methods
 required by the EJB specification.
 
-=== ejbCreate<METHOD> Methods
+==== ejbCreate<METHOD> Methods
 
 The
 entity bean class must implement the ejbCreate<METHOD> methods that
@@ -1770,7 +1775,7 @@ method should throw the DuplicateKeyException on an attempt to create an
 entity object with a duplicate primary key. However, it is legal to
 reuse the primary key of a previously removed entity object.
 
-=== ejbPostCreate<METHOD> Methods
+==== ejbPostCreate<METHOD> Methods
 
 For each
 ejbCreate<METHOD> method, the entity bean class must define a matching
@@ -1803,7 +1808,7 @@ link:Ejb.html#a3221[See System Exceptions]). An EJB 2.0 or later
 enterprise bean should not throw the _java.rmi.RemoteException_ . from
 the _ejbPostCreate_ method.
 
-=== ejbFind Methods
+==== ejbFind Methods
 
 The entity bean
 class may also define additional ejbFind<METHOD> finder methods.
@@ -1846,7 +1851,7 @@ ejbFindByPrimaryKey method. The result type for this method must be the
 primary key type (i.e., the ejbFindByPrimaryKey method must be a
 single-object finder).
 
-=== ejbHome<METHOD> Methods
+==== ejbHome<METHOD> Methods
 
 The entity bean class may define zero or more
 home methods whose signatures must follow the following rules:
@@ -1869,7 +1874,7 @@ The _throws_ clause may define arbitrary
 application specific exceptions. The _throws_ clause must not throw the
 _java.rmi.RemoteException_ .
 
-=== Business Methods
+==== Business Methods
 
 The entity bean
 class may define zero or more business methods whose signatures must
@@ -1901,7 +1906,7 @@ exceptions to the container (see Section link:Ejb.html#a3221[See
 System Exceptions]). An EJB 2.0 or later enterprise bean should not
 throw the _java.rmi.RemoteException_ . from a business method.
 
-=== Entity Bean’s Remote Interface
+==== Entity Bean’s Remote Interface
 
 The following are
 the requirements for the entity bean’s remote interface:
@@ -1937,7 +1942,7 @@ local interface types, local home interface types, timers or timer
 handles, or the managed collection classes that are used for entity
 beans with container-managed persistence as arguments or results.
 
-=== Entity Bean’s Remote Home Interface
+==== Entity Bean’s Remote Home Interface
 
 The following are
 the requirements for the entity bean’s remote home interface:
@@ -2018,7 +2023,7 @@ expose local interface types, local home interface types, timer handles,
 or the managed collection classes that are used for entity beans with
 container-managed persistence as arguments or results.
 
-=== Entity Bean’s Local Interface
+==== Entity Bean’s Local Interface
 
 The following are
 the requirements for the entity bean’s local interface:
@@ -2045,7 +2050,7 @@ All the exceptions defined in the _throws_
 clause of the matching method of the enterprise Bean class must be
 defined in the _throws_ clause of the method of the local interface.
 
-=== Entity Bean’s Local Home Interface
+==== Entity Bean’s Local Home Interface
 
 The following are
 the requirements for the entity bean’s local home interface:
@@ -2122,7 +2127,8 @@ The _throws_ clause of any method on the
 entity bean’s local home interface must not include the
 _java.rmi.RemoteException_ .
 
-=== [[a3011]]Entity Bean’s Primary Key Class
+[[a3011]]
+==== Entity Bean’s Primary Key Class
 
 The Bean Provider
 must specify a primary key class in the deployment descriptor.
@@ -2149,7 +2155,7 @@ deployment tools are provided by the Container Provider. Alternatively,
 the deployment tools may be provided by a different vendor who uses the
 container vendor’s specific API.
 
-=== Generation of Implementation Classes
+==== Generation of Implementation Classes
 
 The deployment
 tools provided by the Container Provider are responsible for the
@@ -2188,7 +2194,7 @@ bean may check that the debited amount does not exceed a certain limit,
 or perform security checking that is specific to the operational
 environment.
 
-=== Entity EJBHome Class
+==== Entity EJBHome Class
 
 The entity
 EJBHome class, which is generated by deployment tools, implements the
@@ -2220,7 +2226,7 @@ method invokes a matching ejbHome<METHOD> method (in which the first
 character of _<METHOD>_ is uppercased in the name of the ejbHome<METHOD>
 method), passing the <METHOD> parameters to the matching method.
 
-=== Entity EJBObject Class
+==== Entity EJBObject Class
 
 The entity
 EJBObject class, which is generated by deployment tools, implements the
@@ -2237,7 +2243,7 @@ The implementation of each business method
 must activate an instance (if an instance is not already in the ready
 state) and invoke the matching business method on the instance.
 
-=== Entity EJBLocalHome Class
+==== Entity EJBLocalHome Class
 
 The entity
 EJBLocalHome class, which is generated by deployment tools, implements
@@ -2270,7 +2276,7 @@ method invokes a matching ejbHome<METHOD> method (in which the first
 character of _<METHOD>_ is uppercased in the name of the ejbHome<METHOD>
 method), passing the <METHOD> parameters to the matching method.
 
-=== Entity EJBLocalObject Class
+==== Entity EJBLocalObject Class
 
 The entity
 EJBLocalObject class, which is generated by deployment tools, implements
@@ -2287,7 +2293,7 @@ The implementation of each business method
 must activate an instance (if an instance is not already in the ready
 state) and invoke the matching business method on the instance.
 
-=== Handle Class
+==== Handle Class
 
 The deployment
 tools are responsible for implementing the handle class for the entity
@@ -2298,7 +2304,7 @@ As the handle class is not entity-bean
 specific, the container may, but is not required to, use a single class
 for all deployed entity beans.
 
-=== Home Handle Class
+==== Home Handle Class
 
 The deployment
 tools responsible for implementing the home
@@ -2309,7 +2315,7 @@ Because the home handle class is not
 entity-bean specific, the container may, but is not required to, use a
 single class for the home handles of all deployed entity beans.
 
-=== Metadata Class
+==== Metadata Class
 
 The deployment
 tools are responsible for implementing the class that provides metadata
@@ -2321,13 +2327,13 @@ Because the metadata class is not entity-bean
 specific, the container may, but is not required to, use a single class
 for all deployed enterprise beans.
 
-=== Instance’s Re-entrance
+==== Instance’s Re-entrance
 
 The container runtime must enforce the rules
 defined in Section link:Ejb.html#a2872[See Non-reentrant and
 Re-entrant Instances].
 
-=== Transaction Scoping, Security, Exceptions
+==== Transaction Scoping, Security, Exceptions
 
 The container runtime must follow the rules
 on transaction scoping and
@@ -2338,7 +2344,7 @@ checking described in the EJB Core Contracts and Requirements document
 link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
 http://jcp.org/en/jsr/detail?id=345] Chapter “Security Management”.
 
-=== Implementation of Object References
+==== Implementation of Object References
 
 The container should implement
 the distribution protocol between the client
@@ -2357,7 +2363,7 @@ needs to have a recovery handler for the system exceptions thrown from
 the individual method invocations on the home and remote interface, the
 client should not be forced to re-obtain the object references.
 
-=== EntityContext
+==== EntityContext
 
 The container must implement the
 EntityContext.getEJBObject method such that

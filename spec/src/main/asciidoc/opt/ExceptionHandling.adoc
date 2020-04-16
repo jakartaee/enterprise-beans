@@ -37,7 +37,7 @@ section in the EJB Core Contracts and Requirements document
 [link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
 Requirements. http://jcp.org/en/jsr/detail?id=345]].
 
-=== Application Exceptions
+==== Application Exceptions
 
 The Bean Provider is responsible for using
 the standard EJB application exceptions (javax.ejb.CreateException,
@@ -47,13 +47,14 @@ link:Ejb.html#a1524[See Standard Application Exceptions for
 Entities] and link:Ejb.html#a2806[See Standard Application
 Exceptions for Entities].
 
-=== [[a3221]]System Exceptions
+[[a3221]]
+==== System Exceptions
 
 The Bean Provider should handle various
 system-level exceptions and errors that an entity bean instance may
 encounter during the execution of a business method (e.g. ejbLoad).
 
-=== javax.ejb.NoSuchEntityException
+==== javax.ejb.NoSuchEntityException
 
 The
 NoSuchEntityException is a subclass of
@@ -65,7 +66,8 @@ persistence entity bean class typically throws this exception from the
 ejbLoad and ejbStore methods, and from the methods that implement the
 business methods defined in the component interface.
 
-=== [[a3227]]Container Provider Responsibilities
+[[a3227]]
+=== Container Provider Responsibilities
 
 
 
@@ -76,7 +78,8 @@ corresponding section in the EJB Core Contracts and Requirements
 document [link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
 Requirements. http://jcp.org/en/jsr/detail?id=345]].
 
-=== [[a3229]]Exceptions from Method Invoked via Entity Bean’s Client View
+[[a3229]]
+==== Exceptions from Method Invoked via Entity Bean’s Client View
 
 The following entity bean methods:
 ejbCreate<METHOD>, ejbPostCreate<METHOD>, ejbRemove, _ejbHome<METHOD>_ ,
@@ -90,7 +93,8 @@ Container-Managed Transaction Demarcation” of the EJB Core Contracts and
 Requirements document [link:Ejb.html#a3339[See EJB 3.2 Core
 Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]].
 
-=== [[a3232]]Exceptions from Other Container-invoked Callbacks
+[[a3232]]
+==== Exceptions from Other Container-invoked Callbacks
 
 This subsection applies to the ejbActivate,
 ejbLoad, ejbPassivate, ejbStore, setEntityContext, and
@@ -126,7 +130,7 @@ the _javax.ejb.TransactionRolledbackLocalException_ to a local client,
 because it provides more information to the client. (The client knows
 that it is fruitless to continue the transaction.)
 
-=== javax.ejb.NoSuchEntityException
+==== javax.ejb.NoSuchEntityException
 
 The
 NoSuchEntityException is a subclass of
@@ -142,7 +146,7 @@ java.rmi.NoSuchObjectException (which is a subclass of
 java.rmi.RemoteException) to a remote client, or the
 _javax.ejb.NoSuchObjectLocalException_ to a local client.
 
-=== Non-existing Entity Object
+==== Non-existing Entity Object
 
 If a client makes a call to an entity object
 that has been removed, the container should throw the
@@ -152,7 +156,7 @@ java.rmi.NoSuchObjectException (which is a
 subclass of java.rmi.RemoteException) to a remote client, or the
 _javax.ejb.NoSuchObjectLocalException_ to a local client.
 
-=== Support for Deprecated Use of java.rmi.RemoteException
+==== Support for Deprecated Use of java.rmi.RemoteException
 
 The EJB 1.0
 specification allowed the business methods, ejbCreate, ejbPostCreate,

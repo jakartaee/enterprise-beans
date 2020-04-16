@@ -22,13 +22,13 @@ document [link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
 Requirements. http://jcp.org/en/jsr/detail?id=345]] for the complete
 description of the Bean Provider responsibilities.
 
-=== Bean-Managed Versus Container-Managed Transaction Demarcation
+==== Bean-Managed Versus Container-Managed Transaction Demarcation
 
 An entity bean
 must always use container-managed transaction demarcation. An entity
 bean must not be designated with bean-managed transaction demarcation.
 
-=== Isolation Levels
+==== Isolation Levels
 
 The isolation
 level describes the degree to which the access to a resource manager by
@@ -51,7 +51,7 @@ ensure that the management of the isolation levels performed by the data
 access classes will not result in conflicting isolation level requests
 for a resource manager within a transaction.
 
-=== Specification of the Transaction Attributes for a Bean’s Methods
+==== Specification of the Transaction Attributes for a Bean’s Methods
 
 The Bean Provider
 of an enterprise bean with container-managed transaction demarcation may
@@ -116,7 +116,7 @@ the EJB Core Contracts and Requirements document
 Requirements. http://jcp.org/en/jsr/detail?id=345]] for the complete
 description of the Container Provider responsibilities.
 
-=== Container-Managed Transaction Demarcation for Entity Beans
+==== Container-Managed Transaction Demarcation for Entity Beans
 
 The container is responsible for providing
 the transaction demarcation for the entity beans with bean-managed

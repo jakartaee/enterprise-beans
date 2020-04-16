@@ -73,7 +73,7 @@ Contracts and Requirements document link:Ejb.html#a3339[See EJB
 3.2 Core Contracts and Requirements.
 http://jcp.org/en/jsr/detail?id=345].
 
-=== Session Bean’s JAX-RPC Service Endpoint Interface
+==== Session Bean’s JAX-RPC Service Endpoint Interface
 
 The following are
 the requirements for stateless session beans with JAX-RPC web service
@@ -146,7 +146,7 @@ within a web service if it is referenced by a web service deployment
 descriptor as defined by link:Ejb.html#a3337[See Web Services
 for Java EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.].
 
-=== MessageContext Interface
+==== MessageContext Interface
 
 The _MessageContext_ interface allows the
 stateless session bean instance to see the SOAP message for the web
@@ -176,7 +176,7 @@ Contracts and Requirements document link:Ejb.html#a3339[See EJB
 3.2 Core Contracts and Requirements.
 http://jcp.org/en/jsr/detail?id=345].
 
-=== Generation of WSDL
+==== Generation of WSDL
 
 Reference link:Ejb.html#a3337[See Web
 Services for Java EE, version 1.3. http://jcp.org/en/jsr/detail?id=109.]
@@ -185,7 +185,7 @@ The Java to WSDL mapping must adhere to the requirements of JAX-RPC
 specification link:Ejb.html#a3332[See Java API for XML-based RPC
 (JAX-RPC) 2.0. http://jcp.org/en/jsr/detail?id=101.].
 
-=== JAX-RPC Message Handlers for Web Service Endpoints
+==== JAX-RPC Message Handlers for Web Service Endpoints
 
 The container must support the use of JAX-RPC
 message handlers for web service endpoints. Container requirements for
@@ -196,7 +196,7 @@ http://jcp.org/en/jsr/detail?id=109.].
 If message handlers are present, they must be
 invoked before any business method interceptor methods.
 
-=== The SessionContext Interface Restrictions
+==== The SessionContext Interface Restrictions
 
 Invoking the _getMessageContext_ method of
 the _SessionContext interface_ is disallowed in session bean methods
