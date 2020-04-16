@@ -1,762 +1,351 @@
 [[a384]]
-== EJB 2.1 Entity Bean Component Contract for Container-Managed Persistence
+== Enterprise Beans 2.1 Entity Bean Component Contract for Container-Managed Persistence
 
-The EJB 2.1 entity bean component contract
-for container-managed persistence is the contract between an entity bean
-and its container. It defines the life cycle of the entity bean
-instances, the model for method delegation of the business methods
-invoked by the client, and the model for the management of the entity
-bean’s persistent state and relationships. The main goal of this
-contract is to ensure that an entity bean component using
-container-managed persistence is portable across all compliant EJB
-containers.
+The Enterprise Beans 2.1 entity bean component contract for container-managed persistence is the contract between an entity bean and its container.
+It defines the life cycle of the entity bean instances, the model for method delegation of the business methods invoked by the client, and the model for the management of the entity bean’s persistent state and relationships.
+The main goal of this contract is to ensure that an entity bean component using container-managed persistence is portable across all compliant Enterprise Beans containers.
 
-This chapter defines the Enterprise Bean
-Provider’s view of this contract and responsibilities of the Container
-Provider for managing the life cycle of the enterprise bean instances
-and their persistent state and relationships.
+This chapter defines the Enterprise Bean Provider’s view of this contract and responsibilities of the Container Provider for managing the life cycle of the enterprise bean instances and their persistent state and relationships.
 
-Note that use of dependency injection,
-interceptors, and Java language metadata annotations is not supported
-for EJB 2.1 entity beans.
+_Note that use of dependency injection, interceptors, and Java language metadata annotations is not supported for Enterprise Beans 2.1 entity beans._
 
 === Overview
 
+In accordance with the architecture for container-managed persistence, the Bean Provider develops a set of entity beans for an application, and determines the relationships among them.
+The Bean Provider designs an abstract persistence schema for each entity bean, which defines its container-managed fields and relationships, and determines the methods for accessing them.
+The entity bean instance accesses its container-managed fields and relationships at runtime by means of the methods defined for its abstract persistence schema.
 
+The abstract persistence schema is specified in the deployment descriptor that is produced by the Bean Provider.
+The Deployer, using the Container Provider’s tools, determines how the persistent fields and relationships defined by the abstract persistence schema are mapped to a database or other persistent store, and generates the necessary additional classes and interfaces that enable the container to manage the persistent fields and relationships of the entity bean instances at runtime.
 
-In accordance
-with the architecture for container-managed persistence, the Bean
-Provider develops a set of entity beans for an application, and
-determines the relationships among them. The Bean Provider designs an
-abstract persistence schema for each entity bean, which defines its
-container-managed fields and relationships,
-and determines the methods for accessing them. The entity bean instance
-accesses its container-managed fields and
-relationships at runtime by means of the methods defined for its
-abstract persistence schema.
-
-The abstract
-persistence schema is specified in the deployment descriptor that is
-produced by the Bean Provider. The Deployer, using the Container
-Provider’s tools, determines how the persistent fields and relationships
-defined by the abstract persistence schema are mapped to a database or
-other persistent store, and generates the necessary additional classes
-and interfaces that enable the container to manage the persistent fields
-and relationships of the entity bean instances at runtime.
-
-This chapter
-describes the component contract for an EJB 2.1 entity bean with
-container-managed persistence, and how data independence is maintained
-between the entity bean instance and its representation in the
-persistent store. It describes this contract from the viewpoints of both
-the Bean Provider and the container.
+This chapter describes the component contract for an Enterprise Beans 2.1 entity bean with container-managed persistence, and how data independence is maintained between the entity bean instance and its representation in the persistent store.
+It describes this contract from the viewpoints of both the Bean Provider and the container.
 
 === Container-Managed Entity Persistence and Data Independence
 
+The Enterprise Beans component model provides a separation between the client view of a bean (as presented by its home and component interfaces) and the entity bean class (which provides the implementation of the client view).
+The Enterprise Beans architecture for container-managed persistence adds to this a separation between the entity bean class (as defined by the Bean Provider) and its persistent representation.
+The container-managed persistence architecture thus provides not only a layer of data independence between the client view of a bean as an _entity object_ and the Bean Provider’s internal view of the bean in terms of the entity bean instance, but also between the entity bean instance and its persistent representation.
+This allows an entity bean to be evolved independently from its clients, without requiring the redefinition or recompilation of those clients, and it allows an entity bean to be redeployed across different containers and different persistent data stores, without requiring the redefinition or recompilation of the entity bean class.
 
+In container-managed persistence, unlike in bean-managed persistence, the Bean Provider does not write database access calls in the methods of the entity bean class.
+Instead, persistence is handled by the container at runtime. The entity Bean Provider must specify in the deployment descriptor those persistent fields and relationships for which the container must handle data access. 
+The Bean Provider codes all persistent data access by using the accessor methods that are defined for the abstract persistence schema.
+The implementation of the persistent fields and relationships, as well as all data access, is deferred to the container.
 
-The EJB component
-model provides a separation between the client view of a bean (as
-presented by its home and component interfaces) and the entity bean
-class (which provides the implementation of the client view). The EJB
-architecture for container-managed persistence adds to this a separation
-between the entity bean class (as defined by the Bean Provider) and its
-persistent representation. The container-managed persistence
-architecture thus provides not only a layer of data independence between
-the client view of a bean as an _entity object_ and the Bean Provider’s
-internal view of the bean in terms of the entity bean instance, but also
-between the entity bean instance and its persistent representation. This
-allows an entity bean to be evolved independently from its clients,
-without requiring the redefinition or recompilation of those clients,
-and it allows an entity bean to be redeployed across different
-containers and different persistent data stores, without requiring the
-redefinition or recompilation of the entity bean class.
+It is the responsibility of the Deployer to map the abstract persistence schema of a set of interrelated entity bean classes into the physical schema used by the underlying data store (e.g., into a relational schema) by using the Container Provider’s tools.
+The Deployer uses the deployment descriptor as input to the Container Provider’s tools to perform this mapping.
+The Container Provider’s tools are also used to generate the concrete implementation of the entity bean classes, including the code that delegates calls to the accessor methods of the entity bean class to the runtime persistent data access layer of the container.
 
-In container-managed persistence, unlike in
-bean-managed persistence, the Bean Provider does not write database
-access calls in the methods of the entity bean class. Instead,
-persistence is handled by the container at runtime. The entity Bean
-Provider must specify in the deployment descriptor those persistent
-fields and relationships for which the container must handle data
-access. The Bean Provider codes all
-persistent data access by using the accessor methods that are defined
-for the abstract persistence schema. The implementation of the
-persistent fields and relationships, as well as all data access, is
-deferred to the container.
+The Enterprise Beans deployment descriptor for Enterprise Beans 2.1 entity beans describes _logical_ relationships among entity beans.
+It does not provide a mechanism for specifying how the abstract persistence schema of an entity bean or of a set of interrelated entity beans is to be mapped to an underlying database.
+This is the responsibility of the Deployer, who, using the Container Provider’s tools, uses the logical relationships that are specified in the deployment descriptor to map to the physical relationships that are specific to the underlying resource.
+It is the responsibility of the container to manage the mapping between the logical and physical relationships at runtime and to manage the referential integrity of the relationships.
 
-It is the
-responsibility of the Deployer to map the abstract persistence schema of
-a set of interrelated entity bean classes into the physical schema used
-by the underlying data store (e.g., into a relational schema) by using
-the Container Provider’s tools. The Deployer uses the deployment
-descriptor as input to the Container Provider’s tools to perform this
-mapping. The Container Provider’s tools are also used to generate the
-concrete implementation of the entity bean classes, including the code
-that delegates calls to the accessor methods of the entity bean class to
-the runtime persistent data access layer of the container.
+The advantage of using container-managed persistence is that the entity bean can be logically independent of the data source in which the entity is stored.
+The Container Provider’s tools can, for example, generate classes that use JDBC or SQLJ to access the entity state in a relational database; classes that implement access to a non-relational data source, such as an IMS database; or classes that implement function calls to existing enterprise applications. These tools are typically specific to each data source.
 
-The EJB
-deployment descriptor for EJB 2.1 entity beans describes _logical_
-relationships among entity beans. It does not provide a mechanism for
-specifying how the abstract persistence schema of an entity bean or of a
-set of interrelated entity beans is to be mapped to an underlying
-database. This is the responsibility of the Deployer, who, using the
-Container Provider’s tools, uses the logical relationships that are
-specified in the deployment descriptor to map to the physical
-relationships that are specific to the underlying resource. It is the
-responsibility of the container to manage the mapping between the
-logical and physical relationships at runtime and to manage the
-referential integrity of the relationships.
-
-The advantage of
-using container-managed persistence is that the entity bean can be
-logically independent of the data source in which the entity is stored.
-The Container Provider’s tools can, for example, generate classes that
-use JDBC or SQLJ to access the entity state in a relational database;
-classes that implement access to a non-relational data source, such as
-an IMS database; or classes that implement function calls to existing
-enterprise applications. These tools are typically specific to each data
-source.
-
-===
-
-
-
-View of Underlying Data Sources Accessed Through Entity Bean
-
-image:EBOpt-8.png[image]
+.View of Underlying Data Sources Accessed Through Entity Bean
+image:EBOpt-8.png[]
 
 === The Entity Bean Provider’s View of Container-Managed Persistence
 
+An entity bean implements an object view of a business entity or set of business entities stored in an underlying database or implemented by an existing enterprise application (for example, by a mainframe program or by an ERP application).
 
+An entity bean with container-managed persistence typically consists of its entity bean class; a component interface which defines its client view business methods; a home interface which defines the create, remove, home, and finder methods of its client view; and its abstract persistence schema as specified in the deployment descriptor.
 
-An entity bean
-implements an object view of a business entity or set of business
-entities stored in an underlying database or implemented by an existing
-enterprise application (for example, by a mainframe program or by an ERP
-application).
+A client of an entity bean can control the life cycle of a bean by using the bean’s home interface and can manipulate the bean as a business entity by using the methods defined by its component interface.
+The home and component interfaces of a bean define its client view.
 
-An
-entity bean with container-managed persistence typically consists of its
-entity bean class; a component interface which defines its client view
-business methods; a home interface which defines the create, remove,
-home, and finder methods of its client view; and its abstract
-persistence schema as specified in the deployment descriptor.
+An entity bean with container-managed persistence typically has container-managed relationships with other container-managed persistence entity beans, as defined by the `relationships`  element of
+the deployment descriptor.
+The architecture for container-managed persistence thus allows the Bean Provider to implement complex applications by defining a complex abstract persistence schema encompassing multiple entity bean classes related by means of container-managed relationships.
 
-A client of an entity bean can control the
-life cycle of a bean by using the bean’s home interface and can
-manipulate the bean as a business entity by using the methods defined by
-its component interface. The home and component interfaces of a bean
-define its client view.
+An entity bean accesses related entity beans by means of the accessor methods for its container-managed relationship fields, which are specified by the `cmr-field`  elements of its abstract persistence schema defined in the deployment descriptor.
+Entity bean relationships are defined in terms of the local interfaces of the related beans, and the view an entity bean presents to its related beans is defined by its local home and local interfaces. Thus, an entity bean can be the target of a relationship from another entity bean only if it has a local interface.
 
-An entity bean with container-managed
-persistence typically has container-managed
-relationships with other container-managed persistence entity beans, as
-defined by the _relationships_  element of
-the deployment descriptor. The architecture for container-managed
-persistence thus allows the Bean Provider to implement complex
-applications by defining a complex abstract persistence schema
-encompassing multiple entity bean classes related by means of
-container-managed relationships.
+The Bean Provider programming an application that uses container-managed persistence typically avoids calls to the methods of the remote home and remote interfaces in favor of invoking related beans by means of the methods of their local interfaces.
+Unlike remote method calls, such internal method invocations are made using call-by-reference and commonly do not involve the checking of method permissions.
 
-An entity bean accesses related entity beans
-by means of the accessor methods for its
-container-managed relationship fields, which
-are specified by the _cmr-field_  elements
-of its abstract persistence schema defined in the deployment descriptor.
-Entity bean relationships are defined in
-terms of the local interfaces of the related beans, and the view an
-entity bean presents to its related beans is defined by its local home
-and local interfaces. Thus, an entity bean can be the target of a
-relationship from another entity bean only if it has a local interface.
+The Enterprise Beans architecture for container-managed persistence provides great flexibility to the Bean Provider in designing an application.
 
-The Bean Provider programming an application
-that uses container-managed persistence typically avoids calls to the
-methods of the remote home and remote interfaces in favor of invoking
-related beans by means of the methods of their local interfaces. Unlike
-remote method calls, such internal method invocations are made using
-call-by-reference and commonly do not involve the checking of method
-permissions.
+****
+_For example, a group of related entity beans—`Order`, `LineItem` and `Customer`—might all be defined as having only local interfaces, with a remotable session bean containing the business logic that drives their invocation.
+The individual entity beans form a coordinated whole that provides an interrelated set of services that are exposed by their several home and component interfaces.
+The services provided by the local network of entity beans is exposed to the remote client view through the home and remote interfaces of the session bean, which offers a coarser grained remote service._
 
-The Enterprise JavaBeans architecture for
-container-managed persistence provides great flexibility to the Bean
-Provider in designing an application.
-
-For example, a group of related entity beans—
-_Order_ , _LineItem_ , and _Customer_ —might all be defined as having
-only local interfaces, with a remotable session bean containing the
-business logic that drives their invocation. The individual entity beans
-form a coordinated whole that provides an interrelated set of services
-that are exposed by their several home and component interfaces. The
-services provided by the local network of entity beans is exposed to the
-remote client view through the home and remote interfaces of the session
-bean, which offers a coarser grained remote service.
-
-Alternatively, a single entity bean might
-represent an independent, remotable business object that forms a unit of
-distribution that is designed to be referenced remotely by multiple
-enterprise beans and/or other remote clients. Such a remotable entity
-bean might make use of other entity beans within its local scope to
-further model its complex internal state. For example, an _Order_ entity
-bean might make use of a _LineItem_ entity bean internally, not exposing
-it to remote clients. In this case, the _Order_ entity bean might define
-both a remote and a local component interface, where the local interface
-is presented only to the related entity beans, such as _LineItem_ , and
-the remote interface is presented to session beans and/or web-tier
-clients.
+_Alternatively, a single entity bean might represent an independent, remotable business object that forms a unit of distribution that is designed to be referenced remotely by multiple enterprise beans and/or other remote clients.
+Such a remotable entity bean might make use of other entity beans within its local scope to further model its complex internal state.
+For example, an `Order` entity bean might make use of a `LineItem` entity bean internally, not exposing it to remote clients.
+In this case, the `Order` entity bean might define both a remote and a local component interface, where the local interface is presented only to the related entity beans, such as `LineItem`, and the remote interface is presented to session beans and/or web-tier clients._
+****
 
 ==== The Entity Bean Provider’s Programming Contract
 
-The Bean Provider
-must observe the following programming contract when defining an entity
-bean class that uses container-managed persistence:
+The Bean Provider must observe the following programming contract when defining an entity bean class that uses container-managed persistence:
 
-The Bean Provider
-must define the entity bean class as an abstract class. The container
-provides the implementation class that is used at runtime.
+* The Bean Provider must define the entity bean class as an abstract class.
+The container provides the implementation class that is used at runtime.
 
-The
-container-managed persistent fields and
-container-managed relationship fields must
-_not_ be defined in the entity bean class. From the perspective of the
-Bean Provider, the container-managed persistent fields and
-container-managed relationship fields are virtual fields only, and are
-accessed through get and set accessor methods. The implementation of the
-container-managed persistent fields and container-managed relationship
-fields is supplied by the container.
+* The container-managed persistent fields and container-managed relationship fields must _not_ be defined in the entity bean class.
+From the perspective of the Bean Provider, the container-managed persistent fields and container-managed relationship fields are virtual fields only, and are accessed through get and set accessor methods.
+The implementation of the container-managed persistent fields and container-managed relationship fields is supplied by the container.
 
-The
-container-managed persistent fields and container-managed relationship
-fields must be specified in the deployment descriptor using the
-_cmp-field_ and _cmr-field_ elements respectively. The names of these
-fields must be valid Java identifiers and must begin with a lowercase
-letter, as determined by _java.lang.Character.isLowerCase_ .
+* The container-managed persistent fields and container-managed relationship fields must be specified in the deployment descriptor using the `cmp-field` and `cmr-field` elements respectively.
+The names of these fields must be valid Java identifiers and must begin with a lowercase letter, as determined by `java.lang.Character.isLowerCase`.
 
-The Bean Provider
-must define the accessor methods for the container-managed persistent
-fields and container-managed relationship fields as get and set methods,
-using the JavaBeans conventions. The implementation of the accessor
-methods is supplied by the container.
+* The Bean Provider must define the accessor methods for the container-managed persistent fields and container-managed relationship fields as get and set methods, using the JavaBeans conventions. The implementation of the accessor methods is supplied by the container.
 
-The accessor
-methods must be public, must be abstract, and must bear the name of the
-container-managed persistent field ( _cmp-field_ ) or container-managed
-relationship field ( _cmr-field_ ) that is specified in the deployment
-descriptor, and in which the first letter of the name of the cmp-field
-or cmr-field has been uppercased and prefixed by “ _get_ ” or “ _set_ ”.
+* The accessor methods must be public, must be abstract, and must bear the name of the container-managed persistent field (`cmp-field`) or container-managed relationship field (`cmr-field`) that is specified in the deployment descriptor, and in which the first letter of the name of the cmp-field or cmr-field has been uppercased and prefixed by "```get```" or "```set```".
 
-The accessor
-methods for a container-managed relationship field must be defined in
-terms of the local interface of the related entity bean, as described in
-link:Ejb.html#a437[See The Entity Bean Provider’s View of
-Persistent Relationships].
+* The accessor methods for a container-managed relationship field must be defined in terms of the local interface of the related entity bean, as described in <<a437>>.
 
-The accessor
-methods for container-managed relationship fields for
-one-to-many or
-many-to-many relationships must utilize one
-of the following Collection interfaces:
-_java.util.Collection_ or _java.util.Set_ . The Collection interfaces
-used in relationships are specified in the deployment descriptor. The
-implementation of the collection classes used for the container-managed
-relationship fields is supplied by the container.
+* The accessor methods for container-managed relationship fields for one-to-many or many-to-many relationships must utilize one of the following Collection interfaces: `java.util.Collection` or `java.util.Set`.
+The Collection interfaces used in relationships are specified in the deployment descriptor.
+The implementation of the collection classes used for the container-managed relationship fields is supplied by the container.
 
-An entity bean local interface type (or a
-collection of such) can be the type of a cmr-field. An entity bean local
-interface type (or a collection of such) cannot be the type of a
-cmp-field.
+* An entity bean local interface type (or a collection of such) can be the type of a cmr-field. An entity bean local interface type (or a collection of such) cannot be the type of a cmp-field.
 
-The accessor
-methods for the container-managed relationship fields must not be
-exposed in the remote interface of an entity bean.
+* The accessor methods for the container-managed relationship fields must not be exposed in the remote interface of an entity bean.
 
-The local
-interface types of the entity bean and of related entity beans must not
-be exposed through the remote interface of the entity bean.
+* The local interface types of the entity bean and of related entity beans must not be exposed through the remote interface of the entity bean.
 
-The collection classes that are used for
-container-managed relationships must not be exposed through the remote
-interface of the entity bean.
+* The collection classes that are used for container-managed relationships must not be exposed through the remote interface of the entity bean.
 
-Once the primary
-key for an entity bean has been set, the Bean Provider must not attempt
-to change it by use of set accessor methods on the primary key
-cmp-fields. The Bean Provider should therefore not expose the set
-accessor methods for the primary key cmp-fields in the component
-interface of the entity bean.
+* Once the primary key for an entity bean has been set, the Bean Provider must not attempt to change it by use of set accessor methods on the primary key cmp-fields.
+The Bean Provider should therefore not expose the set accessor methods for the primary key cmp-fields in the component interface of the entity bean.
 
-The Bean Provider
-must ensure that the Java types assigned to the cmp-fields are
-restricted to the following: Java primitive types and Java serializable
-types.
+* The Bean Provider must ensure that the Java types assigned to the cmp-fields are restricted to the following: Java primitive types and Java serializable types.
 
 [[a437]]
 ==== The Entity Bean Provider’s View of Persistent Relationships
 
-An entity bean
-may have relationships with other entity beans with container-managed
-persistence.
+An entity bean may have relationships with other entity beans with container-managed persistence.
 
-Relationships may be one-to-one, one-to-many,
-or many-to-many relationships.
+Relationships may be one-to-one, one-to-many, or many-to-many relationships.
 
-Container-managed
-relationships can exist only among entity beans within the same local
-relationship scope, as defined by the _relationships_
- element in the deployment descriptor.
-Container-managed relationships are defined in terms of the local
-interfaces of the related beans.
+Container-managed relationships can exist only among entity beans within the same local relationship scope, as defined by the `relationships` element in the deployment descriptor.
+Container-managed relationships are defined in terms of the local interfaces of the related beans.
 
-Relationships may be either bidirectional or
-unidirectional. If a relationship is
-bidirectional, it can be navigated in both directions, whereas a
-unidirectional relationship can be navigated in one direction only.
+Relationships may be either bidirectional or unidirectional.
+If a relationship is bidirectional, it can be navigated in both directions, whereas a unidirectional relationship can be navigated in one direction only.
 
-A unidirectional
-relationship is implemented with a cmr-field on the entity bean instance
-from which navigation can take place, and no related cmr-field on the
-entity bean instance that is the target of the relationship.
-Unidirectional relationships are typically used when the Bean Provider
-wishes to restrict the visibility of a relationship.
+A unidirectional relationship is implemented with a cmr-field on the entity bean instance from which navigation can take place, and no related cmr-field on the entity bean instance that is the target of the relationship.
+Unidirectional relationships are typically used when the Bean Provider wishes to restrict the visibility of a relationship.
 
-An entity bean that does not have a
-local interface can have only unidirectional
-relationships from itself to other entity beans. The lack of a local
-interface prevents other entity beans from having a relationship to it.
+An entity bean that does not have a local interface can have only unidirectional relationships from itself to other entity beans.
+The lack of a local interface prevents other entity beans from having a relationship to it.
 
-The bean developer navigates or manipulates
-relationships by using the get and set
-accessor methods for the container-managed relationship fields and the
-_java.util.Collection_ API for collection-valued container-managed
+The bean developer navigates or manipulates relationships by using the get and set accessor methods for the container-managed relationship fields and the `java.util.Collection` API for collection-valued container-managed
 relationship fields.
 
-The Bean Provider must consider the type and
-cardinality of relationships when the entity
-bean classes are programmed. The get method for a cmr-field must return
-either the local interface of the entity bean or a collection (either
-_java.util.Collection_ or _java.util.Set_ ) of the same. The set method
-for the relationship must take as an argument the entity bean’s local
-interface or a collection of the same.
+The Bean Provider must consider the type and cardinality of relationships when the entity bean classes are programmed.
+The get method for a cmr-field must return either the local interface of the entity bean or a collection (either `java.util.Collection` or `java.util.Set`) of the same.
+The set method for the relationship must take as an argument the entity bean’s local interface or a collection of the same.
 
 ==== Dependent Value Classes
 
-A dependent value class is a concrete class
-that is the value of a cmp-field. A dependent value class may be a class
-that the Bean Provider wishes to use internally within an entity bean
-with container-managed persistence, and/or it may be a class that the
-Bean Provider chooses to expose through the remote (or local) interface
-of the entity bean.
+A dependent value class is a concrete class that is the value of a cmp-field.
+A dependent value class may be a class that the Bean Provider wishes to use internally within an entity bean with container-managed persistence, and/or it may be a class that the Bean Provider chooses to expose through the remote (or local) interface of the entity bean.
 
-A dependent value
-class can be the value of a cmp-field; it cannot be the value of a
-cmr-field.
+A dependent value class can be the value of a cmp-field; it cannot be the value of a cmr-field.
 
-The get accessor method for a cmp-field that
-corresponds to a dependent value class returns a _copy_ of the dependent
-value class instance. The assignment of a dependent value class value to
-a cmp-field using the set accessor method causes the value to be copied
-to the target cmp-field.
+The get accessor method for a cmp-field that corresponds to a dependent value class returns a _copy_ of the dependent value class instance.
+The assignment of a dependent value class value to a cmp-field using the set accessor method causes the value to be copied to the target cmp-field.
 
 A dependent value class must be serializable.
 The internal structure of a dependent value class is not described in
-the EJB deployment descriptor.
+the Enterprise Beans deployment descriptor.
 
 ==== Remove Protocols
 
-The Bean Provider can specify the removal of
-an entity object in two ways:
+The Bean Provider can specify the removal of an entity object in two ways:
 
-By the use of a _remove_
- method on the entity bean’s component
-interface or home interface.
+* By the use of a `remove` method on the entity bean’s component interface or home interface.
 
-By the use of a _cascade-delete_
- specification in the deployment descriptor.
+* By the use of a `cascade-delete` specification in the deployment descriptor.
 
 ===== Remove Methods
 
-{empty}When the _remove_ method is invoked on
-an entity object, the container must invoke the entity Bean Provider’s
-_ejbRemove_  method as described in Section
-link:Ejb.html#a1279[See Container’s View]. After the Bean
-Provider’s _ejbRemove_ method returns (and prior to returning to the
-client), the container must remove the entity object from all
-relationships in which it participates, and then remove its persistent
-representation. link:#a3368[4]
+When the `remove` method is invoked on an entity object, the container must invoke the entity Bean Provider’s `ejbRemove` method as described in <<a1279>>.
+After the Bean Provider’s `ejbRemove` method returns (and prior to returning to the client), the container must remove the entity object from all relationships in which it participates, and then remove its persistent
+representation.
+footnote:a3368[At this point it must appear to the application that the entity has been removed from the persistent store. If the container employs an optimistic caching strategy and defers the removal of the entity from the database (e.g., to the end of transaction), this must be invisible to the application.]
 
-Once an entity has been removed from a
-relationship, the accessor methods for any relationships to the entity
-will reflect this removal. An accessor method for a one-to-one or
-many-to-one relationship to the entity will return null; and an accessor
-method for a many-to-many relationship to the entity will return a
-collection from which the entity object has been removed.
+* Once an entity has been removed from a relationship, the accessor methods for any relationships to the entity will reflect this removal.
+An accessor method for a one-to-one or many-to-one relationship to the entity will return null; and an accessor method for a many-to-many relationship to the entity will return a collection from which the entity object has been removed.
 
-The container must detect any subsequent
-attempt to invoke an accessor method on the removed entity object and
-throw the _java.rmi.NoSuchObjectException_ if the client is a remote
-client or the _javax.ejb.NoSuchObjectLocalException_ if the client is a
-local client. The container must detect an attempt to assign a removed
-entity object as the value of a cmr-field of another object (whether as
-an argument to a set accessor method or as an argument to a method of
-the _java.util.Collection_ API) and throw the
-_java.lang.IllegalArgumentException_ .
+* The container must detect any subsequent attempt to invoke an accessor method on the removed entity object and throw the `java.rmi.NoSuchObjectException` if the client is a remote client or the `jakarta.ejb.NoSuchObjectLocalException` if the client is a local client.
+The container must detect an attempt to assign a removed entity object as the value of a cmr-field of another object (whether as an argument to a set accessor method or as an argument to a method of the `java.util.Collection` API) and throw the `java.lang.IllegalArgumentException`.
 
-After removing the entity object from all
-relationships and removing its persistent representation, the container
-must then cascade the removal to all entity beans with which the entity
-had been previously in container-managed relationships for which the
-_cascade-delete_ option was specified.
+After removing the entity object from all relationships and removing its persistent representation, the container must then cascade the removal to all entity beans with which the entity had been previously in container-managed relationships for which the `cascade-delete` option was specified.
 
-More than one relationship may be affected by
-the removal of an entity object, as in the following example. Once the
-shipping address object used by the _Order_ bean has been removed, the
-billing address accessor method will also return null.
-
+More than one relationship may be affected by the removal of an entity object, as in the following example.
+Once the shipping address object used by the `Order` bean has been removed, the billing address accessor method will also return null.
+[source, java]
+----
 public void changeAddress()
+    Address a = createAddress();
+    setShippingAddress(a);
+    setBillingAddress(a);
+    //both relationships now reference the same entity object
+    getShippingAddress().remove();
+    if (getBillingAddress() == null) // it must be
+        ...
+    else ...
+         // this is impossible....
+----
 
- Address a = createAddress();
-
- setShippingAddress(a);
-
- setBillingAddress(a);
-
- //both relationships now reference the same
-entity object
-
- getShippingAddress().remove();
-
- if (getBillingAddress() == null) // it must
-be
-
- ...
-
- else ...
-
- // this is impossible....
-
-The _remove_ method, alone, causes only the
-entity on which it is invoked to be removed. It does not cause the
-deletion to be cascaded to other entity objects. In order for the
-deletion of one entity object to be automatically cascaded to another,
-the _cascade-delete_  mechanism should be
-used.
+The `remove` method, alone, causes only the entity on which it is invoked to be removed.
+It does not cause the deletion to be cascaded to other entity objects.
+In order for the deletion of one entity object to be automatically cascaded to another, the `cascade-delete` mechanism should be used.
 
 ===== Cascade-delete
 
-The
-_cascade-delete_ deployment descriptor element is used within a
-particular relationship to specify that the lifetime of one or more
-entity objects is dependent upon the lifetime of another entity object.
+The `cascade-delete` deployment descriptor element is used within a particular relationship to specify that the lifetime of one or more entity objects is dependent upon the lifetime of another entity object.
 
-The
-_cascade-delete_ deployment descriptor element is contained within the
-_ejb-relationship-role_ element. The _cascade-delete_ element can only
-be specified for an _ejb-relationship-role_ element contained in an
-_ejb-relation_ element if the _other_ _ejb-relationship-role_ element in
-the same _ejb-relation_ element specifies a _multiplicity_ of _One_ .
-The _cascade-delete_ option cannot be specified for a many-to-many
-relationship. The deletion of one entity object can only be cascaded to
-cause the deletion of other entity objects if the first entity object is
-in a one-to-one or one-to-many relationship with those other entity
-objects.
+The `cascade-delete` deployment descriptor element is contained within the `ejb-relationship-role` element.
+The `cascade-delete` element can only be specified for an `ejb-relationship-role` element contained in an `ejb-relation` element if the _other_ `ejb-relationship-role` element in the same `ejb-relation` element specifies a `multiplicity` of `One`.
+The `cascade-delete` option cannot be specified for a many-to-many relationship.
+The deletion of one entity object can only be cascaded to cause the deletion of other entity objects if the first entity object is in a one-to-one or one-to-many relationship with those other entity objects.
 
-If an entity is deleted, and the
-_cascade-delete_ deployment descriptor element is specified for a
-related entity bean, then the removal is cascaded to cause the removal
-of the related entity object or objects. As with the _remove_ operation,
-the removal triggered by the _cascade-delete_ option causes the
-container to invoke the _ejbRemove_ method on the entity bean instance
-that is to be removed before the persistent representation of that
-entity object is removed. Once an entity has been removed from a
-relationship because of a cascaded delete, the accessor methods for any
-relationships to the entity will reflect this removal. An accessor
-method for a one-to-one or many-to-one relationship to the entity will
-return null; and an accessor method for a many-to-many relationship to
-the entity will return a collection from which the entity object has
-been removed. After removing the entity object from all relationships
-and removing its persistent representation, the container must then
-cascade the removal to all entity beans with which the entity had been
-previously been in container-managed relationships for which the
-_cascade-delete_ option was specified.
+If an entity is deleted, and the `cascade-delete` deployment descriptor element is specified for a related entity bean, then the removal is cascaded to cause the removal of the related entity object or objects.
+As with the `remove` operation, the removal triggered by the `cascade-delete` option causes the container to invoke the `ejbRemove` method on the entity bean instance that is to be removed before the persistent representation of that entity object is removed.
+Once an entity has been removed from a relationship because of a cascaded delete, the accessor methods for any relationships to the entity will reflect this removal.
+An accessor method for a one-to-one or many-to-one relationship to the entity will return null; and an accessor method for a many-to-many relationship to the entity will return a collection from which the entity object has been removed.
+After removing the entity object from all relationships and removing its persistent representation, the container must then cascade the removal to all entity beans with which the entity had been previously been in container-managed relationships for which the `cascade-delete` option was specified.
 
-The use of _cascade-delete_ causes only the
-entity object or objects in the relationship for which it is specified
-to be deleted. It does not cause the deletion to be further cascaded to
-other entity objects, unless they are participants in relationship roles
-for which _cascade-delete_ has also been specified.
+The use of `cascade-delete` causes only the entity object or objects in the relationship for which it is specified to be deleted.
+It does not cause the deletion to be further cascaded to other entity objects, unless they are participants in relationship roles for which `cascade-delete` has also been specified.
 
 ==== Identity of Entity Objects
 
-From the viewpoint of the Bean Provider,
-entity objects have a runtime object
-identity that is maintained by the container.
+From the viewpoint of the Bean Provider, entity objects have a runtime object identity that is maintained by the container.
 
-The container maintains the persistent
-identity of an entity object on the basis of its primary key.
+The container maintains the persistent identity of an entity object on the basis of its primary key.
 
-The primary key
-of an entity bean may or may not be visible as one or more cmp-fields of
-the instance, depending on the way in which it is specified. The Bean
-Provider specifies the primary key as described in
-link:Ejb.html#a1820[See Primary Keys]. Once it has been set, the
-Bean Provider must not attempt to change the value of a primary key
-field by means of a set method on its cmp-fields.
+The primary key of an entity bean may or may not be visible as one or more cmp-fields of the instance, depending on the way in which it is specified. The Bean Provider specifies the primary key as described in <<a1820>>.
+Once it has been set, the Bean Provider must not attempt to change the value of a primary key field by means of a set method on its cmp-fields.
 
-When a new instance of an entity bean whose
-primary key fields are visible in the entity
-bean class is created, the Bean Provider must use the
-_ejbCreate<METHOD>_ method to set all the primary key fields of the
-entity bean instance before the instance can participate in a
-relationship, e.g. be used in a set accessor method for a cmr-field. The
-Bean Provider must not reset a primary key value by means of a set
-method on any of its cmp-fields after it has been set in the
-_ejbCreate<METHOD>_ method. If the Bean Provider attempts to reset a
-primary key value, the container must throw the
-_java.lang.IllegalStateException_ .
+When a new instance of an entity bean whose primary key fields are visible in the entity bean class is created, the Bean Provider must use the `ejbCreate<METHOD>` method to set all the primary key fields of the entity bean instance before the instance can participate in a relationship, e.g. be used in a set accessor method for a cmr-field.
+The Bean Provider must not reset a primary key value by means of a set method on any of its cmp-fields after it has been set in the `ejbCreate<METHOD>` method.
+If the Bean Provider attempts to reset a primary key value, the container must throw the `java.lang.IllegalStateException`.
 
-Note that the container’s implementation of
-the referential integrity semantics for container-managed relationships
-must not cause the value of the primary key to change.
+****
+_Note that the container’s implementation of the referential integrity semantics for container-managed relationships must not cause the value of the primary key to change._
 
-The Bean Provider should not use untrimmed or
-blank-padded string-valued primary key fields. Use of untrimmed primary
-key fields may cause comparison operations based on primary keys to
-fail, and may result in non-portable behavior. If untrimmed strings are
-used in primary key fields or other cmp-fields, the container or
-database system may trim them.
+_The Bean Provider should not use untrimmed or blank-padded string-valued primary key fields. Use of untrimmed primary key fields may cause comparison operations based on primary keys to fail, and may result in non-portable behavior.
+If untrimmed strings are used in primary key fields or other cmp-fields, the container or database system may trim them._
+****
 
 [[a496]]
 ==== Semantics of Assignment for Relationships
 
-The assignment operations for
-container-managed relationships have a
-special semantics that is determined by the referential integrity
-semantics for the relationship multiplicity.
+The assignment operations for container-managed relationships have a special semantics that is determined by the referential integrity semantics for the relationship multiplicity.
 
-In the case of a one-to-one relationship,
-when the Bean Provider uses a set accessor method to assign an object
-from a cmr-field in one instance to a cmr-field of the _same
-relationship type_ (i.e., as defined by the _ejb-relation_ and
-_ejb-relationship-role_ deployment descriptor elements) in another
-instance, the object is effectively _moved_ and the value of the source
-cmr-field is set to null in the same transaction context. If the
-argument to the set accessor method is not of the same type as the
-cmr-field, the container must throw the
-_java.lang.IllegalArgumentException_ .
+In the case of a one-to-one relationship, when the Bean Provider uses a set accessor method to assign an object from a cmr-field in one instance to a cmr-field of the _same relationship type_ (i.e., as defined by the `ejb-relation` and `ejb-relationship-role` deployment descriptor elements) in another instance, the object is effectively _moved_ and the value of the source cmr-field is set to null in the same transaction context.
+If the argument to the set accessor method is not of the same type as the cmr-field, the container must throw the `java.lang.IllegalArgumentException`.
 
-In the case of a one-to-many or many-to-many
-relationship, either the _java.util.Collection_ API or a set accessor
-method may be used to manipulate the contents of a collection-valued
-cmr-field. These two approaches are discussed below.
+In the case of a one-to-many or many-to-many relationship, either the `java.util.Collection` API or a set accessor method may be used to manipulate the contents of a collection-valued cmr-field.
+These two approaches are discussed below.
 
 ===== Use of the java.util.Collection API to Update Relationships
 
-The methods of the _java.util.Collection_ API
-for the container-managed collections used
-for collection-valued cmr-fields have the usual semantics, with the
-following exception: the _add_ and _addAll_ methods applied to
-container-managed collections in one-to-many relationships have a
-special semantics that is determined by the
-referential integrity of one-to-many
-relationships.
+The methods of the `java.util.Collection` API for the container-managed collections used for collection-valued cmr-fields have the usual semantics, with the following exception: the `add` and `addAll` methods applied to container-managed collections in one-to-many relationships have a special semantics that is determined by the referential integrity of one-to-many relationships.
 
-If the argument to the _add_
- method is already an element of a
-collection-valued relationship field of the _same relationship type_ as
-the target collection (as defined by the _ejb-relation_ and
-_ejb-relationship-role_ deployment descriptor elements), it is removed
-from this first relationship and added, in the same transaction context,
-to the target relationship (i.e., it is effectively moved from one
-collection of the relationship type to the other). For example, if there
-is a one-to-many relationship between field offices and sales
-representatives, adding a sales representative to a new field office
-will have the effect of removing him or her from his or her current
-field office. If the argument to the _add_ method is not an element of a
-collection-valued relationship of the _same relationship type_ , it is
-simply added to the target collection and not removed from its current
-collection, if any.
+* If the argument to the `add` method is already an element of a collection-valued relationship field of the _same relationship type_ as the target collection (as defined by the `ejb-relation` and `ejb-relationship-role` deployment descriptor elements), it is removed from this first relationship and added, in the same transaction context, to the target relationship (i.e., it is effectively moved from one collection of the relationship type to the other).
+For example, if there is a one-to-many relationship between field offices and sales representatives, adding a sales representative to a new field office will have the effect of removing him or her from his or her current field office.
+If the argument to the `add` method is not an element of a collection-valued relationship of the _same relationship type_, it is simply added to the target collection and not removed from its current collection, if any.
 
-The _addAll_
-method, when applied to a target collection in a one-to-many
-relationship, has similar semantics, applied to the members of its
-collection argument individually.
+* The `addAll` method, when applied to a target collection in a one-to-many relationship, has similar semantics, applied to the members of its collection argument individually.
 
-Note that in the case of many-to-many
-relationships, adding an element or elements to the contents of a
-collection-valued cmr-field has no effect on the source collection, if
-any. For example, if there is a many-to-many relationship between
-customers and sales representatives, a customer can be added to the set
-of customers handled by a particular sales representative without
-affecting the set of customers handled by any other sales
-representative.
+****
+_Note that in the case of many-to-many relationships, adding an element or elements to the contents of a collection-valued cmr-field has no effect on the source collection, if any._
+_For example, if there is a many-to-many relationship between customers and sales representatives, a customer can be added to the set of customers handled by a particular sales representative without affecting the set of customers handled by any other sales representative._
+****
 
-When the _java.util.Collection_
- API is used to manipulate the contents of
-container-managed relationship fields, the argument to any Collection
-method defined with a single Object parameter must be of the element
-type of the collection defined for the target cmr-field. The argument
-for any collection-valued parameter must be a _java.util.Collection_ (or
-_java.util.Set_ ), all of whose elements are of the element type of the
-collection defined for the target cmr-field. If an argument is not of
-the correct type for the relationship, the container must throw the
-_java.lang.IllegalArgumentException_ .
+When the `java.util.Collection` API is used to manipulate the contents of container-managed relationship fields, the argument to any Collection method defined with a single Object parameter must be of the element type of the collection defined for the target cmr-field.
+The argument for any collection-valued parameter must be a `java.util.Collection` (or `java.util.Set`), all of whose elements are of the element type of the collection defined for the target cmr-field.
+If an argument is not of the correct type for the relationship, the container must throw the `java.lang.IllegalArgumentException`.
 
-The Bean Provider should exercise caution
-when using an Iterator over a collection in a container-managed
-relationship. In particular, the Bean Provider should not modify the
-container-managed collection while the iteration is in progress in any
-way that causes elements to be added or removed, other than by the
-_java.util.Iterator.remove()_  method. If
-elements are added or removed from the underlying container-managed
-collection used by an iterator other than by the
-_java.util.Iterator.remove()_ method, the container should throw the
-_java.lang.IllegalStateException_ on the next operation on the iterator.
+The Bean Provider should exercise caution when using an Iterator over a collection in a container-managed relationship.
+In particular, the Bean Provider should not modify the container-managed collection while the iteration is in progress in any way that causes elements to be added or removed, other than by the `java.util.Iterator.remove()` method.
+If elements are added or removed from the underlying container-managed collection used by an iterator other than by the `java.util.Iterator.remove()` method, the container should throw the `java.lang.IllegalStateException` on the next operation on the iterator.
 
-The following example illustrates how
-operations on container-managed relationships that affect the contents
-of a collection-valued cmr-field viewed through an iterator can be
-avoided. Because there is a one-to-many relationship between field
-offices and sales representatives, adding a sales representative to a
-new field office causes the sales representative to be removed from the
-current field office.
-
-Collection nySalesreps =
-nyOffice.getSalesreps();
-
-Collection sfSalesreps =
-sfOffice.getSalesreps();
-
-
+The following example illustrates how operations on container-managed relationships that affect the contents of a collection-valued cmr-field viewed through an iterator can be avoided.
+Because there is a one-to-many relationship between field offices and sales representatives, adding a sales representative to a new field office causes the sales representative to be removed from the current field office.
+[source, java]
+----
+Collection nySalesreps = nyOffice.getSalesreps();
+Collection sfSalesreps = sfOffice.getSalesreps();
 
 Iterator i = nySalesreps.iterator();
-
 Salesrep salesrep;
 
-
-
 // a wrong way to transfer the salesrep
-
-while (i.hasNext()) \{
-
- salesrep = (Salesrep)i.next();
-
- sfSalesreps.add(salesrep); // removes
-salesrep from nyOffice
-
+while (i.hasNext()) {
+    salesrep = (Salesrep)i.next();
+    sfSalesreps.add(salesrep); // removes salesrep from nyOffice
 }
 
-
-
-// this is a correct and safe way to transfer
-the salesrep
-
-while (i.hasNext()) \{
-
- salesrep = (Salesrep)i.next();
-
- i.remove();
-
- sfSalesreps.add(salesrep);
-
+// this is a correct and safe way to transfer the salesrep
+while (i.hasNext()) {
+    salesrep = (Salesrep)i.next();
+    i.remove();
+    sfSalesreps.add(salesrep);
 }
-
-
+----
 
 ===== Use of Set Accessor Methods to Update Relationships
 
-The semantics of a
-set accessor method, when applied to a
-collection-valued cmr-field, is also determined by the
-referential integrity semantics associated
-with the multiplicity of the relationship. The identity of the
-collection object referenced by a cmr-field does not change when a set
-accessor method is executed.
+The semantics of a set accessor method, when applied to a collection-valued cmr-field, is also determined by the referential integrity semantics associated with the multiplicity of the relationship.
+The identity of the collection object referenced by a cmr-field does not change when a set accessor method is executed.
 
-In the case of a one-to-many relationship, if
-a collection of entity objects is assigned from a cmr-field of in one
-instance to a cmr-field of the same relationship type in another
-instance, the objects in the collection are effectively moved. The
-contents of the collection of the target instance are replaced with the
-contents of the collection of the source instance, but the _identity_ of
-the collection object containing the instances in the relationship does
-not change. The source cmr-field references the same collection object
-as before (i.e., the identity of the collection object is preserved),
-but the collection is empty.
+In the case of a one-to-many relationship, if a collection of entity objects is assigned from a cmr-field of in one instance to a cmr-field of the same relationship type in another instance, the objects in the collection are effectively moved.
+The contents of the collection of the target instance are replaced with the contents of the collection of the source instance, but the _identity_ of the collection object containing the instances in the relationship does not change.
+The source cmr-field references the same collection object as before (i.e., the identity of the collection object is preserved), but the collection is empty.
 
-The Bean Provider can thus use the set method
-to move objects between the collections referenced by cmr-fields of the
-same relationship type in different instances. The
-set accessor method, when applied to a
-cmr-field in a one-to-many relationship thus has the semantics of the
-_java.util.Collection_ methods _clear_ , followed by _addAll_ , applied
-to the target collection; and _clear_ , applied to the source
-collection. It is the responsibility of the container to transfer the
-contents of the collection instances in the same transaction context.
+The Bean Provider can thus use the set method to move objects between the collections referenced by cmr-fields of the same relationship type in different instances.
+The set accessor method, when applied to a cmr-field in a one-to-many relationship thus has the semantics of the `java.util.Collection` methods `clear`, followed by `addAll`, applied to the target collection; and `clear`, applied to the source collection.
+It is the responsibility of the container to transfer the contents of the collection instances in the same transaction context.
 
-Note that if the collection that is passed to
-the cmr setter method is an unmanaged collection (i.e., not itself the
-value of a collection-valued cmr-field), the same requirements apply in
-the case that the collection contains entity objects that already
-participate in a one-to-many relationship of the same relationship type
-as the target cmr-field.
+****
+_Note that if the collection that is passed to the cmr setter method is an unmanaged collection (i.e., not itself the value of a collection-valued cmr-field), the same requirements apply in the case that the collection contains entity objects that already participate in a one-to-many relationship of the same relationship type as the target cmr-field._
+****
 
-In the following example, the telephone
-numbers associated with the billing address of an _Order_ bean instance
-are transferred to the shipping address. Billing address and shipping
-address are different instances of the same local interface type,
-_Address_ . _Address_ is related to _TelephoneNumber_ in a one-to-many
-relationship. The example illustrates how a Bean Provider uses the set
-method to move a set of instances.
-
-public void changeTelephoneNumber() \{
-
- Address a = getShippingAddress();
-
- Address b = getBillingAddress();
-
- Collection c = b.getTelephoneNumbers();
-
-
-a.setTelephoneNumbers(b.getTelephoneNumbers());
-
- if (c.isEmpty()) \{ // must be true...
-
- ...
-
+In the following example, the telephone numbers associated with the billing address of an `Order` bean instance are transferred to the shipping address.
+Billing address and shipping address are different instances of the same local interface type, `Address`.
+`Address` is related to `TelephoneNumber` in a one-to-many relationship.
+The example illustrates how a Bean Provider uses the set method to move a set of instances.
+[source, java]
+----
+public void changeTelephoneNumber() {
+    Address a = getShippingAddress();
+    Address b = getBillingAddress();
+    Collection c = b.getTelephoneNumbers();
+    a.setTelephoneNumbers(b.getTelephoneNumbers());
+    if (c.isEmpty()) { // must be true...
+     ...
+    }
 }
+----
 
-In the case of a
-many-to-many relationship, if the value of a
-cmr-field is assigned to a cmr-field of the same relationship type in
-another instance, the objects in the collection of the first instance
-are assigned as the contents of the cmr-field of the second instance.
-The identities of the collection objects referenced by the cmr-fields do
-not change. The contents of the collections are shared, but not the
-collections themselves. The set accessor method, when applied to a
-cmr-field in a many-to-many relationship thus has the semantics of the
-_java.util.Collection_ methods _clear_ , followed by _addAll_ , applied
-to the target collection.
+In the case of a many-to-many relationship, if the value of a cmr-field is assigned to a cmr-field of the same relationship type in another instance, the objects in the collection of the first instance are assigned as the contents of the cmr-field of the second instance.
+The identities of the collection objects referenced by the cmr-fields do not change.
+The contents of the collections are shared, but not the collections themselves.
+The set accessor method, when applied to a cmr-field in a many-to-many relationship thus has the semantics of the `java.util.Collection` methods `clear`, followed by `addAll`, applied to the target collection.
 
-For example, if there is a many-to-many
-relationship between customers and sales representatives, assigning the
-set of customers of one sales representative to the another sales
-representative will result in both sales representatives handling the
-same customers. If the second sales representative originally handled a
-different group of customers, those customers will no longer be handled
-by that sales representative.
-
-public void shareCustomers(SalesRep rep) \{
-
- setCustomers(rep.getCustomers());
-
- // the customers are shared among the sales
-reps
-
+For example, if there is a many-to-many relationship between customers and sales representatives, assigning the set of customers of one sales representative to the another sales representative will result in both sales representatives handling the same customers.
+If the second sales representative originally handled a different group of customers, those customers will no longer be handled by that sales representative.
+[source, java]
+----
+public void shareCustomers(SalesRep rep) {
+    setCustomers(rep.getCustomers());
+    // the customers are shared among the sales reps
 }
+----
 
-The following section,
-link:Ejb.html#a558[See Assignment Rules for Relationships],
-defines the semantics of assignment for relationships in further detail.
+The following section, <<a558>>, defines the semantics of assignment for relationships in further detail.
 
 [[a558]]
 ==== Assignment Rules for Relationships
