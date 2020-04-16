@@ -1,50 +1,24 @@
 == Overview
 
-This document describes features for which
-support has been made optional as of the 3.2 release of the Enterprise
-JavaBeans _TM_ specification:
+This document describes features for which support has been made optional as of the 3.2 release of the Enterprise Beans specification:
 
- _EJB 2.1 Entity Bean Component Contract for
-Container-Managed Persistence_
+* _Enterprise Beans 2.1 Entity Bean Component Contract for Container-Managed Persistence_
+* _Enterprise Beans 2.1 Entity Bean Component Contract for Bean-Managed Persistence_
+* _Enterprise Beans 1.1 Entity Bean Component Contract for Container-Managed Persistence_
+* _Client View of an Entity Bean_
+* _Enterprise Beans QL: Query Language for Container-Managed Persistence Query Methods_
+* _Jakarta XML RPC Based Web Service Endpoints_
+* _Jakarta XML RPC Web Service Client View._
 
- _EJB 2.1 Entity Bean Component Contract for
-Bean-Managed Persistence_
-
- _EJB 1.1 Entity Bean Component Contract for
-Container-Managed Persistence_
-
- _Client View of an Entity Bean_
-
- _EJB QL: Query Language for
-Container-Managed Persistence Query Methods_
-
- _JAX-RPC Based Web Service Endpoints_
-
- _JAX-RPC Web Service Client View._
-
-If an implementation supports such features,
-it must do so in accordance with the requirements of this specification.
+If an implementation supports such features, it must do so in accordance with the requirements of this specification.
 In addition, the following rules apply:
 
-If any of the following features is
-supported, all features in the list must be supported:
+* If any of the following features is supported, all features in the list must be supported:
+** Enterprise Beans 2.x entity beans with container-managed persistence
+** Enterprise Beans 1.1 entity beans with container-managed persistence
+** Enterprise Beans 2.x entity beans with bean-managed persistence
+** Enterprise Beans QL
 
-EJB 2.x entity beans with container-managed
-persistence
+* If Jakarta XML RPC web service endpoints are supported, the Jakarta XML RPC web service endpoint client view must be supported.
 
-EJB 1.1 entity beans with container-managed
-persistence
-
-EJB 2.x entity beans with bean-managed
-persistence
-
-EJB QL
-
-If JAX-RPC web service endpoints are
-supported, the JAX-RPC web service endpoint client view must be
-supported.
-
-See the general description of the EJB goals
-and requirements in the EJB Core Contracts and Requirements
-link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345] document.
+See the general description of the Enterprise Beans goals and requirements in the Enterprise Beans Core Contracts and Requirements <<a3339>> document.
