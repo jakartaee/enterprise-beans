@@ -350,1517 +350,880 @@ The following section, <<a558>>, defines the semantics of assignment for relatio
 [[a558]]
 ==== Assignment Rules for Relationships
 
-This section
-defines the semantics of assignment and collection manipulation in
-one-to-one, one-to-many, and many-to-many container-managed
-relationships.
+This section defines the semantics of assignment and collection manipulation in one-to-one, one-to-many, and many-to-many container-managed relationships.
 
-The figures make
-use of two entity beans, with local interface types A and B. Instances
-with local interface type _A_ are typically designated as _a1_ ,...,
-_an_ ; instances with local interface type _B_ are typically designated
-as _b1_ ,..., _bm_ . Interface _A_ exposes accessor methods _getB_ and
-_setB_ for navigable relationships with _B_ : _getB_ returns an instance
-of _B_ or a collection of instances of _B_ , depending on the
-multiplicity of the relationship. Similarly, _B_ exposes accessor
-methods _getA_ and _setA_ for navigable relationships with _A_ .
+The figures make use of two entity beans, with local interface types A and B. Instances with local interface type `A` are typically designated as `a1`,...,`an`; instances with local interface type `B` are typically designated as `b1`,...,`bm`.
+Interface `A` exposes accessor methods `getB` and `setB` for navigable relationships with `B`: `getB` returns an instance of `B` or a collection of instances of `B`, depending on the multiplicity of the relationship.
+Similarly, `B` exposes accessor methods `getA` and `setA` for navigable relationships with `A`.
 
-All changes in each subsection are assumed to
-be applied to the figure labeled “Before change” at the beginning of the
-subsection (i.e., changes are not cumulative). The results of changes
-are designated graphically as well as in conditional expressions
-expressed in the Java _TM_ programming language.
+All changes in each subsection are assumed to be applied to the figure labeled "`Before change`" at the beginning of the subsection (i.e., changes are not cumulative).
+The results of changes are designated graphically as well as in conditional expressions expressed in the Java(TM) programming language.
 
 ===== One-to-one Bidirectional Relationships
 
-
-
-image:EBOpt-9.png[image]
+image::EBOpt-9.png[]
 
 Before change:
-
+[source, java]
+----
 B b1 = a1.getB();
-
 B b2 = a2.getB();
+----
 
 Change:
-
- _a1.setB(a2.getB());_
+[source, java]
+----
+a1.setB(a2.getB());
+----
 
 Expected result:
-
+[source, java]
+----
 (b2.isIdentical(a1.getB())) &&
-
 (a2.getB() == null) &&
-
 (b1.getA() == null) &&
-
 (a1.isIdentical(b2.getA()))
+----
 
-
-
-image:EBOpt-10.png[image]
+image::EBOpt-10.png[]
 
 ===== One-to-one Unidirectional Relationships
 
-
-
-image:EBOpt-11.png[image]
+image::EBOpt-11.png[]
 
 Before change:
-
+[source, java]
+----
 B b1 = a1.getB();
-
 B b2 = a2.getB();
+----
 
 Change:
-
- _a1.setB(a2.getB());_
+[source, java]
+----
+a1.setB(a2.getB());
+----
 
 Expected result:
+[source, java]
+----
+(b2.isIdentical(a1.getB())) && (a2.getB() == null)
+----
 
- _(b2.isIdentical(a1.getB())) && (_ a2.getB()
-=== null)
-
-
-
-image:EBOpt-12.png[image]
+image::EBOpt-12.png[]
 
 ===== One-to-many Bidirectional Relationships
 
-
-
-image:EBOpt-13.png[image]
+image::EBOpt-13.png[]
 
 Before change:
-
+[source, java]
+----
 Collection b1 = a1.getB();
-
 Collection b2 = a2.getB();
-
 B b11, b12, ... , b1n; // members of b1
-
 B b21, b22, ... , b2m; // members of b2
-
-
+----
 
 Change:
-
- _a1.setB(a2.getB());_
+[source, java]
+----
+a1.setB(a2.getB());
+----
 
 Expected result:
-
+[source, java]
+----
 (a2.getB().isEmpty()) &&
-
 (b2.isEmpty()) &&
-
 (b1 == a1.getB()) &&
-
 (b2 == a2.getB()) &&
-
 (a1.getB().contains(b21)) &&
-
 (a1.getB().contains(b22)) && ... &&
-
 (a1.getB().contains(b2m)) &&
-
 (b11.getA() == null) &&
-
 (b12.getA() == null) && ... &&
-
 (b1n.getA() == null) &&
-
 (a1.isIdentical(b21.getA())) &&
-
 (a1.isIdentical(b22.getA())) && ...&&
-
 (a1.isIdentical(b2m.getA()))
+----
 
-
-
-image:EBOpt-14.png[image]
+image::EBOpt-14.png[]
 
 Change:
-
- _b2m.setA(b1n.getA());_
+[source, java]
+----
+b2m.setA(b1n.getA());
+----
 
 Expected result:
-
+[source, java]
+----
 (b1.contains(b11)) &&
-
 (b1.contains(b12)) && ... &&
-
 (b1.contains(b1n)) &&
-
 (b1.contains(b2m)) &&
-
 (b2.contains(b21)) &&
-
 (b2.contains(b22)) && ... &&
-
 (b2.contains(b2m_1)) &&
-
 (a1.isIdentical(b11.getA())) &&
-
 (a1.isIdentical(b12.getA())) && ... &&
-
 (a1.isIdentical(b1n.getA())) &&
-
 (a2.isIdentical(b21.getA())) &&
-
 (a2.isIdentical(b22.getA())) && ... &&
-
 (a2.isIdentical(b2m_1.getA())) &&
-
 (a1.isIdentical(b2m.getA()))
+----
 
-
-
-image:EBOpt-15.png[image]
+image::EBOpt-15.png[]
 
 Change:
-
+[source, java]
+----
 a1.getB().add(b2m);
+----
 
 Expected result:
-
+[source, java]
+----
 (b1.contains(b11)) &&
-
 (b1.contains(b12)) && ... &&
-
 (b1.contains(b1n)) &&
-
 (b1.contains(b2m)) &&
-
 (b2.contains(b21)) &&
-
 (b2.contains(b22)) && ... &&
-
 (b2.contains(b2m_1)) &&
-
 (a1.isIdentical(b11.getA())) &&
-
 (a1.isIdentical(b12.getA())) && ... &&
-
 (a1.isIdentical(b1n.getA())) &&
-
 (a2.isIdentical(b21.getA())) &&
-
 (a2.isIdentical(b22.getA())) && ... &&
-
 (a2.isIdentical(b2m_1.getA())) &&
-
 (a1.isIdentical(b2m.getA()))
+----
 
-
-
-image:EBOpt-16.png[image]
+image::EBOpt-16.png[]
 
 Change:
-
+[source, java]
+----
 a1.getB().remove(b1n);
+----
 
 Expected result:
-
+[source, java]
+----
 (b1n.getA() == null) &&
-
 (b1 == a1.getB()) &&
-
 (b1.contains(b11)) &&
-
 (b1.contains(b12)) && ... &&
-
 (b1.contains(b1n_1)) &&
-
 !(b1.contains(b1n))
+----
 
-
-
-image:EBOpt-17.png[image]
+image::EBOpt-17.png[]
 
 ===== One-to-many Unidirectional Relationships
 
-
-
-image:EBOpt-18.png[image]
+image::EBOpt-18.png[]
 
 Before change:
-
+[source, java]
+----
 Collection b1 = a1.getB();
-
 Collection b2 = a2.getB();
-
 B b11, b12, ... , b1n; // members of b1
-
 B b21, b22, ... , b2m; // members of b2
+----
 
 Change:
-
- _a1.setB(a2.getB());_
+[source, java]
+----
+a1.setB(a2.getB());
+----
 
 Expected result:
-
+[source, java]
+----
 (a2.getB().isEmpty()) &&
-
 (b2.isEmpty()) &&
-
 (b1 == a1.getB()) &&
-
 (b2 == a2.getB()) &&
-
 (a1.getB().contains(b21)) &&
-
 (a1.getB().contains(b22)) && ... &&
-
 (a1.getB().contains(b2m))
+----
 
-
-
-image:EBOpt-19.png[image]
+image::EBOpt-19.png[]
 
 Change:
-
+[source, java]
+----
 a1.getB().add(b2m);
+----
 
 Expected result:
-
+[source, java]
+----
 (b1 == a1.getB()) &&
-
 (b1.contains(b2m))
+----
 
-
-
-image:EBOpt-20.png[image]
+image::EBOpt-20.png[]
 
 Change:
-
+[source, java]
+----
 a1.getB().remove(b1n);
+----
 
 Expected result:
-
+[source, java]
+----
 (a1.getB().contains(b11)) &&
-
 (a1.getB().contains(b12)) && ... &&
-
 (a1.getB().contains(b1n_1)) &&
-
 !(a1.getB().contains(b1n)) &&
+----
 
-
-
-image:EBOpt-21.png[image]
+image::EBOpt-21.png[]
 
 ===== Many-to-one Unidirectional Relationships
-
-
 
 image:EBOpt-22.png[image]
 
 Before change:
-
+[source, java]
+----
 B b11, b12, ... , b1n;
-
 B b21, b22, ... , b2m;
-
 // the following is true
-
-// (a1.isIdentical(b11.getA())) && ... &&
-(a1.isIdentical(b1n.getA() )) &&
-
-// (a2.isIdentical(b21.getA())) && ... &&
-(a2.isIdentical(b2m.getA() ))
+// (a1.isIdentical(b11.getA())) && ... && (a1.isIdentical(b1n.getA())) &&
+// (a2.isIdentical(b21.getA())) && ... && (a2.isIdentical(b2m.getA()))
+----
 
 Change:
-
- _b1j.setA(b2k.getA());_
+[source, java]
+----
+b1j.setA(b2k.getA());
+----
 
 Expected result:
-
+[source, java]
+----
 (a1.isIdentical(b11.getA())) &&
-
 (a1.isIdentical(b12.getA())) &&
-
 ...
-
 (a2.isIdentical(b1j.getA())) &&
-
 ...
-
 (a1.isIdentical(b1n.getA())) &&
-
 (a2.isIdentical(b21.getA())) &&
-
 (a2.isIdentical(b22.getA())) &&
-
 ...
-
 (a2.isIdentical(b2k.getA())) &&
-
 ...
-
 (a2.isIdentical(b2m.getA()))
+----
 
-
-
-image:EBOpt-23.png[image]
+image::EBOpt-23.png[]
 
 ===== Many-to-many Bidirectional Relationships
-
-
 
 image:EBOpt-24.png[image]
 
 Before change the following holds:
-
+[source, java]
+----
 (a1.getB().contains(b1)) &&
-
 (a1.getB().contains(b2)) &&
-
 (a2.getB().contains(b1)) &&
-
 (a2.getB().contains(b2)) &&
-
 (a2.getB().contains(b3)) &&
-
 (a3.getB().contains(b2)) &&
-
 (a3.getB().contains(b3)) &&
-
 (a3.getB().contains(b4)) &&
-
 (a4.getB().contains(b3)) &&
-
 (a4.getB().contains(b4)) &&
-
 (a4.getB().contains(b5)) &&
-
 (a5.getB().contains(b4)) &&
-
 (a5.getB().contains(b5)) &&
-
 (b1.getA().contains(a1)) &&
-
 (b1.getA().contains(a2)) &&
-
 (b2.getA().contains(a1)) &&
-
 (b2.getA().contains(a2)) &&
-
 (b2.getA().contains(a3)) &&
-
 (b3.getA().contains(a2)) &&
-
 (b3.getA().contains(a3)) &&
-
 (b3.getA().contains(a4)) &&
-
 (b4.getA().contains(a3)) &&
-
 (b4.getA().contains(a4)) &&
-
 (b4.getA().contains(a5)) &&
-
 (b5.getA().contains(a4)) &&
-
 (b5.getA().contains(a5)) &&
-
-
+----
 
 Change:
-
- _a1.setB(a3.getB());_
+[source, java]
+----
+a1.setB(a3.getB());
+----
 
 Expected result:
-
+[source, java]
+----
 (a1.getB().contains(b2)) &&
-
 (a1.getB().contains(b3)) &&
-
 (a1.getB().contains(b4)) &&
-
 (a3.getB().contains(b2)) &&
-
 (a3.getB().contains(b3)) &&
-
 (a3.getB().contains(b4)) &&
-
 (b1.getA().contains(a2)) &&
-
 (b2.getA().contains(a1)) &&
-
 (b2.getA().contains(a2)) &&
-
 (b2.getA().contains(a3)) &&
-
 (b3.getA().contains(a1)) &&
-
 (b3.getA().contains(a2)) &&
-
 (b3.getA().contains(a3)) &&
-
 (b3.getA().contains(a4)) &&
-
 (b4.getA().contains(a1)) &&
-
 (b4.getA().contains(a3)) &&
-
 (b4.getA().contains(a4)) &&
-
 (b4.getA().contains(a5))
+----
 
-
-
-image:EBOpt-25.png[image]
+image::EBOpt-25.png[]
 
 Change:
-
+[source, java]
+----
 a1.getB().add(b3);
+----
 
 Expected result:
-
+[source, java]
+----
 (a1.getB().contains(b1)) &&
-
 (a1.getB().contains(b2)) &&
-
 (a1.getB().contains(b3)) &&
-
 (b3.getA().contains(a1)) &&
-
 (b3.getA().contains(a2)) &&
-
 (b3.getA().contains(a3)) &&
-
 (b3.getA().contains(a4)) &&
+----
 
-
-
-image:EBOpt-26.png[image]
+image::EBOpt-26.png[]
 
 Change:
-
+[source, java]
+----
 a2.getB().remove(b2);
+----
 
 Expected result:
-
+[source, java]
+----
 (a2.getB().contains(b1)) &&
-
 (a2.getB().contains(b3)) &&
-
 (b2.getA().contains(a1)) &&
-
 (b2.getA().contains(a3))
+----
 
-
-
-image:EBOpt-27.png[image]
+image::EBOpt-27.png[]
 
 ===== Many-to-many Unidirectional Relationships
 
-
-
-image:EBOpt-28.png[image]
+image::EBOpt-28.png[]
 
 Before change the following holds:
-
+[source, java]
+----
 (a1.getB().contains(b1)) &&
-
 (a1.getB().contains(b2)) &&
-
 (a2.getB().contains(b1)) &&
-
 (a2.getB().contains(b2)) &&
-
 (a2.getB().contains(b3)) &&
-
 (a3.getB().contains(b2)) &&
-
 (a3.getB().contains(b3)) &&
-
 (a3.getB().contains(b4)) &&
-
 (a4.getB().contains(b3)) &&
-
 (a4.getB().contains(b4)) &&
-
 (a4.getB().contains(b5)) &&
-
 (a5.getB().contains(b4)) &&
-
 (a5.getB().contains(b5)) &&
+----
 
 Change:
-
- _a1.setB(a3.getB());_
+[source, java]
+----
+a1.setB(a3.getB());
+----
 
 Expected Result:
-
+[source, java]
+----
 (a1.getB().contains(b2)) &&
-
 (a1.getB().contains(b3)) &&
-
 (a1.getB().contains(b4)) &&
-
 (a3.getB().contains(b2)) &&
-
 (a3.getB().contains(b3)) &&
-
 (a3.getB().contains(b4)) &&
+----
 
-
-
-image:EBOpt-29.png[image]
+image::EBOpt-29.png[]
 
 Change:
-
+[source, java]
+----
 a1.getB().add(b3);
+----
 
 Expected result:
-
+[source, java]
+----
 (a1.getB().contains(b1)) &&
-
 (a1.getB().contains(b2)) &&
-
 (a1.getB().contains(b3))
+----
 
-
-
-image:EBOpt-30.png[image]
+image::EBOpt-30.png[]
 
 Change:
-
+[source, java]
+----
 a2.getB().remove(b2);
+----
 
 Expected result:
-
+[source, java]
+----
 (a2.getB().contains(b1)) &&
-
 (a2.getB().contains(b3))
+----
 
-
-
-image:EBOpt-31.png[image]
+image::EBOpt-31.png[]
 
 ==== Collections Managed by the Container
 
-The collections
-that are used in the representation of one-to-many and many-to-many
-container-managed relationships are implemented and managed by the
-container. The following semantics apply to these collections:
+The collections that are used in the representation of one-to-many and many-to-many container-managed relationships are implemented and managed by the container.
+The following semantics apply to these collections:
 
-It is the responsibility of the container to
-preserve the runtime identity of the collection objects used in
-container-managed relationships.
+* It is the responsibility of the container to preserve the runtime identity of the collection objects used in container-managed relationships.
 
-There is no constructor available to the Bean
-Provider for the container-managed collections.
+* There is no constructor available to the Bean Provider for the container-managed collections.
 
-If there are no related values for a given
-container-managed relationship, the get accessor method for that
-cmr-field returns an empty collection (and not _null_ ).
+* If there are no related values for a given container-managed relationship, the get accessor method for that cmr-field returns an empty collection (and not `null`).
 
-It is the responsibility of the container to
-raise the _java.lang.IllegalArgumentException_
- if the Bean Provider attempts to assign
-_null_ as the value of a collection-valued cmr-field by means of the set
-accessor method.
+* It is the responsibility of the container to raise the `java.lang.IllegalArgumentException` if the Bean Provider attempts to assign `null` as the value of a collection-valued cmr-field by means of the set accessor method.
 
-It is the responsibility of the container to
-ensure that when the _java.util.Collection_
-API is used to manipulate the contents of container-managed relationship
-fields, the argument to any Collection method defined with a single
-Object parameter must be of the element type of the collection defined
-for the target cmr-field. The argument for any collection-valued
-parameter must be a _java.util.Collection_ (or _java.util.Set_ ), all of
-whose elements are of the element type of the collection defined for the
-target cmr-field. If an argument is not of the correct type for the
-relationship, the container must throw the
-_java.lang.IllegalArgumentException_ .
+* It is the responsibility of the container to ensure that when the `java.util.Collection` API is used to manipulate the contents of container-managed relationship fields, the argument to any Collection method defined with a single Object parameter must be of the element type of the collection defined for the target cmr-field.
+The argument for any collection-valued parameter must be a `java.util.Collection` (or `java.util.Set`), all of whose elements are of the element type of the collection defined for the target cmr-field.
+If an argument is not of the correct type for the relationship, the container must throw the `java.lang.IllegalArgumentException`.
 
-It is the responsibility of the container to
-throw the _java.lang.IllegalStateException_
-if an attempt is made to modify a container-managed collection
-corresponding to a multivalued cmr-field using the
-_java.util.Collection_ API outside of the transaction context in which
-the collection object was initially materialized.
+* It is the responsibility of the container to throw the `java.lang.IllegalStateException` if an attempt is made to modify a container-managed collection corresponding to a multivalued cmr-field using the `java.util.Collection` API outside of the transaction context in which the collection object was initially materialized.
 
-It is the responsibility of the container to
-throw the _java.lang.IllegalStateException_ if an attempt is made to use
-a _java.util.Iterator_  for a
-container-managed collection in a transaction context other than that in
-which the iterator was obtained.
+* It is the responsibility of the container to throw the `java.lang.IllegalStateException` if an attempt is made to use a `java.util.Iterator` for a container-managed collection in a transaction context other than that in which the iterator was obtained.
 
 ==== Non-persistent State
 
-The Bean Provider
-may use instance variables in the entity
-bean instance to maintain non-persistent state, e.g. a JMS connection.
+The Bean Provider may use instance variables in the entity bean instance to maintain non-persistent state, e.g. a Jakarta Messaging connection.
 
-The Bean Provider can use instance variables
-to store values that depend on the persistent state of the entity bean
-instance, although this use is not encouraged. The Bean Provider should
-use the ejbLoad method to resynchronize the
-values of any instance variables that depend on the entity bean’s
-persistent state. In general, any non-persistent state that depends on
-the persistent state of an entity bean should be recomputed during the
-ejbLoad method.
+The Bean Provider can use instance variables to store values that depend on the persistent state of the entity bean instance, although this use is not encouraged. The Bean Provider should use the `ejbLoad` method to resynchronize the values of any instance variables that depend on the entity bean’s persistent state.
+In general, any non-persistent state that depends on the persistent state of an entity bean should be recomputed during the `ejbLoad` method.
 
-The Bean Provider should exercise care in
-passing the contents of instance variables as the arguments or results
-of method invocations when local interfaces are used. In general, the
-Bean Provider should avoid passing state that is maintained in instance
-variables as the argument or result of a local method invocation.
+The Bean Provider should exercise care in passing the contents of instance variables as the arguments or results of method invocations when local interfaces are used.
+In general, the Bean Provider should avoid passing state that is maintained in instance variables as the argument or result of a local method invocation.
 
 ==== The Relationship Between the Internal View and the Client View
 
-In designing the
-entity bean, the Bean Provider should keep in mind the following:
+In designing the entity bean, the Bean Provider should keep in mind the following:
 
-The classes that are exposed by the
-remote interface are decoupled from the
-persistence layer. Instances of these classes are passed to and from the
-client by value.
+* The classes that are exposed by the remote interface are decoupled from the persistence layer.
+Instances of these classes are passed to and from the client by value.
 
-The classes that are exposed by the
-local interface of the bean may be tightly
-coupled to the bean’s internal state. Instances of these classes are
-passed to and from the client by reference and may therefore be modified
-by the client. The Bean Provider should exercise care in determining
-what is exposed through the local interface of the bean.
+* The classes that are exposed by the local interface of the bean may be tightly coupled to the bean’s internal state.
+Instances of these classes are passed to and from the client by reference and may therefore be modified by the client.
+The Bean Provider should exercise care in determining what is exposed through the local interface of the bean.
 
 ===== Restrictions on Remote Interfaces
 
-The following restrictions apply to the
-remote interface of an entity bean with container-managed persistence.
+The following restrictions apply to the remote interface of an entity bean with container-managed persistence.
 
-The Bean Provider must not expose the get and
-set methods for container-managed relationship fields or the persistent
-_Collection_ classes that are used in container-managed relationships
-through the remote interface of the bean.
+* The Bean Provider must not expose the get and set methods for container-managed relationship fields or the persistent `Collection` classes that are used in container-managed relationships through the remote interface of the bean.
 
-The Bean Provider must not expose local
-interface types or local home interface types through the remote
-interface or remote home interface of the bean.
+* The Bean Provider must not expose local interface types or local home interface types through the remote interface or remote home interface of the bean.
 
-The Bean Provider must not expose the
-container-managed collection classes that are used for relationships
-through the remote interface of the bean.
+* The Bean Provider must not expose the container-managed collection classes that are used for relationships through the remote interface of the bean.
 
-The Bean Provider must not expose timers or
-timer handles through the remote interface of the bean.
+* The Bean Provider must not expose timers or timer handles through the remote interface of the bean.
 
-Dependent value classes can be exposed in the
-remote interface or remote home interface and can be included in the
-client ejb-jar file.
+Dependent value classes can be exposed in the remote interface or remote home interface and can be included in the client ejb-jar file.
 
-The Bean Provider is free to expose get and
-set methods that correspond to cmp-fields of the entity bean through the
-bean’s remote interface.
+The Bean Provider is free to expose get and set methods that correspond to cmp-fields of the entity bean through the bean’s remote interface.
 
 ==== Mapping Data to a Persistent Store
 
-This
-specification does not prescribe how the abstract persistence schema of
-an entity bean should be mapped to a relational (or other) schema of a
-persistent store, or define how such a mapping is described.
+This specification does not prescribe how the abstract persistence schema of an entity bean should be mapped to a relational (or other) schema of a persistent store, or define how such a mapping is described.
 
 ==== Example
 
-link:Ejb.html#a861[See Relationship
-Example] illustrates an _Order_ entity bean with relationships to line
-items and customers, which are other entity beans within the same local
-scope. _Product_ is indirectly related to _Order_ by means of the
-relationship between _LineItem_ and _Product_ . Sample code for the
-_OrderBean_ class follows the figure.
+<<a861>> illustrates an `Order` entity bean with relationships to line items and customers, which are other entity beans within the same local scope.
+`Product` is indirectly related to `Order` by means of the
+relationship between `LineItem` and `Product`.
+Sample code for the `OrderBean` class follows the figure.
 
-===
+[[a861]]
+.Relationship Example
+image::EBOpt-32.png[]
 
-
-
-[[a861]]Relationship Example
-
-image:EBOpt-32.png[image]
-
-
-
-
-
+[source, java]
+----
 package com.acme.order;
 
-
-
-// This example shows the implementation of
-OrderBean, the
-
-// entity bean class for the OrderEJB entity
-bean. OrderEJB has
-
-// container-managed relationships with the
-entity beans
-
+// This example shows the implementation of OrderBean, the
+// entity bean class for the OrderEJB entity bean. OrderEJB has
+// container-managed relationships with the entity beans
 // CustomerEJB and LineItemEJB.
-
-// This example illustrates the use of local
-interfaces.
-
-
+// This example illustrates the use of local interfaces.
 
 import java.util.Collection;
-
 import java.util.Vector;
-
 import java.util.Date;
-
-
-
 import javax.naming.*;
 
-
-
-public abstract class OrderBean implements
-javax.ejb.EntityBean \{
-
-
-
- private javax.ejb.EntityContext context;
-
-
-
- // define status codes for processing
-
-
-
- static final int BACKORDER = 1;
-
- static final int SHIPPED = 2;
-
- static final int UNSHIPPED = 3;
-
-
-
- // get and set methods for the cmp fields
-
-
-
- public abstract int getOrderStatus();
-
- public abstract void setOrderStatus(int
-orderStatus);
-
-
-
- public abstract boolean getCreditApproved();
-
- public abstract void
-setCreditApproved(boolean creditapproved);
-
-
-
- public abstract Date getOrderDate();
-
- public abstract void setOrderDate(Date
-orderDate);
-
-
-
- // get and set methods for the relationship
-fields
-
-
-
- public abstract Collection getLineItems();
-
- public abstract void setLineItems(Collection
-lineitems);
-
-
-
- public abstract Customer getCustomer();
-
- public abstract void setCustomer(Customer
-customer);
-
-
-
- // business methods.
-
-
-
-
-
- // addLineItem:
-
- // This method is used to add a line item.
-
- // It creates the lineitem object and adds
-it to the
-
- // persistent managed relationship.
-
-
-
- public void addLineItem(Product product,
-
- int quantity,
-
- Address address)
-
- throws InsufficientInfoException
-
- \{
-
- // create a new line item
-
- if (validAddress(address)) \{
-
- // Address is a legacy class. It is a
-dependent value
-
- // class that is available both in the
-client and in
-
- // the entity bean, and is serializable.
-
- // We will use the address as the value of a
-cmp field
-
- // of lineItem.
-
-
-
- try \{
-
- Context ic = new InitialContext();
-
- LineItemLocalHome litemLocalHome =
-
- (LineItemLocalHome)ic.lookup("LineItemEJB");
-
- LineItem litem = litemLocalHome.create();
-
-
-
- litem.setProduct(product);
-
- litem.setQuantity(quantity);
-
-
-litem.setTax(calculateTax(product.getPrice(),
-
- quantity,
-
- address));
-
- litem.setStatus(UNSHIPPED);
-
- // set the address for the line item to be
-shipped
-
- litem.setAddress(address);
-
- // The lineItem entity bean uses a dependent
-value
-
- // class to represent the dates for the
-order status.
-
- // This class holds shipment date, expected
-shipment
-
- // date, credit approval date, and inventory
-
- // dates which are internal to the order
-fullfillment
-
- // process. Not all this information will be
-available
-
- // to the client.
-
-
-
- Dates dates = new Dates();
-
- litem.setDates(dates);
-
- getLineItems().add(litem);
-
- } catch (Exception someexception) \{}
-
- } else \{
-
- throw new InsufficientInfoException();
-
- }
-
- }
-
-
-
-
-
- // getOrderLineItems:
-
- // This method makes a view of the lineitems
-that are in this
-
- // order available in the client. It makes
-only the relevant
-
- // information visible to the client and
-hides the internal
-
- // details of the representation of the
-lineitem
-
- public Collection getOrderLineItems() \{
-
- Vector clientlineitems = new Vector();
-
- Collection lineitems = getLineItems();
-
- java.util.Iterator iterator =
-lineitems.iterator();
-
- // ClientLineItem is a value class that is
-used in
-
- // the client view.
-
- // The entity Bean Provider abstracts from
-the persistent
-
- // representation of the line item to
-construct the client
-
- // view.
-
- ClientLineItem clitem;
-
- while (iterator.hasNext()) \{
-
- LineItem litem = (LineItem)iterator.next();
-
- clitem = new ClientLineItem();
-
- // only the name of the product is available
-in the
-
- // client view
-
-
-clitem.setProductName(litem.getProduct().getName());
-
- clitem.setQuantity(litem.getQuantity());
-
- // the client view gets a specific
-descriptive message
-
- // depending on the line item status.
-
- clitem.setCurrentStatus(
-
- statusCodeToString(litem.getStatus()));
-
- // address is not copied to the client view.
-
- // as this class includes other information
-with
-
- // respect to the order handing that should
-not be
-
- // available to the client. Only the
-relevant info
-
- // is copied.
-
- int lineitemStatus = litem.getStatus();
-
- if ( lineitemStatus == BACKORDER) \{
-
- clitem.setShipDate(
-
- litem.getDates().getExpectedShipDate());
-
- } else if (lineitemStatus == SHIPPED) \{
-
- clitem.setShipDate(
-
- litem.getDates().getShippedDate());
-
- }
-
- //add the new line item
-
- clientlineitems.add(clitem);
-
- }
-
- // return the value objects to the client
-
- return clientlineitems;
-
- }
-
-
-
- // other methods internal to the entity bean
-class
-
- ...
-
-
-
- // other javax.ejb.EntityBean methods
-
- ...
-
+public abstract class OrderBean implements jakarta.ejb.EntityBean {
+
+    private jakarta.ejb.EntityContext context;
+
+    // define status codes for processing
+
+    static final int BACKORDER = 1;
+    static final int SHIPPED = 2;
+    static final int UNSHIPPED = 3;
+
+    // get and set methods for the cmp fields
+
+    public abstract int getOrderStatus();
+    public abstract void setOrderStatus(int orderStatus);
+
+    public abstract boolean getCreditApproved();
+    public abstract void setCreditApproved(boolean creditapproved);
+
+    public abstract Date getOrderDate();
+    public abstract void setOrderDate(Date orderDate);
+
+    // get and set methods for the relationship fields
+
+    public abstract Collection getLineItems();
+    public abstract void setLineItems(Collection lineitems);
+
+    public abstract Customer getCustomer();
+    public abstract void setCustomer(Customer customer);
+
+    // business methods.
+
+    // addLineItem:
+    // This method is used to add a line item.
+    // It creates the lineitem object and adds it to the
+    // persistent managed relationship.
+
+    public void addLineItem(Product product,
+                 int quantity,
+                 Address address)
+     throws InsufficientInfoException 
+    {
+        // create a new line item
+        if (validAddress(address)) {
+            // Address is a legacy class. It is a dependent value
+            // class that is available both in the client and in
+            // the entity bean, and is serializable.
+            // We will use the address as the value of a cmp field
+            // of lineItem.
+            try {
+                Context ic = new InitialContext();
+                LineItemLocalHome litemLocalHome =
+                    (LineItemLocalHome)ic.lookup("LineItemEJB");
+                LineItem litem = litemLocalHome.create();
+
+                litem.setProduct(product);
+                litem.setQuantity(quantity);
+                litem.setTax(calculateTax(product.getPrice(),
+                                          quantity,
+                                          address));
+                litem.setStatus(UNSHIPPED);
+                // set the address for the line item to be shipped
+                litem.setAddress(address);
+                // The lineItem entity bean uses a dependent value
+                // class to represent the dates for the order status.
+                // This class holds shipment date, expected shipment
+                // date, credit approval date, and inventory
+                // dates which are internal to the order fullfillment
+                // process. Not all this information will be available
+                // to the client.
+                Dates dates = new Dates();
+                litem.setDates(dates);
+                getLineItems().add(litem);
+            } catch (Exception someexception) {}
+        } else {
+            throw new InsufficientInfoException();
+        }
+    }
+
+    // getOrderLineItems:
+    // This method makes a view of the lineitems that are in this
+    // order available in the client. It makes only the relevant
+    // information visible to the client and hides the internal
+    // details of the representation of the lineitem
+    public Collection getOrderLineItems() {
+        Vector clientlineitems = new Vector();
+        Collection lineitems = getLineItems();
+        java.util.Iterator iterator = lineitems.iterator();
+        // ClientLineItem is a value class that is used in
+        // the client view.
+        // The entity Bean Provider abstracts from the persistent
+        // representation of the line item to construct the client
+        // view.
+        ClientLineItem clitem;
+        while (iterator.hasNext()) {
+            LineItem litem = (LineItem)iterator.next();
+            clitem = new ClientLineItem();
+            // only the name of the product is available in the
+            // client view
+            clitem.setProductName(litem.getProduct().getName());
+            clitem.setQuantity(litem.getQuantity());
+            // the client view gets a specific descriptive message
+            // depending on the line item status.
+            clitem.setCurrentStatus(
+            statusCodeToString(litem.getStatus()));
+            // address is not copied to the client view.
+            // as this class includes other information with
+            // respect to the order handing that should not be
+            // available to the client. Only the relevant info
+            // is copied.
+            int lineitemStatus = litem.getStatus();
+            if (lineitemStatus == BACKORDER) {
+                clitem.setShipDate(
+                    litem.getDates().getExpectedShipDate());
+            } else if (lineitemStatus == SHIPPED) {
+                clitem.setShipDate(
+                    litem.getDates().getShippedDate());
+            }
+            //add the new line item
+            clientlineitems.add(clitem);
+        }
+        // return the value objects to the client
+        return clientlineitems;
+    }
+    // other methods internal to the entity bean class
+    ...
+    // other javax.ejb.EntityBean methods
+    ...
 }
-
+----
 
 [[a1013]]
 ==== The Bean Provider’s View of the Deployment Descriptor
 
-The persistent fields (cmp-fields) and
-relationships (cmr-fields) of an entity bean must be declared in the
-deployment descriptor.
+The persistent fields (cmp-fields) and relationships (cmr-fields) of an entity bean must be declared in the deployment descriptor.
 
-The deployment descriptor provides the
-following information about the abstract persistence schemas of entity
-beans and their container-managed
-relationships:
+The deployment descriptor provides the following information about the abstract persistence schemas of entity beans and their container-managed relationships:
 
-An _ejb-name_ element for each entity bean.
-The _ejb-name_ must be a valid Java identifier and must be unique within
-the _ejb-name_ elements of the ejb-jar file.
+* An `ejb-name` element for each entity bean.
+The `ejb-name` must be a valid Java identifier and must be unique within the `ejb-name` elements of the ejb-jar file.
 
-An _abstract-schema-name_ element for each
-entity bean. The _abstract-schema-name_ must be a valid Java identifier
-and must be unique within the _abstract-schema-name_ elements of the
-ejb-jar file. The _abstract-schema-name_ element is used in the
-specification of EJB QL queries.
+* An `abstract-schema-name` element for each
+entity bean.
+The `abstract-schema-name` must be a valid Java identifier
+and must be unique within the `abstract-schema-name` elements of the
+ejb-jar file.
+The `abstract-schema-name` element is used in the specification of Enterprise Beans QL queries.
 
-{empty}A set of _ejb-relation_ elements, each
-of which contains a pair of _ejb-relationship-role_ elements to describe
-the two roles in the relationship.link:#a3369[5]
+* A set of `ejb-relation` elements, each of which contains a pair of `ejb-relationship-role` elements to describe the two roles in the relationship.
+footnote:a3369[The relation names and the relationship role names are not used in the code provided by the Bean Provider.]
 
-Each _ejb-relationship-role_ element
-describes a relationship role: its name, its multiplicity within a
-relation, and its navigability. It specifies the name of the _cmr-field_
-that is used from the perspective of the relationship participant. The
-_cmr-field-type_ element must be specified if the type of the cmr-field
-is _java.util.Collection_ or _java.util.Set_ . Each relationship role
-refers to an entity bean by means of an ejb-name element contained in
-the _relationship-role-source_ element.
+* Each `ejb-relationship-role` element describes a relationship role: its name, its multiplicity within a relation, and its navigability.
+It specifies the name of the `cmr-field` that is used from the perspective of the relationship participant.
+The `cmr-field-type` element must be specified if the type of the cmr-field
+is `java.util.Collection` or `java.util.Set`.
+Each relationship role refers to an entity bean by means of an ejb-name element contained in the `relationship-role-source` element.
 
-The following example shows a deployment
-descriptor segment that defines the abstract persistence schema for a
-set of related entity beans. The deployment descriptor elements for
-container-managed persistence and relationships are described further in
-Chapter link:Ejb.html#a3273[See Deployment Descriptor].
-
+The following example shows a deployment descriptor segment that defines the abstract persistence schema for a set of related entity beans.
+The deployment descriptor elements for container-managed persistence and relationships are described further in <<a3273>>.
+[source, xml]
+----
 <ejb-jar>
-
-
-
-...
-
-
-
-<enterprise-beans>
-
-...
-
-</enterprise-beans>
-
-
-
-<relationships>
-
-
-
-<!--
-
-ONE-TO-MANY: Order LineItem
-
--->
-
-
-
- <ejb-relation>
-
-
-<ejb-relation-name>Order-LineItem</ejb-relation-name>
-
- <ejb-relationship-role>
-
- <ejb-relationship-role-name>
-
- order-has-lineitems
-
- </ejb-relationship-role-name>
-
- <multiplicity>One</multiplicity>
-
- <relationship-role-source>
-
- <ejb-name>OrderEJB</ejb-name>
-
- </relationship-role-source>
-
- <cmr-field>
-
- <cmr-field-name>lineItems</cmr-field-name>
-
- <cmr-field-type>java.util.Collection
-
- </cmr-field-type>
-
- </cmr-field>
-
- </ejb-relationship-role>
-
-
-
- <ejb-relationship-role>
-
-
-<ejb-relationship-role-name>lineitem-belongsto-order
-
- </ejb-relationship-role-name>
-
- <multiplicity>Many</multiplicity>
-
- <cascade-delete/>
-
- <relationship-role-source>
-
- <ejb-name>LineItemEJB</ejb-name>
-
- </relationship-role-source>
-
- <cmr-field>
-
- <cmr-field-name>order</cmr-field-name>
-
- </cmr-field>
-
- </ejb-relationship-role>
-
- </ejb-relation>
-
-
-
-<!--
-
-ONE-TO-MANY unidirectional relationship:
-
-Product is not aware of its relationship with
-LineItem
-
--->
-
-
-
- <ejb-relation>
-
-
-<ejb-relation-name>Product-LineItem</ejb-relation-name>
-
-
-
- <ejb-relationship-role>
-
- <ejb-relationship-role-name>
-
- product-has-lineitems
-
- </ejb-relationship-role-name>
-
- <multiplicity>One</multiplicity>
-
- <relationship-role-source>
-
- <ejb-name>ProductEJB</ejb-name>
-
- </relationship-role-source>
-
- <!-- since Product does not know about
-LineItem
-
- there is no cmr field in Product for
-accessing
-
- Lineitem
-
- -->
-
- </ejb-relationship-role>
-
-
-
- <ejb-relationship-role>
-
- <ejb-relationship-role-name>
-
- lineitem-for-product
-
- </ejb-relationship-role-name>
-
- <multiplicity>Many</multiplicity>
-
- <relationship-role-source>
-
- <ejb-name>LineItemEJB</ejb-name>
-
- </relationship-role-source>
-
- <cmr-field>
-
- <cmr-field-name>product</cmr-field-name>
-
- </cmr-field>
-
- </ejb-relationship-role>
-
-
-
- </ejb-relation>
-
-
-
-
-
-<!--
-
-ONE-TO-MANY: Order Customer:
-
--->
-
-
-
- <ejb-relation>
-
-
-<ejb-relation-name>Order-Customer</ejb-relation-name>
-
-
-
- <ejb-relationship-role>
-
- <ejb-relationship-role-name>
-
- customer-has-orders
-
- </ejb-relationship-role-name>
-
- <multiplicity>One</multiplicity>
-
- <relationship-role-source>
-
- <ejb-name>CustomerEJB</ejb-name>
-
- </relationship-role-source>
-
- <cmr-field>
-
- <cmr-field-name>orders</cmr-field-name>
-
- <cmr-field-type>java.util.Collection
-
- </cmr-field-type>
-
- </cmr-field>
-
- </ejb-relationship-role>
-
-
-
- <ejb-relationship-role>
-
- <ejb-relationship-role-name>
-
- order-belongsto-customer
-
- </ejb-relationship-role-name>
-
- <multiplicity>Many</multiplicity>
-
- <relationship-role-source>
-
- <ejb-name>OrderEJB</ejb-name>
-
- </relationship-role-source>
-
- <cmr-field>
-
- <cmr-field-name>customer</cmr-field-name>
-
- </cmr-field>
-
- </ejb-relationship-role>
-
-
-
- </ejb-relation>
-
-
-
-
-
-
-
-</relationships>
-
-
-
-...
-
-
-
+    ...
+    <enterprise-beans>
+    ...
+    </enterprise-beans>
+    <relationships>
+        <!-- 
+        ONE-TO-MANY: Order LineItem 
+        -->
+        <ejb-relation>
+            <ejb-relation-name>Order-LineItem</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>
+                    order-has-lineitems
+                </ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>OrderEJB</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>lineItems</cmr-field-name>
+                    <cmr-field-type>java.util.Collection
+                    </cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>
+                    lineitem-belongsto-order
+                </ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>LineItemEJB</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>order</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <!-- 
+        ONE-TO-MANY unidirectional relationship:
+        Product is not aware of its relationship with LineItem
+        -->
+        <ejb-relation>
+            <ejb-relation-name>Product-LineItem</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>
+                    product-has-lineitems
+                </ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>ProductEJB</ejb-name>
+                </relationship-role-source>
+                <!-- since Product does not know about LineItem
+                there is no cmr field in Product for accessing
+                Lineitem
+                -->
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>
+                    lineitem-for-product
+                </ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>LineItemEJB</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>product</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <!--
+        ONE-TO-MANY: Order Customer:
+        -->
+        <ejb-relation>
+            <ejb-relation-name>Order-Customer</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>
+                    customer-has-orders
+                </ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>CustomerEJB</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>orders</cmr-field-name>
+                    <cmr-field-type>java.util.Collection
+                    </cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>
+                    order-belongsto-customer
+                </ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>OrderEJB</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>customer</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+    </relationships>
+    ...
 </ejb-jar>
+----
 
 === The Entity Bean Component Contract
 
-
-
-This section specifies the container-managed
-persistence contract between an entity bean and its container.
+This section specifies the container-managed persistence contract between an entity bean and its container.
 
 ==== Runtime Execution Model of Entity Beans
 
-This subsection
-describes the runtime model and the classes
-used in the description of the contract between an entity bean and its
-container. link:Ejb.html#a1155[See Overview of the Entity Bean
-Runtime Execution Model] shows an overview of the runtime model. The
-client of an entity bean may be a local client or it may be a remote
-client.
+This subsection describes the runtime model and the classes used in the description of the contract between an entity bean and its container.
+<<a1155>> shows an overview of the runtime model.
+The client of an entity bean may be a local client or it may be a remote client.
 
-===
+[[a1155]]
+.Overview of the Entity Bean Runtime Execution Model
+image::EBOpt-33.png[]
 
+An enterprise bean is an object whose class is provided by the Bean Provider.
+The class of an entity bean with container-managed persistence is abstract.
+The concrete bean class is generated by the Container Provider’s tools at deployment time.
+The container is also responsible for providing the implementation of the `java.util.Collection` classes that are used in maintaining the container-managed relationships of the entity bean.
 
+An entity *EJBObject* or *EJBLocalObject* is an object whose class was generated at deployment time by the Container Provider’s tools.
+A client never references an entity bean instance directly—a client always references an entity EJBObject or EJBLocalObject whose class is generated by the Container Provider’s tools.
+The entity EJBObject class implements an entity bean’s remote interface. 
+The entity EJBLocalObject class implements an entity bean’s local interface.
+A related entity bean never references another entity bean instance directly—a related entity bean, like any other local client of an entity bean, always references an entity EJBLocalObject whose class is generated by the Container Provider’s tools.
 
-[[a1155]]Overview of the Entity Bean Runtime Execution Model
-
-image:EBOpt-33.png[image]
-
-An enterprise bean is an object whose class
-is provided by the Bean Provider. The class of an entity bean with
-container-managed persistence is abstract. The concrete bean class is
-generated by the Container Provider’s tools at deployment time. The
-container is also responsible for providing the implementation of the
-_java.util.Collection_ classes that are used in maintaining the
-container-managed relationships of the entity bean.
-
-An entity _EJBObject_
- or
-EJBLocalObject is an object whose class was
-generated at deployment time by the Container Provider’s tools. A client
-never references an entity bean instance directly—a client always
-references an entity EJBObject or EJBLocalObject whose class is
-generated by the Container Provider’s tools. The entity EJBObject class
-implements an entity bean’s remote interface. The entity EJBLocalObject
-class implements an entity bean’s local interface. A related entity bean
-never references another entity bean instance directly—a related entity
-bean, like any other local client of an entity bean, always references
-an entity EJBLocalObject whose class is generated by the Container
-Provider’s tools.
-
-An entity _EJBHome_
- or EJBLocalHome
-object provides life cycle operations
-(create, find, remove) for its entity objects as well as home business
-methods, which are business methods that are not specific to an entity
-bean instance. The class for the entity EJBHome or EJBLocalHome object
-is generated by the Container Provider’s tools at deployment time. The
-entity EJBHome or EJBLocalHome object implements the entity bean’s
-remote or local home interface that was defined by the Bean Provider.
+An entity *EJBHome* or *EJBLocalHome* object provides life cycle operations (create, find, remove) for its entity objects as well as home business methods, which are business methods that are not specific to an entity bean instance.
+The class for the entity EJBHome or EJBLocalHome object is generated by the Container Provider’s tools at deployment time.
+The entity EJBHome or EJBLocalHome object implements the entity bean’s remote or local home interface that was defined by the Bean Provider.
 
 ==== Container Responsibilities
 
-The following are the container
-responsibilities for the management of persistent state.
+The following are the container responsibilities for the management of persistent state.
 
 ===== Container-Managed Fields
 
-An entity bean with container-managed
-persistence relies on the container to perform
-persistent data access on behalf of the
-entity bean instances. The container transfers data between an entity
-bean instance and the underlying resource manager. The container also
-implements the creation, removal, and lookup of the entity object in the
-underlying database.
+An entity bean with container-managed persistence relies on the container to perform persistent data access on behalf of the entity bean instances.
+The container transfers data between an entity bean instance and the underlying resource manager.
+The container also implements the creation, removal, and lookup of the entity object in the underlying database.
 
-The container
-transfers data between the entity bean and the underlying data source as
-a result of the execution of the entity bean’s methods. Because of the
-requirement that all data access occur through the
-accessor methods, the container can
-implement both eager and
-lazy loading and storing schemes.
+The container transfers data between the entity bean and the underlying data source as a result of the execution of the entity bean’s methods.
+Because of the requirement that all data access occur through the accessor methods, the container can implement both eager and lazy loading and storing schemes.
 
-The container is responsible for implementing
-the entity bean class by providing the implementation of the get and set
-accessor methods for its abstract persistence schema. The container is
-allowed to use Java serialization to store the container-managed
-persistent fields (cmp-fields).
+The container is responsible for implementing the entity bean class by providing the implementation of the get and set accessor methods for its abstract persistence schema.
+The container is allowed to use Java serialization to store the container-managed persistent fields (cmp-fields).
 
-The container must also manage the mapping
-between primary keys and EJBLocalObjects or
-EJBObjects. If both a remote and a local interface are specified for the
-entity bean, the container must manage the mapping between EJBObjects
-and EJBLocalObjects.
+The container must also manage the mapping between primary keys and EJBLocalObjects or EJBObjects.
+If both a remote and a local interface are specified for the entity bean, the container must manage the mapping between EJBObjects and EJBLocalObjects.
 
-Because the container is free to optimize the
-delivery of persistent data to the bean instance (for example, by the
-use of lazy loading strategies), the contents of the entity bean
-instance and the contents of container-managed collections may not be
-fully materialized.
+****
+_Because the container is free to optimize the delivery of persistent data to the bean instance (for example, by the use of lazy loading strategies), the contents of the entity bean instance and the contents of container-managed collections may not be fully materialized._
+****
 
 ===== Container-Managed Relationships
 
-The container
-maintains the relationships among entity beans.
+The container maintains the relationships among entity beans.
 
-It is the responsibility of the container to
-maintain the referential integrity of the
-container-managed relationships, as described in
-link:Ejb.html#a496[See Semantics of Assignment for
-Relationships], in accordance with the semantics of the relationship
-type as specified in the deployment descriptor. For example, if an
-entity bean is added to a collection corresponding to the
-container-managed relationship field of another entity bean, the
-container-managed relationship field of the first entity bean must also
-be updated by the container in the same transaction context.
+* It is the responsibility of the container to maintain the referential integrity of the container-managed relationships, as described in <<a496>>, in accordance with the semantics of the relationship type as specified in the deployment descriptor.
+For example, if an entity bean is added to a collection corresponding to the container-managed relationship field of another entity bean, the container-managed relationship field of the first entity bean must also be updated by the container in the same transaction context.
 
-It is the responsibility of the container to
-throw the _java.lang.IllegalArgumentException_
- when the argument to a set method in a
-relationship is an instance of the wrong relationship type or a
-collection containing instances of the wrong type, or when an argument
-to a method of the _java.util.Collection_
-API used to manipulate a collection-valued container-managed
-relationship field is an instance of the wrong type or a collection that
-contains instances of the wrong type (see Section
-link:Ejb.html#a496[See Semantics of Assignment for
-Relationships]).
+* It is the responsibility of the container to throw the `java.lang.IllegalArgumentException` when the argument to a set method in a relationship is an instance of the wrong relationship type or a collection containing instances of the wrong type, or when an argument to a method of the `java.util.Collection` API used to manipulate a collection-valued container-managed relationship field is an instance of the wrong type or a collection that contains instances of the wrong type (see <<a496>>).
 
-It is the responsibility of the container to
-throw the _java.lang.IllegalStateException_
-when a method of the _java.util.Collection_ API is used to access a
-collection-valued cmr-field within a transaction context other than the
-transaction context in which the cmr-field was initially materialized.
-For example, if the container-managed collection is returned as the
-result of a local interface method with transaction attribute
-_RequiresNew_ , and the client attempts to access the collection, the
-container must throw the _IllegalStateException_ .
+* It is the responsibility of the container to throw the `java.lang.IllegalStateException` when a method of the `java.util.Collection` API is used to access a collection-valued cmr-field within a transaction context other than the transaction context in which the cmr-field was initially materialized.
+For example, if the container-managed collection is returned as the result of a local interface method with transaction attribute `RequiresNew`, and the client attempts to access the collection, the container must throw the `IllegalStateException`.
 
-It is the responsibility of the container to
-throw the _java.lang.IllegalStateException_ when a _java.util.Iterator_
- is used to access a collection-valued
-cmr-field within a transaction context other than the transaction
-context in which the iterator was initially obtained.
+* It is the responsibility of the container to throw the `java.lang.IllegalStateException` when a `java.util.Iterator` is used to access a collection-valued cmr-field within a transaction context other than the transaction context in which the iterator was initially obtained.
 
 === Instance Life Cycle Contract Between the Bean and the Container
 
