@@ -1,2015 +1,1253 @@
 [[a1840]]
-== EJB QL: EJB 2.1 Query Language for Container-Managed Persistence Query Methods
+== Enterprise Beans QL: EJB 2.1 Query Language for Container-Managed Persistence Query Methods
 
-The Enterprise
-JavaBeans query language, EJB QL, is used to define queries for entity
-beans with container-managed persistence. EJB QL enables the Bean
-Provider to specify the semantics of query methods in a portable way.
+The Enterprise Beans query language, Enterprise Beans QL, is used to define queries for entity beans with container-managed persistence.
+Enterprise Beans QL enables the Bean Provider to specify the semantics of query methods in a portable way.
 
-This chapter provides the complete definition
-of EJB QL that is required to be supported for use with EJB 2.1 entity
-beans with container managed persistence. Implementations of this
-specification are permitted, but not required, to provide the extensions
-to EJB QL defined by the Java Persistence query language
-link:Ejb.html#a3325[See Java™ Persistence API, version 2.1.
-http://jcp.org/en/jsr/detail?id=338.] for use with finder and select
-methods. Applications that make use of such extensions in finder and
-select methods will not be portable.
+****
+_This chapter provides the complete definition of Enterprise Beans QL that is required to be supported for use with Enterprise Beans 2.1 entity beans with container managed persistence.
+Implementations of this specification are permitted, but not required, to provide the extensions to Enterprise Beans QL defined by the Jakarta Persistence query language <<a3325>> for use with finder and select methods.
+Applications that make use of such extensions in finder and select methods will not be portable._
+****
 
 === Overview
 
+Enterprise Beans QL is a query specification language for the finder and select methods of entity beans with container-managed persistence.
+Enterprise Beans QL can be compiled to a target language, such as SQL, of a database or other persistent store.
+This allows the execution of queries to be shifted to the native language facilities provided by the persistent store, instead of requiring queries to be executed on the runtime representation of the entity beans’ state.
+As a result, query methods can be optimizable as well as portable.
 
+The Enterprise Beans query language uses the abstract persistence schemas of entity beans, including their relationships, for its data model.
+It defines operators and expressions based on this data model.
 
-EJB QL is a query
-specification language for the finder and select methods of entity beans
-with container-managed persistence. EJB QL can be compiled to a target
-language, such as SQL, of a database or other persistent store. This
-allows the execution of queries to be shifted to the native language
-facilities provided by the persistent store, instead of requiring
-queries to be executed on the runtime representation of the entity
-beans’ state. As a result, query methods can be optimizable as well as
-portable.
+The Bean Provider uses Enterprise Beans QL to write queries based on the abstract persistence schemas and the relationships defined in the deployment descriptor.
+Enterprise Beans QL depends on navigation and selection based on the cmp-fields and cmr-fields of the related entity beans.
+The Bean Provider can navigate from an entity bean to other entity beans by using the names of cmr-fields in Enterprise Beans QL queries.
 
-The Enterprise JavaBeans query language uses
-the abstract persistence schemas of entity beans, including their
-relationships, for its data model. It defines operators and expressions
-based on this data model.
+Enterprise Beans QL allows the Bean Provider to use the abstract schema types of entity beans in a query if the abstract persistence schemas of the beans are defined in the same deployment descriptor as the query.
 
-The Bean Provider uses EJB QL to write
-queries based on the abstract persistence schemas and the relationships
-defined in the deployment descriptor. EJB QL depends on navigation and
-selection __ based on the cmp-fields and cmr-fields of the related
-entity beans. The Bean Provider can navigate from an entity bean to
-other entity beans by using the names of cmr-fields in EJB QL queries.
+It is possible to parse and validate Enterprise Beans QL queries before entity beans are deployed because Enterprise Beans QL is based on the abstract schema types of entity beans.
 
-EJB QL allows the
-Bean Provider to use the abstract schema types of entity beans in a
-query if the abstract persistence schemas of the beans are defined in
-the same deployment descriptor as the query.
-
-It is possible to parse and validate EJB QL
-queries before entity beans are deployed because EJB QL is based on the
-abstract schema types of entity beans.
-
-EJB QL queries can be used in two different
+Enterprise Beans QL queries can be used in two different
 ways:
 
-as queries for selecting entity objects
-through finder methods defined in the home interface. Finder methods
-allow the results of an EJB QL query to be used by the clients of the
-entity bean.
+* as queries for selecting entity objects through finder methods defined in the home interface.
+Finder methods allow the results of an Enterprise Beans QL query to be used by the clients of the entity bean.
 
-as queries for selecting entity objects or
-other values derived from an entity bean’s abstract schema type through
-select methods defined on the entity bean class. Select methods allow
-the Bean Provider to use EJB QL to find objects or values related to the
-state of an entity bean without directly exposing the results to the
-client.
+* as queries for selecting entity objects or other values derived from an entity bean’s abstract schema type through select methods defined on the entity bean class.
+Select methods allow the Bean Provider to use Enterprise Beans QL to find objects or values related to the state of an entity bean without directly exposing the results to the client.
 
-=== EJB QL Definition
+=== Enterprise Beans QL Definition
 
+Enterprise Beans QL uses a SQL-like syntax to select objects or values based on the abstract schema types and relationships
+of entity beans.
+The path expressions of Enterprise Beans QL allow the Bean Provider to navigate over relationships defined by the cmr-fields of the abstract schema types of entity beans.
 
+This chapter provides the full definition of the language.
 
-EJB QL uses a SQL-like syntax to select
-objects or values based on the abstract schema types and relationships
-of entity beans. The path expressions of EJB QL allow the Bean Provider
-to navigate over relationships defined by the cmr-fields of the abstract
-schema types of entity beans.
+An Enterprise Beans QL query is a string which consists of the following clauses:
 
-This chapter provides the full definition of
-the language.
+* a SELECT clause, which determines the type of the objects or values to be selected.
 
-An EJB QL query
-is a string which consists of the following clauses:
+* a FROM clause, which provides declarations that designate the domain to which the expressions specified in the SELECT clause and WHERE clause of the query apply.
 
-a SELECT clause,
-which determines the type of the objects or values to be selected.
+* an optional WHERE clause, which may be used to restrict the results that are returned by the query.
 
-a FROM clause,
-which provides declarations that designate the domain to which the
-expressions specified in the SELECT clause and WHERE clause of the query
-apply.
+* an optional ORDER BY clause, which may be used to order the results that are returned by the query.
 
-an optional WHERE
-clause, which may be used to restrict the results that are returned by
-the query.
+In BNF syntax, an Enterprise Beans QL query is defined as:
 
-an optional ORDER BY clause, which may be
-used to order the results that are returned by the query.
+[bnf]
+----
+Enterprise Beans QL ::= select_clause from_clause [where_clause] [orderby_clause]
+----
 
-In BNF syntax, an EJB QL query is defined as:
+An Enterprise Beans QL query must always have a SELECT and a FROM clause. 
+The square brackets [] indicate that the WHERE and ORDER BY clauses are optional.
 
-{empty}EJB QL :: = select_clause from_clause
-[where_clause] [orderby_clause]
+An Enterprise Beans QL query may have parameters that correspond to the parameters of the finder or select method for which it is defined.
 
-An EJB QL query
-must always have a SELECT and a FROM clause. The square brackets []
-indicate that the WHERE and ORDER BY clauses are optional.
-
-An EJB QL query may have parameters that
-correspond to the parameters of the finder or select method for which it
-is defined.
-
-An EJB QL query is statically defined in the
-_ejb-ql_ deployment descriptor element.
+An Enterprise Beans QL query is statically defined in the `ejb-ql` deployment descriptor element.
 
 ==== Abstract Schema Types and Query Domains
 
-EJB QL is a typed language whose design is
-based on the type model of EJB 2.0 container-managed persistence. Every
-expression in EJB QL has a type. The type of the expression is derived
-from the structure of the expression; the abstract schema types of the
-identification variable declarations; the types to which the cmp-fields
-and cmr-fields evaluate; and the types of literals. The allowable types
-in EJB QL are the abstract schema types of entity beans and cmp-fields.
+Enterprise Beans QL is a typed language whose design is based on the type model of Enterprise Beans 2.0 container-managed persistence.
+Every expression in Enterprise Beans QL has a type.
+The type of the expression is derived from the structure of the expression; the abstract schema types of the identification variable declarations; the types to which the cmp-fields and cmr-fields evaluate; and the types of literals.
+The allowable types in Enterprise Beans QL are the abstract schema types of entity beans and cmp-fields.
 
-The abstract schema type of an entity bean is
-derived from its entity bean class and the information provided in the
-deployment descriptor. There is a one-to-one mapping between entity bean
-abstract schema types and entity bean homes. Abstract schema names, as
-specified by the _abstract-schema-name_ elements in the deployment
-descriptor, are used to denote entity bean abstract schema types in EJB
-QL.
+The abstract schema type of an entity bean is derived from its entity bean class and the information provided in the deployment descriptor.
+There is a one-to-one mapping between entity bean abstract schema types and entity bean homes. Abstract schema names, as specified by the `abstract-schema-name` elements in the deployment descriptor, are used to denote entity bean abstract schema types in Enterpise Beans QL.
 
-Informally, the abstract schema type of an
-entity bean can be characterized as follows:
+Informally, the abstract schema type of an entity bean can be characterized as follows:
 
- _For every get accessor method of the entity
-bean class that corresponds to a_ _cmp-field element in the deployment
-descriptor, there is a field (“cmp-field”) whose abstract schema type
-corresponds to the result type of the accessor method._
+* _For every get accessor method of the entity bean class that corresponds to a `cmp-field` element in the deployment descriptor, there is a field ("`cmp-field`") whose abstract schema type corresponds to the result type of the accessor method._
 
- _For every get accessor method of the entity
-bean that corresponds to a_ _cmr-field_ _element in the deployment
-descriptor, there is a field (“cmr-field”) whose type is the abstract
-schema type of the entity bean denoted by the ejb-name element contained
-in the corresponding ejb-relationship-role element (or, if the role has
-a multiplicity of Many, a collection of such)._
+* _For every get accessor method of the entity bean that corresponds to a  `cmr-field` element in the deployment descriptor, there is a field ("`cmr-field`") whose type is the abstract schema type of the entity bean denoted by the `ejb-name` element contained in the corresponding `ejb-relationship-role` element (or, if the role has a multiplicity of `Many`, a collection of such)._
 
-Abstract schema types are specific to the EJB
-QL data model. The container is not required to implement or otherwise
-materialize an abstract schema type.
+Abstract schema types are specific to the Enterprise Beans QL data model.
+The container is not required to implement or otherwise materialize an abstract schema type.
 
-The
-domain of an EJB QL query consists of the abstract schema types of all
-entity beans with container-managed persistence that are defined in the
-same deployment descriptor.
+The domain of an Enterprise Beans QL query consists of the abstract schema types of all entity beans with container-managed persistence that are defined in the same deployment descriptor.
 
-The Bean Provider creates an ejb-jar file
-which contains a deployment descriptor describing several entity beans
-and their relationships. EJB QL assumes that a single deployment
-descriptor in an ejb-jar file constitutes a nondecomposable unit for the
-container responsible for implementing the abstract persistence schemas
-of the entity beans and the relationships defined in the deployment
-descriptor and the ejb-jar file. Queries can be written by utilizing
-navigation over the cmr-fields of related beans supplied in the same
-ejb-jar by the Bean Provider because they are implemented and managed by
-the same container.
+****
+The Bean Provider creates an ejb-jar file which contains a deployment descriptor describing several entity beans and their relationships.
+Enterprise Beans QL assumes that a single deployment descriptor in an ejb-jar file constitutes a nondecomposable unit for the container responsible for implementing the abstract persistence schemas of the entity beans and the relationships defined in the deployment descriptor and the ejb-jar file.
+Queries can be written by utilizing navigation over the cmr-fields of related beans supplied in the same ejb-jar by the Bean Provider because they are implemented and managed by the same container.
+****
 
-The domain of a
-query may be restricted by the _navigability_ of the relationships of
-the entity bean on which it is based. The cmr-fields of an entity bean’s
-abstract schema type determine navigability. Using the cmr-fields and
-their values, a query can select related entity beans and use their
-abstract schema types in the query.
+The domain of a query may be restricted by the _navigability_ of the relationships of the entity bean on which it is based.
+The cmr-fields of an entity bean’s abstract schema type determine navigability.
+Using the cmr-fields and their values, a query can select related entity beans and use their abstract schema types in the query.
 
 ==== Query Methods
 
-EJB QL is used for two types of query
-methods:
+Enterprise Beans QL is used for two types of query methods:
 
-Finder
-methods—Finder methods are defined in the home interface(s) of an entity
-bean and return entity objects or local entity objects. A finder method
-that is defined on the remote home interface must return either an
-EJBObject or a collection of EJBObjects; a finder method that is defined
-on the local home interface must return either an EJBLocalObject or a
-collection of EJBLocalObjects. The result type of a finder method
-defined on the remote home interface of an entity bean is the entity
-bean’s remote interface (or a collection of objects implementing the
-entity bean’s remote interface). The result type of a finder method
-defined on the local home interface of an entity bean is the entity
-bean’s local interface (or a collection of objects implementing the
-entity bean’s local interface).
+* Finder methods--Finder methods are defined in the home interface(s) of an entity bean and return entity objects or local entity objects.
+A finder method that is defined on the remote home interface must return either an EJBObject or a collection of EJBObjects; a finder method that is defined on the local home interface must return either an EJBLocalObject or a collection of EJBLocalObjects.
+The result type of a finder method defined on the remote home interface of an entity bean is the entity bean’s remote interface (or a collection of objects implementing the entity bean’s remote interface).
+The result type of a finder method defined on the local home interface of an entity bean is the entity bean’s local interface (or a collection of objects implementing the entity bean’s local interface).
 
-Select
-methods—Select methods are a special type of query method not directly
-exposed through the client view. The Bean Provider typically uses select
-methods to select the persistent state of an entity object or to select
-entities that are related to the entity bean for which the query is
-defined. The result type of a select method can be an EJBLocalObject (or
-a collection of EJBLocalObjects), an EJBObject (or a collection of
-EJBObjects), a cmp-field value (or a collection of such), or the result
-of an aggregate function.
+* Select methods--Select methods are a special type of query method not directly exposed through the client view.
+The Bean Provider typically uses select methods to select the persistent state of an entity object or to select entities that are related to the entity bean for which the query is defined.
+The result type of a select method can be an EJBLocalObject (or a collection of EJBLocalObjects), an EJBObject (or a collection of EJBObjects), a cmp-field value (or a collection of such), or the result of an aggregate function.
 
 ==== Naming
 
-Entity beans are
-designated in EJB QL query strings by their abstract schema names.
-The Bean Provider assigns unique abstract
-schema names to entity beans as part of the development process so that
-they can be used within queries. These unique names are scoped within
-the deployment descriptor file.
+Entity beans are designated in Enterprise Beans QL query strings by their abstract schema names.
+The Bean Provider assigns unique abstract schema names to entity beans as part of the development process so that they can be used within queries.
+These unique names are scoped within the deployment descriptor file.
 
 [[a1882]]
 ==== Examples
 
-The following convention refers to the names
-used for entity beans in subsequent examples: An entity bean as a whole
-is designated by _<name>EJB,_ and its entity bean class and abstract
-schema type are designated by _<name>_ , following the convention used
-to name the local interface of an entity bean.
+The following convention refers to the names used for entity beans in subsequent examples: An entity bean as a whole is designated by `<name>EJB`, and its entity bean class and abstract schema type are designated by `<name>`, following the convention used to name the local interface of an entity bean.
 
-The first example assumes that the Bean
-Provider provides several entity beans, _OrderEJB_ , _ProductEJB_ ,
-_LineItemEJB_ , _ShippingAddressEJB_ , and _BillingAddressEJB_ . The
-abstract schema types for these entity beans are _Order_ , _Product_ ,
-_LineItem_ , _ShippingAddress_ , and _BillingAddress_ respectively.
-These beans are logically in the same ejb-jar file, as shown in
-link:Ejb.html#a1886[See Several Entity Beans with Abstract
-Persistence Schemas Defined in the Same Ejb-jar File.]. Only two of the
-entity beans, OrderEJB and ProductEJB, have remote interfaces and remote
-home interfaces.
+The first example assumes that the Bean Provider provides several entity beans, `OrderEJB`, `ProductEJB`, `LineItemEJB`, `ShippingAddressEJB`, and `BillingAddressEJB`.
+The abstract schema types for these entity beans are `Order`, `Product`,
+`LineItem`, `ShippingAddress`, and `BillingAddress` respectively.
+These beans are logically in the same ejb-jar file, as shown in <<a1886>>.
+Only two of the entity beans, `OrderEJB` and `ProductEJB`, have remote interfaces and remote home interfaces.
 
-===
+[[a1886]]
+.Several Entity Beans with Abstract Persistence Schemas Defined in the Same Ejb-jar File.
+image::EBOpt-37.png[]
 
+The entity beans `ShippingAddress` and `BillingAddress` each have one-to-many relationships with `Order`.
+There is also a one-to-many relationship between `Order` and `Lineitem`.
+The entity bean `LineItem` is related to `Product` in a many-to-one relationship.
 
+Enterprise Beans QL allows the Bean Provider to specify finder queries for OrderEJB by navigating over the cmr-fields and cmp-fields defined by `Order` and `LineItem`.
+A finder method query to find all orders with pending line items might be written as follows:
+[source, sql]
+----
+    SELECT DISTINCT OBJECT(o)
+    FROM Order AS o, IN(o.lineItems) AS l
+    WHERE l.shipped = FALSE
+----
 
-[[a1886]]Several Entity Beans with Abstract Persistence
-Schemas Defined in the Same Ejb-jar File.
+This query navigates over the cmr-field `lineItems` of the abstract schema type `Order` to find line items, and uses the cmp-field `shipped` of `LineItem` to select those orders that have at least one line item that has not yet shipped.
+(Note that this query does not select orders that have no line items.)
 
-image:EBOpt-37.png[image]
+Although predefined reserved identifiers, such as DISTINCT, OBJECT, FROM, AS, IN, WHERE, and FALSE appear in upper case in this example, predefined reserved identifiers are case insensitive.
 
-The entity beans _ShippingAddress_ and
-_BillingAddress_ each have one-to-many relationships with _Order_ .
-There is also a one-to-many relationship between _Order_ and _Lineitem_
-. The entity bean _LineItem_ is related to _Product_ in a many-to-one
-relationship.
+The SELECT clause of this example designates the return type of this query to be of type `Order`.
+If this query is defined for a finder method on the entity bean’s remote home interface, the finder method will return objects of the entity bean’s remote interface type corresponding to the abstract schema type instances selected by the query.
+If this same query is defined for a finder method on the entity bean’s local home interface, the finder method will return objects of the entity bean’s local interface type corresponding to these same abstract schema type instances.
+Finder methods must always return EJBObjects or EJBLocalObjects of the bean type for which the query method is defined.
 
-EJB QL allows the Bean Provider to specify
-finder queries for OrderEJB by navigating over the cmr-fields and
-cmp-fields defined by _Order_ and _LineItem_ . A finder method query to
-find all orders with pending line items might be written as follows:
+Because the same deployment descriptor defines the abstract persistence schemas of the related entity beans, the Bean Provider can also specify a query for `OrderEJB` that utilizes the abstract schema type of `ProductEJB`, and hence the cmp-fields and cmr-fields of both the abstract schema types `Order` and `Product`.
+For example, if the abstract schema type `Product` has a cmp-field named
+`product_type`, a finder query for `OrderEJB` can be specified using this cmp-field.
+Such a finder query might be: "`Find all orders for products with product type office supplies`".
+An Enterprise Beans QL query string for this might be as follows.
+[source, sql]
+----
+    SELECT DISTINCT OBJECT(o)
+    FROM Order o, IN(o.lineItems) l
+    WHERE l.product.product_type = 'office_supplies'
+----
 
- SELECT DISTINCT OBJECT(o)
-
- _FROM Order AS o, IN(o.lineItems) AS l_
-
- _WHERE l.shipped = FALSE_
-
-This query navigates over the cmr-field
-_lineItems_ of the abstract schema type _Order_ to find line items, and
-uses the cmp-field _shipped_ of _LineItem_ to select those orders that
-have at least one line item that has not yet shipped. (Note that this
-query does not select orders that have no line items.)
-
-Although predefined reserved identifiers,
-such as DISTINCT, OBJECT, FROM, AS, IN, WHERE, and FALSE appear in upper
-case in this example, predefined reserved identifiers are case
-insensitive.
-
-The SELECT clause of this example designates
-the return type of this query to be of type Order. If this query is
-defined for a finder method on the entity bean’s remote home interface,
-the finder method will return objects of the entity bean’s remote
-interface type corresponding to the abstract schema type instances
-selected by the query. If this same query is defined for a finder method
-on the entity bean’s local home interface, the finder method will return
-objects of the entity bean’s local interface type corresponding to these
-same abstract schema type instances. Finder methods must always return
-EJBObjects or EJBLocalObjects of the bean type for which the query
-method is defined.
-
-Because the same deployment descriptor
-defines the abstract persistence schemas of the related entity beans,
-the Bean Provider can also specify a query for _OrderEJB_ that utilizes
-the abstract schema type of _ProductEJB_ , and hence the cmp-fields and
-cmr-fields of both the abstract schema types _Order_ and _Product_ . For
-example, if the abstract schema type _Product_ has a cmp-field named
-_product_type_ , a finder query for _OrderEJB_ can be specified using
-this cmp-field. Such a finder query might be: “Find all orders for
-products with product type office supplies”. An EJB QL query string for
-this might be as follows.
-
- SELECT DISTINCT OBJECT(o)
-
- FROM Order o, IN(o.lineItems) l
-
- WHERE l.product.product_type = _‘_
-office_supplies’
-
-Because _Order_ is related to _Product_ by
-means of the relationships between _Order_ and _LineItem_ and between
-_LineItem_ and _Product_ , navigation using the cmr-fields _lineItems_
-and _product_ is needed to express the query. This query is specified by
-using the _abstract-schema-name_ for _OrderEJB_ , namely _Order_ , which
-designates the abstract schema type over which the query ranges. The
-basis for the navigation is provided by the cmr-fields _lineItems_ and
-_product_ of the abstract schema types Order and LineItem respectively.
+Because `Order` is related to `Product` by means of the relationships between `Order` and `LineItem` and between `LineItem` and `Product`, navigation using the cmr-fields `lineItems` and `product` is needed to express the query.
+This query is specified by using the `abstract-schema-name` for `OrderEJB`, namely `Order`, which designates the abstract schema type over which the query ranges.
+The basis for the navigation is provided by the cmr-fields `lineItems` and `product` of the abstract schema types `Order` and `LineItem` respectively.
 
 ==== The FROM Clause and Navigational Declarations
 
-The FROM clause
-of an EJB QL query defines the domain of the query by declaring
-identification variables. The
-domain of the query may be constrained by
-path expressions.
+The FROM clause of an Enterprise Beans QL query defines the domain of the query by declaring identification variables.
+The domain of the query may be constrained by path expressions.
 
-Identification variables designate instances
-of a particular entity bean abstract schema type. The FROM clause can
-contain multiple identification variable declarations separated by a
-comma ( _,_ ).
+Identification variables designate instances of a particular entity bean abstract schema type.
+The FROM clause can contain multiple identification variable declarations separated by a comma (,).
 
-from_clause ::= _FROM_
-identification_variable_declaration +
-[, identification_variable_declaration]* +
-identification_variable_declaration ::= collection_member_declaration
-| +
-range_variable_declaration +
-collection_member_declaration ::= _IN_
-(collection_valued_path_expression) [ _AS_ ] identifier
+[bnf, subs="+quotes"]
+----
+from_clause ::= *FROM* identification_variable_declaration
+                        [, identification_variable_declaration]*
+identification_variable_declaration ::= collection_member_declaration |
+                                    range_variable_declaration
+collection_member_declaration ::= *IN* (collection_valued_path_expression) [*AS*] identifier
+range_variable_declaration :: abstract_schema_name [*AS*] identifier
+----
 
-range_variable_declaration ::
-abstract_schema_name [ _AS_ ] identifier
-
-The following subsections discuss the
-constructs used in the FROM clause.
+The following subsections discuss the constructs used in the FROM clause.
 
 ===== Identifiers
 
-An
-identifier is a character sequence of unlimited length. The character
-sequence must begin with a Java identifier start character, and all
-other characters must be Java identifier part characters. An identifier
-start character is any character for which the method
-_Character.isJavaIdentifierStart_ returns true. This includes the
-underscore ( ___ ) character and the dollar sign ( _$_ ) character. An
-identifier part character is any character for which the method
-_Character.isJavaIdentifierPart_ returns true. The
-question mark ( _?_ ) character is reserved
-for use by EJB QL.
+An identifier is a character sequence of unlimited length.
+The character sequence must begin with a Java identifier start character, and all other characters must be Java identifier part characters.
+An identifier start character is any character for which the method `Character.isJavaIdentifierStart` returns true.
+This includes the underscore (_) character and the dollar sign ($) character.
+An identifier part character is any character for which the method `Character.isJavaIdentifierPart` returns true.
+The question mark (?) character is reserved for use by Enterprise Beans QL.
 
-The following are the reserved identifiers in
-EJB QL: SELECT, FROM, WHERE, _DISTINCT_ , _OBJECT, NULL_ , _TRUE_ ,
-_FALSE_ , _NOT_ , _AND_ , _OR_ , _BETWEEN_ , _LIKE_ , _IN_ , _AS_ ,
-UNKNOWNlink:#a3378[14], EMPTY, MEMBER, OF, _IS, AVG, MAX, MIN,
-SUM, COUNT, ORDER, BY, ASC, DESC, MOD_ .
+The following are the reserved identifiers in Enterprise Beans QL: _SELECT, FROM, WHERE, DISTINCT, OBJECT, NULL, TRUE, FALSE, NOT, AND, OR, BETWEEN, LIKE, IN, AS, UNKNOWN_
+footnote:a3378[Not currently used in Enterprise Beans QL; reserved for future use.], 
+_EMPTY, MEMBER, OF, IS, AVG, MAX, MIN, SUM, COUNT, ORDER, BY, ASC, DESC, MOD_.
 
 Reserved identifiers are case insensitive.
 Reserved identifiers must not be used as identification variables.
 
-It is recommended that the Bean Provider not
-use other SQL reserved words as identification variables in EJB QL
-queries because they may be used as EJB QL reserved identifiers in
-future versions of the EJB specification.
+****
+_It is recommended that the Bean Provider not use other SQL reserved words as identification variables in Enterprise Beans QL queries because they may be used as Enterprise Beans QL reserved identifiers in future versions of the Enterprise Beans specification._
+****
 
 [[a1914]]
 ===== Identification Variables
 
-An identification
-variable is a valid identifier declared in the
-FROM clause of an EJB QL query. An
-identification variable may be declared using the special operators IN
-and, optionally, AS.
+An identification variable is a valid identifier declared in the FROM clause of an Enterprise Beans QL query.
+An identification variable may be declared using the special operators IN and, optionally, AS.
 
-All identification variables must be declared
-in the FROM clause. Identification variables cannot be declared in other
-clauses.
+All identification variables must be declared in the FROM clause.
+Identification variables cannot be declared in other clauses.
 
-An identification variable must not be a
-reserved identifier or have the same name as any of the following:
+An identification variable must not be a reserved identifier or have the same name as any of the following:
 
-abstract-schema-name
+* abstract-schema-name
 
-{empty}ejb-namelink:#a3379[15]
+* ejb-name
+footnote:a3379[Use of ejb-names in EJB QL is reserved for future use.]
 
-Identification variables are case
-insensitive.
+Identification variables are case insensitive.
 
-An identification variable evaluates to a
-value of the type of the expression used in declaring the variable. For
-example, consider the previous finder query for OrderEJB:
-
+An identification variable evaluates to a value of the type of the expression used in declaring the variable.
+For example, consider the previous finder query for `OrderEJB`:
+[source, sql]
+----
 SELECT DISTINCT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
+WHERE l.product.product_type = 'office_supplies'
+----
 
-WHERE l.product.product_type =
-‘office_supplies’
+In the FROM clause declaration `IN(o.lineItems) l`, the identification variable `l` evaluates to any LineItem value directly reachable from Order.
+The cmr-field `lineItems` is a collection of instances of the abstract schema type `LineItem` and the identification variable `l` refers to an element of this collection.
+The type of `l` is the abstract schema type of `LineItem`.
 
-In the FROM clause declaration
-_IN(o.lineItems) l_ , __ the identification variable _l_ evaluates to
-any LineItem value directly reachable from Order. The cmr-field
-_lineItems_ is a collection of instances of the abstract schema type
-LineItem and the identification variable _l_ refers to an element of
-this collection. The type of _l_ is the abstract schema type of
-_LineItem_ .
+An identification variable ranges over the abstract schema type of an entity bean.
+An identification variable designates an instance of an entity bean abstract schema type or an element of a collection of entity bean abstract schema types instances.
+Identification variables are existentially quantified in an Enterprise Beans QL query.
 
-An identification variable ranges over the
-abstract schema type of an entity bean. An identification variable
-designates an instance of an entity bean abstract schema type or an
-element of a collection of entity bean abstract schema types instances.
-Identification variables are existentially quantified in an EJB QL
-query.
+An identification variable always designates a reference to a single value.It is declared in one of two ways; as a range variable or as a collection member identification variable:
 
-An identification
-variable always designates a reference to a single value. It is declared
-in one of two ways; as a range variable or as a collection member
-identification variable:
+* A range variable is declared using the abstract schema name of an entity bean.
 
-A range variable is declared using the
-abstract schema name of an entity bean.
+* A collection member identification variable is declared using a collection-valued path expression.
 
-A collection member identification variable
-is declared using a collection-valued path expression.
-
-The identification variable declarations are
-evaluated from left to right in the FROM clause. A collection member
-identification variable declaration can use the result of a preceding
-identification variable declaration of the query string.
+The identification variable declarations are evaluated from left to right in the FROM clause.
+A collection member identification variable declaration can use the result of a preceding identification variable declaration of the query string.
 
 ===== Range Variable Declarations
 
-The EJB QL syntax
-for declaring an identification variable as a range variable is similar
-to that of SQL; optionally, it uses the AS keyword.
+The Enterprise Beans QL syntax for declaring an identification variable as a range variable is similar to that of SQL; optionally, it uses the AS keyword.
 
-range_variable_declaration ::=
-abstract_schema_name [ _AS_ ] identifier
+[bnf, subs="+quotes"]
+----
+range_variable_declaration ::= abstract_schema_name [*AS*] identifier
+----
 
-Objects or values that are related to an
-entity bean are typically obtained by navigation using path expressions.
-However, navigation does not reach all objects. Range variable
-declarations allow the Bean Provider to designate a “root” for objects
-which may not be reachable by navigation.
+Objects or values that are related to an entity bean are typically obtained by navigation using path expressions.
+However, navigation does not reach all objects.
+Range variable declarations allow the Bean Provider to designate a "`root`" for objects which may not be reachable by navigation.
 
-If the Bean Provider wants to select values
-by comparing more than one instance of an entity bean abstract schema
-type, more than one identification variable ranging over the abstract
-schema type is needed in the FROM clause.
+If the Bean Provider wants to select values by comparing more than one instance of an entity bean abstract schema type, more than one identification variable ranging over the abstract schema type is needed in the FROM clause.
 
-The following finder method query returns
-orders whose quantity is greater than the order quantity for John Smith.
-This example illustrates the use of two different identification
-variables in the FROM clause, both of the abstract schema type Order.
-The SELECT clause of this query determines that it is the orders with
-quantities larger than John Smith’s that are returned.
+The following finder method query returns orders whose quantity is greater than the order quantity for John Smith.
+This example illustrates the use of two different identification variables in the FROM clause, both of the abstract schema type Order.
+The SELECT clause of this query determines that it is the orders with quantities larger than John Smith’s that are returned.
 
+[source, sql]
+----
 SELECT DISTINCT OBJECT(o1)
-
 FROM Order o1, Order o2
-
-WHERE o1.quantity > o2.quantity AND
-
- o2.customer.lastname = ‘Smith’ AND
-
- o2.customer.firstname= ‘John’
-
-
+WHERE o1.quantity > o2.quantity AND 
+        o2.customer.lastname = 'Smith' AND 
+        o2.customer.firstname = 'John'
+----
 
 ===== Collection Member Declarations
 
-An identification
-variable declared by a collection_member_declaration ranges over values
-of a collection obtained by navigation using a path expression. Such a
-path expression represents a navigation involving the cmr-fields of an
-entity bean abstract schema type. Because a path expression can be based
-on another path expression, the navigation can use the cmr-fields of
-related entity beans. Path expressions are discussed in
-link:Ejb.html#a1956[See Path Expressions].
+An identification variable declared by a `collection_member_declaration` ranges over values of a collection obtained by navigation using a path expression.
+Such a path expression represents a navigation involving the cmr-fields of an entity bean abstract schema type.
+Because a path expression can be based on another path expression, the navigation can use the cmr-fields of related entity beans.
+Path expressions are discussed in <<a1956>>.
 
-An identification variable of a collection
-member declaration is declared using a special operator, the reserved
-identifier IN. The argument to the IN
-operator is a collection-valued path expression. The path expression
-evaluates to a collection type specified as a result of navigation to a
-collection-valued cmr-field of an entity bean abstract schema type.
+An identification variable of a collection member declaration is declared using a special operator, the reserved identifier IN.
+The argument to the IN operator is a collection-valued path expression. 
+The path expression evaluates to a collection type specified as a result of navigation to a collection-valued cmr-field of an entity bean abstract schema type.
 
-The syntax for declaring a collection member
-identification variable is as follows:
+The syntax for declaring a collection member identification variable is as follows:
+[bnf, subs="+quotes"]
+----
+collection_member_declaration ::= *IN* (collection_valued_path_expression) [*AS*] identifier
+----
 
-collection_member_declaration ::= _IN (_
-collection_valued_path_expression _)_ [AS] identifier
+For example, the FROM clause for a query defined for `OrderEJB` might contain the following collection member declaration:
 
-For example, the FROM clause for a query
-defined for _OrderEJB_ might contain the following collection member
-declaration:
-
+```
 IN(o.lineItems) l
-
-In this example, lineItems is the name of a
-cmr-field whose value is a collection of instances of the abstract
-schema type LineItem of the LineItemEJB entity bean. The identification
-variable _l_ designates a member of this collection, a single LineItem
-abstract schema type instance. In this example, _o_ is an identification
-variable of the abstract schema type Order.
+```
+In this example, `lineItems` is the name of a cmr-field whose value is a collection of instances of the abstract schema type `LineItem` of the `LineItemEJB` entity bean.
+The identification variable `l` designates a member of this collection, a _single_ `LineItem` abstract schema type instance.
+In this example, `o` is an identification variable of the abstract schema type `Order`.
 
 ===== Example
 
-The following FROM clause contains two
-identification variable declaration clauses. The identification variable
-declared in the first clause is used in the second clause. The clauses
-declare the variables _o_ and _l_ respectively. The range variable
-declaration _Order_ AS o designates the identification variable _o_ as a
-range variable whose type is the abstract schema type, Order. The
-identification variable _l_ has the abstract schema type _LineItem_ .
-Because the clauses are evaluated from left to right, the identification
-variable _l_ can utilize the results of the navigation on _o_ .
-
- FROM Order AS o, IN(o.lineItems) l
+The following FROM clause contains two identification variable declaration clauses.
+The identification variable declared in the first clause is used in the second clause.
+The clauses declare the variables `o` and `l` respectively.
+The range variable declaration `Order` AS o designates the identification variable `o` as a range variable whose type is the abstract schema type, `Order`.
+The identification variable `l` has the abstract schema type `LineItem`.
+Because the clauses are evaluated from left to right, the identification variable `l` can utilize the results of the navigation on `o`.
+```
+    FROM Order AS o, IN(o.lineItems) l
+```
 
 [[a1956]]
 ===== Path Expressions
 
-An identification
-variable followed by the navigation operator ( _._ ) and a cmp-field or
-cmr-field is a path expression. The type of the path expression is the
-type computed as the result of navigation; that is, the type of the
-cmp-field or cmr-field to which the expression navigates.
+An identification variable followed by the navigation operator (.) and a cmp-field or cmr-field is a path expression.
+The type of the path expression is the type computed as the result of navigation; that is, the type of the cmp-field or cmr-field to which the expression navigates.
 
-Depending on navigability, a path expression
-that leads to a cmr-field may be further composed. Path expressions can
-be composed from other path expressions if the original path expression
-evaluates to a single-valued type (not a collection) corresponding to a
-cmr-field. A path expression that ends in a cmp-field is terminal and
-cannot be further composed.
+Depending on navigability, a path expression that leads to a cmr-field may be further composed.
+Path expressions can be composed from other path expressions if the original path expression evaluates to a single-valued type (not a collection) corresponding to a cmr-field.
+A path expression that ends in a cmp-field is terminal and cannot be further composed.
 
-Path expression navigability is composed
-using “inner join” semantics. That is, if the value of a non-terminal
-cmr-field in the path expression is null, the path is considered to have
-no value, and does not participate in the determination of the result.
+Path expression navigability is composed using "`inner join`" semantics.
+That is, if the value of a non-terminal cmr-field in the path expression is null, the path is considered to have no value, and does not participate in the determination of the result.
 
-The syntax for single-valued path expressions
-and collection valued path expressions is as follows:
-
-cmp_path_expression ::=
-
- \{identification_variable |
-single_valued_cmr_path_expression}.cmp_field
-
+The syntax for single-valued path expressions and collection valued path expressions is as follows:
+[bnf]
+----
+cmp_path_expression ::= 
+        {identification_variable | single_valued_cmr_path_expression}.cmp_field
 single_valued_cmr_path_expression ::=
-
-
-identification_variable.[single_valued_cmr_field
-.]*single_valued_cmr_field
-
+        identification_variable.[single_valued_cmr_field.]*single_valued_cmr_field
 single_valued_path_expression ::=
-
- cmp_path_expression |
-single_valued_cmr_path_expression
-
+        cmp_path_expression | single_valued_cmr_path_expression
 collection_valued_path_expression ::=
+        identification_variable.[single_valued_cmr_field.]*collection_valued_cmr_field
+----
 
+A `single_valued_cmr_field` is designated by the name of a cmr-field in a one-to-one or many-to-one relationship.
+The type of a `single_valued_cmr_path_expression` is the abstract schema type of the related entity bean.
 
-identification_variable.[single_valued_cmr_field.]*collection_valued_cmr_field
+A `collection_valued_cmr_field` is designated by the name of a cmr-field in
+a one-to-many or a many-to-many relationship.
+The type of a `collection_valued_cmr_field` is a collection of values of the abstract schema type of the related entity bean.
 
-A _single_valued_cmr_field_
- is designated by the name of a cmr-field in
-a one-to-one or many-to-one relationship. The type of a
-_single_valued_cmr_path_expression_ is the abstract schema type of the
-related entity bean.
+Navigation to a related entity bean results in a value of the related entity bean’s abstract schema type.
 
-A _collection_valued_cmr_field_
- is designated by the name of a cmr-field in
-a one-to-many or a many-to-many relationship. The type of a
-_collection_valued_cmr_field_ is a collection of values of the abstract
-schema type of the related entity bean.
+The evaluation of a path expression terminating in a cmp-field results in the abstract schema type corresponding to the Java type designated by the cmp-field.
 
-Navigation to a related entity bean results
-in a value of the related entity bean’s abstract schema type.
-
-The evaluation of a path expression
-terminating in a cmp-field results in the abstract schema type
-corresponding to the Java type designated by the cmp-field.
-
-It is syntactically illegal to compose a path
-expression from a path expression that evaluates to a collection. For
-example, if o designates Order, the path expression o.lineItems.product
-is illegal since navigation to _lineItems_ results in a collection. This
-case should produce an error when the EJB QL query string is verified.
-To handle such a navigation, an identification variable must be declared
-in the FROM clause to range over the elements of the _lineItems_
-collection. Another path expression must be used to navigate over each
-such element in the WHERE clause of the query, as in the following:
-
+It is syntactically illegal to compose a path expression from a path expression that evaluates to a collection.
+For example, if `o` designates `Order`, the path expression `o.lineItems.product` is illegal since navigation to `lineItems` results in a collection.
+This case should produce an error when the Enterprise Beans QL query string is verified.
+To handle such a navigation, an identification variable must be declared in the FROM clause to range over the elements of the `lineItems` collection.
+Another path expression must be used to navigate over each such element in the WHERE clause of the query, as in the following:
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order AS o, IN(o.lineItems) l
-
-WHERE l.product.name = ‘widget’
-
-
+WHERE l.product.name = 'widget'
+----
 
 ==== WHERE Clause and Conditional Expressions
 
-The WHERE clause
-of a query consists of a conditional expression used to select objects
-or values that satisfy the expression. The WHERE clause thus restricts
-the result of a query.
+The WHERE clause of a query consists of a conditional expression used to select objects or values that satisfy the expression.
+The WHERE clause thus restricts the result of a query.
 
 A WHERE clause is defined as follows:
+[bnf, subs="+quotes"]
+----
+where_clause ::= *WHERE* conditional_expression
+----
 
-where_clause ::= _WHERE_
-conditional_expression
-
-The following sections describe the language
-constructs that can be used in a conditional expression of the WHERE
-clause.
+The following sections describe the languageconstructs that can be used in a conditional expression of the WHERE clause.
 
 ===== Literals
 
-A string literal
-is enclosed in single quotes—for example: ‘literal’. A string literal
-that includes a single quote is represented by two single quotes—for
-example: ‘literal’’s’. EJB QL string literals, like Java _String_
-literals, use unicode character encoding.
+A string literal is enclosed in single quotes—for example: 'literal'.
+A string literal that includes a single quote is represented by two single quotes—for example: 'literal''s'.
+Enterprise Beans QL string literals, like Java `String` literals, use unicode character encoding.
 
-An exact numeric
-literal is a numeric value without a decimal point, such as 57, -957,
-+62. Exact numeric literals support numbers in the range of Java _long_
-. Exact numeric literals use the Java integer literal syntax.
+An exact numeric literal is a numeric value without a decimal point, such as 57, -957, +62.
+Exact numeric literals support numbers in the range of Java `long`.
+Exact numeric literals use the Java integer literal syntax.
 
-An approximate
-numeric literal is a numeric value in
-scientific notation, such as 7E3, -57.9E2, or a numeric value with a
-decimal, such as 7., -95.7, +6.2. Approximate numeric literals support
-numbers in the range of Java _double_ . Approximate literals use the
-Java floating point literal syntax.
+An approximate numeric literal is a numeric value in scientific notation, such as 7E3, -57.9E2, or a numeric value with a decimal, such as 7., -95.7, +6.2.
+Approximate numeric literals support numbers in the range of Java `double`. 
+Approximate literals use the Java floating point literal syntax.
 
-The Bean Provider may utilize appropriate
-suffixes to indicate the specific type of the literal in accordance with
-the Java Language Specification.
+The Bean Provider may utilize appropriate suffixes to indicate the specific type of the literal in accordance with the Java Language Specification.
 
-The boolean
-literals are _TRUE_ and _FALSE_ .
+The boolean literals are `TRUE` and `FALSE`.
 
-Although predefined reserved literals appear
-in upper case, they are case insensitive.
+Although predefined reserved literals appear in upper case, they are case insensitive.
 
 ===== Identification Variables
 
-All
-identification variables used in the WHERE clause of an EJB QL query
-must be declared in the FROM clause, as described in
-link:Ejb.html#a1914[See Identification Variables].
+All identification variables used in the WHERE clause of an Enterprise Beans QL query must be declared in the FROM clause, as described in <<a1914>>.
 
-Identification variables are existentially
-quantified in the WHERE clause. This means
-that an identification variable represents a member of a collection or
-an instance of an entity bean’s abstract schema type. An identification
-variable never designates a collection in its entirety.
+Identification variables are existentially quantified in the WHERE clause.
+This means that an identification variable represents a member of a collection or
+an instance of an entity bean’s abstract schema type.
+An identification variable never designates a collection in its entirety.
 
 ===== Path Expressions
 
-It is illegal to
-use a _collection_valued_path_expression_ within a WHERE clause as part
-of a conditional expression except in an
-_empty_collection_comparison_expression or collection_member_expression_
-.
+It is illegal to use a `collection_valued_path_expression` within a WHERE clause as part of a conditional expression except in an `empty_collection_comparison_expression` or `collection_member_expression`.
 
 ===== Input Parameters
 
-The following
-rules apply to input parameters. Input parameters can only be used in
-the WHERE clause of a query.
+The following rules apply to input parameters. Input parameters can only be used in the WHERE clause of a query.
 
-Input parameters are designated by the
-question mark ( _?_ ) prefix followed by an integer. For example: _?1_ .
+* Input parameters are designated by the question mark (?) prefix followed by an integer.
+For example: `?1`.
 
-Input parameters are numbered starting from
-1.
+* Input parameters are numbered starting from 1.
 
-The number of distinct input parameters in an
-EJB QL query must not exceed the number of input parameters for the
-finder or select method. It is not required that the EJB QL query use
-all of the input parameters for the finder or select method.
+* The number of distinct input parameters in an Enterprise Beans QL query must not exceed the number of input parameters for the finder or select method.
+It is not required that the Enterprise Beans QL query use all of the input parameters for the finder or select method.
 
-An input parameter evaluates to the abstract
-schema type of the corresponding parameter defined in the signature of
-the finder or select method with which the query is associated. It is
-the responsibility of the container to map the input parameter to the
-appropriate abstract schema type value.
+* An input parameter evaluates to the abstract schema type of the corresponding parameter defined in the signature of the finder or select method with which the query is associated.
+It is the responsibility of the container to map the input parameter to the appropriate abstract schema type value.
 
-Note that if an input parameter value is
-null, comparison operations or arithmetic operations involving the input
-parameter will return an unknown value. See
-link:Ejb.html#a2207[See Null Values].
+****
+_Note that if an input parameter value is null, comparison operations or arithmetic operations involving the input parameter will return an unknown value. See <<a2207>>._
+****
 
 ===== Conditional Expression Composition
 
-Conditional
-expressions are composed of other conditional expressions, comparison
-operations, logical operations, path expressions that evaluate to
-boolean values, and boolean literals.
+Conditional expressions are composed of other conditional expressions, comparison operations, logical operations, path expressions that evaluate to boolean values, and boolean literals.
 
-Arithmetic
-expressions can be used in comparison expressions. Arithmetic
-expressions are composed of other arithmetic expressions, arithmetic
-operations, path expressions that evaluate to numeric values, and
-numeric literals.
+Arithmetic expressions can be used in comparison expressions.
+Arithmetic expressions are composed of other arithmetic expressions, arithmetic operations, path expressions that evaluate to numeric values, and numeric literals.
 
 Arithmetic operations use numeric promotion.
 
-Standard bracketing _()_ for ordering
-expression evaluation is supported.
+Standard bracketing `()` for ordering expression evaluation is supported.
 
-Conditional expressions are defined as
-follows:
-
-conditional_expression ::= conditional_term |
-conditional_expression _OR_ conditional_term +
-conditional_term ::= conditional_factor | conditional_term _AND_
-conditional_factor +
-conditional_factor ::= [ _NOT_ ] conditional_primary +
-conditional_primary ::= simple_cond_expression |
-(conditional_expression) +
-simple_cond_expression ::= comparison_expression | between_expression |
-like_expression | +
-in_expression | null_comparison_expression | +
-empty_collection_comparison_expression |
-
- collection_member_expression
+Conditional expressions are defined as follows:
+[bnf, subs="+quotes"]
+----
+conditional_expression ::= conditional_term | conditional_expression *OR* conditional_term
+conditional_term ::= conditional_factor | conditional_term *AND* conditional_factor
+conditional_factor ::= [*NOT*] conditional_primary 
+conditional_primary ::= simple_cond_expression | (conditional_expression)
+simple_cond_expression ::= comparison_expression | between_expression | like_expression | 
+                    in_expression | null_comparison_expression | 
+                    empty_collection_comparison_expression | 
+                    collection_member_expression
+----
 
 ===== Operators and Operator Precedence
 
-The operators are
-listed below in order of decreasing precedence.
+The operators are listed below in order of decreasing precedence.
 
-Navigation operator ( _._ )
+* Navigation operator (.)
 
-Arithmetic operators:
-
-+, - unary
-
-*, / multiplication and division
-
+* Arithmetic operators: +
++, - unary +
+*, / multiplication and division + 
 +, - addition and subtraction
 
-Comparison operators : _=_ , _>_ , _>=_ , _<_
-, _<=_ , _<>_ (not equal)
+* Comparison operators: `=`, `>`, `>=`, `<`, `<=`, `<>` (not equal)
 
-Logical operators: _NOT_ , _AND_ , _OR_
+* Logical operators: `NOT`, `AND`, `OR`
 
-The following sections describe other
-operators used in specific expressions.
+The following sections describe other operators used in specific expressions.
 
-===== Between _Expressions_
+===== Between Expressions
 
- _The syntax for the use of the comparison
-operator [NOT] BETWEEN in an conditional expression is as follows:_
-
-
- _arithmetic_expression_ [ _NOT_ ] _BETWEEN_
-_arithmetic-expression_ _AND_ _arithmetic-expression_
+The syntax for the use of the comparison operator [NOT] BETWEEN in an conditional expression is as follows:
+[bnf, subs="+quotes"]
+----
+arithmetic_expression [*NOT*] *BETWEEN* arithmetic-expression *AND* arithmetic-expression
+----
 
 The BETWEEN expression
-
+```
 x BETWEEN y AND z
-
+```
 is semantically equivalent to:
-
+```
 y <= x AND x <= z
-
-The rules for unknown and NULL values in
-comparison operations apply. See link:Ejb.html#a2207[See Null
-Values].
+```
+The rules for unknown and NULL values in comparison operations apply. 
+See <<a2207>>.
 
 Examples are:
 
- _p.age BETWEEN 15 and 19_ is equivalent to
-_p.age >= 15 AND p.age <= 19_
+`p.age BETWEEN 15 and 19` is equivalent to `p.age >= 15 AND p.age <= 19`
 
- _p.age NOT BETWEEN 15 and 19_ is equivalent
-to _p.age < 15 OR p.age > 19_
+`p.age NOT BETWEEN 15 and 19` is equivalent to `p.age < 15 OR p.age > 19`
 
 ===== In Expressions
 
-The syntax for
-the use of the comparison operator [NOT] IN in a conditional expression
-is as follows:
+The syntax for the use of the comparison operator [NOT] IN in a conditional expression is as follows:
+[bnf, subs="+quotes"]
+----
+cmp_path_expression [*NOT*] *IN* ( {literal | input_parameter} [, {literal | input_parameter}]* )
+----
 
- _cmp_path_expression_ [ _NOT_ ] _IN_ (
-\{literal | input_parameter} _[_ , \{ _literal | input_parameter}]*_ )
-
-The _cmp_path_expression_ __ must have a
-string or numeric value. The literal and/or input_parameter values must
-be _like_ the same abstract schema type of the cmp_path_expression in
-type. (See link:Ejb.html#a2265[See Equality and Comparison
-Semantics]).
+The `cmp_path_expression` must have a string or numeric value.
+The literal and/or input_parameter values must be _like_ the same abstract schema type of the cmp_path_expression in type.
+(See <<a2265>>).
 
 Examples are:
 
- _o.country IN (’UK’, ’US’, ’France’)_ is
-true for _UK_ and false for _Peru_ , and is equivalent to the expression
-_(o.country = ’UK’) OR (o.country = ’US’) OR (o.country = ’ France’)_ .
+`o.country IN ('UK', 'US', 'France')` is true for `UK` and false for `Peru`, and is equivalent to the expression `(o.country = 'UK') OR (o.country = 'US') OR (o.country = 'France')`.
 
- _o.country NOT IN (’UK’, ’US’, ’France’)_ is
-false for _UK_ and true for _Peru_ , and is equivalent to the expression
-_NOT ((o.country = ’UK’) OR (o.country = ’US’) OR (o.country =
-’France’))_ .
+`o.country NOT IN ('UK', 'US', 'France')` is false for `UK` and true for `Peru`, and is equivalent to the expression `NOT ((o.country = 'UK') OR (o.country = 'US') OR (o.country = 'France'))`.
 
-There must be at least one element in the
-comma separated list that defines the set of values for the _IN_
-expression.
+There must be at least one element in the comma separated list that defines the set of values for the `IN` expression.
 
-If the value of a _cmp_path_expression_ in an
-IN or NOT IN expression is _NULL_ or unknown, the value of the
-expression is unknown.
+If the value of a `cmp_path_expression` in an IN or NOT IN expression is `NULL` or unknown, the value of the expression is unknown.
 
-===== Like _Expressions_
+===== Like Expressions
 
- _The syntax for the use of the comparison
-operator [NOT] LIKE in a conditional expression is as follows:_
+The syntax for the use of the comparison operator [NOT] LIKE in a conditional expression is as follows:
+[bnf, subs="+quotes"]
+----
+cmp_path_expression [*NOT*] *LIKE* pattern_value [*ESCAPE* escape_character]
+----
 
-
-{empty} _cmp_path_expression_ [ _NOT_ ]
-_LIKE_ _pattern_value_ [ _ESCAPE_ _escape_character_ ]
-
-The _cmp_path_expression_ must have a string
-value. The _pattern_value_ is a string literal or a string-valued input
-parameter in which an underscore ( ___ ) stands for any single
-character, a percent ( _%_ ) character stands for any sequence of
-characters (including the empty sequence), and all other characters
-stand for themselves. The optional _escape_character_ __ is a
-single-character string literal or a character-valued input parameter
-(i.e., _char_ or _Character_ ) and is used to escape the special meaning
-of the underscore and percent characters in _pattern_value_
-_.link:#a3380[16]_
+The `cmp_path_expression` must have a string value.
+The `pattern_value` is a string literal or a string-valued input parameter in which an underscore (_) stands for any single character, a percent (%) character stands for any sequence of characters (including the empty sequence), and all other characters stand for themselves.
+The optional `escape_character` is a single-character string literal or a character-valued input parameter (i.e., `char` or `Character`) and is used to escape the special meaning of the underscore and percent characters in `pattern_value`.
+footnote:a3380[Refer to <<a3331>> for a more precise characterization of these rules.]
 
 Examples are:
 
- _address.phone LIKE ‘12%3’_ is true for
-‘123’ ‘12993’ and false for ‘1234’
+* `address.phone LIKE '12%3'` is true for '123' '12993' and false for '1234'
 
- _asentence.word LIKE ‘l_se’_ is true for
-‘lose’ and false for ‘loose’
+* `asentence.word LIKE 'l_se'` is true for 'lose' and false for 'loose'
 
- _aword.underscored LIKE ‘\_%’ ESCAPE ‘\’_ is
-true for ‘_foo’ and false for ‘bar’
+* `aword.underscored LIKE '\_%' ESCAPE '\'` is true for '_foo' and false for 'bar'
 
- _address.phone NOT LIKE ‘12%3’_ is false for
-‘123’ and ‘12993’ and true for ‘1234’
+* `address.phone NOT LIKE '12%3'` is false for '123' and '12993' and true for '1234'
 
-If _the value of the_ _cmp_path_expression_
-or _pattern_value_ is _NULL_ or unknown, the value of the LIKE
-expression is unknown. If the _escape_character_ is specified and is
-_NULL_ , the value of the LIKE expression is unknown.
+If the value of the `cmp_path_expression` or `pattern_value` is `NULL` or unknown, the value of the LIKE expression is unknown.
+If the `escape_character` is specified and is `NULL`, the value of the LIKE expression is unknown.
 
 ===== Null Comparison Expressions
 
-The syntax for
-the use of the comparison operator IS NULL in a conditional expression
-is as follows:
+The syntax for the use of the comparison operator IS NULL in a conditional expression is as follows:
+[bnf, subs="+quotes"]
+----
+{single_valued_path_expression | input_parameter} *IS* [*NOT*] *NULL*
+----
 
-\{single_valued_path_expression |
-input_parameter } _IS_ [ _NOT_ ] _NULL_ __
-
-A null comparison expression tests whether or
-not the single-valued path expression or input parameter is a _NULL_
-value.
+A null comparison expression tests whether or not the single-valued path expression or input parameter is a `NULL` value.
 
 ===== Empty Collection Comparison Expressions
 
-The syntax for
-the use of the comparison operator IS EMPTY in an
-_empty_collection_comparison_expression_ is as follows:
+The syntax for the use of the comparison operator IS EMPTY in an `empty_collection_comparison_expression` is as follows:
+[bnf, subs="+quotes"]
+----
+collection_valued_path_expression *IS* [*NOT*] *EMPTY*
+----
 
-collection_valued_path_expression _IS_ [
-_NOT_ ] _EMPTY_
+This expression tests whether or not the collection designated by the collection-valued path expression is empty (i.e, has no elements).
 
-This expression tests whether or not the
-collection designated by the collection-valued path expression is empty
-(i.e, has no elements).
+****
+Note that a collection-valued path expression can only be used in the WHERE clause in an empty collection comparison expression or in a collection member expression.
+****
 
-Note that a collection-valued path expression
-can only be used in the WHERE clause in an empty collection comparison
-expression or in a collection member expression.
-
-The collection designated by the
-collection-valued path expression used in an
-empty collection comparison expression must not be used in the FROM
-clause for the declaration of an identification variable. An
-identification variable declared as a member of a collection implicitly
-designates the existence of a non-empty relationship; testing whether
-the same collection is empty is contradictory. Therefore, the following
-query is invalid.
-
+The collection designated by the collection-valued path expression used in an empty collection comparison expression must not be used in the FROM clause for the declaration of an identification variable.
+An identification variable declared as a member of a collection implicitly designates the existence of a non-empty relationship; testing whether the same collection is empty is contradictory.
+Therefore, the following query is invalid.
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
-
 WHERE o.lineItems IS EMPTY
+----
 
-If the value of the collection-valued path
-expression in an empty collection comparison expression is unknown, the
-value of the empty comparison expression is unknown.
+If the value of the collection-valued path expression in an empty collection comparison expression is unknown, the value of the empty comparison expression is unknown.
 
 ===== Collection Member Expressions
 
-The syntax for
-the use of the comparison operator MEMBER OFlink:#a3381[17] in
-an _collection_member_expression_ is as follows:
+The syntax for the use of the comparison operator MEMBER OF
+footnote:a3381[The use of the reserved word OF is optional in this expression.]
+in an `collection_member_expression` is as follows:
+[bnf, subs="+quotes"]
+----
+{single_valued_cmr_path_expression | identification_variable | input_parameter}
+        [*NOT*] *MEMBER* [*OF*] collection_valued_path_expression
+----
 
-\{single_valued_cmr_path_expression |
-identification_variable | input_parameter }
+This expression tests whether the designated value is a member of the collection specified by the collection-valued path expression.
 
- _[NOT] MEMBER [OF]_
-collection_valued_path_expression
+****
+Note that a collection-valued path expression can only be used in the WHERE clause in an empty collection comparison expression or in a collection member expression.
+****
 
-This expression tests whether the designated
-value is a member of the collection specified by the collection-valued
-path expression.
-
-Note that a collection-valued path expression
-can only be used in the WHERE clause in an empty collection comparison
-expression or in a collection member expression.
-
-If the collection valued path expression
-designates an empty collection, the value of the MEMBER OF expression is
-FALSE and the value of the NOT MEMBER OF expression is TRUE. Otherwise,
-if the value of the collection-valued path
-expression or single-valued cmr path expression in the collection member
-expression is unknown, the value of the collection member expression is
-unknown.
+If the collection valued path expression designates an empty collection, the value of the MEMBER OF expression is FALSE and the value of the NOT MEMBER OF expression is TRUE. 
+Otherwise, if the value of the collection-valued path expression or single-valued cmr path expression in the collection member expression is unknown, the value of the collection member expression is unknown.
 
 ===== Functional Expressions
 
-EJB QL includes
-the following built-in functionslink:#a3382[18], which may be
-used in the WHERE clause of a query.
+Enterprise Beans QL includes the following built-in functions
+footnote:a3382[These functions are a subset of the functions defined for JDBC 2.0 and later drivers, as described in Appendix D of the JDBC specification <<a3335>>.],
+which may be used in the WHERE clause of a query.
 
 String Functions:
 
- _CONCAT(String, String)_ returns a _String_
+* `CONCAT(String, String)` returns a `String`
 
- _SUBSTRING(String, start, length)_ returns a
-_String_
+* `SUBSTRING(String, start, length)` returns a `String`
 
- _LOCATE(String, String [,
-start])link:#a3383[19]_ returns an _int_
+* `LOCATE(String, String [, start])`
+footnote:a3383[Containers and databases may not support the use of the optional, third argument of the LOCATE function. Portable applications should therefore avoid use of this argument.]
+returns an `int`
 
- _LENGTH(String)_ returns an _int_
+* `LENGTH(String)` returns an `int`
 
-Note that _start_ and _length_ are integer
-values. The first position in a string is designated as _1_ by these
-functions.
+Note that `start` and `length` are integer values.
+The first position in a string is designated as `1` by these functions.
 
 Arithmetic Functions:
 
- _ABS(number)_ returns a number ( _int_ ,
-_float_ , or _double_ ) of the same type as the argument to the function
+* `ABS(number)` returns a number (`int`, `float`, or `double`) of the same type as the argument to the function
 
- _SQRT(double)_ returns a _double_
+* `SQRT(double)` returns a `double`
 
- _MOD(int, int)_ returns an _int_
+* `MOD(int, int)` returns an `int`
 
-Numeric arguments to these functions may
-correspond to the numeric Java object types as well as the primitive
-numeric types.
+Numeric arguments to these functions may correspond to the numeric Java object types as well as the primitive numeric types.
 
-If the value of any argument to a functional
-expression is null or unknown, the value of the functional expression is
-unknown.
+If the value of any argument to a functional expression is null or unknown, the value of the functional expression is unknown.
 
 ==== SELECT Clause
 
-The SELECT clause
-denotes the query result. The SELECT clause contains either a single
-range variable that ranges over an entity bean abstract schema type, a
-single-valued path expression, or an aggregate select expression. In the
-case of a finder method, the SELECT clause is restricted to contain
-either a single range variable or a single-valued path expression that
-evaluates to the abstract schema type of the entity bean for which the
-finder method is defined.
+The SELECT clause denotes the query result.
+The SELECT clause contains either a single range variable that ranges over an entity bean abstract schema type, a single-valued path expression, or an aggregate select expression.
+In the case of a finder method, the SELECT clause is restricted to contain either a single range variable or a single-valued path expression that evaluates to the abstract schema type of the entity bean for which the finder method is defined.
 
 The SELECT clause has the following syntax:
+[bnf, subs="+quotes"]
+----
+select_clause ::= *SELECT* [*DISTINCT*] {select_expression | *OBJECT* (identification_variable)}
 
-select_clause ::= _SELECT_ [ _DISTINCT_ ]
-\{select_expression | _OBJECT_ (identification_variable)}
-
-
-
-select_expression ::=
-single_valued_path_expression | aggregate_select_expression
-
+select_expression ::= single_valued_path_expression | aggregate_select_expression
 aggregate_select_expression ::=
+        { *AVG* | *MAX* | *MIN* | *SUM* | *COUNT* } ([*DISTINCT*] cmp_path_expression) |
+        *COUNT* ([*DISTINCT*] identification_variable | single_valued_cmr_path_expression)
+----
 
- \{ _AVG_ | _MAX_ | _MIN_ | _SUM_ | _COUNT_
-_}_ _(_ [ _DISTINCT_ ] cmp_path_expression _)_ |
+All standalone identification variables in the SELECT clause must be qualified by the
+OBJECT operator.
+The SELECT clause must not use the OBJECT operator to qualify path expressions.
 
- _COUNT (_ [ _DISTINCT_ ]
-identification_variable | single_valued_cmr_path_expression _)_
+Note that the SELECT clause must be specified to return a single-valued expression. The query below is therefore not valid:
+[source, sql]
+----
+SELECT o.lineItems FROM Order AS o
+----
 
+The DISTINCT keyword is used to specify that duplicate values must be eliminated from
+the query result.
+If DISTINCT is not specified, duplicate values are not eliminated unless the query is specified for a method whose result type is `java.util.Set`.
+If a query is specified for a method whose result type is `java.util.Set`, but does not specify DISTINCT, the container must interpret the query as if SELECT DISTINCT had been specified.
+In general, however, the Bean Provider should specify the DISTINCT keyword when writing queries for methods that return `java.util.Set`.
 
+The SELECT clause determines the type of the values returned by a query. For example, the following query returns a collection of products:
+[source, sql]
+----
+SELECT l.product FROM Order AS o, IN(o.lineItems) l
+----
 
-All standalone identification variables in
-the SELECT clause must be qualified by the
-OBJECT operator. The SELECT clause must not
-use the OBJECT operator to qualify path expressions.
-
-Note that the SELECT clause must be specified
-to return a single-valued expression. The query below is therefore not
-valid:
-
- _SELECT o.lineItems FROM Order AS o_
-
-The DISTINCT
-keyword is used to specify that duplicate values must be eliminated from
-the query result. If DISTINCT is not specified, duplicate values are not
-eliminated unless the query is specified for a method whose result type
-is _java.util.Set._ If a query is specified for a method whose result
-type is _java.util.Set_ , but does not specify DISTINCT, the container
-must interpret the query as if SELECT
-DISTINCT had been specified. In general, however, the Bean Provider
-should specify the DISTINCT keyword when writing queries for methods
-that return _java.util.Set_ .
-
-The SELECT clause determines the type of the
-values returned by a query. For example, the following query returns a
-collection of products:
-
-SELECT l.product FROM Order AS o,
-IN(o.lineItems) l
-
-It is the responsibility of the container to
-map the abstract schema types returned by the query to the Java types
-that are returned by the finder or select method with which the query is
-associated and to materialize those return types, as described in
-link:Ejb.html#a2190[See Return Value Types].
+It is the responsibility of the container to map the abstract schema types returned by the query to the Java types that are returned by the finder or select method with which the query is associated and to materialize those return types, as described in <<a2190>>.
 
 ===== Null Values in the Query Result
 
-If the result of an EJB QL query corresponds
-to a cmr-field or cmp-field whose value is null, the container must
-include that null value in the result that is returned by the finder or
-select method. The Bean Provider can use the IS NOT NULL construct to
-eliminate such null values from the result set of the query.
+If the result of an Enterprise Beans QL query corresponds to a cmr-field or cmp-field whose value is null, the container must include that null value in the result that is returned by the finder or
+select method.
+The Bean Provider can use the IS NOT NULL construct to eliminate such null values from the result set of the query.
 
-If the finder or select method is a
-single-object finder or select method, and the result set of the query
-consists of a single null value, the container must return the null
-value as the result of the method. If the result set of a query for a
-single-object finder or select method contains more than one value
-(whether non-null, null, or a combination), the container must throw the
-FinderException.
+If the finder or select method is a single-object finder or select method, and the result set of the query consists of a single null value, the container must return the null value as the result of the method.
+If the result set of a query for a single-object finder or select method contains more than one value (whether non-null, null, or a combination), the container must throw the `FinderException`.
 
-Note, however, that cmp-field types defined
-in terms of Java numeric primitive types cannot produce NULL values in
-the query result. An EJB QL query that returns such a cmp-field type as
-a result type must not return a null value. (If the Bean Provider wishes
-to allow null values for cmp-fields, he or she should specify those
-cmp-fields to have the equivalent Java object types instead of primitive
-types, e.g., _Integer_ rather than _int_ .)
+Note, however, that cmp-field types defined in terms of Java numeric primitive types cannot produce NULL values in the query result.
+An Enterprise Beans QL query that returns such a cmp-field type as a result type must not return a null value. 
+(If the Bean Provider wishes to allow null values for cmp-fields, he or she should specify those cmp-fields to have the equivalent Java object types instead of primitive types, e.g., `Integer` rather than `int`.)
 
 ===== Aggregate Functions in the SELECT Clause
 
-The result of an EJB QL query may be the
-result of an aggregate function applied to a path expression.
+The result of an Enterprise Beans QL query may be the result of an aggregate function applied to a path expression.
 
-The following aggregate functions can be used
-in the SELECT clause of an EJB QL query: AVG, COUNT, MAX, MIN, SUM.
+The following aggregate functions can be used in the SELECT clause of an Enterprise Beans QL query: AVG, COUNT, MAX, MIN, SUM.
 
-For all aggregate functions except COUNT, the
-path expression that is the argument to the aggregate function must
-terminate in a cmp-field. The path expression argument to COUNT may
-terminate in either a cmp-field or a cmr-field, or the argument to COUNT
-may be an identification variable.
+For all aggregate functions except COUNT, the path expression that is the argument to the aggregate function must terminate in a cmp-field.
+The path expression argument to COUNT may terminate in either a cmp-field or a cmr-field, or the argument to COUNT may be an identification variable.
 
-Arguments to the functions SUM and AVG must
-be numeric. Arguments to the functions MAX and MIN must correspond to
-orderable cmp-field types (i.e., numeric types, string types, character
-types, or date types).
+Arguments to the functions SUM and AVG must be numeric.
+Arguments to the functions MAX and MIN must correspond to orderable cmp-field types (i.e., numeric types, string types, character types, or date types).
 
-{empty}The argument to an aggregate function
-may be preceded by the keyword DISTINCT to specify that duplicate values
-are to be eliminated before the aggregate function is
-applied.link:#a3384[20]
+The argument to an aggregate function may be preceded by the keyword DISTINCT to specify that duplicate values are to be eliminated before the aggregate function is applied.
+footnote:a3384[It is legal to specify DISTINCT with MAX or MIN, but it does not affect the result.]
 
-Null values are eliminated before the
-aggregate function is applied, regardless of whether the keyword
-DISTINCT is specified.
+Null values are eliminated before the aggregate function is applied, regardless of whether the keyword DISTINCT is specified.
 
 ===== Examples
 
-The following example returns all line items
-related to some order:
-
+The following example returns all line items related to some order:
+[source, sql]
+----
 SELECT OBJECT(l)
-
 FROM Order o, IN(o.lineItems) l
-
-The following query returns all line items
-regardless of whether a line item is related to any order or product:
-
+----
+The following query returns all line items regardless of whether a line item is related to any order or product:
+[source, sql]
+----
 SELECT OBJECT(l)
-
 FROM LineItems AS l
-
-The following query returns the average order
-quantity:
-
+----
+The following query returns the average order quantity:
+[source, sql]
+----
 SELECT AVG(o.quantity)
-
 FROM Order o
-
-The following query returns the total cost of
-the items that John Smith has ordered.
-
+----
+The following query returns the total cost of the items that John Smith has ordered.
+[source, sql]
+----
 SELECT SUM(l.price)
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE o.customer.lastname = ‘Smith’ AND
-o.customer.firstname = ‘John’
-
-The following query returns the number of
-items in John Smith’s entire order.
-
+WHERE o.customer.lastname = 'Smith' AND o.customer.firstname = 'John'
+----
+The following query returns the number of items in John Smith’s entire order.
+[source, sql]
+----
 SELECT COUNT(l)
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE o.customer.lastname = ‘Smith’ AND
-o.customer.firstname = ‘John’
-
-
-
-The following query returns the total number
-of orders.
-
+WHERE o.customer.lastname = 'Smith' AND o.customer.firstname = 'John'
+----
+The following query returns the total number of orders.
+[source, sql]
+----
 SELECT COUNT(o)
-
 FROM Order o
-
-The following query counts the number of
-items in John Smith’s order for which prices have been specified.
-
+----
+The following query counts the number of items in John Smith’s order for which prices have been specified.
+[source, sql]
+----
 SELECT COUNT(l.price)
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE o.customer.lastname = ‘Smith’ AND
-o.customer.firstname = ‘John’
-
+WHERE o.customer.lastname = 'Smith' AND o.customer.firstname = 'John'
+----
 Note that this is equivalent to:
-
+[source, sql]
+----
 SELECT COUNT(l)
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE o.customer.lastname = ‘Smith’ AND
-o.customer.firstname = ‘John’
-
+WHERE o.customer.lastname = 'Smith' AND o.customer.firstname = 'John'
 AND l.price IS NOT NULL
+----
 
 ==== ORDER BY Clause
 
-The ORDER BY clause allows the objects or
-values that are returned by the query to be ordered.
+The ORDER BY clause allows the objects or values that are returned by the query to be ordered.
 
 The syntax of the ORDER BY clause is
+[bnf, subs="+quotes"]
+----
+orderby_clause ::= *ORDER BY* orderby_item [, orderby_item]*
+orderby_item ::= cmp_path_expression [*ASC* | *DESC*]
+----
+When the ORDER BY clause is used in an Enterprise Beans QL query, the SELECT clause of the query must be one of the following:
 
-orderby_clause ::= _ORDER BY_ orderby_item [,
-orderby_item]*
+. an identification variable x, denoted as OBJECT(x)
 
-{empty}orderby_item ::= cmp_path_expression
-[ASC | DESC]
+. a `single_valued_cmr_path_expression`
 
-When the ORDER BY clause is used in an EJB QL
-query, the SELECT clause of the query must be one of the following:
+. a `cmp_path_expression`
 
-an identification variable x, denoted as
-OBJECT(x)
+In the first two cases, each `orderby_item` must be an orderable cmp-field of the entity bean abstract schema type value returned by the SELECT clause.
+In the third case, the `orderby_item` must evaluate to the same cmp-field of the same entity bean abstract schema type as the `cmp_path_expression` in the SELECT clause.
 
-a _single_valued_cmr_path_expression_
-
-a _cmp_path_expression_
-
-In the first two cases, each _orderby_item_
-must be an orderable cmp-field of the entity bean abstract schema type
-value returned by the SELECT clause. In the third case, the
-_orderby_item_ must evaluate to the same cmp-field of the same entity
-bean abstract schema type as the _cmp_path_expression_ in the SELECT
-clause.
-
-For example, the first two queries below are
-legal, but the third and fourth are not.
-
+For example, the first two queries below are legal, but the third and fourth are not.
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Customer c, IN(c.orders) o
-
-WHERE c.address.state = ‘CA’
-
+WHERE c.address.state = 'CA'
 ORDER BY o.quantity, o.totalcost
 
-
-
 SELECT o.quantity
-
 FROM Customer c, IN(c.orders) o
-
-WHERE c.address.state = ‘CA’
-
+WHERE c.address.state = 'CA'
 ORDER BY o.quantity
 
-
-
 SELECT l.product.product_name
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE o.customer.lastname = ‘Smith’ AND
-o.customer.firstname = ‘John’
-
+WHERE o.customer.lastname = 'Smith' AND o.customer.firstname = 'John'
 ORDER BY l.product.price
 
-
-
-
-
 SELECT l.product.product_name
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE o.customer.lastname = ‘Smith’ AND
-o.customer.firstname = ‘John’
-
+WHERE o.customer.lastname = 'Smith' AND o.customer.firstname = 'John'
 ORDER BY o.quantity
+----
 
-If more than one _orderby_item_ is specified,
-the left-to-right sequence of the _orderby_item_ elements determines the
-precedence, whereby the leftmost _orderby_item_ has highest precedence.
+If more than one `orderby_item` is specified, the left-to-right sequence of the `orderby_item` elements determines the precedence, whereby the leftmost `orderby_item` has highest precedence.
 
-The keyword ASC specifies that ascending
-ordering be used; the keyword DESC specifies that descending ordering be
-used. Ascending ordering is the default.
+The keyword ASC specifies that ascending ordering be used; the keyword DESC specifies that descending ordering beused.
+Ascending ordering is the default.
 
-SQL rules for the ordering of null values
-apply: that is, all null values must appear before all non-null values
-in the ordering or all null values must appear after all non-null values
-in the ordering, but it is not specified which.
+SQL rules for the ordering of null values apply: that is, all null values must appear before all non-null values in the ordering or all null values must appear after all non-null values in the ordering, but it is not specified which.
 
-It is the container’s responsibility to
-ensure that the ordering of the query result is preserved in the result
-of the finder or select method if the ORDER BY clause is used.
+It is the container’s responsibility to ensure that the ordering of the query result is preserved in the result of the finder or select method if the ORDER BY clause is used.
 
 [[a2190]]
 ==== Return Value Types
 
-The value of a query result, specified by the
-SELECT clause, is an entity bean abstract
+The value of a query result, specified by the SELECT clause, is an entity bean abstract
 schema type, a cmp-field type, or the result of an aggregate function.
-The finder or select method with which the query is associated in the
-deployment descriptor determines how this result is mapped to the Java
-type that is visible as the result of the query method.
+The finder or select method with which the query is associated in the deployment descriptor determines how this result is mapped to the Java type that is visible as the result of the query method.
 
-How the result
-type of a query is mapped depends on whether the query is defined for a
-finder method on the remote home interface, for a finder method on the
-local home interface, or for a select method.
+How the result type of a query is mapped depends on whether the query is defined for a finder method on the remote home interface, for a finder method on the local home interface, or for a select method.
 
-The result type of a query for a finder
-method must be the entity bean abstract schema type that corresponds to
-the entity bean type of the entity bean on whose home interface the
-finder method is defined. If the query is used for a finder method
-defined on the remote home interface of the bean, the result of the
-finder method is the entity bean’s remote interface (or a collection of
-objects implementing the entity bean’s remote interface). If the finder
-method is defined on the local home interface, the result is the entity
-bean’s local interface (or a collection of objects implementing the
-entity bean’s local interface).
+* The result type of a query for a finder method must be the entity bean abstract schema type that corresponds to the entity bean type of the entity bean on whose home interface the finder method is defined.
+If the query is used for a finder method defined on the remote home interface of the bean, the result of the finder method is the entity bean’s remote interface (or a collection of objects implementing the entity bean’s remote interface).
+If the finder method is defined on the local home interface, the result is the entity bean’s local interface (or a collection of objects implementing the entity bean’s local interface).
 
-If the result type of a query for a select
-method is an entity bean abstract schema type, the return values for the
-query method are instances of the entity bean’s local interface or
-instances of the entity bean’s remote interface, depending on whether
-the value of the _result-type-mapping_
-deployment descriptor element contained in the _query_ element for the
-select method is _Local_ or _Remote_ . The default value for
-_result-type-mapping_ is _Local_ .
+* If the result type of a query for a select method is an entity bean abstract schema type, the return values for the query method are instances of the entity bean’s local interface or instances of the entity bean’s remote interface, depending on whether the value of the `result-type-mapping` deployment descriptor element contained in the `query` element for the select method is `Local` or `Remote`.
+The default value for `result-type-mapping` is `Local`.
 
-If the result type of a query used for a
-select method is an abstract schema type corresponding to a cmp-field
-type (excluding queries whose SELECT clause uses one of the aggregate
-functions AVG, COUNT, MAX, MIN, SUM), the result type of the select
-method is as follows:
+* If the result type of a query used for a select method is an abstract schema type corresponding to a cmp-field type (excluding queries whose SELECT clause uses one of the aggregate functions AVG, COUNT, MAX, MIN, SUM), the result type of the select method is as follows:
 
-If the Java type of the cmp-field is an
-object type and the select method is a single-object select method, the
-result of the select method is an instance of that object type. If the
-select method is a multi-object select method, the result is a
-collection of instances of that type.
+** If the Java type of the cmp-field is an object type and the select method is a single-object select method, the result of the select method is an instance of that object type.
+If the select method is a multi-object select method, the result is a collection of instances of that type.
 
-If the Java type of the cmp-field is a
-primitive Java type (e.g., int), and the select method is a
-single-object select method, the result of the select method is that
-primitive type.
+** If the Java type of the cmp-field is a primitive Java type (e.g., int), and the select method is a
+single-object select method, the result of the select method is that primitive type.
 
-If the Java type of the cmp-field is a
-primitive Java type (e.g., int), and the select method is a multi-object
-select method, the result of the select method is a collection of values
-of the corresponding wrappered type (e.g., Integer).
+** If the Java type of the cmp-field is a primitive Java type (e.g., int), and the select method is a multi-object select method, the result of the select method is a collection of values of the corresponding wrappered type (e.g., Integer).
 
-If the select method query is an aggregate
-query, the select method must be a single-object select method.
+* If the select method query is an aggregate query, the select method must be a single-object select method.
 
-The result type of the select method must be
-a primitive type, a wrappered type, or an object type that is compatible
-with the standard JDBC conversion mappings for the type of the cmp-field
-link:Ejb.html#a3335[See JDBC™ 4.1 API (JDBC specification).
-http://jcp.org/en/jsr/detail?id=221.].
+** The result type of the select method must be a primitive type, a wrappered type, or an object type that is compatible with the standard JDBC conversion mappings for the type of the cmp-field <<a3335>>.
 
-If the aggregate query uses the SUM, AVG,
-MAX, or MIN operator, and the result type of the select method is an
-object type and there are no values to which the aggregate function can
-be applied, the select method returns null.
+** If the aggregate query uses the SUM, AVG, MAX, or MIN operator, and the result type of the select method is an object type and there are no values to which the aggregate function can be applied, the select method returns null.
 
-If the aggregate query uses the SUM, AVG,
-MAX, or MIN operator, and the result type of the select method is a
-primitive type and there are no values to which the aggregate function
-can be applied, the container must throw the _ObjectNotFoundException_ .
+** If the aggregate query uses the SUM, AVG, MAX, or MIN operator, and the result type of the select method is a primitive type and there are no values to which the aggregate function can be applied, the container must throw the `ObjectNotFoundException`.
 
-If the aggregate query uses the COUNT
-operator, the result of the select method should be an exact numeric
-type. If there are no values to which the COUNT method can be applied,
-the result of the select method is 0.
+** If the aggregate query uses the COUNT operator, the result of the select method should be an exact numeric
+type.
+If there are no values to which the COUNT method can be applied, the result of the select method is 0.
 
-The result of a finder or select method may
-contain a null value if a cmp-field or cmr-field in the query result is
-null.
+The result of a finder or select method may contain a null value if a cmp-field or cmr-field in the query result is null.
 
 [[a2207]]
 ==== Null Values
 
-When the target
-of a reference does not exist in the persistent store, its value is
-regarded as _NULL_ . SQL 92 _NULL_ semantics
-link:Ejb.html#a3331[See Database Language SQL. ANSI X3.135-1992
-or ISO/IEC 9075:1992.] defines the evaluation of conditional expressions
-containing _NULL_ values.
-
-The following is a brief description of these
-semantics:
-
-Comparison or arithmetic operations with a
-NULL value always yield an unknown value.
-
-Two NULL values are not considered to be
-equal, the comparison yields an unknown value.
-
-Comparison or arithmetic operations with an
-unknown value always yield an unknown value.
-
-The IS NULL and IS NOT NULL operators convert
-a _NULL_ cmp-field or single-valued cmr-field value into the respective
-TRUE or FALSE value.
-
-Boolean operators use three valued logic,
-defined by link:Ejb.html#a2216[See Definition of the AND
-Operator], link:Ejb.html#a2235[See Definition of the OR
-Operator], and link:Ejb.html#a2254[See Definition of the NOT
-Operator].
-
-===
-
-
-
-Definition of the [[a2216]]AND
-Operator
-
-AND
-
- T
-
- F
-
- U
-
- T
-
- T
-
- F
-
- U
-
- F
-
- F
-
- F
-
- F
-
- U
-
- U
-
- F
-
- U
-
-
-
-===
-
-
-
-Definition of the [[a2235]]OR
-Operator
-
-OR
-
- T
-
- F
-
- U
-
- T
-
- T
-
- T
-
- T
-
- F
-
- T
-
- F
-
- U
-
- U
-
- T
-
- U
-
- U
-
-
-
-===
-
-
-
-Definition of the [[a2254]]NOT
-Operator
-
-NOT
-
-
-
- T
-
- F
-
- F
-
- T
-
- U
-
- U
-
-Note: EJB QL defines the
-empty string, ‘’, as a string with 0 length,
-which is not equal to a NULL value. However, NULL values and empty
-strings may not always be distinguished when queries are mapped to some
-persistent stores. The Bean Provider should therefore not rely on the
-semantics of EJB QL comparisons involving the empty string and NULL
-value.
+When the target of a reference does not exist in the persistent store, its value is regarded as `NULL`.
+SQL 92 `NULL` semantics <<a3331>> defines the evaluation of conditional expressions containing `NULL` values.
+
+The following is a brief description of these semantics:
+
+* Comparison or arithmetic operations with a NULL value always yield an unknown value.
+
+* Two NULL values are not considered to be equal, the comparison yields an unknown value.
+
+* Comparison or arithmetic operations with an unknown value always yield an unknown value.
+
+* The IS NULL and IS NOT NULL operators convert a `NULL` cmp-field or single-valued cmr-field value into the respective TRUE or FALSE value.
+
+* Boolean operators use three valued logic, defined by <<a2216>>, <<a2235>>, and <<a2254>>.
+
+[[a2216]]
+.Definition of the AND Operator
+[cols="4", width="30%", options="header"]
+|===
+| AND
+| T
+| F
+| U
+
+| T
+| T
+| F
+| U
+
+| F
+| F
+| F
+| F
+
+| U
+| U
+| F
+| U
+|===
+
+[[a2235]]
+.Definition of the OR Operator
+[cols="4", width="30%", options="header"]
+|===
+| OR
+| T
+| F
+| U
+
+| T
+| T
+| T
+| T
+
+| F
+| T
+| F
+| U
+
+| U
+| T
+| U
+| U
+|===
+
+[[a2254]]
+.Definition of the NOT Operator
+[cols="^,^", width="20%", options="header"]
+|===
+| NOT
+|
+
+| T
+| F
+
+| F
+| T
+
+| U
+| U
+|===
+
+_Note: Enterprise Beans QL defines the empty string, '', as a string with 0 length, which is not equal to a NULL value.
+However, NULL values and empty strings may not always be distinguished when queries are mapped to some
+persistent stores.
+The Bean Provider should therefore not rely on the semantics of Enterprise Beans QL comparisons involving the empty string and NULL value._
 
 [[a2265]]
 ==== Equality and Comparison Semantics
 
-EJB QL only
-permits the values of _like_ types to be compared. A type is _like_
-another type if they correspond to the same Java language type, or if
-one is a primitive Java language type and the other is the wrappered
-Java class type equivalent (e.g., _int_ and _Integer_ are like types in
-this sense). There is one exception to this rule: it is valid to compare
-numeric values for which the rules of numeric promotion apply.
-Conditional expressions attempting to compare non-like type values are
-disallowed except for this numeric case.
+Enterprise Beans QL only permits the values of _like_ types to be compared.
+A type is _like_ another type if they correspond to the same Java language type, or if one is a primitive Java language type and the other is the wrappered Java class type equivalent (e.g., `int` and `Integer` are like types in this sense).
+There is one exception to this rule: it is valid to compare numeric values for which the rules of numeric promotion apply.
+Conditional expressions attempting to compare non-like type values are disallowed except for this numeric case.
 
-Note that EJB QL permits the arithmetic
-operators and comparison operators to be applied to cmp-fields and input
-parameters of the wrappered Java class equivalents to the primitive
-numeric Java types.
+****
+Note that Enterprise Beans QL permits the arithmetic operators and comparison operators to be applied to cmp-fields and input parameters of the wrappered Java class equivalents to the primitive numeric Java types.
+****
 
-Two entity objects of the same abstract
-schema type are equal if and only if they have the same primary key
-value.
+Two entity objects of the same abstract schema type are equal if and only if they have the same primary key value.
 
 ==== Restrictions
 
-Date and time
-values should use the standard Java _long_ millisecond value. The
-standard way to produce millisecond values is to use
-_java.util.Calendar_ .
+Date and time values should use the standard Java `long` millisecond value.
+The standard way to produce millisecond values is to use `java.util.Calendar`.
 
-Although SQL
-requires support for fixed decimal comparison in arithmetic expressions,
-EJB QL does not. For this reason EJB QL restricts exact numeric literals
-to those without a decimal point (and numerics with a decimal point as
-an alternate representation for approximate numeric values).
+Although SQL requires support for fixed decimal comparison in arithmetic expressions, Enterprise Beans QL does not.
+For this reason Enterprise Beans QL restricts exact numeric literals to those without a decimal point (and numerics with a decimal point as an alternate representation for approximate numeric values).
 
-Support for the BigDecimal and BigInteger
-types is optional for containers in EJB 2.1. Applications that depend on
-such types in EJB QL queries may not be portable.
+Support for the BigDecimal and BigInteger types is optional for containers in Enterprise Beans 2.1. Applications that depend on such types in Enterprise Beans QL queries may not be portable.
 
- _Boolean_ comparison is restricted to _=_
-and _<>_ .
+`Boolean` comparison is restricted to `=` and `<>`.
 
-EJB QL does not
-support the use of comments.
+Enterprise Beans QL does not support the use of comments.
 
-The data model
-for container-managed persistence does not currently support
-inheritance. Therefore, entity objects of different types cannot be
-compared. EJB QL queries that contain such comparisons are invalid.
+The data model for container-managed persistence does not currently support inheritance.
+Therefore, entity objects of different types cannot be compared.
+Enterprise Beans QL queries that contain such comparisons are invalid.
 
 === Examples
 
-
-
-The following
-examples illustrate the syntax and semantics of EJB QL. These examples
-are based on the example presented in link:Ejb.html#a1882[See
-Examples].
+The following examples illustrate the syntax and semantics of Enterprise Beans QL.
+These examples are based on the example presented in <<a1882>>.
 
 ==== Simple Queries
 
 Find all orders:
-
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o
-
-Find all orders that need to be shipped to
-California:
-
+----
+Find all orders that need to be shipped to California:
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o
-
 WHERE o.shipping_address.state = ‘CA’
-
-
-
+----
 Find all states for which there are orders:
-
-
-
+[source, sql]
+----
 SELECT DISTINCT o.shipping_address.state
-
 FROM Order o
+----
 
 ==== Queries with Relationships
 
 Find all orders that have line items:
-
+[source, sql]
+----
 SELECT DISTINCT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
-
-Note that the result of this query does not
-include orders with no associated line items. This query can also be
-written as:
-
+----
+Note that the result of this query does not include orders with no associated line items.
+This query can also be written as:
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o
-
 WHERE o.lineItems IS NOT EMPTY
-
+----
 Find all orders that have no line items:
-
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o
-
 WHERE o.lineItems IS EMPTY
-
+----
 Find all pending orders:
-
+[source, sql]
+----
 SELECT DISTINCT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
-
 WHERE l.shipped = FALSE
-
-Find all orders in which the shipping address
-differs from the billing address. This example assumes that the Bean
-Provider uses two distinct entity beans to designate shipping and
-billing addresses, as in link:Ejb.html#a1886[See Several Entity
-Beans with Abstract Persistence Schemas Defined in the Same Ejb-jar
-File.].
-
+----
+Find all orders in which the shipping address differs from the billing address.
+This example assumes that the Bean Provider uses two distinct entity beans to designate shipping and billing addresses, as in <<a1886>>.
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o
-
-WHERE
-
-NOT (o.shipping_address.state =
-o.billing_address.state AND
-
- o.shipping_address.city =
-o.billing_address.city AND
-
- o.shipping_address.street =
-o.billing_address.street)
-
-If the Bean Provider uses a single entity
-bean in two different relationships for both the shipping address and
-the billing address, the above expression can be simplified based on the
-equality rules defined in Section link:Ejb.html#a2265[See
-Equality and Comparison Semantics]. The query can then be written as:
-
+WHERE 
+NOT (o.shipping_address.state = o.billing_address.state AND 
+    o.shipping_address.city = o.billing_address.city AND
+    o.shipping_address.street = o.billing_address.street)
+----
+If the Bean Provider uses a single entity bean in two different relationships for both the shipping address and the billing address, the above expression can be simplified based on the equality rules defined in <<a2265>>.
+The query can then be written as:
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o
-
 WHERE o.shipping_address <> o.billing_address
+----
+The query checks whether the same entity bean abstract schema type instance (identified by its primary key) is related to an order through two distinct relationships.
 
-The query checks whether the same entity bean
-abstract schema type instance (identified by its primary key) is related
-to an order through two distinct relationships.
-
-Find all orders for a book titled ‘Applying
-Enterprise JavaBeans: Component-Based Development for the J2EE
-Platform’:
-
+Find all orders for a book titled 'Applying Enterprise Beans: Component-Based Development for the J2EE Platform':
+[source, sql]
+----
 SELECT DISTINCT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
-
-WHERE l.product.type = ‘book’ AND
-
- l.product.name = ‘Applying Enterprise
-JavaBeans:
-
- Component-Based Development for the J2EE
-Platform’
-
-
+WHERE l.product.type = 'book' AND
+    l.product.name = 'Applying Enterprise Beans: 
+    Component-Based Development for the J2EE Platform'
+----
 
 ==== Queries Using Input Parameters
 
-The following query finds the orders for a
-product whose name is designated by an input parameter:
-
+The following query finds the orders for a product whose name is designated by an input parameter:
+[source, sql]
+----
 SELECT DISTINCT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
-
 WHERE l.product.name = ?1
-
-For this query, the input parameter must be
-of the type of the cmp-field name, i.e., a string.
+----
+For this query, the input parameter must be of the type of the cmp-field name, i.e., a string.
 
 ==== Queries for Select Methods
 
-The following select queries illustrate the
-selection of values other than entity beans.
+The following select queries illustrate the selection of values other than entity beans.
 
-The following EJB QL query selects the names
-of all products that have been ordered.
-
+The following Enterprise Beans QL query selects the names of all products that have been ordered.
+[source, sql]
+----
 SELECT DISTINCT l.product.name
-
 FROM Order o, IN(o.lineItems) l
+----
 
-The following query finds the names of all
-products in the order specified by a particular order number. The order
-number is specified by a parameter that corresponds to the primary key
-of Order. Note that because this query does not specify DISTINCT in its
-SELECT clause, if it is specified for a query method whose return type
-is _java.util.Collection_ , the collection that is returned may contain
-duplicates. In this example, such duplicates correspond to products that
-have been ordered multiple times in the given order.
-
+The following query finds the names of all products in the order specified by a particular order number.
+The order number is specified by a parameter that corresponds to the primary key of Order.
+Note that because this query does not specify DISTINCT in its SELECT clause, if it is specified for a query method whose return type is `java.util.Collection`, the collection that is returned may contain duplicates.
+In this example, such duplicates correspond to products that have been ordered multiple times in the given order.
+[source, sql]
+----
 SELECT l.product.name
-
 FROM Order o, IN(o.lineItems) l
-
 WHERE o.ordernumber = ?1
+----
+It is the responsibility of the container to interpret the query such that no duplicates are produced if the result type of the query method is `java.util.Set`.
 
-It is the responsibility of the container to
-interpret the query such that no duplicates are produced if the result
-type of the query method is _java.util.Set_ .
-
-Consider the following query for a select
-method:
-
+Consider the following query for a select method:
+[source, sql]
+----
 SELECT o.shipping_address.city
-
 FROM Order o
+----
+This query returns the names of all the cities of the shipping addresses of all orders.
+The result type of the select method, which is either `java.util.Collection` or `java.util.Set`, determines whether the query may return duplicate city names.
 
-This query
-returns the names of all the cities of the shipping addresses of all
-orders. The result type of the select method, which is either
-_java.util.Collection_ or _java.util.Set_ , determines whether the query
-may return duplicate city names.
+==== Enterprise Beans QL and SQL
 
-==== EJB QL and SQL
+Enterprise Beans QL, like SQL, treats the FROM clause as a cartesian product.
+The FROM clause is similar to that of SQL in that the declared identification variables affect the results of the query even if they are not used in the WHERE clause.
+The Bean Provider should use caution in defining identification variables because the domain of the query can depend on whether there are any values of the declared type.
 
-EJB QL, like SQL,
-treats the FROM clause as a cartesian product. The
-FROM clause is similar to that of SQL in
-that the declared identification variables affect the results of the
-query even if they are not used in the WHERE clause. The Bean Provider
-should use caution in defining identification variables because the
-domain of the query can depend on whether there are any values of the
-declared type.
-
-For example, the FROM clause below defines a
-query over all orders that have line items and existing products. If
-there are no Product instances in the persistent store, the domain of
-the query is empty and no order is selected.
-
+For example, the FROM clause below defines a query over all orders that have line items and existing products.
+If there are no Product instances in the persistent store, the domain of the query is empty and no order is selected.
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order AS o, IN(o.lineItems) l, Product p
+----
 
+The container can represent the abstract schemas of a set of entity beans in an application using a relational database.
+There are multiple ways to define a mapping to a set of tables in a relational database.
+Although this area is beyond the scope of this specification, a sample mapping and translation of Enterprise Beans QL to SQL is described to clarify the semantics of Enterprise Beans QL.
 
+A mapping strategy from a set of entity beans to a relational database might be to map each entity bean to a separate table.
+One-to-many relationships may be represented by foreign keys in the related table from the many side and many-to-many relationships may be represented by using an auxiliary table that contains the primary keys of the related objects.
 
-The container can represent the abstract
-schemas of a set of entity beans in an application using a relational
-database. There are multiple ways to define a mapping to a set of tables
-in a relational database. Although this area is beyond the scope of this
-specification, a sample mapping and translation of EJB QL to SQL is
-described to clarify the semantics of EJB QL.
+Because the FROM clause represents a cartesian product, the SQL result may contain duplicates.
+If the query is for a method whose return type is `java.util.Set`, the container would therefore typically utilize a SELECT DISTINCT clause in translating the query to SQL.
+The query method result may contain duplicates if the return type of the query method is `java.util.Collection` and DISTINCT is not specified in the SELECT clause of the Enterprise Beans QL query.
 
-A mapping strategy from a set of entity beans
-to a relational database might be to map each entity bean to a separate
-table. One-to-many relationships may be represented by
-foreign keys in the related table from the
-many side and many-to-many relationships may be represented by using an
-auxiliary table that contains the primary keys of the related objects.
+The following translation example illustrates the mapping of entity beans to relational database tables.
+The entity bean OrderEJB is represented by the table ORDER and the entity bean LineItemEJB is represented by the table LINEITEM.
+The column OKEY represents the primary key for OrderEJB entity bean, FKEY represents the foreign key column of LINEITEM that holds the values of the ORDER primary keys.
+FKEY is defined in the LINEITEM table to model the one-to-many relationship.
 
-Because the FROM clause represents a
-cartesian product, the SQL result may
-contain duplicates. If the query is for a method whose return type is
-_java.util.Set_ , the container would therefore typically utilize a
-SELECT DISTINCT clause in translating the
-query to SQL. The query method result may contain duplicates if the
-return type of the query method is _java.util.Collection_ and DISTINCT
-is not specified in the SELECT clause of the EJB QL query.
-
-The following translation example illustrates
-the mapping of entity beans to relational database tables. The entity
-bean OrderEJB is represented by the table ORDER and the entity bean
-LineItemEJB is represented by the table LINEITEM. The column OKEY
-represents the primary key for OrderEJB entity bean, FKEY represents the
-foreign key column of LINEITEM that holds the values of the ORDER
-primary keys. FKEY is defined in the LINEITEM table to model the
-one-to-many relationship.
-
-Using this mapping, the following EJB QL
-finder query
-
+Using this mapping, the following Enterprise Beans QL finder query
+[source, sql]
+----
 SELECT OBJECT(o)
-
 FROM Order o, IN(o.lineItems) l
-
 WHERE l.quantity > 5
-
+----
 might be represented in SQL as
-
+[source, sql]
+----
 SELECT DISTINCT o.OKEY
-
 FROM ORDERBEAN o, LINEITEM l
-
 WHERE o.OKEY = l.FKEY AND l.QUANTITY > 5
+----
 
+=== Enterprise Beans QL BNF
 
+Enterprise Beans QL BNF notation summary:
 
-=== EJB QL BNF
+* { ... } grouping
 
+* [ ... ] optional constructs
 
+* *boldface* keywords
 
-EJB QL BNF
-notation summary:
+The following is the complete BNF notation for Enterprise Beans QL:
+[bnf, subs="+quotes"]
+----
+Enterprise Beans QL ::= select_clause from_clause [where_clause] [orderby_clause]
 
-\{ ... } grouping
-
-[ ... ] optional constructs
-
-boldface keywords
-
-The following is the complete BNF notation
-for EJB QL:
-
-{empty}EJB QL ::= select_clause from_clause
-[where_clause] [orderby_clause]
-
-from_clause ::= _FROM_
-identification_variable_declaration
-
- [, identification_variable_declaration]*
-
-identification_variable_declaration ::=
-collection_member_declaration |
-
- range_variable_declaration
-
-collection_member_declaration ::= _IN (_
-collection_valued_path_expression _)_ [AS] identifier
-
-range_variable_declaration ::=
-abstract_schema_name [ _AS_ ] identifier
-
-cmp_path_expression ::=
-
- \{identification_variable |
-single_valued_cmr_path_expression}.cmp_field
-
+from_clause ::= *FROM* identification_variable_declaration
+        [, identification_variable_declaration]*
+identification_variable_declaration ::= 
+        collection_member_declaration | range_variable_declaration
+collection_member_declaration ::= *IN* (collection_valued_path_expression) [*AS*] identifier
+range_variable_declaration ::= abstract_schema_name [*AS*] identifier
+cmp_path_expression ::= 
+        {identification_variable | single_valued_cmr_path_expression}.cmp_field
 single_valued_cmr_path_expression ::=
-
-
-identification_variable.[single_valued_cmr_field.]*
-single_valued_cmr_field
-
+        identification_variable.[single_valued_cmr_field.]* single_valued_cmr_field
 single_valued_path_expression ::=
-
- cmp_path_expression |
-single_valued_cmr_path_expression
-
+        cmp_path_expression | single_valued_cmr_path_expression
 collection_valued_path_expression ::=
-
-
-identification_variable.[single_valued_cmr_field.]*collection_valued_cmr_field
-
-select_clause ::= _SELECT_ [ _DISTINCT_ ]
-\{select_expression | _OBJECT(_ identification_variable _)_ }
-
+        identification_variable.[single_valued_cmr_field.]* collection_valued_cmr_field 
+select_clause ::= *SELECT* [*DISTINCT*]
+        {select_expression | *OBJECT*(identification_variable)}
 select_expression ::=
-single_valued_path_expression | aggregate_select_expression
-
+        single_valued_path_expression | aggregate_select_expression
 aggregate_select_expression ::=
-
- \{ _AVG_ | _MAX_ | _MIN_ | _SUM_ | _COUNT_
-_}_ _(_ [ _DISTINCT_ ] cmp_path_expression _)_ |
-
- _COUNT (_ [ _DISTINCT_ ]
-identification_variable | single_valued_cmr_path_expression _)_
-
-where_clause ::= _WHERE_
-conditional_expression
-
-conditional_expression ::= conditional_term |
-conditional_expression _OR_ conditional_term
-
-conditional_term ::= conditional_factor |
-conditional_term _AND_ conditional_factor
-
-conditional_factor ::= [ _NOT_ ]
-conditional_primary
-
-conditional_primary ::=
-simple_cond_expression | (conditional_expression)
-
-simple_cond_expression ::=
-comparison_expression | between_expression | like_expression |
-
- in_expression | null_comparison_expression |
-
- empty_collection_comparison_expression |
-
- collection_member_expression
-
- _between_expression ::=_
-
- _arithmetic_expression_ [ _NOT_ ] _BETWEEN_
-
- _arithmetic_expression_ _AND_
-_arithmetic_expression_
-
- _in_expression ::=_
-
- __ cmp_path_expression [ _NOT_ ] _IN_
-
- _(_ _\{literal_ | input_parameter} [, _\{
-literal | input_parameter} ]*_ _)_
-
- _like_expression ::=_
-
-{empty} __ cmp_path_expression [ _NOT_ ]
-_LIKE_ _pattern_value_ [ _ESCAPE_ _escape_character_ ]
-
+        {*AVG* | *MAX* | *MIN* | *SUM* | *COUNT*} ([*DISTINCT*] cmp_path_expression) |
+        *COUNT* ([*DISTINCT*] identification_variable | single_valued_cmr_path_expression)
+where_clause ::= *WHERE* conditional_expression
+conditional_expression ::= conditional_term | conditional_expression *OR* conditional_term
+conditional_term ::= conditional_factor | conditional_term *AND* conditional_factor
+conditional_factor ::= [*NOT*] conditional_primary
+conditional_primary ::= simple_cond_expression | (conditional_expression)
+simple_cond_expression ::= comparison_expression | between_expression | like_expression |
+        in_expression | null_comparison_expression |
+        empty_collection_comparison_expression |
+        collection_member_expression
+between_expression ::= arithmetic_expression [*NOT*] *BETWEEN*
+        arithmetic_expression *AND* arithmetic_expression
+in_expression ::=
+        cmp_path_expression [*NOT*] *IN*
+        ( {literal | input_parameter} [, {literal | input_parameter}]* )
+like_expression ::=_
+        cmp_path_expression [*NOT*] *LIKE* pattern_value [*ESCAPE* escape_character]
 null_comparison_expression ::=
-
- \{single_valued_path_expression |
-input_parameter} _IS_ [ _NOT_ ] _NULL_
-
+        {single_valued_path_expression | input_parameter} *IS* [*NOT*] *NULL*
 empty_collection_comparison_expression ::=
-
- collection_valued_path_expression _IS [NOT]
-EMPTY_
-
+        collection_valued_path_expression *IS* [*NOT*] *EMPTY*
 collection_member_expression ::=
-
- \{single_valued_cmr_path_expression |
-identification_variable | input_parameter}
-
- [ _NOT_ ] _MEMBER_ _[_ _OF_ _]_
-collection_valued_path_expression
-
+        {single_valued_cmr_path_expression | identification_variable | input_parameter}
+            [*NOT*] *MEMBER* [*OF*] collection_valued_path_expression
 comparison_expression ::=
-
- string_value comparison_operator
-string_expression |
-
- boolean_value \{ _=_ | _<>_ }
-boolean_expression} |
-
- datetime_value comparison_operator
-datetime_expression |
-
- entity_bean_value \{ _=_ | _<>_ }
-entity_bean_expression |
-
- arithmetic_value comparison_operator
-arithmetic_expression
-
-arithmetic_value ::= cmp_path_expression |
-functions_returning_numerics
-
-comparison_operator ::=
-
- _=_ | _>_ | _>=_ | _<_ | _<=_ | _<>_
-
-arithmetic_expression ::= arithmetic_term |
-arithmetic_expression \{ _+_ | _-_ } arithmetic_term
-
-arithmetic_term ::= arithmetic_factor |
-arithmetic_term \{ _*_ | _/_ } arithmetic_factor
-
-arithmetic_factor ::= [\{ _+_ | _-_ }]
-arithmetic_primary
-
-arithmetic_primary ::= cmp_path_expression |
-literal | (arithmetic_expression) |
-
- input_parameter |
-functions_returning_numerics
-
-string_value ::= cmp_path_expression |
-functions_returning_strings
-
-string_expression ::= string_primary |
-input_parameter
-
-string_primary ::= cmp_path_expression |
-literal | (string_expression) |
-
- functions_returning_strings
-
+        string_value comparison_operator string_expression |
+        boolean_value { *=* | *<>* } boolean_expression} |
+        datetime_value comparison_operator datetime_expression |
+        entity_bean_value { *=* | *<>* } entity_bean_expression |
+        arithmetic_value comparison_operator arithmetic_expression
+arithmetic_value ::= cmp_path_expression | functions_returning_numerics
+comparison_operator ::= *=* | *>* | *>=* | *<* | *<=* | *<>*
+arithmetic_expression ::= arithmetic_term | arithmetic_expression { *+* | *-* } arithmetic_term
+arithmetic_term ::= arithmetic_factor | arithmetic_term { *** | */* } arithmetic_factor
+arithmetic_factor ::= [{ *+* | *-* }] arithmetic_primary
+arithmetic_primary ::= cmp_path_expression | literal | (arithmetic_expression) |
+        input_parameter | functions_returning_numerics
+string_value ::= cmp_path_expression | functions_returning_strings
+string_expression ::= string_primary | input_parameter
+string_primary ::= cmp_path_expression | literal | (string_expression) | 
+        functions_returning_strings
 datetime_value ::= cmp_path_expression
-
-datetime_expression ::= datetime_value |
-input_parameter
-
+datetime_expression ::= datetime_value | input_parameter
 boolean_value ::= cmp_path_expression
-
-boolean_expression ::= cmp_path_expression |
-literal | input_parameter
-
-entity_bean_value ::=
-single_valued_cmr_path_expression | identification_variable
-
-entity_bean_expression ::= entity_bean_value
-| input_parameter
-
-functions_returning_strings ::= _CONCAT(_
-string_expression _,_ string_expression _)_ |
-
- _SUBSTRING(_ string_expression _,_
-arithmetic_expression _,_ arithmetic_expression _)_
-
-functions_returning_numerics::=
-
- _LENGTH(_ string_expression _)_ |
-
- _LOCATE(_ string_expression _,_
-string_expression[ _,_ arithmetic_expression] _) |_
-
- _ABS(_ arithmetic_expression _)_ |
-
- _SQRT(_ arithmetic_expression _) |_
-
- _MOD(_ arithmetic_expression,
-arithmetic_expression _)_
-
-orderby_clause ::= _ORDER BY_ orderby_item [
-_,_ orderby_item]*
-
-{empty}orderby_item ::= cmp_path_expression [
-_ASC_ | _DESC_ ]
+boolean_expression ::= cmp_path_expression | literal | input_parameter
+entity_bean_value ::= single_valued_cmr_path_expression | identification_variable
+entity_bean_expression ::= entity_bean_value | input_parameter
+functions_returning_strings ::= *CONCAT*(string_expression, string_expression) |
+        *SUBSTRING*(string_expression, arithmetic_expression, arithmetic_expression)
+functions_returning_numerics::= *LENGTH*(string_expression) |
+        *LOCATE*(string_expression, string_expression[, arithmetic_expression]) |
+        *ABS*(arithmetic_expression) |
+        *SQRT*(arithmetic_expression) |
+        *MOD*(arithmetic_expression, arithmetic_expression)
+orderby_clause ::= *ORDER BY* orderby_item [, orderby_item]*
+orderby_item ::= cmp_path_expression [*ASC* | *DESC*]
+----
