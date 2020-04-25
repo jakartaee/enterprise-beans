@@ -1,1653 +1,913 @@
 [[a2456]]
-== EJB 2.1 Entity Bean Component Contract for Bean-Managed Persistence
+== Enterprise Beans 2.1 Entity Bean Component Contract for Bean-Managed Persistence
 
-The entity bean component contract for
-bean-managed persistence is the contract between an entity bean and its
-container. It defines the life cycle of the entity bean instances and
-the model for method delegation of the client-invoked business methods.
-The main goal of this contract is to ensure that a component using
-bean-managed persistence is portable across all compliant EJB
-containers.
+The entity bean component contract for bean-managed persistence is the contract between an entity bean and its container.
+It defines the life cycle of the entity bean instances and the model for method delegation of the client-invoked business methods.
+The main goal of this contract is to ensure that a component using bean-managed persistence is portable across all compliant Enterprise Beans containers.
 
-This chapter defines the Enterprise Bean
-Provider’s view of this contract and the Container Provider’s
-responsibility for managing the life cycle of the enterprise bean
-instances. It also describes the Bean Provider’s responsibilities when
-persistence is provided by the Bean Provider.
+This chapter defines the Enterprise Bean Provider’s view of this contract and the Container Provider’s responsibility for managing the life cycle of the enterprise bean instances.
+It also describes the Bean Provider’s responsibilities when persistence is provided by the Bean Provider.
 
-Note that use of dependency injection,
-interceptors, and Java language metadata annotations is not supported
-for EJB 2.1 entity beans.
+_Note that use of dependency injection, interceptors, and Java language metadata annotations is not supported for Enterprise Beans 2.1 entity beans._
 
 === Overview of Bean-Managed Entity Persistence
 
+An entity bean implements an object view of an entity stored in an underlying database, or an entity implemented by an existing enterprise application (for example, by a mainframe program or by an ERP application).
+The data access protocol for transferring the state of the entity between the entity bean instances and the underlying database is referred to as object persistence.
 
+The entity bean component protocol for bean-managed persistence allows the entity Bean Provider to implement the entity bean’s persistence directly in the entity bean class or in one or more helper classes provided with the entity bean class.
+This chapter describes the contracts for bean-managed persistence.
 
-An entity bean
-implements an object view of an entity stored in an underlying database,
-or an entity implemented by an existing enterprise application (for
-example, by a mainframe program or by an ERP application). The data
-access protocol for transferring the state of the entity between the
-entity bean instances and the underlying database is referred to as
-object persistence.
-
-The entity bean component protocol for
-bean-managed persistence allows the entity
-Bean Provider to implement the entity bean’s persistence directly in the
-entity bean class or in one or more helper classes provided with the
-entity bean class. This chapter describes the contracts for bean-managed
-persistence.
-
-===
-
-
-
-Client View of Underlying Data Sources Accessed Through Entity Bean
-
-image:EBOpt-38.png[image]
+.Client View of Underlying Data Sources Accessed Through Entity Bean
+image::EBOpt-38.png[]
 
 ==== Entity Bean Provider’s View of Persistence
 
-Using
-bean-managed persistence, the entity Bean Provider writes database
-access calls (e.g. using JDBC _TM_ or SQLJ) directly in the entity bean
-component. The data access calls are performed in the ejbCreate<METHOD>,
-ejbRemove, ejbFind<METHOD>, ejbLoad, and ejbStore methods, and/or in the
-business methods.
+Using bean-managed persistence, the entity Bean Provider writes database access calls (e.g. using JDBC(TM) or SQLJ) directly in the entity bean component.
+The data access calls are performed in the `ejbCreate<METHOD>`, `ejbRemove`, `ejbFind<METHOD>`, `ejbLoad`, and `ejbStore` methods, and/or in the business methods.
 
-The data access calls can be coded directly
-into the entity bean class, or they can be encapsulated in a
-data access component that is part of the
-entity bean. Directly coding data access calls in the entity bean class
-may make it more difficult to adapt the entity bean to work with a
-database that has a different schema, or with a different type of
-database.
+The data access calls can be coded directly into the entity bean class, or they can be encapsulated in a
+data access component that is part of the entity bean.
+Directly coding data access calls in the entity bean class may make it more difficult to adapt the entity bean to work with a database that has a different schema, or with a different type of database.
 
-We expect that most enterprise beans with
-bean-managed persistence will be created by application development
-tools which will encapsulate data access in components. These data
-access components will probably not be the same for all tools. Further,
-if the data access calls are encapsulated in data access components, the
-data access components may require deployment interfaces to allow
-adapting data access to different schemas or even to a different
-database type. This EJB specification does not define the architecture
-for data access objects, strategies for tailoring and deploying data
-access components or ensuring portability of these components for
-bean-managed persistence.
+_We expect that most enterprise beans with bean-managed persistence will be created by application development tools which will encapsulate data access in components.
+These data access components will probably not be the same for all tools.
+Further, if the data access calls are encapsulated in data access components, the data access components may require deployment interfaces to allow adapting data access to different schemas or even to a different database type.
+This Enterprise Beans specification does not define the architecture for data access objects, strategies for tailoring and deploying data
+access components or ensuring portability of these components for bean-managed persistence._
 
 ==== Runtime Execution Model
 
-This section describes the runtime model and
-the classes used in the description of the contract between an entity
-bean with bean-managed persistence and its container.
+This section describes the runtime model and the classes used in the description of the contract between an entity bean with bean-managed persistence and its container.
 
-===
+.Overview of the Entity Bean Runtime Execution Model
+image::EBOpt-39.png[]
 
+An enterprise bean instance is an object whose class is provided by the Bean Provider.
 
-
-Overview of the Entity Bean Runtime Execution Model
-
-image:EBOpt-39.png[image]
-
-An enterprise bean instance is an object
-whose class is provided by the Bean Provider.
-
-An entity EJBObject or EJBLocalObject is an
-object whose class is generated at deployment time by the Container
-Provider’s tools. The entity EJBObject class implements the entity
-bean’s remote interface. The entity EJBLocalObject class implements the
-entity bean’s local interface. A client never references an entity bean
-instance directly—a client always references an entity EJBObject or
-entity EJBLocalObject whose class is generated by the Container
+An entity *EJBObject* or *EJBLocalObject* is an object whose class is generated at deployment time by the Container
 Provider’s tools.
+The entity EJBObject class implements the entity bean’s remote interface.
+The entity EJBLocalObject class implements the entity bean’s local interface.
+A client never references an entity bean instance directly—a client always references an entity EJBObject or entity EJBLocalObject whose class is generated by the Container Provider’s tools.
 
-An entity EJBHome or EJBLocalHome object
-provides the life cycle operations (create,
-remove, find) for its entity objects as well as home business methods,
-which are not specific to an entity bean instance. The class for the
-entity EJBHome or EJBLocalHome object is generated by the Container
-Provider’s tools at deployment time. The entity EJBHome or EJBLocalHome
-object implements the entity bean’s home interface that was defined by
-the Bean Provider.
+An entity *EJBHome* or *EJBLocalHome* object provides the life cycle operations (create, remove, find) for its entity objects as well as home business methods, which are not specific to an entity bean instance.
+The class for the entity EJBHome or EJBLocalHome object is generated by the Container Provider’s tools at deployment time.
+The entity EJBHome or EJBLocalHome object implements the entity bean’s home interface that was defined by the Bean Provider.
 
 ==== Instance Life Cycle
+[[a2480]]
+.Life Cycle of an Entity Bean Instance.
+image::EBOpt-40.png[]
 
-===
+An entity bean instance is in one of the following three states:
 
+* It does not exist.
 
+* Pooled state.
+An instance in the pooled state is not associated with any particular entity object identity.
 
-[[a2480]]Life Cycle of an Entity Bean Instance.
+* Ready state.
+An instance in the ready state is assigned an entity object identity.
 
-image:EBOpt-40.png[image]
+The following steps describe the life cycle of an entity bean instance:
 
-An entity bean
-instance is in one of the following three states:
+* An entity bean instance’s life starts when
+the container creates the instance using newInstance.
+The container then invokes the `setEntityContext` method to pass the instance a reference to the `EntityContext` interface.
+The `EntityContext` interface allows the instance to invoke services provided by the container and to obtain the information about the caller of a client-invoked method.
 
-It does not exist.
+* The instance enters the pool of available instances.
+Each entity bean has its own pool.
+While the instance is in the available pool, the instance is not associated with any particular entity object identity.
+All instances in the pool are considered equivalent, and therefore any instance can be assigned by the container to any entity object identity at the transition to the ready state.
+While the instance is in the pooled state, the container may use the instance to execute any of the entity bean’s finder methods (shown as `ejbFind<METHOD>` in the diagram) or home methods (shown as `ejbHome<METHOD>` in the diagram).
+The instance does not move to the ready state during the execution of a finder or a home method.
 
-Pooled state. An instance in the pooled state
-is not associated with any particular entity object identity.
+* An instance transitions from the pooled state to the ready state when the container selects that instance to service a client call to an entity object or an `ejbTimeout` method.
+There are two possible transitions from the pooled to the ready state: through the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods, or through the `ejbActivate` method.
+The container invokes the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods when the instance is assigned to an entity object during entity object creation (i.e., when the client invokes a `create<METHOD>` method on the entity bean’s home object).
+The container invokes the `ejbActivate` method on an instance when an instance needs to be activated to service an invocation on an existing entity object—this occurs because there is no suitable instance in the ready state to service the client’s call or the `ejbTimeout` method.
 
-Ready state. An instance in the ready state
-is assigned an entity object identity.
+* When an entity bean instance is in the ready state, the instance is associated with a specific entity object identity.
+While the instance is in the ready state, the container can invoke the `ejbLoad` and `ejbStore` methods zero or more times.
+A business method can be invoked on the instance zero or more times.
+The `ejbTimeout` method can be invoked on the instance zero or more times.
+Invocations of the `ejbLoad` and `ejbStore` methods can be arbitrarily mixed with invocations of business methods or the `ejbTimeout` method.
+The purpose of the `ejbLoad` and `ejbStore` methods is to synchronize the state of the instance with the state of the entity in the underlying data source—the container can invoke these methods whenever it determines a need to synchronize the instance’s state.
 
-The following
-steps describe the life cycle of an entity bean instance:
+* The container can choose to passivate an entity bean instance within a transaction.
+To passivate an instance, the container first invokes the `ejbStore` method to allow the instance to synchronize the database state with the instance’s state, and then the container invokes the `ejbPassivate` method to return the instance to the pooled state.
 
-An entity bean instance’s life starts when
-the container creates the instance using newInstance. The container then
-invokes the setEntityContext method to pass the instance a reference to
-the EntityContext interface. The EntityContext interface allows the
-instance to invoke services provided by the container and to obtain the
-information about the caller of a client-invoked method.
+* Eventually, the container will transition the instance to the pooled state.
+There are three possible transitions from the ready to the pooled state: through the `ejbPassivate` method, through the `ejbRemove` method, and because of a transaction rollback for `ejbCreate`, `ejbPostCreate`, or `ejbRemove` (not shown in <<a2480>>).
+The container invokes the `ejbPassivate` method when the container wants to disassociate the instance from the entity object identity without removing the entity object.
+The container invokes the `ejbRemove` method when the container is removing the entity object (i.e., when the client invoked the `remove` method on the entity object’s component interface, or a `remove` method on the entity bean’s home interface).
+If `ejbCreate`, `ejbPostCreate`, or `ejbRemove` is called and the transaction rolls back, the container will transition the bean instance to the pooled state.
 
-The instance enters the pool of available
-instances. Each entity bean has its own pool. While the instance is in
-the available pool, the instance is not associated with any particular
-entity object identity. All instances in the pool are considered
-equivalent, and therefore any instance can be assigned by the container
-to any entity object identity at the transition to the ready state.
-While the instance is in the pooled state, the container may use the
-instance to execute any of the entity bean’s finder methods (shown as
-_ejbFind<METHOD>_ in the diagram) or home methods (shown as
-ejbHome<METHOD> in the diagram). The instance does not move to the ready
-state during the execution of a finder or a home method.
+* When the instance is put back into the pool, it is no longer associated with an entity object identity.
+The container can assign the instance to any entity object within the same entity bean home.
 
-An instance transitions from the pooled state
-to the ready state when the container selects that instance to service a
-client call to an entity object or an _ejbTimeout_ method. There are two
-possible transitions from the pooled to the ready state: through the
-_ejbCreate_ <METHOD> and _ejbPostCreate_ <METHOD> methods, or through
-the _ejbActivate_ method. The container invokes the _ejbCreate_ <METHOD>
-__ and _ejbPostCreate_ <METHOD> methods when the instance is assigned to
-an entity object during entity object creation (i.e., when the client
-invokes a _create_ <METHOD> method on the entity bean’s home object).
-The container invokes the _ejbActivate_ method on an instance when an
-instance needs to be activated to service an invocation on an existing
-entity object—this occurs because there is no suitable instance in the
-ready state to service the client’s call or the _ejbTimeout_ method.
-
-When an entity bean instance is in the ready
-state, the instance is associated with a specific entity object
-identity. While the instance is in the ready state, the container can
-invoke the _ejbLoad_ and _ejbStore_ methods zero or more times. A
-business method can be invoked on the instance zero or more times. The
-_ejbTimeout_ method can be invoked on the instance zero or more times.
-Invocations of the _ejbLoad_ and _ejbStore_ methods can be arbitrarily
-mixed with invocations of business methods or the _ejbTimeout_ method.
-The purpose of the _ejbLoad_ and _ejbStore_ methods is to synchronize
-the state of the instance with the state of the entity in the underlying
-data source—the container can invoke these methods whenever it
-determines a need to synchronize the instance’s state.
-
-The container can choose to passivate an
-entity bean instance within a transaction. To passivate an instance, the
-container first invokes the ejbStore method to allow the instance to
-synchronize the database state with the instance’s state, and then the
-container invokes the ejbPassivate method to return the instance to the
-pooled state.
-
-Eventually, the container will transition the
-instance to the pooled state. There are three possible transitions from
-the ready to the pooled state: through the _ejbPassivate_ method,
-through the _ejbRemove_ method, and because of a transaction rollback
-for _ejbCreate_ , _ejbPostCreate_ , or _ejbRemove_ (not shown in
-link:Ejb.html#a2480[See Life Cycle of an Entity Bean
-Instance.]). The container invokes the _ejbPassivate_ method when the
-container wants to disassociate the instance from the entity object
-identity without removing the entity object. The container invokes the
-_ejbRemove_ method when the container is removing the entity object
-(i.e., when the client invoked the _remove_ method on the entity
-object’s component interface, or a _remove_ method on the entity bean’s
-home interface). If _ejbCreate_ , _ejbPostCreate_ , or _ejbRemove_ is
-called and the transaction rolls back, the container will transition the
-bean instance to the pooled state.
-
-When the instance is put back into the pool,
-it is no longer associated with an entity object identity. The container
-can assign the instance to any entity object within the same entity bean
-home.
-
-An instance in the pool can be removed by
-calling the _unsetEntityContext_ method on the instance.
+* An instance in the pool can be removed by calling the `unsetEntityContext` method on the instance.
 
 Notes:
 
-The EntityContext interface passed by the
-container to the instance in the setEntityContext method is an
-interface, not a class that contains static information. For example,
-the result of the EntityContext.getPrimaryKey method might be different
-each time an instance moves from the pooled state to the ready state,
-and the result of the getCallerPrincipal and isCallerInRole methods may
+. The `EntityContext` interface passed by the container to the instance in the `setEntityContext` method is an
+interface, not a class that contains static information.
+For example, the result of the `EntityContext.getPrimaryKey` method might be different each time an instance moves from the pooled state to the ready state, and the result of the `getCallerPrincipal` and `isCallerInRole` methods may
 be different in each business method.
 
-A RuntimeException thrown from any method of
-the entity bean class (including the business methods and the callbacks
-invoked by the container) results in the transition to the “does not
-exist” state. The container must not invoke any method on the instance
-after a RuntimeException has been caught. From the client perspective,
-the corresponding entity object continues to exist. The client can
-continue accessing the entity object through its component interface
-because the container can use a different entity bean instance to
-delegate the client’s requests. Exception handling is described further
-in Chapter link:Ejb.html#a3210[See Exception Handling].
+. A `RuntimeException` thrown from any method of the entity bean class (including the business methods and the callbacks invoked by the container) results in the transition to the "`does not exist`" state.
+The container must not invoke any method on the instance after a `RuntimeException` has been caught.
+From the client perspective, the corresponding entity object continues to exist.
+The client can continue accessing the entity object through its component interface because the container can use a different entity bean instance to delegate the client’s requests.
+Exception handling is described further in <<a3210>>.
 
-The container is not required to maintain a
-pool of instances in the pooled state. The pooling approach is an
-example of a possible implementation, but it is not the required
-implementation. Whether the container uses a pool or not has no bearing
-on the entity bean coding style.
+. The container is not required to maintain a pool of instances in the pooled state.
+The pooling approach is an example of a possible implementation, but it is not the required implementation.
+Whether the container uses a pool or not has no bearing on the entity bean coding style.
 
 ==== The Entity Bean Component Contract
 
-This section specifies the contract between
-an entity bean with bean-managed persistence and its container.
+This section specifies the contract between an entity bean with bean-managed persistence and its container.
 
 ===== Entity Bean Instance’s View
 
-The following describes the entity bean
-instance’s view of the contract:
+The following describes the entity bean instance’s view of the contract:
 
-The Bean Provider
-is responsible for implementing the following methods in the entity bean
-class:
+The Bean Provider is responsible for implementing the following methods in the entity bean class:
 
-A public
-constructor that takes no arguments. The container uses this constructor
-to create instances of the entity bean class.
+* A public constructor that takes no arguments.
+The container uses this constructor to create instances of the entity bean class.
 
- _public void setEntityContext(EntityContext
-ic)_ ;
+* `public void setEntityContext(EntityContext ic);`
++
+A container uses this method to pass a reference to the `EntityContext` interface to the entity bean instance.
+If the entity bean instance needs to use the `EntityContext` interface during its lifetime, it must remember the `EntityContext` interface in an instance variable.
++
+This method executes with an unspecified transaction context (Refer to Enterprise Beans Core Contracts and Requirements
+document <<a3339>> for how the container executes methods with an unspecified transaction context).
+An identity of an entity object is not available during this method.
++
+The instance can take advantage of the `setEntityContext` method to allocate any resources that are to be held by the instance for its lifetime.
+Such resources cannot be specific to an entity object identity because the instance might be reused during its lifetime to serve multiple entity object identities.
 
-A container uses
-this method to pass a reference to the EntityContext interface to the
-entity bean instance. If the entity bean instance needs to use the
-EntityContext interface during its lifetime, it must remember the
-EntityContext interface in an instance variable.
+* `public void unsetEntityContext();`
++
+A container invokes this method before terminating the life of the instance.
++
+This method executes with an unspecified transaction context.
+An identity of an entity object is not available during this method.
++
+The instance can take advantage of the `unsetEntityContext` method to free any resources that are held by the instance.
+(These resources typically had been allocated by the `setEntityContext` method.)
 
-This method executes with an unspecified
-transaction context (Refer to EJB Core Contracts and Requirements
-document link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
-Requirements. http://jcp.org/en/jsr/detail?id=345] Subsection 8.6.5 for
-how the container executes methods with an unspecified transaction
-context). An identity of an entity object is not available during this
-method.
+* `public` _PrimaryKeyClass_ `ejbCreate<METHOD>(...);`
++
+There are zero
+footnote:a3385[An entity Bean has no `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods if it does not define any create methods in its home interface.
+Such an entity bean does not allow the clients to create new entity objects.
+The entity bean restricts the clients to accessing entities that were created through direct database inserts.]
+or more `ejbCreate<METHOD>` methods, whose signatures match the signatures of the `create<METHOD>` methods of the entity bean home interface.
+The container invokes an `ejbCreate<METHOD>` method on an entity bean instance when a client invokes a matching `create<METHOD>` method to create an entity object.
++
+The implementation of the `ejbCreate<METHOD>` method typically validates the client-supplied arguments, and inserts a record representing the entity object into the database.
+The method also initializes the instance’s variables.
+The `ejbCreate<METHOD>` method must return the primary key for the created entity object.
++
+An `ejbCreate<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching `create<METHOD>` method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>>
+Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
 
-The instance can take advantage of the
-setEntityContext method to allocate any resources that are to be held by
-the instance for its lifetime. Such resources cannot be specific to an
-entity object identity because the instance might be reused during its
-lifetime to serve multiple entity object identities.
+* `public void ejbPostCreate<METHOD>(...);`
++
+For each `ejbCreate<METHOD>` method, there is a matching `ejbPostCreate<METHOD>` method that has the same input parameters but whose return value is void.
+The container invokes the matching `ejbPostCreate<METHOD>` method on an instance after it invokes the ejbCreate<METHOD> method with the same arguments.
+The entity object identity is available during the `ejbPostCreate<METHOD>` method.
+The instance may, for example, obtain the component interface of the associated entity object and pass it to another enterprise bean as a method argument.
++
+An `ejbPostCreate<METHOD>` method executes in the same transaction context as the previous `ejbCreate<METHOD>` method.
 
- _public void unsetEntityContext();_
-
-A container
-invokes this method before terminating the life of the instance.
-
-This method executes with an unspecified
-transaction context. An identity of an entity object is not available
-during this method.
-
-The instance can take advantage of the
-_unsetEntityContext_ method to free any resources that are held by the
-instance. (These resources typically had been allocated by the
-setEntityContext method.)
-
- _public PrimaryKeyClass ejbCreate_
-<METHOD>(...);
-
-There are
-zerolink:#a3385[21] or more ejbCreate<METHOD> methods, whose
-signatures match the signatures of the create<METHOD> methods of the
-entity bean home interface. The container invokes an _ejbCreate_
-<METHOD> method on an entity bean instance when a client invokes a
-matching create<METHOD> method to create an entity object.
-
-The implementation of the _ejbCreate_
-<METHOD> method typically validates the client-supplied arguments, and
-inserts a record representing the entity object into the database. The
-method also initializes the instance’s variables. The ejbCreate<METHOD>
-method must return the primary key for the created entity object.
-
-An _ejbCreate_ <METHOD> method executes in
-the transaction context determined by the transaction attribute of the
-matching create<METHOD> method, as described in EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]
-Subsection “Container-Managed Transaction Demarcation for Business
-Methods”.
-
- _public void ejbPostCreate_ <METHOD>
-_(...);_
-
-For each
-ejbCreate<METHOD> method, there is a matching ejbPostCreate<METHOD>
-method that has the same input parameters but whose return value is
-void. The container invokes the matching ejbPostCreate<METHOD> method on
-an instance after it invokes the ejbCreate<METHOD> method with the same
-arguments. The entity object identity is available during the
-ejbPostCreate<METHOD> method. The instance may, for example, obtain the
-component interface of the associated entity object and pass it to
-another enterprise bean as a method argument.
-
-An _ejbPostCreate_ <METHOD> method executes
-in the same transaction context as the previous ejbCreate<METHOD>
-method.
-
- _public void ejbActivate();_
-
-The container
-invokes this method on the instance when the container picks the
-instance from the pool and assigns it to a specific entity object
-identity. The ejbActivate method gives the entity bean instance the
-chance to acquire additional resources that it needs while it is in the
+* `public void ejbActivate();`
++
+The container invokes this method on the instance when the container picks the instance from the pool and assigns it to a specific entity object identity.
+The `ejbActivate` method gives the entity bean instance the chance to acquire additional resources that it needs while it is in the
 ready state.
++
+This method executes with an unspecified transaction context.
+The instance can obtain the identity of the entity object via the `getPrimaryKey`, `getEJBLocalObject`, or `getEJBObject` method on the entity context.
+The instance can rely on the fact that the primary key and entity object identity will remain associated with the instance until the completion of `ejbPassivate` or `ejbRemove`.
++
+Note that the instance should not use the `ejbActivate` method to read the state of the entity from the database; the instance should load its state only in the `ejbLoad` method.
 
-This method executes with an unspecified
-transaction context. The instance can obtain the identity of the entity
-object via the getPrimaryKey, getEJBLocalObject, or getEJBObject method
-on the entity context. The instance can rely on the fact that the
-primary key and entity object identity will remain associated with the
-instance until the completion of ejbPassivate or ejbRemove.
+* `public void ejbPassivate();`
++
+The container invokes this method on an instance when the container decides to disassociate the instance from an entity object identity, and to put the instance back into the pool of available instances.
+The `ejbPassivate` method gives the instance the chance to release any resources that should not be held while the instance is in the pool.
+(These resources typically had been allocated during the `ejbActivate` method.)
++
+This method executes with an unspecified transaction context.
+The instance can still obtain the identity of the entity object via the `getPrimaryKey`, `getEJBLocalObject`, or `getEJBObject` method of the `EntityContext` interface.
++
+Note that an instance should not use the `ejbPassivate` method to write its state to the database; an instance should store its state only in the `ejbStore` method.
 
-Note that the instance should not use the
-ejbActivate method to read the state of the entity from the database;
-the instance should load its state only in the ejbLoad method.
+* `public void ejbRemove();`
++
+The container invokes this method on an instance as a result of a client’s invoking a `remove` method.
+The instance is in the ready state when `ejbRemove` is invoked and it will be entered into the pool when the method completes.
++
+This method executes in the transaction context determined by the transaction attribute of the `remove` method that triggered the `ejbRemove` method.
+The instance can still obtain the identity of the entity object via the `getPrimaryKey`, `getEJBLocalObject`, or `getEJBObject` method of the `EntityContext` interface.
++
+The container synchronizes the instance’s state before it invokes the `ejbRemove` method.
+This means that the state of the instance variables at the beginning of the `ejbRemove` method is the same as it would be at the beginning of a business method.
++
+An entity bean instance should use this method to remove the entity object’s representation from the database.
++
+Since the instance will be entered into the pool, the state of the instance at the end of this method must be equivalent to the state of a passivated instance.
+This means that the instance must release any resource that it would normally release in the `ejbPassivate` method.
 
- _public void ejbPassivate()_ ; +
-The container invokes this method on an
-instance when the container decides to disassociate the instance from an
-entity object identity, and to put the instance back into the pool of
-available instances. The _ejbPassivate_ method gives the instance the
-chance to release any resources that should not be held while the
-instance is in the pool. (These resources typically had been allocated
-during the _ejbActivate_ method.)
+* `public void ejbLoad();`
++
+The container invokes this method on an instance in the ready state to inform the instance that it should synchronize the entity state cached in its instance variables from the entity state in the database.
+The instance should be prepared for the container to invoke this method at any time that the instance is in the ready state.
++
+If the instance is caching the entity state (or parts of the entity state), the instance should not use the previously cached state in the subsequent business method.
+The instance may take advantage of the `ejbLoad` method, for example, to refresh the cached state by reading it from the database.
++
+This method executes in the transaction context determined by the transaction attribute of the business method or `ejbTimeout` method that triggered the `ejbLoad` method.
 
-This method executes with an unspecified
-transaction context. The instance can still obtain the identity of the
-entity object via the getPrimaryKey, getEJBLocalObject, or getEJBObject
-method of the EntityContext interface.
+* `public void ejbStore();`
++
+The container invokes this method on an instance to inform the instance that the instance should synchronize the entity state in the database with the entity state cached in its instance variables.
+The instance should be prepared for the container to invoke this method at any time that the instance is in the ready state.
++
+An instance should write any updates cached in the instance variables to the database in the `ejbStore` method.
++
+This method executes in the same transaction context as the previous `ejbLoad` or `ejbCreate<METHOD>` method invoked on the instance.
+All business methods or the `ejbTimeout` method invoked between the previous `ejbLoad` or `ejbCreate<METHOD>` method and this `ejbStore` method are also invoked in the same transaction context.
 
-Note that an instance should not use the
-ejbPassivate method to write its state to the database; an instance
-should store its state only in the ejbStore method.
+* `public` _<primary key type or collection>_ `ejbFind<METHOD>(...);`
++
+The container invokes this method on the instance when the container selects the instance to execute a matching client-invoked `find<METHOD>` method.
+The instance is in the pooled state (i.e., it is not assigned to any particular entity object identity) when the container selects the instance to execute the `ejbFind<METHOD>` method on it, and it is returned to the pooled state when the execution of the `ejbFind<METHOD>` method completes.
++
+The `ejbFind<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching find method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
++
+The implementation of an `ejbFind<METHOD>` method typically uses the method’s arguments to locate the requested entity object or a collection of entity objects in the database.
+The method must return a primary key or a collection of primary keys to the container (see <<a2729>>).
 
- _public void ejbRemove()_ ;
+* `public` _<type>_ `ejbHome<METHOD>(...);`
++
+The container invokes this method on any instance when the container selects the instance to execute a matching client-invoked `<METHOD>` home method.
+The instance is in the pooled state (i.e., it is not assigned to any particular entity object identity) when the container selects the instance to execute the `ejbHome<METHOD>` method on it, and it is returned to the pooled state when the execution of the `ejbHome<METHOD>` method completes.
++
+The `ejbHome<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching `<METHOD>` home method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
 
-The container
-invokes this method on an instance as a result of a client’s invoking a
-remove method. The instance is in the ready state when ejbRemove is
-invoked and it will be entered into the pool when the method completes.
-
-This method executes in the transaction
-context determined by the transaction attribute of the remove method
-that triggered the _ejbRemove_ method. The instance can still obtain the
-identity of the entity object via the getPrimaryKey, getEJBLocalObject,
-or getEJBObject method of the EntityContext interface.
-
-The container synchronizes the instance’s
-state before it invokes the ejbRemove method. This means that the state
-of the instance variables at the beginning of the ejbRemove method is
-the same as it would be at the beginning of a business method.
-
-An entity bean instance should use this
-method to remove the entity object’s representation from the database.
-
-Since the instance will be entered into the
-pool, the state of the instance at the end of this method must be
-equivalent to the state of a passivated instance. This means that the
-instance must release any resource that it would normally release in the
-ejbPassivate method.
-
- _public void ejbLoad()_ ;
-
-The container
-invokes this method on an instance in the ready state to inform the
-instance that it should synchronize the entity state cached in its
-instance variables from the entity state in the database. The instance
-should be prepared for the container to invoke this method at any time
-that the instance is in the ready state.
-
-If the instance is caching the entity state
-(or parts of the entity state), the instance should not use the
-previously cached state in the subsequent business method. The instance
-may take advantage of the ejbLoad method, for example, to refresh the
-cached state by reading it from the database.
-
-This method executes in the transaction
-context determined by the transaction attribute of the business method
-or _ejbTimeout_ method that triggered the ejbLoad method.
-
- _public void ejbStore();_
-
-The container
-invokes this method on an instance to inform the instance that the
-instance should synchronize the entity state in the database with the
-entity state cached in its instance variables. The instance should be
-prepared for the container to invoke this method at any time that the
-instance is in the ready state.
-
-An instance should write any updates cached
-in the instance variables to the database in the ejbStore method.
-
-This method executes in the same transaction
-context as the previous ejbLoad or ejbCreate _<METHOD>_ method invoked
-on the instance. All business methods or the _ejbTimeout_ method invoked
-between the previous ejbLoad or ejbCreate _<METHOD>_ method and this
-ejbStore method are also invoked in the same transaction context.
-
-public <primary key type or collection>
-ejbFind<METHOD>(...);
-
-The container
-invokes this method on the instance when the container selects the
-instance to execute a matching client-invoked find<METHOD> method. The
-instance is in the pooled state (i.e., it is not assigned to any
-particular entity object identity) when the container selects the
-instance to execute the ejbFind<METHOD> method on it, and it is returned
-to the pooled state when the execution of the ejbFind<METHOD> method
-completes.
-
-The ejbFind<METHOD> method executes in the
-transaction context determined by the transaction attribute of the
-matching find method, as described in EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]
-Subsection “Container-Managed Transaction Demarcation for Business
-Methods”.
-
-The implementation of an ejbFind<METHOD>
-method typically uses the method’s arguments to locate the requested
-entity object or a collection of entity objects in the database. The
-method must return a primary key or a collection of primary keys to the
-container (see Subsection link:Ejb.html#a2729[See Finder Method
-Return Type]).
-
-public __ <type> __ ejbHome<METHOD>(...);
-
-The container
-invokes this method on any instance when the container selects the
-instance to execute a matching client-invoked <METHOD> home method. The
-instance is in the pooled state (i.e., it is not assigned to any
-particular entity object identity) when the container selects the
-instance to execute the ejbHome<METHOD> method on it, and it is returned
-to the pooled state when the execution of the ejbHome<METHOD> method
-completes.
-
-The ejbHome<METHOD> method executes in the
-transaction context determined by the transaction attribute of the
-matching <METHOD> home method, as described in EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]
-Subsection “Container-Managed Transaction Demarcation for Business
-Methods”.
-
- _public void ejbTimeout(...);_
-
-The container invokes the _ejbTimeout_ method
-on an instance when a timer for the instance has expired. The
-_ejbTimeout_ method notifies the instance of the time-based event and
-allows the instance to execute the business logic to handle it.
-
-The _ejbTimeout_ method executes in the
-transaction context determined by its transaction attribute.
+* `public void ejbTimeout(...);`
++
+The container invokes the `ejbTimeout` method on an instance when a timer for the instance has expired.
+The `ejbTimeout` method notifies the instance of the time-based event and allows the instance to execute the business logic to handle it.
++
+The `ejbTimeout` method executes in the transaction context determined by its transaction attribute.
 
 [[a2553]]
 ===== Container’s View
 
-This subsection
-describes the container’s view of the state
-management contract. The container must call the following methods:
+This subsection describes the container’s view of the state management contract.
+The container must call the following methods:
 
- _public void setEntityContext(ec)_ ;
+* `public void setEntityContext(ec);`
++
+The container invokes this method to pass a reference to the `EntityContext` interface to the entity bean instance.
+The container must invoke this method after it creates the instance, and before it puts the instance into the pool of available instances.
++
+The container invokes this method with an unspecified transaction context.
+At this point, the `EntityContext` is not associated with any entity object identity.
 
-The container invokes this method to pass a
-reference to the EntityContext interface to the entity bean instance.
-The container must invoke this method after it creates the instance, and
-before it puts the instance into the pool of available instances.
+* `public void unsetEntityContext();`
++
+The container invokes this method when the container wants to reduce the number of instances in the pool.
+After this method completes, the container must not reuse this instance.
++
+The container invokes this method with an unspecified transaction context.
 
-The container invokes this method with an
-unspecified transaction context. At this point, the EntityContext is not
-associated with any entity object identity.
+* `public` _PrimaryKeyClass_ `ejbCreate<METHOD>(...);` +
+`public void ejbPostCreate<METHOD>(...);`
++
+The container invokes these two methods during the creation of an entity object as a result of a client invoking a `create<METHOD>` method on the entity bean’s home interface.
++
+The container first invokes the `ejbCreate<METHOD>` method whose signature matches the `create<METHOD>` method invoked by the client.
+The `ejbCreate<METHOD>` method returns a primary key for the created entity object.
+The container creates an entity EJBObject reference and/or EJBLocalObject reference for the primary key.
+The container then invokes a matching `ejbPostCreate<METHOD>` method to allow the instance to fully initialize itself.
+Finally, the container returns the entity object’s remote interface (i.e., a reference to the entity EJBObject) to the client if the client is a remote client, or the entity object’s local interface (i.e., a reference to the entity EJBLocalObject) to the client if the client is a local client.
++
+The container must invoke the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods in the transaction context determined by the transaction attribute of the matching `create<METHOD>` method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
 
- _public void unsetEntityContext()_ ;
+* `public void ejbActivate();`
++
+The container invokes this method on an entity bean instance at activation time (i.e., when the instance is taken from the pool and assigned to an entity object identity).
+The container must ensure that the primary key of the associated entity object is available to the instance if the instance invokes the
+`getPrimaryKey`, `getEJBLocalObject`, or `getEJBObject` method on its `EntityContext` interface.
++
+The container invokes this method with an unspecified transaction context.
++
+Note that instance is not yet ready for the delivery of a business method.
+The container must still invoke the `ejbLoad` method prior to a business method or `ejbTimeout` method invocation.
 
-The container invokes this method when the
-container wants to reduce the number of instances in the pool. After
-this method completes, the container must not reuse this instance.
+* `public void ejbPassivate();`
++
+The container invokes this method on an entity bean instance at passivation time (i.e., when the instance is being disassociated from an entity object identity and moved into the pool).
+The container must ensure that the identity of the associated entity object is still available to the instance if the instance invokes
+the `getPrimaryKey`, `getEJBLocalObject`, or `getEJBObject` method on its entity context.
++
+The container invokes this method with an unspecified transaction context.
++
+Note that if the instance state has been updated by a transaction, the container must first invoke the `ejbStore` method on the instance before it invokes `ejbPassivate` on it.
 
-The container invokes this method with an
-unspecified transaction context.
+* public void ejbRemove();
++
+The container invokes this method before it ends the life of an entity object as a result of a client invoking a `remove` operation.
++
+The container invokes this method in the transaction context determined by the transaction attribute of the invoked `remove` method.
+The container must ensure that the identity of the associated entity object is still available to the instance in the `ejbRemove` method (i.e., the instance can invoke the `getPrimaryKey`, `getEJBLocalObject`, or `getEJBObject` method on its `EntityContext` in the `ejbRemove` method).
++
+The container must ensure that the instance’s state is synchronized from the state in the database before invoking the
+`ejbRemove` method (i.e., if the instance is not already synchronized from the state in the database, the container must invoke `ejbLoad` before it invokes `ejbRemove`).
 
- _public PrimaryKeyClass ejbCreate_ <METHOD>
-_(...)_ ; +
-_public void ejbPostCreate_ <METHOD> _(...)_ ;
+* `public void ejbLoad();`
++
+The container must invoke this method on the instance whenever it becomes necessary for the instance to synchronize its instance state from its state in the database.
+The exact times that the container invokes `ejbLoad` depend on the configuration of the component and the container, and are not defined by the Enterprise Beans architecture.
+Typically, the container will call `ejbLoad` before the first business method within a transaction or before invoking the `ejbTimeout` method to ensure that the instance can refresh its cached state of the entity object from the database.
+After the first `ejbLoad` within a transaction, the container is not required to recognize that the state of the entity object in the database has been changed by another transaction, and it is not required to notify the instance of this change via another `ejbLoad` call.
++
+The container must invoke this method in the transaction context determined by the transaction attribute of the business method or `ejbTimeout` method that triggered the `ejbLoad` method.
 
-The container invokes these two methods
-during the creation of an entity object as a result of a client invoking
-a create<METHOD> method on the entity bean’s home interface.
+* `public void ejbStore();`
++
+The container must invoke this method on the instance whenever it becomes necessary for the instance to synchronize its state in the database with the state of the instance’s fields.
+This synchronization always happens at the end of a transaction, unless the bean is specified as read-only (see <<a2598>>).
+However, the container may also invoke this method when it passivates the instance in the middle of a transaction, or when it needs to transfer the most recent state of the entity object to another instance for the same entity object in the same transaction (see Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Access from Multiple Clients in the Same Transaction Context`"_).
++
+The container must invoke this method in the same transaction context as the previously invoked `ejbLoad`, `ejbCreate<METHOD>`, or `ejbTimeout` method.
 
-The container first invokes the
-ejbCreate<METHOD> method whose signature matches the create<METHOD>
-method invoked by the client. The ejbCreate<METHOD> method returns a
-primary key for the created entity object. The container creates an
-entity EJBObject reference and/or EJBLocalObject reference for the
-primary key. The container then invokes a matching ejbPostCreate<METHOD>
-method to allow the instance to fully initialize itself. Finally, the
-container returns the entity object’s remote interface (i.e., a
-reference to the entity EJBObject) to the client if the client is a
-remote client, or the entity object’s local interface (i.e., a reference
-to the entity EJBLocalObject) to the client if the client is a local
-client.
+* `public` _<primary key type or collection>_ `ejbFind<METHOD>(...);`
++
+The container invokes the `ejbFind<METHOD>` method on an instance when a client invokes a matching `find<METHOD>` method on the entity bean’s home interface.
+The container must pick an instance that is in the pooled state (i.e., the instance is not associated with any entity object identity) for the execution of the `ejbFind<METHOD>` method.
+If there is no instance in the pooled state, the container creates one and calls the `setEntityContext` method on the instance before dispatching the finder method.
++
+Before invoking the `ejbFind<METHOD>` method, the container must first synchronize the state of any non-read-only entity bean instances that are participating in the same transaction context as is used to execute the `ejbFind<METHOD>` by invoking the `ejbStore` method on those entity bean instances.
+footnote:a3386[The Enterprise Beans specification does not require the distributed flushing of state.
+The container in which the `ejbFind<METHOD>` method executes is not required to propagate the flush to a different container.]
++
+After the `ejbFind<METHOD>` method completes, the instance remains in the pooled state.
+The container may, but is not required to, immediately activate the objects that were located by the finder using the transition through the `ejbActivate` method.
++
+The container must invoke the `ejbFind<METHOD>` method in the transaction context determined by the transaction attribute of the matching find method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed
+Transaction Demarcation for Business Methods`"_.
++
+If the `ejbFind<METHOD>` method is declared to return a single primary key, the container creates an entity EJBObject reference for the primary key and returns it to the client if the client is a remote client.
+If the client is a local client, the container creates and returns an entity EJBLocalObject reference for the primary key.
+If the `ejbFind<METHOD>` method is declared to return a collection of primary keys, the container creates a collection of entity EJBObject or EJBLocalObject references for the primary keys returned from `ejbFind<METHOD>`, and returns the collection to the client.
+(See <<a2729>> for information on collections.)
 
-The container must invoke the
-ejbCreate<METHOD> and ejbPostCreate<METHOD> methods in the transaction
-context determined by the transaction attribute of the matching
-create<METHOD> method, as described in EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]
-Subsection “Container-Managed Transaction Demarcation for Business
-Methods”.
+* `public` _<type>_ `ejbHome<METHOD>(...);`
++
+The container invokes the `ejbHome<METHOD>` method on an instance when a client invokes a matching `<METHOD>` home method on the entity bean’s home interface.
+The container must pick an instance that is in the pooled state (i.e., the instance is not associated with any entity object identity) for the execution of the `ejbHome<METHOD>` method.
+If there is no instance in the pooled state, the container creates one and calls the `setEntityContext` method on the instance before dispatching the home method.
++
+After the `ejbHome<METHOD>` method completes, the instance remains in the pooled state.
++
+The container must invoke the `ejbHome<METHOD>` method in the transaction context determined by the transaction attribute of the matching `<METHOD>` home method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
 
- _public void ejbActivate()_ ;
-
-The container invokes this method on an
-entity bean instance at activation time (i.e., when the instance is
-taken from the pool and assigned to an entity object identity). The
-container must ensure that the primary key of the associated entity
-object is available to the instance if the instance invokes the
-getPrimaryKey, getEJBLocalObject, or getEJBObject method on its
-EntityContext interface.
-
-The container invokes this method with an
-unspecified transaction context.
-
-Note that instance is not yet ready for the
-delivery of a business method. The container must still invoke the
-ejbLoad method prior to a business method or _ejbTimeout_ method
-invocation.
-
- _public void ejbPassivate()_ ;
-
-The container invokes this method on an
-entity bean instance at passivation time (i.e., when the instance is
-being disassociated from an entity object identity and moved into the
-pool). The container must ensure that the identity of the associated
-entity object is still available to the instance if the instance invokes
-the getPrimaryKey, getEJBLocalObject, or getEJBObject method on its
-entity context.
-
-The container invokes this method with an
-unspecified transaction context.
-
-Note that if the instance state has been
-updated by a transaction, the container must first invoke the ejbStore
-method on the instance before it invokes ejbPassivate on it.
-
- _public void ejbRemove();_
-
-The container invokes this method before it
-ends the life of an entity object as a result of a client invoking a
-remove operation.
-
-The container invokes this method in the
-transaction context determined by the transaction attribute of the
-invoked remove method. The container must ensure that the identity of
-the associated entity object is still available to the instance in the
-_ejbRemove_ method (i.e., the instance can invoke the getPrimaryKey,
-getEJBLocalObject, or getEJBObject method on its EntityContext in the
-_ejbRemove_ method).
-
-The container must ensure that the instance’s
-state is synchronized from the state in the database before invoking the
-ejbRemove method (i.e., if the instance is not already synchronized from
-the state in the database, the container must invoke ejbLoad before it
-invokes ejbRemove).
-
- _public void ejbLoad()_ ;
-
-The container must invoke this method on the
-instance whenever it becomes necessary for the instance to synchronize
-its instance state from its state in the database. The exact times that
-the container invokes _ejbLoad_ depend on the configuration of the
-component and the container, and are not defined by the EJB
-architecture. Typically, the container will call _ejbLoad_ before the
-first business method within a transaction or before invoking the
-_ejbTimeout_ method to ensure that the instance can refresh its cached
-state of the entity object from the database. After the first _ejbLoad_
-within a transaction, the container is not required to recognize that
-the state of the entity object in the database has been changed by
-another transaction, and it is not required to notify the instance of
-this change via another _ejbLoad_ call.
-
-The container must invoke this method in the
-transaction context determined by the transaction attribute of the
-business method or _ejbTimeout_ method that triggered the ejbLoad
-method.
-
- _public void ejbStore()_ ;
-
-The container must invoke this method on the
-instance whenever it becomes necessary for the instance to synchronize
-its state in the database with the state of the instance’s fields. This
-synchronization always happens at the end of a transaction, unless the
-bean is specified as read-only (see section
-link:Ejb.html#a2598[See Read-only Entity Beans]). However, the
-container may also invoke this method when it passivates the instance in
-the middle of a transaction, or when it needs to transfer the most
-recent state of the entity object to another instance for the same
-entity object in the same transaction (see EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]
-Subsection “Access from Multiple Clients in the Same Transaction
-Context”).
-
-The container must invoke this method in the
-same transaction context as the previously invoked ejbLoad, ejbCreate
-_<METHOD>_ , or _ejbTimeout_ method.
-
-public <primary key type or collection>
-ejbFind<METHOD>(...);
-
-The container invokes the ejbFind<METHOD>
-method on an instance when a client invokes a matching find<METHOD>
-method on the entity bean’s home interface. The container must pick an
-instance that is in the pooled state (i.e., the instance is not
-associated with any entity object identity) for the execution of the
-ejbFind<METHOD> method. If there is no instance in the pooled state, the
-container creates one and calls the setEntityContext method on the
-instance before dispatching the finder method.
-
-{empty}Before invoking the _ejbFind<METHOD>_
-method, the container must first synchronize the state of any
-non-read-only entity bean instances that are participating in the same
-transaction context as is used to execute the _ejbFind<METHOD>_ by
-invoking the _ejbStore_ method on those entity bean instances.
-link:#a3386[22]
-
-After the ejbFind<METHOD> method completes,
-the instance remains in the pooled state. The container may, but is not
-required to, immediately activate the objects that were located by the
-finder using the transition through the ejbActivate method.
-
-The container must invoke the ejbFind<METHOD>
-method in the transaction context determined by the transaction
-attribute of the matching find method, as described in EJB Core
-Contracts and Requirements document link:Ejb.html#a3339[See EJB
-3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345] Subsection “Container-Managed
-Transaction Demarcation for Business Methods”.
-
-If the ejbFind<METHOD> method is declared to
-return a single primary key, the container creates an entity EJBObject
-reference for the primary key and returns it to the client if the client
-is a remote client. If the client is a local client, the container
-creates and returns an entity EJBLocalObject reference for the primary
-key. If the ejbFind<METHOD> method is declared to return a collection of
-primary keys, the container creates a collection of entity EJBObject or
-EJBLocalObject references for the primary keys returned from
-ejbFind<METHOD>, and returns the collection to the client. (See
-Subsection link:Ejb.html#a2729[See Finder Method Return Type]
-for information on collections.)
-
-public __ <type> ejbHome<METHOD>(...);
-
-The container invokes the ejbHome<METHOD>
-method on an instance when a client invokes a matching <METHOD> home
-method on the entity bean’s home interface. The container must pick an
-instance that is in the pooled state (i.e., the instance is not
-associated with any entity object identity) for the execution of the
-ejbHome<METHOD> method. If there is no instance in the pooled state, the
-container creates one and calls the setEntityContext method on the
-instance before dispatching the home method.
-
-After the ejbHome<METHOD> method completes,
-the instance remains in the pooled state.
-
-The container must invoke the ejbHome<METHOD>
-method in the transaction context determined by the transaction
-attribute of the matching <METHOD> home method, as described in EJB Core
-Contracts and Requirements document link:Ejb.html#a3339[See EJB
-3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345] Subsection “Container-Managed
-Transaction Demarcation for Business Methods”.
-
-
- _public void ejbTimeout(...);_
-
-The container invokes the _ejbTimeout_ method
-on the instance when a timer with which the entity has been registered
-expires. If there is no suitable instance in the ready state, the
-container must activate an instance, invoking the _ejbActivate_ method
-and transitioning it to the ready state.
-
-The container invokes the _ejbTimeout_ method
-in the context of a transaction determined by its transaction attribute.
+* `public void ejbTimeout(...);`
++
+The container invokes the `ejbTimeout` method on the instance when a timer with which the entity has been registered expires.
+If there is no suitable instance in the ready state, the container must activate an instance, invoking the `ejbActivate` method and transitioning it to the ready state.
++
+The container invokes the `ejbTimeout` method in the context of a transaction determined by its transaction attribute.
 
 [[a2598]]
 ==== Read-only Entity Beans
 
-Compliant implementations of this
-specification may optionally support read-only entity beans. A read-only
-entity bean is an entity bean whose instances are not intended to be
-updated and/or created by the application. Read-only beans are best
-suited for situations where the underlying data never changes or changes
-infrequently.
+Compliant implementations of this specification may optionally support read-only entity beans.
+A read-only entity bean is an entity bean whose instances are not intended to be updated and/or created by the application.
+Read-only beans are best suited for situations where the underlying data never changes or changes infrequently.
 
-{empty}Containers that support read-only
-beans do not call the _ejbStore_ method on them. The _ejbLoad_ method
-should typically be called by the container when the state of the bean
-instance is initially loaded from the database, or at designated refresh
-intervals.link:#a3387[23]
+Containers that support read-only beans do not call the `ejbStore` method on them.
+The `ejbLoad` method should typically be called by the container when the state of the bean instance is initially loaded from the database, or at designated refresh intervals.
+footnote:a3387[The ability to refresh the state of a read-only bean and the intervals at which such refresh occurs are vendor-specific.]
 
-{empty}If a read-only bean is used, the state
-of such a bean should not be updated by the application, and the
-behavior is unspecified if this occurs.link:#a3388[24]
+If a read-only bean is used, the state of such a bean should not be updated by the application, and the behavior is unspecified if this occurs.
+footnote:a3388[For example, an implementation might choose to ignore such updates or to disallow them.]
 
-Read-only beans are designated by
-vendor-specific means that are outside the scope of this specification,
-and their use is therefore not portable.
+Read-only beans are designated by vendor-specific means that are outside the scope of this specification, and their use is therefore not portable.
 
 ==== The EntityContext Interface
 
-A container
-provides the entity bean instances with an _EntityContext_ , which gives
-the entity bean instance access to the instance’s context maintained by
-the container. The _EntityContext_ interface has the following methods:
+A container provides the entity bean instances with an `EntityContext`, which gives the entity bean instance access to the instance’s context maintained by the container.
+The `EntityContext` interface has the following methods:
 
-The _getEJBObject_ method returns the entity
-bean’s remote interface.
+* The `getEJBObject` method returns the entity bean’s remote interface.
 
-The _getEJBHome_ method returns the entity
-bean’s remote home interface.
+* The `getEJBHome` method returns the entity bean’s remote home interface.
 
-The _getEJBLocalObject_ method returns the
-entity bean’s local interface.
+* The `getEJBLocalObject` method returns the entity bean’s local interface.
 
-The _getEJBLocalHome_ method returns the
-entity bean’s local home interface.
+* The `getEJBLocalHome` method returns the entity bean’s local home interface.
 
-The _getCallerPrincipal_ method returns the
-_java.security.Principal_ that identifies the invoker.
+* The `getCallerPrincipal` method returns the `java.security.Principal` that identifies the invoker.
 
-The _isCallerInRole_ method tests if the
-entity bean instance’s caller has a particular role.
+* The `isCallerInRole` method tests if the entity bean instance’s caller has a particular role.
 
-The _setRollbackOnly_ method allows the
-instance to mark the current transaction such that the only outcome of
-the transaction is a rollback.
+* The `setRollbackOnly` method allows the instance to mark the current transaction such that the only outcome of the transaction is a rollback.
 
-The _getRollbackOnly_ method allows the
-instance to test if the current transaction has been marked for
-rollback.
+* The `getRollbackOnly` method allows the instance to test if the current transaction has been marked for rollback.
 
-The _getPrimaryKey_ method returns the entity
-bean’s primary key.
+* The `getPrimaryKey` method returns the entity bean’s primary key.
 
-The _getTimerService_ method returns the
-_javax.ejb.TimerService_ interface.
+* The `getTimerService` method returns the `jakarta.ejb.TimerService` interface.
 
-The _getUserTransaction_ method returns the
-_javax.transaction.UserTransaction_ interface. Entity bean instances
-must not call this method.
+* The `getUserTransaction` method returns the `jakarta.transaction.UserTransaction` interface.
+Entity bean instances must not call this method.
 
-The _lookup_ method enables the entity bean
-to look up its environment entries in the JNDI naming context.
+* The `lookup` method enables the entity bean to look up its environment entries in the JNDI naming context.
 
 ==== Operations Allowed in the Methods of the Entity Bean Class
 
-Table link:Ejb.html#a2625[See
-Operations Allowed in the Methods of an Entity Bean] defines the methods
-of an entity bean class in which the enterprise bean instances can
-access the methods of the
-javax.ejb.EntityContext interface, the
-java:comp/env environment naming context, resource managers,
-_TimerService_ and _Timer_ methods, the _EntityManagerFactory_ and
-_EntityManager_ methods, and other enterprise beans.
+<<a2625>> defines the methods of an entity bean class in which the enterprise bean instances can access the methods of the `jakarta.ejb.EntityContext` interface, the `java:comp/env` environment naming context, resource managers, `TimerService` and `Timer` methods, the `EntityManagerFactory` and `EntityManager` methods, and other enterprise beans.
 
-If an entity bean instance attempts to invoke
-a method of the EntityContext interface, and the access is not allowed
-in Table link:Ejb.html#a2625[See Operations Allowed in the
-Methods of an Entity Bean], the container must throw the
-java.lang.IllegalStateException.
+If an entity bean instance attempts to invoke a method of the `EntityContext` interface, and the access is not allowed in <<a2625>>, the container must throw the `java.lang.IllegalStateException`.
 
-If an entity bean instance attempts to invoke
-a method of the _TimerService_ or _Timer_ interface and the access is
-not allowed in Table link:Ejb.html#a2625[See Operations Allowed
-in the Methods of an Entity Bean], the container must throw the
-java.lang.IllegalStateException.
+If an entity bean instance attempts to invoke a method of the `TimerService` or `Timer` interface and the access is not allowed in <<a2625>>, the container must throw the `java.lang.IllegalStateException`.
 
-If an entity bean instance attempts to access
-a resource manager, an enterprise bean, or an entity manager or entity
-manager factory, and the access is not allowed in Table
-link:Ejb.html#a2625[See Operations Allowed in the Methods of an
-Entity Bean], the behavior is undefined by the EJB architecture.
+If an entity bean instance attempts to access a resource manager, an enterprise bean, or an entity manager or entity manager factory, and the access is not allowed in <<a2625>>, the behavior is undefined by the Enterprise Beans architecture.
 
 
 
-===
+[[a2625]]
+.Operations Allowed in the Methods of an Entity Bean
+[cols="2", width="100%", options="header"]
+|===
+| Bean method
+| Bean method can perform the following operations
 
+| constructor
+| -
 
-
-[[a2625]]Operations Allowed in the Methods of an Entity
-Bean
-
-Bean method
-
-Bean method can perform the following
-operations
-
-constructor
-
--
-
-setEntityContext
-
+| setEntityContext +
 unsetEntityContext
+| EntityContext methods: _getEJBHome, getEJBLocalHome, lookup_ +
+JNDI access to java:comp/env +
 
-EntityContext methods: getEJBHome,
-getEJBLocalHome, lookup
-
-JNDI access to java:comp/env
-
-ejbCreate
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
+| ejbCreate
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
 EntityManager access
 
-ejbPostCreate
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, getEJBObject, _getEJBLocalObject,_ getPrimaryKey,
-getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-Timer service or Timer methods
-
-EntityManagerFactory access
-
+| ejbPostCreate
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject, getPrimaryKey, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+Timer service or Timer methods +
+EntityManagerFactory access +
 EntityManager access
 
-ejbRemove
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, getEJBObject, _getEJBLocalObject,_ getPrimaryKey,
-getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-Timer service or Timer methods
-
-EntityManagerFactory access
-
+| ejbRemove
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject, getPrimaryKey, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+Timer service or Timer methods +
+EntityManagerFactory access +
 EntityManager access
 
-ejbFind
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
+| ejbFind
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
 EntityManager access
 
-ejbHome
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-EntityManagerFactory access
-
+| ejbHome
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+EntityManagerFactory access +
 EntityManager access
 
-ejbActivate
-
+| ejbActivate +
 ejbPassivate
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getEJBObject, _getEJBLocalObject,_ getPrimaryKey,
-getTimerService, lookup
-
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getEJBObject, getEJBLocalObject, getPrimaryKey, getTimerService, lookup_ +
 JNDI access to java:comp/env
 
-ejbLoad
-
+| ejbLoad +
 ejbStore
-
-EntityContext methods: getEJBHome,
-_getEJBLocalHome_ , getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, getEJBObject, _getEJBLocalObject,_ getPrimaryKey,
-getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-Timer service or Timer methods
-
-EntityManagerFactory access
-
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject, getPrimaryKey, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+Timer service or Timer methods +
+EntityManagerFactory access +
 EntityManager access
 
-business method
-
-from component interface
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole,
-setRollbackOnly, getEJBObject, _getEJBLocalObject,_ getPrimaryKey,
-getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-Timer service or Timer methods
-
-EntityManagerFactory access
-
+| business method from component interface
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, getRollbackOnly, isCallerInRole, setRollbackOnly, getEJBObject, getEJBLocalObject, getPrimaryKey, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+Timer service or Timer methods +
+EntityManagerFactory access +
 EntityManager access
 
-ejbTimeout
-
-EntityContext methods: getEJBHome,
-getEJBLocalHome, getCallerPrincipal, isCallerInRole, getRollbackOnly,
-setRollbackOnly, getEJBObject, _getEJBLocalObject,_ getPrimaryKey,
-getTimerService, lookup
-
-JNDI access to java:comp/env
-
-Resource manager access
-
-Enterprise bean access
-
-Timer service or Timer methods
-
-EntityManagerFactory access
-
+| ejbTimeout
+| EntityContext methods: _getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole, getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject, getPrimaryKey, getTimerService, lookup_ +
+JNDI access to java:comp/env +
+Resource manager access +
+Enterprise bean access +
+Timer service or Timer methods +
+EntityManagerFactory access +
 EntityManager access
+|===
 
 Additional restrictions:
 
-The getRollbackOnly and setRollbackOnly
-methods of the EntityContext interface should be used only in the
-enterprise bean methods that execute in the context of a transaction.
-The container must throw the java.lang.IllegalStateException if the
-methods are invoked while the instance is not associated with a
-transaction.
+* The `getRollbackOnly` and `setRollbackOnly` methods of the `EntityContext` interface should be used only in the enterprise bean methods that execute in the context of a transaction.
+The container must throw the `java.lang.IllegalStateException` if the methods are invoked while the instance is not associated with a transaction.
 
 Reasons for disallowing operations:
 
-Invoking the getEJBObject, getEJBLocalObject,
-and getPrimaryKey methods is disallowed in the entity bean methods in
-which there is no entity object identity associated with the instance.
+* Invoking the `getEJBObject`, `getEJBLocalObject`, and `getPrimaryKey` methods is disallowed in the entity bean methods in which there is no entity object identity associated with the instance.
 
-Invoking the _getEJBObject_ and _getEJBHome_
-methods is disallowed if the entity bean does not define a remote client
-view.
+* Invoking the `getEJBObject` and `getEJBHome` methods is disallowed if the entity bean does not define a remote client view.
 
-Invoking the _getEJBLocalObject_ and
-_getEJBLocalHome_ methods is disallowed if the entity bean does not
-define a local client view.
+* Invoking the `getEJBLocalObject` and `getEJBLocalHome` methods is disallowed if the entity bean does not define a local client view.
 
-Invoking the getRollbackOnly and
-setRollbackOnly methods is disallowed in the entity bean methods for
-which the container does not have a meaningful transaction context.
-These are the methods that have the NotSupported, Never, or Supports
-transaction attribute.
+* Invoking the `getRollbackOnly` and `setRollbackOnly` methods is disallowed in the entity bean methods for which the container does not have a meaningful transaction context.
+These are the methods that have the `NotSupported`, `Never`, or `Supports` transaction attribute.
 
-Accessing resource managers and enterprise
-beans is disallowed in the entity bean methods for which the container
-does not have a meaningful transaction context or client security
-context.
+* Accessing resource managers and enterprise beans is disallowed in the entity bean methods for which the container does not have a meaningful transaction context or client security context.
 
 ==== Caching of Entity State and the ejbLoad and ejbStore Methods
 
-An instance of an
-entity bean with bean-managed persistence can cache the entity object’s
-state between business method invocations. An instance may choose to
-cache the entire entity object’s state, part of the state, or no state
-at all.
+An instance of an entity bean with bean-managed persistence can cache the entity object’s state between business method invocations. An instance may choose to cache the entire entity object’s state, part of the state, or no state at all.
 
-The
-container-invoked ejbLoad and ejbStore methods assist the instance with
-the management of the cached entity object’s state. The instance should
-handle the ejbLoad and ejbStore methods as follows:
+The container-invoked `ejbLoad` and `ejbStore` methods assist the instance with the management of the cached entity object’s state. The instance should handle the `ejbLoad` and `ejbStore` methods as follows:
 
-When the container invokes the ejbStore
-method on the instance, the instance should push all cached updates of
-the entity object’s state to the underlying database. The container
-invokes the ejbStore method at the end of a
-transactionlink:#a3389[25], and may also invoke it at other
-times when the instance is in the ready state. (For example the
-container may invoke _ejbStore_ when passivating an instance in the
-middle of a transaction, or when transferring the instance’s state to
-another instance to support distributed transactions in a multi-process
-server.)
+* When the container invokes the `ejbStore` method on the instance, the instance should push all cached updates of the entity object’s state to the underlying database.
+The container invokes the ejbStore method at the end of a transaction
+footnote:a3389[This call may be omitted if the bean has been specified as read-only.],
+and may also invoke it at other times when the instance is in the ready state.
+(For example the container may invoke `ejbStore` when passivating an instance in the middle of a transaction, or when transferring the instance’s state to another instance to support distributed transactions in a multi-process server.)
 
-When the container invokes the ejbLoad method
-on the instance, the instance should discard any cached entity object’s
-state. The instance may, but is not required to, refresh the cached
-state by reloading it from the underlying database.
+* When the container invokes the `ejbLoad` method on the instance, the instance should discard any cached entity object’s
+state.
+The instance may, but is not required to, refresh the cached state by reloading it from the underlying database.
 
-The following examples, which are
-illustrative but not prescriptive, show how an instance may cache the
-entity object’s state:
+The following examples, which are illustrative but not prescriptive, show how an instance may cache the entity object’s state:
 
-An instance loads the entire entity object’s
-state in the ejbLoad method and caches it until the container invokes
-the ejbStore method. The business methods read and write the cached
-entity state. The ejbStore method writes the updated parts of the entity
-object’s state to the database.
+* An instance loads the entire entity object’s state in the ejbLoad method and caches it until the container invokes the `ejbStore` method.
+The business methods read and write the cached entity state.
+The `ejbStore` method writes the updated parts of the entity object’s state to the database.
 
-An instance loads the most frequently used
-part of the entity object’s state in the ejbLoad method and caches it
-until the container invokes the ejbStore method. Additional parts of the
-entity object’s state are loaded as needed by the business methods. The
-ejbStore method writes the updated parts of the entity object’s state to
-the database.
+* An instance loads the most frequently used part of the entity object’s state in the `ejbLoad` method and caches it until the container invokes the `ejbStore` method.
+Additional parts of the entity object’s state are loaded as needed by the business methods.
+The `ejbStore` method writes the updated parts of the entity object’s state to the database.
 
-An instance does not cache any entity
-object’s state between business methods. The business methods access and
-modify the entity object’s state directly in the database. The ejbLoad
-and ejbStore methods have an empty implementation.
+* An instance does not cache any entity object’s state between business methods.
+The business methods access and modify the entity object’s state directly in the database.
+The `ejbLoad` and `ejbStore` methods have an empty implementation.
 
-We expect that most entity developers will
-not manually code the cache management and data access calls in the
-entity bean class. We expect that they will rely on application
-development tools to provide various data access components that
-encapsulate data access and provide state caching.
+We expect that most entity developers will not manually code the cache management and data access calls in the entity bean class.
+We expect that they will rely on application development tools to provide various data access components that encapsulate data access and provide state caching.
 
 ===== ejbLoad and ejbStore with the NotSupported Transaction Attribute
 
-The use of the
-ejbLoad and ejbStore methods for caching an
-entity object’s state in the instance works well only if the container
-can use transaction boundaries to drive the ejbLoad and ejbStore
-methods. When the
-NotSupportedlink:#a3390[26]
-transaction attribute is assigned to a component interface method, the
-corresponding enterprise bean class method executes with an unspecified
-transaction context (See EJB Core Contracts and Requirements document
-link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345] Subsection “Handling of Methods
-that Run with an unspecified transaction context”). This means that the
-container does not have any well-defined transaction boundaries to drive
-the ejbLoad and ejbStore methods on the instance.
+The use of the `ejbLoad` and `ejbStore` methods for caching an entity object’s state in the instance works well only if the container can use transaction boundaries to drive the `ejbLoad` and `ejbStore` methods.
+When the `NotSupported`
+footnote:a3390[This applies also to the Never and Supports attribute.]
+transaction attribute is assigned to a component interface method, the corresponding enterprise bean class method executes with an unspecified transaction context (See Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Handling of Methods that Run with an unspecified transaction context`"_).
+This means that the container does not have any well-defined transaction boundaries to drive the `ejbLoad` and `ejbStore` methods on the instance.
 
-Therefore, the ejbLoad and
-ejbStore methods are “unreliable” for the
-instances that the container uses to dispatch the methods with an
-unspecified transaction context. The following are the only guarantees
-that the container provides for the instances that execute the methods
-with an unspecified transaction context:
+Therefore, the `ejbLoad` and `ejbStore` methods are "`unreliable`" for the instances that the container uses to dispatch the methods with an unspecified transaction context.
+The following are the only guarantees that the container provides for the instances that execute the methods with an unspecified transaction context:
 
-The container invokes at least one ejbLoad
-between ejbActivate and the first business method in the instance.
+* The container invokes at least one `ejbLoad` between ejbActivate and the first business method in the instance.
 
-The container invokes at least one ejbStore
-between the last business method on the instance and the ejbPassivate
-methodlink:#a3391[27].
+* The container invokes at least one `ejbStore` between the last business method on the instance and the `ejbPassivate` method
+footnote:a3391[This `ejbStore` call may be omitted if the bean has been specified as read-only.].
 
-Because the entity object’s state accessed
-between the ejbLoad and ejbStore method pair is not protected by a
-transaction boundary for the methods that execute with an unspecified
-transaction context, the Bean Provider should not attempt to use the
-ejbLoad and ejbStore methods to control caching of the entity object’s
-state in the instance. Typically, the implementation of the ejbLoad and
-ejbStore methods should be a no-op (i.e., an empty method), and each
-business method should access the entity object’s state directly in the
-database.
+Because the entity object’s state accessed between the `ejbLoad` and `ejbStore` method pair is not protected by a transaction boundary for the methods that execute with an unspecified transaction context, the Bean Provider should not attempt to use the `ejbLoad` and `ejbStore` methods to control caching of the entity object’s state in the instance.
+Typically, the implementation of the `ejbLoad` and `ejbStore` methods should be a no-op (i.e., an empty method), and each business method should access the entity object’s state directly in the database.
 
 [[a2729]]
 ==== Finder Method Return Type
 
 ===== Single-Object Finder
 
-Some finder
-methods (such as ejbFindByPrimaryKey) are designed to return at most one
-entity object. For single-object finders, the result type of a
-find<METHOD>method defined in the entity bean’s remote home interface is
-the entity bean’s remote interface, and the result type of the
-find<METHOD>method defined in the entity bean’s local home interface is
-the entity bean’s local interface. The result type of the corresponding
-ejbFind<METHOD> method defined in the entity’s implementation class is
-the entity bean’s primary key type.
+Some finder methods (such as `ejbFindByPrimaryKey`) are designed to return at most one entity object.
+For single-object finders, the result type of a `find<METHOD>` method defined in the entity bean’s remote home interface is the entity bean’s remote interface, and the result type of the `find<METHOD>` method defined in the entity bean’s local home interface is the entity bean’s local interface.
+The result type of the corresponding `ejbFind<METHOD>` method defined in the entity’s implementation class is the entity bean’s primary key type.
 
-The following code illustrates the definition
-of a single-object finder on the remote home interface.
-
+The following code illustrates the definition of a single-object finder on the remote home interface.
+[source, java]
+----
 // Entity’s home interface
-
-public AccountHome extends javax.ejb.EJBHome
-\{
-
- ...
-
- Account findByPrimaryKey(AccountPrimaryKey
-primkey)
-
- throws FinderException, RemoteException;
-
- ...
-
+public AccountHome extends jakarta.ejb.EJBHome {
+    ...
+    Account findByPrimaryKey(AccountPrimaryKey primkey)
+        throws FinderException, RemoteException;
+    ...
 }
+----
 
-Note that a finder method defined on the
-local home interface, however, must not throw the _RemoteException_ .
+****
+_Note that a finder method defined on the local home interface, however, must not throw the `RemoteException`._
+****
 
+[source, java]
+----
 // Entity’s implementation class
-
-public AccountBean implements
-javax.ejb.EntityBean \{
-
- ...
-
- public AccountPrimaryKey
-ejbFindByPrimaryKey(
-
- AccountPrimaryKey primkey)
-
- throws FinderException
-
- \{
-
- ...
-
- }
-
- ...
-
+public AccountBean implements jakarta.ejb.EntityBean {
+    ...
+    public AccountPrimaryKey ejbFindByPrimaryKey(
+            AccountPrimaryKey primkey)
+        throws FinderException 
+    {
+        ...
+    }
+    ...
 }
+----
 
 ===== Multi-Object Finders
 
-Some finder methods are designed to return
-multiple entity objects. For multi-object
-finders defined in the entity bean’s remote home interface, the result
-type of the find<METHOD>method is a collection of objects implementing
-the entity bean’s remote interface. For multi-object finders defined in
-the entity bean’s local home interface, the result type is a collection
-of objects implementing the entity bean’s local interface. In either
-case, the result type of the corresponding ejbFind<METHOD>
-implementation method defined in the entity bean’s implementation class
-is a collection of objects of the entity bean’s primary key type.
+Some finder methods are designed to return multiple entity objects.
+For multi-object finders defined in the entity bean’s remote home interface, the result type of the `find<METHOD>` method is a collection of objects implementing the entity bean’s remote interface.
+For multi-object finders defined in the entity bean’s local home interface, the result type is a collection of objects implementing the entity bean’s local interface.
+In either case, the result type of the corresponding `ejbFind<METHOD>` implementation method defined in the entity bean’s implementation class is a collection of objects of the entity bean’s primary key type.
 
-The Bean Provider can choose two types to
-define a collection type for a finder:
+The Bean Provider can choose two types to define a collection type for a finder:
 
-the Java™ 2
-java.util.Collection interface
+* the Java(TM) 2 `java.util.Collection` interface
 
-the JDK™ 1.1
-java.util.Enumeration interface
+* the JDK(TM) 1.1 `java.util.Enumeration` interface
 
-A Bean Provider targeting containers and
-clients based on Java 2 should use the java.util.Collection interface
-for the finder’s result type.
+A Bean Provider targeting containers and clients based on Java 2 should use the `java.util.Collection` interface for the finder’s result type.
 
-A Bean Provider who wants to ensure that the
-entity bean is compatible with containers and clients based on JDK 1.1
-must use the java.util.Enumeration interface for the finder’s result
-typelink:#a3392[28].
+A Bean Provider who wants to ensure that the entity bean is compatible with containers and clients based on JDK 1.1 must use the `java.util.Enumeration` interface for the finder’s result type
+footnote:a3392[The finder will be also compatible with Java 2-based containers and clients.].
 
-The Bean Provider must ensure that the
-objects in the java.util.Enumeration or java.util.Collection returned
-from the ejbFind<METHOD> method are instances of the entity bean’s
-primary key class.
+The Bean Provider must ensure that the objects in the `java.util.Enumeration` or `java.util.Collection` returned from the `ejbFind<METHOD>` method are instances of the entity bean’s primary key class.
 
-A client program must use the
-PortableRemoteObject.narrow method to
-convert the objects contained in the collections returned by a finder
-method on the entity bean’s remote home interface to the entity bean’s
-remote interface type.
+A client program must use the `PortableRemoteObject.narrow` method to convert the objects contained in the collections returned by a finder method on the entity bean’s remote home interface to the entity bean’s remote interface type.
 
-The following is
-an example of a multi-object finder method definition that is compatible
-with containers and clients based on Java 2:
-
+The following is an example of a multi-object finder method definition that is compatible with containers and clients based on Java 2:
+[source, java]
+----
 // Entity’s remote home interface
-
-public AccountHome extends javax.ejb.EJBHome
-\{
-
- ...
-
- java.util.Collection
-findLargeAccounts(double limit)
-
- throws FinderException, RemoteException;
-
- ...
-
+public AccountHome extends jakarta.ejb.EJBHome {
+    ...
+    java.util.Collection findLargeAccounts(double limit)
+        throws FinderException, RemoteException;
+    ...
 }
-
-
 
 // Entity’s implementation class
-
-public AccountBean implements
-javax.ejb.EntityBean \{
-
- ...
-
- public java.util.Collection
-ejbFindLargeAccounts(
-
- double limit) throws FinderException
-
- \{
-
- ...
-
- }
-
- ...
-
+public AccountBean implements jakarta.ejb.EntityBean {
+    ...
+    public java.util.Collection ejbFindLargeAccounts(
+            double limit) throws FinderException
+    {
+        ...
+    }
+    ...
 }
+----
 
-The following is an example of a multi-object
-finder method definition compatible with containers and clients that are
-based on both JDK 1.1 and Java 2:
-
+The following is an example of a multi-object finder method definition compatible with containers and clients that are based on both JDK 1.1 and Java 2:
+[source, java]
+----
 // Entity’s remote home interface
-
-public AccountHome extends javax.ejb.EJBHome
-\{
-
- ...
-
- java.util.Enumeration
-findLargeAccounts(double limit)
-
- throws FinderException, RemoteException;
-
- ...
-
+public AccountHome extends jakarta.ejb.EJBHome {
+    ...
+    java.util.Enumeration findLargeAccounts(double limit)
+        throws FinderException, RemoteException;
+    ...
 }
-
-
 
 // Entity’s implementation class
-
-public AccountBean implements
-javax.ejb.EntityBean \{
-
- ...
-
- public java.util.Enumeration
-ejbFindLargeAccounts(
-
- double limit) throws FinderException
-
- \{
-
- ...
-
- }
-
- ...
-
+public AccountBean implements jakarta.ejb.EntityBean {
+    ...
+    public java.util.Enumeration ejbFindLargeAccounts(
+            double limit) throws FinderException
+    {
+        ...
+    }
+    ...
 }
+----
 
 ==== Timer Notifications
 
-An entity bean can be registered with the EJB
-Timer Service for time-based event notifications if it implements the
-_javax.ejb.TimedObject_ interface. The container invokes the bean
-instance’s _ejbTimeout_ method when a timer for the bean has expired.
-See link:Ejb.html#a3258[See Timer Service].
+An entity bean can be registered with the Enterprise Beans Timer Service for time-based event notifications if it implements the `jakarta.ejb.TimedObject` interface.
+The container invokes the bean instance’s `ejbTimeout` method when a timer for the bean has expired.
+See <<a3258>>.
 
 [[a2806]]
 ==== Standard Application Exceptions for Entities
 
-The EJB
-specification defines the following standard application exceptions:
+The Enterprise Beans specification defines the following standard application exceptions:
 
-javax.ejb.CreateException
+* `jakarta.ejb.CreateException`
 
-javax.ejb.DuplicateKeyException
+* `jakarta.ejb.DuplicateKeyException`
 
-javax.ejb.FinderException
+* `jakarta.ejb.FinderException`
 
-javax.ejb.ObjectNotFoundException
+* `jakarta.ejb.ObjectNotFoundException`
 
-javax.ejb.RemoveException
+* `jakarta.ejb.RemoveException`
 
 ===== CreateException
 
-From the client’s
-perspective, a CreateException (or a subclass of CreateException)
-indicates that an application level error occurred during the
-create<METHOD> operation. If a client receives this exception, the
-client does not know, in general, whether the entity object was created
-but not fully initialized, or not created at all. Also, the client does
-not know whether or not the transaction has been marked for rollback.
-(However, the client may determine the transaction status using the
-UserTransaction interface or the _setRollbackOnly_ method of the
-_EJBContext_ interface.)
+From the client’s perspective, a `CreateException` (or a subclass of `CreateException`) indicates that an application level error occurred during the `create<METHOD>` operation.
+If a client receives this exception, the client does not know, in general, whether the entity object was created but not fully initialized, or not created at all.
+Also, the client does not know whether or not the transaction has been marked for rollback.
+(However, the client may determine the transaction status using the `UserTransaction` interface or the `setRollbackOnly` method of the `EJBContext` interface.)
 
-The Bean Provider throws the CreateException
-(or subclass of CreateException) from the ejbCreate<METHOD> and
-ejbPostCreate<METHOD> methods to indicate an application-level error
-from the create or initialization operation. Optionally, the Bean
-Provider may mark the transaction for rollback before throwing this
-exception.
+The Bean Provider throws the `CreateException` (or subclass of `CreateException`) from the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods to indicate an application-level error from the create or initialization operation.
+Optionally, the Bean Provider may mark the transaction for rollback before throwing this exception.
 
-The Bean Provider is encouraged to mark the
-transaction for rollback only if data integrity would be lost if the
-transaction were committed by the client. Typically, when a
-_CreateException_ is thrown, it leaves the database in a consistent
-state, allowing the client to recover. For example, _ejbCreate_ may
-throw the _CreateException_ to indicate that the some of the arguments
-to the _create<METHOD>_ method are invalid.
+_The Bean Provider is encouraged to mark the transaction for rollback only if data integrity would be lost if the transaction were committed by the client.
+Typically, when a `CreateException` is thrown, it leaves the database in a consistent state, allowing the client to recover. For example, `ejbCreate` may throw the `CreateException` to indicate that the some of the arguments to the `create<METHOD>` method are invalid._
 
-The container treats the CreateException as
-any other application exception. See Section
-link:Ejb.html#a3227[See Container Provider Responsibilities].
+The container treats the `CreateException` as any other application exception.
+See <<a3227>>.
 
 ===== DuplicateKeyException
 
-The
-DuplicateKeyException is a subclass of CreateException. It is thrown by
-the ejbCreate<METHOD> method to indicate to the client that the entity
-object cannot be created because an entity object with the same key
-already exists. The unique key causing the violation may be the primary
-key, or another key defined in the underlying database.
+The `DuplicateKeyException` is a subclass of `CreateException`.
+It is thrown by the `ejbCreate<METHOD>` method to indicate to the client that the entity object cannot be created because an entity object with the same key already exists.
+The unique key causing the violation may be the primary key, or another key defined in the underlying database.
 
-Normally, the Bean Provider should not mark
-the transaction for rollback before throwing the exception.
+Normally, the Bean Provider should not mark the transaction for rollback before throwing the exception.
 
-When the client receives the
-DuplicateKeyException, the client knows that the entity was not created,
-and that the client’s transaction has not typically been marked for
-rollback.
+When the client receives the `DuplicateKeyException`, the client knows that the entity was not created, and that the client’s transaction has not typically been marked for rollback.
 
 ===== FinderException
 
-From the client’s
-perspective, a FinderException (or a subclass of FinderException)
-indicates that an application level error occurred during the find
-operation. Typically, the client’s transaction has not been marked for
-rollback because of the FinderException.
+From the client’s perspective, a `FinderException` (or a subclass of `FinderException`) indicates that an application level error occurred during the find operation.
+Typically, the client’s transaction has not been marked for rollback because of the `FinderException`.
 
-The Bean Provider throws the FinderException
-(or subclass of FinderException) from the ejbFind<METHOD> method to
-indicate an application-level error in the finder method. The Bean
-Provider should not, typically, mark the transaction for rollback before
-throwing the FinderException.
+The Bean Provider throws the `FinderException` (or subclass of `FinderException`) from the `ejbFind<METHOD>` method to indicate an application-level error in the finder method.
+The Bean Provider should not, typically, mark the transaction for rollback before throwing the `FinderException`.
 
-The container treats the FinderException as
-any other application exception. See Section
-link:Ejb.html#a3227[See Container Provider Responsibilities].
+The container treats the FinderException as any other application exception.
+See <<a3227>>.
 
 ===== ObjectNotFoundException
 
-The
-ObjectNotFoundException is a subclass of FinderException. It is thrown
-by the ejbFind<METHOD> method to indicate that the requested entity
-object does not exist.
+The `ObjectNotFoundException` is a subclass of `FinderException`.
+It is thrown by the `ejbFind<METHOD>` method to indicate that the requested entity object does not exist.
 
-Only single-object finders (see Subsection
-link:Ejb.html#a2729[See Finder Method Return Type]) should throw
-this exception. Multi-object finders must not throw this exception.
-Multi-object finders should return an empty collection as an indication
-that no matching objects were found.
+Only single-object finders (see <<a2729>>) should throw this exception.
+Multi-object finders must not throw this exception.
+Multi-object finders should return an empty collection as an indication that no matching objects were found.
 
 ===== RemoveException
 
-From the client’s
-perspective, a RemoveException (or a subclass of RemoveException)
-indicates that an application level error occurred during a remove
-operation. If a client receives this exception, the client does not
-know, in general, whether the entity object was removed or not. The
-client also does not know if the transaction has been marked for
-rollback. (However, the client may determine the transaction status
-using the UserTransaction interface.)
+From the client’s perspective, a `RemoveException` (or a subclass of `RemoveException`) indicates that an application level error occurred during a remove operation.
+If a client receives this exception, the client does not know, in general, whether the entity object was removed or not.
+The client also does not know if the transaction has been marked for rollback.
+(However, the client may determine the transaction status using the `UserTransaction` interface.)
 
-The Bean Provider throws the RemoveException
-(or subclass of RemoveException) from the ejbRemove method to indicate
-an application-level error from the entity object removal operation.
-Optionally, the Bean Provider may mark the transaction for rollback
-before throwing this exception.
+The Bean Provider throws the `RemoveException` (or subclass of `RemoveException`) from the `ejbRemove` method to indicate an application-level error from the entity object removal operation.
+Optionally, the Bean Provider may mark the transaction for rollback before throwing this exception.
 
-The Bean Provider is encouraged to mark the
-transaction for rollback only if data integrity would be lost if the
-transaction were committed by the client. Typically, when a
-_RemoveException_ is thrown, it leaves the database in a consistent
-state, allowing the client to recover.
+_The Bean Provider is encouraged to mark the transaction for rollback only if data integrity would be lost if the
+transaction were committed by the client.
+Typically, when a `RemoveException` is thrown, it leaves the database in a consistent state, allowing the client to recover._
 
-The container
-treats the RemoveException as any other application exception. See
-Section link:Ejb.html#a3227[See Container Provider
-Responsibilities].
+The container treats the `RemoveException` as any other application exception.
+See <<a3227>>.
 
 ==== Commit Options
 
-The Entity Bean
-protocol is designed to give the container the flexibility to select the
-disposition of the instance state at transaction commit time. This
-flexibility allows the container to optimally manage the caching of
-entity object’s state and the association of an entity object identity
-with the enterprise bean instances.
+The Entity Bean protocol is designed to give the container the flexibility to select the disposition of the instance state at transaction commit time.
+This flexibility allows the container to optimally manage the caching of entity object’s state and the association of an entity object identity with the enterprise bean instances.
 
-The container can select from the following
-commit-time options:
+The container can select from the following commit-time options:
 
-Option A: The container caches a “ready”
-instance between transactions. The container ensures that the instance
-has exclusive access to the state of the object in the persistent
-storage. Therefore, the container does not have to synchronize the
-instance’s state from the persistent storage at the beginning of the
+**Option A:**
+The container caches a "`ready`" instance between transactions.
+The container ensures that the instance has exclusive access to the state of the object in the persistent storage.
+Therefore, the container does not have to synchronize the instance’s state from the persistent storage at the beginning of the
 next transaction.
 
-Option B: The container caches a “ready”
-instance between transactions. In contrast to Option A, in this option
-the container does not ensure that the instance has exclusive access to
-the state of the object in the persistent storage. Therefore, the
-container must synchronize the instance’s state from the persistent
-storage at the beginning of the next transaction.
+**Option B:**
+The container caches a "`ready`" instance between transactions.
+In contrast to Option A, in this option the container does not ensure that the instance has exclusive access to the state of the object in the persistent storage.
+Therefore, the container must synchronize the instance’s state from the persistent storage at the beginning of the next transaction.
 
-Option _C_ : The container does not cache a
-“ready” instance between transactions. The container returns the
-instance to the pool of available instances after a transaction has
-completed.
+**Option C:**
+The container does not cache a "`ready`" instance between transactions.
+The container returns the instance to the pool of available instances after a transaction has completed.
 
-The following table provides a summary of the
-commit-time options.
+The following table provides a summary of the commit-time options.
 
-===
+.Summary of Commit-Time Options
+[cols="4", options="header"]
+|===
+|
+| Write instance state to database
+| Instance stays ready
+| Instance state remains valid
 
+| Option A
+| Yes
+| Yes
+| Yes
 
+| Option B
+| Yes
+| Yes
+| No
 
-Summary of Commit-Time Options
+| Option C
+| Yes
+| No
+| No
+|===
 
+Note that the container synchronizes the instance’s state with the persistent storage at transaction commit for all three options.
 
-
-Write instance state to database
-
-Instance stays
-
-ready
-
-Instance state remains valid
-
-Option A
-
-Yes
-
-Yes
-
-Yes
-
-Option B
-
-Yes
-
-Yes
-
-No
-
-Option C
-
-Yes
-
-No
-
-No
-
-Note that the container synchronizes the
-instance’s state with the persistent storage at transaction commit for
-all three options.
-
-The selection of the commit option is
-transparent to the entity bean implementation—the entity bean will work
-correctly regardless of the commit-time option chosen by the container.
+The selection of the commit option is transparent to the entity bean implementation—the entity bean will work correctly regardless of the commit-time option chosen by the container.
 The Bean Provider writes the entity bean in the same way.
 
 ==== Concurrent Access from Multiple Transactions
 
-When writing the entity bean business
-methods, the Bean Provider does not have to worry about
-concurrent access from multiple
-transactions. The Bean Provider may assume that the container will
-ensure appropriate synchronization for entity objects that are accessed
+When writing the entity bean business methods, the Bean Provider does not have to worry about
+concurrent access from multiple transactions.
+The Bean Provider may assume that the container will ensure appropriate synchronization for entity objects that are accessed
 concurrently from multiple transactions.
 
-The container
-typically uses one of the following implementation strategies to achieve
-proper synchronization. (These strategies are illustrative, not
-prescriptive.)
+The container typically uses one of the following implementation strategies to achieve proper synchronization.
+(These strategies are illustrative, not prescriptive.)
 
-The container activates multiple instances of
-the entity bean, one for each transaction in which the entity object is
-being accessed. The transaction synchronization is performed
-automatically by the underlying database during the database access
-calls performed by the business methods and the _ejbTimeout_ method; and
-by the _ejbLoad_ , _ejbCreate<METHOD>_ , _ejbStore_ , and _ejbRemove_
-methods. The database system provides all the necessary transaction
-synchronization; the container does not have to perform any
-synchronization logic.
+* The container activates multiple instances of the entity bean, one for each transaction in which the entity object is
+being accessed.
+The transaction synchronization is performed automatically by the underlying database during the database access calls performed by the business methods and the `ejbTimeout` method; and by the `ejbLoad`, `ejbCreate<METHOD>`, `ejbStore`, and `ejbRemove` methods.
+The database system provides all the necessary transaction synchronization; the container does not have to perform any synchronization logic.
 
-===
+.Multiple Clients Can Access the Same Entity Object Using Multiple Instances
+image::EBOpt-41.png[]
 
+_With this strategy, the type of lock acquired by `ejbLoad` leads to a trade-off.
+If `ejbLoad` acquires an exclusive lock on the instance's state in the database, then throughput of read-only transactions could be impacted.
+If `ejbLoad` acquires a shared lock and the instance is updated, then `ejbStore` will need to promote the lock to an exclusive lock.
+This may cause a deadlock if it happens concurrently under multiple transactions._
 
+* The container acquires exclusive access to the entity object’s state in the database.
+The container activates a single instance and serializes the access from multiple transactions to this instance.
+The commit-time option A applies to this type of container.
 
-Multiple Clients Can Access the Same Entity Object
-Using Multiple Instances
-
-image:EBOpt-41.png[image]
-
-With this strategy, the type of lock acquired
-by _ejbLoad_ leads to a trade-off. If _ejbLoad_ acquires an exclusive
-lock on the instance's state in the database, then throughput of
-read-only transactions could be impacted. If _ejbLoad_ acquires a shared
-lock and the instance is updated, then _ejbStore_ will need to promote
-the lock to an exclusive lock. This may cause a deadlock if it happens
-concurrently under multiple transactions.
-
-The container acquires exclusive access to
-the entity object’s state in the database. The container activates a
-single instance and serializes the access from multiple transactions to
-this instance. The commit-time option A applies to this type of
-container.
-
-===
-
-
-
-Multiple Clients Can Access the Same Entity Object Using Single Instance
-
-image:EBOpt-42.png[image]
+.Multiple Clients Can Access the Same Entity Object Using Single Instance
+image::EBOpt-42.png[]
 
 [[a2872]]
 ==== Non-reentrant and Re-entrant Instances
 
-An entity Bean
-Provider can specify that an entity bean is non-reentrant. If an
-instance of a non-reentrant entity bean executes a client request in a
-given transaction context, and another request with the same transaction
-context arrives for the same entity object, the container will throw an
-exception to the second request. This rule allows the Bean Provider to
-program the entity bean as single-threaded, non-reentrant code.
+An entity Bean Provider can specify that an entity bean is non-reentrant.
+If an instance of a non-reentrant entity bean executes a client request in a given transaction context, and another request with the same transaction context arrives for the same entity object, the container will throw an exception to the second request.
+This rule allows the Bean Provider to program the entity bean as single-threaded, non-reentrant code.
 
-The functionality of some entity beans may
-require loopbacks in the same transaction
-context. An example of a loopback is when the client calls entity object
-A, A calls entity object B, and B calls back A in the same transaction
-context. The entity bean’s method invoked by the loopback shares the
-current execution context (which includes the transaction and security
-contexts) with the bean’s method invoked by the client.
+The functionality of some entity beans may require loopbacks in the same transaction context.
+An example of a loopback is when the client calls entity object A, A calls entity object B, and B calls back A in the same transaction context.
+The entity bean’s method invoked by the loopback shares the current execution context (which includes the transaction and security contexts) with the bean’s method invoked by the client.
 
-If the entity bean is specified as
-non-reentrant in the deployment descriptor, the container must reject an
-attempt to re-enter the instance via the entity bean’s component
-interface while the instance is executing a business method. (This can
-happen, for example, if the instance has invoked another enterprise
-bean, and the other enterprise bean tries to make a loopback call.) If
-the attempt is made to reenter the instance through the remote
-interface, the container must throw the _java.rmi.RemoteException_ to
-the caller. If the attempt is made to reenter the instance through the
-local interface, the container must throw the _javax.ejb.EJBException_
-to the caller. The container must allow the call if the bean’s
-deployment descriptor specifies that the entity bean is re-entrant.
+If the entity bean is specified as non-reentrant in the deployment descriptor, the container must reject an attempt to re-enter the instance via the entity bean’s component interface while the instance is executing a business method.
+(This can happen, for example, if the instance has invoked another enterprise bean, and the other enterprise bean tries to make a loopback call.)
+If the attempt is made to reenter the instance through the remote interface, the container must throw the `java.rmi.RemoteException` to the caller.
+If the attempt is made to reenter the instance through the local interface, the container must throw the `jakarta.ejb.EJBException` to the caller.
+The container must allow the call if the bean’s deployment descriptor specifies that the entity bean is re-entrant.
 
-Re-entrant entity beans must be programmed
-and used with caution. First, the Bean Provider must code the entity
-bean with the anticipation of a loopback call. Second, since the
-container cannot, in general, tell a loopback from a concurrent call
-from a different client, the client programmer must be careful to avoid
-code that could lead to a concurrent call in the same transaction
-context.
+Re-entrant entity beans must be programmed and used with caution.
+First, the Bean Provider must code the entity bean with the anticipation of a loopback call.
+Second, since the container cannot, in general, tell a loopback from a concurrent call from a different client, the client programmer must be careful to avoid code that could lead to a concurrent call in the same transaction context.
 
-Concurrent calls in the same transaction
-context targeted at the same entity object are illegal and may lead to
-unpredictable results. Since the container cannot, in general,
-distinguish between an illegal concurrent call and a legal loopback,
-application programmers are encouraged to avoid using loopbacks. Entity
-beans that do not need callbacks should be marked as non-reentrant in
-the deployment descriptor, allowing the container to detect and prevent
-illegal concurrent calls from clients.
+Concurrent calls in the same transaction context targeted at the same entity object are illegal and may lead to unpredictable results.
+Since the container cannot, in general, distinguish between an illegal concurrent call and a legal loopback, application programmers are encouraged to avoid using loopbacks.
+Entity beans that do not need callbacks should be marked as non-reentrant in the deployment descriptor, allowing the container to detect and prevent illegal concurrent calls from clients.
 
 === Responsibilities of the Enterprise Bean Provider
 
