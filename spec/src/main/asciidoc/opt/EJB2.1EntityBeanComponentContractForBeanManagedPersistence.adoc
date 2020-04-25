@@ -176,7 +176,7 @@ The method also initializes the instance’s variables.
 The `ejbCreate<METHOD>` method must return the primary key for the created entity object.
 +
 An `ejbCreate<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching `create<METHOD>` method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>>
-Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
+Subsection "`__Container-Managed Transaction Demarcation for Business Methods__`".
 
 * `public void ejbPostCreate<METHOD>(...);`
 +
@@ -251,7 +251,7 @@ All business methods or the `ejbTimeout` method invoked between the previous `ej
 The container invokes this method on the instance when the container selects the instance to execute a matching client-invoked `find<METHOD>` method.
 The instance is in the pooled state (i.e., it is not assigned to any particular entity object identity) when the container selects the instance to execute the `ejbFind<METHOD>` method on it, and it is returned to the pooled state when the execution of the `ejbFind<METHOD>` method completes.
 +
-The `ejbFind<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching find method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
+The `ejbFind<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching find method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Container-Managed Transaction Demarcation for Business Methods__`".
 +
 The implementation of an `ejbFind<METHOD>` method typically uses the method’s arguments to locate the requested entity object or a collection of entity objects in the database.
 The method must return a primary key or a collection of primary keys to the container (see <<a2729>>).
@@ -261,7 +261,7 @@ The method must return a primary key or a collection of primary keys to the cont
 The container invokes this method on any instance when the container selects the instance to execute a matching client-invoked `<METHOD>` home method.
 The instance is in the pooled state (i.e., it is not assigned to any particular entity object identity) when the container selects the instance to execute the `ejbHome<METHOD>` method on it, and it is returned to the pooled state when the execution of the `ejbHome<METHOD>` method completes.
 +
-The `ejbHome<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching `<METHOD>` home method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
+The `ejbHome<METHOD>` method executes in the transaction context determined by the transaction attribute of the matching `<METHOD>` home method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Container-Managed Transaction Demarcation for Business Methods__`".
 
 * `public void ejbTimeout(...);`
 +
@@ -302,7 +302,7 @@ The container creates an entity EJBObject reference and/or EJBLocalObject refere
 The container then invokes a matching `ejbPostCreate<METHOD>` method to allow the instance to fully initialize itself.
 Finally, the container returns the entity object’s remote interface (i.e., a reference to the entity EJBObject) to the client if the client is a remote client, or the entity object’s local interface (i.e., a reference to the entity EJBLocalObject) to the client if the client is a local client.
 +
-The container must invoke the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods in the transaction context determined by the transaction attribute of the matching `create<METHOD>` method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
+The container must invoke the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods in the transaction context determined by the transaction attribute of the matching `create<METHOD>` method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Container-Managed Transaction Demarcation for Business Methods__`".
 
 * `public void ejbActivate();`
 +
@@ -348,7 +348,7 @@ The container must invoke this method in the transaction context determined by t
 +
 The container must invoke this method on the instance whenever it becomes necessary for the instance to synchronize its state in the database with the state of the instance’s fields.
 This synchronization always happens at the end of a transaction, unless the bean is specified as read-only (see <<a2598>>).
-However, the container may also invoke this method when it passivates the instance in the middle of a transaction, or when it needs to transfer the most recent state of the entity object to another instance for the same entity object in the same transaction (see Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Access from Multiple Clients in the Same Transaction Context`"_).
+However, the container may also invoke this method when it passivates the instance in the middle of a transaction, or when it needs to transfer the most recent state of the entity object to another instance for the same entity object in the same transaction (see Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Access from Multiple Clients in the Same Transaction Context__`").
 +
 The container must invoke this method in the same transaction context as the previously invoked `ejbLoad`, `ejbCreate<METHOD>`, or `ejbTimeout` method.
 
@@ -365,8 +365,8 @@ The container in which the `ejbFind<METHOD>` method executes is not required to 
 After the `ejbFind<METHOD>` method completes, the instance remains in the pooled state.
 The container may, but is not required to, immediately activate the objects that were located by the finder using the transition through the `ejbActivate` method.
 +
-The container must invoke the `ejbFind<METHOD>` method in the transaction context determined by the transaction attribute of the matching find method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed
-Transaction Demarcation for Business Methods`"_.
+The container must invoke the `ejbFind<METHOD>` method in the transaction context determined by the transaction attribute of the matching find method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Container-Managed
+Transaction Demarcation for Business Methods__`".
 +
 If the `ejbFind<METHOD>` method is declared to return a single primary key, the container creates an entity EJBObject reference for the primary key and returns it to the client if the client is a remote client.
 If the client is a local client, the container creates and returns an entity EJBLocalObject reference for the primary key.
@@ -381,7 +381,7 @@ If there is no instance in the pooled state, the container creates one and calls
 +
 After the `ejbHome<METHOD>` method completes, the instance remains in the pooled state.
 +
-The container must invoke the `ejbHome<METHOD>` method in the transaction context determined by the transaction attribute of the matching `<METHOD>` home method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Container-Managed Transaction Demarcation for Business Methods`"_.
+The container must invoke the `ejbHome<METHOD>` method in the transaction context determined by the transaction attribute of the matching `<METHOD>` home method, as described in Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Container-Managed Transaction Demarcation for Business Methods__`".
 
 * `public void ejbTimeout(...);`
 +
@@ -450,7 +450,7 @@ If an entity bean instance attempts to access a resource manager, an enterprise 
 
 [[a2625]]
 .Operations Allowed in the Methods of an Entity Bean
-[cols="2", width="100%", options="header"]
+[cols="33%,67%", width="100%", options="header"]
 |===
 | Bean method
 | Bean method can perform the following operations
@@ -595,7 +595,7 @@ We expect that they will rely on application development tools to provide variou
 The use of the `ejbLoad` and `ejbStore` methods for caching an entity object’s state in the instance works well only if the container can use transaction boundaries to drive the `ejbLoad` and `ejbStore` methods.
 When the `NotSupported`
 footnote:a3390[This applies also to the Never and Supports attribute.]
-transaction attribute is assigned to a component interface method, the corresponding enterprise bean class method executes with an unspecified transaction context (See Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection _"`Handling of Methods that Run with an unspecified transaction context`"_).
+transaction attribute is assigned to a component interface method, the corresponding enterprise bean class method executes with an unspecified transaction context (See Enterprise Beans Core Contracts and Requirements document <<a3339>> Subsection "`__Handling of Methods that Run with an unspecified transaction context__`").
 This means that the container does not have any well-defined transaction boundaries to drive the `ejbLoad` and `ejbStore` methods on the instance.
 
 Therefore, the `ejbLoad` and `ejbStore` methods are "`unreliable`" for the instances that the container uses to dispatch the methods with an unspecified transaction context.
@@ -911,723 +911,426 @@ Entity beans that do not need callbacks should be marked as non-reentrant in the
 
 === Responsibilities of the Enterprise Bean Provider
 
-
-
-This section describes the responsibilities
-of a bean-managed persistence entity Bean Provider to ensure that the
-entity bean can be deployed in any EJB container.
+This section describes the responsibilities of a bean-managed persistence entity Bean Provider to ensure that the entity bean can be deployed in any Enterprise Beans container.
 
 ==== Classes and Interfaces
 
-The Bean Provider is responsible for
-providing the following class files:
+The Bean Provider is responsible for providing the following class files:
 
-Entity bean class and any dependent classes
+* Entity bean class and any dependent classes
 
-Primary key class
+* Primary key class
 
-Entity bean’s remote interface and remote
-home interface, if the entity bean provides a remote client view
+* Entity bean’s remote interface and remote home interface, if the entity bean provides a remote client view
 
-Entity bean’s local interface and local home
-interface, if the entity bean provides a local client view
+* Entity bean’s local interface and local home interface, if the entity bean provides a local client view
 
-The Bean Provider must provide a remote
-interface and a remote home interface or a local interface an local home
-interface for the bean. The Bean Provider may provide a remote
-interface, remote home interface, local interface, and local home
-interface for the bean. Other combinations are not allowed.
+The Bean Provider must provide a remote interface and a remote home interface or a local interface an local home interface for the bean.
+The Bean Provider may provide a remote interface, remote home interface, local interface, and local home interface for the bean.
+Other combinations are not allowed.
 
 ==== Enterprise Bean Class
 
-The following are
-the requirements for an entity bean class:
+The following are the requirements for an entity bean class:
 
-The class must implement, directly or
-indirectly, the javax.ejb.EntityBean interface.
+The class must implement, directly or indirectly, the `jakarta.ejb.EntityBean` interface.
 
-The class may implement, directly or
-indirectly, the _javax.ejb.TimedObject_ interface.
+The class may implement, directly or indirectly, the `jakarta.ejb.TimedObject` interface.
 
-The class must be defined as public and must
-not be abstract. The class must be a top level class.
+The class must be defined as `public` and must not be `abstract`.
+The class must be a top level class.
 
-The class must not be defined as final.
+The class must not be defined as `final`.
 
-The class must define a public constructor
-that takes no arguments.
+The class must define a public constructor that takes no arguments.
 
-The class must not define the finalize
-method.
+The class must not define the `finalize` method.
 
-The class may, but is not required to,
-implement the entity bean’s component
-interfacelink:#a3393[29]. If the class implements the entity
-bean’s component interface, the class must provide no-op implementations
-of the methods defined in the javax.ejb.EJBObject or
-javax.ejb.EJBLocalObject interface. The container will never invoke
-these methods on the bean instances at runtime.
+The class may, but is not required to, implement the entity bean’s component interface.
+footnote:a3393[If the entity bean class does implement the component interface, care must be taken to avoid passing of this as a method argument or result.
+This potential error can be avoided by choosing not to implement the component interface in the entity bean class.]
+If the class implements the entity bean’s component interface, the class must provide no-op implementations of the methods defined in the `jakarta.ejb.EJBObject` or `jakarta.ejb.EJBLocalObject` interface.
+The container will never invoke these methods on the bean instances at runtime.
 
-A no-op implementation of these methods is
-required to avoid defining the entity bean class as abstract.
+_A no-op implementation of these methods is required to avoid defining the entity bean class as abstract._
 
-The entity bean class must implement the
-business methods, and the ejbCreate<METHOD>, ejbPostCreate<METHOD>,
-ejbFind<METHOD>, and ejbHome<METHOD> methods as described later in this
-section.
+The entity bean class must implement the business methods, and the `ejbCreate<METHOD>`, `ejbPostCreate<METHOD>`, `ejbFind<METHOD>`, and `ejbHome<METHOD>` methods as described later in this section.
 
-The entity bean class may have superclasses
-and/or superinterfaces. If the entity bean
-has superclasses, the business methods, the ejbCreate and ejbPostCreate
-methods, the finder methods, and the methods of the EntityBean interface
-or the _TimedObject_ interface may be implemented in the enterprise bean
-class or in any of its superclasses.
+The entity bean class may have superclasses and/or superinterfaces.
+If the entity bean has superclasses, the business methods, the `ejbCreate` and `ejbPostCreate` methods, the finder methods, and the methods of the `EntityBean` interface or the `TimedObject` interface may be implemented in the enterprise bean class or in any of its superclasses.
 
-The entity bean class is allowed to implement
-other methods (for example helper methods
-invoked internally by the business methods) in addition to the methods
-required by the EJB specification.
+The entity bean class is allowed to implement other methods (for example helper methods invoked internally by the business methods) in addition to the methods required by the Enterprise Beans specification.
 
 ==== ejbCreate<METHOD> Methods
 
-The
-entity bean class must implement the ejbCreate<METHOD> methods that
-correspond to the create<METHOD> methods specified in the entity bean’s
-home interface.
+The entity bean class must implement the `ejbCreate<METHOD>` methods that correspond to the create<METHOD> methods specified in the entity bean’s home interface.
 
-The entity bean class may define zero or more
-ejbCreate<METHOD> methods whose signatures must follow these rules:
+The entity bean class may define zero or more `ejbCreate<METHOD>` methods whose signatures must follow these rules:
 
-The method name must have ejbCreate as its
-prefix.
+The method name must have `ejbCreate` as its prefix.
 
-The method must be declared as public.
+The method must be declared as `public`.
 
-The method must not be declared as final or
-static.
+The method must not be declared as `final` or `static`.
 
-The return type must be the entity bean’s
-primary key type.
+The return type must be the entity bean’s primary key type.
 
-The method argument and return value types
-must be legal types for RMI-IIOP if the e _jbCreate<METHOD>_ corresponds
-to a _create<METHOD>_ on the entity bean’s remote home interface.
+The method argument and return value types must be legal types for RMI-IIOP if the `ejbCreate<METHOD>` corresponds to a `create<METHOD>` on the entity bean’s remote home interface.
 
-The _throws_ clause may define arbitrary
-application specific exceptions, including the
-javax.ejb.CreateException.
+The `throws` clause may define arbitrary application specific exceptions, including the `jakarta.ejb.CreateException`.
 
-EJB 1.0 allowed the _ejbCreate_ method to
-throw the java.rmi.RemoteException to indicate a non-application
-exception. This practice was deprecated in EJB 1.1—an EJB 1.1 or EJB 2.0
-or later compliant enterprise bean should throw the
-_javax.ejb.EJBException_ or another _java.lang.RuntimeException_ to
-indicate non-application exceptions to the container (see Section
-link:Ejb.html#a3221[See System Exceptions]). An EJB 2.0 or later
-enterprise bean should not throw the _java.rmi.RemoteException_ . from
-the _ejbCreate_ method.
+_Compatibility Note: Enterprise Beans 1.0 allowed the `ejbCreate` method to throw the `java.rmi.RemoteException` to indicate a non-application exception.
+This practice was deprecated in Enterprise Beans 1.1—an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later compliant enterprise bean should throw the `jakarta.ejb.EJBException` or another `java.lang.RuntimeException` to indicate non-application exceptions to the container (see <<a3221>>).
+An Enterprise Beans 2.0 or later enterprise bean should not throw the `java.rmi.RemoteException` from the `ejbCreate` method._
 
-The entity object created by the
-ejbCreate<METHOD> method must have a unique primary key. This means that
-the primary key must be different from the primary keys of all the
-existing entity objects within the same home. The ejbCreate<METHOD>
-method should throw the DuplicateKeyException on an attempt to create an
-entity object with a duplicate primary key. However, it is legal to
-reuse the primary key of a previously removed entity object.
+The entity object created by the `ejbCreate<METHOD>` method must have a unique primary key.
+This means that the primary key must be different from the primary keys of all the existing entity objects within the same home.
+The `ejbCreate<METHOD>` method should throw the `DuplicateKeyException` on an attempt to create an entity object with a duplicate primary key.
+However, it is legal to reuse the primary key of a previously removed entity object.
 
 ==== ejbPostCreate<METHOD> Methods
 
-For each
-ejbCreate<METHOD> method, the entity bean class must define a matching
-ejbPostCreate<METHOD> method, using the following rules:
+For each `ejbCreate<METHOD>` method, the entity bean class must define a matching `ejbPostCreate<METHOD>` method, using the following rules:
 
-The method name must have ejbPostCreate as
-its prefix.
+The method name must have `ejbPostCreate` as its prefix.
 
-The method must be declared as public.
+The method must be declared as `public`.
 
-The method must not be declared as final or
-static.
+The method must not be declared as `final` or `static`.
 
-The return type must be _void_ .
+The return type must be `void`.
 
-The method arguments must be the same as the
-arguments of the matching ejbCreate<METHOD> method.
+The method arguments must be the same as the arguments of the matching `ejbCreate<METHOD>` method.
 
-The _throws_ clause may define arbitrary
-application specific exceptions, including the
-javax.ejb.CreateException.
+The `throws` clause may define arbitrary application specific exceptions, including the `jakarta.ejb.CreateException`.
 
-EJB 1.0 allowed the _ejbPostCreate_ method to
-throw the java.rmi.RemoteException to indicate a non-application
-exception. This practice was deprecated in EJB 1.1—an EJB 1.1 or EJB 2.0
-or later compliant enterprise bean should throw the
-_javax.ejb.EJBException_ or another _java.lang.RuntimeException_ to
-indicate non-application exceptions to the container (see Section
-link:Ejb.html#a3221[See System Exceptions]). An EJB 2.0 or later
-enterprise bean should not throw the _java.rmi.RemoteException_ . from
-the _ejbPostCreate_ method.
+_Compatibility Note: Enterprise Beans 1.0 allowed the `ejbPostCreate` method to throw the `java.rmi.RemoteException` to indicate a non-application exception.
+This practice was deprecated in Enterprise Beans 1.1—an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later compliant enterprise bean should throw the `jakarta.ejb.EJBException` or another `java.lang.RuntimeException` to indicate non-application exceptions to the container (see <<3221>>).
+An Enterprise Beans 2.0 or later enterprise bean should not throw the `java.rmi.RemoteException` from the `ejbPostCreate` method._
 
 ==== ejbFind Methods
 
-The entity bean
-class may also define additional ejbFind<METHOD> finder methods.
+The entity bean class may also define additional `ejbFind<METHOD>` finder methods.
 
-The signatures of the finder methods must
-follow the following rules:
+The signatures of the finder methods must follow the following rules:
 
-A finder method name must start with the
-prefix “ _ejbFind_ ” (e.g. ejbFindByPrimaryKey, ejbFindLargeAccounts,
-ejbFindLateShipments).
+A finder method name must start with the prefix "```ejbFind```" (e.g. `ejbFindByPrimaryKey`, `ejbFindLargeAccounts`, `ejbFindLateShipments`).
 
-A finder method must be declared as public.
+A finder method must be declared as `public`.
 
-The method must not be declared as final or
-static.
+The method must not be declared as `final` or `static`.
 
-The method argument types must be legal types
-for RMI-IIOP if the _ejbFind<METHOD>_ method corresponds to a
-_find<METHOD>_ method on the entity bean’s remote home interface.
+The method argument types must be legal types for RMI-IIOP if the `ejbFind<METHOD>` method corresponds to a `find<METHOD>` method on the entity bean’s remote home interface.
 
-The return type of a finder method must be
-the entity bean’s primary key type, or a collection of primary keys (see
-Subsection link:Ejb.html#a2729[See Finder Method Return Type]).
+The return type of a finder method must be the entity bean’s primary key type, or a collection of primary keys (see <<a2729>>).
 
-The _throws_ clause may define arbitrary
-application specific exceptions, including the
-javax.ejb.FinderException.
+The `throws` clause may define arbitrary application specific exceptions, including the `jakarta.ejb.FinderException`.
 
-EJB 1.0 allowed the finder methods to throw
-the java.rmi.RemoteException to indicate a non-application exception.
-This practice was deprecated in EJB 1.1—an EJB 1.1 or EJB 2.0 or later
-compliant enterprise bean should throw the _javax.ejb.EJBException_ or
-another _java.lang.RuntimeException_ to indicate non-application
-exceptions to the container (see Section link:Ejb.html#a3221[See
-System Exceptions]). An EJB 2.0 or later enterprise bean should not
-throw the _java.rmi.RemoteException_ . from the _ejbFind_ method.
+_Compatibility Note: Enterprise Beans 1.0 allowed the finder methods to throw the `java.rmi.RemoteException` to indicate a non-application exception.
+This practice was deprecated in Enterprise Beans 1.1—an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later compliant enterprise bean should throw the `jakarta.ejb.EJBException` or another `java.lang.RuntimeException` to indicate non-application exceptions to the container (see <<a3221>>).
+An Enterprise Beans 2.0 or later enterprise bean should not throw the `java.rmi.RemoteException` from the `ejbFind` method._
 
-Every entity bean must define the
-ejbFindByPrimaryKey method. The result type for this method must be the
-primary key type (i.e., the ejbFindByPrimaryKey method must be a
-single-object finder).
+Every entity bean must define the `ejbFindByPrimaryKey` method.
+The result type for this method must be the primary key type (i.e., the `ejbFindByPrimaryKey` method must be a single-object finder).
 
 ==== ejbHome<METHOD> Methods
 
-The entity bean class may define zero or more
-home methods whose signatures must follow the following rules:
+The entity bean class may define zero or more home methods whose signatures must follow the following rules:
 
-An _ejbHome<METHOD>_
- method must exist for every home _<METHOD>_
-method on the entity bean’s remote home or local home interface. The
-method name must have ejbHome as its prefix followed by the name of the
-_<METHOD>_ method in which the first character has been uppercased.
+An `ejbHome<METHOD>` method must exist for every home `<METHOD>` method on the entity bean’s remote home or local home interface.
+The method name must have ejbHome as its prefix followed by the name of the `<METHOD>` method in which the first character has been uppercased.
 
-The method must be declared as public.
+The method must be declared as `public`.
 
-The method must not be declared as static.
+The method must not be declared as `static`.
 
-The method argument and return value types
-must be legal types for RMI-IIOP if the _ejbHome_ method corresponds to
-a method on the entity bean’s remote home interface.
+The method argument and return value types must be legal types for RMI-IIOP if the `ejbHome` method corresponds to a method on the entity bean’s remote home interface.
 
-The _throws_ clause may define arbitrary
-application specific exceptions. The _throws_ clause must not throw the
-_java.rmi.RemoteException_ .
+The `throws` clause may define arbitrary application specific exceptions.
+The `throws` clause must not throw the `java.rmi.RemoteException`.
 
 ==== Business Methods
 
-The entity bean
-class may define zero or more business methods whose signatures must
-follow these rules:
+The entity bean class may define zero or more business methods whose signatures must follow these rules:
 
-The method names can be arbitrary, but they
-must not start with ‘ _ejb_ ’ to avoid conflicts with the callback
-methods used by the EJB architecture.
+The method names can be arbitrary, but they must not start with "```ejb```" to avoid conflicts with the callback methods used by the Enterprise Beans architecture.
 
-The business method must be declared as
-public.
+The business method must be declared as `public`.
 
-The method must not be declared as final or
-static.
+The method must not be declared as `final` or `static`.
 
-The method argument and return value types
-must be legal types for RMI-IIOP if the method corresponds to a business
-method on the entity bean’s remote interface.
+The method argument and return value types must be legal types for RMI-IIOP if the method corresponds to a business method on the entity bean’s remote interface.
 
-The _throws_ clause may define arbitrary
-application specific exceptions.
+The `throws` clause may define arbitrary application specific exceptions.
 
-EJB 1.0 allowed the business methods to throw
-the java.rmi.RemoteException to indicate a non-application exception.
-This practice was deprecated in EJB 1.1—an EJB 1.1 or EJB 2.0 or later
-compliant enterprise bean should throw the _javax.ejb.EJBException_ or
-another _java.lang.RuntimeException_ to indicate non-application
-exceptions to the container (see Section link:Ejb.html#a3221[See
-System Exceptions]). An EJB 2.0 or later enterprise bean should not
-throw the _java.rmi.RemoteException_ . from a business method.
+_Compatibility Note: Enterprise Beans 1.0 allowed the business methods to throw the `java.rmi.RemoteException` to indicate a non-application exception.
+This practice was deprecated in Enterprise Beans 1.1—an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later compliant enterprise bean should throw the `jakarta.ejb.EJBException` or another `java.lang.RuntimeException` to indicate non-application exceptions to the container (see <<a3221>>).
+An Enterprise Beans 2.0 or later enterprise bean should not throw the `java.rmi.RemoteException` from a business method._
 
 ==== Entity Bean’s Remote Interface
 
-The following are
-the requirements for the entity bean’s remote interface:
+The following are the requirements for the entity bean’s remote interface:
 
-The interface must extend the
-javax.ejb.EJBObject interface.
+The interface must extend the `jakarta.ejb.EJBObject` interface.
 
-The methods defined in the remote interface
-must follow the rules for RMI-IIOP. This means that their argument and
-return value types must be valid types for RMI-IIOP, and their _throws_
-clauses must include the java.rmi.RemoteException.
+The methods defined in the remote interface must follow the rules for RMI-IIOP.
+This means that their argument and return value types must be valid types for RMI-IIOP, and their `throws` clauses must include the `java.rmi.RemoteException`.
 
-The remote
-interface is allowed to have superinterfaces. Use of interface
-inheritance is subject to the RMI-IIOP rules for the definition of
-remote interfaces.
+The remote interface is allowed to have superinterfaces.
+Use of interface inheritance is subject to the RMI-IIOP rules for the definition of remote interfaces.
 
-For each method defined in the remote
-interface, there must be a matching method in the entity bean’s class.
+For each method defined in the remote interface, there must be a matching method in the entity bean’s class.
 The matching method must have:
 
-The same name.
+* The same name.
 
-The same number and types of its arguments,
-and the same return type.
+* The same number and types of its arguments, and the same return type.
 
-All the exceptions defined in the _throws_
-clause of the matching method of the enterprise bean class must be
-defined in the _throws_ clause of the method of the remote interface.
+* All the exceptions defined in the `throws` clause of the matching method of the enterprise bean class must be defined in the `throws` clause of the method of the remote interface.
 
-The remote interface methods must not expose
-local interface types, local home interface types, timers or timer
-handles, or the managed collection classes that are used for entity
-beans with container-managed persistence as arguments or results.
+The remote interface methods must not expose local interface types, local home interface types, timers or timer handles, or the managed collection classes that are used for entity beans with container-managed persistence as arguments or results.
 
 ==== Entity Bean’s Remote Home Interface
 
-The following are
-the requirements for the entity bean’s remote home interface:
+The following are the requirements for the entity bean’s remote home interface:
 
-The interface must extend the
-javax.ejb.EJBHome interface.
+The interface must extend the `jakarta.ejb.EJBHome` interface.
 
-The methods defined in this interface must
-follow the rules for RMI-IIOP. This means that their argument and return
-types must be of valid types for RMI-IIOP, and that their _throws_
-clauses must include the java.rmi.RemoteException.
+The methods defined in this interface must follow the rules for RMI-IIOP.
+This means that their argument and return types must be of valid types for RMI-IIOP, and that their `throws` clauses must include the `java.rmi.RemoteException`.
 
-The remote home interface is allowed to have
-superinterfaces. Use of interface inheritance is subject to the RMI-IIOP
-rules for the definition of remote interfaces.
+The remote home interface is allowed to have superinterfaces.
+Use of interface inheritance is subject to the RMI-IIOP rules for the definition of remote interfaces.
 
-Each method defined in the remote home
-interface must be one of the following:
+Each method defined in the remote home interface must be one of the following:
 
-A create method.
+* A create method.
 
-A finder method.
+* A finder method.
 
-A home method.
+* A home method.
 
-Each create method must be the named “
-_create<METHOD>_ ”, and it must match one of the ejbCreate _<METHOD>_
-methods defined in the enterprise bean class. The matching ejbCreate
-_<METHOD>_ method must have the same number and types of its arguments.
+Each create method must be the named "```create<METHOD>```", and it must match one of the `ejbCreate<METHOD>` methods defined in the enterprise bean class.
+The matching `ejbCreate<METHOD>` method must have the same number and types of its arguments.
 (Note that the return type is different.)
 
-The return type for a create<METHOD> method
-must be the entity bean’s remote interface type.
+The return type for a `create<METHOD>` method must be the entity bean’s remote interface type.
 
-All the exceptions defined in the _throws_
-clause of the matching ejbCreate _<METHOD>_ and ejbPostCreate _<METHOD>_
-methods of the enterprise bean class must be included in the _throws_
-clause of the matching create<METHOD> method of the remote home
-interface (i.e., the set of exceptions defined for the create<METHOD>
-method must be a superset of the union of exceptions defined for the
-ejbCreate<METHOD> and ejbPostCreate<METHOD> methods).
+All the exceptions defined in the `throws` clause of the matching `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods of the enterprise bean class must be included in the `throws` clause of the matching `create<METHOD>` method of the remote home interface (i.e., the set of exceptions defined for the `create<METHOD>` method must be a superset of the union of exceptions defined for the
+`ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods).
 
-The _throws_ clause of a create _<METHOD>_
-method must include the javax.ejb.CreateException.
+The `throws` clause of a `create<METHOD>` method must include the `jakarta.ejb.CreateException`.
 
-Each finder method must be named “
-_find<METHOD>_ ” (e.g. findLargeAccounts), and it must match one of the
-ejbFind<METHOD> methods defined in the entity bean class (e.g.
-ejbFindLargeAccounts). The matching ejbFind<METHOD> method must have the
-same number and types of arguments. (Note that the return type may be
-different.)
+Each finder method must be named "```find<METHOD>```" (e.g. `findLargeAccounts`), and it must match one of the `ejbFind<METHOD>` methods defined in the entity bean class (e.g. `ejbFindLargeAccounts`).
+The matching ejbFind<METHOD> method must have the same number and types of arguments.
+(Note that the return type may be different.)
 
-The return type for a find<METHOD> method
-must be the entity bean’s remote interface type (for a single-object
-finder), or a collection thereof (for a multi-object finder).
+The return type for a `find<METHOD>` method must be the entity bean’s remote interface type (for a single-object finder), or a collection thereof (for a multi-object finder).
 
-The remote home interface must always include
-the findByPrimaryKey method, which is always a single-object finder. The
-method must declare the primary key class as the method argument.
+The remote home interface must always include the `findByPrimaryKey` method, which is always a single-object finder.
+The method must declare the primary key class as the method argument.
 
-All the exceptions defined in the _throws_
-clause of an ejbFind method of the entity bean class must be included in
-the _throws_ clause of the matching find method of the remote home
-interface.
+All the exceptions defined in the `throws` clause of an ejbFind method of the entity bean class must be included in the `throws` clause of the matching find method of the remote home interface.
 
-The _throws_ clause of a finder method must
-include the javax.ejb.FinderException.
+The `throws` clause of a finder method must include the `jakarta.ejb.FinderException`.
 
-Home methods can have arbitrary names,
-provided that they do not clash with create, find, and remove method
-names. The matching ejbHome method specified in the entity bean class
-must have the same number and types of arguments and must return the
-same type as the home method as specified in the remote home interface
-of the bean.
+Home methods can have arbitrary names, provided that they do not clash with create, find, and remove method names.
+The matching ejbHome method specified in the entity bean class must have the same number and types of arguments and must return the same type as the home method as specified in the remote home interface of the bean.
 
-The remote home interface methods must not
-expose local interface types, local home interface types, timer handles,
-or the managed collection classes that are used for entity beans with
-container-managed persistence as arguments or results.
+The remote home interface methods must not expose local interface types, local home interface types, timer handles, or the managed collection classes that are used for entity beans with container-managed persistence as arguments or results.
 
 ==== Entity Bean’s Local Interface
 
-The following are
-the requirements for the entity bean’s local interface:
+The following are the requirements for the entity bean’s local interface:
 
-The interface must extend the
-javax.ejb.EJBLocalObject interface.
+The interface must extend the `jakarta.ejb.EJBLocalObject` interface.
 
-The _throws_ clause of a method defined on
-the local interface must not include the java.rmi.RemoteException.
+The `throws` clause of a method defined on the local interface must not include the `java.rmi.RemoteException`.
 
-The local interface is allowed to have
-superinterfaces.
+The local interface is allowed to have superinterfaces.
 
-For each method defined in the local
-interface, there must be a matching method in the entity bean’s class.
+For each method defined in the local interface, there must be a matching method in the entity bean’s class.
 The matching method must have:
 
-The same name.
+* The same name.
 
-The same number and types of its arguments,
-and the same return type.
+* The same number and types of its arguments, and the same return type.
 
-All the exceptions defined in the _throws_
-clause of the matching method of the enterprise Bean class must be
-defined in the _throws_ clause of the method of the local interface.
+* All the exceptions defined in the `throws` clause of the matching method of the enterprise Bean class must be defined in the `throws` clause of the method of the local interface.
 
 ==== Entity Bean’s Local Home Interface
 
-The following are
-the requirements for the entity bean’s local home interface:
+The following are the requirements for the entity bean’s local home interface:
 
-The interface must extend the
-javax.ejb.EJBLocalHome interface.
+The interface must extend the `jakarta.ejb.EJBLocalHome` interface.
 
-The _throws_ clause of a method on the local
-home interface must not include the java.rmi.RemoteException.
+The `throws` clause of a method on the local home interface must not include the `java.rmi.RemoteException`.
 
-The local home interface is allowed to have
-superinterfaces.
+The local home interface is allowed to have superinterfaces.
 
-Each method defined in the local home
-interface must be one of the following:
+Each method defined in the local home interface must be one of the following:
 
-A create method.
+* A create method.
 
-A finder method.
+* A finder method.
 
-A home method.
+* A home method.
 
-Each create method must be the named “
-_create<METHOD>_ ”, and it must match one of the ejbCreate _<METHOD>_
-methods defined in the enterprise bean class. The matching ejbCreate
-_<METHOD>_ method must have the same number and types of its arguments.
+Each create method must be the named "```create<METHOD>```", and it must match one of the `ejbCreate<METHOD>` methods defined in the enterprise bean class.
+The matching `ejbCreate<METHOD>` method must have the same number and types of its arguments.
 (Note that the return type is different.)
 
-The return type for a create<METHOD> method
-must be the entity bean’s local interface type.
+The return type for a `create<METHOD>` method must be the entity bean’s local interface type.
 
-All the exceptions defined in the _throws_
-clause of the matching ejbCreate _<METHOD>_ and ejbPostCreate _<METHOD>_
-methods of the enterprise bean class must be included in the _throws_
-clause of the matching create<METHOD> method of the local home interface
-(i.e., the set of exceptions defined for the create<METHOD> method must
-be a superset of the union of exceptions defined for the
-ejbCreate<METHOD> and ejbPostCreate<METHOD> methods).
+All the exceptions defined in the `throws` clause of the matching `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods of the enterprise bean class must be included in the `throws` clause of the matching `create<METHOD>` method of the local home interface (i.e., the set of exceptions defined for the `create<METHOD>` method must be a superset of the union of exceptions defined for the `ejbCreate<METHOD>` and `ejbPostCreate<METHOD>` methods).
 
-The _throws_ clause of a create _<METHOD>_
-method must include the javax.ejb.CreateException.
+The `throws` clause of a `create<METHOD>` method must include the `jakarta.ejb.CreateException`.
 
-Each finder method must be named “
-_find<METHOD>_ ” (e.g. findLargeAccounts), and it must match one of the
-ejbFind<METHOD> methods defined in the entity bean class (e.g.
-ejbFindLargeAccounts). The matching ejbFind<METHOD> method must have the
-same number and types of arguments. (Note that the return type may be
-different.)
+Each finder method must be named "```find<METHOD>```" (e.g. `findLargeAccounts`), and it must match one of the `ejbFind<METHOD>` methods defined in the entity bean class (e.g. `ejbFindLargeAccounts`).
+The matching `ejbFind<METHOD>` method must have the same number and types of arguments.
+(Note that the return type may be different.)
 
-The return type for a find<METHOD> method
-must be the entity bean’s local interface type (for a single-object
-finder), or a collection thereof (for a multi-object finder).
+The return type for a `find<METHOD>` method must be the entity bean’s local interface type (for a single-object finder), or a collection thereof (for a multi-object finder).
 
-The local home interface must always include
-the findByPrimaryKey method, which is always a single-object finder. The
-method must declare the primary key class as the method argument.
+The local home interface must always include the `findByPrimaryKey` method, which is always a single-object finder.
+The method must declare the primary key class as the method argument.
 
-All the exceptions defined in the _throws_
-clause of an ejbFind method of the entity bean class must be included in
-the _throws_ clause of the matching find method of the local home
-interface.
+All the exceptions defined in the `throws` clause of an `ejbFind` method of the entity bean class must be included in the `throws` clause of the matching find method of the local home interface.
 
-The _throws_ clause of a finder method must
-include the javax.ejb.FinderException.
+The `throws` clause of a finder method must include the `jakarta.ejb.FinderException`.
 
-Home methods can have arbitrary names,
-provided that they do not clash with create, find, and remove method
-names. The matching ejbHome method specified in the entity bean class
-must have the same number and types of arguments and must return the
-same type as the home method as specified in the local home interface of
-the bean.
+Home methods can have arbitrary names, provided that they do not clash with create, find, and remove method names.
+The matching `ejbHome` method specified in the entity bean class must have the same number and types of arguments and must return the same type as the home method as specified in the local home interface of the bean.
 
-The _throws_ clause of any method on the
-entity bean’s local home interface must not include the
-_java.rmi.RemoteException_ .
+The `throws` clause of any method on the entity bean’s local home interface must not include the `java.rmi.RemoteException`.
 
 [[a3011]]
 ==== Entity Bean’s Primary Key Class
 
-The Bean Provider
-must specify a primary key class in the deployment descriptor.
+The Bean Provider must specify a primary key class in the deployment descriptor.
 
-The primary key type must be a legal Value
-Type in RMI-IIOP.
+The primary key type must be a legal Value Type in RMI-IIOP.
 
-The class must provide suitable
-implementation of the hashCode() and equals(Object other) methods to
-simplify the management of the primary keys by client code.
+The class must provide suitable implementation of the `hashCode()` and `equals(Object other)` methods to simplify the management of the primary keys by client code.
 
 === The Responsibilities of the Container Provider
 
+This section describes the responsibilities of the Container Provider to support bean-managed persistence entity beans.
+The Container Provider is responsible for providing the deployment tools, and for managing entity bean instances at runtime.
 
-
-This section describes the responsibilities
-of the Container Provider to support bean-managed persistence entity
-beans. The Container Provider is responsible for providing the
-deployment tools, and for managing entity bean instances at runtime.
-
-Because the EJB specification does not define
-the API between deployment tools and the container, we assume that the
-deployment tools are provided by the Container Provider. Alternatively,
-the deployment tools may be provided by a different vendor who uses the
-container vendor’s specific API.
+_Because the Enterprise Beans specification does not define the API between deployment tools and the container, we assume that the
+deployment tools are provided by the Container Provider.
+Alternatively, the deployment tools may be provided by a different vendor who uses the container vendor’s specific API._
 
 ==== Generation of Implementation Classes
 
-The deployment
-tools provided by the Container Provider are responsible for the
-generation of additional classes when the entity bean is deployed. The
-tools obtain the information that they need for generation of the
-additional classes by introspecting the classes and interfaces provided
-by the entity Bean Provider and by examining the entity bean’s
-deployment descriptor.
+The deployment tools provided by the Container Provider are responsible for the generation of additional classes when the entity bean is deployed.
+The tools obtain the information that they need for generation of the additional classes by introspecting the classes and interfaces provided by the entity Bean Provider and by examining the entity bean’s deployment descriptor.
 
-The deployment tools must generate the
-following classes:
+The deployment tools must generate the following classes:
 
-A class that implements the entity bean’s
-remote home interface (i.e., the entity EJBHome class).
+* A class that implements the entity bean’s remote home interface (i.e., the entity EJBHome class).
 
-A class that implements the entity bean’s
-remote interface (i.e., the entity EJBObject class).
+* A class that implements the entity bean’s remote interface (i.e., the entity EJBObject class).
 
-A class that implements the entity bean’s
-local home interface (i.e., the entity EJBLocalHome class).
+* A class that implements the entity bean’s local home interface (i.e., the entity EJBLocalHome class).
 
-A class that implements the entity bean’s
-local interface (i.e., the entity EJBLocalObject class).
+* A class that implements the entity bean’s local interface (i.e., the entity EJBLocalObject class).
 
-The deployment tools may also generate a
-class that mixes some container-specific code with the entity bean
-class. The code may, for example, help the container to manage the
-entity bean instances at runtime. Tools can use subclassing, delegation,
-and code generation.
+The deployment tools may also generate a class that mixes some container-specific code with the entity bean class.
+The code may, for example, help the container to manage the entity bean instances at runtime.
+Tools can use subclassing, delegation, and code generation.
 
-The deployment tools may also allow
-generation of additional code that wraps the business methods and that
-is used to customize the business logic for an existing operational
-environment. For example, a wrapper for a debit function on the Account
-bean may check that the debited amount does not exceed a certain limit,
-or perform security checking that is specific to the operational
-environment.
+The deployment tools may also allow generation of additional code that wraps the business methods and that is used to customize the business logic for an existing operational environment.
+For example, a wrapper for a `debit` function on the `Account` bean may check that the debited amount does not exceed a certain limit, or perform security checking that is specific to the operational environment.
 
 ==== Entity EJBHome Class
 
-The entity
-EJBHome class, which is generated by deployment tools, implements the
-entity bean’s remote home interface. This class implements the methods
-of the javax.ejb.EJBHome interface, and the type-specific create,
-finder, and home methods specific to the entity bean.
+The entity EJBHome class, which is generated by deployment tools, implements the entity bean’s remote home interface.
+This class implements the methods of the `jakarta.ejb.EJBHome` interface, and the type-specific create, finder, and home methods specific to the entity bean.
 
-The implementation of each create<METHOD>
-method invokes a matching ejbCreate<METHOD> method, followed by the
-matching ejbPostCreate<METHOD> method, passing the create<METHOD>
-parameters to these matching methods.
+The implementation of each `create<METHOD>` method invokes a matching `ejbCreate<METHOD>` method, followed by the matching `ejbPostCreate<METHOD>` method, passing the `create<METHOD>` parameters to these matching methods.
 
-The implementation of the remove methods
-defined in the javax.ejb.EJBHome interface must activate an instance (if
-an instance is not already in the ready state) and invoke the ejbRemove
-method on the instance.
+The implementation of the `remove` methods defined in the `jakarta.ejb.EJBHome` interface must activate an instance (if an instance is not already in the ready state) and invoke the `ejbRemove` method on the instance.
 
-The implementation of each find<METHOD>
-method invokes a matching ejbFind<METHOD> method. The implementation of
-the find<METHOD> method must create an entity object reference for the
-primary key returned from the ejbFind<METHOD> and return the entity
-object reference (i.e., EJBObject) to the client. If the ejbFind<METHOD>
-method returns a collection of primary keys, the implementation of the
-find<METHOD> method must create a collection of entity object references
-for the primary keys and return the collection to the client.
+The implementation of each `find<METHOD>` method invokes a matching `ejbFind<METHOD>` method.
+The implementation of the `find<METHOD>` method must create an entity object reference for the primary key returned from the `ejbFind<METHOD>` and return the entity object reference (i.e., EJBObject) to the client.
+If the `ejbFind<METHOD>` method returns a collection of primary keys, the implementation of the `find<METHOD>` method must create a collection of entity object references for the primary keys and return the collection to the client.
 
-The implementation of each <METHOD> home
-method invokes a matching ejbHome<METHOD> method (in which the first
-character of _<METHOD>_ is uppercased in the name of the ejbHome<METHOD>
-method), passing the <METHOD> parameters to the matching method.
+The implementation of each `<METHOD>` home method invokes a matching `ejbHome<METHOD>` method (in which the first character of `<METHOD>` is uppercased in the name of the `ejbHome<METHOD>` method), passing the `<METHOD>` parameters to the matching method.
 
 ==== Entity EJBObject Class
 
-The entity
-EJBObject class, which is generated by deployment tools, implements the
-entity bean’s remote interface. It implements the methods of the
-javax.ejb.EJBObject interface and the business methods specific to the
-entity bean.
+The entity EJBObject class, which is generated by deployment tools, implements the entity bean’s remote interface.
+It implements the methods of the `jakarta.ejb.EJBObject` interface and the business methods specific to the entity bean.
 
-The implementation of the remove method
-(defined in the javax.ejb.EJBObject interface) must activate an instance
-(if an instance is not already in the ready state) and invoke the
-ejbRemove method on the instance.
+The implementation of the `remove` method (defined in the `jakarta.ejb.EJBObject` interface) must activate an instance (if an instance is not already in the ready state) and invoke the `ejbRemove` method on the instance.
 
-The implementation of each business method
-must activate an instance (if an instance is not already in the ready
-state) and invoke the matching business method on the instance.
+The implementation of each business method must activate an instance (if an instance is not already in the ready state) and invoke the matching business method on the instance.
 
 ==== Entity EJBLocalHome Class
 
-The entity
-EJBLocalHome class, which is generated by deployment tools, implements
-the entity bean’s local home interface. This class implements the
-methods of the javax.ejb.EJBLocalHome interface, and the type-specific
-create, finder, and home methods specific to the entity bean.
+The entity EJBLocalHome class, which is generated by deployment tools, implements the entity bean’s local home interface.
+This class implements the methods of the `jakarta.ejb.EJBLocalHome` interface, and the type-specific create, finder, and home methods specific to the entity bean.
 
-The implementation of each create<METHOD>
-method invokes a matching ejbCreate<METHOD> method, followed by the
-matching ejbPostCreate<METHOD> method, passing the create<METHOD>
-parameters to these matching methods.
+The implementation of each `create<METHOD>` method invokes a matching `ejbCreate<METHOD>` method, followed by the matching `ejbPostCreate<METHOD>` method, passing the `create<METHOD>` parameters to these matching methods.
 
-The implementation of the remove method
-defined in the javax.ejb.EJBLocalHome interface must activate an
-instance (if an instance is not already in the ready state) and invoke
-the ejbRemove method on the instance.
+The implementation of the `remove` method defined in the `jakarta.ejb.EJBLocalHome` interface must activate an instance (if an instance is not already in the ready state) and invoke the `ejbRemove` method on the instance.
 
-The implementation of each find<METHOD>
-method invokes a matching ejbFind<METHOD> method. The implementation of
-the find<METHOD> method must create an entity object reference for the
-primary key returned from the ejbFind<METHOD> and return the entity
-object reference (i.e., EJBLocalObject) to the client. If the
-ejbFind<METHOD> method returns a collection of primary keys, the
-implementation of the find<METHOD> method must create a collection of
-entity object references for the primary keys and return the collection
-to the client.
+The implementation of each `find<METHOD>` method invokes a matching `ejbFind<METHOD>` method.
+The implementation of the `find<METHOD>` method must create an entity object reference for the primary key returned from the `ejbFind<METHOD>` and return the entity object reference (i.e., EJBLocalObject) to the client.
+If the `ejbFind<METHOD>` method returns a collection of primary keys, the implementation of the `find<METHOD>` method must create a collection of entity object references for the primary keys and return the collection to the client.
 
-The implementation of each <METHOD> home
-method invokes a matching ejbHome<METHOD> method (in which the first
-character of _<METHOD>_ is uppercased in the name of the ejbHome<METHOD>
-method), passing the <METHOD> parameters to the matching method.
+The implementation of each `<METHOD>` home method invokes a matching `ejbHome<METHOD>` method (in which the first character of `<METHOD>` is uppercased in the name of the `ejbHome<METHOD>` method), passing the `<METHOD>` parameters to the matching method.
 
 ==== Entity EJBLocalObject Class
 
-The entity
-EJBLocalObject class, which is generated by deployment tools, implements
-the entity bean’s local interface. It implements the methods of the
-javax.ejb.EJBLocalObject interface and the business methods specific to
-the entity bean.
+The entity EJBLocalObject class, which is generated by deployment tools, implements the entity bean’s local interface.
+It implements the methods of the `jakarta.ejb.EJBLocalObject` interface and the business methods specific to the entity bean.
 
-The implementation of the remove method
-(defined in the javax.ejb.EJBLocalObject interface) must activate an
-instance (if an instance is not already in the ready state) and invoke
-the ejbRemove method on the instance.
+The implementation of the `remove` method (defined in the `jakarta.ejb.EJBLocalObject` interface) must activate an instance (if an instance is not already in the ready state) and invoke the `ejbRemove` method on the instance.
 
-The implementation of each business method
-must activate an instance (if an instance is not already in the ready
-state) and invoke the matching business method on the instance.
+The implementation of each business method must activate an instance (if an instance is not already in the ready state) and invoke the matching business method on the instance.
 
 ==== Handle Class
 
-The deployment
-tools are responsible for implementing the handle class for the entity
-bean. The handle class must be serializable by the Java Serialization
-protocol.
+The deployment tools are responsible for implementing the handle class for the entity bean.
+The handle class must be serializable by the Java Serialization protocol.
 
-As the handle class is not entity-bean
-specific, the container may, but is not required to, use a single class
-for all deployed entity beans.
+As the handle class is not entity-bean specific, the container may, but is not required to, use a single class for all deployed entity beans.
 
 ==== Home Handle Class
 
-The deployment
-tools responsible for implementing the home
-handle class for the entity bean. The handle class must be serializable
-by the Java Serialization protocol.
+The deployment tools responsible for implementing the home handle class for the entity bean.
+The handle class must be serializable by the Java Serialization protocol.
 
-Because the home handle class is not
-entity-bean specific, the container may, but is not required to, use a
-single class for the home handles of all deployed entity beans.
+Because the home handle class is not entity-bean specific, the container may, but is not required to, use a single class for the home handles of all deployed entity beans.
 
 ==== Metadata Class
 
-The deployment
-tools are responsible for implementing the class that provides metadata
-information to the remote client view contract. The class must be a
-valid RMI-IIOP Value Type, and must implement the javax.ejb.EJBMetaData
-interface.
+The deployment tools are responsible for implementing the class that provides metadata information to the remote client view contract. The class must be a valid RMI-IIOP Value Type, and must implement the `jakarta.ejb.EJBMetaData` interface.
 
-Because the metadata class is not entity-bean
-specific, the container may, but is not required to, use a single class
-for all deployed enterprise beans.
+Because the metadata class is not entity-bean specific, the container may, but is not required to, use a single class for all deployed enterprise beans.
 
 ==== Instance’s Re-entrance
 
-The container runtime must enforce the rules
-defined in Section link:Ejb.html#a2872[See Non-reentrant and
-Re-entrant Instances].
+The container runtime must enforce the rules defined in <<a2872>>.
 
 ==== Transaction Scoping, Security, Exceptions
 
-The container runtime must follow the rules
-on transaction scoping and
-exception handling described in Chapters 9
-and link:Ejb.html#a3210[See Exception Handling]. The container
-runtime must follow the rules on security
-checking described in the EJB Core Contracts and Requirements document
-link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345] Chapter “Security Management”.
+The container runtime must follow the rules on transaction scoping and exception handling described in <<a3185>> and <<a3210>>.
+The container runtime must follow the rules on security checking described in the Enterprise Beans Core Contracts and Requirements document <<a3339>> Chapter "`__Security Management__`".
 
 ==== Implementation of Object References
 
-The container should implement
-the distribution protocol between the client
-and the container such that the object references of the remote home and
-remote interfaces used by entity bean clients are usable for a long
-period of time. Ideally, a client should be able to use an object
-reference across a server crash and restart. An
-object reference should become invalid only
-when the entity object has been removed, or after a reconfiguration of
-the server environment (for example, when the entity bean is moved to a
-different EJB server or container).
+The container should implement the distribution protocol between the client and the container such that the object references of the remote home and remote interfaces used by entity bean clients are usable for a long period of time.
+Ideally, a client should be able to use an object reference across a server crash and restart.
+An object reference should become invalid only when the entity object has been removed, or after a reconfiguration of the server environment (for example, when the entity bean is moved to a different Enterprise Beans server or container).
 
-The motivation for this is to simplify the
-programming model for the entity bean client. While the client code
-needs to have a recovery handler for the system exceptions thrown from
-the individual method invocations on the home and remote interface, the
-client should not be forced to re-obtain the object references.
+_The motivation for this is to simplify the programming model for the entity bean client.
+While the client code needs to have a recovery handler for the system exceptions thrown from the individual method invocations on the home and remote interface, the client should not be forced to re-obtain the object references._
 
 ==== EntityContext
 
-The container must implement the
-EntityContext.getEJBObject method such that
-the bean instance can use the Java language cast to convert the returned
-value to the entity bean’s remote interface type. Specifically, the bean
-instance does not have to use the PortableRemoteObject.narrow method for
-the type conversion.
+The container must implement the `EntityContext.getEJBObject` method such that the bean instance can use the Java language cast to convert the returned value to the entity bean’s remote interface type.
+Specifically, the bean instance does not have to use the `PortableRemoteObject.narrow` method for the type conversion.
