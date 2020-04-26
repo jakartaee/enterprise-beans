@@ -1,46 +1,31 @@
 [[a3258]]
 == Timer Service
 
-This chapter defines limitations of the EJB
-container-managed timer service when used with EJB 2.1 entity beans.
+This chapter defines limitations of the Enterprise Beans container-managed timer service when used with Enterprise Beans 2.1 entity beans.
 
 === Bean Provider’s View of the Timer Service
 
+Timers can be created for Enterprise Beans 2.1 entity beans.
+A timer that is created for the Enterprise Beans 2.1 entity bean is associated with the entity bean’s identity.
 
-
-Timers can be created for EJB 2.1 entity
-beans. A timer that is created for the EJB 2.1 entity bean is associated
-with the entity bean’s identity.
-
-Use of the EJB Timer Service is not supported
-for an EJB 1.1 entity bean with container-managed persistence.
+Use of the Enterprise Beans Timer Service is not supported for an Enterprise Beans 1.1 entity bean with container-managed persistence.
 
 ==== Calendar-Based Time Expressions
 
-Calendar based timers are not supported for
-entity beans.
+Calendar based timers are not supported for entity beans.
 
 ==== Non-persistent Timers
 
-Non-persistent timers are not supported for
-entity beans.
+Non-persistent timers are not supported for entity beans.
 
 ==== The TimerService Interface
 
-For an EJB 2.1 entity bean, the result of
-_getTimers_ is a collection of those timers that are associated with the
-bean’s identity.
+For an Enterprise Beans 2.1 entity bean, the result of `getTimers` is a collection of those timers that are associated with the bean’s identity.
 
 ==== Timer Expiration and Timeout Callback Method
 
-If a timer for an EJB 2.1 entity bean
-expires, and the bean has been passivated, the container must call the
-_ejbActivate_ and _ejbLoad_ methods on the entity bean class before
-calling the timeout callback method, as described in Sections
-link:Ejb.html#a1279[See Container’s View] and
-link:Ejb.html#a2553[See Container’s View].
+If a timer for an Enterprise Beans 2.1 entity bean expires, and the bean has been passivated, the container must call the `ejbActivate` and `ejbLoad` methods on the entity bean class before calling the timeout callback method, as described in <<a1279>> and <<a2553>>.
 
 ==== Entity Bean Removal
 
-If an entity bean is removed, the container
-must remove the timers for that bean.
+If an entity bean is removed, the container must remove the timers for that bean.
