@@ -1,8 +1,8 @@
 [[a5456]]
 == Timer Service
 
-This chapter defines the EJB
-container-managed Timer Service. The EJB Timer Service is a
+This chapter defines the Enterprise Beans
+container-managed Timer Service. The Enterprise Beans Timer Service is a
 container-provided service that allows the Bean Provider to register
 enterprise beans for timer callbacks to occur according to a
 calendar-based schedule, at a specified time, after a specified elapsed
@@ -16,19 +16,19 @@ certain temporal events have occurred in order to manage the semantic
 state transitions that are intrinsic to the business processes that they
 model.
 
-The EJB Timer Service is a container-managed
+The Enterprise Beans Timer Service is a container-managed
 service that allows callbacks to be scheduled for time-based events. The
 container provides a reliable and transactional notification service for
 timed events. Timer notifications may be scheduled to occur according to
 a calendar-based schedule, at a specific time, after a specific elapsed
 duration, or at specific recurring intervals.
 
-The Timer Service is implemented by the EJB
+The Timer Service is implemented by the Enterprise Beans
 container. An enterprise bean accesses this service by means of
 dependency injection, through the `EJBContext` interface, or through
 lookup in the JNDI namespace.
 
-The EJB Timer Service is a coarse-grained
+The Enterprise Beans Timer Service is a coarse-grained
 timer notification service that is designed for use in the modeling of
 application-level processes. It is not intended for the modeling of
 real-time events.
@@ -42,18 +42,18 @@ of time._
 ****
 
 The following sections describe the Timer
-Service with respect to the various individual EJB roles.
+Service with respect to the various individual Enterprise Beans roles.
 
 [[a5465]]
 === Bean Provider’s View of the Timer Service
 
-The EJB Timer Service is a container-provided
+The Enterprise Beans Timer Service is a container-provided
 service that allows enterprise beans to be registered for timer callback
 methods to occur according to a calendar-based schedule, at a specified
 time, after a specified elapsed time, or after specified intervals. The
 Timer Service provides methods for the programmatic creation and
 cancellation of timers, as well as for locating the timers that are
-associated with a bean or with all beans in an EJB module. Timers can
+associated with a bean or with all beans in an Enterprise Beans module. Timers can
 also be created automatically by the container at deployment time based
 on metadata in the bean class or in the deployment descriptor.
 
@@ -67,7 +67,7 @@ programmatically-created timers.
 For programmatically created timers, the
 timeout callback method must either be a single method that is annotated
 with the `Timeout` annotation or the bean must implement the
-`javax.ejb.TimedObject` interface. The `javax.ejb.TimedObject` interface
+`jakarta.ejb.TimedObject` interface. The `jakarta.ejb.TimedObject` interface
 has a single method, the timer callback method `ejbTimeout`.
 
 For automatically created timers, the
@@ -520,7 +520,7 @@ dependency injection, through the `getTimerService` method of the
 
 [source, java]
 ----
-public interface javax.ejb.TimerService {
+public interface jakarta.ejb.TimerService {
 
  public Timer createTimer(long duration, java.io.Serializable info);
 
@@ -642,7 +642,7 @@ All timers created via one of the
 single timeout callback method. This method must either be a single
 method annotated with the `Timeout` annotation (or a method specified as
 a timeout method in the deployment descriptor) or the bean must
-implement the `javax.ejb.TimedObject` interface. The `TimedObject`
+implement the `jakarta.ejb.TimedObject` interface. The `TimedObject`
 interface has a single method, `ejbTimeout`. If the bean implements the
 `TimedObject` interface, the `Timeout` annotation or `timeout-method`
 deployment descriptor element can only be used to specify the
@@ -655,7 +655,7 @@ the same method.]
 
 [source, java]
 ----
-public interface javax.ejb.TimedObject {
+public interface jakarta.ejb.TimedObject {
     public void ejbTimeout(Timer timer);
 }
 ----
@@ -688,7 +688,7 @@ void <METHOD>(Timer timer) // <1>
 timeout callbacks accept the `Timer` parameter but did not require that this 
 parameter be listed when declared by means of the deployment descriptor. To 
 preserve backward compatibility, a `timeout-method` that does not include a 
-`method-param` element for the `javax.ejb.Timer` parameter may be used to 
+`method-param` element for the `jakarta.ejb.Timer` parameter may be used to 
 match either a timeout method signature with or without a Timer parameter, 
 if there is only one method with the specified name. If methods with the 
 specified name are overloaded, a `timeout-method` element with an empty 
@@ -770,10 +770,10 @@ future timeouts for this calendar-based timer, the
 
 ==== The Timer and TimerHandle Interfaces
 
-The `javax.ejb.Timer` interface allows the
+The `jakarta.ejb.Timer` interface allows the
 caller to cancel a timer and to obtain information about the timer.
 
-The `javax.ejb.TimerHandle` interface allows
+The `jakarta.ejb.TimerHandle` interface allows
 the caller to obtain a serializable timer handle that may be persisted.
 Timer handles are only available for persistent timers. Since timers are
 local objects, a TimerHandle must not be passed through a bean’s remote
@@ -782,16 +782,16 @@ business interface, remote interface or web service interface.
 The methods of these interfaces are as follows:
 [source, java]
 ----
-public interface javax.ejb.Timer {
+public interface jakarta.ejb.Timer {
     public void cancel();
 
     public long getTimeRemaining();
 
     public java.util.Date getNextTimeout();
 
-    public javax.ejb.ScheduleExpression getSchedule();
+    public jakarta.ejb.ScheduleExpression getSchedule();
 
-    public javax.ejb.TimerHandle getHandle();
+    public jakarta.ejb.TimerHandle getHandle();
 
     public java.io.Serializable getInfo();
 
@@ -800,8 +800,8 @@ public interface javax.ejb.Timer {
     public boolean isCalendarTimer();
 }
 
-public interface javax.ejb.TimerHandle extends java.io.Serializable {
-    public javax.ejb.Timer getTimer();
+public interface jakarta.ejb.TimerHandle extends java.io.Serializable {
+    public jakarta.ejb.Timer getTimer();
 }
 ----
 
@@ -864,7 +864,7 @@ remote interface, or web service method.
 === Container’s Responsibilities
 
 This section describes the responsibilities
-of the Container Provider to support the EJB Timer Service.
+of the Container Provider to support the Enterprise Beans Timer Service.
 
 ==== TimerService, Timer, and TimerHandle Interfaces
 
@@ -905,10 +905,10 @@ invoking the timeout callback method. If the transaction fails or is
 rolled back, the container must retry the timeout at least once.
 
 If the timer is a single-event timer, the
-container must cause the timer to no longer exist. If a `javax.ejb.Timer`
+container must cause the timer to no longer exist. If a `jakarta.ejb.Timer`
 interface method is subsequently invoked on the timer after the
 completion of the timeout callback method, the container must throw the
-`javax.ejb.NoSuchObjectLocalException`.
+`jakarta.ejb.NoSuchObjectLocalException`.
 
 If the Bean Provider invokes the
 `setRollbackOnly` method from within the timeout callback method, the
@@ -931,8 +931,8 @@ once upon restart.
 
 When a timer’s `cancel` method has been
 called, the container must cause the timer to no longer exist. If a
-`javax.ejb.Timer` method is subsequently invoked on the timer, the
-container must throw the `javax.ejb.NoSuchObjectLocalException`.
+`jakarta.ejb.Timer` method is subsequently invoked on the timer, the
+container must throw the `jakarta.ejb.NoSuchObjectLocalException`.
 
 When the `cancel` method of an automatically
 created non-persistent timer has been called, the container only causes

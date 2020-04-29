@@ -1,18 +1,18 @@
 [[a5804]]
 == Deployment Descriptor
 
-This chapter defines the EJB deployment descriptor. 
+This chapter defines the Enterprise Beans deployment descriptor. 
 <<a5807>> provides an overview of the deployment descriptor. 
 <<a5815>> through <<a5907>> describe the information in 
-the deployment descriptor from the perspective of the EJB roles 
+the deployment descriptor from the perspective of the Enterprise Beans roles 
 responsible for providing the information.
 <<a5910>> defines the deployment descriptor’s XML Schema
-elements that are specific to the EJB architecture.
-The XML Schema elements that are common to the Java EE Platform 
+elements that are specific to the Enterprise Beans architecture.
+The XML Schema elements that are common to the Jakarta EE Platform 
 specifications are provided in <<a9861>>.
 
 Entity beans elements are described in the
-EJB Optional Features document <<a9890>>.
+Enterprise Beans Optional Features document <<a9890>>.
 
 [[a5807]]
 === Overview
@@ -31,7 +31,7 @@ Assembler contains one or more enterprise beans, plus application
 assembly information describing how the enterprise beans are combined
 into a single application deployment unit.
 
-_The Java EE specification defines how
+_The Jakarta EE specification defines how
 enterprise beans and other application components contained in multiple
 such files can be assembled into an application._
 
@@ -219,12 +219,12 @@ enterprise bean’s references to administered objects that are associated
 with resources and that have not been defined by means of metadata
 annotations, as specified in <<a4344>>.
 
-* *EJB references* +
+* *Enterprise bean’s references* +
 The Bean Provider must declare any enterprise bean’s references to the
 remote home or remote business view of other enterprise beans that have
 not been defined by means of metadata annotations, as specified in <<a3915>>.
 
-* *EJB local references* +
+* *Enterprise bean’s local references* +
 The Bean Provider must declare any enterprise bean’s
 references to the local home or local business or no-interface view of
 other enterprise beans that have not been defined by means of metadata
@@ -258,7 +258,7 @@ metadata annotations, as specified in <<a5071>>.
 * *Message-driven bean’s configuration properties* +
 The Bean Provider may provide input to the Deployer as to
 how a message-driven bean should be configured upon activation in its
-operational environment. Activation configuration properties for a JMS
+operational environment. Activation configuration properties for a Jakarta Messaging
 message-driven bean include information about a bean’s intended
 destination type, its message selector, and its acknowledgement mode.
 Other bean types may make use of different properties. See <<a9863>>.
@@ -323,7 +323,7 @@ elements.
 
 * *Message-driven bean message selector* +
 The Application Assembler may further restrict, but not replace, the value
-of the `messageSelector` `activation-config-property` element of a JMS
+of the `messageSelector` `activation-config-property` element of a Jakarta Messaging
 message-driven bean—whether this was defined in metadata annotations or 
 the deployment descriptor.
 
@@ -336,7 +336,7 @@ never modify any of the following:
 
 * *Enterprise bean’s abstract schema name* +
 The Application Assembler should not change the enterprise bean’s name
-defined in the `abstract-schema-name` element since EJB QL queries may
+defined in the `abstract-schema-name` element since Enterprise Beans QL queries may
 depend on the content of this element.
 
 * *Relationship role source element* +
@@ -360,7 +360,7 @@ application assembly information:
 * *Binding of enterprise bean references* +
 The Application Assembler may link an enterprise
 bean reference to another enterprise bean in the ejb-jar file or `.war`
-file or in an ejb-jar file in the same Java EE application unit. The
+file or in an ejb-jar file in the same Jakarta EE application unit. The
 Application Assembler creates the link by adding the
 `ejb-link` element to the referencing bean.
 The Application Assembler uses the `ejb-name` of the referenced bean for
@@ -375,7 +375,7 @@ same name to be uniquely identified.
 * *Linking of message destination references* +
 The Application Assembler may link message consumers and producers
 through common message destinations specified in the ejb-jar file or
-`.war` file or in the same Java EE application unit. The Application
+`.war` file or in the same Jakarta EE application unit. The Application
 Assembler creates the link by adding the message-destination-link
 element to the referencing bean.
 
@@ -467,17 +467,17 @@ The Container Provider provides tools that
 read and import the information contained in the XML deployment
 descriptor.
 
-All EJB 3.2 implementations must support EJB
-3.1, EJB 3.0, EJB 2.1, EJB 2.0, and EJB 1.1 as well as EJB 3.1
-deployment descriptors. The definitions of the EJB 3.1 EJB 3.0, EJB 2.1,
-EJB 2.0, and EJB 1.1 deployment descriptors can be found in the
-Enterprise JavaBeans 3.1<<a9891>> and earlier specifications.
+All Enterprise Beans 3.2 implementations must support Enterprise Beans
+3.1, Enterprise Beans 3.0, Enterprise Beans 2.1, Enterprise Beans 2.0, and Enterprise Beans 1.1 as well as Enterprise Beans 3.1
+deployment descriptors. The definitions of the Enterprise Beans 3.1 Enterprise Beans 3.0, Enterprise Beans 2.1,
+Enterprise Beans 2.0, and Enterprise Beans 1.1 deployment descriptors can be found in the
+Enterprise Beans 3.1<<a9891>> and earlier specifications.
 
 [[a5910]]
 === Deployment Descriptor XML Schema
 
 This section
-provides the XML Schema for the EJB deployment descriptor. The comments
+provides the XML Schema for the Enterprise Beans deployment descriptor. The comments
 in the XML Schema specify additional requirements for the syntax and
 semantics that cannot be easily expressed by the XML Schema mechanism.
 
@@ -504,82 +504,58 @@ definition from a previous version of this specification.
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://xmlns.jcp.org/xml/ns/javaee"
-            xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
+            targetNamespace="https://jakarta.ee/xml/ns/jakartaee"
+            xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified"
-            version="3.2">
+            version="4.0">
   <xsd:annotation>
     <xsd:documentation>
 
-      DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+      Copyright (c) 2009, 2020 Oracle and/or its affiliates. All rights reserved.
       
-      Copyright (c) 2009-2013 Oracle and/or its affiliates. All rights reserved.
+      This program and the accompanying materials are made available under the
+      terms of the Eclipse Public License v. 2.0, which is available at
+      http://www.eclipse.org/legal/epl-2.0.
       
-      The contents of this file are subject to the terms of either the GNU
-      General Public License Version 2 only ("GPL") or the Common Development
-      and Distribution License("CDDL") (collectively, the "License").  You
-      may not use this file except in compliance with the License.  You can
-      obtain a copy of the License at
-      https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
-      or packager/legal/LICENSE.txt.  See the License for the specific
-      language governing permissions and limitations under the License.
+      This Source Code may also be made available under the following Secondary
+      Licenses when the conditions for such availability set forth in the
+      Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+      version 2 with the GNU Classpath Exception, which is available at
+      https://www.gnu.org/software/classpath/license.html.
       
-      When distributing the software, include this License Header Notice in each
-      file and include the License file at packager/legal/LICENSE.txt.
-      
-      GPL Classpath Exception:
-      Oracle designates this particular file as subject to the "Classpath"
-      exception as provided by Oracle in the GPL Version 2 section of the License
-      file that accompanied this code.
-      
-      Modifications:
-      If applicable, add the following below the License Header, with the fields
-      enclosed by brackets [] replaced by your own identifying information:
-      "Portions Copyright [year] [name of copyright owner]"
-      
-      Contributor(s):
-      If you wish your version of this file to be governed by only the CDDL or
-      only the GPL Version 2, indicate your decision by adding "[Contributor]
-      elects to include this software in this distribution under the [CDDL or GPL
-      Version 2] license."  If you don't indicate a single choice of license, a
-      recipient has the option to distribute your version of this file under
-      either the CDDL, the GPL Version 2 or to extend the choice of license to
-      its licensees as provided above.  However, if you add GPL Version 2 code
-      and therefore, elected the GPL Version 2 license, then the option applies
-      only if the new code is made subject to such option by the copyright
-      holder.
+      SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
       
     </xsd:documentation>
   </xsd:annotation>
 
   <xsd:annotation>
     <xsd:documentation>
-      <![CDATA[[
-      This is the XML Schema for the EJB 3.2 deployment descriptor.
+      <![CDATA[
+      This is the XML Schema for the Enterprise Beans 4.0 deployment descriptor.
       
-      All EJB deployment descriptors must indicate
-      the schema by using the Java EE namespace:
+      All Enterprise Beans deployment descriptors must indicate
+      the schema by using the Jakarta EE namespace:
       
-      http://xmlns.jcp.org/xml/ns/javaee
+      https://jakarta.ee/xml/ns/jakartaee
       
       and by indicating the version of the schema by
       using the version element as shown below:
       
-      <ejb-jar xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+      <ejb-jar xmlns="https://jakarta.ee/xml/ns/jakartaee"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-      	  http://xmlns.jcp.org/xml/ns/javaee/ejb-jar_3_2.xsd"
-      version="3.2">
+      xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+      	  https://jakarta.ee/xml/ns/jakartaee/ejb-jar_4_0.xsd"
+      version="4.0">
       ...
       </ejb-jar>
       
       The instance documents may indicate the published version of
       the schema using the xsi:schemaLocation attribute for the
-      Java EE namespace with the following location:
+      Jakarta EE namespace with the following location:
       
-      http://xmlns.jcp.org/xml/ns/javaee/ejb-jar_3_2.xsd
+      https://jakarta.ee/xml/ns/jakartaee/ejb-jar_3_2.xsd
       
       ]]>
     </xsd:documentation>
@@ -588,7 +564,7 @@ definition from a previous version of this specification.
   <xsd:annotation>
     <xsd:documentation>
 
-      The following conventions apply to all Java EE
+      The following conventions apply to all Jakarta EE
       deployment descriptor elements unless indicated otherwise.
       
       - In elements that specify a pathname to a file within the
@@ -603,13 +579,13 @@ definition from a previous version of this specification.
     </xsd:documentation>
   </xsd:annotation>
 
-  <xsd:include schemaLocation="javaee_7.xsd"/>
+  <xsd:include schemaLocation="jakartaee_9.xsd"/>
 
 
 <!-- **************************************************** -->
 
   <xsd:element name="ejb-jar"
-               type="javaee:ejb-jarType">
+               type="jakartaee:ejb-jarType">
     <xsd:annotation>
       <xsd:documentation>
 
@@ -627,11 +603,11 @@ definition from a previous version of this specification.
           
         </xsd:documentation>
       </xsd:annotation>
-      <xsd:selector xpath="javaee:enterprise-beans/*"/>
-      <xsd:field xpath="javaee:ejb-name"/>
+      <xsd:selector xpath="jakartaee:enterprise-beans/*"/>
+      <xsd:field xpath="jakartaee:ejb-name"/>
     </xsd:key>
     <xsd:keyref name="ejb-name-references"
-                refer="javaee:ejb-name-key">
+                refer="jakartaee:ejb-name-key">
       <xsd:annotation>
         <xsd:documentation>
 
@@ -641,8 +617,8 @@ definition from a previous version of this specification.
           
         </xsd:documentation>
       </xsd:annotation>
-      <xsd:selector xpath=".//javaee:ejb-relationship-role/javaee:relationship-role-source"/>
-      <xsd:field xpath="javaee:ejb-name"/>
+      <xsd:selector xpath=".//jakartaee:ejb-relationship-role/jakartaee:relationship-role-source"/>
+      <xsd:field xpath="jakartaee:ejb-name"/>
     </xsd:keyref>
     <xsd:key name="role-name-key">
       <xsd:annotation>
@@ -653,11 +629,11 @@ definition from a previous version of this specification.
           
         </xsd:documentation>
       </xsd:annotation>
-      <xsd:selector xpath="javaee:assembly-descriptor/javaee:security-role"/>
-      <xsd:field xpath="javaee:role-name"/>
+      <xsd:selector xpath="jakartaee:assembly-descriptor/jakartaee:security-role"/>
+      <xsd:field xpath="jakartaee:role-name"/>
     </xsd:key>
     <xsd:keyref name="role-name-references"
-                refer="javaee:role-name-key">
+                refer="jakartaee:role-name-key">
       <xsd:annotation>
         <xsd:documentation>
 
@@ -666,8 +642,8 @@ definition from a previous version of this specification.
           
         </xsd:documentation>
       </xsd:annotation>
-      <xsd:selector xpath="javaee:enterprise-beans/*/javaee:security-role-ref"/>
-      <xsd:field xpath="javaee:role-link"/>
+      <xsd:selector xpath="jakartaee:enterprise-beans/*/jakartaee:security-role-ref"/>
+      <xsd:field xpath="jakartaee:role-link"/>
     </xsd:keyref>
   </xsd:element>
 
@@ -691,9 +667,9 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="timeout"
-                   type="javaee:xsdIntegerType"/>
+                   type="jakartaee:xsdIntegerType"/>
       <xsd:element name="unit"
-                   type="javaee:time-unit-typeType"/>
+                   type="jakartaee:time-unit-typeType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -713,9 +689,9 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="method-name"
-                   type="javaee:string"/>
+                   type="jakartaee:string"/>
       <xsd:element name="method-params"
-                   type="javaee:method-paramsType"
+                   type="jakartaee:method-paramsType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -746,11 +722,11 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="activation-config-property"
-                   type="javaee:activation-config-propertyType"
+                   type="jakartaee:activation-config-propertyType"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -774,7 +750,7 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="activation-config-property-name"
-                   type="javaee:xsdStringType">
+                   type="jakartaee:xsdStringType">
         <xsd:annotation>
           <xsd:documentation>
 
@@ -782,7 +758,7 @@ definition from a previous version of this specification.
             the name for an activation configuration property of
             a message-driven bean.
             
-            For JMS message-driven beans, the following property
+            For Jakarta Messaging message-driven beans, the following property
             names are recognized: acknowledgeMode,
             messageSelector, destinationType, subscriptionDurability,
             destinationLookup, connectionFactoryLookup, subscriptionName,
@@ -792,7 +768,7 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="activation-config-property-value"
-                   type="javaee:xsdStringType">
+                   type="jakartaee:xsdStringType">
         <xsd:annotation>
           <xsd:documentation>
 
@@ -831,10 +807,10 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="class"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="0"/>
       <xsd:element name="method-name"
-                   type="javaee:java-identifierType"/>
+                   type="jakartaee:java-identifierType"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -861,10 +837,10 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="class"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="0"/>
       <xsd:element name="method-name"
-                   type="javaee:java-identifierType"/>
+                   type="jakartaee:java-identifierType"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -897,30 +873,30 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="security-role"
-                   type="javaee:security-roleType"
+                   type="jakartaee:security-roleType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="method-permission"
-                   type="javaee:method-permissionType"
+                   type="jakartaee:method-permissionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="container-transaction"
-                   type="javaee:container-transactionType"
+                   type="jakartaee:container-transactionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="interceptor-binding"
-                   type="javaee:interceptor-bindingType"
+                   type="jakartaee:interceptor-bindingType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="message-destination"
-                   type="javaee:message-destinationType"
+                   type="jakartaee:message-destinationType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="exclude-list"
-                   type="javaee:exclude-listType"
+                   type="jakartaee:exclude-listType"
                    minOccurs="0"/>
       <xsd:element name="application-exception"
-                   type="javaee:application-exceptionType"
+                   type="jakartaee:application-exceptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
@@ -943,11 +919,11 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="field-name"
-                   type="javaee:java-identifierType">
+                   type="jakartaee:java-identifierType">
         <xsd:annotation>
           <xsd:documentation>
 
@@ -965,7 +941,7 @@ definition from a previous version of this specification.
             cmp-version 1.x must denote a public field of the
             enterprise bean class or one of its superclasses.
             
-            Support for entity beans is optional as of EJB 3.2.
+            Support for entity beans is optional as of Enterprise Beans 3.2.
             
           </xsd:documentation>
         </xsd:annotation>
@@ -991,12 +967,12 @@ definition from a previous version of this specification.
         1.x
         2.x
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="1.x"/>
         <xsd:enumeration value="2.x"/>
       </xsd:restriction>
@@ -1019,17 +995,17 @@ definition from a previous version of this specification.
         used only for collection-valued cmr-fields. It specifies the
         type of the collection that is used.
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="cmr-field-name"
-                   type="javaee:string">
+                   type="jakartaee:string">
         <xsd:annotation>
           <xsd:documentation>
 
@@ -1041,13 +1017,13 @@ definition from a previous version of this specification.
             specified by cmr-field-name in which the first
             letter is uppercased, prefixed by "get" or "set".
             
-            Support for entity beans is optional as of EJB 3.2.
+            Support for entity beans is optional as of Enterprise Beans 3.2.
             
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="cmr-field-type"
-                   type="javaee:cmr-field-typeType"
+                   type="jakartaee:cmr-field-typeType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -1069,7 +1045,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="java.util.Collection"/>
         <xsd:enumeration value="java.util.Set"/>
       </xsd:restriction>
@@ -1096,7 +1072,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Bean"/>
         <xsd:enumeration value="Container"/>
       </xsd:restriction>
@@ -1123,7 +1099,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Read"/>
         <xsd:enumeration value="Write"/>
       </xsd:restriction>
@@ -1151,12 +1127,12 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="method"
-                   type="javaee:named-methodType"/>
+                   type="jakartaee:named-methodType"/>
       <xsd:element name="lock"
-                   type="javaee:concurrent-lock-typeType"
+                   type="jakartaee:concurrent-lock-typeType"
                    minOccurs="0"/>
       <xsd:element name="access-timeout"
-                   type="javaee:access-timeoutType"
+                   type="jakartaee:access-timeoutType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -1181,14 +1157,14 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="method"
-                   type="javaee:methodType"
+                   type="jakartaee:methodType"
                    maxOccurs="unbounded"/>
       <xsd:element name="trans-attribute"
-                   type="javaee:trans-attributeType"/>
+                   type="jakartaee:trans-attributeType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -1217,7 +1193,7 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="ejb-name"
-                   type="javaee:ejb-linkType"
+                   type="jakartaee:ejb-linkType"
                    minOccurs="1"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
@@ -1231,7 +1207,7 @@ definition from a previous version of this specification.
   <xsd:complexType name="ejb-classType">
     <xsd:annotation>
       <xsd:documentation>
-        <![CDATA[[
+        <![CDATA[
         The ejb-classType contains the fully-qualified name of the
         enterprise bean's class. It is used by ejb-class elements. 
         
@@ -1243,7 +1219,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:fully-qualified-classType"/>
+      <xsd:restriction base="jakartaee:fully-qualified-classType"/>
     </xsd:simpleContent>
   </xsd:complexType>
 
@@ -1254,7 +1230,7 @@ definition from a previous version of this specification.
     <xsd:annotation>
       <xsd:documentation>
 
-        The ejb-jarType defines the root element of the EJB
+        The ejb-jarType defines the root element of the Enterprise Beans
         deployment descriptor. It contains
         
         - an optional description of the ejb-jar file
@@ -1279,17 +1255,17 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="module-name"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
-      <xsd:group ref="javaee:descriptionGroup"/>
+      <xsd:group ref="jakartaee:descriptionGroup"/>
       <xsd:element name="enterprise-beans"
-                   type="javaee:enterprise-beansType"
+                   type="jakartaee:enterprise-beansType"
                    minOccurs="0"/>
       <xsd:element name="interceptors"
-                   type="javaee:interceptorsType"
+                   type="jakartaee:interceptorsType"
                    minOccurs="0"/>
       <xsd:element name="relationships"
-                   type="javaee:relationshipsType"
+                   type="jakartaee:relationshipsType"
                    minOccurs="0">
         <xsd:unique name="relationship-name-uniqueness">
           <xsd:annotation>
@@ -1301,12 +1277,12 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-relation"/>
-          <xsd:field xpath="javaee:ejb-relation-name"/>
+          <xsd:selector xpath="jakartaee:ejb-relation"/>
+          <xsd:field xpath="jakartaee:ejb-relation-name"/>
         </xsd:unique>
       </xsd:element>
       <xsd:element name="assembly-descriptor"
-                   type="javaee:assembly-descriptorType"
+                   type="jakartaee:assembly-descriptorType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -1319,11 +1295,11 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="ejb-client-jar"
-                   type="javaee:pathType"
+                   type="jakartaee:pathType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
-            <![CDATA[[
+            <![CDATA[
             The optional ejb-client-jar element specifies a JAR
             file that contains the class files necessary for a
             client program to access the
@@ -1340,17 +1316,17 @@ definition from a previous version of this specification.
       </xsd:element>
     </xsd:sequence>
     <xsd:attribute name="version"
-                   type="javaee:dewey-versionType"
-                   fixed="3.2"
+                   type="jakartaee:dewey-versionType"
+                   fixed="4.0"
                    use="required">
       <xsd:annotation>
         <xsd:documentation>
 
           The version specifies the version of the
-          EJB specification that the instance document must 
+          Enterprise Beans specification that the instance document must 
           comply with. This information enables deployment tools
-          to validate a particular EJB Deployment
-          Descriptor with respect to a specific version of the EJB
+          to validate a particular Enterprise Beans Deployment
+          Descriptor with respect to a specific version of the Enterprise Beans
           schema. 
           
         </xsd:documentation>
@@ -1392,7 +1368,7 @@ definition from a previous version of this specification.
   <xsd:complexType name="ejb-nameType">
     <xsd:annotation>
       <xsd:documentation>
-        <![CDATA[[
+        <![CDATA[
         The ejb-nameType specifies an enterprise bean's name. It is
         used by ejb-name elements. This name is assigned by the
         file producer to name the enterprise bean in the
@@ -1415,7 +1391,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:xsdNMTOKENType"/>
+      <xsd:restriction base="jakartaee:xsdNMTOKENType"/>
     </xsd:simpleContent>
   </xsd:complexType>
 
@@ -1435,17 +1411,17 @@ definition from a previous version of this specification.
         relationship, if specified, is unique within the ejb-jar
         file.
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="ejb-relation-name"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -1457,7 +1433,7 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="ejb-relationship-role"
-                   type="javaee:ejb-relationship-roleType"
+                   type="jakartaee:ejb-relationship-roleType"
                    minOccurs="2"
                    maxOccurs="2"/>
     </xsd:sequence>
@@ -1471,7 +1447,7 @@ definition from a previous version of this specification.
   <xsd:complexType name="ejb-relationship-roleType">
     <xsd:annotation>
       <xsd:documentation>
-        <![CDATA[[
+        <![CDATA[
         The ejb-relationship-roleType describes a role within a
         relationship. There are two roles in each relationship.
         
@@ -1509,18 +1485,18 @@ definition from a previous version of this specification.
         </ejb-relationship-role>
         </ejb-relation>
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
         ]]>
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="ejb-relationship-role-name"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -1534,9 +1510,9 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="multiplicity"
-                   type="javaee:multiplicityType"/>
+                   type="jakartaee:multiplicityType"/>
       <xsd:element name="cascade-delete"
-                   type="javaee:emptyType"
+                   type="jakartaee:emptyType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -1550,15 +1526,15 @@ definition from a previous version of this specification.
             which the other ejb-relationship-role
             element specifies a multiplicity of One.
             
-            Support for entity beans is optional as of EJB 3.2.
+            Support for entity beans is optional as of Enterprise Beans 3.2.
             
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="relationship-role-source"
-                   type="javaee:relationship-role-sourceType"/>
+                   type="jakartaee:relationship-role-sourceType"/>
       <xsd:element name="cmr-field"
-                   type="javaee:cmr-fieldType"
+                   type="jakartaee:cmr-fieldType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -1580,13 +1556,13 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:choice maxOccurs="unbounded">
       <xsd:element name="session"
-                   type="javaee:session-beanType">
+                   type="jakartaee:session-beanType">
         <xsd:unique name="session-ejb-local-ref-name-uniqueness">
           <xsd:annotation>
             <xsd:documentation>
 
               The ejb-ref-name element contains the name of
-              an EJB reference. The EJB reference is an entry in
+              an enterprise bean reference. The enterprise bean reference is an entry in
               the component's environment and is relative to the
               java:comp/env context.  The name must be unique within
               the component.
@@ -1595,15 +1571,15 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-local-ref"/>
-          <xsd:field xpath="javaee:ejb-ref-name"/>
+          <xsd:selector xpath="jakartaee:ejb-local-ref"/>
+          <xsd:field xpath="jakartaee:ejb-ref-name"/>
         </xsd:unique>
         <xsd:unique name="session-ejb-ref-name-uniqueness">
           <xsd:annotation>
             <xsd:documentation>
 
-              The ejb-ref-name element contains the name of an EJB
-              reference. The EJB reference is an entry in the
+              The ejb-ref-name element contains the name of an enterprise bean
+              reference. The enterprise bean reference is an entry in the
               component's environment and is relative to the
               java:comp/env context. The name must be unique
               within the component.
@@ -1612,8 +1588,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-ref"/>
-          <xsd:field xpath="javaee:ejb-ref-name"/>
+          <xsd:selector xpath="jakartaee:ejb-ref"/>
+          <xsd:field xpath="jakartaee:ejb-ref-name"/>
         </xsd:unique>
         <xsd:unique name="session-resource-env-ref-uniqueness">
           <xsd:annotation>
@@ -1628,8 +1604,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:resource-env-ref"/>
-          <xsd:field xpath="javaee:resource-env-ref-name"/>
+          <xsd:selector xpath="jakartaee:resource-env-ref"/>
+          <xsd:field xpath="jakartaee:resource-env-ref-name"/>
         </xsd:unique>
         <xsd:unique name="session-message-destination-ref-uniqueness">
           <xsd:annotation>
@@ -1644,8 +1620,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:message-destination-ref"/>
-          <xsd:field xpath="javaee:message-destination-ref-name"/>
+          <xsd:selector xpath="jakartaee:message-destination-ref"/>
+          <xsd:field xpath="jakartaee:message-destination-ref-name"/>
         </xsd:unique>
         <xsd:unique name="session-res-ref-name-uniqueness">
           <xsd:annotation>
@@ -1658,8 +1634,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:resource-ref"/>
-          <xsd:field xpath="javaee:res-ref-name"/>
+          <xsd:selector xpath="jakartaee:resource-ref"/>
+          <xsd:field xpath="jakartaee:res-ref-name"/>
         </xsd:unique>
         <xsd:unique name="session-env-entry-name-uniqueness">
           <xsd:annotation>
@@ -1672,18 +1648,18 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:env-entry"/>
-          <xsd:field xpath="javaee:env-entry-name"/>
+          <xsd:selector xpath="jakartaee:env-entry"/>
+          <xsd:field xpath="jakartaee:env-entry-name"/>
         </xsd:unique>
       </xsd:element>
       <xsd:element name="entity"
-                   type="javaee:entity-beanType">
+                   type="jakartaee:entity-beanType">
         <xsd:unique name="entity-ejb-local-ref-name-uniqueness">
           <xsd:annotation>
             <xsd:documentation>
 
               The ejb-ref-name element contains the name of
-              an EJB reference. The EJB reference is an entry in
+              an enterprise bean reference. The enterprise bean reference is an entry in
               the component's environment and is relative to the
               java:comp/env context.  The name must be unique within
               the component.
@@ -1692,15 +1668,15 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-local-ref"/>
-          <xsd:field xpath="javaee:ejb-ref-name"/>
+          <xsd:selector xpath="jakartaee:ejb-local-ref"/>
+          <xsd:field xpath="jakartaee:ejb-ref-name"/>
         </xsd:unique>
         <xsd:unique name="entity-ejb-ref-name-uniqueness">
           <xsd:annotation>
             <xsd:documentation>
 
-              The ejb-ref-name element contains the name of an EJB
-              reference. The EJB reference is an entry in the
+              The ejb-ref-name element contains the name of an enterprise bean
+              reference. The enterprise bean reference is an entry in the
               component's environment and is relative to the
               java:comp/env context. The name must be unique
               within the component.
@@ -1709,8 +1685,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-ref"/>
-          <xsd:field xpath="javaee:ejb-ref-name"/>
+          <xsd:selector xpath="jakartaee:ejb-ref"/>
+          <xsd:field xpath="jakartaee:ejb-ref-name"/>
         </xsd:unique>
         <xsd:unique name="entity-resource-env-ref-uniqueness">
           <xsd:annotation>
@@ -1725,8 +1701,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:resource-env-ref"/>
-          <xsd:field xpath="javaee:resource-env-ref-name"/>
+          <xsd:selector xpath="jakartaee:resource-env-ref"/>
+          <xsd:field xpath="jakartaee:resource-env-ref-name"/>
         </xsd:unique>
         <xsd:unique name="entity-message-destination-ref-uniqueness">
           <xsd:annotation>
@@ -1741,8 +1717,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:message-destination-ref"/>
-          <xsd:field xpath="javaee:message-destination-ref-name"/>
+          <xsd:selector xpath="jakartaee:message-destination-ref"/>
+          <xsd:field xpath="jakartaee:message-destination-ref-name"/>
         </xsd:unique>
         <xsd:unique name="entity-res-ref-name-uniqueness">
           <xsd:annotation>
@@ -1755,8 +1731,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:resource-ref"/>
-          <xsd:field xpath="javaee:res-ref-name"/>
+          <xsd:selector xpath="jakartaee:resource-ref"/>
+          <xsd:field xpath="jakartaee:res-ref-name"/>
         </xsd:unique>
         <xsd:unique name="entity-env-entry-name-uniqueness">
           <xsd:annotation>
@@ -1769,18 +1745,18 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:env-entry"/>
-          <xsd:field xpath="javaee:env-entry-name"/>
+          <xsd:selector xpath="jakartaee:env-entry"/>
+          <xsd:field xpath="jakartaee:env-entry-name"/>
         </xsd:unique>
       </xsd:element>
       <xsd:element name="message-driven"
-                   type="javaee:message-driven-beanType">
+                   type="jakartaee:message-driven-beanType">
         <xsd:unique name="messaged-ejb-local-ref-name-uniqueness">
           <xsd:annotation>
             <xsd:documentation>
 
               The ejb-ref-name element contains the name of
-              an EJB reference. The EJB reference is an entry in
+              an enterprise bean reference. The enterprise bean reference is an entry in
               the component's environment and is relative to the
               java:comp/env context.  The name must be unique within
               the component.
@@ -1789,15 +1765,15 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-local-ref"/>
-          <xsd:field xpath="javaee:ejb-ref-name"/>
+          <xsd:selector xpath="jakartaee:ejb-local-ref"/>
+          <xsd:field xpath="jakartaee:ejb-ref-name"/>
         </xsd:unique>
         <xsd:unique name="messaged-ejb-ref-name-uniqueness">
           <xsd:annotation>
             <xsd:documentation>
 
-              The ejb-ref-name element contains the name of an EJB
-              reference. The EJB reference is an entry in the
+              The ejb-ref-name element contains the name of an enterprise bean
+              reference. The enterprise bean reference is an entry in the
               component's environment and is relative to the
               java:comp/env context. The name must be unique
               within the component.
@@ -1806,8 +1782,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:ejb-ref"/>
-          <xsd:field xpath="javaee:ejb-ref-name"/>
+          <xsd:selector xpath="jakartaee:ejb-ref"/>
+          <xsd:field xpath="jakartaee:ejb-ref-name"/>
         </xsd:unique>
         <xsd:unique name="messaged-resource-env-ref-uniqueness">
           <xsd:annotation>
@@ -1822,8 +1798,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:resource-env-ref"/>
-          <xsd:field xpath="javaee:resource-env-ref-name"/>
+          <xsd:selector xpath="jakartaee:resource-env-ref"/>
+          <xsd:field xpath="jakartaee:resource-env-ref-name"/>
         </xsd:unique>
         <xsd:unique name="messaged-message-destination-ref-uniqueness">
           <xsd:annotation>
@@ -1838,8 +1814,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:message-destination-ref"/>
-          <xsd:field xpath="javaee:message-destination-ref-name"/>
+          <xsd:selector xpath="jakartaee:message-destination-ref"/>
+          <xsd:field xpath="jakartaee:message-destination-ref-name"/>
         </xsd:unique>
         <xsd:unique name="messaged-res-ref-name-uniqueness">
           <xsd:annotation>
@@ -1852,8 +1828,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:resource-ref"/>
-          <xsd:field xpath="javaee:res-ref-name"/>
+          <xsd:selector xpath="jakartaee:resource-ref"/>
+          <xsd:field xpath="jakartaee:res-ref-name"/>
         </xsd:unique>
         <xsd:unique name="messaged-env-entry-name-uniqueness">
           <xsd:annotation>
@@ -1866,8 +1842,8 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath="javaee:env-entry"/>
-          <xsd:field xpath="javaee:env-entry-name"/>
+          <xsd:selector xpath="jakartaee:env-entry"/>
+          <xsd:field xpath="jakartaee:env-entry-name"/>
         </xsd:unique>
       </xsd:element>
     </xsd:choice>
@@ -1882,7 +1858,7 @@ definition from a previous version of this specification.
     <xsd:annotation>
       <xsd:documentation>
 
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
         The entity-beanType declares an entity bean. The declaration
         consists of:
@@ -1916,10 +1892,10 @@ definition from a previous version of this specification.
         field
         - an optional declaration of the bean's environment 
         entries
-        - an optional declaration of the bean's EJB 
+        - an optional declaration of the bean's enterprise bean 
         references
-        - an optional declaration of the bean's local 
-        EJB references
+        - an optional declaration of the bean's local enterprise bean 
+        references
         - an optional declaration of the bean's web 
         service references
         - an optional declaration of the security role 
@@ -1977,30 +1953,30 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:group ref="javaee:descriptionGroup"/>
+      <xsd:group ref="jakartaee:descriptionGroup"/>
       <xsd:element name="ejb-name"
-                   type="javaee:ejb-nameType"/>
+                   type="jakartaee:ejb-nameType"/>
       <xsd:element name="mapped-name"
-                   type="javaee:xsdStringType"
+                   type="jakartaee:xsdStringType"
                    minOccurs="0"/>
       <xsd:element name="home"
-                   type="javaee:homeType"
+                   type="jakartaee:homeType"
                    minOccurs="0"/>
       <xsd:element name="remote"
-                   type="javaee:remoteType"
+                   type="jakartaee:remoteType"
                    minOccurs="0"/>
       <xsd:element name="local-home"
-                   type="javaee:local-homeType"
+                   type="jakartaee:local-homeType"
                    minOccurs="0"/>
       <xsd:element name="local"
-                   type="javaee:localType"
+                   type="jakartaee:localType"
                    minOccurs="0"/>
       <xsd:element name="ejb-class"
-                   type="javaee:ejb-classType"/>
+                   type="jakartaee:ejb-classType"/>
       <xsd:element name="persistence-type"
-                   type="javaee:persistence-typeType"/>
+                   type="jakartaee:persistence-typeType"/>
       <xsd:element name="prim-key-class"
-                   type="javaee:fully-qualified-classType">
+                   type="jakartaee:fully-qualified-classType">
         <xsd:annotation>
           <xsd:documentation>
 
@@ -2012,13 +1988,13 @@ definition from a previous version of this specification.
             deferred to deployment time, the prim-key-class 
             element should specify java.lang.Object.
             
-            Support for entity beans is optional as of EJB 3.2.
+            Support for entity beans is optional as of Enterprise Beans 3.2.
             
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="reentrant"
-                   type="javaee:true-falseType">
+                   type="jakartaee:true-falseType">
         <xsd:annotation>
           <xsd:documentation>
 
@@ -2032,33 +2008,33 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="cmp-version"
-                   type="javaee:cmp-versionType"
+                   type="jakartaee:cmp-versionType"
                    minOccurs="0"/>
       <xsd:element name="abstract-schema-name"
-                   type="javaee:java-identifierType"
+                   type="jakartaee:java-identifierType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
 
             The abstract-schema-name element specifies the name
             of the abstract schema type of an entity bean with 
-            cmp-version 2.x. It is used in EJB QL queries. 
+            cmp-version 2.x. It is used in Enterprise Beans QL queries. 
             
             For example, the abstract-schema-name for an entity 
             bean whose local interface is 
             com.acme.commerce.Order might be Order. 
             
-            Support for entity beans is optional as of EJB 3.2.
+            Support for entity beans is optional as of Enterprise Beans 3.2.
             
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="cmp-field"
-                   type="javaee:cmp-fieldType"
+                   type="jakartaee:cmp-fieldType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="primkey-field"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -2078,21 +2054,21 @@ definition from a previous version of this specification.
             their names must correspond to the field names of
             the entity bean class that comprise the key.
             
-            Support for entity beans is optional as of EJB 3.2.
+            Support for entity beans is optional as of Enterprise Beans 3.2.
             
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:group ref="javaee:jndiEnvironmentRefsGroup"/>
+      <xsd:group ref="jakartaee:jndiEnvironmentRefsGroup"/>
       <xsd:element name="security-role-ref"
-                   type="javaee:security-role-refType"
+                   type="jakartaee:security-role-refType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="security-identity"
-                   type="javaee:security-identityType"
+                   type="jakartaee:security-identityType"
                    minOccurs="0"/>
       <xsd:element name="query"
-                   type="javaee:queryType"
+                   type="jakartaee:queryType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
@@ -2118,11 +2094,11 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="method"
-                   type="javaee:methodType"
+                   type="jakartaee:methodType"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2161,12 +2137,12 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="exception-class"
-                   type="javaee:fully-qualified-classType"/>
+                   type="jakartaee:fully-qualified-classType"/>
       <xsd:element name="rollback"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0"/>
       <xsd:element name="inherited"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2191,11 +2167,11 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="interceptor"
-                   type="javaee:interceptorType"
+                   type="jakartaee:interceptorType"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2229,30 +2205,30 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="interceptor-class"
-                   type="javaee:fully-qualified-classType"/>
+                   type="jakartaee:fully-qualified-classType"/>
       <xsd:element name="around-invoke"
-                   type="javaee:around-invokeType"
+                   type="jakartaee:around-invokeType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="around-timeout"
-                   type="javaee:around-timeoutType"
+                   type="jakartaee:around-timeoutType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="around-construct"
-                   type="javaee:lifecycle-callbackType"
+                   type="jakartaee:lifecycle-callbackType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
-      <xsd:group ref="javaee:jndiEnvironmentRefsGroup"/>
+      <xsd:group ref="jakartaee:jndiEnvironmentRefsGroup"/>
       <xsd:element name="post-activate"
-                   type="javaee:lifecycle-callbackType"
+                   type="jakartaee:lifecycle-callbackType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="pre-passivate"
-                   type="javaee:lifecycle-callbackType"
+                   type="jakartaee:lifecycle-callbackType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
@@ -2266,7 +2242,7 @@ definition from a previous version of this specification.
   <xsd:complexType name="interceptor-bindingType">
     <xsd:annotation>
       <xsd:documentation>
-        <![CDATA[[
+        <![CDATA[
         The interceptor-bindingType element describes the binding of
         interceptor classes to beans within the ejb-jar file or .war file.
         It consists of :
@@ -2372,28 +2348,28 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="ejb-name"
-                   type="javaee:string"/>
+                   type="jakartaee:string"/>
       <xsd:choice>
         <xsd:element name="interceptor-class"
-                     type="javaee:fully-qualified-classType"
+                     type="jakartaee:fully-qualified-classType"
                      minOccurs="0"
                      maxOccurs="unbounded"/>
         <xsd:element name="interceptor-order"
-                     type="javaee:interceptor-orderType"
+                     type="jakartaee:interceptor-orderType"
                      minOccurs="1"/>
       </xsd:choice>
       <xsd:element name="exclude-default-interceptors"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0"/>
       <xsd:element name="exclude-class-interceptors"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0"/>
       <xsd:element name="method"
-                   type="javaee:named-methodType"
+                   type="jakartaee:named-methodType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2414,7 +2390,7 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="interceptor-class"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="1"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
@@ -2428,9 +2404,9 @@ definition from a previous version of this specification.
   <xsd:complexType name="named-methodType">
     <xsd:sequence>
       <xsd:element name="method-name"
-                   type="javaee:string"/>
+                   type="jakartaee:string"/>
       <xsd:element name="method-params"
-                   type="javaee:method-paramsType"
+                   type="jakartaee:method-paramsType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2443,9 +2419,9 @@ definition from a previous version of this specification.
   <xsd:complexType name="init-methodType">
     <xsd:sequence>
       <xsd:element name="create-method"
-                   type="javaee:named-methodType"/>
+                   type="jakartaee:named-methodType"/>
       <xsd:element name="bean-method"
-                   type="javaee:named-methodType"/>
+                   type="jakartaee:named-methodType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -2457,9 +2433,9 @@ definition from a previous version of this specification.
   <xsd:complexType name="remove-methodType">
     <xsd:sequence>
       <xsd:element name="bean-method"
-                   type="javaee:named-methodType"/>
+                   type="jakartaee:named-methodType"/>
       <xsd:element name="retain-if-exception"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2508,9 +2484,9 @@ definition from a previous version of this specification.
         superclass around-timeout methods.
         - an optional declaration of the bean's environment
         entries
-        - an optional declaration of the bean's EJB references
-        - an optional declaration of the bean's local EJB
-        references
+        - an optional declaration of the bean's enterprise bean references
+        - an optional declaration of the bean's local enterprise bean 
+        	  references
         - an optional declaration of the bean's web service
         references
         - an optional declaration of the security role 
@@ -2529,14 +2505,14 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:group ref="javaee:descriptionGroup"/>
+      <xsd:group ref="jakartaee:descriptionGroup"/>
       <xsd:element name="ejb-name"
-                   type="javaee:ejb-nameType"/>
+                   type="jakartaee:ejb-nameType"/>
       <xsd:element name="mapped-name"
-                   type="javaee:xsdStringType"
+                   type="jakartaee:xsdStringType"
                    minOccurs="0"/>
       <xsd:element name="ejb-class"
-                   type="javaee:ejb-classType"
+                   type="jakartaee:ejb-classType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -2550,7 +2526,7 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="messaging-type"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -2562,7 +2538,7 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="timeout-method"
-                   type="javaee:named-methodType"
+                   type="jakartaee:named-methodType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -2575,37 +2551,37 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="timer"
-                   type="javaee:timerType"
+                   type="jakartaee:timerType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="transaction-type"
-                   type="javaee:transaction-typeType"
+                   type="jakartaee:transaction-typeType"
                    minOccurs="0"/>
       <xsd:element name="message-destination-type"
-                   type="javaee:message-destination-typeType"
+                   type="jakartaee:message-destination-typeType"
                    minOccurs="0"/>
       <xsd:element name="message-destination-link"
-                   type="javaee:message-destination-linkType"
+                   type="jakartaee:message-destination-linkType"
                    minOccurs="0"/>
       <xsd:element name="activation-config"
-                   type="javaee:activation-configType"
+                   type="jakartaee:activation-configType"
                    minOccurs="0"/>
       <xsd:element name="around-invoke"
-                   type="javaee:around-invokeType"
+                   type="jakartaee:around-invokeType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="around-timeout"
-                   type="javaee:around-timeoutType"
+                   type="jakartaee:around-timeoutType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
-      <xsd:group ref="javaee:jndiEnvironmentRefsGroup"/>
+      <xsd:group ref="jakartaee:jndiEnvironmentRefsGroup"/>
       <xsd:element name="security-role-ref"
-                   type="javaee:security-role-refType"
+                   type="jakartaee:security-role-refType"
                    minOccurs="0"
                    maxOccurs="unbounded">
       </xsd:element>
       <xsd:element name="security-identity"
-                   type="javaee:security-identityType"
+                   type="jakartaee:security-identityType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2618,7 +2594,7 @@ definition from a previous version of this specification.
   <xsd:complexType name="methodType">
     <xsd:annotation>
       <xsd:documentation>
-        <![CDATA[[
+        <![CDATA[
         The methodType is used to denote a method of an enterprise
         bean.  The method may be any of the following or a set of
         any of the following methods may be designated:
@@ -2852,19 +2828,19 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="ejb-name"
-                   type="javaee:ejb-nameType"/>
+                   type="jakartaee:ejb-nameType"/>
       <xsd:element name="method-intf"
-                   type="javaee:method-intfType"
+                   type="jakartaee:method-intfType"
                    minOccurs="0">
       </xsd:element>
       <xsd:element name="method-name"
-                   type="javaee:method-nameType"/>
+                   type="jakartaee:method-nameType"/>
       <xsd:element name="method-params"
-                   type="javaee:method-paramsType"
+                   type="jakartaee:method-paramsType"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -2919,7 +2895,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Home"/>
         <xsd:enumeration value="Remote"/>
         <xsd:enumeration value="LocalHome"/>
@@ -2947,7 +2923,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string"/>
+      <xsd:restriction base="jakartaee:string"/>
     </xsd:simpleContent>
   </xsd:complexType>
 
@@ -2965,7 +2941,7 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="method-param"
-                   type="javaee:java-typeType"
+                   type="jakartaee:java-typeType"
                    minOccurs="0"
                    maxOccurs="unbounded">
         <xsd:annotation>
@@ -3014,15 +2990,15 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:choice>
         <xsd:element name="role-name"
-                     type="javaee:role-nameType"
+                     type="jakartaee:role-nameType"
                      maxOccurs="unbounded"/>
         <xsd:element name="unchecked"
-                     type="javaee:emptyType">
+                     type="jakartaee:emptyType">
           <xsd:annotation>
             <xsd:documentation>
 
@@ -3035,7 +3011,7 @@ definition from a previous version of this specification.
         </xsd:element>
       </xsd:choice>
       <xsd:element name="method"
-                   type="javaee:methodType"
+                   type="jakartaee:methodType"
                    maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -3057,12 +3033,12 @@ definition from a previous version of this specification.
         One
         Many
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="One"/>
         <xsd:enumeration value="Many"/>
       </xsd:restriction>
@@ -3084,12 +3060,12 @@ definition from a previous version of this specification.
         Bean
         Container
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Bean"/>
         <xsd:enumeration value="Container"/>
       </xsd:restriction>
@@ -3111,11 +3087,11 @@ definition from a previous version of this specification.
         	- an optional specification of the result type 
         	  mapping, if the query is for a select method 
         	  and entity objects are returned.
-        	- the EJB QL query string that defines the query.
+        	- the Enterprise Beans QL query string that defines the query.
         
-        Queries that are expressible in EJB QL must use the ejb-ql
+        Queries that are expressible in Enterprise Beans QL must use the ejb-ql
         element to specify the query. If a query is not expressible
-        in EJB QL, the description element should be used to
+        in Enterprise Beans QL, the description element should be used to
         describe the semantics of the query and the ejb-ql element
         should be empty.
         
@@ -3128,15 +3104,15 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"/>
       <xsd:element name="query-method"
-                   type="javaee:query-methodType"/>
+                   type="jakartaee:query-methodType"/>
       <xsd:element name="result-type-mapping"
-                   type="javaee:result-type-mappingType"
+                   type="jakartaee:result-type-mappingType"
                    minOccurs="0"/>
       <xsd:element name="ejb-ql"
-                   type="javaee:xsdStringType"/>
+                   type="jakartaee:xsdStringType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -3148,7 +3124,7 @@ definition from a previous version of this specification.
   <xsd:complexType name="query-methodType">
     <xsd:annotation>
       <xsd:documentation>
-        <![CDATA[[
+        <![CDATA[
         The query-method specifies the method for a finder or select
         query.
         
@@ -3174,16 +3150,16 @@ definition from a previous version of this specification.
         </ejb-ql>
         </query>
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
         ]]>
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="method-name"
-                   type="javaee:method-nameType"/>
+                   type="jakartaee:method-nameType"/>
       <xsd:element name="method-params"
-                   type="javaee:method-paramsType"/>
+                   type="jakartaee:method-paramsType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -3202,17 +3178,17 @@ definition from a previous version of this specification.
         relationship-role-source elements to uniquely identify an
         entity bean.
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="ejb-name"
-                   type="javaee:ejb-nameType"/>
+                   type="jakartaee:ejb-nameType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -3231,17 +3207,17 @@ definition from a previous version of this specification.
         description; and a list of ejb-relation elements, which
         specify the container managed relationships.
         
-        Support for entity beans is optional as of EJB 3.2.
+        Support for entity beans is optional as of Enterprise Beans 3.2.
         
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="ejb-relation"
-                   type="javaee:ejb-relationType"
+                   type="jakartaee:ejb-relationType"
                    maxOccurs="unbounded">
         <xsd:unique name="role-name-uniqueness">
           <xsd:annotation>
@@ -3254,7 +3230,7 @@ definition from a previous version of this specification.
               
             </xsd:documentation>
           </xsd:annotation>
-          <xsd:selector xpath=".//javaee:ejb-relationship-role-name"/>
+          <xsd:selector xpath=".//jakartaee:ejb-relationship-role-name"/>
           <xsd:field xpath="."/>
         </xsd:unique>
       </xsd:element>
@@ -3283,7 +3259,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Local"/>
         <xsd:enumeration value="Remote"/>
       </xsd:restriction>
@@ -3307,12 +3283,12 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:choice>
         <xsd:element name="use-caller-identity"
-                     type="javaee:emptyType">
+                     type="jakartaee:emptyType">
           <xsd:annotation>
             <xsd:documentation>
 
@@ -3325,7 +3301,7 @@ definition from a previous version of this specification.
           </xsd:annotation>
         </xsd:element>
         <xsd:element name="run-as"
-                     type="javaee:run-asType"/>
+                     type="jakartaee:run-asType"/>
       </xsd:choice>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -3390,9 +3366,9 @@ definition from a previous version of this specification.
         superclass around-timeout methods.
         - an optional declaration of the bean's 
         environment entries
-        - an optional declaration of the bean's EJB references
-        - an optional declaration of the bean's local 
-        EJB references
+        - an optional declaration of the bean's enterprise bean references
+        - an optional declaration of the bean's local enterprise bean
+        references
         - an optional declaration of the bean's web 
         service references
         - an optional declaration of the security role 
@@ -3419,34 +3395,34 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:group ref="javaee:descriptionGroup"/>
+      <xsd:group ref="jakartaee:descriptionGroup"/>
       <xsd:element name="ejb-name"
-                   type="javaee:ejb-nameType"/>
+                   type="jakartaee:ejb-nameType"/>
       <xsd:element name="mapped-name"
-                   type="javaee:xsdStringType"
+                   type="jakartaee:xsdStringType"
                    minOccurs="0"/>
       <xsd:element name="home"
-                   type="javaee:homeType"
+                   type="jakartaee:homeType"
                    minOccurs="0"/>
       <xsd:element name="remote"
-                   type="javaee:remoteType"
+                   type="jakartaee:remoteType"
                    minOccurs="0"/>
       <xsd:element name="local-home"
-                   type="javaee:local-homeType"
+                   type="jakartaee:local-homeType"
                    minOccurs="0"/>
       <xsd:element name="local"
-                   type="javaee:localType"
+                   type="jakartaee:localType"
                    minOccurs="0"/>
       <xsd:element name="business-local"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="business-remote"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="local-bean"
-                   type="javaee:emptyType"
+                   type="jakartaee:emptyType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -3458,7 +3434,7 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="service-endpoint"
-                   type="javaee:fully-qualified-classType"
+                   type="jakartaee:fully-qualified-classType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -3468,13 +3444,13 @@ definition from a previous version of this specification.
             service endpoint interface. The service-endpoint
             element may only be specified for a stateless
             session bean. The specified interface must be a
-            valid JAX-RPC service endpoint interface.
+            valid Jakarta XML RPC service endpoint interface.
             
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="ejb-class"
-                   type="javaee:ejb-classType"
+                   type="jakartaee:ejb-classType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -3488,13 +3464,13 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="session-type"
-                   type="javaee:session-typeType"
+                   type="jakartaee:session-typeType"
                    minOccurs="0"/>
       <xsd:element name="stateful-timeout"
-                   type="javaee:stateful-timeoutType"
+                   type="jakartaee:stateful-timeoutType"
                    minOccurs="0"/>
       <xsd:element name="timeout-method"
-                   type="javaee:named-methodType"
+                   type="jakartaee:named-methodType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -3507,11 +3483,11 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="timer"
-                   type="javaee:timerType"
+                   type="jakartaee:timerType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="init-on-startup"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
@@ -3525,24 +3501,24 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="concurrency-management-type"
-                   type="javaee:concurrency-management-typeType"
+                   type="jakartaee:concurrency-management-typeType"
                    minOccurs="0"/>
       <xsd:element name="concurrent-method"
-                   type="javaee:concurrent-methodType"
+                   type="jakartaee:concurrent-methodType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="depends-on"
-                   type="javaee:depends-onType"
+                   type="jakartaee:depends-onType"
                    minOccurs="0"/>
       <xsd:element name="init-method"
-                   type="javaee:init-methodType"
+                   type="jakartaee:init-methodType"
                    minOccurs="0"
                    maxOccurs="unbounded">
         <xsd:annotation>
           <xsd:documentation>
 
             The init-method element specifies the mappings for
-            EJB 2.x style create methods for an EJB 3.x bean.
+            Enterprise Beans 2.x style create methods for an Enterprise Beans 3.x bean.
             This element can only be specified for stateful 
             session beans. 
             
@@ -3550,14 +3526,14 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="remove-method"
-                   type="javaee:remove-methodType"
+                   type="jakartaee:remove-methodType"
                    minOccurs="0"
                    maxOccurs="unbounded">
         <xsd:annotation>
           <xsd:documentation>
 
             The remove-method element specifies the mappings for
-            EJB 2.x style remove methods for an EJB 3.x bean.
+            Enterprise Beans 2.x style remove methods for an Enterprise Beans 3.x bean.
             This element can only be specified for stateful 
             session beans. 
             
@@ -3565,44 +3541,44 @@ definition from a previous version of this specification.
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="async-method"
-                   type="javaee:async-methodType"
+                   type="jakartaee:async-methodType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="transaction-type"
-                   type="javaee:transaction-typeType"
+                   type="jakartaee:transaction-typeType"
                    minOccurs="0"/>
       <xsd:element name="after-begin-method"
-                   type="javaee:named-methodType"
+                   type="jakartaee:named-methodType"
                    minOccurs="0"/>
       <xsd:element name="before-completion-method"
-                   type="javaee:named-methodType"
+                   type="jakartaee:named-methodType"
                    minOccurs="0"/>
       <xsd:element name="after-completion-method"
-                   type="javaee:named-methodType"
+                   type="jakartaee:named-methodType"
                    minOccurs="0"/>
       <xsd:element name="around-invoke"
-                   type="javaee:around-invokeType"
+                   type="jakartaee:around-invokeType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="around-timeout"
-                   type="javaee:around-timeoutType"
+                   type="jakartaee:around-timeoutType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
-      <xsd:group ref="javaee:jndiEnvironmentRefsGroup"/>
+      <xsd:group ref="jakartaee:jndiEnvironmentRefsGroup"/>
       <xsd:element name="post-activate"
-                   type="javaee:lifecycle-callbackType"
+                   type="jakartaee:lifecycle-callbackType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="pre-passivate"
-                   type="javaee:lifecycle-callbackType"
+                   type="jakartaee:lifecycle-callbackType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="security-role-ref"
-                   type="javaee:security-role-refType"
+                   type="jakartaee:security-role-refType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="security-identity"
-                   type="javaee:security-identityType"
+                   type="jakartaee:security-identityType"
                    minOccurs="0"/>
       <xsd:element name="passivation-capable"
                    type="xsd:boolean"
@@ -3644,7 +3620,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Singleton"/>
         <xsd:enumeration value="Stateful"/>
         <xsd:enumeration value="Stateless"/>
@@ -3671,9 +3647,9 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="timeout"
-                   type="javaee:xsdIntegerType"/>
+                   type="jakartaee:xsdIntegerType"/>
       <xsd:element name="unit"
-                   type="javaee:time-unit-typeType"/>
+                   type="jakartaee:time-unit-typeType"/>
     </xsd:sequence>
     <xsd:attribute name="id"
                    type="xsd:ID"/>
@@ -3702,7 +3678,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Days"/>
         <xsd:enumeration value="Hours"/>
         <xsd:enumeration value="Minutes"/>
@@ -3720,25 +3696,25 @@ definition from a previous version of this specification.
   <xsd:complexType name="timer-scheduleType">
     <xsd:sequence>
       <xsd:element name="second"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="minute"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="hour"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="day-of-month"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="month"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="day-of-week"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="year"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -3790,11 +3766,11 @@ definition from a previous version of this specification.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="description"
-                   type="javaee:descriptionType"
+                   type="jakartaee:descriptionType"
                    minOccurs="0"
                    maxOccurs="unbounded"/>
       <xsd:element name="schedule"
-                   type="javaee:timer-scheduleType"/>
+                   type="jakartaee:timer-scheduleType"/>
       <xsd:element name="start"
                    type="xsd:dateTime"
                    minOccurs="0"/>
@@ -3802,15 +3778,15 @@ definition from a previous version of this specification.
                    type="xsd:dateTime"
                    minOccurs="0"/>
       <xsd:element name="timeout-method"
-                   type="javaee:named-methodType"/>
+                   type="jakartaee:named-methodType"/>
       <xsd:element name="persistent"
-                   type="javaee:true-falseType"
+                   type="jakartaee:true-falseType"
                    minOccurs="0"/>
       <xsd:element name="timezone"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
       <xsd:element name="info"
-                   type="javaee:string"
+                   type="jakartaee:string"
                    minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id"
@@ -3840,7 +3816,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="NotSupported"/>
         <xsd:enumeration value="Supports"/>
         <xsd:enumeration value="Required"/>
@@ -3869,7 +3845,7 @@ definition from a previous version of this specification.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
-      <xsd:restriction base="javaee:string">
+      <xsd:restriction base="jakartaee:string">
         <xsd:enumeration value="Bean"/>
         <xsd:enumeration value="Container"/>
       </xsd:restriction>

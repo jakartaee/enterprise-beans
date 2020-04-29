@@ -39,18 +39,18 @@ of the `java.rmi.RemoteException`. The `java.rmi.RemoteException` and its
 subclasses are reserved for system exceptions.
 
 The
-`javax.ejb.CreateException`
-`and javax.ejb.RemoveException` and subclasses
+`jakarta.ejb.CreateException`
+`and jakarta.ejb.RemoveException` and subclasses
 thereof are considered to be application exceptions. These exceptions
 are used as standard application exceptions to report errors to the
 client from the create and remove methods of the EJBHome and/or
-EJBLocalHome interfaces of components written to the EJB 2.1 client
+EJBLocalHome interfaces of components written to the Enterprise Beans 2.1 client
 view. These exceptions are covered by the rules on application
 exceptions that are defined in this chapter.
 
 ==== Goals for Exception Handling
 
-The EJB specification for exception handling
+The Enterprise Beans specification for exception handling
 is designed to meet these high-level goals:
 
 * An application exception thrown by an
@@ -132,17 +132,17 @@ exception. Marking the transaction for rollback will ensure that the
 transaction can never commit.
 
 The Bean Provider is also responsible for
-using the standard EJB application exceptions
-(`javax.ejb.CreateException`, `javax.ejb.RemoveException`,
-`javax.ejb.FinderException`, and subclasses thereof) for beans written to
-the EJB 2.1 and earlier client view as described in 
+using the standard Enterprise Beans application exceptions
+(`jakarta.ejb.CreateException`, `jakarta.ejb.RemoveException`,
+`jakarta.ejb.FinderException`, and subclasses thereof) for beans written to
+the Enterprise Beans 2.1 and earlier client view as described in 
 <<./enterprise-beans-spec-opt-{revnumber}.adoc#a1524, Standard Application 
 Exceptions for Entities in Container-Managed Persistence>> and
 <<./enterprise-beans-spec-opt-{revnumber}.adoc#a2806, Standard Application 
 Exceptions for Entities in Bean-Managed Persistence>>.
 
 Bean Providers may define subclasses of the
-standard EJB application exceptions and throw instances of the
+standard Enterprise Beans application exceptions and throw instances of the
 subclasses in the enterprise bean methods. A subclass will typically
 provide more information to the client that catches the exception.
 
@@ -196,7 +196,7 @@ bean business method, message listener method, business method
 interceptor method, or lifecycle callback interceptor method may
 encounter various exceptions or errors that prevent the method from
 successfully completing. Typically, this happens because the exception
-or error is unexpected, or the exception is expected but the EJB Bean
+or error is unexpected, or the exception is expected but the Bean
 Provider does not know how to recover from it. Examples of such
 exceptions and errors are: failure to obtain a database connection, JNDI
 exceptions, unexpected `RemoteException` from invocation of other
@@ -210,7 +210,7 @@ If the enterprise bean method encounters a
 system-level exception or error that does not allow the method to
 successfully complete, the method should throw a suitable
 non-application exception that is compatible with the method’s `throws`
-clause. While the EJB specification does not prescribe the exact usage
+clause. While the Enterprise Beans specification does not prescribe the exact usage
 of the exception, it encourages the Bean Provider to follow these
 guidelines:
 
@@ -223,28 +223,28 @@ the exception).
 results in a checked exception footnote:a10285[A checked exception is one 
 that is not a subclass of `java.lang.RuntimeException`.] that the bean
 method cannot recover, the bean method should throw the
-`javax.ejb.EJBException` that wraps the original exception.
+`jakarta.ejb.EJBException` that wraps the original exception.
 
 * Any other unexpected error conditions should
-be reported using the `javax.ejb.EJBException`.
+be reported using the `jakarta.ejb.EJBException`.
 
-Note that the `javax.ejb.EJBException` is a
+Note that the `jakarta.ejb.EJBException` is a
 subclass of the `java.lang.RuntimeException`, and therefore it does not
 have to be listed in the `throws` clauses of the business methods.
 
 The container catches a non-application
 exception; logs it (which can result in alerting the System
 Administrator); and, unless the bean is a message-driven bean, throws
-the `javax.ejb.EJBException` footnote:a10286[If the business interface 
+the `jakarta.ejb.EJBException` footnote:a10286[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] or, if the web
-service client view is used, the `java.rmi.RemoteException`. If the EJB
-2.1 client view is used, the container throws the
+service client view is used, the `java.rmi.RemoteException`. If the 
+Enterprise Beans 2.1 client view is used, the container throws the
 `java.rmi.RemoteException` (or subclass thereof) to the client if the
-client is a remote client, or throws the `javax.ejb.EJBException` (or
+client is a remote client, or throws the `jakarta.ejb.EJBException` (or
 subclass thereof) to the client if the client is a local client. In the
 case of a message-driven bean, the container logs the exception and then
-throws a `javax.ejb.EJBException` that wraps the original exception to
+throws a `jakarta.ejb.EJBException` that wraps the original exception to
 the resource adapter. (See <<a9863>>).
 
 The exception that is seen by the client is
@@ -272,7 +272,7 @@ container that is responsible for the cleanup._
 === Container Provider Responsibilities
 
 This section describes the responsibilities
-of the Container Provider for handling exceptions. The EJB architecture
+of the Container Provider for handling exceptions. The Enterprise Beans architecture
 specifies the container’s behavior for the following exceptions:
 
 * Exceptions from the business methods of
@@ -339,10 +339,10 @@ Mark the transaction for rollback.
 
 Discard instance <<a10289>>.
 
-Throw `javax.ejb.EJBTransactionRolledbackException` to client.
+Throw `jakarta.ejb.EJBTransactionRolledbackException` to client.
 <<a10290>>
 | 
-Receives `javax.ejb.EJBTransactionRolledbackException`
+Receives `jakarta.ejb.EJBTransactionRolledbackException`
 
 Continuing transaction is fruitless.
 .2+.^| Bean method runs in the context of a transaction that the container 
@@ -417,7 +417,7 @@ container callbacks on the instance. Discarding does not apply if the
 bean is a singleton session bean. +
 [[a10290, Note D]]  [D] If the business
 interface is a remote business interface that extends `java.rmi.Remote`,
-the `javax.transaction.TransactionRolledbackException` is thrown to the
+the `jakarta.transaction.TransactionRolledbackException` is thrown to the
 client, which will receive this exception. +
 [[a10291, Note E]]  [E] If the business
 interface is a remote business interface that extends `java.rmi.Remote`,
@@ -496,7 +496,7 @@ receive and how the client can recover from the exception.
 
 [[a3080]]
 [cols=4, options=header]
-.Handling of Exceptions Thrown by Methods of Web Service Client View or EJB 2.1 Client View of a Bean with Container-Managed Transaction Demarcation
+.Handling of Exceptions Thrown by Methods of Web Service Client View or Enterprise Beans 2.1 Client View of a Bean with Container-Managed Transaction Demarcation
 |===
 | Method condition
 | Method exception
@@ -528,12 +528,12 @@ Mark the transaction for rollback.
 
 Discard instance <<a10298>>.
 
-Throw `javax.transaction.TransactionRolledbackException` to remote client;
-throw `javax.ejb.TransactionRolledbackLocalException` to local client.
+Throw `jakarta.transaction.TransactionRolledbackException` to remote client;
+throw `jakarta.ejb.TransactionRolledbackLocalException` to local client.
 | 
 Receives
-`javax.transaction.TransactionRolledbackException` or
-`javax.ejb.TransactionRolledbackLocalException`
+`jakarta.transaction.TransactionRolledbackException` or
+`jakarta.ejb.TransactionRolledbackLocalException`
 
 Continuing transaction is fruitless.
 .2+.^| 
@@ -629,7 +629,7 @@ client will receive and how the client can recover from the exception.
 
 [[a3129]]
 [cols=4, options=header]
-.Handling of Exceptions Thrown by a EJB 2.1 Client View Business Method of a Session Bean with Bean-Managed Transaction Demarcation
+.Handling of Exceptions Thrown by a Enterprise Beans 2.1 Client View Business Method of a Session Bean with Bean-Managed Transaction Demarcation
 |===
 | Bean method condition
 | Bean method exception
@@ -896,23 +896,23 @@ instance).
 
 * If the exception or error happened during the
 processing of a client invoked method, throw the
-`javax.ejb.EJBException`.footnote:a10308[If the business interface is 
+`jakarta.ejb.EJBException`.footnote:a10308[If the business interface is 
 a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.] 
-If the EJB 2.1 client
+If the Enterprise Beans 2.1 client
 view or web service client view is used, throw the
 java.rmi.RemoteException to the client if the client is a remote client
-or throw the `javax.ejb.EJBException` to the client if the client is a
+or throw the `jakarta.ejb.EJBException` to the client if the client is a
 local client. If the instance executed in the client’s transaction, the
 container should throw the
-`javax.ejb.EJBTransactionRolledbackException`.footnote:a10309[If the 
+`jakarta.ejb.EJBTransactionRolledbackException`.footnote:a10309[If the 
 business interface is a remote business interface that extends 
-`java.rmi.Remote`, the `javax.transaction.TransactionRolledbackException` 
+`java.rmi.Remote`, the `jakarta.transaction.TransactionRolledbackException` 
 is thrown to the client instead.]
-If the EJB 2.1 client view or web service client view is used, the
+If the Enterprise Beans 2.1 client view or web service client view is used, the
 container should throw the
-`javax.transaction.TransactionRolledbackException` to a remote client or
-the `javax.ejb.TransactionRolledbackLocalException` to a local client,
+`jakarta.transaction.TransactionRolledbackException` to a remote client or
+the `jakarta.ejb.TransactionRolledbackLocalException` to a local client,
 because it provides more information to the client. (The client knows
 that it is fruitless to continue the transaction.)
 
@@ -921,14 +921,14 @@ that it is fruitless to continue the transaction.)
 
 If a client makes a call to a stateful
 session object that has been removed, the container should throw the
-`javax.ejb.NoSuchEJBException`.footnote:a10310[If the business interface 
+`jakarta.ejb.NoSuchEJBException`.footnote:a10310[If the business interface 
 is a remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.NoSuchObjectException` is thrown to the client instead.] 
-If the EJB 2.1
+If the Enterprise Beans 2.1
 client view is used, the container should throw the
 `java.rmi.NoSuchObjectException` (which is a
 subclass of `java.rmi.RemoteException`) to a remote client, or the
-`javax.ejb.NoSuchObjectLocalException` to a local client.
+`jakarta.ejb.NoSuchObjectLocalException` to a local client.
 
 ==== Exceptions from the Management of Container-Managed Transactions
 
@@ -940,20 +940,20 @@ that may be thrown by the transaction start and commit operations.
 
 If the container fails to start or commit a
 container-managed transaction, the container must throw the
-`javax.ejb.EJBException`.footnote:a10311[If the business interface is a 
+`jakarta.ejb.EJBException`.footnote:a10311[If the business interface is a 
 remote business interface that extends `java.rmi.Remote`, the 
 `java.rmi.RemoteException` is thrown to the client instead.]
 If the web service
-client view or EJB 2.1 client view is used, the container must throw the
+client view or Enterprise Beans 2.1 client view is used, the container must throw the
 `java.rmi.RemoteException` to a remote or web
-service client and the `javax.ejb.EJBException` to a local client. In
+service client and the `jakarta.ejb.EJBException` to a local client. In
 the case where the container fails to start or commit a
 container-managed transaction on behalf of a message-driven bean or a
 timeout callback method, the container must throw and log the
-`javax.ejb.EJBException`.
+`jakarta.ejb.EJBException`.
 
 However, the container should not throw the
-`javax.ejb.EJBException` or `java.rmi.RemoteException` if the container
+`jakarta.ejb.EJBException` or `java.rmi.RemoteException` if the container
 performs a transaction rollback because the transaction has been marked
 for rollback and no `EJBException` or `RemoteException` would otherwise be
 thrown according to <<a3008>> through <<a3246>>. 
@@ -964,7 +964,7 @@ exception thrown by the business method to the client.
 _Note that some implementations of the
 container may retry a failed transaction transparently to the client and
 enterprise bean code. Such a container would throw the
-`javax.ejb.EJBException` or `java.rmi.RemoteException` or after a
+`jakarta.ejb.EJBException` or `java.rmi.RemoteException` or after a
 number of unsuccessful tries._
 
 ==== Release of Resources
@@ -986,7 +986,7 @@ eventually released by the JVM garbage collector mechanism._
 
 ==== Support for Deprecated Use of java.rmi.RemoteException
 
-The EJB 1.0
+The Enterprise Beans 1.0
 specification allowed the business methods, `ejbCreate`, `ejbPostCreate`,
 `ejbFind<METHOD>`, `ejbRemove`, and the container-invoked callbacks (i.e.,
 the methods defined in the `SessionBean` and `SessionSynchronization`
@@ -995,16 +995,16 @@ interfaces) implemented in the enterprise bean class to use the
 container.
 
 This use of the `java.rmi.RemoteException` was
-deprecated in EJB 1.1—enterprise beans written for the EJB 1.1
-specification should use the `javax.ejb.EJBException` instead, and
-enterprise beans written for the EJB 2.0 or later specification must use
-the `javax.ejb.EJBException` instead.
+deprecated in Enterprise Beans 1.1—enterprise beans written for the Enterprise Beans 1.1
+specification should use the `jakarta.ejb.EJBException` instead, and
+enterprise beans written for the Enterprise Beans 2.0 or later specification must use
+the `jakarta.ejb.EJBException` instead.
 
-The EJB 1.1 and EJB 2.0 or later
+The Enterprise Beans 1.1 and Enterprise Beans 2.0 or later
 specifications require that a container support the deprecated use of
 the `java.rmi.RemoteException`. The container should treat the
 `java.rmi.RemoteException` thrown by an enterprise bean method in the same
-way as it is specified for the `javax.ejb.EJBException`.
+way as it is specified for the `jakarta.ejb.EJBException`.
 
 [[a3263]]
 === Client’s View of Exceptions
@@ -1018,7 +1018,7 @@ interface (whether local or remote), through the enterprise bean’s
 no-interface view, through the enterprise bean’s remote home and remote
 component interfaces, through the enterprise bean’s local home and local
 component interfaces, or through the enterprise bean’s web service
-client view depending on whether the client is written to the EJB 3.x
+client view depending on whether the client is written to the Enterprise Beans 3.x
 API or earlier API and whether the client is a remote client, a local
 client, or a web service client.
 
@@ -1052,7 +1052,7 @@ If a client
 program receives an application exception from an enterprise bean
 invocation, the client can continue calling the enterprise bean. An
 application exception does not result in the
-removal of the EJB object.
+removal of the Enterprise Beans object.
 
 Although the container does not automatically
 mark for rollback a transaction because of a thrown application
@@ -1072,9 +1072,9 @@ the setting on the application exception has no effect.]
 
 * Dynamically. Clients that are enterprise
 beans with container-managed transaction demarcation can use the
-`getRollbackOnly` method of the `javax.ejb.EJBContext` object to learn if
+`getRollbackOnly` method of the `jakarta.ejb.EJBContext` object to learn if
 the current transaction has been marked for rollback; other clients may
-use the `getStatus` method of the `javax.transaction.UserTransaction`
+use the `getStatus` method of the `jakarta.transaction.UserTransaction`
 interface to obtain the transaction status.
 
 ===== Web Service Clients
@@ -1086,17 +1086,17 @@ specified in the WSDL that describes the port type that the stateless
 session bean implements. For Java clients, the exceptions received by
 the client are described by the mapping rules in <<a9873>>.
 
-==== java.rmi.RemoteException and javax.ejb.EJBException
+==== java.rmi.RemoteException and jakarta.ejb.EJBException
 
 As described above, a client receives the
-`javax.ejb.EJBException` or the `java.rmi.RemoteException` as an
+`jakarta.ejb.EJBException` or the `java.rmi.RemoteException` as an
 indication of a failure to invoke an enterprise bean method or to
 properly complete its invocation. The exception can be thrown by the
 container or by the communication subsystem between the client and the
 container.
 
 If the client receives the
-`javax.ejb.EJBException` or the
+`jakarta.ejb.EJBException` or the
 `java.rmi.RemoteException` exception from a method invocation, the client,
 in general, does not know if the enterprise bean’s method has been
 completed or not.
@@ -1147,68 +1147,68 @@ an enterprise bean with bean-managed transaction demarcation, and other
 client types, can use the `UserTransaction.getStatus` method to obtain the
 status of the transaction.
 
-Some implementations of EJB servers and
+Some implementations of Enterprise Beans servers and
 containers may provide more detailed exception reporting by throwing an
-appropriate subclass of the `javax.ejb.EJBException` or
+appropriate subclass of the `jakarta.ejb.EJBException` or
 `java.rmi.RemoteException` to the client. The following subsections
-describe the several subclasses of the `javax.ejb.EJBException` and
+describe the several subclasses of the `jakarta.ejb.EJBException` and
 `java.rmi.RemoteException` that may be thrown by the container to give the
 client more information.
 
-===== javax.ejb.EJBTransactionRolledbackException, javax.ejb.TransactionRolledbackLocalException, and javax.transaction.TransactionRolledbackException
+===== jakarta.ejb.EJBTransactionRolledbackException, jakarta.ejb.TransactionRolledbackLocalException, and jakarta.transaction.TransactionRolledbackException
 
 The
-`javax.ejb.EJBTransactionRolledbackException` and
-`javax.ejb.TransactionRolledbackLocalException` are subclasses of the
-`javax.ejb.EJBException`. The
-`javax.transaction.TransactionRolledbackException` is a subclass of the
-`java.rmi.RemoteException`. It is defined in the JTA standard extension.
+`jakarta.ejb.EJBTransactionRolledbackException` and
+`jakarta.ejb.TransactionRolledbackLocalException` are subclasses of the
+`jakarta.ejb.EJBException`. The
+`jakarta.transaction.TransactionRolledbackException` is a subclass of the
+`java.rmi.RemoteException`. It is defined in the Jakarta Transactions standard extension.
 
 If a client receives one of these exceptions,
 the client knows for certain that the transaction has been marked for
 rollback. It would be fruitless for the client to continue the
 transaction because the transaction can never commit.
 
-===== javax.ejb.EJBTransactionRequiredException, javax.ejb.TransactionRequiredLocalException, and javax.transaction.TransactionRequiredException
+===== jakarta.ejb.EJBTransactionRequiredException, jakarta.ejb.TransactionRequiredLocalException, and jakarta.transaction.TransactionRequiredException
 
 The
-`javax.ejb.EJBTransactionRequiredException` and
-`javax.ejb.TransactionRequiredLocalException` are subclasses of the
-`javax.ejb.EJBException` . The
-`javax.transaction.TransactionRequiredException` is a subclass of the
-`java.rmi.RemoteException`. It is defined in the JTA standard extension.
+`jakarta.ejb.EJBTransactionRequiredException` and
+`jakarta.ejb.TransactionRequiredLocalException` are subclasses of the
+`jakarta.ejb.EJBException` . The
+`jakarta.transaction.TransactionRequiredException` is a subclass of the
+`java.rmi.RemoteException`. It is defined in the Jakarta Transactions standard extension.
 
 The
-`javax.ejb.EJBTransactionRequiredException` ,
-`javax.ejb.TransactionRequiredLocalException` , or
-`javax.transaction.TransactionRequiredException` informs the client that
+`jakarta.ejb.EJBTransactionRequiredException` ,
+`jakarta.ejb.TransactionRequiredLocalException` , or
+`jakarta.transaction.TransactionRequiredException` informs the client that
 the target enterprise bean must be invoked in a client’s transaction,
 and that the client invoked the enterprise bean without a transaction
 context.
 
 This error usually indicates that the application was not properly formed.
 
-===== javax.ejb.NoSuchEJBException, javax.ejb.NoSuchObjectLocalException, and java.rmi.NoSuchObjectException
+===== jakarta.ejb.NoSuchEJBException, jakarta.ejb.NoSuchObjectLocalException, and java.rmi.NoSuchObjectException
 
 The
-`javax.ejb.NoSuchEJBException` is a subclass of the
-`javax.ejb.EJBException`. It is thrown to the client of a session bean’s
+`jakarta.ejb.NoSuchEJBException` is a subclass of the
+`jakarta.ejb.EJBException`. It is thrown to the client of a session bean’s
 business interface if a local business method cannot complete because
-the EJB object no longer exists.
+the Enterprise Beans object no longer exists.
 
-The `javax.ejb.NoSuchObjectLocalException`
+The `jakarta.ejb.NoSuchObjectLocalException`
 and the `java.rmi.NoSuchObjectException` apply to the business methods
-of the EJB 2.1 local and remote client views respectively.
+of the Enterprise Beans 2.1 local and remote client views respectively.
 
 The
-`javax.ejb.NoSuchObjectLocalException` is a subclass of the
-`javax.ejb.EJBException`. It is thrown to the client if a local business
-method cannot complete because the EJB object no longer exists.
+`jakarta.ejb.NoSuchObjectLocalException` is a subclass of the
+`jakarta.ejb.EJBException`. It is thrown to the client if a local business
+method cannot complete because the Enterprise Beans object no longer exists.
 
 The
 `java.rmi.NoSuchObjectException` is a subclass of the
 `java.rmi.RemoteException`. It is thrown to the client if a remote
-business method cannot complete because the EJB object no longer exists.
+business method cannot complete because the Enterprise Beans object no longer exists.
 
 === System Administrator’s Responsibilities
 

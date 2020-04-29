@@ -1,15 +1,15 @@
 [[a9826]]
-== Responsibilities of EJB Roles
+== Responsibilities of Enterprise Beans Roles
 
 This chapter provides the summary of the
-responsibilities of each EJB Role.
+responsibilities of each Enterprise Beans Role.
 
 === Bean Provider’s Responsibilities
 
 This section
 highlights the requirements for the Bean Provider. Meeting these
 requirements is necessary to ensure that the enterprise beans developed
-by the Bean Provider can be deployed in all compliant EJB containers.
+by the Bean Provider can be deployed in all compliant Enterprise Beans containers.
 
 ==== API Requirements
 
@@ -31,24 +31,24 @@ The requirements
 for the Application Assembler are in defined in <<a5804>> and <<a9294>>.
 
 [[a9838]]
-=== EJB Container Provider’s Responsibilities
+=== Container Provider’s Responsibilities
 
-The EJB Container
+The Container
 Provider is responsible for providing the deployment tools used by the
 Deployer to deploy enterprise beans packaged in the ejb-jar file. The
 requirements for the deployment tools are defined in the individual
 chapters of this document.
 
-The EJB Container Provider is responsible for
-implementing its part of the EJB contracts and its part of the contracts
-described in _Java Persistence API_ specification
+The Container Provider is responsible for
+implementing its part of the Enterprise Beans contracts and its part of the contracts
+described in _Jakarta Persistence_ specification
 <<a9851>>, and for providing all the runtime
 services described in the individual chapters of this document.
 
 === Deployer’s Responsibilities
 
 The Deployer uses
-the deployment tools provided by the EJB Container Provider to deploy
+the deployment tools provided by the Container Provider to deploy
 ejb-jar files or `.war` files produced by the Bean Providers and
 Application Assemblers.
 
@@ -58,9 +58,9 @@ describe the responsibilities of the Deployer in more detail.
 === System Administrator’s Responsibilities
 
 The System
-Administrator is responsible for configuring the EJB container and
+Administrator is responsible for configuring the Enterprise Beans container and
 server, setting up security management, integrating resource managers
-with the EJB container, and runtime monitoring of deployed enterprise
+with the Enterprise Beans container, and runtime monitoring of deployed enterprise
 beans applications.
 
 The individual chapters of this document
@@ -69,7 +69,7 @@ detail.
 
 === Client Programmer’s Responsibilities
 
-The EJB client programmer writes applications
+The Enterprise Beans client programmer writes applications
 that access enterprise beans via their business interfaces, via their
 no-interface view, via their web service client view, or via messages,
 or view their home and component interfaces.

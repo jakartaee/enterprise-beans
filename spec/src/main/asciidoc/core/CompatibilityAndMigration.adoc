@@ -2,32 +2,32 @@
 == Compatibility and Migration
 
 This chapter addresses issues of
-compatibility and migration between EJB 3.2 and earlier components and
+compatibility and migration between Enterprise Beans 3.2 and earlier components and
 clients.
 
 [[a9696]]
 === Support for Existing Applications
 
-Existing EJB 3.1 and earlier applications
-that do not include entity bean components and JAX-RPC based web
+Existing Enterprise Beans 3.1 and earlier applications
+that do not include entity bean components and Jakarta XML RPC based web
 services endpoints footnote:a10344[See <<a182>>.] must be supported to run
-unchanged in EJB 3.2 containers.
+unchanged in Enterprise Beans 3.2 containers.
 
-Full EJB 3.2 implementations must support EJB
-1.1, EJB 2.0, EJB 2.1, EJB 3.0, and EJB 3.1 deployment descriptors for
-applications written to earlier versions of the Enterprise JavaBeans
-specification. EJB 3.2 Lite implementations must support EJB 3.0, and
-EJB 3.1 deployment descriptors for applications written to the EJB 3.x
-versions of the Enterprise JavaBeans specification.
+Full Enterprise Beans 3.2 implementations must support Enterprise Beans
+1.1, Enterprise Beans 2.0, Enterprise Beans 2.1, Enterprise Beans 3.0, and Enterprise Beans 3.1 deployment descriptors for
+applications written to earlier versions of the Enterprise Beans
+specification. Enterprise Beans 3.2 Lite implementations must support Enterprise Beans 3.0, and
+Enterprise Beans 3.1 deployment descriptors for applications written to the Enterprise Beans 3.x
+versions of the Enterprise Beans specification.
 
 === Default Stateful Session Bean Concurrency Behavior
 
-Prior versions of the EJB specification
+Prior versions of the Enterprise Beans specification
 allowed the container to choose the default behavior in the event of
 concurrent access attempts to a stateful session bean instance. This
 specification requires a default of serialized requests in the face of
 concurrency. This means by default clients will not receive the
-`javax.ejb.ConcurrentAccessException` when concurrent access occurs for a
+`jakarta.ejb.ConcurrentAccessException` when concurrent access occurs for a
 request. This should have minimal impact to correctly written
 applications since even with the prior behavior there was no guarantee
 of receiving such an exception due to the inherent race conditions.
@@ -37,73 +37,73 @@ more details.
 
 === Default Application Exception Subclassing Behavior
 
-The EJB 3.0 Specification was ambiguous with
+The Enterprise Beans 3.0 Specification was ambiguous with
 respect to whether the designation of an unchecked exception as an
-application exception applied to that exception’s subclasses. The EJB
+application exception applied to that exception’s subclasses. The Enterprise Beans
 3.1 specification clarified that, by default, the application exception
 designation is inherited by subclasses. Non-inheriting behavior may be
 specified by means of the `ApplicationException` annotation and/or the
 deployment descriptor. See <<a2942>> for more detail.
 
-=== Interoperability of EJB 3.2 and Earlier Components
+=== Interoperability of Enterprise Beans 3.2 and Earlier Components
 
-This release of Enterprise JavaBeans supports
+This release of Enterprise Beans supports
 migration and interoperability among client and server components
-written to different versions of the EJB APIs as described below.
+written to different versions of the Enterprise Beans APIs as described below.
 
-==== Clients written to the EJB 2.x APIs
+==== Clients written to the Enterprise Beans 2.x APIs
 
-An enterprise bean that is written to the EJB
+An enterprise bean that is written to the Enterprise Beans
 2.1 or earlier API release may be a client of components written to the
-EJB 3.x API using the earlier EJB APIs when deployed in an EJB 3.x
+Enterprise Beans 3.x API using the earlier Enterprise Beans APIs when deployed in an Enterprise Beans 3.x
 container.
 
-Such an EJB 2.1 or earlier client component
+Such an Enterprise Beans 2.1 or earlier client component
 does not need to be rewritten or recompiled to be a client of a
-component written to the EJB 3.x API.
+component written to the Enterprise Beans 3.x API.
 
 Such clients may access components written to
-the EJB 3.x APIs and components written to the earlier EJB APIs within
+the Enterprise Beans 3.x APIs and components written to the earlier Enterprise Beans APIs within
 the same transaction.
 
 See <<a9716>> for a discussion of the
-mechanisms that are used to enable components written to the EJB 3.x API
+mechanisms that are used to enable components written to the Enterprise Beans 3.x API
 to be accessed and utilized by clients written to earlier versions of
-the EJB specification.
+the Enterprise Beans specification.
 
-==== Clients written to the EJB 3.x API
+==== Clients written to the Enterprise Beans 3.x API
 
-A client written to the EJB 3.x API may be a
-client of a component written to the EJB 2.1 or earlier API.
+A client written to the Enterprise Beans 3.x API may be a
+client of a component written to the Enterprise Beans 2.1 or earlier API.
 
 Such clients may access components written to
-the EJB 3.x APIs and components written to the earlier EJB APIs within
+the Enterprise Beans 3.x APIs and components written to the earlier Enterprise Beans APIs within
 the same transaction.
 
 Such clients access components written to the
-earlier EJB APIs using the EJB 2.1 client view home and component
-interfaces. The `EJB` annotation (or the `ejb-ref` and `ejb-local-ref`
+earlier Enterprise Beans APIs using the Enterprise Beans 2.1 client view home and component
+interfaces. The `Enterprise Beans` annotation (or the `ejb-ref` and `ejb-local-ref`
 deployment descriptor elements) may be used to specify the injection of
 home interfaces into components that are clients of beans written to the
-earlier EJB client view.
+earlier Enterprise Beans client view.
 
-==== Combined use of EJB 2.x and EJB 3.x persistence APIs
+==== Combined use of Enterprise Beans 2.x and Enterprise Beans 3.x persistence APIs
 
-{empty}EJB clients may access Java
-Persistence entities and/or the EntityManager together with EJB 2.x
+Enterprise Beans clients may access Jakarta
+Persistence entities and/or the EntityManager together with Enterprise Beans 2.x
 entity beans within the same transaction as well as within separate
 transactions.footnote:a10345[In general, the same database data should 
-not be accessed by both Java Persistence entities and EJB 2.x entities 
+not be accessed by both Jakarta Persistence entities and Enterprise Beans 2.x entities 
 within the same application: behavior is unspecified if data aliasing 
 occurs.]
 
 [[a9716]]
-=== Adapting EJB 3.x Session Beans to Earlier Client Views
+=== Adapting Enterprise Beans 3.x Session Beans to Earlier Client Views
 
-Clients written to the EJB 2.1 and earlier
+Clients written to the Enterprise Beans 2.1 and earlier
 client view depend upon the existence of a home and component interface.
 
-A session bean written to the EJB 3.x API may
+A session bean written to the Enterprise Beans 3.x API may
 be adapted to such earlier preexisting client view interfaces.
 
 The session bean designates the interfaces to
@@ -114,15 +114,15 @@ specified when using these annotations. Rather, they are derived from
 the `Home` and `LocalHome` interfaces respectively.
 
 When the client is deployed, the container
-classes that implement the EJB 2.1 home and remote component interfaces
+classes that implement the Enterprise Beans 2.1 home and remote component interfaces
 (or local home and local component interfaces) referenced by the client
-must provide the implementation of the `javax.ejb.EJBHome` and
-`javax.ejb.EJBObject` interfaces (or the `javax.ejb.EJBLocalHome` and
-`javax.ejb.EJBLocalObject` interfaces) respectively.
+must provide the implementation of the `jakarta.ejb.EJBHome` and
+`jakarta.ejb.EJBObject` interfaces (or the `jakarta.ejb.EJBLocalHome` and
+`jakarta.ejb.EJBLocalObject` interfaces) respectively.
 
 In addition, the container implementation
 classes must implement the methods of the home and comonent interfaces
-to apply to the EJB 3.x component being referenced as described below.
+to apply to the Enterprise Beans 3.x component being referenced as described below.
 
 ==== Stateless Session Beans
 

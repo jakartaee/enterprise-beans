@@ -3,21 +3,21 @@
 
 The model for persistence and
 object/relational mapping was considerably revised and enhanced in the
-Enterprise JavaBeans 3.0 release. The contracts and requirements for
-persistent entities are defined by the "_Java Persistence API_"
+Enterprise Beans 3.0 release. The contracts and requirements for
+persistent entities are defined by the "_Jakarta Persistence_"
 specification <<a9851>>, which also contains
-the full specification of the Java Persistence query language and the
+the full specification of the Jakarta Persistence query language and the
 metadata for object/relational mapping.
 
 
 :opt-doc: ./enterprise-beans-spec-opt-{revnumber}.adoc
 
 The client view of entity beans under the
-earlier EJB 2.1 programming model, the contracts for EJB 2.1 Entity
-Beans with Container-Managed Persistence, the contracts for the EJB QL
-query language, the contracts for EJB 2.1 Entity Beans with Bean-Managed
-Persistence, and the contracts for EJB 1.1 Entity Beans with
-Container-Managed Persistence are described in the EJB Optional Features
+earlier Enterprise Beans 2.1 programming model, the contracts for Enterprise Beans 2.1 Entity
+Beans with Container-Managed Persistence, the contracts for the Enterprise Beans QL
+query language, the contracts for Enterprise Beans 2.1 Entity Beans with Bean-Managed
+Persistence, and the contracts for Enterprise Beans 1.1 Entity Beans with
+Container-Managed Persistence are described in the Enterprise Beans Optional Features
 document <<a9890>>. See
 <<{opt-doc}#a41, Chapter 3>>,
 <<{opt-doc}#a384, Chapter 4>>,

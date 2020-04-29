@@ -1,60 +1,60 @@
 [[a1]]
 == Introduction
 
-This is the specification of the Enterprise
-JavaBeans(TM) architecture. The Enterprise JavaBeans architecture is a
+This is the specification of the Jakarta(R) Enterprise
+Beans architecture. The Enterprise Beans architecture is an
 architecture for the development and deployment of component-based
 business applications. Applications written using the Enterprise
-JavaBeans architecture are scalable, transactional, and multi-user
+Beans architecture are scalable, transactional, and multi-user
 secure. These applications may be written once, and then deployed on any
-server platform that supports the Enterprise JavaBeans specification.
+server platform that supports the Enterprise Beans specification.
 
 === Target Audience
 
 _The target audiences for this specification
 are the vendors of transaction processing platforms, vendors of
 enterprise application tools, and other vendors who want to support the
-Enterprise JavaBeans (EJB) technology in their products._
+Enterprise Beans technology in their products._
 
 _Many concepts described in this document are
-system-level issues that are transparent to the Enterprise JavaBeans
+system-level issues that are transparent to the Enterprise Beans
 application programmer._
 
 [[a6]]
 === What is New in This Release
 
-The Enterprise JavaBeans 3.2 architecture
-extends Enterprise JavaBeans to include the following new functionality
-and simplifications to the earlier EJB APIs:
+The Enterprise Beans 3.2 architecture
+extends Enterprise Beans to include the following new functionality
+and simplifications to the earlier Enterprise Beans APIs:
 
 * _Made support for the following features
-optional in this release and moved their description to a separate EJB
-Optional Features <<a9890>> document:_
+optional in this release and moved their description to a separate 
+Enterprise Beans Optional Features <<a9890>> document:_
 
-** _EJB 2.1 and earlier Entity Bean Component
+** _Enterprise Beans 2.1 and earlier Entity Bean Component
 Contract for Container-Managed Persistence_
-** _EJB 2.1 and earlier Entity Bean Component
+** _Enterprise Beans 2.1 and earlier Entity Bean Component
 Contract for Bean-Managed Persistence_
-** _Client View of an EJB 2.1 and earlier
+** _Client View of an Enterprise Beans 2.1 and earlier
 Entity Bean_
-** _EJB QL: Query Language for
+** _Enterprise Beans QL: Query Language for
 Container-Managed Persistence Query Methods_
-** _JAX-RPC Based Web Service Endpoints_
-** _JAX-RPC Web Service Client View_
+** _Jakarta XML RPC Based Web Service Endpoints_
+** _Jakarta XML RPC Web Service Client View_
 
 * _Enhanced message-driven beans contract with a
 no-methods message listener interface to expose all public methods as
 message listener methods._
 
-* _Defined the EJB API Groups with clear rules
-for an EJB Lite Container to support other API groups._
+* _Defined the Enterprise Beans API Groups with clear rules
+for an Enterprise Beans Lite Container to support other API groups._
 
 * _Added container provided security role named
 `"**"` to indicate any authenticated caller independent of the actual role
 name._
 
-* _Extended the EJB Lite Group to include local
-asynchronous session bean invocations and non-persistent EJB Timer
+* _Extended the Enterprise Beans Lite Group to include local
+asynchronous session bean invocations and non-persistent Enterprise Beans Timer
 Service._
 
 * _Added an option for the lifecycle callback
@@ -66,20 +66,20 @@ transaction attribute._
 of stateful session beans._
 
 * _Enhanced the TimerService API to access all
-active timers in the EJB module._
+active timers in the Enterprise Beans module._
 
 * _Enhanced the embeddable EJBContainer to
 implement `AutoCloseable` interface._
 
-* _Removed restrictions on `javax.ejb.Timer` and
-`javax.ejb.TimerHandle` that required references to be used only inside a
+* _Removed restrictions on `jakarta.ejb.Timer` and
+`jakarta.ejb.TimerHandle` that required references to be used only inside a
 bean._
 
 * _Relaxed default rules for a session bean to
 designate its implemented interfaces as local or as remote business
 interfaces._
 
-* _Enhanced the list of standard JMS MDB
+* _Enhanced the list of standard Jakarta(R) Messaging MDB
 activation properties._
 
 * _Simplified requirements for definition of a
@@ -89,54 +89,54 @@ security role using the ejb deployment descriptor._
 class loader; replaced 'must not' with 'should exercise caution' when
 using the Java I/O package._
 
-=== What was New in EJB 3.1
+=== What was New in Enterprise Beans 3.1
 
-The Enterprise JavaBeans 3.1 <<a9891>> architecture extended
-Enterprise JavaBeans to include the following new functionality and
-simplifications to the earlier EJB APIs:
+The Enterprise Beans 3.1 <<a9891>> architecture extended
+Enterprise Beans to include the following new functionality and
+simplifications to the earlier Enterprise Beans APIs:
 
 * _A simplified local view that provides
 session bean access without a separate local business interface._
 
-* _Packaging and deployment of EJB components
+* _Packaging and deployment of Enterprise Beans components
 directly in a `.war` file without an ejb-jar file._
 
-* _An embeddable API for executing EJB
+* _An embeddable API for executing Enterprise Beans
 components within a Java SE environment._
 
  * _A singleton session bean component that
 provides easy access to shared state as well as application startup and
 shutdown callbacks._
 
-* _Automatically created EJB Timers._
+* _Automatically created Enterprise Beans Timers._
 
-* _Calendar-based EJB Timer expressions._
+* _Calendar-based Enterprise Beans Timer expressions._
 
 * _Asynchronous session bean invocations._
 
 * _The definition of a lightweight subset of
-Enterprise JavaBeans functionality that is provided within the Java EE
+Enterprise Beans functionality that is provided within the Jakarta(R) EE
 Web Profile._
 
 * _A portable global JNDI name syntax for
-looking up EJB components._
+looking up Enterprise Beans components._
 
-==== What was New in EJB 3.0
+==== What was New in Enterprise Beans 3.0
 
-The Enterprise JavaBeans 3.0 architecture
-extended Enterprise JavaBeans to include the following new functionality
-and simplifications to the earlier EJB APIs:
+The Enterprise Beans 3.0 architecture
+extended Enterprise Beans to include the following new functionality
+and simplifications to the earlier Enterprise Beans APIs:
 
 * _Definition of the Java language metadata
-annotations that can be used to annotate EJB applications. These
+annotations that can be used to annotate Enterprise Beans applications. These
 metadata annotations are targeted at simplifying the developer’s task,
 at reducing the number of program classes and interfaces the developer
 is required to implement, and at eliminating the need for the developer
-to provide an EJB deployment descriptor._
+to provide an Enterprise Beans deployment descriptor._
 
 * _Specification of programmatic defaults,
 including for metadata, to reduce the need for the developer to specify
-common, expected behaviors and requirements on the EJB container. A
+common, expected behaviors and requirements on the Enterprise Beans container. A
 "configuration by exception" approach is taken whenever possible._
 
 * _Encapsulation of environmental dependencies
@@ -146,7 +146,7 @@ mechanisms, and simple lookup mechanisms._
 * _Simplification of the enterprise bean
 types._
 
-* _Elimination of the requirement for EJB
+* _Elimination of the requirement for Enterprise Beans
 component interfaces for session beans. The required business interface
 for a session bean can be a plain Java interface rather than an
 `EJBObject`, `EJBLocalObject`, or `java.rmi.Remote` interface._
@@ -155,7 +155,7 @@ for a session bean can be a plain Java interface rather than an
 interfaces for session beans._
 
 * _Simplification of entity persistence
-through the Java Persistence API <<a9851>>. 
+through the Jakarta(R) Persistence <<a9851>>. 
 Support for light-weight domain modeling, including inheritance and
 polymorphism._
 
@@ -163,8 +163,8 @@ polymorphism._
 annotations and XML deployment descriptor elements for the
 object/relational mapping of persistent entities <<a9851>>._
 
-* _A query language for Java Persistence that
-is an extension to EJB QL, with addition of projection, explicit inner
+* _A query language for Jakarta Persistence that
+is an extension to Enterprise Beans QL, with addition of projection, explicit inner
 and outer join operations, bulk update and delete, subqueries, and
 group-by. Addition of a dynamic query capability and support for native
 SQL queries._
@@ -180,10 +180,10 @@ implementation of callback interfaces._
 
 === Acknowledgements
 
-The EJB 3.2 specification work is being
+The Enterprise Beans 3.2 specification work was
 conducted as part of JSR-345 under the Java Community Process Program.
 This specification is the result of the collaborative work of the
-members of the EJB 3.2 Expert Group: Caucho Technology, Inc: Reza
+members of the Enterprise Beans 3.2 Expert Group: Caucho Technology, Inc: Reza
 Rahman; IBM: Jeremy Bauer; Oracle: Marina Vatkina, Linda DeMichiel; OW2:
 Florent Benoit; Pramati Technologies: Ravikiran Noothi; RedHat: Pete
 Muir, Carlo de Wolf; TmaxSoft, Inc.: Miju Byon; individual members: Adam
@@ -196,30 +196,30 @@ Jean-Louis Monteiro.
 This specification is organized into the
 following documents:
 
-* EJB Core Contracts and Requirements
+* Enterprise Beans Core Contracts and Requirements
 
-* EJB Optional Features
+* Enterprise Beans Optional Features
 
-This EJB Core Contracts document defines the
-contracts and requirements for the use and implementation of Enterprise
-JavaBeans. These contracts include those for the EJB 3.2 API, as well as
-for the earlier EJB API that is required to be supported in this
-release. See <<a9423>> for coverage of the Enterprise JavaBeans API requirements.
+This Enterprise Beans Core Contracts document defines the
+contracts and requirements for the use and implementation of Enterprise Beans. 
+These contracts include those for the Enterprise Beans 3.2 API, as well as
+for the earlier Enterprise Beans API that is required to be supported in this
+release. See <<a9423>> for coverage of the Enterprise Beans API requirements.
 
-The EJB Optional Features document <<a9890>> defines the contracts and
+The Enterprise Beans Optional Features document <<a9890>> defines the contracts and
 requirements for the use and implementation of features support for
-which has been made optional as of Enterprise JavaBeans, 3.2. These
-contracts are separated from the core contracts requirements of the EJB
+which has been made optional as of Enterprise Beans, 3.2. These
+contracts are separated from the core contracts requirements of the Enterprise Beans
 3.1 specification.
 
 === Document Conventions
 
-The regular Times font is used for
-information that is prescriptive by the EJB specification.
+The regular font is used for
+information that is prescriptive by the Enterprise Beans specification.
 
-_The italic Times font is used for paragraphs
+_The italic font is used for paragraphs
 that contain descriptive information, such as notes describing typical
 use, or notes clarifying the text with prescriptive specification._
 
-`The Courier font is used for code examples.`
+`The monospace font is used for code examples.`
 

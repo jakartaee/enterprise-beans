@@ -33,17 +33,17 @@ single application deployment unit.
 
 An ejb-jar file is designed specifically for
 the packaging of enterprise beans. An ejb-jar file that is packaged
-stand-alone or within an `.ear` file constitutes a Java EE module.
+stand-alone or within an `.ear` file constitutes a Jakarta EE module.
 
 ****
 _While the use of an ejb-jar file within a
 `.war` file is supported by this specification, an ejb-jar file within a
-`.war` file does not constitute a Java EE module. See <<a9314>>._
+`.war` file does not constitute a Jakarta EE module. See <<a9314>>._
 ****
 
 === Deployment Descriptor
 
-The EJB
+The Enterprise Beans
 deployment descriptor is optional in either packaging scenario. If a
 deployment descriptor is provided it must conform to the format defined
 in <<a5804>.
@@ -84,7 +84,7 @@ The ejb-jar file or `.war` file must also
 contain, either by inclusion or by reference, the class files for all
 the classes and interfaces that each enterprise bean class and the
 business interfaces, home interfaces, component interfaces, and/or web
-service endpoints depend on, except Java EE and Java SE classes. This
+service endpoints depend on, except Jakarta EE and Java SE classes. This
 includes their superclasses and superinterfaces, dependent classes, and
 the classes and interfaces used as method parameters, results, and
 exceptions.
@@ -115,7 +115,7 @@ and one or more jar files within the `WEB-INF/lib directory`.
 ****
 _A "ejb-jar" file in the `WEB-INF/lib`
 directory that contains enterprise beans is not considered an
-independent Java EE "module" in the way that a `.war` file, stand-alone
+independent Jakarta EE "module" in the way that a `.war` file, stand-alone
 ejb-jar file, or an .ear-level ejb-jar file is considered a module. Such
 an "ejb-jar" file does not define its own module name or its own
 namespace for ejb-names, environment dependencies, persistence units,
@@ -141,7 +141,7 @@ other non-enterprise bean classes packaged in a `.war` file. This means,
 for example, that a servlet packaged within a `.war` file is guaranteed to
 have visibility to an enterprise bean component packaged within the same
 `.war` file, and vice versa. Detailed class loading requirements for web
-modules are covered in the Java EE Platform specification <<a9861>>.
+modules are covered in the Jakarta EE Platform specification <<a9861>>.
 
 ==== Component Environment
 
@@ -192,8 +192,8 @@ deployment descriptor or by annotations.
 package com.acme;
 
 @Stateless
-public class FooBean \{
- public void foo() \{ ... }
+public class FooBean {
+    public void foo() { ... }
 }
 ----
 
@@ -312,11 +312,11 @@ The ejb-client JAR file is specified in the
 using the `ejb-client-jar` element. The value
 of the `ejb-client-jar` element is the path name specifying the location
 of the ejb-client JAR file in the containing
-Java EE Enterprise Application Archive (`.ear`) file. 
+Jakarta EE Enterprise Application Archive (`.ear`) file. 
 The path name is relative to the location of the
 referencing ejb-jar file or `.war` file.
 
-The EJB specification does not specify
+The Enterprise Beans specification does not specify
 whether an ejb-jar file or `.war` file should include by copy or by
 reference the classes that are in an ejb-client JAR file, but they must
 be included either one way or the other. If the by-copy approach is
@@ -327,7 +327,7 @@ duplicate the content of the ejb-client JAR file in the ejb-jar file or
 `.war` file, but instead uses a Manifest Class-Path entry in the ejb-jar
 file or `.war` file to specify that the ejb-jar file or `.war` file depends
 on the ejb-client JAR at runtime. The use of the Class-Path entries in
-JAR files and `.war` files is explained in the Java EE Platform
+JAR files and `.war` files is explained in the Jakarta EE Platform
 specification <<a9861>>.
 
 [[a9397]]
@@ -338,7 +338,7 @@ application to insure that the client view classes are available to the
 client at runtime. The client of an enterprise bean may be another
 enterprise bean packaged in the same ejb-jar or different ejb-jar file,
 another enterprise bean packaged in the same `.war` file or different `.war`
-file, or the client may be another Java EE component, such as a web
+file, or the client may be another Jakarta EE component, such as a web
 component.
 
 When clients packaged in jar files refer to
@@ -357,7 +357,7 @@ the client view classes
 
 The client may also require the use of system
 value classes (e.g., the serializable value classes implementing the
-`javax.ejb.Handle`, `javax.ejb.HomeHandle`, `javax.ejb.EJBMetaData`,
+`jakarta.ejb.Handle`, `jakarta.ejb.HomeHandle`, `jakarta.ejb.EJBMetaData`,
 `java.util.Enumeration`, `java.util.Collection`, and `java.util.Iterator`
 interfaces), although these are not packaged with the application. It is
 the responsibility of the provider of the container hosting the
