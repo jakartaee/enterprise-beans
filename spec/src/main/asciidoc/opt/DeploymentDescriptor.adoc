@@ -1,97 +1,39 @@
 [[a3273]]
 == Deployment Descriptor
 
-This chapter defines the EJB deployment
-descriptor elements and the Bean Provider and the Application Assembler
-responsibilities corresponding to entity beans. The rules defined in
-this chapter are in addition to the rules defined in the Chapter 14 of
-the EJB Core Contracts and Requirements document
-link:Ejb.html#a3339[See EJB 3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345].
+This chapter defines the Enterprise Beans deployment descriptor elements and the Bean Provider and the Application Assembler responsibilities corresponding to entity beans.
+The rules defined in this chapter are in addition to the rules defined in the Chapter "`__Deployment Descriptor__`" of the Enterprise Beans Core Contracts and Requirements document <<a3339>>.
 
-See EJB Core Contracts and Requirements
-document link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
-Requirements. http://jcp.org/en/jsr/detail?id=345] for the complete XML
-Schema for the EJB 3.2 deployment descriptor.
+See Enterprise Beans Core Contracts and Requirements document <<a3339>> for the complete XML Schema for the Enterprise Beans deployment descriptor.
 
 === Bean Provider’s Responsibilities
 
+The Bean Provider is responsible for providing the following structural information for each entity bean in the deployment descriptor.
 
+* **Re-entrancy indication.** The Bean Provider must specify whether an entity bean is re-entrant.
 
-The Bean Provider is responsible for
-providing the following structural information for each entity bean in
-the deployment descriptor.
+* **Entity bean’s persistence management.** If the enterprise bean is an entity bean, the Bean Provider must use the persistence-type element to declare whether persistence management is performed by the enterprise bean or by the container.
 
- _Re-entrancy indication_
-. The Bean Provider must specify whether an
-entity bean is re-entrant.
+* **Entity bean’s primary key class.** If the enterprise bean is an entity bean, the Bean Provider specifies the fully-qualified name of the entity bean’s primary key class in the `prim-key-class` element. The Bean Provider must specify the primary key class for an entity with bean-managed persistence.
 
-Entity bean’s persistence management.
-If the enterprise bean is an entity bean,
-the Bean Provider must use the persistence-type element to declare
-whether persistence management is performed by the enterprise bean or by
-the container.
+* **Entity bean’s abstract schema name.** If the enterprise bean is an entity bean with container-managed persistence and `cmp-version 2.x`, the Bean Provider must specify the abstract schema name of the entity bean using the `abstract-schema-name` element.
 
-Entity bean’s primary key class.
-If the enterprise bean is an entity bean,
-the Bean Provider specifies the fully-qualified name of the entity
-bean’s primary key class in the prim-key-class element. The Bean
-Provider must specify the primary key class for an entity with
-bean-managed persistence.
+* **Container-managed fields.** If the enterprise bean is an entity bean with container-managed persistence, the Bean Provider must specify the container-managed fields using the cmp-field elements.
 
-Entity bean’s abstract schema name. If the
-enterprise bean is an entity bean with container-managed persistence and
-_cmp-version_ _2.x_ , the Bean Provider must specify the
-abstract schema name of the entity bean
-using the abstract-schema-name element.
+* **Container-managed relationships.** If the enterprise bean is an entity bean with container-managed persistence and `cmp-version 2.x`, the Bean Provider must specify the container-managed relationships of the entity bean using the relationships element.
 
-Container-managed fields.
-If the enterprise bean is an entity bean
-with container-managed persistence, the Bean Provider must specify the
-container-managed fields using the cmp-field elements.
-
-Container-managed relationships. If the
-enterprise bean is an entity bean with container-managed persistence and
-_cmp-version_ _2.x_ , the Bean Provider must specify the
-container-managed relationships of the
-entity bean using the relationships element.
-
-Finder and select queries. If the enterprise
-bean is an entity bean with container-managed persistence and
-_cmp-version_ _2.x_ , the Bean Provider must use the _query_
- element to specify any EJB QL finder or
-select query for the entity bean other than a query for the
-_findByPrimaryKey_ method.
-
-.
+* **Finder and select queries.** If the enterprise bean is an entity bean with container-managed persistence and `cmp-version 2.x`, the Bean Provider must use the `query` element to specify any Enterprise Beans QL finder or select query for the entity bean other than a query for the `findByPrimaryKey` method.
 
 === Application Assembler’s Responsibility
 
+The Application Assembler may modify the following information that was specified by the Bean Provider:
 
+* **Relationship names for Enterprise Beans 2.x entity beans.** If multiple ejb-jar files use the same names for relationships and are merged into a single ejb-jar file, it is the responsibility of the Application Assembler to modify the relationship names defined in the `ejb-relation-name` elements.
 
-The Application Assembler may modify the
-following information that was specified by the Bean Provider:
+In general, the Application Assembler should never modify any of the following.
 
- _Relationship names for EJB 2.x entity
-beans._ If multiple ejb-jar files use the same names for relationships
-and are merged into a single ejb-jar file, it is the responsibility of
-the Application Assembler to modify the relationship names defined in
-the _ejb-relation-name_ elements.
+* **Enterprise bean’s abstract schema name.** The Application Assembler should not change the enterprise bean’s name defined in the `abstract-schema-name` element since Enterprise Beans QL queries may depend on the content of this element.
 
-In general, the Application Assembler should
-never modify any of the following.
+* **Relationship role source element.** The Application Assembler should not change the value of an `ejb-name` element in the `relationship-role-source` element.
 
-Enterprise bean’s abstract schema name. The
-Application Assembler should not change the enterprise bean’s name
-defined in the abstract-schema-name element since EJB QL queries may
-depend on the content of this element.
-
-Relationship role source element. The
-Application Assembler should not change the value of an ejb-name element
-in the _relationship-role-source_  element.
-
-If any of these elements must be modified by
-the Application Assembler in order to resolve name clashes during the
-merging of ejb-jar files, the Application Assembler must also modify all
-ejb-ql query strings that depend on the value of the modified
-element(s).
+If any of these elements must be modified by the Application Assembler in order to resolve name clashes during the merging of ejb-jar files, the Application Assembler must also modify all `ejb-ql` query strings that depend on the value of the modified element(s).

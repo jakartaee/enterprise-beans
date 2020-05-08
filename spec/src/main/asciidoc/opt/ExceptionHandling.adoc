@@ -1,186 +1,88 @@
 [[a3210]]
 == Exception Handling
 
-This chapter defines requirements for
-exception handling of entity beans and JAX-RPC web service endpoints in
-addition to the contracts specified in the EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345] Chapter
-“Exception Handling”.
+This chapter defines requirements for exception handling of entity beans and Jakarta XML RPC web service endpoints in addition to the contracts specified in the Enterprise Beans Core Contracts and Requirements document <<a3339>> Chapter "`__Exception Handling__`".
 
 === Application Exceptions
 
-
-
-The
-javax.ejb.CreateException,
-javax.ejb.RemoveException,
-javax.ejb.FinderException, and subclasses
-thereof are application exceptions used to report errors to the client
-from the create, remove, and finder methods of the EJBHome and/or
-EJBLocalHome interfaces of entity bean components (see Subsections
-link:Ejb.html#a1524[See Standard Application Exceptions for
-Entities] and link:Ejb.html#a2806[See Standard Application
-Exceptions for Entities]). See rules for the application exceptions
-defined in the corresponding section of the EJB Core Contracts and
-Requirements document link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345].
+The `jakarta.ejb.CreateException`, `jakarta.ejb.RemoveException`, `jakarta.ejb.FinderException`, and subclasses thereof are application exceptions used to report errors to the client from the `create`, `remove`, and `finder` methods of the EJBHome and/or EJBLocalHome interfaces of entity bean components (see <<a1524>> and <<a2806>>).
+See rules for the application exceptions defined in the corresponding section of the Enterprise Beans Core Contracts and Requirements document <<a3339>>.
 
 === Bean Provider’s Responsibilities
 
+This section defines the responsibilities of the Bean Provider for exception handling of entity beans in addition to the Bean Provider’s responsibilities specified in the corresponding section in the Enterprise Beans Core Contracts and Requirements document <<a3339>>.
 
+==== Application Exceptions
 
-This section defines the responsibilities of
-the Bean Provider for exception handling of entity beans in addition to
-the Bean Provider’s responsibilities specified in the corresponding
-section in the EJB Core Contracts and Requirements document
-[link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
-Requirements. http://jcp.org/en/jsr/detail?id=345]].
+The Bean Provider is responsible for using the standard Enterprise Beans application exceptions (`jakarta.ejb.CreateException`, `jakarta.ejb.RemoveException`, `jakarta.ejb.FinderException`, and subclasses thereof) for entity beans as described in <<a1524>> and <<a2806>>.
 
-=== Application Exceptions
+[[a3221]]
+==== System Exceptions
 
-The Bean Provider is responsible for using
-the standard EJB application exceptions (javax.ejb.CreateException,
-javax.ejb.RemoveException, javax.ejb.FinderException, and subclasses
-thereof) for entity beans as described in Subsections
-link:Ejb.html#a1524[See Standard Application Exceptions for
-Entities] and link:Ejb.html#a2806[See Standard Application
-Exceptions for Entities].
+The Bean Provider should handle various system-level exceptions and errors that an entity bean instance may encounter during the execution of a business method (e.g. `ejbLoad`).
 
-=== [[a3221]]System Exceptions
+==== jakarta.ejb.NoSuchEntityException
 
-The Bean Provider should handle various
-system-level exceptions and errors that an entity bean instance may
-encounter during the execution of a business method (e.g. ejbLoad).
+The `NoSuchEntityException` is a subclass of `EJBException`.
+It should be thrown by the entity bean class methods to indicate that the underlying entity has been removed from the database.
 
-=== javax.ejb.NoSuchEntityException
+A bean-managed persistence entity bean class typically throws this exception from the `ejbLoad` and `ejbStore` methods, and from the methods that implement the business methods defined in the component interface.
 
-The
-NoSuchEntityException is a subclass of
-EJBException. It should be thrown by the entity bean class methods to
-indicate that the underlying entity has been removed from the database.
+[[a3227]]
+=== Container Provider Responsibilities
 
-A bean-managed
-persistence entity bean class typically throws this exception from the
-ejbLoad and ejbStore methods, and from the methods that implement the
-business methods defined in the component interface.
+This section defines the responsibilities of the Container Provider for exception handling of entity beans in addition to the Container Provider’s responsibilities specified in the corresponding section in the Enterprise Beans Core Contracts and Requirements document <<a3339>>.
 
-=== [[a3227]]Container Provider Responsibilities
+[[a3229]]
+==== Exceptions from Method Invoked via Entity Bean’s Client View
 
+The following entity bean methods: `ejbCreate<METHOD>`, `ejbPostCreate<METHOD>`, `ejbRemove`, `ejbHome<METHOD>`, and `ejbFind<METHOD>` are considered to be business methods in this context.
 
+Rules for exception handling of these methods are specified in the Table "`__Handling of Exceptions Thrown by Methods of Web Service Client View or Enterprise Beans 2.1 Client View of a Bean with Container-Managed Transaction Demarcation__`" of the Enterprise Beans Core Contracts and Requirements document <<a3339>>.
 
-This section defines the responsibilities of
-the Container Provider for exception handling of entity beans in
-addition to the Container Provider’s responsibilities specified in the
-corresponding section in the EJB Core Contracts and Requirements
-document [link:Ejb.html#a3339[See EJB 3.2 Core Contracts and
-Requirements. http://jcp.org/en/jsr/detail?id=345]].
+[[a3232]]
+==== Exceptions from Other Container-invoked Callbacks
 
-=== [[a3229]]Exceptions from Method Invoked via Entity Bean’s Client View
+This subsection applies to the `ejbActivate`, `ejbLoad`, `ejbPassivate`, `ejbStore`, `setEntityContext`, and `unsetEntityContext` container-invoked callbacks methods of the EntityBean interface.
 
-The following entity bean methods:
-ejbCreate<METHOD>, ejbPostCreate<METHOD>, ejbRemove, _ejbHome<METHOD>_ ,
-and ejbFind<METHOD> are considered to be business methods in this
-context.
+The container must handle all exceptions or errors from these methods as follows:
 
-Rules for exception handling of these methods
-are specified in the Table “Handling of Exceptions Thrown by Methods of
-Web Service Client View or EJB 2.1 Client View of a Bean with
-Container-Managed Transaction Demarcation” of the EJB Core Contracts and
-Requirements document [link:Ejb.html#a3339[See EJB 3.2 Core
-Contracts and Requirements. http://jcp.org/en/jsr/detail?id=345]].
+* Log the exception or error to bring the problem to the attention of the System Administrator.
 
-=== [[a3232]]Exceptions from Other Container-invoked Callbacks
+* If the instance is in a transaction, mark the transaction for rollback.
 
-This subsection applies to the ejbActivate,
-ejbLoad, ejbPassivate, ejbStore, setEntityContext, and
-unsetEntityContext container-invoked callbacks methods of the EntityBean
-interface.
+* Discard the instance (i.e., the container must not invoke any business methods or container callbacks on the instance).
 
-The container must handle all exceptions or
-errors from these methods as follows:
+* If the exception or error happened during the processing of a client invoked method, throw the `jakarta.ejb.EJBException`.
+footnote:a3395[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.RemoteException` is thrown to the client instead.]
+If the Enterprise Beans 2.1 client view or web service client view is used, throw the `java.rmi.RemoteException` to the client if the client is a remote client or throw the `jakarta.ejb.EJBException` to the client if the client is a local client.
+If the instance executed in the client’s transaction, the container should throw the `jakarta.ejb.EJBTransactionRolledbackException`.
+footnote:a3396[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `jakarta.transaction.TransactionRolledbackException` is thrown to the client instead.]
+If the Enterprise Beans 2.1 client view or web service client view is used, the container should throw the `jakarta.transaction.TransactionRolledbackException` to a remote client or the `jakarta.ejb.TransactionRolledbackLocalException` to a local client, because it provides more information to the client.
+(The client knows that it is fruitless to continue the transaction.)
 
-Log the exception or error to bring the
-problem to the attention of the System Administrator.
+==== jakarta.ejb.NoSuchEntityException
 
-If the instance is in a transaction, mark the
-transaction for rollback.
+The `NoSuchEntityException` is a subclass of `EJBException`.
+If it is thrown by a method of an entity bean class, the container must handle the exception using the rules in <<a3229>> and <<a3232>>.
 
-Discard the instance (i.e., the container
-must not invoke any business methods or container callbacks on the
-instance).
+To give the client a better indication of the cause of the error, the container should throw the `java.rmi.NoSuchObjectException` (which is a subclass of `java.rmi.RemoteException`) to a remote client, or the `jakarta.ejb.NoSuchObjectLocalException` to a local client.
 
-If the exception or error happened during the
-processing of a client invoked method, throw the
-_javax.ejb.EJBExceptionlink:#a3395[31]_ . If the EJB 2.1 client
-view or web service client view is used, throw the
-java.rmi.RemoteException to the client if the client is a remote client
-or throw the _javax.ejb.EJBException_ to the client if the client is a
-local client. If the instance executed in the client’s transaction, the
-container should throw the
-_javax.ejb.EJBTransactionRolledbackExceptionlink:#a3396[32]_ .
-If the EJB 2.1 client view or web service client view is used, the
-container should throw the
-javax.transaction.TransactionRolledbackException to a remote client or
-the _javax.ejb.TransactionRolledbackLocalException_ to a local client,
-because it provides more information to the client. (The client knows
-that it is fruitless to continue the transaction.)
+==== Non-existing Entity Object
 
-=== javax.ejb.NoSuchEntityException
+If a client makes a call to an entity object that has been removed, the container should throw the `jakarta.ejb.NoSuchEJBException`.
+footnote:a3397[If the business interface is a remote business interface that extends `java.rmi.Remote`, the `java.rmi.NoSuchObjectException` is thrown to the client instead.]
+If the Enterprise Beans 2.1 client view is used, the container should throw the `java.rmi.NoSuchObjectException` (which is a subclass of `java.rmi.RemoteException`) to a remote client, or the `jakarta.ejb.NoSuchObjectLocalException` to a local client.
 
-The
-NoSuchEntityException is a subclass of
-EJBException. If it is thrown by a method of an entity bean class, the
-container must handle the exception using the rules in Sections
-link:Ejb.html#a3229[See Exceptions from Method Invoked via
-Entity Bean’s Client View] and link:Ejb.html#a3232[See
-Exceptions from Other Container-invoked Callbacks].
+==== Support for Deprecated Use of java.rmi.RemoteException
 
-To give the client a better indication of the
-cause of the error, the container should throw the
-java.rmi.NoSuchObjectException (which is a subclass of
-java.rmi.RemoteException) to a remote client, or the
-_javax.ejb.NoSuchObjectLocalException_ to a local client.
+The Enterprise Beans 1.0 specification allowed the business methods, `ejbCreate`, `ejbPostCreate`, `ejbFind<METHOD>`, `ejbRemove`, and the container-invoked callbacks (i.e., the methods defined in the `EntityBean` interface) implemented in the enterprise bean class to use the `java.rmi.RemoteException` to report non-application exceptions to the container.
 
-=== Non-existing Entity Object
-
-If a client makes a call to an entity object
-that has been removed, the container should throw the
-_javax.ejb.NoSuchEJBExceptionlink:#a3397[33]_ . If the EJB 2.1
-client view is used, the container should throw the
-java.rmi.NoSuchObjectException (which is a
-subclass of java.rmi.RemoteException) to a remote client, or the
-_javax.ejb.NoSuchObjectLocalException_ to a local client.
-
-=== Support for Deprecated Use of java.rmi.RemoteException
-
-The EJB 1.0
-specification allowed the business methods, ejbCreate, ejbPostCreate,
-ejbFind<METHOD>, ejbRemove, and the container-invoked callbacks (i.e.,
-the methods defined in the EntityBean interface) implemented in the
-enterprise bean class to use the java.rmi.RemoteException to report
-non-application exceptions to the container.
-
-See the corresponding section in the EJB Core
-Contracts and Requirements document [link:Ejb.html#a3339[See EJB
-3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345]] for the rules on support of the
-deprecated use of java.rmi.RemoteException.
+See the corresponding section in the Enterprise Beans Core Contracts and Requirements document <<a3339>> for the rules on support of the deprecated use of `java.rmi.RemoteException`.
 
 === Client’s View of Exceptions
 
+The Jakarta XML RPC web service endpoint interface is Java RMI interface, and therefore the `throws` clauses of all its methods (including those inherited from superinterfaces) include the mandatory `java.rmi.RemoteException`.
+The `throws` clauses may include an arbitrary number of application exceptions.
 
-
-The JAX-RPC web service endpoint interface is
-Java RMI interface, and therefore the _throws_ clauses of all its
-methods (including those inherited from superinterfaces) include the
-mandatory java.rmi.RemoteException.The
-_throws_ clauses may include an arbitrary number of application
-exceptions.
-
-See the corresponding section in the EJB Core
-Contracts and Requirements document [link:Ejb.html#a3339[See EJB
-3.2 Core Contracts and Requirements.
-http://jcp.org/en/jsr/detail?id=345]] for the client’s view of
-exceptions received from from enterprise beans and web service
-endpoints.
+See the corresponding section in the Enterprise Beans Core Contracts and Requirements document <<a3339>> for the client’s view of exceptions received from from enterprise beans and web service endpoints.

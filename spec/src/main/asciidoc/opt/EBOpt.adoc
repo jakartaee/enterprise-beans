@@ -29,5 +29,3 @@ include::PackagingRestrictions.adoc[]
 include::RelatedDocuments.adoc[]
 
 include::RevisionHistory.adoc[]
-
-include::Footnotes.adoc[]
