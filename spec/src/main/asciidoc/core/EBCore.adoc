@@ -16,8 +16,6 @@ include::SupportForTransactions.adoc[]
 
 include::ExceptionHandling.adoc[]
 
-include::SupportForDistributedInteroperability.adoc[]
-
 include::EnterpriseBeanEnvironment.adoc[]
 
 include::SecurityManagement.adoc[]
