@@ -175,7 +175,7 @@ SessionSynchronization interface
 
 RMI-IIOP Interoperability
 
-|Required
+|Optional
 
 s|Entity Beans a|
 *COMPONENTS:*
