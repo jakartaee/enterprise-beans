@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1120">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1120" font-family="serif" font-size="16">
   <text x="28" y="63">
     <tspan x="52.047" y="63">client</tspan> <tspan x="39.695" y="80.609">container</tspan>
   </text>

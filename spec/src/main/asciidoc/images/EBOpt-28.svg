@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="396" height="555">
+<svg xmlns="http://www.w3.org/2000/svg" width="396" height="555" font-family="serif" font-size="16">
   <text x="10" y="25" font-style="italic">
     <tspan x="12.313" y="25">A and B are in a many-to-many unidirectional relationship:</tspan>
   </text>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="650" height="580">
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="580" font-family="serif" font-size="16">
   <path fill="#fff" stroke="#000" stroke-width="2" d="M105.833 133h83.334C199.583 133 210 148 210 163s-10.417 30-20.833 30h-83.334C95.417 193 85 178 85 163s10.417-30 20.833-30"/>
   <text x="94" y="151">
     <tspan x="104.32" y="151">does not exist</tspan> <tspan x="134.945" y="168.609">and</tspan> <tspan x="101.719" y="186.219">not referenced</tspan>

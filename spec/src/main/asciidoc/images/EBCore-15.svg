@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="524" height="293">
+<svg xmlns="http://www.w3.org/2000/svg" width="524" height="293" font-family="serif" font-size="16">
   <path fill="#fff" stroke="#000" stroke-width="2" d="M166 42h300v100H166z"/>
   <text x="237" y="28">
     <tspan x="241.766" y="28">Enterprise Bean Server</tspan>

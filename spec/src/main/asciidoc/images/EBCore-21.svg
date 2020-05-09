@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="723" height="336">
+<svg xmlns="http://www.w3.org/2000/svg" width="723" height="336" font-family="serif" font-size="16">
   <ellipse cx="85.5" cy="184" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
   <text x="48" y="190">
     <tspan x="49.891" y="190">Program A</tspan>

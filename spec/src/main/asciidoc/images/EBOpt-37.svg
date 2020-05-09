@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="556" height="209">
+<svg xmlns="http://www.w3.org/2000/svg" width="556" height="209" font-family="serif" font-size="16">
   <ellipse cx="177" cy="35" fill="#fff" stroke="#000" stroke-width="2" rx="75" ry="25"/>
   <text x="110" y="41">
     <tspan x="157.805" y="41">Order</tspan>

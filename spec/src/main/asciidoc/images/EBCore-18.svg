@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="593" height="294">
+<svg xmlns="http://www.w3.org/2000/svg" width="593" height="294" font-family="serif" font-size="16">
   <path fill="#fff" stroke="#000" stroke-width="2" d="M10 51h100v80H10z"/>
   <text x="18" y="97">
     <tspan x="40.266" y="97">Client</tspan>

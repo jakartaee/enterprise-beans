@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="498" height="395">
+<svg xmlns="http://www.w3.org/2000/svg" width="498" height="395" font-family="serif" font-size="16">
   <path fill="#fff" stroke="#000" stroke-width="2" d="M10 10h100v80H10z"/>
   <text x="18" y="29">
     <tspan x="36.898" y="29">Jakarta</tspan> <tspan x="38.578" y="46.609">Server</tspan> <tspan x="16.273" y="64.219">Pages/Servlet</tspan> <tspan x="42.047" y="81.828">client</tspan>

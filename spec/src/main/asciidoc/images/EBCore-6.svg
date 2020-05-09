@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="505" height="245">
+<svg xmlns="http://www.w3.org/2000/svg" width="505" height="245" font-family="serif" font-size="16">
   <rect width="300" height="200" x="194" y="35" fill="#fff" stroke="#000" stroke-width="2" rx="25" ry="25"/>
   <rect width="275" height="125" x="207" y="60" fill="#fff" stroke="#000" stroke-width="2" rx="15.625" ry="15.625"/>
   <text x="311" y="26">

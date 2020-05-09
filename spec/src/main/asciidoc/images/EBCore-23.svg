@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="777" height="358">
+<svg xmlns="http://www.w3.org/2000/svg" width="777" height="358" font-family="serif" font-size="16">
   <text x="36" y="28">
     <tspan x="68.727" y="28">client address space (i.e. JVM)</tspan>
   </text>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="489" height="339">
+<svg xmlns="http://www.w3.org/2000/svg" width="489" height="339" font-family="serif" font-size="16">
   <path fill="#fff" stroke="#000" stroke-width="2" d="M10 32h150v40H10z"/>
   <text x="10" y="32">
     <tspan dx="40" dy="16">&lt;abstract&gt;</tspan> <tspan x="10" dx="40" dy="16">OrderBean</tspan>
