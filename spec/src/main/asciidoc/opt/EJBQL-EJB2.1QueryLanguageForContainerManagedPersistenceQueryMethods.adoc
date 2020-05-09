@@ -132,7 +132,7 @@ Only two of the entity beans, `OrderEJB` and `ProductEJB`, have remote interface
 
 [[a1886]]
 .Several Entity Beans with Abstract Persistence Schemas Defined in the Same Ejb-jar File.
-image::EBOpt-37.png[]
+image::EBOpt-37.svg[]
 
 The entity beans `ShippingAddress` and `BillingAddress` each have one-to-many relationships with `Order`.
 There is also a one-to-many relationship between `Order` and `Lineitem`.

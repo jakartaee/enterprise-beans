@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="345" height="378">
+  <text x="10" y="20" font-style="italic">
+    <tspan>After Change:</tspan>
+  </text>
+  <rect width="72" height="36" x="29" y="122" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="29" y="122">
+    <tspan dx="27" dy="24">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M102.581 134.757l25.257-75.77 1.58-4.744M122 58l7.419-3.757L133 61"/>
+  <rect width="72" height="36" x="130" y="32" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="130" y="32">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M104.412 135.845l45.765-49.035 3.411-3.656M146 83l7.588.155L154 91"/>
+  <rect width="72" height="36" x="156" y="62" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="156" y="62">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M105.696 137.782l67.913-24.846 4.695-1.718M171 108l7.304 3.218L175 118"/>
+  <rect width="72" height="36" x="182" y="92" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="182" y="92">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M106 139.5h96m-6-5.5l6 5.5-6 5.5"/>
+  <rect width="72" height="36" x="206" y="122" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="206" y="122">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">n-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M105.866 140.651l116.403 27.546 4.865 1.152M223 163l4.134 6.349L220 174"/>
+  <rect width="72" height="36" x="231" y="153" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="231" y="153">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">n</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M105.64 141.362l138.08 55.414 4.64 1.862M245 191l3.36 7.638L241 202"/>
+  <rect width="72" height="36" x="252" y="183" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="252" y="183">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">m</tspan>
+  </text>
+  <rect width="72" height="36" x="29" y="274" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="29" y="274">
+    <tspan dx="27" dy="24">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M103.874 290.384l116.378-26.652 4.874-1.116M218 258l7.126 4.616L221 269"/>
+  <rect width="72" height="36" x="229" y="244" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="229" y="244">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M104 291.547l91 .859 5 .047M194 287l6 5.453-6 5.547"/>
+  <rect width="72" height="36" x="204" y="275" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="204" y="275">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M103.677 293.268l67.97 25.696 4.676 1.768M173 313l3.323 7.732L169 324"/>
+  <rect width="72" height="36" x="180" y="305" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="180" y="305">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M102.381 295.183l45.856 49.95 3.382 3.684M152 341l-.381 7.817L144 348"/>
+  <rect width="72" height="36" x="154" y="335" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="154" y="335">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">m-1</tspan>
+  </text>
+</svg>

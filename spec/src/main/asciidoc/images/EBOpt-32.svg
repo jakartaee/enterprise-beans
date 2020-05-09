@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="489" height="339">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 32h150v40H10z"/>
+  <text x="10" y="32">
+    <tspan dx="40" dy="16">&lt;abstract&gt;</tspan> <tspan x="10" dx="40" dy="16">OrderBean</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 72h150v171H10z"/>
+  <text x="10" y="72">
+    <tspan x="10" dx="13" dy="18">getOrderStatus</tspan> <tspan x="10" dx="13" dy="18">setOrderStatus</tspan> <tspan x="10" dx="13" dy="18">getLineStatus</tspan> <tspan x="10" dx="13" dy="18">setLineStatus</tspan> <tspan x="10" dx="13" dy="18">getCreditApproved</tspan> <tspan x="10" dx="13" dy="18">setCreditApproved</tspan> <tspan x="10" dx="13" dy="18">getCustomer</tspan> <tspan x="10" dx="13" dy="18">setCustomer</tspan> <tspan x="10" dx="13" dy="18">...</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M352.4 26.4l6.703 4.608L354.4 37.4m4.703-6.392L169.795 69.983l-4.898 1.009M171.4 75.4l-6.503-4.408L169.4 64.4"/>
+  <text x="169" y="62">
+    <tspan>*</tspan>
+  </text>
+  <text x="214" y="35">
+    <tspan>Order-Customer</tspan>
+  </text>
+  <text x="344" y="52">
+    <tspan>1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M364 10h100v40H364z"/>
+  <text x="364" y="10">
+    <tspan dx="20" dy="26">Customer</tspan>
+  </text>
+  <path stroke="#000" stroke-width="2" d="M170.071 246.536l3.536 10.606L163 253.607 159.464 243z"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M179.757 267.23l-1.91-7.438 7.91-1.562m-7.91 1.562l68.673 42.91 4.24 2.649m-2.003-8.121l2.003 8.121-8.003 1.879"/>
+  <text x="189" y="253">
+    <tspan>1</tspan>
+  </text>
+  <text x="120" y="301">
+    <tspan>Order-LineItem</tspan>
+  </text>
+  <text x="229" y="318">
+    <tspan>*</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M255 288h100v40H255z"/>
+  <text x="255" y="288">
+    <tspan dx="20" dy="26">LineItem</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M309 285l98.49-100.297 3.504-3.568m-7.897.097l7.897-.097.103 8.097"/>
+  <text x="327" y="285">
+    <tspan>*</tspan>
+  </text>
+  <text x="364" y="248">
+    <tspan>Product-LineItem</tspan>
+  </text>
+  <text x="378" y="195">
+    <tspan>1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M364 137h100v40H364z"/>
+  <text x="364" y="137">
+    <tspan dx="26" dy="26">Product</tspan>
+  </text>
+</svg>

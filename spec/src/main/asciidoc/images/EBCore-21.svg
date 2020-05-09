@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="723" height="336">
+  <ellipse cx="85.5" cy="184" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="48" y="190">
+    <tspan x="49.891" y="190">Program A</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M90.29 152.568l116.13-34.705 4.79-1.431M204 113l7.21 3.432L207 123"/>
+  <text x="120" y="121">
+    <tspan x="120.336" y="121">TX 1</tspan>
+  </text>
+  <ellipse cx="292.5" cy="115" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="255" y="119">
+    <tspan x="257.109" y="119">Program B</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M90.28 215.465l116.16 35.605 4.78 1.466M207 245l4.22 7.535L204 256"/>
+  <text x="120" y="260">
+    <tspan x="120.336" y="260">TX 1</tspan>
+  </text>
+  <ellipse cx="292.5" cy="254" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="255" y="258">
+    <tspan x="257.109" y="258">Program C</tspan>
+  </text>
+  <text x="508" y="49">
+    <tspan x="514.602" y="49">Enterprise Bean Container</tspan>
+  </text>
+  <rect width="211" height="243" x="500" y="63" fill="#fff" stroke="#000" stroke-width="2" rx="26.375" ry="26.375"/>
+  <ellipse cx="605.5" cy="184" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="563" y="190">
+    <tspan x="563.719" y="190">Entity object</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M373.591 116.98l146.226 63.06 4.592 1.98M521 175l3.409 7.02L517 185"/>
+  <text x="441" y="121">
+    <tspan x="441.336" y="121">TX 1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M373.58 251.996l146.258-63.988 4.581-2.004M517 183l7.42 3.004L522 193"/>
+  <text x="441" y="251">
+    <tspan x="441.336" y="251">TX 1</tspan>
+  </text>
+</svg>

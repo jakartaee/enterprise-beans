@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="378">
+  <text x="10" y="20" font-style="italic">
+    <tspan>After Change:</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M74.667 126h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5H74.667C68.833 161 63 152.25 63 143.5S68.833 126 74.667 126"/>
+  <text x="71" y="149">
+    <tspan x="90.445" y="149">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M134.581 138.757l25.257-75.77 1.58-4.744M154 62l7.419-3.757L165 65"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M174.667 36h46.666C227.167 36 233 44.75 233 53.5S227.167 71 221.333 71h-46.666C168.833 71 163 62.25 163 53.5S168.833 36 174.667 36"/>
+  <text x="172" y="59">
+    <tspan x="186.891" y="59">b1</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M136.412 139.845l45.765-49.035 3.411-3.656M178 87l7.588.155L186 95"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M200.667 66h46.666C253.167 66 259 74.75 259 83.5s-5.833 17.5-11.667 17.5h-46.666C194.833 101 189 92.25 189 83.5S194.833 66 200.667 66"/>
+  <text x="198" y="89">
+    <tspan x="212.594" y="89">b1</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M137.696 141.782l67.913-24.846 4.695-1.718M203 112l7.304 3.218L207 122"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M226.667 96h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5S220.833 96 226.667 96"/>
+  <text x="224" y="119">
+    <tspan x="238.594" y="119">b1</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M138 143.5h96m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M250.667 126h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="248" y="149">
+    <tspan x="255.93" y="149">b1</tspan><tspan dy="5" font-size=".75em">n-1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M360.667 162h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="358" y="185">
+    <tspan x="372.188" y="185">b1</tspan><tspan dy="5" font-size=".75em">n</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M74.667 242h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5H74.667C68.833 277 63 268.25 63 259.5S68.833 242 74.667 242"/>
+  <text x="71" y="265">
+    <tspan x="90.445" y="265">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M137.874 258.384l116.378-26.652 4.874-1.116M252 226l7.126 4.616L255 237"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M275.667 212h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="273" y="235">
+    <tspan x="287.594" y="235">b2</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M138 259.547l91 .859 5 .047M228 255l6 5.453-6 5.547"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M250.667 243h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="248" y="266">
+    <tspan x="262.594" y="266">b2</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M137.677 261.268l67.97 25.696 4.676 1.768M207 281l3.323 7.732L203 292"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M226.667 273h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="224" y="296">
+    <tspan x="238.594" y="296">b2</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M136.381 263.183l45.856 49.95 3.382 3.684M186 309l-.381 7.817L178 316"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M200.667 303h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="198" y="326">
+    <tspan x="212" y="326">b2</tspan><tspan dy="5" font-size=".75em">m-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M134.581 264.243l25.257 75.77 1.58 4.744M165 338l-3.581 6.757L154 341"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M174.667 332h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="172" y="355">
+    <tspan x="186" y="355">b2</tspan><tspan dy="5" font-size=".75em">m</tspan>
+  </text>
+</svg>

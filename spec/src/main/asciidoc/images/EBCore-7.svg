@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="695.391" height="348">
+  <rect width="249" height="327" x="319" y="10" fill="#ccc" stroke="#000" stroke-width="2" rx="31.125" ry="31.125"/>
+  <rect width="174" height="250" x="351" y="50" fill="#ccc" stroke="#000" stroke-width="2" rx="21.75" ry="21.75"/>
+  <text x="48" y="172">
+    <tspan x="45.266" y="172">Client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M93.727 163.167l59.82-53.5 3.726-3.334M149 106l8.273.333L157 114"/>
+  <ellipse cx="248.5" cy="103" fill="#fff" stroke="#000" stroke-width="2" rx="87.5" ry="36"/>
+  <text x="206" y="109">
+    <tspan x="206" y="109">Service class</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M94.922 179.882l130.235 23.353 4.921.883M226 198l4.078 6.118L224 209"/>
+  <ellipse cx="322.5" cy="205" fill="#fff" stroke="#000" stroke-width="2" rx="87.5" ry="36"/>
+  <text x="253" y="211">
+    <tspan x="253" y="211">Web service endpoint</tspan>
+  </text>
+  <text x="356" y="37">
+    <tspan x="356" y="37">Container</tspan>
+  </text>
+  <text x="397" y="262">
+    <tspan x="397" y="262">Stateless session</tspan> <tspan x="397" y="279.609">bean</tspan>
+  </text>
+  <ellipse cx="466.5" cy="172.5" fill="#ccc" stroke="#000" stroke-width="2" rx="48.5" ry="21.5"/>
+  <ellipse cx="456.5" cy="158.5" fill="#ccc" stroke="#000" stroke-width="2" rx="48.5" ry="21.5"/>
+  <ellipse cx="446.5" cy="140.5" fill="#ccc" stroke="#000" stroke-width="2" rx="48.5" ry="21.5"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M461 137l112.398-32.706L583 101.5"/>
+  <text x="592" y="89">
+    <tspan x="592" y="89">Stateless</tspan> <tspan x="592" y="106.609">session bean</tspan> <tspan x="592" y="124.219">instances</tspan>
+  </text>
+</svg>

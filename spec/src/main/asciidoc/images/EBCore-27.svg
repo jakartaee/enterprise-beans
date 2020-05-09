@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="695" height="131">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M59 20h100c12.5 0 25 10 25 20s-12.5 20-25 20H59c-12.5 0-25-10-25-20s12.5-20 25-20"/>
+  <text x="42" y="46">
+    <tspan x="103.664" y="46">C</tspan>
+  </text>
+  <text x="42" y="92">
+    <tspan x="44.484" y="92">application client or</tspan> <tspan x="75.313" y="109.609">web client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M189 40h90m-6-6l6 6-6 6"/>
+  <text x="201" y="28">
+    <tspan x="200.586" y="28">HTTP(S)</tspan>
+  </text>
+  <text x="201" y="67">
+    <tspan x="198.617" y="67">IIOP/SSL</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M284 20h150v40H284z"/>
+  <text x="292" y="46">
+    <tspan x="350.547" y="46">S1</tspan>
+  </text>
+  <text x="292" y="92">
+    <tspan x="295.367" y="92">Enterprise Beans or</tspan> <tspan x="312.961" y="109.609">web container</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M439 40h90m-6-6l6 6-6 6"/>
+  <text x="455" y="28">
+    <tspan x="452.617" y="28">IIOP/SSL</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M534 20h150v40H534z"/>
+  <text x="542" y="46">
+    <tspan x="600.547" y="46">S2</tspan>
+  </text>
+  <text x="542" y="92">
+    <tspan x="554.484" y="92">Enterprise Beans</tspan> <tspan x="578.695" y="109.609">container</tspan>
+  </text>
+</svg>

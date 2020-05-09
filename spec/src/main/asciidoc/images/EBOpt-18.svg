@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="396" height="555">
+  <text x="20" y="25" font-style="italic">
+    <tspan>A and B are in a one-to-many unidirectional relationship:</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M43 72h100v80H43z"/>
+  <text x="43" y="72">
+    <tspan dx="45" dy="45">A</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M148 112h106m-6-6l6 6-6 6"/>
+  <text x="150" y="96">
+    <tspan>0..1</tspan>
+  </text>
+  <text x="220" y="96">
+    <tspan>0..*</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M259 72h100v80H259z"/>
+  <text x="259" y="72">
+    <tspan dx="45" dy="45">B</tspan>
+  </text>
+  <text x="20" y="195" font-style="italic">
+    <tspan>Before Change:</tspan>
+  </text>
+  <rect width="72" height="36" x="72" y="301" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="72" y="301">
+    <tspan dx="27" dy="24">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M144.581 313.757l25.257-75.77 1.58-4.744M164 237l7.419-3.757L175 240"/>
+  <rect width="72" height="36" x="172" y="211" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="172" y="211">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M146.412 314.845l45.765-49.035 3.411-3.656M188 262l7.588.155L196 270"/>
+  <rect width="72" height="36" x="198" y="241" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="198" y="241">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M147.696 316.782l67.913-24.846 4.695-1.718M213 287l7.304 3.218L217 297"/>
+  <rect width="72" height="36" x="224" y="271" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="224" y="271">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M148 318.5h96m-6-5.5l6 5.5-6 5.5"/>
+  <rect width="72" height="36" x="248" y="301" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="248" y="301">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">n-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M147.866 319.651l116.403 27.546 4.865 1.152M265 342l4.134 6.349L262 353"/>
+  <rect width="72" height="36" x="273" y="332" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="273" y="332">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">n</tspan>
+  </text>
+  <rect width="72" height="36" x="72" y="417" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="72" y="417">
+    <tspan dx="27" dy="24">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M147.874 433.384l116.378-26.652 4.874-1.116M262 401l7.126 4.616L265 412"/>
+  <rect width="72" height="36" x="273" y="387" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="273" y="387">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M148 434.547l91 .859 5 .047M238 430l6 5.453-6 5.547"/>
+  <rect width="72" height="36" x="248" y="418" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="248" y="418">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M147.677 436.268l67.97 25.696 4.676 1.768M217 456l3.323 7.732L213 467"/>
+  <rect width="72" height="36" x="224" y="448" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="224" y="448">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M146.381 438.183l45.856 49.95 3.382 3.684M196 484l-.381 7.817L188 491"/>
+  <rect width="72" height="36" x="198" y="478" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="198" y="478">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">m-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M144.581 439.243l25.257 75.77 1.58 4.744M175 513l-3.581 6.757L164 516"/>
+  <rect width="72" height="36" x="172" y="507" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="172" y="507">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">m</tspan>
+  </text>
+</svg>

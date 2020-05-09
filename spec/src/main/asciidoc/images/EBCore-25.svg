@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1120">
+  <text x="28" y="63">
+    <tspan x="52.047" y="63">client</tspan> <tspan x="39.695" y="80.609">container</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-dasharray="10,5" d="M70 106v997"/>
+  <text x="179" y="54">
+    <tspan x="198.586" y="54">client&apos;s</tspan> <tspan x="185.094" y="71.609">transaction</tspan> <tspan x="192.516" y="89.219">manager</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-dasharray="10,5" d="M220 106v997"/>
+  <text x="329" y="55">
+    <tspan x="346.813" y="55">server&apos;s</tspan> <tspan x="335.094" y="72.609">transaction</tspan> <tspan x="342.516" y="90.219">manager</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-dasharray="10,5" d="M370 109v997"/>
+  <text x="478" y="54">
+    <tspan x="487.07" y="54">Enterprise</tspan> <tspan x="500.359" y="71.609">Beans</tspan> <tspan x="489.695" y="89.219">container</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-dasharray="10,5" d="M520 106v997"/>
+  <text x="628" y="54">
+    <tspan x="638.406" y="54">enterprise</tspan> <tspan x="654.086" y="71.609">bean</tspan> <tspan x="643.734" y="89.219">instance</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-dasharray="10,5" d="M670 106v997"/>
+  <text x="778" y="63">
+    <tspan x="790.18" y="63">Resource</tspan> <tspan x="791.031" y="80.609">Manager</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-dasharray="10,5" d="M820 106v997"/>
+  <text x="82" y="137">
+    <tspan x="86.328" y="137">sending request</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M73.683 150.544h142m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M116 163h350v25H116z"/>
+  <text x="124" y="181" font-weight="400">
+    <tspan x="147.138" y="181">IIOP request message with transaction context</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M72.683 191.544h443m-6-6l6 6-6 6"/>
+  <circle cx="294.5" cy="216.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="290" y="222" font-weight="400">
+    <tspan x="290.5" y="222">1</tspan>
+  </text>
+  <path fill="#fff" d="M387 204h125v25H387z"/>
+  <text x="396" y="222" font-weight="400">
+    <tspan x="397.719" y="222">received request</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M384.683 239.544l-6-6 6-6m-6 6h136"/>
+  <path fill="#fff" d="M378 245h175v25H378z"/>
+  <text x="387" y="263" font-weight="400">
+    <tspan x="392.602" y="263">register syncronization</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M385.683 283.544l-6-6 6-6m-6 6h136"/>
+  <path fill="#fff" d="M224 289h235v25H224z"/>
+  <text x="233" y="307" font-weight="400">
+    <tspan x="235.32" y="307">register syncronization (optional)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M232.683 331.544l-6-6 6-6m-6 6h139"/>
+  <circle cx="294.5" cy="351.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="290" y="357" font-weight="400">
+    <tspan x="290.5" y="357">2</tspan>
+  </text>
+  <path fill="#fff" d="M544 330h100v25H544z"/>
+  <text x="552" y="348" font-weight="400">
+    <tspan x="554.719" y="348">invoke bean</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M522.683 365.544h144m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M683 379h125v25H683z"/>
+  <text x="691" y="397" font-weight="400">
+    <tspan x="695.922" y="397">access resource</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M675.683 415.544h140m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M385 426h125v25H385z"/>
+  <text x="393" y="444" font-weight="400">
+    <tspan x="401.023" y="444">enlist resource</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M383.683 468.544l-6-6 6-6m-6 6h136"/>
+  <path fill="#fff" d="M234 480h125v25H234z"/>
+  <text x="243" y="498">
+    <tspan x="243.961" y="498">register resource</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M233.683 517.544l-6-6 6-6m-6 6h136"/>
+  <circle cx="294.5" cy="537.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="290" y="543">
+    <tspan x="290.5" y="543">3</tspan>
+  </text>
+  <path fill="#fff" d="M379 523h125v25H379z"/>
+  <text x="387" y="541">
+    <tspan x="397.773" y="541">sending reply</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M383.683 565.544l-6-6 6-6m-6 6h136"/>
+  <path fill="#fff" d="M221 573h150v25H221z"/>
+  <text x="229" y="591">
+    <tspan x="233.148" y="591">IIOP reply message</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M82.683 613.544l-6-6 6-6m-6 6h438"/>
+  <path fill="#fff" d="M72 621h125v25H72z"/>
+  <text x="81" y="639">
+    <tspan x="89.164" y="639">received reply</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M72.683 654.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <circle cx="294.5" cy="635.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="290" y="641">
+    <tspan x="290.5" y="641">4</tspan>
+  </text>
+  <path fill="#fff" d="M77 670h125v25H77z"/>
+  <text x="85" y="688">
+    <tspan x="114.875" y="688">commit</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M72.683 704.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M227 715h125v25H227z"/>
+  <text x="236" y="733">
+    <tspan x="229.266" y="733">before_completion</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M222.683 749.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <circle cx="293.5" cy="776.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="289" y="782">
+    <tspan x="289.5" y="782">5</tspan>
+  </text>
+  <path fill="#fff" d="M379 764h125v25H379z"/>
+  <text x="388" y="782">
+    <tspan x="381.266" y="782">before_completion</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M370.683 796.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M529 813h125v25H529z"/>
+  <text x="537" y="831">
+    <tspan x="564.789" y="831">ejbStore</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M524.683 847.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M683 863h125v25H683z"/>
+  <text x="691" y="881">
+    <tspan x="712.789" y="881">flush state</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M673.683 896.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M227 913h125v25H227z"/>
+  <text x="236" y="931">
+    <tspan x="266.063" y="931">prepare</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M223.683 947.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <circle cx="293.5" cy="974.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="289" y="980">
+    <tspan x="289.5" y="980">6</tspan>
+  </text>
+  <path fill="#fff" d="M529 952h125v25H529z"/>
+  <text x="538" y="970">
+    <tspan x="568.063" y="970">prepare</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M376.683 992.544l429-1.954 10-.046m-6-6l6 6-6 6"/>
+  <path fill="#fff" d="M227 1009h125v25H227z"/>
+  <text x="235" y="1027">
+    <tspan x="264.875" y="1027">commit</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M224.683 1043.544l132 .93 10 .07m-6-6l6 6-6 6"/>
+  <circle cx="293.5" cy="1070.5" r="12.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="289" y="1076">
+    <tspan x="289.5" y="1076">7</tspan>
+  </text>
+  <path fill="#fff" d="M529 1051h125v25H529z"/>
+  <text x="537" y="1069">
+    <tspan x="566.875" y="1069">commit</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M375.683 1088.544l429-1.954 10-.046m-6-6l6 6-6 6"/>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="546">
+  <rect width="225" height="525" x="364" y="10" fill="#fff" stroke="#000" stroke-width="2" rx="28.125" ry="28.125"/>
+  <rect width="175" height="188" x="378" y="263" fill="#fff" stroke="#000" stroke-width="2" rx="21.875" ry="21.875"/>
+  <rect width="175" height="188" x="378" y="49" fill="#fff" stroke="#000" stroke-width="2" rx="21.875" ry="21.875"/>
+  <text x="404" y="38">
+    <tspan x="440.695" y="38">container</tspan>
+  </text>
+  <text x="28" y="251">
+    <tspan x="27.047" y="251">client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M74.472 232.764l243.584-121.792 4.472-2.236M315 106l7.528 2.736L320 116"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M367.833 69h83.334C461.583 69 472 77.75 472 86.5S461.583 104 451.167 104h-83.334C357.417 104 347 95.25 347 86.5S357.417 69 367.833 69"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M357.833 79h83.334C451.583 79 462 87.75 462 96.5S451.583 114 441.167 114h-83.334C347.417 114 337 105.25 337 96.5S347.417 79 357.833 79"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M347.833 89h83.334C441.583 89 452 97.75 452 106.5S441.583 124 431.167 124h-83.334C337.417 124 327 115.25 327 106.5S337.417 89 347.833 89"/>
+  <text x="335" y="112">
+    <tspan x="351.633" y="112">EJBObjects</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M74.802 243.608l242.593-70.324 4.803-1.392M315 168l7.198 3.892L318 179"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M347.833 153h83.334c10.416 0 20.833 8.75 20.833 17.5S441.583 188 431.167 188h-83.334C337.417 188 327 179.25 327 170.5s10.417-17.5 20.833-17.5"/>
+  <text x="335" y="176">
+    <tspan x="356.563" y="176">EJBHome</tspan>
+  </text>
+  <text x="404" y="217">
+    <tspan x="404.68" y="217">entity bean 1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M74.802 246.392l242.593 70.324 4.803 1.392M318 311l4.198 7.108L315 322"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M367.833 283h83.334c10.416 0 20.833 8.75 20.833 17.5S461.583 318 451.167 318h-83.334C357.417 318 347 309.25 347 300.5s10.417-17.5 20.833-17.5"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M357.833 292h83.334c10.416 0 20.833 8.75 20.833 17.5S451.583 327 441.167 327h-83.334C347.417 327 337 318.25 337 309.5s10.417-17.5 20.833-17.5"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M347.833 302h83.334c10.416 0 20.833 8.75 20.833 17.5S441.583 337 431.167 337h-83.334C337.417 337 327 328.25 327 319.5s10.417-17.5 20.833-17.5"/>
+  <text x="335" y="325">
+    <tspan x="333.422" y="325">EJBLocalObjects</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M74.465 257.25L318.07 380l4.465 2.25M320 375l2.535 7.25L315 385"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M347.833 367h83.334c10.416 0 20.833 8.75 20.833 17.5S441.583 402 431.167 402h-83.334C337.417 402 327 393.25 327 384.5s10.417-17.5 20.833-17.5"/>
+  <text x="335" y="390">
+    <tspan x="338.352" y="390">EJBLocalHome</tspan>
+  </text>
+  <text x="404" y="430">
+    <tspan x="404.68" y="430">entity bean 2</tspan>
+  </text>
+  <text x="399" y="493">
+    <tspan x="400.719" y="493">other enterprise beans</tspan>
+  </text>
+</svg>

@@ -36,7 +36,7 @@ objects. The stubs implement the remote home and remote component
 interfaces.
 
 .Location of Enterprise Beans Client Stubs.
-image::EBCore-23.png[]
+image::EBCore-23.svg[]
 
 The communication stubs used on the client
 side are artifacts generated at the enterprise bean’s deployment time by
@@ -64,7 +64,7 @@ from several vendors to illustrate the interoperability enabled by Enterprise Be
 
 [[a3322]]
 .Heterogeneous Enterprise Beans Environment
-image::EBCore-24.png[]
+image::EBCore-24.svg[]
 
 The following sections in this chapter
 
@@ -644,7 +644,7 @@ entities; it is not intended to be prescriptive.
 
 [[a3440]]
 .Transaction Context Propagation
-image::EBCore-25.png[]
+image::EBCore-25.svg[]
 
 Containers that perform transactional work
 within the scope of a transaction must register an OTS Resource object
@@ -1021,7 +1021,7 @@ significant for interoperability considerations.
 
 ===== Trust Relationships Between Containers, Principal Propagation
 
-image::EBCore-26.png[]
+image::EBCore-26.svg[]
 
 When there is a chain of multiple invocations
 across web components and enterprise beans, intermediate components may
@@ -1224,7 +1224,7 @@ between client and server at the transport layer is also available to
 the containers: e.g. the certificates used for authentication at the SSL
 layer may be used by the server container for authorization.
 
-image::EBCore-27.png[]
+image::EBCore-27.svg[]
 
 The following cases are required to be supported:
 

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="524" height="293">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M166 42h300v100H166z"/>
+  <text x="237" y="28">
+    <tspan x="241.766" y="28">Enterprise Bean Server</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 53h100v80H10z"/>
+  <text x="18" y="99">
+    <tspan x="40.266" y="99">Client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M110 93l103-.912L223 92m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M235.667 72h50.666C292.667 72 299 82 299 92s-6.333 20-12.667 20h-50.666C229.333 112 223 102 223 92s6.333-20 12.667-20"/>
+  <text x="232" y="98">
+    <tspan x="255.594" y="98">X</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M299 92h55m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M366.167 72h48.666C420.917 72 427 82 427 92s-6.083 20-12.167 20h-48.666C360.083 112 354 102 354 92s6.083-20 12.167-20"/>
+  <text x="363" y="98">
+    <tspan x="385.094" y="98">Y</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M257.391 115.46l-62.173 59.62-3.61 3.46M200 179l-8.391-.46L192 171"/>
+  <path fill="#fff" stroke="#000" stroke-linejoin="round" stroke-width="2" d="M138 198h80v48c-5 0-5 0-30 8s-25 8-50 0v-56m10 0v-8h80v48h-10m-60-48v-8h80v48h-10"/>
+  <text x="146" y="228">
+    <tspan x="151.336" y="228">queue A</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M264.609 115.46l62.173 59.619 3.61 3.46M330 171l.391 7.54L322 179"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M284 198.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+  <text x="292" y="254">
+    <tspan x="299.125" y="254">database B</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M394.097 115.473l61.709 59.581 3.597 3.473M459 171l.403 7.527L451 179"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M413 198.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+  <text x="421" y="254">
+    <tspan x="428.125" y="254">database C</tspan>
+  </text>
+</svg>

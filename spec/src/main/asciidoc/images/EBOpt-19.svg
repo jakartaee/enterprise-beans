@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="345" height="378">
+  <text x="10" y="20" font-style="italic">
+    <tspan>After Change:</tspan>
+  </text>
+  <rect width="72" height="36" x="61" y="126" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="61" y="126">
+    <tspan dx="27" dy="22">a1</tspan>
+  </text>
+  <rect width="72" height="36" x="162" y="36" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="162" y="36">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <rect width="72" height="36" x="188" y="66" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="188" y="66">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <rect width="72" height="36" x="214" y="96" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="214" y="96">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <rect width="72" height="36" x="238" y="126" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="238" y="126">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">n-1</tspan>
+  </text>
+  <rect width="72" height="36" x="263" y="157" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="263" y="157">
+    <tspan dx="25" dy="22">b1</tspan><tspan dy="5" font-size=".75em">n</tspan>
+  </text>
+  <rect width="72" height="36" x="61" y="242" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="61" y="242">
+    <tspan dx="27" dy="22">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M137.18 146.244l118.46 77.768 4.18 2.744M258 219l1.82 7.756L252 228"/>
+  <rect width="72" height="36" x="263" y="212" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="263" y="212">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M136.357 147.205l95.929 105.884 3.357 3.706M236 249l-.357 7.795L228 256"/>
+  <rect width="72" height="36" x="238" y="243" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="238" y="243">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M135.436 147.867l74.692 133.9 2.436 4.366M215 278l-2.436 8.133L205 284"/>
+  <rect width="72" height="36" x="214" y="273" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="214" y="273">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M134.508 148.267l51.476 162.699 1.508 4.767M191 309l-3.508 6.733L180 312"/>
+  <rect width="72" height="36" x="188" y="303" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="188" y="303">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">m-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M133.72 148.448l27.839 191.156.72 4.948M167 338l-4.72 6.552L156 340"/>
+  <rect width="72" height="36" x="162" y="332" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="162" y="332">
+    <tspan dx="25" dy="22">b2</tspan><tspan dy="5" font-size=".75em">m</tspan>
+  </text>
+</svg>

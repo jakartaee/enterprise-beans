@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="176">
+  <text x="10" y="22" font-style="italic">
+    <tspan>After Change:</tspan>
+  </text>
+  <rect width="70" height="36" x="65" y="57" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="65" y="57">
+    <tspan dx="27" dy="24">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M140 85l-.917-7.614L147 76m-7.917 1.386l91.75 64.843 4.084 2.885M234 137l.917 8.114L227 146"/>
+  <rect width="70" height="36" x="240" y="57" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="240" y="57">
+    <tspan dx="27" dy="24">b1</tspan>
+  </text>
+  <rect width="70" height="36" x="65" y="130" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="65" y="130">
+    <tspan dx="27" dy="24">a2</tspan>
+  </text>
+  <rect width="70" height="36" x="240" y="130" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="240" y="130">
+    <tspan dx="27" dy="24">b2</tspan>
+  </text>
+</svg>

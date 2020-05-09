@@ -145,7 +145,7 @@ database C. The Enterprise Beans server ensures that the updates to databases A,
 and C are either all committed or all rolled back._
 
 .Updates to Simultaneous Databases
-image::EBCore-15.png[]
+image::EBCore-15.svg[]
 
 _The application programmer does not have to
 do anything to ensure transactional semantics. Behind the scenes, the
@@ -170,7 +170,7 @@ ensures that the operations on A, B, and C are either all committed, or
 all rolled back._
 
 .Message Sent to Jakarta Messaging Queue and Updates to Multiple Databases
-image::EBCore-16.png[]
+image::EBCore-16.svg[]
 
 _The application programmer does not have to
 do anything to ensure transactional semantics. The enterprise beans X
@@ -191,7 +191,7 @@ updates to databases B and C are either all committed or all rolled
 back._
 
 .Message Sent to Jakarta Messaging Queue Serviced by Message-Driven Bean and Updates to Multiple Databases
-image::EBCore-17.png[]
+image::EBCore-17.svg[]
 
 ==== Update of Databases via Multiple Enterprise Beans Servers
 
@@ -207,7 +207,7 @@ makes it possible to perform the updates to databases A and B in a
 single transaction._
 
 .Updates to Multiple Databases in Same Transaction
-image::EBCore-18.png[]
+image::EBCore-18.svg[]
 
 _When X invokes Y, the two Enterprise Beans servers
 cooperate to propagate the transaction context from X to Y. This
@@ -234,7 +234,7 @@ residing at multiple Enterprise Beans servers, as illustrated in the following
 figure.
 
 .Updates on Multiple Databases on Multiple Servers
-image::EBCore-19.png[]
+image::EBCore-19.svg[]
 
 _The application programmer demarcates the
 transaction with begin and commit calls. If the enterprise beans X and Y
@@ -278,7 +278,7 @@ automatically included in the transaction (subject to the transaction
 attribute of the other enterprise bean)._
 
 .Update of Multiple Databases from Non-Transactional Client
-image::EBCore-20.png[]
+image::EBCore-20.svg[]
 
 _The container automatically commits the
 transaction at the time X returns a reply to the client._
@@ -2081,7 +2081,7 @@ transaction. If programs B and C access the same entity object, the
 topology of the transaction creates a diamond.
 
 .Transaction Diamond Scenario with Entity Object
-image::EBCore-21.png[]
+image::EBCore-21.svg[]
 
 _An example (not realistic in practice) is a
 client program that tries to perform two purchases at two different
@@ -2181,7 +2181,7 @@ session beans to encounter the diamond case. For example, program A
 starts a transaction and then invokes two different session objects.
 
 .Transaction Diamond Scenario with a Session Bean
-image::EBCore-22.png[]
+image::EBCore-22.svg[]
 
 If the session bean instances cache the same
 data item (e.g. the current balance of Account 100) across method

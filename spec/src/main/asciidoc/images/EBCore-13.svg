@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="694" height="371">
+  <rect width="250" height="350" fill="#ccc" stroke="#000" stroke-width="2" rx="31.25" ry="31.25" transform="translate(315 10)"/>
+  <rect width="175" height="250" fill="#ccc" stroke="#000" stroke-width="2" rx="21.875" ry="21.875" transform="translate(353 50)"/>
+  <text transform="translate(368 36)">
+    <tspan x="0" y="0">Container</tspan>
+  </text>
+  <text transform="translate(80 194)">
+    <tspan x="0" y="0">Client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M130 188h90m-6-6l6 6-6 6"/>
+  <ellipse cx="87.5" cy="35" fill="#fff" stroke="#000" stroke-width="2" rx="87.5" ry="35" transform="translate(225 153)"/>
+  <text transform="translate(275 185)">
+    <tspan x="0" y="0">destination</tspan> <tspan x="0" y="17.609">or endpoint</tspan>
+  </text>
+  <text transform="translate(376 258)">
+    <tspan x="0" y="0">Message-driven</tspan> <tspan x="0" y="17.609">bean</tspan>
+  </text>
+  <ellipse cx="48.5" cy="21.5" fill="#ccc" stroke="#000" stroke-width="2" rx="48.5" ry="21.5" transform="translate(414 154)"/>
+  <ellipse cx="48.5" cy="21.5" fill="#ccc" stroke="#000" stroke-width="2" rx="48.5" ry="21.5" transform="translate(404 140)"/>
+  <ellipse cx="48.5" cy="21.5" fill="#ccc" stroke="#000" stroke-width="2" rx="48.5" ry="21.5" transform="translate(394 122)"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M464 140l109.303-27.556L583 110"/>
+  <text transform="translate(593 98)">
+    <tspan x="0" y="0">Message-</tspan><tspan x="0" y="17.609">driven bean</tspan> <tspan x="0" y="35.219">instances</tspan>
+  </text>
+</svg>

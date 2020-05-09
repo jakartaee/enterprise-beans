@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="619.969" height="525">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M30.833 133h83.334C124.583 133 135 148 135 163s-10.417 30-20.833 30H30.833C20.417 193 10 178 10 163s10.417-30 20.833-30"/>
+  <text transform="translate(19 151)">
+    <tspan x="10.32" y="0">does not exist</tspan> <tspan x="40.945" y="17.609">and</tspan> <tspan x="7.719" y="35.219">not referenced</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M121.327 195.738l215.162 140.787 4.184 2.737M339 331l1.673 8.262L333 341"/>
+  <text font-style="italic" transform="translate(195 231)">
+    <tspan x="-6.477" y="0">home.create&lt;METHOD&gt;(...)</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M347.833 342h83.334C441.583 342 452 357 452 372s-10.417 30-20.833 30h-83.334C337.417 402 327 387 327 372s10.417-30 20.833-30"/>
+  <text transform="translate(336 360)">
+    <tspan x="34.273" y="0">exists</tspan> <tspan x="40.945" y="17.609">and</tspan> <tspan x="19.945" y="35.219">referenced</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M340.73 404.823C266 456 390 497 389.5 407m-5.5 6l5.5-6 5.5 6"/>
+  <text font-style="italic" transform="translate(295 487)">
+    <tspan x="4.695" y="0">client&apos;s method on reference</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M384 204l5.5-6 5.5 6m-5.5-6v139"/>
+  <text font-style="italic" transform="translate(409 230)">
+    <tspan x="32.375" y="0">object.remove(),</tspan> <tspan x="32.594" y="17.609">home.remove(...),</tspan> <tspan x=".344" y="35.219">system exception in bean,</tspan> <tspan x="40.953" y="52.828">bean timeout</tspan> <tspan x="75.383" y="70.438">or</tspan> <tspan x="34.063" y="88.047">container crash</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M347.833 133h83.334C441.583 133 452 148 452 163s-10.417 30-20.833 30h-83.334C337.417 193 327 178 327 163s10.417-30 20.833-30"/>
+  <text transform="translate(335 151)">
+    <tspan x="8.5" y="0">does not exist</tspan> <tspan x="40.945" y="17.609">and</tspan> <tspan x="19.945" y="35.219">referenced</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M438.27 130.177C513 79 389 38 389.5 128m5.5-6l-5.5 6-5.5-6"/>
+  <text font-style="italic" transform="translate(260 28)">
+    <tspan x="0" y="0">client&apos;s method on reference</tspan> <tspan x="0" y="17.609">generates NoSuchObjectException or</tspan> <tspan x="65" y="35.219">NoSuchLocalObjectException</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M146 169l-6-6 6-6m-6 6h182"/>
+  <text font-style="italic" transform="translate(156 149)">
+    <tspan x="21.031" y="0">release reference</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M141 395l-6-6.025 6-5.975m-6 5.975l186-.925 5-.025"/>
+  <text font-style="italic" transform="translate(153 414)">
+    <tspan x="21.031" y="0">release reference</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M30.833 342h83.334C124.583 342 135 357 135 372s-10.417 30-20.833 30H30.833C20.417 402 10 387 10 372s10.417-30 20.833-30"/>
+  <text transform="translate(19 360)">
+    <tspan x="34.273" y="0">exists</tspan> <tspan x="40.945" y="17.609">and</tspan> <tspan x="7.719" y="35.219">not referenced</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M320 350l6 6.025-6 5.975m6-5.975l-184 .925-5 .025"/>
+  <text font-style="italic" transform="translate(153 341)">
+    <tspan x="1.977" y="0">handle.getEJBObject()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M67 204l5.5-6 5.5 6m-5.5-6v139"/>
+  <text font-style="italic" transform="translate(89 273)">
+    <tspan x="1.063" y="0">container crash</tspan> <tspan x=".258" y="17.609">or bean timeout</tspan>
+  </text>
+</svg>

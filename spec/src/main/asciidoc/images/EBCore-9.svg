@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="435" height="297">
+  <text transform="translate(286 26)">
+    <tspan x="-2.805" y="0">container</tspan>
+  </text>
+  <rect width="224" height="250" fill="#fff" stroke="#000" stroke-width="2" rx="28" ry="28" transform="translate(200 36)"/>
+  <rect width="200" height="165" fill="#fff" stroke="#000" stroke-width="2" rx="20.625" ry="20.625" transform="translate(213 65)"/>
+  <text transform="translate(18 146)">
+    <tspan x="-2.953" y="0">client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M60.896 128.984l79.312-16.453 4.896-1.015M138 107l7.104 4.516L141 118"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M166.667 92h66.666c8.334 0 16.667 9.25 16.667 18.5s-8.333 18.5-16.667 18.5h-66.666c-8.334 0-16.667-9.25-16.667-18.5S158.333 92 166.667 92"/>
+  <text transform="translate(158 116)">
+    <tspan x="28.047" y="0">Cart</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M254.236 113.156l46.292 29.031 4.236 2.657M303 137l1.764 7.844L297 147"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M325.667 129h66.666c8.334 0 16.667 9.25 16.667 18.5s-8.333 18.5-16.667 18.5h-66.666c-8.334 0-16.667-9.25-16.667-18.5s8.333-18.5 16.667-18.5"/>
+  <text transform="translate(317 153)">
+    <tspan x="11.383" y="0">CartBean</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M60.661 151.81l80.017 31.07 4.661 1.81M142 177l3.339 7.69L138 188"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M166.667 168h66.666c8.334 0 16.667 9.25 16.667 18.5s-8.333 18.5-16.667 18.5h-66.666c-8.334 0-16.667-9.25-16.667-18.5s8.333-18.5 16.667-18.5"/>
+  <text transform="translate(158 192)">
+    <tspan x="8.625" y="0">CartHome</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M254.815 185.153l58.84-16.46 4.816-1.346M311 163l7.47 4.347L315 174"/>
+</svg>

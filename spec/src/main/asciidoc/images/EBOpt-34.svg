@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="679" height="484">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M309.833 20h83.334C403.583 20 414 30 414 40s-10.417 20-20.833 20h-83.334C299.417 60 289 50 289 40s10.417-20 20.833-20"/>
+  <text x="297" y="37">
+    <tspan x="322.609" y="37">does not </tspan> <tspan x="336.211" y="54.609">exist</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M340 65v119m6-6l-6 6-6-6"/>
+  <text x="170" y="111">
+    <tspan x="170" y="111">1. newInstance()</tspan> <tspan x="170" y="128.609">2. setEntityContext(ec)</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M309.833 189h83.334C403.583 189 414 199 414 209s-10.417 20-20.833 20h-83.334C299.417 229 289 219 289 209s10.417-20 20.833-20"/>
+  <text x="298" y="215">
+    <tspan x="329.914" y="215">pooled</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M302.654 187.03C220.25 152 194.25 209 284 209m-5.75-6l5.75 6-5.75 6"/>
+  <text x="44" y="215">
+    <tspan x="44" y="215">ejbHome&lt;METHOD&gt;(args)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M302.216 230.86c-55.716 21.89-54.716 100.89.078 125.096m-2.794-7.206l2.794 7.206-7.794 2.794"/>
+  <text x="48" y="280">
+    <tspan x="66.922" y="280">ejbCreate&lt;METHOD&gt;(args)</tspan> <tspan x="39.344" y="297.609">ejbPostCreate&lt;METHOD&gt;(args)</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M309.833 358h83.334C403.583 358 414 368 414 378s-10.417 20-20.833 20h-83.334C299.417 398 289 388 289 378s10.417-20 20.833-20"/>
+  <text x="298" y="384">
+    <tspan x="333.922" y="384">ready</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M340 234v119m6-6l-6 6-6-6"/>
+  <path fill="#fff" d="M269 303h85v20h-85z"/>
+  <text x="269" y="319">
+    <tspan x="269" y="319">ejbActivate()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M302.263 356.026C219.4 320.2 194.4 378.2 284 378m-5.6-5.8l5.6 5.8-5.6 5.2"/>
+  <text x="154" y="364">
+    <tspan x="154" y="364">ejbLoad()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M284 378.034c-89.6.166-63.6 59.166 18.294 22.01M294.4 397.2l7.894 2.844-2.894 7.156"/>
+  <text x="145" y="434">
+    <tspan x="145" y="434">business methods</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M306.75 397.75c-81 39 43 90 45 0m-6 6l6-6 6 6"/>
+  <text x="255" y="469">
+    <tspan x="255" y="469">ejbTimeout(arg)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M351.4 403.2c0 90 131 34 49.306-3.156m2.694 7.156l-2.694-7.156 7.694-2.844"/>
+  <text x="435" y="439">
+    <tspan x="435" y="439">ejbSelect&lt;METHOD&gt;(args)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M400.731 356.014C483.4 320.2 509.4 376.2 419.4 378.096m6 5.104l-6.001-5.104 6.001-5.896"/>
+  <text x="460" y="394">
+    <tspan x="460" y="394">ejbStore()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M403.5 237.75l-2.716-6.89 7.716-3.11m-7.716 3.11c55.716 21.89 54.716 100.89-.078 125.096"/>
+  <text x="450" y="299">
+    <tspan x="450" y="299">ejbRemove()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M353 240l6-6 6 6m-6-6v119"/>
+  <path fill="#fff" d="M344 263h90v20h-90z"/>
+  <text x="344" y="279">
+    <tspan x="344" y="279">ejbPassivate()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M400.719 186.985C483.4 151 509.4 209 419 209m5.4 6l-5.4-6 5.4-6"/>
+  <text x="482" y="175">
+    <tspan x="482" y="175">ejbFind&lt;METHOD&gt;(args)</tspan> <tspan x="482" y="192.609">ejbSelect&lt;METHOD&gt;(args)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M353 71l6-6 6 6m-6-6v119"/>
+  <text x="377" y="110">
+    <tspan x="377" y="110">1. unsetEntityContext()</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M532 40H419m5.75 5.75L419 40l5.75-5.25"/>
+  <text x="546" y="28">
+    <tspan x="546" y="28">instance throws</tspan> <tspan x="546" y="45.609">system exception</tspan> <tspan x="546" y="63.219">from any method</tspan>
+  </text>
+</svg>

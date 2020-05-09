@@ -581,7 +581,7 @@ An example of the session bean runtime
 objects is illustrated by the following diagram:
 
 .Session Bean Example Objects
-image::EBCore-6.png[]
+image::EBCore-6.svg[]
 
 A client obtains a reference to a `Cart`
 session object, which provides a shopping service, by means of
@@ -854,7 +854,7 @@ that is provided to Jakarta XML Web Services clients of a stateless session
 bean through the client view APIs.
 
 .Web Service Client View of Stateless Session Beans Deployed in a Container
-image::EBCore-7.png[]
+image::EBCore-7.svg[]
 
 ==== Jakarta XML Web Services Clients
 
@@ -1184,7 +1184,7 @@ client using the Enterprise Beans 2.1 and earlier client view API, the life cycl
 a session object is illustrated below.
 
 .Life Cycle of a Session Object.
-image::EBCore-8.png[]
+image::EBCore-8.svg[]
 
 A session object does not exist until it is
 created. When a client creates a session object, the client has a
@@ -1254,7 +1254,7 @@ An example of the session bean runtime
 objects is illustrated by the following diagram:
 
 .Session Bean Example Objects
-image::EBCore-9.png[]
+image::EBCore-9.svg[]
 
 A client creates a remote `Cart` session
 object, which provides a shopping service, using a `create<METHOD>` method

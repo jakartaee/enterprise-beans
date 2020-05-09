@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="556" height="209">
+  <ellipse cx="177" cy="35" fill="#fff" stroke="#000" stroke-width="2" rx="75" ry="25"/>
+  <text x="110" y="41">
+    <tspan x="157.805" y="41">Order</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M123.967 52.678l-35.183 86.066L85 148"/>
+  <text x="99" y="65">
+    <tspan>m</tspan>
+  </text>
+  <text x="74" y="137">
+    <tspan>1</tspan>
+  </text>
+  <ellipse cx="85" cy="173" fill="#fff" stroke="#000" stroke-width="2" rx="75" ry="25"/>
+  <text x="18" y="179">
+    <tspan x="29.797" y="179">ShippingAddress</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M177 60l71.367 80.517L255 148"/>
+  <text x="166" y="73">
+    <tspan>m</tspan>
+  </text>
+  <text x="223" y="139">
+    <tspan>1</tspan>
+  </text>
+  <ellipse cx="255" cy="173" fill="#fff" stroke="#000" stroke-width="2" rx="75" ry="25"/>
+  <text x="188" y="179">
+    <tspan x="206.461" y="179">BillingAddress</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M230.033 52.678l44.595 17.07 9.339 3.574"/>
+  <text x="251" y="53">
+    <tspan>1</tspan>
+  </text>
+  <text x="280" y="65">
+    <tspan>m</tspan>
+  </text>
+  <ellipse cx="337" cy="91" fill="#fff" stroke="#000" stroke-width="2" rx="75" ry="25"/>
+  <text x="270" y="97">
+    <tspan x="307.5" y="97">LineItem</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M390.033 108.678l70.305 18.746L470 130"/>
+  <text x="411" y="108">
+    <tspan>m</tspan>
+  </text>
+  <text x="464" y="122">
+    <tspan>1</tspan>
+  </text>
+  <ellipse cx="470" cy="155" fill="#fff" stroke="#000" stroke-width="2" rx="75" ry="25"/>
+  <text x="403" y="161">
+    <tspan x="444.93" y="161">Product</tspan>
+  </text>
+</svg>

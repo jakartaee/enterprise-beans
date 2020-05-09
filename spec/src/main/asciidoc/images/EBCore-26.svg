@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="695" height="141">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M59 10h100c12.5 0 25 10 25 20s-12.5 20-25 20H59c-12.5 0-25-10-25-20s12.5-20 25-20"/>
+  <text x="42" y="36">
+    <tspan x="103.664" y="36">C</tspan>
+  </text>
+  <text x="42" y="83">
+    <tspan x="44.484" y="83">application client or</tspan><tspan x="75.313" y="100.609">web client</tspan><tspan x="54.875" y="118.219">(initiating client)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M189 30h90m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M284 10h150v40H284z"/>
+  <text x="292" y="36">
+    <tspan x="350.547" y="36">S1</tspan>
+  </text>
+  <text x="292" y="83">
+    <tspan x="295.367" y="83">Enterprise Beans or</tspan><tspan x="312.961" y="100.609">web container</tspan><tspan x="313.555" y="118.219">(intermediate)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M439 30h90m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M534 10h150v40H534z"/>
+  <text x="542" y="36">
+    <tspan x="600.547" y="36">S2</tspan>
+  </text>
+  <text x="542" y="83">
+    <tspan x="554.484" y="83">Enterprise Beans</tspan><tspan x="577.234" y="100.609">container </tspan><tspan x="585.469" y="118.219">(target)</tspan>
+  </text>
+</svg>

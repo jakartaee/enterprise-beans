@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="723" height="336">
+  <text x="237" y="41">
+    <tspan x="243.602" y="41">Enterprise Bean Container</tspan>
+  </text>
+  <rect width="211" height="243" x="229" y="57" fill="#fff" stroke="#000" stroke-width="2" rx="26.375" ry="26.375"/>
+  <ellipse cx="85.5" cy="184" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="48" y="190">
+    <tspan x="49.891" y="190">Program A</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M90.338 152.738l157.986-41.214 4.838-1.262M246 106l7.162 4.262L249 117"/>
+  <text x="169" y="109">
+    <tspan x="169.336" y="109">TX 1</tspan>
+  </text>
+  <ellipse cx="334.5" cy="109" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="275" y="114">
+    <tspan x="275.398" y="114">Session instance 1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M415.967 109.57l168.098 19.29 4.968.57M584 123l5.033 6.43L583 134"/>
+  <text x="485" y="86">
+    <tspan x="485" y="86">read and cache</tspan> <tspan x="485" y="103.609">Account 100</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M90.406 214.967l157.783 31.1 4.905.966M249 240l4.094 7.033L246 251"/>
+  <text x="169" y="261">
+    <tspan x="169.336" y="261">TX 1</tspan>
+  </text>
+  <ellipse cx="334.5" cy="248" fill="#fff" stroke="#000" stroke-width="2" rx="76.5" ry="30"/>
+  <text x="275" y="253">
+    <tspan x="275.398" y="253">Session instance 2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M415.976 247.51l168.072-16.53 4.976-.49M583 225l6.024 5.49L584 237"/>
+  <text x="485" y="263">
+    <tspan x="485" y="263">read and cache</tspan> <tspan x="485" y="280.609">Account 100</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M594 146.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+</svg>

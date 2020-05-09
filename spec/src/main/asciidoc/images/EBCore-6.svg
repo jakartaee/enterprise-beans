@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="505" height="245">
+  <rect width="300" height="200" x="194" y="35" fill="#fff" stroke="#000" stroke-width="2" rx="25" ry="25"/>
+  <rect width="275" height="125" x="207" y="60" fill="#fff" stroke="#000" stroke-width="2" rx="15.625" ry="15.625"/>
+  <text x="311" y="26">
+    <tspan x="313.695" y="26">container</tspan>
+  </text>
+  <text x="18" y="140">
+    <tspan x="17.047" y="140">client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M64.928 133.655l55.216-9.465 4.928-.845M119 119l6.072 4.345L120 130"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M150.833 100h83.334C244.583 100 255 111.25 255 122.5S244.583 145 234.167 145h-83.334C140.417 145 130 133.75 130 122.5s10.417-22.5 20.833-22.5"/>
+  <text x="138" y="128">
+    <tspan x="178.547" y="128">Cart</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M260 122.5h85m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M370 100h80c10 0 20 11.25 20 22.5S460 145 450 145h-80c-10 0-20-11.25-20-22.5s10-22.5 20-22.5"/>
+  <text x="358" y="128">
+    <tspan x="379.383" y="128">CartBean</tspan>
+  </text>
+</svg>

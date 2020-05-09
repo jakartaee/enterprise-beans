@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="613" height="544">
+  <text x="94" y="34" font-style="italic">
+    <tspan x="94" y="34">(a) Entity bean is an object view of a collection of related records</tspan> <tspan x="94" y="51.609">in the database</tspan>
+  </text>
+  <rect width="176" height="162" x="193" y="75" fill="#fff" stroke="#000" stroke-width="2" rx="20.25" ry="20.25"/>
+  <text x="254" y="100">
+    <tspan x="250.695" y="100">container</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M26.667 137h66.666c8.334 0 16.667 10 16.667 20s-8.333 20-16.667 20H26.667C18.333 177 10 167 10 157s8.333-20 16.667-20"/>
+  <text x="18" y="163">
+    <tspan x="42.047" y="163">client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M115 157h111m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M247.667 137h66.666c8.334 0 16.667 10 16.667 20s-8.333 20-16.667 20h-66.666C239.333 177 231 167 231 157s8.333-20 16.667-20"/>
+  <text x="239" y="154">
+    <tspan x="243.5" y="154">order entity</tspan> <tspan x="265.086" y="171.609">bean</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M336 157h124m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M465 123.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+  <text x="473" y="179">
+    <tspan x="482.344" y="179">Order 100</tspan>
+  </text>
+  <text x="110" y="299" font-style="italic">
+    <tspan x="110" y="299">(b) Entity bean is an object view of an existing application</tspan>
+  </text>
+  <rect width="176" height="162" x="134" y="322" fill="#fff" stroke="#000" stroke-width="2" rx="20.25" ry="20.25"/>
+  <text x="195" y="347">
+    <tspan x="191.695" y="347">container</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M26.667 384h66.666c8.334 0 16.667 10 16.667 20s-8.333 20-16.667 20H26.667C18.333 424 10 414 10 404s8.333-20 16.667-20"/>
+  <text x="18" y="410">
+    <tspan x="42.047" y="410">client</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M115 404h52m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M188.667 384h66.666c8.334 0 16.667 10 16.667 20s-8.333 20-16.667 20h-66.666C180.333 424 172 414 172 404s8.333-20 16.667-20"/>
+  <text x="180" y="401">
+    <tspan x="184.5" y="401">order entity</tspan> <tspan x="206.086" y="418.609">bean</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M277 403.96l49-.382 5-.039M325 398l6 5.54-6 5.46"/>
+  <ellipse cx="398.5" cy="403.5" fill="#fff" stroke="#000" stroke-width="2" rx="62.5" ry="37.5"/>
+  <text x="344" y="400">
+    <tspan x="370.945" y="400">exisiting</tspan> <tspan x="362.555" y="417.609">application</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M466 403.561l26 .317 5 .061M491 398l6 5.939-6 6.061"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M502 370.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+  <text x="510" y="426">
+    <tspan x="519.344" y="426">Order 100</tspan>
+  </text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="654" height="233">
+  <path fill="none" d="M0 0h654v233H0z"/>
+  <text x="332" y="18">
+    <tspan>Container</tspan>
+  </text>
+  <rect width="237" height="193" x="246" y="29" fill="#fff" stroke="#000" stroke-width="2" rx="24.125" ry="24.125"/>
+  <path fill="#fff" d="M254 44h190v20H254z"/>
+  <text x="262" y="60">
+    <tspan x="268.945" y="60">enterprise bean instances</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M26.667 44h66.666C101.667 44 110 54 110 64s-8.333 20-16.667 20H26.667C18.333 84 10 74 10 64s8.333-20 16.667-20"/>
+  <text x="18" y="70">
+    <tspan x="34.445" y="70">Client 1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M114.434 66.311l80.698 42.067 4.434 2.31M197 103l2.566 7.689L192 113"/>
+  <text x="166" y="80">
+    <tspan>TX 1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M26.667 182h66.666c8.334 0 16.667 10 16.667 20s-8.333 20-16.667 20H26.667C18.333 222 10 212 10 202s8.333-20 16.667-20"/>
+  <text x="18" y="208">
+    <tspan x="34.445" y="208">Client 2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M114.434 199.689l80.698-42.067 4.434-2.31M192 153l7.566 2.311L197 163"/>
+  <text x="166" y="195">
+    <tspan>TX 2</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M207 113h80c10 0 20 10 20 20s-10 20-20 20h-80c-10 0-20-10-20-20s10-20 20-20"/>
+  <text x="196" y="130">
+    <tspan x="206.719" y="130">Entity object</tspan> <tspan x="206.492" y="147.609">Account 100</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M310.743 129.685l23.771-21.055 3.743-3.315M330 105l8.257.315L338 113"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M362 82h80c10 0 20 10 20 20s-10 20-20 20h-80c-10 0-20-10-20-20s10-20 20-20"/>
+  <text x="351" y="99">
+    <tspan x="361.492" y="99">Account 100</tspan> <tspan x="378.258" y="116.609">in TX 1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M466.817 103.341l64.55 17.976 4.816 1.342M532 116l4.183 6.659L529 127"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M310.638 136.43l24.086 22.71 3.638 3.43M338 155l.362 7.57L330 163"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M362 146h80c10 0 20 10 20 20s-10 20-20 20h-80c-10 0-20-10-20-20s10-20 20-20"/>
+  <text x="351" y="163">
+    <tspan x="361.492" y="163">Account 100</tspan> <tspan x="378.258" y="180.609">in TX 2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M466.796 164.586l63.612-18.758 4.796-1.414M528 141l7.204 3.414L531 151"/>
+  <path fill="#fff" d="M543 91.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667V91.667C643 83.333 618 75 593 75s-50 8.333-50 16.667z"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M543 91.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667V91.667c0 8.333-25 16.666-50 16.666S543 100 543 91.667C543 83.333 568 75 593 75s50 8.333 50 16.667"/>
+  <text x="552" y="147">
+    <tspan x="552.492" y="147">Account 100</tspan>
+  </text>
+</svg>

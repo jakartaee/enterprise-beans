@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="593" height="294">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 51h100v80H10z"/>
+  <text x="18" y="97">
+    <tspan x="40.266" y="97">Client</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M166 40h180v100H166z"/>
+  <text x="174" y="28">
+    <tspan x="178.766" y="28">Enterprise Bean Server</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M115 90.956l98-.868 5-.044M212 84l6 6.044L212 96"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M235.667 70h50.666C292.667 70 299 80 299 90s-6.333 20-12.667 20h-50.666C229.333 110 223 100 223 90s6.333-20 12.667-20"/>
+  <text x="232" y="96">
+    <tspan x="255.594" y="96">X</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M261 115v63m6-6l-6 6-6-6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M211 199.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+  <text x="219" y="255">
+    <tspan x="225.898" y="255">database A</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M402 40h180v100H402z"/>
+  <text x="413" y="28">
+    <tspan x="417.766" y="28">Enterprise Bean Server</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M304 90h145m-6-6l6 6-6 6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M466.667 70h50.666C523.667 70 530 80 530 90s-6.333 20-12.667 20h-50.666C460.333 110 454 100 454 90s6.333-20 12.667-20"/>
+  <text x="463" y="96">
+    <tspan x="486.594" y="96">Y</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M492 115v63m6-6l-6 6-6-6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M442 199.667v66.666c0 8.334 25 16.667 50 16.667s50-8.333 50-16.667v-66.666c0 8.333-25 16.666-50 16.666s-50-8.333-50-16.666c0-8.334 25-16.667 50-16.667s50 8.333 50 16.667"/>
+  <text x="450" y="255">
+    <tspan x="457.125" y="255">database B</tspan>
+  </text>
+</svg>

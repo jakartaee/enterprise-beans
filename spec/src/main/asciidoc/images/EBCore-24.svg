@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="498" height="395">
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 10h100v80H10z"/>
+  <text x="18" y="29">
+    <tspan x="36.898" y="29">Jakarta</tspan> <tspan x="38.578" y="46.609">Server</tspan> <tspan x="16.273" y="64.219">Pages/Servlet</tspan> <tspan x="42.047" y="81.828">client</tspan>
+  </text>
+  <text x="31" y="115" font-style="italic">
+    <tspan x="32.281" y="115">vendor 1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 140h100v80H10z"/>
+  <text x="19" y="177">
+    <tspan x="22.422" y="177">Application</tspan> <tspan x="43.047" y="194.609">client</tspan>
+  </text>
+  <text x="31" y="246" font-style="italic">
+    <tspan x="32.281" y="246">vendor 2</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M10 269h100v80H10z"/>
+  <text x="18" y="306">
+    <tspan x="32.211" y="306">CORBA</tspan> <tspan x="42.047" y="323.609">client</tspan>
+  </text>
+  <text x="31" y="377" font-style="italic">
+    <tspan x="32.281" y="377">vendor 3</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M209 97h100v80H209z"/>
+  <text x="217" y="134">
+    <tspan x="226.07" y="134">Enterprise</tspan> <tspan x="239.359" y="151.609">Beans</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M209 176h100v80H209z"/>
+  <text x="217" y="204">
+    <tspan x="226.07" y="204">Enterprise</tspan> <tspan x="239.359" y="221.609">Beans</tspan> <tspan x="237.578" y="239.219">Server</tspan>
+  </text>
+  <text x="230" y="282" font-style="italic">
+    <tspan x="231.281" y="282">vendor 4</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M387 97h100v80H387z"/>
+  <text x="395" y="134">
+    <tspan x="404.07" y="134">Enterprise</tspan> <tspan x="417.359" y="151.609">Beans</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M387 176h100v80H387z"/>
+  <text x="395" y="204">
+    <tspan x="404.07" y="204">Enterprise</tspan> <tspan x="417.359" y="221.609">Beans</tspan> <tspan x="415.578" y="239.219">Server</tspan>
+  </text>
+  <text x="408" y="282" font-style="italic">
+    <tspan x="409.281" y="282">vendor 5</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M113.09 53.932l89.732 114.205 3.09 3.932m1.234-7.679l-1.235 7.679-7.765-.679"/>
+  <text x="141" y="83">
+    <tspan x="142.445" y="83">IIOP</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M114.699 181.709l84.903 30.874 4.699 1.708M201 207l3.301 7.291L197 218"/>
+  <text x="141" y="186">
+    <tspan x="142.445" y="186">IIOP</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M114.408 306.64l85.776-45.92 4.408-2.36M197 256l7.592 2.36L202 266"/>
+  <text x="141" y="272">
+    <tspan x="142.445" y="272">IIOP</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M314 216h68m-6-6l6 6-6 6"/>
+  <text x="331" y="198">
+    <tspan x="332.445" y="198">IIOP</tspan>
+  </text>
+</svg>
