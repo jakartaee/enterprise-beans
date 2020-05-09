@@ -3200,4 +3200,3 @@ concurrent access to the SessionContext object to be thread-safe.
 The container
 must follow the requirements for all other resources and configuration
 parameters specified in the Jakarta EE Platform specification <<a9861>>.
-----
