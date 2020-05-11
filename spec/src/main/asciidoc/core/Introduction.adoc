@@ -22,6 +22,17 @@ application programmer._
 
 [[a6]]
 === What is New in This Release
+* _Removed the methods relying on java.security.Identity_
+
+* _Removed the methods relying on JAX-RPC_
+
+* _Removed the deprecated EJBContext.getEnvironment() method_
+
+* _Removed the Support for Distributed Interoperability_
+
+* _Marked the EJB 2.x API Group as "Optional"_
+
+=== What was New in Enterprise Beans 3.2
 
 The Enterprise Beans 3.2 architecture
 extends Enterprise Beans to include the following new functionality
