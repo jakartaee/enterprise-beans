@@ -2,8 +2,8 @@
 [bibliography]
 == Related Documents
 
-- [[[a9850, 1]]] Jakarta Enterprise Beans, Core Features 3.2. (this specification) 
-https://jakarta.ee/specifications/enterprise-beans/3.2/.
+- [[[a9850, 1]]] Jakarta Enterprise Beans, Core Features 4.0. (this specification)
+https://jakarta.ee/specifications/enterprise-beans/4.0/.
 
 - [[[a9851, 2]]] Jakarta Persistence 2.2. 
 https://jakarta.ee/specifications/persistence/2.2/.
@@ -127,8 +127,8 @@ https://jakarta.ee/specifications/cdi/2.0/.
 - [[[a9889, 39]]] Jakarta RESTful Web Services 2.1
 https://jakarta.ee/specifications/restful-ws/2.1/.
 
-- [[[a9890, 40]]] Jakarta Enterprise Beans, Optional Features 3.2
-https://jakarta.ee/specifications/enterprise-beans/3.2/.
+- [[[a9890, 40]]] Jakarta Enterprise Beans, Optional Features 4.0
+https://jakarta.ee/specifications/enterprise-beans/4.0/.
 
 - [[[a9891, 41]]] Enterprise JavaBeans™,
 version 3.1. (EJB 3.1). _http://jcp.org/en/jsr/detail?id=318._
