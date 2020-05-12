@@ -38,6 +38,8 @@ public class DuplicateKeyException extends CreateException {
 
     /**
      * Constructs a DuplicateKeyException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public DuplicateKeyException(String message) {
         super(message);

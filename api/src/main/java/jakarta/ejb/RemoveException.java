@@ -34,6 +34,8 @@ public class RemoveException extends java.lang.Exception {
 
     /**
      * Constructs an RemoveException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public RemoveException(String message) {
         super(message);

@@ -34,6 +34,8 @@ public class AccessLocalException extends EJBException {
 
     /**
      * Constructs an AccessLocalException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public AccessLocalException(String message) {
         super(message);
@@ -41,6 +43,9 @@ public class AccessLocalException extends EJBException {
 
     /**
      * Constructs an AccessLocalException with the specified detail message and a nested exception.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
      */
     public AccessLocalException(String message, Exception ex) {
         super(message, ex);

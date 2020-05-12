@@ -35,6 +35,8 @@ public class IllegalLoopbackException extends ConcurrentAccessException {
 
     /**
      * <p>Constructor for IllegalLoopbackException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public IllegalLoopbackException(String message) {
         super(message);

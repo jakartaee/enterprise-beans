@@ -71,6 +71,7 @@ public interface SessionContext extends EJBContext {
      * @exception IllegalStateException Thrown if invoked with a parameter that does not correspond to one of the beans'
      * business interfaces or no-interface view.
      * @since EJB 3.0
+     * @param <T> a T object.
      */
     <T> T getBusinessObject(Class<T> businessInterface) throws IllegalStateException;
 

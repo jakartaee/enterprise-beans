@@ -34,6 +34,8 @@ public class EJBTransactionRequiredException extends EJBException {
 
     /**
      * Constructs an EJBTransactionRequiredException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public EJBTransactionRequiredException(String message) {
         super(message);

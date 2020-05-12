@@ -35,6 +35,8 @@ public class ConcurrentAccessTimeoutException extends ConcurrentAccessException 
 
     /**
      * <p>Constructor for ConcurrentAccessTimeoutException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public ConcurrentAccessTimeoutException(String message) {
         super(message);

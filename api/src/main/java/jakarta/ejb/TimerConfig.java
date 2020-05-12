@@ -45,6 +45,9 @@ public class TimerConfig {
 
     /**
      * <p>Constructor for TimerConfig.</p>
+     *
+     * @param info a {@link java.io.Serializable} object.
+     * @param persistent a boolean.
      */
     public TimerConfig(Serializable info, boolean persistent) {
         info_ = info;

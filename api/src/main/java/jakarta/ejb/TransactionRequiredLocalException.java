@@ -34,6 +34,8 @@ public class TransactionRequiredLocalException extends EJBException {
 
     /**
      * Constructs an TransactionRequiredLocalException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public TransactionRequiredLocalException(String message) {
         super(message);

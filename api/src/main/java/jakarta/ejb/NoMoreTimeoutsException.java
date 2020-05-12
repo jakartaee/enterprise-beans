@@ -33,6 +33,8 @@ public class NoMoreTimeoutsException extends EJBException {
 
     /**
      * <p>Constructor for NoMoreTimeoutsException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public NoMoreTimeoutsException(String message) {
         super(message);

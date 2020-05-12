@@ -39,6 +39,8 @@ public class ObjectNotFoundException extends FinderException {
 
     /**
      * Constructs an ObjectNotFoundException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public ObjectNotFoundException(String message) {
         super(message);

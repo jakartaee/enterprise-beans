@@ -41,6 +41,8 @@ public class FinderException extends java.lang.Exception {
 
     /**
      * Constructs an FinderException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public FinderException(String message) {
         super(message);

@@ -34,6 +34,8 @@ public class EJBException extends java.lang.RuntimeException {
 
     /**
      * Constructs an EJBException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public EJBException(String message) {
         super(message);
@@ -41,6 +43,8 @@ public class EJBException extends java.lang.RuntimeException {
 
     /**
      * Constructs an EJBException that embeds the originally thrown exception.
+     *
+     * @param ex a {@link java.lang.Exception} object.
      */
     public EJBException(Exception ex) {
         super(ex);
@@ -48,6 +52,9 @@ public class EJBException extends java.lang.RuntimeException {
 
     /**
      * Constructs an EJBException that embeds the originally thrown exception with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
      */
     public EJBException(String message, Exception ex) {
         super(message, ex);

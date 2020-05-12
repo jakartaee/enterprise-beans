@@ -38,6 +38,8 @@ public class CreateException extends java.lang.Exception {
 
     /**
      * Constructs a CreateException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public CreateException(String message) {
         super(message);

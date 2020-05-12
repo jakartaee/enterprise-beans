@@ -34,6 +34,8 @@ public class NoSuchEJBException extends EJBException {
 
     /**
      * Constructs a NoSuchEJBException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public NoSuchEJBException(String message) {
         super(message);
@@ -41,6 +43,9 @@ public class NoSuchEJBException extends EJBException {
 
     /**
      * Constructs a NoSuchEJBException with the specified detail message and a nested exception.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
      */
     public NoSuchEJBException(String message, Exception ex) {
         super(message, ex);

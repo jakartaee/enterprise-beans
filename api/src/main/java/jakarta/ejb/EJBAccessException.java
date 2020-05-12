@@ -33,6 +33,8 @@ public class EJBAccessException extends EJBException {
 
     /**
      * Constructs an EJBAccessException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public EJBAccessException(String message) {
         super(message);

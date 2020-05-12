@@ -46,6 +46,8 @@ public class NoSuchEntityException extends EJBException {
 
     /**
      * Constructs a NoSuchEntityException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public NoSuchEntityException(String message) {
         super(message);
@@ -53,6 +55,8 @@ public class NoSuchEntityException extends EJBException {
 
     /**
      * Constructs a NoSuchEntityException that embeds the originally thrown exception.
+     *
+     * @param ex a {@link java.lang.Exception} object.
      */
     public NoSuchEntityException(Exception ex) {
         super(ex);

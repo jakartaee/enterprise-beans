@@ -35,6 +35,8 @@ public class TransactionRolledbackLocalException extends EJBException {
 
     /**
      * Constructs a TransactionRolledbackLocalException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public TransactionRolledbackLocalException(String message) {
         super(message);
@@ -42,6 +44,9 @@ public class TransactionRolledbackLocalException extends EJBException {
 
     /**
      * Constructs a TransactionRolledbackLocalException with the specified detail message and a nested exception.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
      */
     public TransactionRolledbackLocalException(String message, Exception ex) {
         super(message, ex);
