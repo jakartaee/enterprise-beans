@@ -50,20 +50,20 @@ import java.io.Serializable;
  * specification is to be evaluated.
  * <p>
  * The attributes that specify the calendar-based schedule itself are as follows:
- * <p>
+ *
  * <ul>
  * <li>second : one or more seconds within a minute
  * <p>
  * Allowable values: [0,59]
- * <p>
+ *
  * <li>minute : one or more minutes within an hour
  * <p>
  * Allowable values : [0,59]
- * <p>
+ *
  * <li>hour : one or more hours within a day
  * <p>
  * Allowable values : [0,23]
- * <p>
+ *
  * <li>dayOfMonth : one or more days within a month
  * <p>
  * Allowable values:
@@ -79,27 +79,27 @@ import java.io.Serializable;
  * -x (where x is in the range [-7, -1]) means x day(s) before the last day of the month
  * <p>
  * "1st","2nd", etc. applied to a day of the week identifies a single occurrence of that day within the month.
- * <p>
+ *
  * <li>month : one or more months within a year
  * <p>
  * Allowable values :
- * <p>
+ *
  * <ul>
  * <li>[1,12]
  * <li>{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", Dec"}
  * </ul>
- * <p>
+ *
  * <li>dayOfWeek : one or more days within a week
  * <p>
  * Allowable values :
- * <p>
+ *
  * <ul>
  * <li>[0,7]
  * <li>{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
  * </ul>
  * <p>
  * "0" and "7" both refer to Sunday
- * <p>
+ *
  * <li>year : a particular calendar year
  * <p>
  * Allowable values : a four-digit calendar year
@@ -109,7 +109,7 @@ import java.io.Serializable;
  * <p>
  *
  * Each attribute supports values expressed in one of the following forms
- * <p>
+ *
  * <ul>
  * <li>Single Value. This constrains the attribute to only one of its possible values.
  * 
@@ -118,7 +118,7 @@ import java.io.Serializable;
  * Example: second = "10"
  * Example: month = "Sep"
  * </pre>
- * <p>
+ *
  * <li>Wild Card. "*" represents all allowable values for a given attribute.
  * 
  * <pre>
@@ -142,7 +142,7 @@ import java.io.Serializable;
  * equivalent to <code>"x-max, min-y"</code>, where <code>max</code> is the largest value of the corresponding attribute
  * and <code>min</code> is the smallest. The range <code>"x-x"</code>, where both range values are the same, evaluates
  * to the single value <code>x</code>. The day of the week range <code>"0-7"</code> is equivalent to <code>"*"</code>.
- * <p>
+ *
  * 
  * <pre>
  * Example: second = "1-10"
@@ -159,14 +159,14 @@ import java.io.Serializable;
  * For the <code>second</code> and <code>minute</code> attributes, <code>x</code> and <code>y</code> must each be in the
  * range <code>[0,59]</code>. For the <code>hour</code> attribute, <code>x</code> and <code>y</code> must each be in the
  * range <code>[0,23]</code>.
- * <p>
+ *
  * 
  * <pre>
  * Example: minute = "&#8727;/5" (Every five minutes within the hour)
  * </pre>
  * 
  * This is equivalent to: <code>minute = "0,5,10,15,20,25,30,35,40,45,50,55"</code>
- * <p>
+ *
  * 
  * <pre>
  * Example: second = "30/10" (Every 10 seconds within the minute, starting at second 30)
@@ -176,7 +176,7 @@ import java.io.Serializable;
  * <p>
  * Note that the set of matching increment values stops once the maximum value for that attribute is exceeded. It does
  * not "roll over" past the boundary.
- * <p>
+ *
  * 
  * <pre>
  * Example : ( minute = "&#8727;/14", hour="1,2")

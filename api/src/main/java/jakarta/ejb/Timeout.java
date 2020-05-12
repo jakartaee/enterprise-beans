@@ -27,7 +27,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <p>
  * The method to which the <code>Timeout</code> annotation is applied must have one of the following signatures, where
  * <code>&#060;METHOD&#062;</code> designates the method name:
- * <p>
+ *
  * 
  * <pre>
  * void &#060;METHOD&#062;()
