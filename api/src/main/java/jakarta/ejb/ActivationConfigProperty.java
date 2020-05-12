@@ -62,7 +62,17 @@ import java.lang.annotation.Target;
 @Target({})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActivationConfigProperty {
+    /**
+     * <p>propertyName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String propertyName();
 
+    /**
+     * <p>propertyValue.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String propertyValue();
 }

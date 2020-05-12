@@ -47,6 +47,8 @@ public @interface LocalHome {
 
     /**
      * The local home interface.
+     *
+     * @return a {@link java.lang.Class} object.
      */
     Class value();
 }

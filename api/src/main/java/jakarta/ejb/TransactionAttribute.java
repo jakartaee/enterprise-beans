@@ -49,5 +49,10 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Target({ METHOD, TYPE })
 @Retention(RUNTIME)
 public @interface TransactionAttribute {
+    /**
+     * <p>value.</p>
+     *
+     * @return a {@link jakarta.ejb.TransactionAttributeType} object.
+     */
     TransactionAttributeType value() default TransactionAttributeType.REQUIRED;
 }

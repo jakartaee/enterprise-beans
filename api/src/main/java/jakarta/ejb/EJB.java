@@ -40,11 +40,15 @@ public @interface EJB {
 
     /**
      * The logical name of the enterprise bean reference within the declaring component's (e.g., java:comp/env) environment.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String name() default "";
 
     /**
      * A string describing the bean.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String description() default "";
 
@@ -64,6 +68,8 @@ public @interface EJB {
      * <p>
      * Only applicable if the target enterprise bean is defined within the same application or stand-alone module as the
      * declaring component.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String beanName() default "";
 
@@ -78,6 +84,8 @@ public @interface EJB {
      * <li>Local Home interface
      * <li>Remote Home interface
      * </ul>
+     *
+     * @return a {@link java.lang.Class} object.
      */
     Class beanInterface() default Object.class;
 
@@ -88,6 +96,8 @@ public @interface EJB {
      * Application servers are not required to support any particular form or type of mapped name, nor the ability to use
      * mapped names. The mapped name is product-dependent and often installation-dependent. No use of a mapped name is
      * portable.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String mappedName() default "";
 
@@ -95,6 +105,7 @@ public @interface EJB {
      * A portable lookup string containing the JNDI name for the target enterprise bean component.
      *
      * @since EJB 3.1
+     * @return a {@link java.lang.String} object.
      */
     String lookup() default "";
 }

@@ -82,6 +82,7 @@ public interface SessionContext extends EJBContext {
      * @exception IllegalStateException Thrown if this method is called and the bean has not been invoked through a business
      * interface or no-interface view.
      * @since EJB 3.0
+     * @return a {@link java.lang.Class} object.
      */
     Class getInvokedBusinessInterface() throws IllegalStateException;
 

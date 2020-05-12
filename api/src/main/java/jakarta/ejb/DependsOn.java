@@ -40,6 +40,8 @@ public @interface DependsOn {
     /**
      * The ejb-names of singleton components whose initialization must occur before this singleton. The order in which these
      * names are listed is not significant.
+     *
+     * @return an array of {@link java.lang.String} objects.
      */
     String[] value();
 

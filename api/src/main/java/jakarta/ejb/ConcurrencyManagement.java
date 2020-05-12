@@ -41,6 +41,11 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Retention(RUNTIME)
 public @interface ConcurrencyManagement {
 
+    /**
+     * <p>value.</p>
+     *
+     * @return a {@link jakarta.ejb.ConcurrencyManagementType} object.
+     */
     ConcurrencyManagementType value() default ConcurrencyManagementType.CONTAINER;
 
 }

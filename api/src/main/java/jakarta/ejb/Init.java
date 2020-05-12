@@ -58,6 +58,8 @@ public @interface Init {
      * Note that this value is not required to be specified if there is only a single <code>create&#060;METHOD&#062;</code>
      * method even if the name of the method to which the <code>Init</code> annotation is applied does not match that of the
      * <code>create&#060;METHOD&#062;</code> method.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String value() default "";
 

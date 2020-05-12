@@ -42,6 +42,8 @@ public @interface Schedules {
 
     /**
      * One or more calendar-based timer specifications.
+     *
+     * @return an array of {@link jakarta.ejb.Schedule} objects.
      */
     Schedule[] value();
 }

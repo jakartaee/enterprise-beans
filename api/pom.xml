@@ -230,7 +230,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
-                    <doclint>all</doclint>
                     <bottom>
                         <![CDATA[
                     <p align="left">Copyright &#169; 2019-${current.year} Eclipse Foundation.<br>Use is subject to
@@ -239,7 +238,6 @@
                     <docfilessubdirs>true</docfilessubdirs>
                     <doctitle>Jakarta Enterprise Beans ${project.version} API</doctitle>
                     <windowtitle>Jakarta Enterprise Beans ${project.version} API</windowtitle>
-                    <fixTags>param</fixTags>
                 </configuration>
                 <executions>
                     <execution>

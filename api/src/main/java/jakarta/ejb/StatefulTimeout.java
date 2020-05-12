@@ -53,12 +53,15 @@ public @interface StatefulTimeout {
      * <li>A value of -1 means the bean will never be removed due to timeout.
      * </ul>
      * Values less than -1 are not valid.
-     * 
+     *
+     * @return a long.
      */
     long value();
 
     /**
      * Units used for the specified value.
+     *
+     * @return a {@link java.util.concurrent.TimeUnit} object.
      */
     TimeUnit unit() default TimeUnit.MINUTES;
 

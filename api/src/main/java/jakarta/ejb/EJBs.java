@@ -31,5 +31,10 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Retention(RUNTIME)
 public @interface EJBs {
 
+    /**
+     * <p>value.</p>
+     *
+     * @return an array of {@link jakarta.ejb.EJB} objects.
+     */
     EJB[] value();
 }

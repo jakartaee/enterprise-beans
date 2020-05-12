@@ -210,36 +210,50 @@ public @interface Schedule {
 
     /**
      * Specifies one or more seconds with in a minute.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String second() default "0";
 
     /**
      * Specifies one or more minutes with an hour.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String minute() default "0";
 
     /**
      * Specifies one or more hours within a day.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String hour() default "0";
 
     /**
      * Specifies one or more days within a month.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String dayOfMonth() default "*";
 
     /**
      * Specifies one or more months within a year.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String month() default "*";
 
     /**
      * Specifies one or more days within a week.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String dayOfWeek() default "*";
 
     /**
      * Specifies one or more years.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String year() default "*";
 
@@ -249,16 +263,22 @@ public @interface Schedule {
      * <p>
      * If a timezone is not specified, the schedule is evaluated in the context of the default timezone associated with the
      * contianer in which the application is executing.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String timezone() default "";
 
     /**
      * Specifies an information string that is associated with the timer
+     *
+     * @return a {@link java.lang.String} object.
      */
     String info() default "";
 
     /**
      * Specifies whether the timer that is created is persistent.
+     *
+     * @return a boolean.
      */
     boolean persistent() default true;
 }

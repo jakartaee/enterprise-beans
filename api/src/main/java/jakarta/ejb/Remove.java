@@ -35,6 +35,8 @@ public @interface Remove {
 
     /**
      * If true, the stateful session bean will not be removed if an exception is thrown from the designated method.
+     *
+     * @return a boolean.
      */
     boolean retainIfException() default false;
 

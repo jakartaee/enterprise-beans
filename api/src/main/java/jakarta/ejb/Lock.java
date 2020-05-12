@@ -38,6 +38,11 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Retention(RUNTIME)
 public @interface Lock {
 
+    /**
+     * <p>value.</p>
+     *
+     * @return a {@link jakarta.ejb.LockType} object.
+     */
     LockType value() default LockType.WRITE;
 
 }

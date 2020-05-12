@@ -118,6 +118,7 @@ public interface EJBContext {
      * @exception IllegalStateException The Container throws the exception if the instance is not allowed to use this method
      * (e.g. if the bean is a stateful session bean)
      * @since EJB 2.1
+     * @return a {@link jakarta.ejb.TimerService} object.
      */
     TimerService getTimerService() throws IllegalStateException;
 
@@ -135,6 +136,7 @@ public interface EJBContext {
      * @exception IllegalArgumentException The Container throws the exception if the given name does not match an entry
      * within the component's environment.
      * @since EJB 3.0
+     * @return a {@link java.lang.Object} object.
      */
     Object lookup(String name) throws IllegalArgumentException;
 

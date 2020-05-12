@@ -63,6 +63,8 @@ public class EJBException extends java.lang.RuntimeException {
     /**
      * Obtain the exception that caused the EJBException to be thrown. It is recommended that the inherited
      * Throwable.getCause() method be used to retrieve the cause instead of this method.
+     *
+     * @return a {@link java.lang.Exception} object.
      */
     public Exception getCausedByException() {
         return (Exception) getCause();

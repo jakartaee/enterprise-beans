@@ -239,6 +239,7 @@ public class ScheduleExpression implements Serializable {
      * Set the second attribute.
      *
      * @param s the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression second(String s) {
         second_ = s;
@@ -249,6 +250,7 @@ public class ScheduleExpression implements Serializable {
      * Set the second attribute.
      *
      * @param s the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression second(int s) {
         second_ = s + "";
@@ -268,6 +270,7 @@ public class ScheduleExpression implements Serializable {
      * Set the minute attribute.
      *
      * @param m the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression minute(String m) {
         minute_ = m;
@@ -278,6 +281,7 @@ public class ScheduleExpression implements Serializable {
      * Set the minute attribute.
      *
      * @param m the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression minute(int m) {
         minute_ = m + "";
@@ -297,6 +301,7 @@ public class ScheduleExpression implements Serializable {
      * Set the hour attribute.
      *
      * @param h the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression hour(String h) {
         hour_ = h;
@@ -307,6 +312,7 @@ public class ScheduleExpression implements Serializable {
      * Set the hour attribute.
      *
      * @param h the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression hour(int h) {
         hour_ = h + "";
@@ -326,6 +332,7 @@ public class ScheduleExpression implements Serializable {
      * Set the day of the month attribute.
      *
      * @param d the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression dayOfMonth(String d) {
         dayOfMonth_ = d;
@@ -336,6 +343,7 @@ public class ScheduleExpression implements Serializable {
      * Set the day of the month attribute.
      *
      * @param d the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression dayOfMonth(int d) {
         dayOfMonth_ = d + "";
@@ -355,6 +363,7 @@ public class ScheduleExpression implements Serializable {
      * Set the month attribute.
      *
      * @param m the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression month(String m) {
         month_ = m;
@@ -365,6 +374,7 @@ public class ScheduleExpression implements Serializable {
      * Set the month attribute.
      *
      * @param m the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression month(int m) {
         month_ = m + "";
@@ -384,6 +394,7 @@ public class ScheduleExpression implements Serializable {
      * Set the day of the week attribute.
      *
      * @param d the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression dayOfWeek(String d) {
         dayOfWeek_ = d;
@@ -394,6 +405,7 @@ public class ScheduleExpression implements Serializable {
      * Set the day of the week attribute.
      *
      * @param d the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression dayOfWeek(int d) {
         dayOfWeek_ = d + "";
@@ -413,6 +425,7 @@ public class ScheduleExpression implements Serializable {
      * Set the year attribute.
      *
      * @param y the attribute value as a <code>String</code>
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression year(String y) {
         year_ = y;
@@ -423,6 +436,7 @@ public class ScheduleExpression implements Serializable {
      * Set the year attribute.
      *
      * @param y the attribute value as an <code>int</code>, if the value is a simple integer value
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression year(int y) {
         year_ = y + "";
@@ -442,6 +456,7 @@ public class ScheduleExpression implements Serializable {
      * Set the timezone.
      *
      * @param timezoneID the Time zone specified as an ID String
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression timezone(String timezoneID) {
         timezoneID_ = timezoneID;
@@ -461,6 +476,7 @@ public class ScheduleExpression implements Serializable {
      * Set the start date.
      *
      * @param s the start date
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression start(Date s) {
         start_ = (s == null) ? null : new Date(s.getTime());
@@ -481,6 +497,7 @@ public class ScheduleExpression implements Serializable {
      * Set the end date.
      *
      * @param e the end date
+     * @return a {@link jakarta.ejb.ScheduleExpression} object.
      */
     public ScheduleExpression end(Date e) {
         end_ = (e == null) ? null : new Date(e.getTime());

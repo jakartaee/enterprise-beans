@@ -34,6 +34,8 @@ public @interface ApplicationException {
 
     /**
      * Indicates whether the container should cause the transaction to rollback when the exception is thrown.
+     *
+     * @return a boolean.
      */
     boolean rollback() default false;
 
@@ -41,6 +43,7 @@ public @interface ApplicationException {
      * Indicates whether the application exception designation should apply to subclasses of the annotated exception class.
      *
      * @since EJB 3.1
+     * @return a boolean.
      */
     boolean inherited() default true;
 

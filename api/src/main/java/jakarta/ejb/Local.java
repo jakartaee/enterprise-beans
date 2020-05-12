@@ -66,6 +66,8 @@ public @interface Local {
      * (excluding <code>java.io.Serializable</code>, <code>java.io.Externalizable</code>, and any of the interfaces defined
      * by the <code>jakarta.ejb</code> package) has no designation.
      * </ul>
+     *
+     * @return an array of {@link java.lang.Class} objects.
      */
     Class[] value() default {};
 }

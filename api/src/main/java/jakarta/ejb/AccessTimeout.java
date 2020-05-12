@@ -66,11 +66,15 @@ public @interface AccessTimeout {
      * <li>A value of -1 indicates that the client request will block indefinitely until forward progress it can proceed.
      * </ul>
      * Values less than -1 are not valid.
+     *
+     * @return a long.
      */
     long value();
 
     /**
      * Units used for the specified value.
+     *
+     * @return a {@link java.util.concurrent.TimeUnit} object.
      */
     TimeUnit unit() default TimeUnit.MILLISECONDS;
 

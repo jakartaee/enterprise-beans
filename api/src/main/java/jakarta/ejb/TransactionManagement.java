@@ -33,5 +33,10 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Target(TYPE)
 @Retention(RUNTIME)
 public @interface TransactionManagement {
+    /**
+     * <p>value.</p>
+     *
+     * @return a {@link jakarta.ejb.TransactionManagementType} object.
+     */
     TransactionManagementType value() default TransactionManagementType.CONTAINER;
 }

@@ -90,9 +90,8 @@ public class TimerConfig {
         return persistent_;
     }
 
-    /**
-     * <p>toString.</p>
-     */
+    /** {@inheritDoc} */
+    @Override
     public String toString() {
         return "TimerConfig [persistent=" + persistent_ + ";info=" + info_ + "]";
     }

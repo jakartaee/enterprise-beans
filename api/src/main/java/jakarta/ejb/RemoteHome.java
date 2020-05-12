@@ -46,6 +46,8 @@ public @interface RemoteHome {
 
     /**
      * The remote home interface
+     *
+     * @return a {@link java.lang.Class} object.
      */
     Class value();
 }

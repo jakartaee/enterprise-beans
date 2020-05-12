@@ -37,6 +37,8 @@ public @interface MessageDriven {
 
     /**
      * The ejb-name for this bean. Defaults to the unqualified name of the message driven bean class.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String name() default "";
 
@@ -44,25 +46,33 @@ public @interface MessageDriven {
      * Message-listener interface. If the message-driven bean class implements more than one interface other than
      * <code>java.io.Serializable</code>, <code>java.io.Externalizable</code>, or any of the interfaces defined by the
      * <code>jakarta.ejb</code> package, the message listener interface must be specified.
+     *
+     * @return a {@link java.lang.Class} object.
      */
     Class messageListenerInterface() default Object.class;
 
     /**
      * Activation config properties.
+     *
+     * @return an array of {@link jakarta.ejb.ActivationConfigProperty} objects.
      */
     ActivationConfigProperty[] activationConfig() default {};
 
     /**
      * A product specific name(e.g. global JNDI name of a queue) that this message-driven bean should be mapped to.
-     * 
+     *
      * Application servers are not required to support any particular form or type of mapped name, nor the ability to use
      * mapped names. The mapped name is product-dependent and often installation-dependent. No use of a mapped name is
      * portable.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String mappedName() default "";
 
     /**
      * A string describing the message driven bean.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String description() default "";
 }
