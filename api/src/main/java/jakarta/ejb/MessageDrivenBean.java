@@ -35,21 +35,18 @@ public interface MessageDrivenBean extends EnterpriseBean {
      * This method is called with no transaction context.
      *
      * @param ctx A MessageDrivenContext interface for the instance.
-     *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      */
     void setMessageDrivenContext(MessageDrivenContext ctx) throws EJBException;
 
     /**
      * A container invokes this method before it ends the life of the message-driven object. This happens when a container
      * decides to terminate the message-driven object.
-     * 
+     *
      * <p>
      * This method is called with no transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      */
     void ejbRemove() throws EJBException;
 

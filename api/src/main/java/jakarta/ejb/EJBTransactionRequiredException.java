@@ -29,7 +29,6 @@ public class EJBTransactionRequiredException extends EJBException {
     /**
      * Constructs an EJBTransactionRequiredException with no detail message.
      */
-
     public EJBTransactionRequiredException() {
     }
 

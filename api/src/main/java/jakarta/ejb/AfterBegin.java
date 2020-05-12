@@ -46,7 +46,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @see SessionSynchronization
  * @see BeforeCompletion
  * @see AfterCompletion
- *
  * @since EJB 3.1
  */
 

@@ -38,7 +38,6 @@ import java.lang.annotation.Retention;
  *
  * @see Init
  * @see RemoteHome
- *
  * @since EJB 3.0
  */
 

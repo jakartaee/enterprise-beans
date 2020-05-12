@@ -46,12 +46,10 @@ public interface SessionSynchronization {
      * This method executes in the proper transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1 and
      * later specifications should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written
      * for the EJB 2.0 and later specifications must not throw the java.rmi.RemoteException.
-     *
      * @see AfterBegin
      */
     public void afterBegin() throws EJBException, RemoteException;
@@ -68,12 +66,10 @@ public interface SessionSynchronization {
      * <code>setRollbackOnly</code> method on the session context, or by throwing an exception.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1 and
      * later specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for
      * the EJB 2.0 and later specifications must not throw the java.rmi.RemoteException.
-     *
      * @see BeforeCompletion
      */
     public void beforeCompletion() throws EJBException, RemoteException;
@@ -86,14 +82,11 @@ public interface SessionSynchronization {
      * This method executes with no transaction context.
      *
      * @param committed True if the transaction has been committed, false if is has been rolled back.
-     *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1 and
      * later specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for
      * the EJB 2.0 and later specifications must not throw the java.rmi.RemoteException.
-     *
      * @see AfterCompletion
      */
     public void afterCompletion(boolean committed) throws EJBException,

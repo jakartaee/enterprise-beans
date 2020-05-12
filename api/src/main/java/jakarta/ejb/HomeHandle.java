@@ -29,7 +29,6 @@ public interface HomeHandle extends java.io.Serializable {
      * Obtain the home object represented by this handle.
      *
      * @return the home object represented by this handle.
-     *
      * @exception RemoteException The home object could not be obtained because of a system-level failure.
      */
     public EJBHome getEJBHome() throws RemoteException;

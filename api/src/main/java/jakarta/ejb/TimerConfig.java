@@ -35,12 +35,17 @@ import java.io.Serializable;
  *
  * @since EJB 3.1
  */
-
 public class TimerConfig {
 
+    /**
+     * <p>Constructor for TimerConfig.</p>
+     */
     public TimerConfig() {
     }
 
+    /**
+     * <p>Constructor for TimerConfig.</p>
+     */
     public TimerConfig(Serializable info, boolean persistent) {
         info_ = info;
         persistent_ = persistent;
@@ -48,7 +53,7 @@ public class TimerConfig {
 
     /**
      * Set the <code>info</code> object made available to timer callbacks.
-     * 
+     *
      * @param i the info object
      */
     public void setInfo(Serializable i) {
@@ -57,7 +62,7 @@ public class TimerConfig {
 
     /**
      * Return the <code>info</code> object made available to timer callbacks.
-     * 
+     *
      * @return info object
      */
     public Serializable getInfo() {
@@ -66,7 +71,7 @@ public class TimerConfig {
 
     /**
      * Specify whether the timer is persistent.
-     * 
+     *
      * @param p boolean indicating whether the timer is to be persistent.
      */
     public void setPersistent(boolean p) {
@@ -75,13 +80,16 @@ public class TimerConfig {
 
     /**
      * Return whether the timer is persistent.
-     * 
+     *
      * @return boolean indicating whether the timer is persistent
      */
     public boolean isPersistent() {
         return persistent_;
     }
 
+    /**
+     * <p>toString.</p>
+     */
     public String toString() {
         return "TimerConfig [persistent=" + persistent_ + ";info=" + info_ + "]";
     }

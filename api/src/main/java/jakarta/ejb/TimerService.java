@@ -34,17 +34,12 @@ public interface TimerService {
      * Create a single-action timer that expires after a specified duration.
      *
      * @param duration the number of milliseconds that must elapse before the timer expires.
-     *
      * @param info application information to be delivered along with the timer expiration notification. This can be null.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If duration is negative
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method fails due to a system-level failure.
-     * 
      */
     public Timer createTimer(long duration, Serializable info) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException,
             jakarta.ejb.EJBException;
@@ -53,17 +48,12 @@ public interface TimerService {
      * Create a single-action timer that expires after a specified duration.
      *
      * @param duration the number of milliseconds that must elapse before the timer expires.
-     *
      * @param timerConfig timer configuration.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If duration is negative
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method fails due to a system-level failure.
-     * 
      * @since EJB 3.1
      */
     public Timer createSingleActionTimer(long duration, TimerConfig timerConfig) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException,
@@ -74,22 +64,16 @@ public interface TimerService {
      * occur after a specified interval.
      *
      * @param initialDuration The number of milliseconds that must elapse before the first timer expiration notification.
-     *
      * @param intervalDuration The number of milliseconds that must elapse between timer expiration notifications.
      * Expiration notifications are scheduled relative to the time of the first expiration. If expiration is delayed (e.g.
      * due to the interleaving of other method calls on the bean), two or more expiration notifications may occur in close
      * succession to "catch up".
-     * 
      * @param info application information to be delivered along with the timer expiration. This can be null.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If initialDuration is negative or intervalDuration is negative.
-     * 
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      */
     public Timer createTimer(long initialDuration, long intervalDuration,
             Serializable info) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException,
@@ -100,22 +84,16 @@ public interface TimerService {
      * occur after a specified interval.
      *
      * @param initialDuration The number of milliseconds that must elapse before the first timer expiration notification.
-     *
      * @param intervalDuration The number of milliseconds that must elapse between timer expiration notifications.
      * Expiration notifications are scheduled relative to the time of the first expiration. If expiration is delayed (e.g.
      * due to the interleaving of other method calls on the bean), two or more expiration notifications may occur in close
      * succession to "catch up".
-     * 
      * @param timerConfig timer configuration
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If initialDuration is negative or intervalDuration is negative.
-     * 
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      * @since EJB 3.1
      */
     public Timer createIntervalTimer(long initialDuration, long intervalDuration,
@@ -126,17 +104,12 @@ public interface TimerService {
      * Create a single-action timer that expires at a given point in time.
      *
      * @param expiration The point in time at which the timer must expire.
-     *
      * @param info application information to be delivered along with the timer expiration notification. This can be null.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If expiration is null or expiration.getTime() is negative.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      */
     public Timer createTimer(Date expiration, Serializable info) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException,
             jakarta.ejb.EJBException;
@@ -145,17 +118,12 @@ public interface TimerService {
      * Create a single-action timer that expires at a given point in time.
      *
      * @param expiration the point in time at which the timer must expire.
-     *
      * @param timerConfig timer configuration.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If expiration is null or expiration.getTime() is negative.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      * @since EJB 3.1
      */
     public Timer createSingleActionTimer(Date expiration, TimerConfig timerConfig) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException,
@@ -166,23 +134,17 @@ public interface TimerService {
      * occur after a specified interval.
      *
      * @param initialExpiration the point in time at which the first timer expiration must occur.
-     *
      * @param intervalDuration the number of milliseconds that must elapse between timer expiration notifications.
      * Expiration notifications are scheduled relative to the time of the first expiration. If expiration is delayed (e.g.
      * due to the interleaving of other method calls on the bean), two or more expiration notifications may occur in close
      * succession to "catch up".
-     * 
      * @param info application information to be delivered along with the timer expiration. This can be null.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If initialExpiration is null, if initialExpiration.getTime() is
      * negative, or if intervalDuration is negative.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      */
     public Timer createTimer(Date initialExpiration, long intervalDuration,
             Serializable info) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException,
@@ -193,23 +155,17 @@ public interface TimerService {
      * occur after a specified interval.
      *
      * @param initialExpiration the point in time at which the first timer expiration must occur.
-     *
      * @param intervalDuration the number of milliseconds that must elapse between timer expiration notifications.
      * Expiration notifications are scheduled relative to the time of the first expiration. If expiration is delayed (e.g.
      * due to the interleaving of other method calls on the bean), two or more expiration notifications may occur in close
      * succession to "catch up".
-     * 
      * @param timerConfig timer configuration.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If initialExpiration is null, if initialExpiration.getTime() is
      * negative, or if intervalDuration is negative.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      * @since EJB 3.1
      */
     public Timer createIntervalTimer(Date initialExpiration, long intervalDuration,
@@ -220,15 +176,11 @@ public interface TimerService {
      * Create a calendar-based timer based on the input schedule expression.
      *
      * @param schedule a schedule expression describing the timeouts for this timer.
-     *
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If Schedule represents an invalid schedule expression.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      * @since EJB 3.1
      */
     public Timer createCalendarTimer(ScheduleExpression schedule)
@@ -239,17 +191,12 @@ public interface TimerService {
      * Create a calendar-based timer based on the input schedule expression.
      *
      * @param schedule a schedule expression describing the timeouts for this timer.
-     *
      * @param timerConfig timer configuration.
-     * 
      * @return the newly created Timer.
-     *
      * @exception java.lang.IllegalArgumentException If Schedule represents an invalid schedule expression.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      * @since EJB 3.1
      */
     public Timer createCalendarTimer(ScheduleExpression schedule, TimerConfig timerConfig)
@@ -261,11 +208,9 @@ public interface TimerService {
      * automatically-created timers.
      *
      * @return a collection of <code>jakarta.ejb.Timer</code> objects.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     * 
      */
     public Collection<Timer> getTimers() throws java.lang.IllegalStateException,
             jakarta.ejb.EJBException;
@@ -275,11 +220,9 @@ public interface TimerService {
      * include both the programmatically-created timers and the automatically-created timers.
      *
      * @return a collection of <code>jakarta.ejb.Timer</code> objects.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
-     *
      * @since EJB 3.2
      */
     public Collection<Timer> getAllTimers() throws java.lang.IllegalStateException,

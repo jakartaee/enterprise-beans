@@ -24,7 +24,7 @@ package jakarta.ejb;
  * <p>
  * The enterprise bean's local interface is defined by the enterprise bean provider and implemented by the enterprise
  * bean container.
- * 
+ *
  * <p>
  * Enterprise beans written to the EJB 3.0 and later APIs do not require a local interface that extends the
  * EJBLocalObject interface. A local business interface can be used instead.
@@ -35,11 +35,9 @@ public interface EJBLocalObject {
     /**
      * Obtain the enterprise bean's local home interface. The local home interface defines the enterprise bean's create,
      * finder, remove, and home business methods that are available to local clients.
-     * 
+     *
      * @return A reference to the enterprise bean's local home interface.
-     *
      * @exception EJBException Thrown when the method failed due to a system-level failure.
-     *
      */
     public EJBLocalHome getEJBLocalHome() throws EJBException;
 
@@ -54,10 +52,8 @@ public interface EJBLocalObject {
      * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @return The enterprise bean local object's primary key.
-     *
      * @exception EJBException Thrown when the method failed due to a system-level failure or when invoked on a session
      * bean.
-     *
      */
     public Object getPrimaryKey() throws EJBException;
 
@@ -65,9 +61,7 @@ public interface EJBLocalObject {
      * Remove the enterprise bean local object.
      *
      * @exception RemoveException The enterprise bean or the container does not allow destruction of the object.
-     *
      * @exception EJBException Thrown when the method failed due to a system-level failure.
-     *
      */
     public void remove() throws RemoveException, EJBException;
 
@@ -75,12 +69,8 @@ public interface EJBLocalObject {
      * Test if a given enterprise bean local object is identical to the invoked enterprise bean local object.
      *
      * @param obj An object to test for identity with the invoked object.
-     *
      * @return True if the given enterprise bean local object is identical to the invoked object, false otherwise.
-     *
-     *
      * @exception EJBException Thrown when the method failed due to a system-level failure.
-     *
      */
     boolean isIdentical(EJBLocalObject obj) throws EJBException;
 }

@@ -90,7 +90,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <li>year : a particular calendar year
  * <p>
  * Allowable values : a four-digit calendar year
- * 
+ *
  * <p>
  * </ul>
  * <p>
@@ -99,24 +99,24 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * <ul>
  * <li>Single Value. This constrains the attribute to only one of its possible values.
- * 
+ *
  * <pre>
- *  
+ *
  * Example: second = "10"
  * Example: month = "Sep"
  * </pre>
  *
  * <li>Wild Card. "*" represents all allowable values for a given attribute.
- * 
+ *
  * <pre>
  * Example: second = "*"
  * Example: dayOfWeek = "*"
  * </pre>
- * 
+ *
  * <li>List. This constrains the attribute to two or more allowable values or ranges, with a comma used as a separator
  * character within the string. Each item in the list must be a single value or range. List items cannot be lists, wild
  * cards, or increments. Duplicate values are ignored.
- * 
+ *
  * <pre>
  * Example: second = "10,20,30"
  * Example: dayOfWeek = "Mon,Wed,Fri"
@@ -130,13 +130,13 @@ import static java.lang.annotation.RetentionPolicy.*;
  * and <code>min</code> is the smallest. The range <code>"x-x"</code>, where both range values are the same, evaluates
  * to the single value <code>x</code>. The day of the week range <code>"0-7"</code> is equivalent to <code>"*"</code>.
  *
- * 
+ *
  * <pre>
  * Example: second = "1-10"
  * Example: dayOfWeek = "Fri-Mon"
  * Example: dayOfMonth = "27-3" (Equivalent to "27-Last , 1-3")
  * </pre>
- * 
+ *
  * <li>Increments. The forward slash constrains an attribute based on a starting point and an interval, and is used to
  * specify every <code>N</code> seconds, minutes, or hours within the minute, hour, or day, respectively. For the
  * expression <code>x/y</code>, the attribute is constrained to every <code>y</code>th value within the set of allowable
@@ -147,24 +147,24 @@ import static java.lang.annotation.RetentionPolicy.*;
  * <code>[0,59]</code>. For the <code>hour</code> element, <code>x</code> and <code>y</code> must each be in the range
  * <code>[0,23]</code>.
  *
- * 
+ *
  * <pre>
  * Example: minute = "&#8727;/5" (Every five minutes within the hour)
  * </pre>
- * 
+ *
  * This is equivalent to: <code>minute = "0,5,10,15,20,25,30,35,40,45,50,55"</code>
  *
- * 
+ *
  * <pre>
  * Example: second = "30/10" (Every 10 seconds within the minute, starting at second 30)
  * </pre>
- * 
+ *
  * This is equivalent to: <code>second = "30,40,50"</code>
  * <p>
  * Note that the set of matching increment values stops once the maximum value for that attribute is exceeded. It does
  * not "roll over" past the boundary.
  *
- * 
+ *
  * <pre>
  * Example : ( minute = "&#8727;/14", hour="1,2")
  * </pre>
@@ -192,7 +192,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * The timeout callback method to which the <code>Schedule</code> annotation is applied must have one of the following
  * signatures, where <code>&lt;METHOD&gt;</code> designates the method name:
  *
- * 
+ *
  * <pre>
  * void &#060;METHOD&#062;()
  * void &#060;METHOD&#062;(Timer timer)

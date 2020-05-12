@@ -21,7 +21,6 @@ package jakarta.ejb;
  * singleton bean while another invocation is in progress and such concurrent access is not allowed.
  *
  * @see AccessTimeout
- *
  * @since EJB 3.1
  */
 public class ConcurrentAccessException extends EJBException {

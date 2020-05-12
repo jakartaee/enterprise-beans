@@ -36,10 +36,8 @@ public interface EJBHome extends java.rmi.Remote {
      * Remove an enterprise bean object identified by its handle.
      *
      * @param handle the handle of the enterprise bean object to be removed
-     *
      * @exception RemoveException Thrown if the enterprise bean or the container does not allow the client to remove the
      * object.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
      */
     void remove(Handle handle) throws RemoteException, RemoveException;
@@ -55,10 +53,8 @@ public interface EJBHome extends java.rmi.Remote {
      * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @param primaryKey the primary key of the enterprise bean object to be removed
-     *
      * @exception RemoveException Thrown if the enterprise bean or the container does not allow the client to remove the
      * object.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
      */
     void remove(Object primaryKey) throws RemoteException, RemoveException;
@@ -71,7 +67,6 @@ public interface EJBHome extends java.rmi.Remote {
      * The information obtainable via the EJBMetaData interface is intended to be used by tools.
      *
      * @return The enterprise Bean's EJBMetaData interface.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
      */
     EJBMetaData getEJBMetaData() throws RemoteException;
@@ -81,9 +76,7 @@ public interface EJBHome extends java.rmi.Remote {
      * remote home object, possibly in a different Java Virtual Machine.
      *
      * @return A handle for the remote home object.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
-     *
      * @since EJB 1.1
      */
     HomeHandle getHomeHandle() throws RemoteException;

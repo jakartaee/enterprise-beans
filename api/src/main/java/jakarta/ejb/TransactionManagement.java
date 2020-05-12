@@ -28,7 +28,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  * If this annotation is not used, the bean is assumed to have container-managed transaction management.
  *
  * @see TransactionManagementType
- *
  * @since EJB 3.0
  */
 @Target(TYPE)

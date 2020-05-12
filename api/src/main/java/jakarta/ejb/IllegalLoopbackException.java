@@ -27,9 +27,15 @@ public class IllegalLoopbackException extends ConcurrentAccessException {
 
     private static final long serialVersionUID = -8854624128500916709L;
 
+    /**
+     * <p>Constructor for IllegalLoopbackException.</p>
+     */
     public IllegalLoopbackException() {
     }
 
+    /**
+     * <p>Constructor for IllegalLoopbackException.</p>
+     */
     public IllegalLoopbackException(String message) {
         super(message);
     }

@@ -29,7 +29,6 @@ public class TransactionRequiredLocalException extends EJBException {
     /**
      * Constructs a TransactionRequiredLocalException with no detail message.
      */
-
     public TransactionRequiredLocalException() {
     }
 

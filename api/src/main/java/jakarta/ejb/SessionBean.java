@@ -37,9 +37,7 @@ public interface SessionBean extends EnterpriseBean {
      * This method is called with no transaction context.
      *
      * @param ctx A SessionContext interface for the instance.
-     *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * applications written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -51,12 +49,11 @@ public interface SessionBean extends EnterpriseBean {
     /**
      * A container invokes this method before it ends the life of the session object. This happens as a result of a client's
      * invoking a remove operation, or when a container decides to terminate the session object after a timeout.
-     * 
+     *
      * <p>
      * This method is called with no transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -72,7 +69,6 @@ public interface SessionBean extends EnterpriseBean {
      * This method is called with no transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -92,7 +88,6 @@ public interface SessionBean extends EnterpriseBean {
      * This method is called with no transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the

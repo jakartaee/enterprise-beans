@@ -30,7 +30,6 @@ public interface Handle extends java.io.Serializable {
      * Obtain the enterprise bean object reference represented by this handle.
      *
      * @return the enterprise bean object reference represented by this handle.
-     *
      * @exception RemoteException The enterprise bean object could not be obtained because of a system-level failure.
      */
     public EJBObject getEJBObject() throws RemoteException;

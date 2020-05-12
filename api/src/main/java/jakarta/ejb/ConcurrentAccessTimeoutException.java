@@ -21,16 +21,21 @@ package jakarta.ejb;
  * in a timeout.
  *
  * @see AccessTimeout
- *
  * @since EJB 3.1
  */
 public class ConcurrentAccessTimeoutException extends ConcurrentAccessException {
 
     private static final long serialVersionUID = 7899534274371798660L;
 
+    /**
+     * <p>Constructor for ConcurrentAccessTimeoutException.</p>
+     */
     public ConcurrentAccessTimeoutException() {
     }
 
+    /**
+     * <p>Constructor for ConcurrentAccessTimeoutException.</p>
+     */
     public ConcurrentAccessTimeoutException(String message) {
         super(message);
     }

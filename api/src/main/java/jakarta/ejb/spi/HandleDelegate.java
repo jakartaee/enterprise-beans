@@ -35,7 +35,6 @@ import jakarta.ejb.EJBHome;
  *
  * @since EJB 2.0
  */
-
 public interface HandleDelegate {
     /**
      * Serialize the EJBObject reference corresponding to a Handle.
@@ -46,9 +45,7 @@ public interface HandleDelegate {
      * method.
      *
      * @param ejbObject The EJBObject reference to be serialized.
-     *
      * @param ostream The output stream.
-     *
      * @exception IOException The EJBObject could not be serialized because of a system-level failure.
      */
     public void writeEJBObject(EJBObject ejbObject, ObjectOutputStream ostream)
@@ -65,9 +62,7 @@ public interface HandleDelegate {
      * the EJBObject reference is capable of performing invocations immediately after deserialization.
      *
      * @param istream The input stream.
-     *
      * @return The deserialized EJBObject reference.
-     *
      * @exception IOException The EJBObject could not be deserialized because of a system-level failure.
      * @exception ClassNotFoundException The EJBObject could not be deserialized because some class could not be found.
      */
@@ -83,9 +78,7 @@ public interface HandleDelegate {
      * <code>writeObject</code> method.
      *
      * @param ejbHome The EJBHome reference to be serialized.
-     *
      * @param ostream The output stream.
-     *
      * @exception IOException The EJBObject could not be serialized because of a system-level failure.
      */
     public void writeEJBHome(EJBHome ejbHome, ObjectOutputStream ostream)
@@ -103,9 +96,7 @@ public interface HandleDelegate {
      * deserialization.
      *
      * @param istream The input stream.
-     *
      * @return The deserialized EJBHome reference.
-     *
      * @exception IOException The EJBHome could not be deserialized because of a system-level failure.
      * @exception ClassNotFoundException The EJBHome could not be deserialized because some class could not be found.
      */

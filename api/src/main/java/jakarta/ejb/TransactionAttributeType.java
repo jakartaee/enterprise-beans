@@ -19,7 +19,7 @@ package jakarta.ejb;
 /**
  * The enum <code>TransactionAttributeType</code> is used with the <code>TransactionAttribute</code> annotation to
  * specify whether the methods of a session bean or message driven bean are called with a valid transaction context.
- * 
+ *
  * <p>
  * For a message-driven bean's message listener methods (or interface), only the <code>REQUIRED</code> and
  * <code>NOT_SUPPORTED</code> values may be used.
@@ -43,7 +43,6 @@ package jakarta.ejb;
  * methods: <code>REQUIRED</code>, <code>REQUIRES_NEW</code>, <code>MANDATORY</code>.
  *
  * @see TransactionAttribute
- *
  * @since EJB 3.0
  */
 public enum TransactionAttributeType {

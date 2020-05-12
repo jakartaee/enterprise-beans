@@ -39,7 +39,7 @@ public interface EJBMetaData {
 
     /**
      * Obtain the class object for the enterprise bean's remote home interface.
-     * 
+     *
      * @return the class object for the enterprise bean's remote home interface.
      */
     Class getHomeInterfaceClass();
@@ -69,7 +69,6 @@ public interface EJBMetaData {
      * Test if the enterprise bean's type is "stateless session".
      *
      * @return True if the type of the enterprise Bean is stateless session.
-     *
      * @since EJB 1.1
      */
     boolean isStatelessSession();

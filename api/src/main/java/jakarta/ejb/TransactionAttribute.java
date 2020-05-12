@@ -43,7 +43,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  * are assumed.
  *
  * @see TransactionAttributeType
- *
  * @since EJB 3.0
  */
 

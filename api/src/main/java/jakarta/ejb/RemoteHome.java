@@ -38,7 +38,6 @@ import java.lang.annotation.Retention;
  *
  * @see Init
  * @see LocalHome
- *
  * @since EJB 3.0
  */
 @Target({ ElementType.TYPE })

@@ -28,7 +28,6 @@ public class EJBAccessException extends EJBException {
     /**
      * Constructs an EJBAccessException with no detail message.
      */
-
     public EJBAccessException() {
     }
 

@@ -33,7 +33,6 @@ public interface TimerHandle extends Serializable {
      * Obtain a reference to the timer represented by this handle.
      *
      * @return a reference to the timer represented by this handle.
-     *
      * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
      * allow access to this method.
      * @throws jakarta.ejb.NoSuchObjectLocalException If invoked on a handle whose associated timer has expired or has been

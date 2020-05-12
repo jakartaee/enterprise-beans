@@ -41,9 +41,8 @@ public interface EJBObject extends java.rmi.Remote {
     /**
      * Obtain the enterprise bean's remote home interface. The remote home interface defines the enterprise bean's create,
      * finder, remove, and home business methods.
-     * 
-     * @return A reference to the enterprise bean's home interface.
      *
+     * @return A reference to the enterprise bean's home interface.
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
      */
     public EJBHome getEJBHome() throws RemoteException;
@@ -59,7 +58,6 @@ public interface EJBObject extends java.rmi.Remote {
      * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @return The enterprise bean object's primary key.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure or when invoked on a session
      * bean.
      */
@@ -69,7 +67,6 @@ public interface EJBObject extends java.rmi.Remote {
      * Remove the enterprise bean object.
      *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
-     *
      * @exception RemoveException The enterprise bean or the container does not allow destruction of the object.
      */
     public void remove() throws RemoteException, RemoveException;
@@ -79,7 +76,6 @@ public interface EJBObject extends java.rmi.Remote {
      * enterprise bean object, possibly in a different Java Virtual Machine.
      *
      * @return A handle for the enterprise bean object.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
      */
     public Handle getHandle() throws RemoteException;
@@ -88,9 +84,7 @@ public interface EJBObject extends java.rmi.Remote {
      * Test if a given enterprise bean object is identical to the invoked enterprise bean object.
      *
      * @param obj An object to test for identity with the invoked object.
-     *
      * @return True if the given enterprise bean object is identical to the invoked object, false otherwise.
-     *
      * @exception RemoteException Thrown when the method failed due to a system-level failure.
      */
     boolean isIdentical(EJBObject obj) throws RemoteException;

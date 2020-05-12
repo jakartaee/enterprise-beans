@@ -34,7 +34,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  *
  * @see ConcurrencyManagementType
  * @see Lock
- * 
  * @since EJB 3.1
  */
 

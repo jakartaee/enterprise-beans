@@ -20,7 +20,6 @@ package jakarta.ejb;
  * Used to specify the value of the <code>ConcurrencyManagement</code> annotation for a singleton session bean.
  *
  * @see ConcurrencyManagement
- *
  * @since EJB 3.1
  */
 public enum ConcurrencyManagementType {

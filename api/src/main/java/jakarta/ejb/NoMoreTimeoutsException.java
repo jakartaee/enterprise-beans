@@ -25,9 +25,15 @@ public class NoMoreTimeoutsException extends EJBException {
 
     private static final long serialVersionUID = 1373788283844991998L;
 
+    /**
+     * <p>Constructor for NoMoreTimeoutsException.</p>
+     */
     public NoMoreTimeoutsException() {
     }
 
+    /**
+     * <p>Constructor for NoMoreTimeoutsException.</p>
+     */
     public NoMoreTimeoutsException(String message) {
         super(message);
     }

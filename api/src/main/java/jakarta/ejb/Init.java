@@ -42,7 +42,6 @@ import java.lang.annotation.Retention;
  *
  * @see LocalHome
  * @see RemoteHome
- *
  * @since EJB 3.0
  */
 @Target({ ElementType.METHOD })

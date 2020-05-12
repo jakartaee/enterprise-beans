@@ -76,7 +76,6 @@ public abstract class EJBContainer implements AutoCloseable {
      *
      * @param properties Spec-defined and/or vendor-specific properties. The spec reserves the prefix
      * <code>"jakarta.ejb."</code> for spec-defined properties.
-     *
      * @return EJBContainer instance
      * @throws jakarta.ejb.EJBException Thrown if the container or application could not be successfully initialized.
      */

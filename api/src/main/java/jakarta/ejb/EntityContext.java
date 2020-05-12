@@ -46,10 +46,8 @@ public interface EntityContext extends EJBContext {
      * result.
      *
      * @return The enterprise bean local object currently associated with the instance.
-     *
      * @exception IllegalStateException if the instance invokes this method while the instance is in a state that does not
      * allow the instance to invoke this method, or if the instance does not have a local interface.
-     *
      * @since EJB 2.0
      */
     EJBLocalObject getEJBLocalObject() throws IllegalStateException;
@@ -67,7 +65,6 @@ public interface EntityContext extends EJBContext {
      * result.
      *
      * @return The enterprise bean object currently associated with the instance.
-     *
      * @exception IllegalStateException Thrown if the instance invokes this method while the instance is in a state that
      * does not allow the instance to invoke this method, or if the instance does not have a remote interface.
      */
@@ -85,7 +82,6 @@ public interface EntityContext extends EJBContext {
      * <b>Note</b>: The result of this method is that same as the result of getEJBObject().getPrimaryKey().
      *
      * @return The primary key currently associated with the instance.
-     *
      * @exception IllegalStateException Thrown if the instance invokes this method while the instance is in a state that
      * does not allow the instance to invoke this method.
      */

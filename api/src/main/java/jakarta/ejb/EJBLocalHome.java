@@ -41,12 +41,9 @@ public interface EJBLocalHome {
      * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
      *
      * @param primaryKey the primary key of the enterprise bean object to be removed
-     *
      * @exception RemoveException Thrown if the enterprise bean or the container does not allow the client to remove the
      * object.
-     *
      * @exception EJBException Thrown when the method failed due to a system-level failure.
-     *
      */
     void remove(Object primaryKey) throws RemoveException, EJBException;
 

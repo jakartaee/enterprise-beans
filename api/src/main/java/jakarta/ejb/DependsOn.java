@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * Used to express an initialization dependency between singleton components.
  * <p>
- * 
+ *
  * The container ensures that all singleton beans with which a singleton has a <code>DependsOn</code> relationship have
  * been initialized before the singleton's <code>PostConstruct</code> method is called.
  * <p>

@@ -29,7 +29,6 @@ import java.util.concurrent.*;
  *
  * @since EJB 3.1
  */
-
 public final class AsyncResult<V> implements Future<V> {
 
     private final V resultValue;
@@ -44,6 +43,8 @@ public final class AsyncResult<V> implements Future<V> {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * This method should not be called. See Class-level comments.
      */
     @Override
@@ -52,6 +53,8 @@ public final class AsyncResult<V> implements Future<V> {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * This method should not be called. See Class-level comments.
      */
     @Override
@@ -60,6 +63,8 @@ public final class AsyncResult<V> implements Future<V> {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * This method should not be called. See Class-level comments.
      */
     @Override
@@ -68,6 +73,8 @@ public final class AsyncResult<V> implements Future<V> {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * This method should not be called. See Class-level comments.
      */
     @Override
@@ -76,6 +83,8 @@ public final class AsyncResult<V> implements Future<V> {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * This method should not be called. See Class-level comments.
      */
     @Override

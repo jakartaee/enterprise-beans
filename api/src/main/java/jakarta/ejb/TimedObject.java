@@ -25,7 +25,6 @@ package jakarta.ejb;
  * be applied to the <code>ejbTimeout</code> method.
  *
  * @see Timeout
- *
  * @since EJB 2.1
  */
 public interface TimedObject {
@@ -34,7 +33,6 @@ public interface TimedObject {
      * Invoked by the enterprise bean container upon timer expiration.
      *
      * @param timer timer whose expiration caused this notification.
-     *
      */
     public void ejbTimeout(Timer timer);
 

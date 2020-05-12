@@ -32,7 +32,7 @@ public interface EJBContainerProvider {
      * Called by the embeddable container bootstrap process to find a suitable embeddable container implementation. An
      * embeddable container provider may deem itself as appropriate for the embeddable application if any of the following
      * are true :
-     * 
+     *
      * <ul>
      * <li>The <code>jakarta.ejb.embeddable.provider</code> property was included in the Map passed to
      * <code>createEJBContainer</code> and the value of the property is the provider's implementation class.
@@ -44,7 +44,6 @@ public interface EJBContainerProvider {
      *
      * @param properties Spec-defined and/or vendor-specific properties, that were passed to
      * <code>jakarta.ejb.embeddable.EJBContainer#createEJBContainer(Map&#60;&#63;,&#63;&#62;)</code> call
-     * 
      * @return EJBContainer instance or null
      */
     public EJBContainer createEJBContainer(Map<?, ?> properties) throws EJBException;

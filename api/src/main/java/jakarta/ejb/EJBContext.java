@@ -28,11 +28,10 @@ import jakarta.transaction.UserTransaction;
  * This interface is extended by the <code>SessionContext</code>, <code>EntityContext</code>, and
  * <code>MessageDrivenContext</code> interfaces to provide additional methods specific to the enterprise interface bean
  * type.
- * 
+ *
  * @see SessionContext
  * @see MessageDrivenContext
  * @see EntityContext
- *
  * @since EJB 1.0
  */
 public interface EJBContext {
@@ -40,7 +39,6 @@ public interface EJBContext {
      * Obtain the enterprise bean's remote home interface.
      *
      * @return The enterprise bean's remote home interface.
-     *
      * @exception java.lang.IllegalStateException if the enterprise bean does not have a remote home interface.
      */
     EJBHome getEJBHome() throws IllegalStateException;
@@ -49,36 +47,29 @@ public interface EJBContext {
      * Obtain the enterprise bean's local home interface.
      *
      * @return The enterprise bean's local home interface.
-     *
      * @exception java.lang.IllegalStateException if the enterprise bean does not have a local home interface.
-     *
      * @since EJB 2.0
      */
     EJBLocalHome getEJBLocalHome() throws IllegalStateException;
 
     /**
      * Obtain the <code>java.security.Principal</code> that identifies the caller.
-     * 
-     * @return The <code>Principal</code> object that identifies the caller. This method never returns <code>null</code>.
      *
+     * @return The <code>Principal</code> object that identifies the caller. This method never returns <code>null</code>.
      * @exception IllegalStateException The Container throws the exception if the instance is not allowed to call this
      * method.
-     *
      * @since EJB 1.1
      */
     Principal getCallerPrincipal() throws IllegalStateException;
 
     /**
      * Test if the caller has a given security role.
-     * 
+     *
      * @param roleName The name of the security role. The role must be one of the security roles that is defined in the
      * deployment descriptor.
-     * 
      * @return True if the caller has the specified role.
-     *
      * @exception IllegalStateException The Container throws the exception if the instance is not allowed to call this
      * method.
-     *
      * @since EJB 1.1
      */
     boolean isCallerInRole(String roleName) throws IllegalStateException;
@@ -92,7 +83,6 @@ public interface EJBContext {
      *
      * @return The <code>UserTransaction</code> interface that the enterprise bean instance can use for transaction
      * demarcation.
-     *
      * @exception IllegalStateException The Container throws the exception if the instance is not allowed to use the
      * <code>UserTransaction</code> interface (i.e. the instance is of a bean with container-managed transactions).
      */
@@ -117,7 +107,6 @@ public interface EJBContext {
      * Only enterprise beans with container-managed transactions are allowed to use this method.
      *
      * @return True if the current transaction is marked for rollback, false otherwise.
-     *
      * @exception IllegalStateException The Container throws the exception if the instance is not allowed to use this method
      * (i.e. the instance is of a bean with bean-managed transactions).
      */
@@ -128,7 +117,6 @@ public interface EJBContext {
      *
      * @exception IllegalStateException The Container throws the exception if the instance is not allowed to use this method
      * (e.g. if the bean is a stateful session bean)
-     *
      * @since EJB 2.1
      */
     TimerService getTimerService() throws IllegalStateException;
@@ -144,10 +132,8 @@ public interface EJBContext {
      * <code>ejbContext.lookup("ejb/BarRef")</code>; <code>ejbContext.lookup("java:comp/env/ejb/BarRef")</code>;
      *
      * @param name Name of the entry
-     *
      * @exception IllegalArgumentException The Container throws the exception if the given name does not match an entry
      * within the component's environment.
-     *
      * @since EJB 3.0
      */
     Object lookup(String name) throws IllegalArgumentException;
@@ -155,10 +141,9 @@ public interface EJBContext {
     /**
      * The <code>getContextData</code> method enables a business method, lifecycle callback method, or timeout method to
      * retrieve any interceptor/webservices context associated with its invocation.
-     * 
+     *
      * @return the context data that interceptor context associated with this invocation. If there is no context data, an
      * empty <code>Map&#060;String,Object&#062;</code> object will be returned.
-     *
      * @since EJB 3.1
      */
     Map<String, Object> getContextData();

@@ -21,7 +21,6 @@ package jakarta.ejb;
  * specify whether container-managed or bean-managed transaction management is used.
  *
  * @see TransactionManagement
- *
  * @since EJB 3.0
  */
 public enum TransactionManagementType {

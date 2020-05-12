@@ -33,7 +33,6 @@ import static java.lang.annotation.RetentionPolicy.*;
  * views must not be designated as asynchronous.
  *
  * @see AsyncResult
- *
  * @since EJB 3.1
  */
 

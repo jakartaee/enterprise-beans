@@ -29,7 +29,6 @@ import java.lang.annotation.Target;
  * <code>messageListenerInterface</code> element of this annotation.
  *
  * @see ActivationConfigProperty
- *
  * @since EJB 3.0
  */
 @Target({ ElementType.TYPE })

@@ -41,9 +41,7 @@ public interface EntityBean extends EnterpriseBean {
      *
      * @param ctx An EntityContext interface for the instance. The instance should store the reference to the context in an
      * instance variable.
-     *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -63,7 +61,6 @@ public interface EntityBean extends EnterpriseBean {
      * This method is called in an unspecified transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -76,14 +73,12 @@ public interface EntityBean extends EnterpriseBean {
      * instance. This method is invoked when a client invokes a remove operation on the entity bean's home interface or the
      * enterprise bean object's remote interface. This method transitions the instance from the ready state to the pool of
      * available instances.
-     * 
+     *
      * <p>
      * This method is called in the transaction context of the remove operation.
      *
      * @exception RemoveException The enterprise Bean does not allow destruction of the object.
-     *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -100,7 +95,6 @@ public interface EntityBean extends EnterpriseBean {
      * This method executes in an unspecified transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -116,7 +110,6 @@ public interface EntityBean extends EnterpriseBean {
      * This method executes in an unspecified transaction context.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -127,13 +120,12 @@ public interface EntityBean extends EnterpriseBean {
     /**
      * A container invokes this method to instruct the instance to synchronize its state by loading it state from the
      * underlying database.
-     * 
+     *
      * <p>
      * This method always executes in the transaction context determined by the value of the transaction attribute in the
      * deployment descriptor.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
@@ -150,7 +142,6 @@ public interface EntityBean extends EnterpriseBean {
      * deployment descriptor.
      *
      * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
-     *
      * @exception RemoteException This exception is defined in the method signature to provide backward compatibility for
      * enterprise beans written for the enterprise bean 1.0 specification. Enterprise beans written for the EJB 1.1
      * specification should throw the jakarta.ejb.EJBException instead of this exception. Enterprise beans written for the
