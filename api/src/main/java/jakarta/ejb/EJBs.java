@@ -22,7 +22,7 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Declares multiple <code>EJB</code> annotations. 
+ * Declares multiple <code>EJB</code> annotations.
  *
  * @see EJB
  *

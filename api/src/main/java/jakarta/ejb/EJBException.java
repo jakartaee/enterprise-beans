@@ -17,54 +17,48 @@
 package jakarta.ejb;
 
 /**
- * The EJBException is thrown to report that the invoked
- * business method or callback method could not be completed because
- * of an unexpected error (e.g. the instance failed to open a database
- * connection).
+ * The EJBException is thrown to report that the invoked business method or callback method could not be completed
+ * because of an unexpected error (e.g. the instance failed to open a database connection).
  *
  * @since EJB 1.1
  */
 public class EJBException extends java.lang.RuntimeException {
-    
+
     private static final long serialVersionUID = 796770993296843510L;
 
     /**
      * Constructs an EJBException with no detail message.
-     */  
+     */
     public EJBException() {
     }
 
     /**
-     * Constructs an EJBException with the specified
-     * detailed message.
-     */  
+     * Constructs an EJBException with the specified detailed message.
+     */
     public EJBException(String message) {
         super(message);
     }
 
     /**
      * Constructs an EJBException that embeds the originally thrown exception.
-     */  
-    public EJBException(Exception  ex) {
+     */
+    public EJBException(Exception ex) {
         super(ex);
     }
 
     /**
-     * Constructs an EJBException that embeds the originally thrown exception
-     * with the specified detail message. 
-     */  
-    public EJBException(String message, Exception  ex) {
+     * Constructs an EJBException that embeds the originally thrown exception with the specified detail message.
+     */
+    public EJBException(String message, Exception ex) {
         super(message, ex);
     }
 
-
     /**
-     * Obtain the exception that caused the EJBException to be thrown.
-     * It is recommended that the inherited Throwable.getCause() method
-     * be used to retrieve the cause instead of this method. 
+     * Obtain the exception that caused the EJBException to be thrown. It is recommended that the inherited
+     * Throwable.getCause() method be used to retrieve the cause instead of this method.
      */
     public Exception getCausedByException() {
-	    return (Exception) getCause();
+        return (Exception) getCause();
     }
 
 }

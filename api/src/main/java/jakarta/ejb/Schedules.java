@@ -22,13 +22,12 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Applied to a timer callback method to schedule multiple calendar-based
- * timers for the method.
+ * Applied to a timer callback method to schedule multiple calendar-based timers for the method.
  *
- * The method to which the <code>Schedules</code> annotation is applied
- * must have one of the following signatures, where <code>&lt;METHOD&gt;</code>
- * designates the method name:
+ * The method to which the <code>Schedules</code> annotation is applied must have one of the following signatures, where
+ * <code>&lt;METHOD&gt;</code> designates the method name:
  * <p>
+ * 
  * <pre>
  * void &#060;METHOD&#062;()
  * void &#060;METHOD&#062;(Timer timer)

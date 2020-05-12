@@ -24,15 +24,13 @@ import static java.lang.annotation.RetentionPolicy.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Specifies the amount of time a stateful session bean can
- * be idle (not receive any client invocations) before it
- * is eligible for removal by the container.
+ * Specifies the amount of time a stateful session bean can be idle (not receive any client invocations) before it is
+ * eligible for removal by the container.
  * <p>
  * 
  * The semantics of the <code>value</code> element are as follows:
  * <ul>
- * <li>A value <code>&#062;</code>0 indicates a timeout value in the units
- * specified by the <code>unit</code> element.
+ * <li>A value <code>&#062;</code>0 indicates a timeout value in the units specified by the <code>unit</code> element.
  * <li>A value of 0 means the bean is immediately eligible for removal.
  * <li>A value of -1 means the bean will never be removed due to timeout.
  * </ul>
@@ -41,7 +39,7 @@ import java.util.concurrent.TimeUnit;
  * @since EJB 3.1
  */
 
-@Target(TYPE) 
+@Target(TYPE)
 @Retention(RUNTIME)
 public @interface StatefulTimeout {
 
@@ -50,8 +48,7 @@ public @interface StatefulTimeout {
      *
      * The semantics of this element are as follows:
      * <ul>
-     * <li>A value <code>&#062;</code>0 indicates a timeout value in the units
-     * specified by the <code>unit</code> element.
+     * <li>A value <code>&#062;</code>0 indicates a timeout value in the units specified by the <code>unit</code> element.
      * <li>A value of 0 means the bean is immediately eligible for removal.
      * <li>A value of -1 means the bean will never be removed due to timeout.
      * </ul>

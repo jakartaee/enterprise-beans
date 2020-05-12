@@ -23,23 +23,18 @@ import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 
 /**
- * Declares the local home or adapted local home interface
- * for a session bean.
+ * Declares the local home or adapted local home interface for a session bean.
  * <p>
- * Clients written to the enterprise bean 2.1 and earlier client view depend upon the 
- * existence of a home and component interface.
- * A session bean written to the enterprise bean 3.x API may be adapted to such earlier 
- * preexisting client view interfaces.
+ * Clients written to the enterprise bean 2.1 and earlier client view depend upon the existence of a home and component
+ * interface. A session bean written to the enterprise bean 3.x API may be adapted to such earlier preexisting client
+ * view interfaces.
  * <p>
- * The session bean designates the local home interface to be adapted by using 
- * the <code>LocalHome</code> annotation on the bean class.  The corresponding 
- * local component interface need not be explicitly specified, as it is
- * derived from the return type of local home interface's
- * create method signature.
+ * The session bean designates the local home interface to be adapted by using the <code>LocalHome</code> annotation on
+ * the bean class. The corresponding local component interface need not be explicitly specified, as it is derived from
+ * the return type of local home interface's create method signature.
  *
  * <p>
- * Session beans written to the EJB 3.0 and later APIs do not otherwise make
- * use of local home interfaces.
+ * Session beans written to the EJB 3.0 and later APIs do not otherwise make use of local home interfaces.
  *
  * @see Init
  * @see RemoteHome
@@ -47,12 +42,12 @@ import java.lang.annotation.Retention;
  * @since EJB 3.0
  */
 
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LocalHome {
 
     /**
      * The local home interface.
      */
-    Class value(); 
-} 
+    Class value();
+}

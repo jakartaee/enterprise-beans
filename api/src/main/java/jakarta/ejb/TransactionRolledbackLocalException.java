@@ -16,12 +16,10 @@
 
 package jakarta.ejb;
 
-/** 
- * This exception is thrown to a local client to indicate that the
- * transaction associated with processing of the request has been
- * rolled back, or marked to roll back. Thus the requested operation
- * either could not be performed or was not performed because further
- * computation on behalf of the transaction would be fruitless.
+/**
+ * This exception is thrown to a local client to indicate that the transaction associated with processing of the request
+ * has been rolled back, or marked to roll back. Thus the requested operation either could not be performed or was not
+ * performed because further computation on behalf of the transaction would be fruitless.
  *
  * @since EJB 2.0
  */
@@ -31,24 +29,21 @@ public class TransactionRolledbackLocalException extends EJBException {
 
     /**
      * Constructs a TransactionRolledbackLocalException with no detail message.
-     */  
+     */
     public TransactionRolledbackLocalException() {
     }
 
     /**
-     * Constructs a TransactionRolledbackLocalException with the specified
-     * detailed message.
-     */  
+     * Constructs a TransactionRolledbackLocalException with the specified detailed message.
+     */
     public TransactionRolledbackLocalException(String message) {
         super(message);
     }
 
     /**
-     * Constructs a TransactionRolledbackLocalException with the specified
-     * detail message and a nested exception. 
-     */  
+     * Constructs a TransactionRolledbackLocalException with the specified detail message and a nested exception.
+     */
     public TransactionRolledbackLocalException(String message, Exception ex) {
         super(message, ex);
     }
 }
-

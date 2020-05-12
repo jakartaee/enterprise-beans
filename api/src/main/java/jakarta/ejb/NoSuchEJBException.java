@@ -16,9 +16,9 @@
 
 package jakarta.ejb;
 
-/**  
- * A NoSuchEJBException is thrown if an attempt is made to invoke
- * a business method on a stateful session or singleton object that no longer exists.
+/**
+ * A NoSuchEJBException is thrown if an attempt is made to invoke a business method on a stateful session or singleton
+ * object that no longer exists.
  *
  * @since EJB 3.0
  */
@@ -28,22 +28,20 @@ public class NoSuchEJBException extends EJBException {
 
     /**
      * Constructs a NoSuchEJBException with no detail message.
-     */  
+     */
     public NoSuchEJBException() {
     }
 
     /**
-     * Constructs a NoSuchEJBException with the specified
-     * detail message.
-     */  
+     * Constructs a NoSuchEJBException with the specified detail message.
+     */
     public NoSuchEJBException(String message) {
         super(message);
     }
 
     /**
-     * Constructs a NoSuchEJBException with the specified
-     * detail message and a nested exception. 
-     */  
+     * Constructs a NoSuchEJBException with the specified detail message and a nested exception.
+     */
     public NoSuchEJBException(String message, Exception ex) {
         super(message, ex);
     }

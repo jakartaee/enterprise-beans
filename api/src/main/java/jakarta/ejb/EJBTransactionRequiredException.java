@@ -17,8 +17,8 @@
 package jakarta.ejb;
 
 /**
- * This exception indicates that a request carried a null transaction context,
- * but the target object requires an active transaction.
+ * This exception indicates that a request carried a null transaction context, but the target object requires an active
+ * transaction.
  *
  * @since EJB 3.0
  */
@@ -28,18 +28,16 @@ public class EJBTransactionRequiredException extends EJBException {
 
     /**
      * Constructs an EJBTransactionRequiredException with no detail message.
-     */  
+     */
 
     public EJBTransactionRequiredException() {
     }
 
     /**
-     * Constructs an EJBTransactionRequiredException with the specified
-     * detailed message.
-     */  
+     * Constructs an EJBTransactionRequiredException with the specified detailed message.
+     */
     public EJBTransactionRequiredException(String message) {
         super(message);
     }
 
-  
 }

@@ -25,52 +25,47 @@ import java.lang.annotation.Retention;
 /**
  * Declares the local business interface(s) for a session bean.
  * <p>
- * The <code>Local</code> annotation is applied to the session bean class or local
- * business interface to designate a local interface of the bean.
+ * The <code>Local</code> annotation is applied to the session bean class or local business interface to designate a
+ * local interface of the bean.
  * <p>
- * When used on the bean class, declares the local business interface(s) 
- * for a session bean.  When used on an interface, designates that interface
- * as a local business interface.  In this case, no <code>value</code> element
- * should be provided.
+ * When used on the bean class, declares the local business interface(s) for a session bean. When used on an interface,
+ * designates that interface as a local business interface. In this case, no <code>value</code> element should be
+ * provided.
  * <p>
- * The <code>Local</code> annotation applies only to session beans and 
- * their interfaces.
+ * The <code>Local</code> annotation applies only to session beans and their interfaces.
  * <p>
- * Use of the <code>Local</code> annotation is required when the bean class 
- * exposes one or more local business interface and any of the following is true:
+ * Use of the <code>Local</code> annotation is required when the bean class exposes one or more local business interface
+ * and any of the following is true:
  * <ul>
  * <li>the bean class does not implement its business interfaces
  * <li>the bean exposes a no-interface view
- * <li>the bean class implements more than one interface and at least one of the interfaces 
- * is explicitly designated as a business interface by using the <code>Local</code> 
- * or <code>Remote</code> annotation on the interface, or in the deployment descriptor
+ * <li>the bean class implements more than one interface and at least one of the interfaces is explicitly designated as
+ * a business interface by using the <code>Local</code> or <code>Remote</code> annotation on the interface, or in the
+ * deployment descriptor
  * </ul>
  * <p>
- * The following interfaces are excluded when determining whether the bean class 
- * has business interfaces: <code>java.io.Serializable</code>; 
- * <code>java.io.Externalizable</code>; any of the interfaces defined in <code>jakarta.ejb</code>.
+ * The following interfaces are excluded when determining whether the bean class has business interfaces:
+ * <code>java.io.Serializable</code>; <code>java.io.Externalizable</code>; any of the interfaces defined in
+ * <code>jakarta.ejb</code>.
  *
  * @since EJB 3.0
  */
 
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Local {
 
     /**
-     * Specifies the local business interface(s) of the bean.  The <code>value</code>
-     * element is specified only when the annotation is applied to the bean class. 
-     * It is only required to be specified if any of the following is true:
+     * Specifies the local business interface(s) of the bean. The <code>value</code> element is specified only when the
+     * annotation is applied to the bean class. It is only required to be specified if any of the following is true:
      * <ul>
      * <li>the bean class does not implement its local business interface
      * <li>at least one of the implemented interfaces is designated as a remote interface
-     * <li>the bean class implements two or more interfaces and at
-     * least one of the implemented interfaces is designated
-     * as local business interfaces using <code>Local</code> annotation on the interface,
-     * and at least one other interface (excluding <code>java.io.Serializable</code>, 
-     * <code>java.io.Externalizable</code>, and any of the interfaces 
-     * defined by the <code>jakarta.ejb</code> package) has no designation.
+     * <li>the bean class implements two or more interfaces and at least one of the implemented interfaces is designated as
+     * local business interfaces using <code>Local</code> annotation on the interface, and at least one other interface
+     * (excluding <code>java.io.Serializable</code>, <code>java.io.Externalizable</code>, and any of the interfaces defined
+     * by the <code>jakarta.ejb</code> package) has no designation.
      * </ul>
      */
     Class[] value() default {};
-} 
+}

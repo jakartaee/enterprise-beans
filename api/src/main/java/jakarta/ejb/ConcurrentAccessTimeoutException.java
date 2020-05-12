@@ -17,8 +17,8 @@
 package jakarta.ejb;
 
 /**
- * This exception indicates that an attempt to concurrently access
- * a stateful session or singleton bean method resulted in a timeout.
+ * This exception indicates that an attempt to concurrently access a stateful session or singleton bean method resulted
+ * in a timeout.
  *
  * @see AccessTimeout
  *
@@ -28,7 +28,8 @@ public class ConcurrentAccessTimeoutException extends ConcurrentAccessException 
 
     private static final long serialVersionUID = 7899534274371798660L;
 
-    public ConcurrentAccessTimeoutException() {}
+    public ConcurrentAccessTimeoutException() {
+    }
 
     public ConcurrentAccessTimeoutException(String message) {
         super(message);

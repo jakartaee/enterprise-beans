@@ -22,22 +22,19 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Declares a concurrency lock for a singleton session bean
- * with container managed concurrency.
+ * Declares a concurrency lock for a singleton session bean with container managed concurrency.
  *
  * <p>
- * This annotation may be specified on the bean class, the business methods
- * of the bean class or both.  Specifying the annotation on a business method
- * overrides the value specified at class level, if any.
+ * This annotation may be specified on the bean class, the business methods of the bean class or both. Specifying the
+ * annotation on a business method overrides the value specified at class level, if any.
  *
  * <p>
- * If this annotation is not used, a value of <code>Lock(WRITE)</code> is
- * assumed.
+ * If this annotation is not used, a value of <code>Lock(WRITE)</code> is assumed.
  *
  * @since EJB 3.1
  */
 
-@Target({TYPE, METHOD}) 
+@Target({ TYPE, METHOD })
 @Retention(RUNTIME)
 public @interface Lock {
 

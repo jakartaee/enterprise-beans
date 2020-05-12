@@ -24,17 +24,17 @@ import static java.lang.annotation.RetentionPolicy.*;
 /**
  * Designates that a session bean exposes a no-interface view.
  * <p>
- * This annotation is required if a session bean exposes any other client views 
- * (local, remote, no-interface, 2.x Remote Home, 2.x Local Home, Web 
- * Service) in addition to the no-interface view or its implements clause contains 
- * an interface other than <code>java.io.Serializable</code>; <code>java.io.Externalizable</code>; 
- * or any of the interfaces defined by the <code>jakarta.ejb</code> package.
+ * This annotation is required if a session bean exposes any other client views (local, remote, no-interface, 2.x Remote
+ * Home, 2.x Local Home, Web Service) in addition to the no-interface view or its implements clause contains an
+ * interface other than <code>java.io.Serializable</code>; <code>java.io.Externalizable</code>; or any of the interfaces
+ * defined by the <code>jakarta.ejb</code> package.
  * <p>
  * This annotation is optional if a session bean exposes only a no-interface view.
  *
  * @since EJB 3.1
  */
 
-@Target({TYPE}) 
+@Target({ TYPE })
 @Retention(RUNTIME)
-public @interface LocalBean {}
+public @interface LocalBean {
+}

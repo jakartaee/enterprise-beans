@@ -17,44 +17,40 @@
 package jakarta.ejb;
 
 /**
- * The MessageDrivenBean interface defines methods that the enterprise bean container uses
- * to notify a message driven bean instance of the instance's life cycle 
- * events.
+ * The MessageDrivenBean interface defines methods that the enterprise bean container uses to notify a message driven
+ * bean instance of the instance's life cycle events.
  * <p>
- * As of EJB 3.0 it is no longer required that a message driven bean class
- * implement this interface.
+ * As of EJB 3.0 it is no longer required that a message driven bean class implement this interface.
  *
  * @since EJB 2.0
  */
 public interface MessageDrivenBean extends EnterpriseBean {
     /**
-     * Set the associated message-driven context. The container calls 
-     * this method after the instance creation.
+     * Set the associated message-driven context. The container calls this method after the instance creation.
      *
-     * <p> The message driven bean instance should store the reference to the
-     * context object in an instance variable.
+     * <p>
+     * The message driven bean instance should store the reference to the context object in an instance variable.
      *
-     * <p> This method is called with no transaction context.
+     * <p>
+     * This method is called with no transaction context.
      *
      * @param ctx A MessageDrivenContext interface for the instance.
      *
-     * @exception EJBException Thrown by the method to indicate a failure
-     *    caused by a system-level error.
+     * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
      *
      */
     void setMessageDrivenContext(MessageDrivenContext ctx) throws EJBException;
 
     /**
-     * A container invokes this method before it ends the life of the 
-     * message-driven object. This happens when a container decides to 
-     * terminate the message-driven object.
+     * A container invokes this method before it ends the life of the message-driven object. This happens when a container
+     * decides to terminate the message-driven object.
      * 
-     * <p> This method is called with no transaction context.
+     * <p>
+     * This method is called with no transaction context.
      *
-     * @exception EJBException Thrown by the method to indicate a failure
-     *    caused by a system-level error.
+     * @exception EJBException Thrown by the method to indicate a failure caused by a system-level error.
      *
      */
-     void ejbRemove() throws EJBException;
+    void ejbRemove() throws EJBException;
 
 }

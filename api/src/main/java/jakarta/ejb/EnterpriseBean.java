@@ -17,8 +17,8 @@
 package jakarta.ejb;
 
 /**
- * The EnterpriseBean interface is a common superinterface for the
- * SessionBean, EntityBean and MessageDrivenBean interfaces.
+ * The EnterpriseBean interface is a common superinterface for the SessionBean, EntityBean and MessageDrivenBean
+ * interfaces.
  *
  * @see SessionBean
  * @see MessageDrivenBean

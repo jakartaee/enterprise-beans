@@ -17,9 +17,8 @@
 package jakarta.ejb;
 
 /**
- * The RemoveException is thrown at an attempt to remove an
- * enterprise bean object or local enterprise bean object when the enterprise bean or the
- * container does not allow the enterprise bean object to be removed.
+ * The RemoveException is thrown at an attempt to remove an enterprise bean object or local enterprise bean object when
+ * the enterprise bean or the container does not allow the enterprise bean object to be removed.
  *
  * @since EJB 1.0
  */
@@ -29,16 +28,14 @@ public class RemoveException extends java.lang.Exception {
 
     /**
      * Constructs an RemoveException with no detail message.
-     */  
+     */
     public RemoveException() {
     }
 
     /**
-     * Constructs an RemoveException with the specified
-     * detail message.
-     */  
+     * Constructs an RemoveException with the specified detail message.
+     */
     public RemoveException(String message) {
         super(message);
     }
 }
-

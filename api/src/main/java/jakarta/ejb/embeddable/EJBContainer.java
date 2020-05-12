@@ -28,68 +28,59 @@ import javax.naming.Context;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.spi.EJBContainerProvider;
 
-/** 
-  * Used to execute an enterprise bean application in an embeddable container.  
-  *
-  * @since EJB 3.1
-  */
+/**
+ * Used to execute an enterprise bean application in an embeddable container.
+ *
+ * @since EJB 3.1
+ */
 public abstract class EJBContainer implements AutoCloseable {
 
     /**
-     * Standard property name for specifying the embeddable container implementation bootstrap
-     * class.  Property value is a fully-qualified class name.
+     * Standard property name for specifying the embeddable container implementation bootstrap class. Property value is a
+     * fully-qualified class name.
      */
     public static final String PROVIDER = "jakarta.ejb.embeddable.provider";
 
     /**
-     * Standard property name for specifying the set of modules to be
-     * initialized.  Property value is one of the following :
+     * Standard property name for specifying the set of modules to be initialized. Property value is one of the following :
      * <ul>
-     *  <li> a single module name String from the JVM classpath
-     *  <li> a String[] array of module names from the JVM classpath
-     *  <li>  a java.io.File representing an ejb-jar or exploded ejb-jar directory
-     *  <li> a java.io.File array, each element of which represents an ejb-jar 
-     *        or exploded ejb-jar directory
+     * <li>a single module name String from the JVM classpath
+     * <li>a String[] array of module names from the JVM classpath
+     * <li>a java.io.File representing an ejb-jar or exploded ejb-jar directory
+     * <li>a java.io.File array, each element of which represents an ejb-jar or exploded ejb-jar directory
      * </ul>
      */
     public static final String MODULES = "jakarta.ejb.embeddable.modules";
 
     /**
-     * Standard property name for specifying the application name of
-     * the enterprise bean modules executing within the embeddable container. If
-     * specified, the property value applies to the
-     * <code>&#060;app-name&#062;</code> portion of the portable
-     * global JNDI name syntax. If this property is not specified, the
-     * <code>&#060;app-name&#062;</code> portion of the portable
-     * global JNDI name syntax does not apply.
+     * Standard property name for specifying the application name of the enterprise bean modules executing within the
+     * embeddable container. If specified, the property value applies to the <code>&#060;app-name&#062;</code> portion of
+     * the portable global JNDI name syntax. If this property is not specified, the <code>&#060;app-name&#062;</code>
+     * portion of the portable global JNDI name syntax does not apply.
      */
     public static final String APP_NAME = "jakarta.ejb.embeddable.appName";
 
     /**
-     * Create and initialize an embeddable enterprise bean container.  JVM classpath is 
-     * searched for all ejb-jars or exploded ejb-jars in directory format.
+     * Create and initialize an embeddable enterprise bean container. JVM classpath is searched for all ejb-jars or exploded
+     * ejb-jars in directory format.
      *
      * @return EJBContainer instance
-     * @throws jakarta.ejb.EJBException Thrown if the container or application
- could not be successfully initialized.
+     * @throws jakarta.ejb.EJBException Thrown if the container or application could not be successfully initialized.
      */
-    public static EJBContainer createEJBContainer() { 
+    public static EJBContainer createEJBContainer() {
         return createEJBContainer(null);
     }
 
     /**
-     * Create and initialize an embeddable enterprise bean container with a
-     * set of configuration properties.
+     * Create and initialize an embeddable enterprise bean container with a set of configuration properties.
      *
-     * @param properties Spec-defined and/or vendor-specific
-     * properties.  The spec reserves the prefix
+     * @param properties Spec-defined and/or vendor-specific properties. The spec reserves the prefix
      * <code>"jakarta.ejb."</code> for spec-defined properties.
      *
      * @return EJBContainer instance
-     * @throws jakarta.ejb.EJBException Thrown if the container or application
- could not be successfully initialized.
+     * @throws jakarta.ejb.EJBException Thrown if the container or application could not be successfully initialized.
      */
-    public static EJBContainer createEJBContainer(Map<?,?> properties) {
+    public static EJBContainer createEJBContainer(Map<?, ?> properties) {
         EJBContainer container = null;
 
         Map<String, String> errors = new HashMap<String, String>();
@@ -108,7 +99,7 @@ public abstract class EJBContainer implements AutoCloseable {
                 // The provider is eligible but encountered problems
                 throw e;
             } catch (Throwable t) {
-                // ignore but remember the message in case all fail: 
+                // ignore but remember the message in case all fail:
                 // according to Spec the provider must return null from
                 // createEJBContainer(), if not the right provider.
                 // But non-compliant provider may throw exception
@@ -123,40 +114,34 @@ public abstract class EJBContainer implements AutoCloseable {
     }
 
     /**
-     * Retrieve a naming context for looking up references to session beans
-     * executing in the embeddable container.
+     * Retrieve a naming context for looking up references to session beans executing in the embeddable container.
      *
      * @return naming context
      */
     abstract public Context getContext();
 
     /**
-     * Shutdown an embeddable EJBContainer instance.  Embeddable applications
-     * should always call <code>close()</code> in order to free up the resources
-     * associated with the embeddable container.   
+     * Shutdown an embeddable EJBContainer instance. Embeddable applications should always call <code>close()</code> in
+     * order to free up the resources associated with the embeddable container.
      */
-    abstract public void close(); 
+    abstract public void close();
 
-    //Private variables
+    // Private variables
     private static final String newLine = "\r\n";
-    private static final ServiceLoader<EJBContainerProvider> providers = 
-            ServiceLoader.load(EJBContainerProvider.class);
+    private static final ServiceLoader<EJBContainerProvider> providers = ServiceLoader.load(EJBContainerProvider.class);
 
     /**
-     * Create a meaningful EJBException in case no EJBContainer provider had
-     * been found.
+     * Create a meaningful EJBException in case no EJBContainer provider had been found.
      *
-     * @param properties the properties passed as an argument to the
-     * createEJBContainer() method
+     * @param properties the properties passed as an argument to the createEJBContainer() method
      *
      * @param errors the Map of errors encountered during the createEJBContainer() call
      *
-     * @param returnedNull the Set of providers that returned null on
-     * createEJBContainer() call
+     * @param returnedNull the Set of providers that returned null on createEJBContainer() call
      *
      * @throws EJBException
      */
-    private static void reportError(Map<?,?> properties, Map<String, String> errors, 
+    private static void reportError(Map<?, ?> properties, Map<String, String> errors,
             Set<String> returnedNull) throws EJBException {
         StringBuffer message = new StringBuffer(
                 "No EJBContainer provider available");
@@ -174,7 +159,7 @@ public abstract class EJBContainer implements AutoCloseable {
             message.append("\n");
         }
 
-        for (Map.Entry me: errors.entrySet()) {
+        for (Map.Entry me : errors.entrySet()) {
             message.append("Provider named ");
             message.append(me.getKey());
             message.append(" threw unexpected exception at create EJBContainer: \n");
@@ -182,7 +167,7 @@ public abstract class EJBContainer implements AutoCloseable {
         }
         if (!returnedNull.isEmpty()) {
             message.append("The following providers:\n");
-            for (String n: returnedNull) {
+            for (String n : returnedNull) {
                 message.append(n).append("\n");
             }
             message.append("Returned null from createEJBContainer call.\n");
@@ -199,4 +184,3 @@ public abstract class EJBContainer implements AutoCloseable {
     }
 
 }
-

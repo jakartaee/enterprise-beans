@@ -17,8 +17,7 @@
 package jakarta.ejb;
 
 /**
- * This exception indicates that client access to a business
- * method was denied.
+ * This exception indicates that client access to a business method was denied.
  *
  * @since EJB 3.0
  */
@@ -28,18 +27,16 @@ public class EJBAccessException extends EJBException {
 
     /**
      * Constructs an EJBAccessException with no detail message.
-     */  
+     */
 
     public EJBAccessException() {
     }
 
     /**
-     * Constructs an EJBAccessException with the specified
-     * detailed message.
-     */  
+     * Constructs an EJBAccessException with the specified detailed message.
+     */
     public EJBAccessException(String message) {
         super(message);
     }
 
-  
 }

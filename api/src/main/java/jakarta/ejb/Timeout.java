@@ -22,30 +22,28 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Designates a method on a stateless session bean class, a singleton
- * session bean class, a message driven bean class, or an enterprise bean 2.x entity bean
- * class that should receive enterprise bean timer expirations for that bean.
+ * Designates a method on a stateless session bean class, a singleton session bean class, a message driven bean class,
+ * or an enterprise bean 2.x entity bean class that should receive enterprise bean timer expirations for that bean.
  * <p>
- * The method to which the <code>Timeout</code> annotation is applied
- * must have one of the following signatures, where <code>&#060;METHOD&#062;</code>
- * designates the method name:
+ * The method to which the <code>Timeout</code> annotation is applied must have one of the following signatures, where
+ * <code>&#060;METHOD&#062;</code> designates the method name:
  * <p>
+ * 
  * <pre>
  * void &#060;METHOD&#062;()
  * void &#060;METHOD&#062;(Timer timer)
  * </pre>
  *
- * A timeout callback method can have public, private, protected, or package level 
- * access.  A timeout callback method must not be declared as final or static.
- * Timeout callback methods must not throw application exceptions.
+ * A timeout callback method can have public, private, protected, or package level access. A timeout callback method
+ * must not be declared as final or static. Timeout callback methods must not throw application exceptions.
  * <p>
- * If the bean implements the <code>TimedObject</code> interface, the
- * <code>Timeout</code> annotation can only be applied to the
- * <code>ejbTimeout</code> method.
+ * If the bean implements the <code>TimedObject</code> interface, the <code>Timeout</code> annotation can only be
+ * applied to the <code>ejbTimeout</code> method.
  *
  * @since EJB 3.0
  */
 
-@Target(METHOD) 
+@Target(METHOD)
 @Retention(RUNTIME)
-public @interface Timeout {}
+public @interface Timeout {
+}
