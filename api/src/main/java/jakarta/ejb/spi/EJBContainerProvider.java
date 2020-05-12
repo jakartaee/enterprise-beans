@@ -45,6 +45,7 @@ public interface EJBContainerProvider {
      * @param properties Spec-defined and/or vendor-specific properties, that were passed to
      * <code>jakarta.ejb.embeddable.EJBContainer#createEJBContainer(Map&#60;&#63;,&#63;&#62;)</code> call
      * @return EJBContainer instance or null
+     * @throws EJBException if the container could not be successfully initialized.
      */
     public EJBContainer createEJBContainer(Map<?, ?> properties) throws EJBException;
 

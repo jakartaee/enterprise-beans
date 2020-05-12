@@ -26,6 +26,7 @@ import java.util.concurrent.*;
  * <p>
  * Note that this object is not passed to the client. It is merely a convenience for providing the result value to the
  * container. Therefore, none of its instance methods should be called by the application.
+ * @param <V> The result type returned by this Future's {@code get} method
  *
  * @since EJB 3.1
  */
