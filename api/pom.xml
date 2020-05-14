@@ -232,9 +232,7 @@
                     <source>1.8</source>
                     <doclint>none</doclint>
                     <bottom>
-                        <![CDATA[
-                    <p align="left">Copyright &#169; 2019-${current.year} Eclipse Foundation.<br>Use is subject to
-    <a href="{@docRoot}/doc-files/EFSL.html" target="_top">license terms</a>.]]>
+                        <![CDATA[<p align="left">Copyright &#169; 2018, ${current.year} Eclipse Foundation.<br>Use is subject to <a href="{@docRoot}/doc-files/EFSL.html" target="_top">license terms</a>.]]>
                     </bottom>
                     <docfilessubdirs>true</docfilessubdirs>
                     <doctitle>Jakarta Enterprise Beans ${project.version} API</doctitle>
