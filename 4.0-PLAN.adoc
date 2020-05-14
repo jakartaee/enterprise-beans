@@ -44,7 +44,7 @@ Since version 1.0 EJB has maintained remote EJB interfaces and maintained an RMI
 
 In EJB 2.1, chapter 19 "Support for Distribution and Interoperability" was added requiring all vendors to specifically support the CORBA protocol for cross-vendor interoperability of remote EJB calls, including interoperability requirements for cross-vendor distributed security and cross-vendor distributed transactions.
 
-To reduce complexity of Jakarta Enterprise Beans and Jakarta EE Full Profile platforms the requirements defined in EJB 3.2 chapter 10 "Support for Distributed and Interoperability" and all TCK tests will be removed from Jakarta Enterprise Beans 4.0 and Jakarta EE 9.  No `javax.ejb` or `jakarta.ejb` API class or methods will be removed by this change.
+To reduce complexity of Jakarta Enterprise Beans and Jakarta EE Full Profile platforms the requirements defined in EJB 3.2 chapter 10 "Support for Distributed Interoperability" and all TCK tests will be removed from Jakarta Enterprise Beans 4.0 and Jakarta EE 9.  No `javax.ejb` or `jakarta.ejb` API class or methods will be removed by this change.
 
 Marking these requirements as optional was considered, but ruled out due to several factors:
 

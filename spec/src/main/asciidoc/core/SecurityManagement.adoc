@@ -185,8 +185,7 @@ section should be used only in the less frequent situations in which the
 enterprise bean business methods need to access the security context
 information._
 
-The `jakarta.ejb.EJBContext` interface provides two
-methods (plus two deprecated methods that were defined in Enterprise Beans 1.0) that
+The `jakarta.ejb.EJBContext` interface provides two methods that
 allow the Bean Provider to access security information about the
 enterprise bean’s caller.
 [source, java]
@@ -199,13 +198,6 @@ public interface jakarta.ejb.EJBContext {
     //
     java.security.Principal getCallerPrincipal();
     boolean isCallerInRole(String roleName);
-
-    //
-    // The following two Enterprise Beans 1.0 methods are deprecated.
-    //
-    java.security.Identity getCallerIdentity();
-    boolean isCallerInRole(java.security.Identity role);
-    ...
 }
 ----
 The Bean Provider
@@ -217,39 +209,6 @@ enterprise bean’s business methods as specified in
 If they are otherwise invoked
 when no security context exists, they should throw the
 `java.lang.IllegalStateException` runtime exception.
-
-The
-`getCallerIdentity()` and `isCallerInRole(Identity role)` methods were
-deprecated in Enterprise Beans 1.1. The Bean Provider must use the
-`getCallerPrincipal()` and `isCallerInRole(String roleName)` methods for new
-enterprise beans.
-
-An Enterprise Beans 1.1 or later compliant container may
-choose to implement the two deprecated methods as follows.
-
-* A container that does not want to provide
-support for this deprecated method should throw a `RuntimeException` (or
-subclass of `RuntimeException`) from the `getCallerIdentity` method.
-
-* A container that wants to provide support for
-the `getCallerIdentity` method should return an instance of a subclass of
-the `java.security.Identity` abstract class from the method. The `getName`
-method invoked on the returned object must return the same value that
-`getCallerPrincipal().getName()` would return.
-
-* A container that does not want to provide
-support for this deprecated method should throw a `RuntimeException` (or
-subclass of `RuntimeException`) from the `isCallerInRole(Identity identity)`
-method.
-
-* A container that wants to implement the
-`isCallerInRole(Identity identity)` method should implement it as follows:
-[source, java]
-----
-public boolean isCallerInRole(Identity identity) {
-    return isCallerInRole(identity.getName());
-}
-----
 
 ===== Use of getCallerPrincipal
 

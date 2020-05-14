@@ -1635,9 +1635,6 @@ to enterprise beans with container-managed transaction demarcation.
 * The `TimerService` interface is unavailable
 to stateful session beans.
 
-* Invoking the `getMessageContext` method is
-disallowed for stateful session beans.
-
 * Invoking the `getEJBObject` and
 `getEJBLocalObject` methods is disallowed in the session bean methods in
 which there is no session object identity established for the instance.
@@ -1995,7 +1992,7 @@ a|
 SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getRollbackOnly, setRollbackOnly, getEJBObject, getEJBLocalObject,
-getTimerService, getMessageContext, lookup, getContextData_
+getTimerService, lookup, getContextData_
 
 Message context methods +
 JNDI access to java:comp/env +
@@ -2008,7 +2005,7 @@ a|
 SessionContext methods:: _getBusinessObject,
 getEJBHome, getEJBLocalHome, getCallerPrincipal, isCallerInRole,
 getEJBObject, getEJBLocalObject, getUserTransaction, getTimerService,
-getMessageContext, lookup, getContextData_
+lookup, getContextData_
 
 UserTransaction methods +
 Message context methods +
@@ -2085,10 +2082,6 @@ which the container does not have a meaningful
 transaction context, and for all session
 beans with bean-managed transaction
 demarcation.
-
-* Invoking the `getMessageContext` method is
-disallowed in session bean methods that were not invoked by the
-container through the session bean’s web service endpoint.
 
 * Accessing resource managers, enterprise
 beans, and the EntityManager is disallowed in the session bean methods
@@ -2761,7 +2754,7 @@ from web service endpoint
 a|
 SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getRollbackOnly, setRollbackOnly,
-getTimerService, getMessageContext, lookup, getContextData_
+getTimerService, lookup, getContextData_
 
 Message context methods +
 JNDI access to java:comp/env +
@@ -2773,7 +2766,7 @@ TimerService and Timer methods
 a|
 SessionContext methods:: _getBusinessObject,
 getCallerPrincipal, isCallerInRole, getUserTransaction, getTimerService,
-getMessageContext, lookup, getContextData_
+lookup, getContextData_
 
 UserTransaction methods +
 Message context methods +
@@ -2853,10 +2846,6 @@ which the container does not have a meaningful
 transaction context, and for all session
 beans with bean-managed transaction
 demarcation.
-
-* Invoking the `getMessageContext` method is
-disallowed in session bean methods that were not invoked by the
-container through the session bean’s web service endpoint.
 
 * Accessing resource managers, enterprise
 beans, and the `EntityManager` is disallowed in the session bean methods

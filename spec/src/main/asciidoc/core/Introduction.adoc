@@ -23,6 +23,20 @@ application programmer._
 [[a6]]
 === What is New in This Release
 
+* _The 'javax' namespace/packages have been renamed to 'jakarta'_
+
+* _Removed the methods relying on java.security.Identity_
+
+* _Removed the methods relying on JAX-RPC_
+
+* _Removed the deprecated EJBContext.getEnvironment() method_
+
+* _Removed the Support for Distributed Interoperability_
+
+* _Marked the EJB 2.x API Group as "Optional"_
+
+=== What was New in Enterprise Beans 3.2
+
 The Enterprise Beans 3.2 architecture
 extends Enterprise Beans to include the following new functionality
 and simplifications to the earlier Enterprise Beans APIs:
@@ -179,6 +193,10 @@ checked exceptions._
 implementation of callback interfaces._
 
 === Acknowledgements
+
+The Enterprise Beans 4.0 specification was done under the Jakarta EE Specification Process (JESP).
+
+=== Acknowledgements for Enterprise Beans 3.2
 
 The Enterprise Beans 3.2 specification work was
 conducted as part of JSR-345 under the Java Community Process Program.

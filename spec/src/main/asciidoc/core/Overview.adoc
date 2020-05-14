@@ -450,18 +450,6 @@ entity is next retrieved._
 
 _See the Enterprise Beans Optional Features <<a9890>> document for details._
 
-=== Standard Mapping to CORBA Protocols
-
-To help
-interoperability for Enterprise Beans environments that include systems from multiple
-vendors, the Enterprise Beans specification requires compliant implementations to
-support the interoperability protocol based on CORBA/IIOP for remote
-invocations from Jakarta EE clients. Implementations may support other
-remote invocation protocols in addition to IIOP.
-
-<<a3308>> summarizes the requirements
-for support for distribution and interoperability.
-
 [[a179]]
 === Mapping to Web Service Protocols
 
