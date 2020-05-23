@@ -441,62 +441,45 @@ means that the container must be able to grant the permission, the term
 .Java SE Platform Security Policy for a Standard Enterprise Beans Container
 [cols=2, options=header]
 |===
-Permission name
-|
-Enterprise Beans Container policy
-|
-java.security.AllPermission
-|
-deny
-|
-java.awt.AWTPermission
-|
-deny
-|
-java.io.FilePermission
-|
-deny
-|
-java.net.NetPermission
-|
-deny
-|
-java.util.PropertyPermission
-|
-grant "*", "read"
+| Permission name
+| Enterprise Beans Container policy
 
+| java.security.AllPermission
+| deny
+
+| java.awt.AWTPermission
+| deny
+
+| java.io.FilePermission
+| deny
+
+| java.net.NetPermission
+| deny
+
+| java.util.PropertyPermission
+| grant "*", "read" +
 deny all other
-|
-java.lang.reflect.ReflectPermission
-|
-deny
-|
-java.lang.RuntimePermission
-|
-grant "queuePrintJob"
 
-grant "loadLibrary"
+| java.lang.reflect.ReflectPermission
+| deny
 
+| java.lang.RuntimePermission
+| grant "queuePrintJob" +
+grant "loadLibrary" +
 deny all other
-|
-java.io.FilePermission
-|
-grant "*", "read,write"
 
+| java.io.FilePermission
+| grant "*", "read,write" +
 deny all other
-|
-java.lang.SecurityPermission
 
-deny
-|
-java.io.SerializablePermission
+| java.lang.SecurityPermission
+| deny
 
-deny
-|
-java.net.SocketPermission
-|
-grant "*", "connect" <<a10342>>
+| java.io.SerializablePermission
+| deny
 
+| java.net.SocketPermission
+| grant "*", "connect" <<a10342>> +
 deny all other
 |===
 *Notes:* +
