@@ -57,7 +57,7 @@ An Enterprise Beans QL query is a string which consists of the following clauses
 
 In BNF syntax, an Enterprise Beans QL query is defined as:
 
-[bnf]
+[source]
 ----
 Enterprise Beans QL ::= select_clause from_clause [where_clause] [orderby_clause]
 ----
@@ -181,7 +181,7 @@ The domain of the query may be constrained by path expressions.
 Identification variables designate instances of a particular entity bean abstract schema type.
 The FROM clause can contain multiple identification variable declarations separated by a comma (,).
 
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 from_clause ::= *FROM* identification_variable_declaration
                         [, identification_variable_declaration]*
@@ -261,7 +261,7 @@ A collection member identification variable declaration can use the result of a 
 
 The Enterprise Beans QL syntax for declaring an identification variable as a range variable is similar to that of SQL; optionally, it uses the AS keyword.
 
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 range_variable_declaration ::= abstract_schema_name [*AS*] identifier
 ----
@@ -297,7 +297,7 @@ The argument to the IN operator is a collection-valued path expression.
 The path expression evaluates to a collection type specified as a result of navigation to a collection-valued cmr-field of an entity bean abstract schema type.
 
 The syntax for declaring a collection member identification variable is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 collection_member_declaration ::= *IN* (collection_valued_path_expression) [*AS*] identifier
 ----
@@ -337,7 +337,7 @@ Path expression navigability is composed using "`inner join`" semantics.
 That is, if the value of a non-terminal cmr-field in the path expression is null, the path is considered to have no value, and does not participate in the determination of the result.
 
 The syntax for single-valued path expressions and collection valued path expressions is as follows:
-[bnf]
+[source]
 ----
 cmp_path_expression ::= 
         {identification_variable | single_valued_cmr_path_expression}.cmp_field
@@ -378,7 +378,7 @@ The WHERE clause of a query consists of a conditional expression used to select 
 The WHERE clause thus restricts the result of a query.
 
 A WHERE clause is defined as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 where_clause ::= *WHERE* conditional_expression
 ----
@@ -449,7 +449,7 @@ Arithmetic operations use numeric promotion.
 Standard bracketing `()` for ordering expression evaluation is supported.
 
 Conditional expressions are defined as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 conditional_expression ::= conditional_term | conditional_expression *OR* conditional_term
 conditional_term ::= conditional_factor | conditional_term *AND* conditional_factor
@@ -481,7 +481,7 @@ The following sections describe other operators used in specific expressions.
 ===== Between Expressions
 
 The syntax for the use of the comparison operator [NOT] BETWEEN in an conditional expression is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 arithmetic_expression [*NOT*] *BETWEEN* arithmetic-expression *AND* arithmetic-expression
 ----
@@ -506,7 +506,7 @@ Examples are:
 ===== In Expressions
 
 The syntax for the use of the comparison operator [NOT] IN in a conditional expression is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 cmp_path_expression [*NOT*] *IN* ( {literal | input_parameter} [, {literal | input_parameter}]* )
 ----
@@ -528,7 +528,7 @@ If the value of a `cmp_path_expression` in an IN or NOT IN expression is `NULL` 
 ===== Like Expressions
 
 The syntax for the use of the comparison operator [NOT] LIKE in a conditional expression is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 cmp_path_expression [*NOT*] *LIKE* pattern_value [*ESCAPE* escape_character]
 ----
@@ -554,7 +554,7 @@ If the `escape_character` is specified and is `NULL`, the value of the LIKE expr
 ===== Null Comparison Expressions
 
 The syntax for the use of the comparison operator IS NULL in a conditional expression is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 {single_valued_path_expression | input_parameter} *IS* [*NOT*] *NULL*
 ----
@@ -564,7 +564,7 @@ A null comparison expression tests whether or not the single-valued path express
 ===== Empty Collection Comparison Expressions
 
 The syntax for the use of the comparison operator IS EMPTY in an `empty_collection_comparison_expression` is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 collection_valued_path_expression *IS* [*NOT*] *EMPTY*
 ----
@@ -592,7 +592,7 @@ If the value of the collection-valued path expression in an empty collection com
 The syntax for the use of the comparison operator MEMBER OF
 footnote:a3381[The use of the reserved word OF is optional in this expression.]
 in an `collection_member_expression` is as follows:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 {single_valued_cmr_path_expression | identification_variable | input_parameter}
         [*NOT*] *MEMBER* [*OF*] collection_valued_path_expression
@@ -647,7 +647,7 @@ The SELECT clause contains either a single range variable that ranges over an en
 In the case of a finder method, the SELECT clause is restricted to contain either a single range variable or a single-valued path expression that evaluates to the abstract schema type of the entity bean for which the finder method is defined.
 
 The SELECT clause has the following syntax:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 select_clause ::= *SELECT* [*DISTINCT*] {select_expression | *OBJECT* (identification_variable)}
 
@@ -772,7 +772,7 @@ AND l.price IS NOT NULL
 The ORDER BY clause allows the objects or values that are returned by the query to be ordered.
 
 The syntax of the ORDER BY clause is
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 orderby_clause ::= *ORDER BY* orderby_item [, orderby_item]*
 orderby_item ::= cmp_path_expression [*ASC* | *DESC*]
@@ -1170,7 +1170,7 @@ Enterprise Beans QL BNF notation summary:
 * *boldface* keywords
 
 The following is the complete BNF notation for Enterprise Beans QL:
-[bnf, subs="+quotes"]
+[source, subs="+quotes"]
 ----
 Enterprise Beans QL ::= select_clause from_clause [where_clause] [orderby_clause]
 

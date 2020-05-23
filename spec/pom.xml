@@ -166,8 +166,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceHighlighter>coderay</sourceHighlighter>
                     <attributes>
+                        <sourceHighlighter>coderay</sourceHighlighter>
                         <revnumber>${project.version}</revnumber>
                         <revremark>${status}</revremark>
                         <revdate>${revisiondate}</revdate>

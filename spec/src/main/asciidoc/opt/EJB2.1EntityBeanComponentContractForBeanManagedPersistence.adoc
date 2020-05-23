@@ -1005,7 +1005,7 @@ The method arguments must be the same as the arguments of the matching `ejbCreat
 The `throws` clause may define arbitrary application specific exceptions, including the `jakarta.ejb.CreateException`.
 
 _Compatibility Note: Enterprise Beans 1.0 allowed the `ejbPostCreate` method to throw the `java.rmi.RemoteException` to indicate a non-application exception.
-This practice was deprecated in Enterprise Beans 1.1—an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later compliant enterprise bean should throw the `jakarta.ejb.EJBException` or another `java.lang.RuntimeException` to indicate non-application exceptions to the container (see <<3221>>).
+This practice was deprecated in Enterprise Beans 1.1—an Enterprise Beans 1.1 or Enterprise Beans 2.0 or later compliant enterprise bean should throw the `jakarta.ejb.EJBException` or another `java.lang.RuntimeException` to indicate non-application exceptions to the container (see <<a3221>>).
 An Enterprise Beans 2.0 or later enterprise bean should not throw the `java.rmi.RemoteException` from the `ejbPostCreate` method._
 
 ==== ejbFind Methods
