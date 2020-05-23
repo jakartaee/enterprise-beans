@@ -19,13 +19,6 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>org.eclipse.ee4j</groupId>
-        <artifactId>project</artifactId>
-        <version>1.0.6</version>
-    </parent>
-
     <groupId>org.eclipse.ee4j.ejb-api</groupId>
     <artifactId>ejb-api-parent</artifactId>
     <packaging>pom</packaging>
@@ -43,11 +36,6 @@
 
     <properties>
         <extension.name>jakarta.ejb</extension.name>
-        <non.final>false</non.final>
-        <findbugs.version>3.0.5</findbugs.version>
-        <findbugs.exclude>exclude.xml</findbugs.exclude>
-        <findbugs.threshold>Low</findbugs.threshold>
-        <legal.doc.source>.</legal.doc.source>
     </properties>
 
     <modules>
@@ -58,7 +46,7 @@
     <licenses>
         <license>
             <name>EPL 2.0</name>
-            <url>http://www.eclipse.org/legal/epl-2.0</url>
+            <url>https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html</url>
             <distribution>repo</distribution>
         </license>
         <license>
