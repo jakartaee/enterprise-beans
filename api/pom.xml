@@ -32,9 +32,10 @@
 
     <properties>
         <extension.name>jakarta.ejb</extension.name>
-        <spec.version>${project.version}</spec.version>
-        <non.final>false</non.final>
+        <spec.version>4.0</spec.version>
         <legal.doc.source>../</legal.doc.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -56,7 +57,9 @@
     <description>Jakarta Enterprise Beans</description>
 
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
-
+    <organization>
+        <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
+    </organization>
     <developers>
         <developer>
             <id>yaminikb</id>
@@ -92,9 +95,21 @@
     <scm>
         <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
-        <url>https://github.com/eclipse-ee4j/ejb-api</url>
+        <url>https://github.com/eclipse-ee4j/ejb-api/tree/${project.scm.tag}</url>
         <tag>HEAD</tag>
     </scm>
+    <mailingLists>
+        <mailingList>
+            <name>Enterprise Beans developer discussions</name>
+            <post>mailto:ejb-dev@eclipse.org</post>
+            <subscribe>mailto:ejb-dev-request@eclipse.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:ejb-dev-request@eclipse.org?subject=unsubscribe</unsubscribe>
+            <archive>http://www.eclipse.org/lists/ejb-dev</archive>
+            <otherArchives>
+                <otherArchive>http://www.eclipse.org/lists/ejb-dev/maillist.rss</otherArchive>
+            </otherArchives>
+        </mailingList>
+    </mailingLists>
     <build>
         <resources>
             <resource>
@@ -185,9 +200,10 @@
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <configuration>
                     <spec>
-                        <specVersion>4.0</specVersion>
+                        <jarType>api</jarType>
+                        <specVersion>${spec.version}</specVersion>
                         <specImplVersion>${project.version}</specImplVersion>
-                        <apiPackage>jakarta.ejb</apiPackage>
+                        <apiPackage>${extension.name}</apiPackage>
                     </spec>
                 </configuration>
                 <executions>
@@ -215,9 +231,7 @@
                         <Bundle-Description>
                             Jakarta Enterprise Beans ${spec.version} API Design Specification
                         </Bundle-Description>
-                        <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
-                        <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
-                        <Implementation-Vendor-Id>org.eclipse.ee4j.ejb</Implementation-Vendor-Id>
+                        <Specification-Vendor>${project.organization.name}</Specification-Vendor>
                     </instructions>
                 </configuration>
                 <executions>
