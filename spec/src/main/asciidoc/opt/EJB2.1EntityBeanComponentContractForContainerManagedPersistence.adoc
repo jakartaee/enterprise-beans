@@ -46,7 +46,7 @@ The advantage of using container-managed persistence is that the entity bean can
 The Container Provider’s tools can, for example, generate classes that use JDBC or SQLJ to access the entity state in a relational database; classes that implement access to a non-relational data source, such as an IMS database; or classes that implement function calls to existing enterprise applications. These tools are typically specific to each data source.
 
 .View of Underlying Data Sources Accessed Through Entity Bean
-image:EBOpt-8.svg[]
+image::EBOpt-8.svg[]
 
 === The Entity Bean Provider’s View of Container-Managed Persistence
 
@@ -591,7 +591,7 @@ image::EBOpt-21.svg[]
 
 ===== Many-to-one Unidirectional Relationships
 
-image:EBOpt-22.svg[image]
+image::EBOpt-22.svg[image]
 
 Before change:
 [source, java]
@@ -630,7 +630,7 @@ image::EBOpt-23.svg[]
 
 ===== Many-to-many Bidirectional Relationships
 
-image:EBOpt-24.svg[image]
+image::EBOpt-24.svg[image]
 
 Before change the following holds:
 [source, java]
