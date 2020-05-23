@@ -34,9 +34,6 @@
         <extension.name>jakarta.ejb</extension.name>
         <spec.version>${project.version}</spec.version>
         <non.final>false</non.final>
-        <findbugs.version>3.0.5</findbugs.version>
-        <findbugs.exclude>exclude.xml</findbugs.exclude>
-        <findbugs.threshold>Low</findbugs.threshold>
         <legal.doc.source>../</legal.doc.source>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -46,8 +43,12 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+        <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>
+        <spotbugs.version>4.0.3</spotbugs.version>
         <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <build-helper-maven-plugin.version>3.1.0</build-helper-maven-plugin.version>
+        <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
         <jakarta.transaction-api.version>2.0.0-RC1</jakarta.transaction-api.version>
     </properties>
 
@@ -134,11 +135,29 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <doclint>none</doclint>
+                        <bottom>
+                            <![CDATA[<p align="left">Copyright &#169; 2018, ${current.year} Eclipse Foundation.<br>Use is subject to <a href="{@docRoot}/doc-files/EFSL.html" target="_top">license terms</a>.]]>
+                        </bottom>
+                        <docfilessubdirs>true</docfilessubdirs>
+                        <doctitle>Jakarta Enterprise Beans ${project.version} API</doctitle>
+                        <windowtitle>Jakarta Enterprise Beans ${project.version} API</windowtitle>
+                    </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>${findbugs.version}</version>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs-maven-plugin.version}</version>
+                    <dependencies>
+                        <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                        <dependency>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs</artifactId>
+                            <version>${spotbugs.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -241,16 +260,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <doclint>none</doclint>
-                    <bottom>
-                        <![CDATA[<p align="left">Copyright &#169; 2018, ${current.year} Eclipse Foundation.<br>Use is subject to <a href="{@docRoot}/doc-files/EFSL.html" target="_top">license terms</a>.]]>
-                    </bottom>
-                    <docfilessubdirs>true</docfilessubdirs>
-                    <doctitle>Jakarta Enterprise Beans ${project.version} API</doctitle>
-                    <windowtitle>Jakarta Enterprise Beans ${project.version} API</windowtitle>
-                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -275,41 +284,12 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <configuration>
-                    <threshold>${findbugs.threshold}</threshold>
-                    <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
-                    <findbugsXmlOutput>true</findbugsXmlOutput>
-                    <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                     <preparationGoals>install</preparationGoals>
                     <goals>deploy</goals>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <configuration>
-                    <reporting>
-                        <plugins>
-                            <plugin>
-                                <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>findbugs-maven-plugin</artifactId>
-                                <version>${findbugs.version}</version>
-                                <configuration>
-                                    <threshold>${findbugs.threshold}</threshold>
-                                    <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
-                                </configuration>
-                            </plugin>
-                        </plugins>
-                    </reporting>
                 </configuration>
             </plugin>
             <plugin>
@@ -329,7 +309,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${build-helper-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>add-legal-resource</id>
@@ -359,6 +339,7 @@
                         <configuration>
                             <name>current.year</name>
                             <pattern>yyyy</pattern>
+                            <locale>en</locale>
                         </configuration>
                     </execution>
                 </executions>
@@ -388,6 +369,30 @@
             </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
     <dependencies>
         <dependency>
             <groupId>jakarta.transaction</groupId>
