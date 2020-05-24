@@ -54,6 +54,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.site.skip>true</maven.site.skip>
         <spec.version>4.0</spec.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
