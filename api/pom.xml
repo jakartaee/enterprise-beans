@@ -53,8 +53,8 @@
         <jakarta.transaction-api.version>2.0.0-RC1</jakarta.transaction-api.version>
     </properties>
 
-    <name>Jakarta Enterprise Beans</name>
-    <description>Jakarta Enterprise Beans</description>
+    <name>Jakarta Enterprise Beans API</name>
+    <description>Jakarta Enterprise Beans API</description>
 
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
     <organization>

@@ -22,6 +22,7 @@
     <artifactId>jakarta.ejb-spec</artifactId>
     <packaging>pom</packaging>
     <name>Jakarta Enterprise Beans Specification</name>
+    <description>Jakarta Enterprise Beans Specification</description>
     <version>4.0-SNAPSHOT</version>
     <licenses>
         <license>

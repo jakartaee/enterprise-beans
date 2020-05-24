@@ -24,7 +24,7 @@
     <packaging>pom</packaging>
     <version>4.0.0-SNAPSHOT</version>
     <name>Jakarta Enterprise Beans Parent</name>
-    <description>Jakarta Enterprise Beans</description>
+    <description>Jakarta Enterprise Beans Parent</description>
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
     <organization>
         <name>Eclipse Foundation</name>
