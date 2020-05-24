@@ -26,19 +26,32 @@
     <name>Jakarta Enterprise Beans Parent</name>
     <description>Jakarta Enterprise Beans</description>
     <url>https://github.com/eclipse-ee4j/ejb-api</url>
-
+    <organization>
+        <name>Eclipse Foundation</name>
+        <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
+    </organization>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/eclipse-ee4j/ejb-api/issues</url>
+    </issueManagement>
     <scm>
         <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
         <url>https://github.com/eclipse-ee4j/ejb-api/tree/${project.scm.tag}</url>
-      <tag>HEAD</tag>
+        <tag>HEAD</tag>
     </scm>
-
-    <modules>
-        <module>api</module>
-        <module>spec</module>
-    </modules>
-
+    <mailingLists>
+        <mailingList>
+            <name>Enterprise Beans developer discussions</name>
+            <post>mailto:ejb-dev@eclipse.org</post>
+            <subscribe>mailto:ejb-dev-request@eclipse.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:ejb-dev-request@eclipse.org?subject=unsubscribe</unsubscribe>
+            <archive>http://www.eclipse.org/lists/ejb-dev</archive>
+            <otherArchives>
+                <otherArchive>http://www.eclipse.org/lists/ejb-dev/maillist.rss</otherArchive>
+            </otherArchives>
+        </mailingList>
+    </mailingLists>
     <licenses>
         <license>
             <name>EPL 2.0</name>
@@ -48,6 +61,11 @@
         <license>
             <name>GPL2 w/ CPE</name>
             <url>https://www.gnu.org/software/classpath/license.html</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>EFSL 1.0</name>
+            <url>https://www.eclipse.org/legal/efsl.php</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -124,4 +142,8 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>api</module>
+        <module>spec</module>
+    </modules>
 </project>
