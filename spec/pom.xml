@@ -24,6 +24,10 @@
     <name>Jakarta Enterprise Beans Specification</name>
     <description>Jakarta Enterprise Beans Specification</description>
     <version>4.0-SNAPSHOT</version>
+    <organization>
+        <name>Eclipse Foundation</name>
+        <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
+    </organization>
     <licenses>
         <license>
             <name>EFSL 1.0</name>
