@@ -17,18 +17,44 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.eclipse.ee4j.ejb-api</groupId>
-        <artifactId>ejb-api-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>enterprise-beans-spec</artifactId>
+    <groupId>jakarta.ejb</groupId>
+    <artifactId>jakarta.ejb-spec</artifactId>
     <packaging>pom</packaging>
     <name>Jakarta Enterprise Beans Specification</name>
     <version>4.0-SNAPSHOT</version>
-
+    <licenses>
+        <license>
+            <name>EFSL 1.0</name>
+            <url>https://www.eclipse.org/legal/efsl.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/eclipse-ee4j/ejb-api/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
+        <url>https://github.com/eclipse-ee4j/ejb-api/tree/${project.scm.tag}</url>
+        <tag>HEAD</tag>
+    </scm>
+    <mailingLists>
+        <mailingList>
+            <name>Enterprise Beans developer discussions</name>
+            <post>mailto:ejb-dev@eclipse.org</post>
+            <subscribe>mailto:ejb-dev-request@eclipse.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:ejb-dev-request@eclipse.org?subject=unsubscribe</unsubscribe>
+            <archive>http://www.eclipse.org/lists/ejb-dev</archive>
+            <otherArchives>
+                <otherArchive>http://www.eclipse.org/lists/ejb-dev/maillist.rss</otherArchive>
+            </otherArchives>
+        </mailingList>
+    </mailingLists>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
         <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
@@ -37,6 +63,7 @@
         <jruby.version>9.2.11.1</jruby.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
@@ -206,6 +233,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <preparationGoals>clean,package</preparationGoals>
+                </configuration>
             </plugin>
         </plugins>
     </build>
