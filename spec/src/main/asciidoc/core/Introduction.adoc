@@ -37,7 +37,7 @@ application programmer._
 
 === What was New in Enterprise Beans 3.2
 
-The Enterprise Beans 3.2 architecture
+The Enterprise Beans 3.2 <<a9891>> architecture
 extends Enterprise Beans to include the following new functionality
 and simplifications to the earlier Enterprise Beans APIs:
 
@@ -105,7 +105,7 @@ using the Java I/O package._
 
 === What was New in Enterprise Beans 3.1
 
-The Enterprise Beans 3.1 <<a9891>> architecture extended
+The Enterprise Beans 3.1 architecture extended
 Enterprise Beans to include the following new functionality and
 simplifications to the earlier Enterprise Beans APIs:
 

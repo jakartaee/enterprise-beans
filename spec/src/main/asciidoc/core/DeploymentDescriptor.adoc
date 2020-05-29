@@ -467,11 +467,11 @@ The Container Provider provides tools that
 read and import the information contained in the XML deployment
 descriptor.
 
-All Enterprise Beans 3.2 implementations must support Enterprise Beans
-3.1, Enterprise Beans 3.0, Enterprise Beans 2.1, Enterprise Beans 2.0, and Enterprise Beans 1.1 as well as Enterprise Beans 3.1
-deployment descriptors. The definitions of the Enterprise Beans 3.1 Enterprise Beans 3.0, Enterprise Beans 2.1,
+All Enterprise Beans 4.0 implementations must support Enterprise Beans
+3.1, Enterprise Beans 3.0, Enterprise Beans 2.1, Enterprise Beans 2.0, and Enterprise Beans 1.1 as well as Enterprise Beans 3.2
+deployment descriptors. The definitions of the Enterprise Beans 3.2, Enterprise Beans 3.1, Enterprise Beans 3.0, Enterprise Beans 2.1,
 Enterprise Beans 2.0, and Enterprise Beans 1.1 deployment descriptors can be found in the
-Enterprise Beans 3.1<<a9891>> and earlier specifications.
+Enterprise Beans 3.2<<a9891>> and earlier specifications.
 
 [[a5910]]
 === Deployment Descriptor XML Schema

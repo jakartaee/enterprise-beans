@@ -2,74 +2,71 @@
 [bibliography]
 == Related Documents
 
-- [[[a9850, 1]]] Jakarta Enterprise Beans, Core Features 4.0. (this specification)
+- [[[a9891, 1]]] Enterprise JavaBeans(TM), version 3.2. 
+https://jcp.org/en/jsr/detail?id=345.
+
+- [[[a9890, 2]]] Jakarta Enterprise Beans, Optional Features 4.0
 https://jakarta.ee/specifications/enterprise-beans/4.0/.
 
-- [[[a9851, 2]]] Jakarta Persistence 3.0. 
+- [[[a9851, 3]]] Jakarta Persistence 3.0. 
 https://jakarta.ee/specifications/persistence/3.0/.
 
-- [[[a9854, 3]] Java(TM) Naming and Directory Interface 1.2 Specification (JNDI).
-https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/index.html.
-
-- [[[a9857, 4]]] Jakarta Transactions 2.0. 
-https://jakarta.ee/specifications/transactions/2.0/.
-
-- [[[a9858, 5]]] Java(TM) Transaction Service, version 1.0 (JTS).
-https://www.oracle.com/technetwork/java/javaee/jts-spec095-1508547.pdf.
-
-- [[[a9861, 6]]] Jakarta EE Platform 9. 
-https://jakarta.ee/specifications/platform/9/.
-
-- [[[a9862, 7]]] Jakarta Messaging 3.0. 
-https://jakarta.ee/specifications/messaging/3.0/.
-
-- [[[a9863, 8]]] Jakarta Connectors 2.0. 
-https://jakarta.ee/specifications/connectors/2.0/.
-
-- [[[a9873, 9]]] Jakarta XML RPC 1.1. 
-https://jakarta.ee/specifications/xml-rpc/1.1/.
-
-- [[[a9874, 10]]]Web Services Description Language (WSDL) 1.1. 
-https://www.w3.org/TR/wsdl.html.
-
-- [[[a9875, 11]]] W3C: SOAP 1.2.
-https://www.w3.org/TR/soap/.
-
-- [[[a9876, 12]]] The Java Virtual Machine Specification.
-https://docs.oracle.com/javase/specs/jvms/se8/html/index.html.
-
-- [[[a9878, 13]]] Jakarta Web Services Metadata 3.0. 
-https://jakarta.ee/specifications/web-services-metadata/3.0/.
-
-- [[[a9879, 14]]] Jakarta Enterprise Web Services 2.0.
-https://jakarta.ee/specifications/enterprise-ws/2.0/.
-
-- [[[a9881, 15]]] Jakarta XML Web Services 3.0. 
+- [[[a9881, 4]]] Jakarta XML Web Services 3.0. 
 https://jakarta.ee/specifications/xml-web-services/3.0/.
 
-- [[[a9882, 16]]] JAR File Specification,
-https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html.
+- [[[a9879, 5]]] Jakarta Enterprise Web Services 2.0.
+https://jakarta.ee/specifications/enterprise-ws/2.0/.
 
-- [[[a9883, 17]]] Java(TM) Platform, Standard Edition 8 API Specification.
-https://docs.oracle.com/javase/8/docs/api/index.html.
+- [[[a9878, 6]]] Jakarta Web Services Metadata 3.0. 
+https://jakarta.ee/specifications/web-services-metadata/3.0/.
 
-- [[[a9885, 18]]] List of zoneinfo time zones: 
-https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+- [[[a9873, 7]]] Jakarta XML RPC 1.1. 
+https://jakarta.ee/specifications/xml-rpc/1.1/.
 
-- [[[a9886, 19]]] Jakarta Managed Beans 2.0. 
+- [[[a9886, 8]]] Jakarta Managed Beans 2.0. 
 https://jakarta.ee/specifications/managedbeans/2.0/.
 
-- [[[a9887, 20]]] Jakarta Interceptors 2.0. 
-https://jakarta.ee/specifications/interceptors/2.0/.
-
-- [[[a9888, 21]]] Jakarta Context Dependency Injection 3.0 
+- [[[a9888, 9]]] Jakarta Context Dependency Injection 3.0 
 https://jakarta.ee/specifications/cdi/3.0/.
 
-- [[[a9889, 22]]] Jakarta RESTful Web Services 3.0
+- [[[a9889, 10]]] Jakarta RESTful Web Services 3.0
 https://jakarta.ee/specifications/restful-ws/3.0/.
 
-- [[[a9890, 23]]] Jakarta Enterprise Beans, Optional Features 4.0
-https://jakarta.ee/specifications/enterprise-beans/4.0/.
+- [[[a9876, 11]]] The Java Virtual Machine Specification.
+https://docs.oracle.com/javase/specs/jvms/se8/html/index.html.
 
-- [[[a9891, 24]]] Enterprise JavaBeans(TM), version 3.2. 
-https://jcp.org/en/jsr/detail?id=345.
+- [[[a9875, 12]]] W3C: SOAP 1.2.
+https://www.w3.org/TR/soap/.
+
+- [[[a9874, 13]]]Web Services Description Language (WSDL) 1.1. 
+https://www.w3.org/TR/wsdl.html.
+
+- [[[a9883, 14]]] Java(TM) Platform, Standard Edition 8 API Specification.
+https://docs.oracle.com/javase/8/docs/api/index.html.
+
+- [[[a9854, 15]]] Java(TM) Naming and Directory Interface 1.2 Specification (JNDI).
+https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/index.html.
+
+- [[[a9887, 16]]] Jakarta Interceptors 2.0. 
+https://jakarta.ee/specifications/interceptors/2.0/.
+
+- [[[a9863, 17]]] Jakarta Connectors 2.0. 
+https://jakarta.ee/specifications/connectors/2.0/.
+
+- [[[a9857, 18]]] Jakarta Transactions 2.0. 
+https://jakarta.ee/specifications/transactions/2.0/.
+
+- [[[a9861, 19]]] Jakarta EE Platform 9. 
+https://jakarta.ee/specifications/platform/9/.
+
+- [[[a9858, 20]]] Java(TM) Transaction Service, version 1.0 (JTS).
+https://www.oracle.com/technetwork/java/javaee/jts-spec095-1508547.pdf.
+
+- [[[a9862, 21]]] Jakarta Messaging 3.0. 
+https://jakarta.ee/specifications/messaging/3.0/.
+
+- [[[a9885, 22]]] List of zoneinfo time zones: 
+https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+
+- [[[a9882, 23]]] JAR File Specification,
+https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html.
