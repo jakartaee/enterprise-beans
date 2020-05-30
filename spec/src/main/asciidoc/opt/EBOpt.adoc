@@ -12,8 +12,6 @@ include::EJB2.1EntityBeanComponentContractForBeanManagedPersistence.adoc[]
 
 include::EJB1.1EntityBeanComponentContractForContainerManagedPersistence.adoc[]
 
-include::SupportForJAX-RPCWebServiceEndpoints.adoc[]
-
 include::SupportForTransactions.adoc[]
 
 include::ExceptionHandling.adoc[]
