@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="386" height="361" font-family="serif" font-size="16">
+  <text x="19" y="26" font-style="italic">
+    <tspan>A and B are in a one-to-one bidirectional relationship:</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M34 72h100v80H34z"/>
+  <text x="34" y="118">
+    <tspan dx="45">A</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M145 118l-6-6 6-6m-6 6h106m-6-6l6 6-6 6"/>
+  <text x="142" y="96">
+    <tspan>0..1</tspan>
+  </text>
+  <text x="216" y="96">
+    <tspan>0..1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M250 72h100v80H250z"/>
+  <text x="250" y="118">
+    <tspan dx="45">B</tspan>
+  </text>
+  <text x="11" y="195" font-style="italic">
+    <tspan>Before Change:</tspan>
+  </text>
+  <rect width="70" height="36" x="65" y="232" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="74" y="255">
+    <tspan dx="20">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M147 255l-6-5.5 6-5.5m-6 5.5h94m-6-5.5l6 5.5-6 5.5"/>
+  <rect width="70" height="36" x="242" y="232" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="249" y="255">
+    <tspan dx="20">b1</tspan>
+  </text>
+  <rect width="70" height="36" x="65" y="305" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="74" y="328">
+    <tspan dx="20">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M147 328l-6-5.5 6-5.5m-6 5.5h94m-6-5.5l6 5.5-6 5.5"/>
+  <rect width="70" height="36" x="242" y="305" fill="#fff" stroke="#000" stroke-width="2" rx="18" ry="15"/>
+  <text x="249" y="328">
+    <tspan dx="20">b2</tspan>
+  </text>
+</svg>

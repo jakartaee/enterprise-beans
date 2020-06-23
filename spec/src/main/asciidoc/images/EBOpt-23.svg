@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="345" height="378" font-family="serif" font-size="16">
+  <text x="10" y="20" font-style="italic">
+    <tspan>After Change:</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M38.667 103h46.666C91.167 103 97 111.75 97 120.5S91.167 138 85.333 138H38.667C32.833 138 27 129.25 27 120.5S32.833 103 38.667 103"/>
+  <text x="35" y="126">
+    <tspan x="54.445" y="126">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M108 117l-7.604-.17L100 109m.396 7.83l45.811-49.49 3.397-3.67"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M164.667 43h46.666C217.167 43 223 51.75 223 60.5S217.167 78 211.333 78h-46.666C158.833 78 153 69.25 153 60.5S158.833 43 164.667 43"/>
+  <text x="162" y="66">
+    <tspan x="176.891" y="66">b1</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M109 122l-7.304-3.218L105 112m-3.304 6.782l67.913-24.846 4.695-1.718"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M190.667 73h46.666C243.167 73 249 81.75 249 90.5s-5.833 17.5-11.667 17.5h-46.666C184.833 108 179 99.25 179 90.5S184.833 73 190.667 73"/>
+  <text x="188" y="96">
+    <tspan x="202.594" y="96">b1</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M108 126l-6-5.476 6-5.524m-6 5.524l91 .429 5 .023"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M214.667 103h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="212" y="126">
+    <tspan x="224" y="126">b1</tspan><tspan dy="5" font-size=".75em">n-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M106 128l-4.13-6.366L109 117m-7.13 4.634l116.39 27.098 4.87 1.134"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M239.667 134h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="237" y="157">
+    <tspan x="251.188" y="157">b1</tspan><tspan dy="5" font-size=".75em">n</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M38.667 219h46.666C91.167 219 97 227.75 97 236.5S91.167 254 85.333 254H38.667C32.833 254 27 245.25 27 236.5S32.833 219 38.667 219"/>
+  <text x="35" y="242">
+    <tspan x="54.445" y="242">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M109 241l-7.147-3.704L106 230m-4.147 7.296l116.441-28.888 4.853-1.204"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M239.667 189h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="237" y="212">
+    <tspan x="251.594" y="212">b2</tspan><tspan dy="5" font-size=".75em">1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M108 242l-6-5.43 6-5.57m-6 5.57l91 1.29 5 .07"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M214.667 220h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="212" y="243">
+    <tspan x="226.594" y="243">b2</tspan><tspan dy="5" font-size=".75em">2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M105 246l-3.323-7.732L109 235m-7.323 3.268l67.97 25.696 4.676 1.768"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M190.667 250h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="188" y="273">
+    <tspan x="202.188" y="273">b2</tspan><tspan dy="5" font-size=".75em">k</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M100 248l.366-7.803L108 241m-7.634-.803l45.901 50.409 3.367 3.697"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M164.667 280h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="162" y="303">
+    <tspan x="176" y="303">b2</tspan><tspan dy="5" font-size=".75em">m-1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M95 248l3.573-6.754L106 245m-7.427-3.754l25.28 76.262 1.574 4.746"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M138.667 309h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="136" y="332">
+    <tspan x="148.188" y="332">b2</tspan><tspan dy="5" font-size=".75em">m</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M92 247l5.206-5.504L103 247m-5.794-5.504l4.381 106.013.207 4.995"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M113.667 340h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="111" y="363">
+    <tspan x="127.367" y="363">b1</tspan><tspan dy="5" font-size=".75em">j</tspan>
+  </text>
+</svg>

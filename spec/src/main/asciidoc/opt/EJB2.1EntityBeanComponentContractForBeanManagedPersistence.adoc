@@ -19,7 +19,7 @@ The entity bean component protocol for bean-managed persistence allows the entit
 This chapter describes the contracts for bean-managed persistence.
 
 .Client View of Underlying Data Sources Accessed Through Entity Bean
-image::EBOpt-38.png[]
+image::EBOpt-38.svg[]
 
 ==== Entity Bean Provider’s View of Persistence
 
@@ -41,7 +41,7 @@ access components or ensuring portability of these components for bean-managed p
 This section describes the runtime model and the classes used in the description of the contract between an entity bean with bean-managed persistence and its container.
 
 .Overview of the Entity Bean Runtime Execution Model
-image::EBOpt-39.png[]
+image::EBOpt-39.svg[]
 
 An enterprise bean instance is an object whose class is provided by the Bean Provider.
 
@@ -58,7 +58,7 @@ The entity EJBHome or EJBLocalHome object implements the entity bean’s home in
 ==== Instance Life Cycle
 [[a2480]]
 .Life Cycle of an Entity Bean Instance.
-image::EBOpt-40.png[]
+image::EBOpt-40.svg[]
 
 An entity bean instance is in one of the following three states:
 
@@ -870,7 +870,7 @@ The transaction synchronization is performed automatically by the underlying dat
 The database system provides all the necessary transaction synchronization; the container does not have to perform any synchronization logic.
 
 .Multiple Clients Can Access the Same Entity Object Using Multiple Instances
-image::EBOpt-41.png[]
+image::EBOpt-41.svg[]
 
 _With this strategy, the type of lock acquired by `ejbLoad` leads to a trade-off.
 If `ejbLoad` acquires an exclusive lock on the instance's state in the database, then throughput of read-only transactions could be impacted.
@@ -882,7 +882,7 @@ The container activates a single instance and serializes the access from multipl
 The commit-time option A applies to this type of container.
 
 .Multiple Clients Can Access the Same Entity Object Using Single Instance
-image::EBOpt-42.png[]
+image::EBOpt-42.svg[]
 
 [[a2872]]
 ==== Non-reentrant and Re-entrant Instances

@@ -46,7 +46,7 @@ The advantage of using container-managed persistence is that the entity bean can
 The Container Provider’s tools can, for example, generate classes that use JDBC or SQLJ to access the entity state in a relational database; classes that implement access to a non-relational data source, such as an IMS database; or classes that implement function calls to existing enterprise applications. These tools are typically specific to each data source.
 
 .View of Underlying Data Sources Accessed Through Entity Bean
-image:EBOpt-8.png[]
+image::EBOpt-8.svg[]
 
 === The Entity Bean Provider’s View of Container-Managed Persistence
 
@@ -361,7 +361,7 @@ The results of changes are designated graphically as well as in conditional expr
 
 ===== One-to-one Bidirectional Relationships
 
-image::EBOpt-9.png[]
+image::EBOpt-9.svg[]
 
 Before change:
 [source, java]
@@ -385,11 +385,11 @@ Expected result:
 (a1.isIdentical(b2.getA()))
 ----
 
-image::EBOpt-10.png[]
+image::EBOpt-10.svg[]
 
 ===== One-to-one Unidirectional Relationships
 
-image::EBOpt-11.png[]
+image::EBOpt-11.svg[]
 
 Before change:
 [source, java]
@@ -410,11 +410,11 @@ Expected result:
 (b2.isIdentical(a1.getB())) && (a2.getB() == null)
 ----
 
-image::EBOpt-12.png[]
+image::EBOpt-12.svg[]
 
 ===== One-to-many Bidirectional Relationships
 
-image::EBOpt-13.png[]
+image::EBOpt-13.svg[]
 
 Before change:
 [source, java]
@@ -449,7 +449,7 @@ Expected result:
 (a1.isIdentical(b2m.getA()))
 ----
 
-image::EBOpt-14.png[]
+image::EBOpt-14.svg[]
 
 Change:
 [source, java]
@@ -476,7 +476,7 @@ Expected result:
 (a1.isIdentical(b2m.getA()))
 ----
 
-image::EBOpt-15.png[]
+image::EBOpt-15.svg[]
 
 Change:
 [source, java]
@@ -503,7 +503,7 @@ Expected result:
 (a1.isIdentical(b2m.getA()))
 ----
 
-image::EBOpt-16.png[]
+image::EBOpt-16.svg[]
 
 Change:
 [source, java]
@@ -522,11 +522,11 @@ Expected result:
 !(b1.contains(b1n))
 ----
 
-image::EBOpt-17.png[]
+image::EBOpt-17.svg[]
 
 ===== One-to-many Unidirectional Relationships
 
-image::EBOpt-18.png[]
+image::EBOpt-18.svg[]
 
 Before change:
 [source, java]
@@ -555,7 +555,7 @@ Expected result:
 (a1.getB().contains(b2m))
 ----
 
-image::EBOpt-19.png[]
+image::EBOpt-19.svg[]
 
 Change:
 [source, java]
@@ -570,7 +570,7 @@ Expected result:
 (b1.contains(b2m))
 ----
 
-image::EBOpt-20.png[]
+image::EBOpt-20.svg[]
 
 Change:
 [source, java]
@@ -587,11 +587,11 @@ Expected result:
 !(a1.getB().contains(b1n)) &&
 ----
 
-image::EBOpt-21.png[]
+image::EBOpt-21.svg[]
 
 ===== Many-to-one Unidirectional Relationships
 
-image:EBOpt-22.png[image]
+image::EBOpt-22.svg[image]
 
 Before change:
 [source, java]
@@ -626,11 +626,11 @@ Expected result:
 (a2.isIdentical(b2m.getA()))
 ----
 
-image::EBOpt-23.png[]
+image::EBOpt-23.svg[]
 
 ===== Many-to-many Bidirectional Relationships
 
-image:EBOpt-24.png[image]
+image::EBOpt-24.svg[image]
 
 Before change the following holds:
 [source, java]
@@ -692,7 +692,7 @@ Expected result:
 (b4.getA().contains(a5))
 ----
 
-image::EBOpt-25.png[]
+image::EBOpt-25.svg[]
 
 Change:
 [source, java]
@@ -712,7 +712,7 @@ Expected result:
 (b3.getA().contains(a4)) &&
 ----
 
-image::EBOpt-26.png[]
+image::EBOpt-26.svg[]
 
 Change:
 [source, java]
@@ -729,11 +729,11 @@ Expected result:
 (b2.getA().contains(a3))
 ----
 
-image::EBOpt-27.png[]
+image::EBOpt-27.svg[]
 
 ===== Many-to-many Unidirectional Relationships
 
-image::EBOpt-28.png[]
+image::EBOpt-28.svg[]
 
 Before change the following holds:
 [source, java]
@@ -770,7 +770,7 @@ Expected Result:
 (a3.getB().contains(b4)) &&
 ----
 
-image::EBOpt-29.png[]
+image::EBOpt-29.svg[]
 
 Change:
 [source, java]
@@ -786,7 +786,7 @@ Expected result:
 (a1.getB().contains(b3))
 ----
 
-image::EBOpt-30.png[]
+image::EBOpt-30.svg[]
 
 Change:
 [source, java]
@@ -801,7 +801,7 @@ Expected result:
 (a2.getB().contains(b3))
 ----
 
-image::EBOpt-31.png[]
+image::EBOpt-31.svg[]
 
 ==== Collections Managed by the Container
 
@@ -874,7 +874,7 @@ Sample code for the `OrderBean` class follows the figure.
 
 [[a861]]
 .Relationship Example
-image::EBOpt-32.png[]
+image::EBOpt-32.svg[]
 
 [source, java]
 ----
@@ -1171,7 +1171,7 @@ The client of an entity bean may be a local client or it may be a remote client.
 
 [[a1155]]
 .Overview of the Entity Bean Runtime Execution Model
-image::EBOpt-33.png[]
+image::EBOpt-33.svg[]
 
 An enterprise bean is an object whose class is provided by the Bean Provider.
 The class of an entity bean with container-managed persistence is abstract.
@@ -1233,7 +1233,7 @@ This section describes the part of the component contract between the entity bea
 
 [[a1191]]
 .Life Cycle of an Entity Bean Instance.
-image::EBOpt-34.png[]
+image::EBOpt-34.svg[]
 
 An entity bean instance is in one of the following three states:
 
@@ -2126,7 +2126,7 @@ The transaction synchronization is performed by the underlying database during t
 The commit-time options B and C in <<a1554>> apply to this type of container.
 
 .Multiple Clients Can Access the Same Entity Object Using Multiple Instances
-image::EBOpt-35.png[]
+image::EBOpt-35.svg[]
 
 _With this strategy, the type of lock acquired by `ejbLoad` or get accessor method (if a lazy loading cache management strategy is used) leads to a trade-off.
 If `ejbLoad` or the accessor method acquires an exclusive lock on the instance's state in the database, the throughput of read-only transactions could be impacted.
@@ -2140,7 +2140,7 @@ this instance.
 The commit-time option A in <<a1554>> applies to this type of container.
 
 .Multiple Clients Can Access the Same Entity Object Using Single Instance
-image::EBOpt-36.png[]
+image::EBOpt-36.svg[]
 
 [[a1596]]
 ==== Non-reentrant and Re-entrant Instances

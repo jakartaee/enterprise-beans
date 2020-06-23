@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="396" height="555" font-family="serif" font-size="16">
+  <text x="10" y="25" font-style="italic">
+    <tspan x="12.313" y="25">A and B are in a many-to-many unidirectional relationship:</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M43 72h100v80H43z"/>
+  <text x="52" y="118">
+    <tspan x="87.594" y="118">A</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M148 112h106m-6-6l6 6-6 6"/>
+  <text x="151" y="96">
+    <tspan>0..*</tspan>
+  </text>
+  <text x="225.6" y="96">
+    <tspan>0..*</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M259 72h100v80H259z"/>
+  <text x="267" y="118">
+    <tspan x="303.664" y="118">B</tspan>
+  </text>
+  <text x="20" y="195" font-style="italic">
+    <tspan>Before Change:</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M101.667 214h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666C95.833 249 90 240.25 90 231.5s5.833-17.5 11.667-17.5"/>
+  <text x="98" y="237">
+    <tspan x="117.445" y="237">a1</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M165 231.5h72m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M244 275l3.27 7.377L240 286m7.27-3.623l-87.81-30.131-4.73-1.623"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M253.667 214h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="251" y="237">
+    <tspan x="269.594" y="237">b1</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M101.667 284h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666C95.833 319 90 310.25 90 301.5s5.833-17.5 11.667-17.5"/>
+  <text x="98" y="307">
+    <tspan x="117.445" y="307">a2</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M154.73 282.377l87.81-30.131 4.73-1.623M240 247l7.27 3.623L244 258"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M165 301.5h72m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M244 345l3.27 7.377L240 356m7.27-3.623l-87.81-30.131-4.73-1.623"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M253.667 284h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="251" y="307">
+    <tspan x="269.594" y="307">b2</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M101.667 354h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666C95.833 389 90 380.25 90 371.5s5.833-17.5 11.667-17.5"/>
+  <text x="98" y="377">
+    <tspan x="117.445" y="377">a3</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M165 371.5h72m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M154.73 352.377l87.81-30.131 4.73-1.623M240 317l7.27 3.623L244 328"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M244 415l3.27 7.377L240 426m7.27-3.623l-87.81-30.131-4.73-1.623"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M253.667 354h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="251" y="377">
+    <tspan x="269.594" y="377">b3</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M101.667 424h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666C95.833 459 90 450.25 90 441.5s5.833-17.5 11.667-17.5"/>
+  <text x="98" y="447">
+    <tspan x="117.445" y="447">a4</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M165 441.5h72m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M154.73 422.377l87.81-30.131 4.73-1.623M240 387l7.27 3.623L244 398"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M244 485l3.27 7.377L240 496m7.27-3.623l-87.81-30.131-4.73-1.623"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M253.667 424h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="251" y="447">
+    <tspan x="269.594" y="447">b4</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M101.667 494h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666C95.833 529 90 520.25 90 511.5s5.833-17.5 11.667-17.5"/>
+  <text x="98" y="517">
+    <tspan x="117.445" y="517">a5</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M165 511.5h72m-6-5.5l6 5.5-6 5.5"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M154.73 492.377l87.81-30.131 4.73-1.623M240 457l7.27 3.623L244 468"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M253.667 494h46.666c5.834 0 11.667 8.75 11.667 17.5s-5.833 17.5-11.667 17.5h-46.666c-5.834 0-11.667-8.75-11.667-17.5s5.833-17.5 11.667-17.5"/>
+  <text x="251" y="517">
+    <tspan x="269.594" y="517">b5</tspan>
+  </text>
+</svg>

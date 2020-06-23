@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="702" height="735" font-family="serif" font-size="16">
+  <text font-style="italic" transform="translate(43 27)">
+    <tspan x="0" y="0">dependency injection, </tspan> <tspan x="0" y="17.609">business interface lookup, or</tspan> <tspan x="0" y="35.219">create&lt;METHOD&gt;(args)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M137.99 74l-.075 42-.01 5m6.095-6l-6.094 6-5.906-6"/>
+  <text transform="translate(18 150)">
+    <tspan x="0" y="0">1. AroundConstruct callbacks, if any</tspan> <tspan x="0" y="17.609">2. constructor</tspan> <tspan x="0" y="35.219">3. dependency injection, if any</tspan> <tspan x="0" y="52.828">4. PostConstruct callbacks, if any</tspan> <tspan x="0" y="70.438">5. Init method, or</tspan> <tspan x="0" y="88.047">ejbCreate&lt;METHOD&gt;, if any</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M242.5 73h102c12.75 0 25.5 12.75 25.5 25.5S357.25 124 344.5 124h-102c-12.75 0-25.5-12.75-25.5-25.5S229.75 73 242.5 73"/>
+  <text transform="translate(225 104)">
+    <tspan x="24.32" y="0">does not exist</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M271 129v143m6-6l-6 6-6-6"/>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M242.5 278h102c12.75 0 25.5 12.75 25.5 25.5S357.25 329 344.5 329h-102c-12.75 0-25.5-12.75-25.5-25.5s12.75-25.5 25.5-25.5"/>
+  <text transform="translate(226 309)">
+    <tspan x="23.93" y="0">method ready</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M234.357 275.822C153 237 122 304 212 303.5m-6-5.5l6 5.5-6 5.5"/>
+  <text font-style="italic" transform="translate(57 303)">
+    <tspan x="0" y="0">non-tx method</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M136.57 379.163l93.55-45.807 8.98-4.397M137 523V379m.01 142.802l93.276 56.047 4.285 2.575m-2.145-8.164l2.145 8.164-7.802 1.735"/>
+  <text font-style="italic" transform="translate(91 357)">
+    <tspan x="0" y="0">tx method</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M123.098 366.72l-.133 29.76-.023 5m5.978-6l-5.978 6-6.022-6"/>
+  <path fill="#fff" d="M93 406h86.8v24.84H93z"/>
+  <text transform="translate(102 424)">
+    <tspan x="0" y="0">afterBegin()</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M242.5 583h102c12.75 0 25.5 12.75 25.5 25.5S357.25 634 344.5 634h-102c-12.75 0-25.5-12.75-25.5-25.5s12.75-25.5 25.5-25.5"/>
+  <text transform="translate(226 614)">
+    <tspan x="3.367" y="0">method ready in TX</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M212 608.583C122 610 153 674 234.327 636.114M227 633l7.326 3.114L232 644"/>
+  <text font-style="italic" transform="translate(92 663)">
+    <tspan x="0" y="0">tx method</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M293.5 578V334m-5.5 6l5.5-6 5.5 6"/>
+  <path fill="#fff" d="M204 444h178.96v40.8H204z"/>
+  <text transform="translate(215 461)">
+    <tspan x="0" y="0">1. beforeCompletion()</tspan> <tspan x="0" y="17.609">2. afterCompletion(true)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M324.92 398.48v40m6-6l-6 6-6-6"/>
+  <text font-style="italic" transform="translate(303 393)">
+    <tspan x="0" y="0">commit</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M375 608.501l135 .036 5 .002m-5.88-5.339l5.88 5.339-5.88 5.661"/>
+  <text font-style="italic" transform="translate(381 594)">
+    <tspan x="0" y="0">non-tx or different tx method</tspan>
+  </text>
+  <text transform="translate(527 614)">
+    <tspan x="0" y="0">ERROR</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M464.807 523.27l-107.763 55.173-8.901 4.557"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M464 524l.931-135 .069-10"/>
+  <path fill="none" stroke="#000" stroke-width="2" d="M355.884 338.314l-3.156-7.32 7.399-2.58m-7.399 2.58l108.536 47.174 4.586 1.994"/>
+  <path fill="#fff" d="M391 444h146.96v25.48H391z"/>
+  <text transform="translate(394 462)">
+    <tspan x="0" y="0">afterCompletion(false)</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M421.92 398.48v40m6-6l-6 6-6-6"/>
+  <text font-style="italic" transform="translate(393 393)">
+    <tspan x="0" y="0">rollback</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M366 284.027l170 .919 5 .027M535 279l6 5.973-6 6.027"/>
+  <text transform="translate(371 273)">
+    <tspan x="0" y="0">PrePassivate callbacks, if any</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M503.066 199.88l-.118 42.6-.014 5m5.986-6l-5.986 6-6.014-6"/>
+  <text transform="translate(432 193)">
+    <tspan x="0" y="0">chosen as LRU victim</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M563.5 276h102c12.75 0 25.5 12.75 25.5 25.5S678.25 327 665.5 327h-102c-12.75 0-25.5-12.75-25.5-25.5s12.75-25.5 25.5-25.5"/>
+  <text transform="translate(547 307)">
+    <tspan x="44.492" y="0">passive</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M540 317.972l-166-.917-5-.027m6 5.972l-6-5.972 6-6.028"/>
+  <text transform="translate(386 340)">
+    <tspan x="0" y="0">PostActivate callbacks, if any</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M506.92 351.48l6-6 6 6m-6-6v27"/>
+  <text font-style="italic" transform="translate(489 391)">
+    <tspan x="0" y="0">method</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M298 135l6-6 6 6m-6-6v143"/>
+  <text font-style="italic" transform="translate(317 214)">
+    <tspan x="0" y="0">Remove method</tspan> <tspan x="0" y="17.609">or CDI context destroyed</tspan> <tspan x="0" y="35.219">or timeout</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M349.92 170.48l6-6 6 6m-6-6v29"/>
+  <text transform="translate(320 153)">
+    <tspan x="0" y="0">PreDestroy callbacks, if any</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M578 149l33.738 117.39L614.5 276m-35.416-126.91l-201.251-37.27-4.917-.91M377 118l-4.084-7.09L380 106m208.92 43.4l-14.958-11.056-8.042-5.944m1 8l-1-8 8-1"/>
+  <text font-style="italic" transform="translate(589 164)">
+    <tspan x="0" y="0">timeout</tspan>
+  </text>
+  <path fill="none" stroke="#000" stroke-width="2" d="M463 98.291l-83 .187-5 .01m6 5.792l-6-5.791 6-5.209"/>
+  <text transform="translate(477 79)">
+    <tspan x="0" y="0">instance throws system</tspan> <tspan x="0" y="17.609">exception from any method</tspan>
+  </text>
+  <path fill="#fff" stroke="#000" stroke-width="2" d="M217 669h299v51H217z"/>
+  <text font-style="italic" transform="translate(224 689)">
+    <tspan x="0" y="0">create()</tspan>
+  </text>
+  <text transform="translate(222 712)">
+    <tspan x="0" y="0">constructor</tspan>
+  </text>
+  <text transform="translate(323 689)">
+    <tspan x="0" y="0">action initiated by client</tspan>
+  </text>
+  <text transform="translate(323 712)">
+    <tspan x="0" y="0">action initiated by container</tspan>
+  </text>
+</svg>

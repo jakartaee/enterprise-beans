@@ -1256,7 +1256,7 @@ The following figure illustrates the life
 cycle of a stateful session bean instance.
 
 .Life Cycle of a Stateful Session Bean Instance
-image::EBCore-10.png[]
+image::EBCore-10.svg[]
 
 The following
 steps describe the life cycle of a stateful session bean instance:
@@ -1853,7 +1853,7 @@ The following figure illustrates the life
 cycle of a stateless session bean instance.
 
 .Life Cycle of a Stateless Session Bean
-image::EBCore-11.png[]
+image::EBCore-11.svg[]
 
 The following steps describe the life cycle
 of a stateless session bean instance:
@@ -2132,7 +2132,7 @@ the `jakarta.ejb.SessionSynchronization` interface or use the session
 synchronization annotations.
 
 .Life Cycle of a Singleton Session Bean
-image::EBCore-12.png[]
+image::EBCore-12.svg[]
 
 The following steps describe the life cycle
 of a singleton session bean instance:

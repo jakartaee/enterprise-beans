@@ -126,7 +126,7 @@ The following diagram illustrates the view that a container provides to the clie
 Note that a client may be a local client of some entity beans and a remote client of others.
 
 .Client View of Entity Beans Deployed in a Container
-image::EBOpt-6.png[]
+image::EBOpt-6.svg[]
 
 === Entity Bean’s Remote Home Interface
 
@@ -411,7 +411,7 @@ The following diagram illustrates a client’s point of view of an entity object
 (The term "referenced" in the diagram means that the client program has a reference to the entity object’s remote or local interface.)
 
 .Client View of Entity Object Life Cycle
-image::EBOpt-7.png[]
+image::EBOpt-7.svg[]
 
 An entity object does not exist until it is created.
 Until it is created, it has no identity.
