@@ -62,7 +62,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
-        <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
+        <asciidoctor.maven.plugin.version>2.0.0</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.3.0</asciidoctorj.version>
         <asciidoctorj.pdf.version>1.5.3</asciidoctorj.pdf.version>
         <jruby.version>9.2.11.1</jruby.version>
@@ -209,7 +209,9 @@
                         <idprefix />
                         <idseparator>-</idseparator>
                         <docinfo1>true</docinfo1>
+                        <imagesdir>images</imagesdir>
                     </attributes>
+                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
                 </configuration>
             </plugin>
             <!-- This is the rule that builds the zip file for download. -->
