@@ -30,20 +30,21 @@
     <artifactId>jakarta.ejb-api</artifactId>
     <version>4.0.0-SNAPSHOT</version>
 
-    <properties>
-        <extension.name>jakarta.ejb</extension.name>
-        <spec.version>${project.version}</spec.version>
-        <non.final>false</non.final>
-        <findbugs.version>3.0.5</findbugs.version>
-        <findbugs.exclude>exclude.xml</findbugs.exclude>
-        <findbugs.threshold>Low</findbugs.threshold>
-        <legal.doc.source>../</legal.doc.source>
-    </properties>
+    <name>Jakarta Enterprise Beans API</name>
 
-    <name>Jakarta Enterprise Beans</name>
-    <description>Jakarta Enterprise Beans</description>
-
-    <url>https://github.com/eclipse-ee4j/ejb-api</url>
+    <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
+    <licenses>
+        <license>
+            <name>EPL 2.0</name>
+            <url>http://www.eclipse.org/legal/epl-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GPL2 w/ CPE</name>
+            <url>https://www.gnu.org/software/classpath/license.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -61,28 +62,28 @@
         </contributor>
     </contributors>
 
-    <licenses>
-        <license>
-            <name>EPL 2.0</name>
-            <url>http://www.eclipse.org/legal/epl-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-        <license>
-            <name>GPL2 w/ CPE</name>
-            <url>https://www.gnu.org/software/classpath/license.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/eclipse-ee4j/ejb-api/issues</url>
-    </issueManagement>
+
     <scm>
         <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
         <url>https://github.com/eclipse-ee4j/ejb-api</url>
         <tag>HEAD</tag>
     </scm>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/eclipse-ee4j/ejb-api/issues</url>
+    </issueManagement>
+
+    <properties>
+        <extension.name>jakarta.ejb</extension.name>
+        <spec.version>${project.version}</spec.version>
+        <non.final>false</non.final>
+        <findbugs.version>3.0.5</findbugs.version>
+        <findbugs.exclude>exclude.xml</findbugs.exclude>
+        <findbugs.threshold>Low</findbugs.threshold>
+        <legal.doc.source>../</legal.doc.source>
+    </properties>
+
     <build>
         <resources>
             <resource>
@@ -96,98 +97,105 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>2.11.0</version>
+                    <configuration>
+                        <configFile>${project.basedir}/etc/config/ee4j-eclipse-formatting.xml</configFile>
+                    </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.glassfish.build</groupId>
-                    <artifactId>spec-version-maven-plugin</artifactId>
-                    <version>2.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>1.4.3</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.6</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>${findbugs.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.7.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.0.0-M2</version>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>1.4.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
+            <!-- Sets minimal Maven version to 3.5.4 -->
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.glassfish.build</groupId>
-                <artifactId>spec-version-maven-plugin</artifactId>
-                <configuration>
-                    <spec>
-                        <specVersion>4.0</specVersion>
-                        <specImplVersion>${project.version}</specImplVersion>
-                        <apiPackage>jakarta.ejb</apiPackage>
-                    </spec>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
                 <executions>
                     <execution>
+                        <id>enforce-maven</id>
                         <goals>
-                            <goal>set-spec-properties</goal>
-                            <goal>check-module</goal>
+                            <goal>enforce</goal>
                         </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.5.4</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Restricts the Java version to 1.8 -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                </configuration>
+            </plugin>
+
+            <!-- Checks copyright / license headers -->
+            <plugin>
+                <groupId>org.glassfish.copyright</groupId>
+                <artifactId>glassfish-copyright-maven-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <excludeFile>etc/config/copyright-exclude</excludeFile>
+                    <!--svn|mercurial|git - defaults to svn-->
+                    <scm>git</scm>
+                    <!-- turn on/off debugging -->
+                    <debug>off</debug>
+                    <!-- skip files not under SCM-->
+                    <scmOnly>true</scmOnly>
+                    <!-- turn off warnings -->
+                    <warn>true</warn>
+                    <!-- for use with repair -->
+                    <update>false</update>
+                    <!-- check that year is correct -->
+                    <ignoreYear>false</ignoreYear>
+                    <templateFile>etc/config/copyright.txt</templateFile>
+                </configuration>
+            </plugin>
+
+            <!--
+                spec-version-maven-plugin would normally appear here.
+                But somehow is missing for Servlet.
+            -->
+
+            <!-- Creates the OSGi MANIFEST.MF file -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <version>4.2.1</version>
                 <configuration>
                     <supportedProjectTypes>
                         <supportedProjectType>jar</supportedProjectType>
                     </supportedProjectTypes>
                     <instructions>
-                        <Bundle-Version>${spec.bundle.version}</Bundle-Version>
-                        <Bundle-SymbolicName>${spec.bundle.symbolic-name}</Bundle-SymbolicName>
-                        <Extension-Name>${spec.extension.name}</Extension-Name>
-                        <Implementation-Version>${spec.implementation.version}</Implementation-Version>
-                        <Specification-Version>${spec.specification.version}</Specification-Version>
+                        <Bundle-Version>5.0.0</Bundle-Version>
+                        <Bundle-SymbolicName>jakarta.ejb-api</Bundle-SymbolicName>
                         <Bundle-Description>
-                            Jakarta Enterprise Beans ${spec.version} API Design Specification
+                            Jakarta Enterprise Beans 4.0
                         </Bundle-Description>
+                        <Extension-Name>jakarta.servlet</Extension-Name>
+                        <Specification-Version>4.0</Specification-Version>
                         <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
+                        <Implementation-Version>${project.version}</Implementation-Version>
                         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
-                        <Implementation-Vendor-Id>org.eclipse.ee4j.ejb</Implementation-Vendor-Id>
+                        <Implementation-Vendor-Id>org.eclipse</Implementation-Vendor-Id>
+                        <Export-Package>jakarta.ejb.*</Export-Package>
                     </instructions>
                 </configuration>
                 <executions>
@@ -200,19 +208,30 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Adds the manifest file created by the org.apache.felix:maven-bundle-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                        <manifestEntries>
+                            <Automatic-Module-Name>java.ejb</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
                     <excludes>
                         <exclude>**/*.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- Creates the source jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
                 <configuration>
                     <includePom>true</includePom>
                 </configuration>
@@ -225,101 +244,84 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--
+               Create Javadoc for API jar
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <doclint>none</doclint>
-                    <bottom>
-                        <![CDATA[<p align="left">Copyright &#169; 2018, ${current.year} Eclipse Foundation.<br>Use is subject to <a href="{@docRoot}/doc-files/EFSL.html" target="_top">license terms</a>.]]>
-                    </bottom>
-                    <docfilessubdirs>true</docfilessubdirs>
-                    <doctitle>Jakarta Enterprise Beans ${project.version} API</doctitle>
-                    <windowtitle>Jakarta Enterprise Beans ${project.version} API</windowtitle>
-                </configuration>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id>
+                        <id>attach-api-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                    </execution>
-                    <execution>
-                        <phase>javadoc</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
                         <configuration>
+                            <source>1.8</source>
+                            <additionalJOption>-Xdoclint:none</additionalJOption>
+                            <description>Jakarta Enterprise Beans API documentation</description>
+                            <doctitle>Jakarta Enterprise Beans API documentation</doctitle>
+                            <windowtitle>Jakarta Enterprise Beans API documentation</windowtitle>
+                            <header><![CDATA[<br>Jakarta Enterprise Beans API v${project.version}]]></header>
+                            <bottom><![CDATA[
+Comments to: <a href="mailto:ejb-dev@eclipse.org">ejb-dev@eclipse.org</a>.<br>
+Copyright &#169; 2019 Eclipse Foundation. All rights reserved.<br>
+Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
+                            </bottom>
+                            <docfilessubdirs>true</docfilessubdirs>
                             <groups>
                                 <group>
                                     <title>Jakarta Enterprise Beans API Documentation</title>
-                                    <packages>jakarta.ejb</packages>
+                                    <packages>
+                                        jakarta.ejb.*
+                                    </packages>
                                 </group>
                             </groups>
+                            <tags>
+                                <tag>
+                                    <name>implSpec</name>
+                                    <placement>a</placement>
+                                    <head>Implementation Requirements:</head>
+                                </tag>
+                                <tag>
+                                    <name>param</name>
+                                </tag>
+                                <tag>
+                                    <name>return</name>
+                                </tag>
+                                <tag>
+                                    <name>throws</name>
+                                </tag>
+                                <tag>
+                                    <name>since</name>
+                                </tag>
+                                <tag>
+                                    <name>version</name>
+                                </tag>
+                                <tag>
+                                    <name>serialData</name>
+                                </tag>
+                                <tag>
+                                    <name>factory</name>
+                                </tag>
+                                <tag>
+                                    <name>see</name>
+                                </tag>
+                            </tags>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <configuration>
-                    <threshold>${findbugs.threshold}</threshold>
-                    <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
-                    <findbugsXmlOutput>true</findbugsXmlOutput>
-                    <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
-                    <preparationGoals>install</preparationGoals>
-                    <goals>deploy</goals>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <configuration>
-                    <reporting>
-                        <plugins>
-                            <plugin>
-                                <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>findbugs-maven-plugin</artifactId>
-                                <version>${findbugs.version}</version>
-                                <configuration>
-                                    <threshold>${findbugs.threshold}</threshold>
-                                    <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
-                                </configuration>
-                            </plugin>
-                        </plugins>
-                    </reporting>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>add-legal-resource</id>
+                        <id>add-resource</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>add-resource</goal>
@@ -327,25 +329,14 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>${legal.doc.source}</directory>
-                                    <includes>
-                                        <include>NOTICE.md</include>
-                                        <include>LICENSE.md</include>
-                                    </includes>
+                                    <directory>${maven.multiModuleProjectDirectory}</directory>
                                     <targetPath>META-INF</targetPath>
+                                    <includes>
+                                        <include>LICENSE.md</include>
+                                        <include>NOTICE.md</include>
+                                    </includes>
                                 </resource>
                             </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>timestamp-property</id>
-                        <goals>
-                            <goal>timestamp-property</goal>
-                        </goals>
-                        <phase>validate</phase>
-                        <configuration>
-                            <name>current.year</name>
-                            <pattern>yyyy</pattern>
                         </configuration>
                     </execution>
                 </executions>
@@ -362,4 +353,87 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>format</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!validate-format</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.revelc.code.formatter</groupId>
+                        <artifactId>formatter-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>format</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.revelc.code</groupId>
+                        <artifactId>impsort-maven-plugin</artifactId>
+                        <configuration>
+                            <removeUnused>true</removeUnused>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sort-imports</id>
+                                <goals>
+                                    <goal>sort</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>validate</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>validate-format</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.revelc.code.formatter</groupId>
+                        <artifactId>formatter-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>validate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.revelc.code</groupId>
+                        <artifactId>impsort-maven-plugin</artifactId>
+                        <configuration>
+                            <removeUnused>true</removeUnused>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>check-imports</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 </project>
