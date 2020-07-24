@@ -17,16 +17,16 @@
 package jakarta.ejb;
 
 /**
- * The NoSuchEntityException exception is thrown by an entity bean 
- * instance to its container to report that the invoked business method 
- * or callback method could not be completed because of the underlying
- * entity was removed from the database. 
+ * The NoSuchEntityException exception is thrown by an entity bean instance to its container to report that the invoked
+ * business method or callback method could not be completed because of the underlying entity was removed from the
+ * database.
  *
- * <p>This exception may be thrown by the bean class methods that implement
- * the business methods defined in the bean's component interface and by 
- * the <code>ejbLoad</code> and <code>ejbStore</code> methods.
+ * <p>
+ * This exception may be thrown by the bean class methods that implement the business methods defined in the bean's
+ * component interface and by the <code>ejbLoad</code> and <code>ejbStore</code> methods.
  *
- * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+ * <p>
+ * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
  *
  * @since EJB 1.1
  */
@@ -40,23 +40,25 @@ public class NoSuchEntityException extends EJBException {
 
     /**
      * Constructs a NoSuchEntityException with no detail message.
-     */  
+     */
     public NoSuchEntityException() {
     }
 
     /**
-     * Constructs a NoSuchEntityException with the specified
-     * detailed message.
-     */  
+     * Constructs a NoSuchEntityException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public NoSuchEntityException(String message) {
         super(message);
     }
 
     /**
-     * Constructs a NoSuchEntityException that embeds the originally 
-     * thrown exception.
-     */  
-    public NoSuchEntityException(Exception  ex) {
+     * Constructs a NoSuchEntityException that embeds the originally thrown exception.
+     *
+     * @param ex a {@link java.lang.Exception} object.
+     */
+    public NoSuchEntityException(Exception ex) {
         super(ex);
     }
 }

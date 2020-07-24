@@ -17,12 +17,12 @@
 package jakarta.ejb;
 
 /**
- * The DuplicateKeyException exception is thrown if an entity EJB
- * object or enterprise bean local object cannot be created because an object with the
- * same key already exists.  This exception is thrown by the create
- * methods defined in an entity bean's home or local home interface.
+ * The DuplicateKeyException exception is thrown if an entity EJB object or enterprise bean local object cannot be
+ * created because an object with the same key already exists. This exception is thrown by the create methods defined in
+ * an entity bean's home or local home interface.
  *
- * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2
+ * <p>
+ * <b>Note:</b> Support for entity beans is optional as of EJB 3.2
  *
  * @since EJB 1.0
  */
@@ -32,16 +32,16 @@ public class DuplicateKeyException extends CreateException {
 
     /**
      * Constructs a DuplicateKeyException with no detail message.
-     */  
+     */
     public DuplicateKeyException() {
     }
 
     /**
-     * Constructs a DuplicateKeyException with the specified
-     * detail message.
-     */  
+     * Constructs a DuplicateKeyException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public DuplicateKeyException(String message) {
         super(message);
     }
 }
-

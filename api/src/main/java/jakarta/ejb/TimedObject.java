@@ -17,17 +17,14 @@
 package jakarta.ejb;
 
 /**
- * The <code>TimedObject</code> interface contains a callback method
- * that is used to deliver timer expiration notifications.  It can be
- * implemented by a stateless session bean class, a singleton session
- * bean class, a message-driven bean class, or an enterprise bean 2.x entity bean class.
+ * The <code>TimedObject</code> interface contains a callback method that is used to deliver timer expiration
+ * notifications. It can be implemented by a stateless session bean class, a singleton session bean class, a
+ * message-driven bean class, or an enterprise bean 2.x entity bean class.
  * <p>
- * If the bean implements the <code>TimedObject</code> interface, the
- * <code>Timeout</code> annotation, if used, can only be applied to 
- * the <code>ejbTimeout</code> method.
+ * If the bean implements the <code>TimedObject</code> interface, the <code>Timeout</code> annotation, if used, can only
+ * be applied to the <code>ejbTimeout</code> method.
  *
  * @see Timeout
- *
  * @since EJB 2.1
  */
 public interface TimedObject {
@@ -36,8 +33,7 @@ public interface TimedObject {
      * Invoked by the enterprise bean container upon timer expiration.
      *
      * @param timer timer whose expiration caused this notification.
-     *
      */
     public void ejbTimeout(Timer timer);
 
-} 
+}

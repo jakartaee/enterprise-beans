@@ -23,29 +23,29 @@ import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 
 /**
- * Designates a method to receive a callback before a stateful session
- * bean is passivated.
+ * Designates a method to receive a callback before a stateful session bean is passivated.
  * <p>
-  * If the method to which this annotation is applied is defined on an interceptor
- * class, it must have one of the following signatures:
+ * If the method to which this annotation is applied is defined on an interceptor class, it must have one of the
+ * following signatures:
+ *
  * <pre>
  * void &#060;METHOD&#062;(InvocationContext)
  *
  * Object &#060;METHOD&#062;(InvocationContext) throws Exception
  * </pre>
  * <p>
- * If the method to which this annotation is applied is defined on a target class,
- * it must have the following signature:
+ * If the method to which this annotation is applied is defined on a target class, it must have the following signature:
+ *
  * <pre>
  * void &#060;METHOD&#062;()
  * </pre>
- * The method can have public, private, protected, or package level access. 
- * It must not be declared as final or static.
+ *
+ * The method can have public, private, protected, or package level access. It must not be declared as final or static.
  *
  * @since EJB 3.0
  */
 
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PrePassivate { 
+public @interface PrePassivate {
 }

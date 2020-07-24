@@ -33,29 +33,32 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @since EJB 3.0
  */
 
-@Target(TYPE) 
+@Target(TYPE)
 @Retention(RUNTIME)
 public @interface Stateless {
 
     /**
-     * The ejb-name for this bean.  Defaults to the unqualified name of the
-     * stateless session bean class.
+     * The ejb-name for this bean. Defaults to the unqualified name of the stateless session bean class.
+     *
+     * @return a {@link java.lang.String} object.
      */
     String name() default "";
 
     /**
-      * A product specific name(e.g. global JNDI name) 
-      * that this session bean should be mapped to.  
-      * 
-      * Application servers are not required to support any particular 
-      * form or type of mapped name, nor the ability to use mapped names. 
-      * The mapped name is product-dependent and often installation-dependent. 
-      * No use of a mapped name is portable. 
-      */ 
+     * A product specific name(e.g. global JNDI name) that this session bean should be mapped to.
+     *
+     * Application servers are not required to support any particular form or type of mapped name, nor the ability to use
+     * mapped names. The mapped name is product-dependent and often installation-dependent. No use of a mapped name is
+     * portable.
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String mappedName() default "";
 
     /**
      * A string describing the stateless session bean.
-     */ 
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String description() default "";
 }

@@ -19,78 +19,79 @@ package jakarta.ejb;
 import java.util.concurrent.*;
 
 /**
-  * Wraps the result of an asynchronous method call as a <code>Future</code>
-  * object, preserving compatability with the business interface signature.
-  * <p>
-  * The value specified in the constructor will be retrieved by the container
-  * and made available to the client.
-  * <p>
-  * Note that this object is not passed to the client.  It is
-  * merely a convenience for providing the result value to the container.
-  * Therefore, none of its instance methods should be called by the 
-  * application.
-  *
-  * @since EJB 3.1
-  */
-
+ * Wraps the result of an asynchronous method call as a <code>Future</code> object, preserving compatability with the
+ * business interface signature.
+ * <p>
+ * The value specified in the constructor will be retrieved by the container and made available to the client.
+ * <p>
+ * Note that this object is not passed to the client. It is merely a convenience for providing the result value to the
+ * container. Therefore, none of its instance methods should be called by the application.
+ * @param <V> The result type returned by this Future's {@code get} method
+ *
+ * @since EJB 3.1
+ */
 public final class AsyncResult<V> implements Future<V> {
 
     private final V resultValue;
 
     /**
-     * Creates a <code>AsyncResult</code> instance to wrap the result of an
-     * asynchronous method call
+     * Creates a <code>AsyncResult</code> instance to wrap the result of an asynchronous method call
      *
-     * @param result the result of an asynchronous method call to be made
-     * available to the client
+     * @param result the result of an asynchronous method call to be made available to the client
      */
     public AsyncResult(V result) {
         resultValue = result;
     }
 
     /**
-     * This method should not be called.  See Class-level comments.
+     * {@inheritDoc}
+     *
+     * This method should not be called. See Class-level comments.
      */
     @Override
     public boolean cancel(boolean mayInterruptIfRunning) {
-        throw new java.lang.IllegalStateException
-	    ("Object does not represent an acutal Future");
+        throw new java.lang.IllegalStateException("Object does not represent an acutal Future");
     }
 
     /**
-     * This method should not be called.  See Class-level comments.
+     * {@inheritDoc}
+     *
+     * This method should not be called. See Class-level comments.
      */
     @Override
     public boolean isCancelled() {
-        throw new java.lang.IllegalStateException
-	    ("Object does not represent an acutal Future");
+        throw new java.lang.IllegalStateException("Object does not represent an acutal Future");
     }
 
     /**
-     * This method should not be called.  See Class-level comments.
+     * {@inheritDoc}
+     *
+     * This method should not be called. See Class-level comments.
      */
     @Override
     public boolean isDone() {
-        throw new java.lang.IllegalStateException
-	    ("Object does not represent an acutal Future");
+        throw new java.lang.IllegalStateException("Object does not represent an acutal Future");
     }
 
     /**
-     * This method should not be called.  See Class-level comments.
+     * {@inheritDoc}
+     *
+     * This method should not be called. See Class-level comments.
      */
     @Override
     public V get() throws InterruptedException, ExecutionException {
-	    return resultValue;
+        return resultValue;
     }
 
     /**
-     * This method should not be called.  See Class-level comments.
+     * {@inheritDoc}
+     *
+     * This method should not be called. See Class-level comments.
      */
     @Override
-    public V get(long timeout, TimeUnit unit) 
-	throws InterruptedException, ExecutionException, TimeoutException {
-	throw new java.lang.IllegalStateException
-	    ("Object does not represent an acutal Future");
+    public V get(long timeout, TimeUnit unit)
+            throws InterruptedException, ExecutionException, TimeoutException {
+        throw new java.lang.IllegalStateException("Object does not represent an acutal Future");
     }
 
 }
