@@ -16,15 +16,11 @@
 
 package jakarta.ejb;
 
-
 /**
- * A ConcurrentAccessException indicates that the client 
- * has attempted an invocation on a stateful session bean or singleton bean
- * while another invocation is in progress and such concurrent access
- * is not allowed.
+ * A ConcurrentAccessException indicates that the client has attempted an invocation on a stateful session bean or
+ * singleton bean while another invocation is in progress and such concurrent access is not allowed.
  *
  * @see AccessTimeout
- *
  * @since EJB 3.1
  */
 public class ConcurrentAccessException extends EJBException {
@@ -33,22 +29,25 @@ public class ConcurrentAccessException extends EJBException {
 
     /**
      * Constructs an ConcurrentAccessException with no detail message.
-     */  
+     */
     public ConcurrentAccessException() {
     }
 
     /**
-     * Constructs an ConcurrentAccessException with the specified
-     * detailed message.
-     */  
+     * Constructs an ConcurrentAccessException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public ConcurrentAccessException(String message) {
         super(message);
     }
 
     /**
-     * Constructs an ConcurrentAccessException with the specified
-     * detail message and a nested exception. 
-     */  
+     * Constructs an ConcurrentAccessException with the specified detail message and a nested exception.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
+     */
     public ConcurrentAccessException(String message, Exception ex) {
         super(message, ex);
     }

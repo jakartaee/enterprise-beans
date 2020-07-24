@@ -16,9 +16,9 @@
 
 package jakarta.ejb;
 
-/**  
- * A NoSuchObjectLocalException is thrown if an attempt is made to invoke
- * a method on a local object (local enterprise bean object or timer) that no longer exists.
+/**
+ * A NoSuchObjectLocalException is thrown if an attempt is made to invoke a method on a local object (local enterprise
+ * bean object or timer) that no longer exists.
  *
  * @since EJB 2.0
  */
@@ -28,22 +28,25 @@ public class NoSuchObjectLocalException extends EJBException {
 
     /**
      * Constructs a NoSuchObjectLocalException with no detail message.
-     */  
+     */
     public NoSuchObjectLocalException() {
     }
 
     /**
-     * Constructs a NoSuchObjectLocalException with the specified
-     * detail message.
-     */  
+     * Constructs a NoSuchObjectLocalException with the specified detail message.
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public NoSuchObjectLocalException(String message) {
         super(message);
     }
 
     /**
-     * Constructs a NoSuchObjectLocalException with the specified
-     * detail message and a nested exception. 
-     */  
+     * Constructs a NoSuchObjectLocalException with the specified detail message and a nested exception.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
+     */
     public NoSuchObjectLocalException(String message, Exception ex) {
         super(message, ex);
     }

@@ -17,10 +17,9 @@
 package jakarta.ejb;
 
 /**
- * This exception indicates that an attempt was made to perform an
- * illegal loopback invocation.   One possible cause is a loopback
- * call to a singleton bean's container-managed concurrency <code>Lock(WRITE)</code> 
- * method where the current thread does not already hold a <code>WRITE</code> lock.
+ * This exception indicates that an attempt was made to perform an illegal loopback invocation. One possible cause is a
+ * loopback call to a singleton bean's container-managed concurrency <code>Lock(WRITE)</code> method where the current
+ * thread does not already hold a <code>WRITE</code> lock.
  *
  * @since EJB 3.1
  */
@@ -28,8 +27,17 @@ public class IllegalLoopbackException extends ConcurrentAccessException {
 
     private static final long serialVersionUID = -8854624128500916709L;
 
-    public IllegalLoopbackException() {}
+    /**
+     * <p>Constructor for IllegalLoopbackException.</p>
+     */
+    public IllegalLoopbackException() {
+    }
 
+    /**
+     * <p>Constructor for IllegalLoopbackException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public IllegalLoopbackException(String message) {
         super(message);
     }

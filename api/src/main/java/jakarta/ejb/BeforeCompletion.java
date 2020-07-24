@@ -22,40 +22,37 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Designate a stateful session bean method to receive the before completion
- * session synchronization callback.
+ * Designate a stateful session bean method to receive the before completion session synchronization callback.
  * <p>
  *
- * The before completion callback notifies a stateful session bean
- * instance that a transaction is about to be committed.
+ * The before completion callback notifies a stateful session bean instance that a transaction is about to be committed.
  * <p>
- *  This method executes in the proper transaction context.
+ * This method executes in the proper transaction context.
  *
- * <p><b>Note:</b> The instance may still cause the container to
- * rollback the transaction by invoking the <code>setRollbackOnly()</code> method
- * on the session context or by throwing an exception.
+ * <p>
+ * <b>Note:</b> The instance may still cause the container to rollback the transaction by invoking the
+ * <code>setRollbackOnly()</code> method on the session context or by throwing an exception.
  *
- * A bean must have at most one <code>BeforeCompletion</code> method.  
- * The signature of this method must observe the following rules:
+ * A bean must have at most one <code>BeforeCompletion</code> method. The signature of this method must observe the
+ * following rules:
  * <ul>
- * <li> The method must not be declared as <code>final</code> or <code>static</code>.
- * <li> The method may have any access type.
- * <li> The return type must be <code>void</code>.
- * <li> The method must take no arguments.
+ * <li>The method must not be declared as <code>final</code> or <code>static</code>.
+ * <li>The method may have any access type.
+ * <li>The return type must be <code>void</code>.
+ * <li>The method must take no arguments.
  * </ul>
  *
  * <p>
- *  A stateful session bean class may use either the
- *  <code>SessionSynchronization</code> interface or the session
- *  synchronization annotations, but not both.
+ * A stateful session bean class may use either the <code>SessionSynchronization</code> interface or the session
+ * synchronization annotations, but not both.
  *
  * @see SessionSynchronization
  * @see AfterBegin
  * @see AfterCompletion
- *
  * @since EJB 3.1
  */
 
-@Target(METHOD) 
+@Target(METHOD)
 @Retention(RUNTIME)
-public @interface BeforeCompletion {}
+public @interface BeforeCompletion {
+}

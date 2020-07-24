@@ -22,20 +22,18 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Applied to a timer callback method to schedule multiple calendar-based
- * timers for the method.
+ * Applied to a timer callback method to schedule multiple calendar-based timers for the method.
  *
- * The method to which the <code>Schedules</code> annotation is applied
- * must have one of the following signatures, where <code>&lt;METHOD&gt;</code>
- * designates the method name:
- * <p>
+ * The method to which the <code>Schedules</code> annotation is applied must have one of the following signatures, where
+ * <code>&lt;METHOD&gt;</code> designates the method name:
+ *
+ *
  * <pre>
  * void &#060;METHOD&#062;()
  * void &#060;METHOD&#062;(Timer timer)
  * </pre>
  *
  * @see Schedule
- *
  * @since EJB 3.1
  */
 @Target(METHOD)
@@ -44,6 +42,8 @@ public @interface Schedules {
 
     /**
      * One or more calendar-based timer specifications.
+     *
+     * @return an array of {@link jakarta.ejb.Schedule} objects.
      */
     Schedule[] value();
 }

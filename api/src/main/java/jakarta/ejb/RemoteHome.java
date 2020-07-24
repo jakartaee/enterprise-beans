@@ -23,34 +23,31 @@ import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 
 /**
- * Declares the remote home interface or adapted remote home interface
- * for a session bean.  The value is never a 2.x remote component interface.
+ * Declares the remote home interface or adapted remote home interface for a session bean. The value is never a 2.x
+ * remote component interface.
  * <p>
- * Clients written to the enterprise bean 2.1 and earlier client view depend upon the 
- * existence of a home and component interface.
- * A session bean written to the enterprise bean 3.x API may be adapted to such earlier 
- * preexisting client view interfaces.
+ * Clients written to the enterprise bean 2.1 and earlier client view depend upon the existence of a home and component
+ * interface. A session bean written to the enterprise bean 3.x API may be adapted to such earlier preexisting client
+ * view interfaces.
  * <p>
- * The session bean designates the home interface to be adapted by using 
- * the <code>RemoteHome</code> annotation on the bean class.  The corresponding 
- * remote component interface need not be explicitly specified, as it is
- * derived from the return type of remote home interface's
- * create method signature.
+ * The session bean designates the home interface to be adapted by using the <code>RemoteHome</code> annotation on the
+ * bean class. The corresponding remote component interface need not be explicitly specified, as it is derived from the
+ * return type of remote home interface's create method signature.
  * <p>
- * Session beans written to the EJB 3.0 and later APIs do not otherwise make
- * use of remote home interfaces.
+ * Session beans written to the EJB 3.0 and later APIs do not otherwise make use of remote home interfaces.
  *
  * @see Init
  * @see LocalHome
- *
  * @since EJB 3.0
  */
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RemoteHome {
- 
+
     /**
      * The remote home interface
+     *
+     * @return a {@link java.lang.Class} object.
      */
-    Class value(); 
-} 
+    Class value();
+}

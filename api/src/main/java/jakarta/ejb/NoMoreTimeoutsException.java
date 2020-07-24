@@ -17,8 +17,7 @@
 package jakarta.ejb;
 
 /**
- * This exception indicates that a calendar-based timer will not
- * result in any more timeouts.
+ * This exception indicates that a calendar-based timer will not result in any more timeouts.
  *
  * @since EJB 3.1
  */
@@ -26,8 +25,17 @@ public class NoMoreTimeoutsException extends EJBException {
 
     private static final long serialVersionUID = 1373788283844991998L;
 
-    public NoMoreTimeoutsException() {}
+    /**
+     * <p>Constructor for NoMoreTimeoutsException.</p>
+     */
+    public NoMoreTimeoutsException() {
+    }
 
+    /**
+     * <p>Constructor for NoMoreTimeoutsException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public NoMoreTimeoutsException(String message) {
         super(message);
     }

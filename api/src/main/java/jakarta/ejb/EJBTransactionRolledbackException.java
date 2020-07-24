@@ -16,12 +16,10 @@
 
 package jakarta.ejb;
 
-/** 
- * This exception is thrown to a remote client to indicate that the
- * transaction associated with processing of the request has been
- * rolled back, or marked to roll back. Thus the requested operation
- * either could not be performed or was not performed because further
- * computation on behalf of the transaction would be fruitless.
+/**
+ * This exception is thrown to a remote client to indicate that the transaction associated with processing of the
+ * request has been rolled back, or marked to roll back. Thus the requested operation either could not be performed or
+ * was not performed because further computation on behalf of the transaction would be fruitless.
  *
  * @since EJB 2.0
  */
@@ -31,24 +29,26 @@ public class EJBTransactionRolledbackException extends EJBException {
 
     /**
      * Constructs an EJBTransactionRolledbackException with no detail message.
-     */  
+     */
     public EJBTransactionRolledbackException() {
     }
 
     /**
-     * Constructs an EJBTransactionRolledbackException with the specified
-     * detailed message.
-     */  
+     * Constructs an EJBTransactionRolledbackException with the specified detailed message.
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public EJBTransactionRolledbackException(String message) {
         super(message);
     }
 
     /**
-     * Constructs an EJBTransactionRolledbackException with the specified
-     * detail message and a nested exception. 
-     */  
+     * Constructs an EJBTransactionRolledbackException with the specified detail message and a nested exception.
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Exception} object.
+     */
     public EJBTransactionRolledbackException(String message, Exception ex) {
         super(message, ex);
     }
 }
-

@@ -22,15 +22,19 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
 /**
- * Declares multiple <code>EJB</code> annotations. 
+ * Declares multiple <code>EJB</code> annotations.
  *
  * @see EJB
- *
  * @since EJB 3.0
  */
 @Target(TYPE)
 @Retention(RUNTIME)
 public @interface EJBs {
 
+    /**
+     * <p>value.</p>
+     *
+     * @return an array of {@link jakarta.ejb.EJB} objects.
+     */
     EJB[] value();
 }

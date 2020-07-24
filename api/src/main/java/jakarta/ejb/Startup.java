@@ -27,7 +27,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @since EJB 3.1
  */
 
-@Target(TYPE) 
+@Target(TYPE)
 @Retention(RUNTIME)
-public @interface Startup {}
-
+public @interface Startup {
+}

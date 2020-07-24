@@ -17,12 +17,10 @@
 package jakarta.ejb;
 
 /**
- * The enum <code>TransactionManagementType</code> is used with the
- * <code>TransactionManagement</code> annotation to specify whether
- * container-managed or bean-managed transaction management is used.
+ * The enum <code>TransactionManagementType</code> is used with the <code>TransactionManagement</code> annotation to
+ * specify whether container-managed or bean-managed transaction management is used.
  *
  * @see TransactionManagement
- *
  * @since EJB 3.0
  */
 public enum TransactionManagementType {
