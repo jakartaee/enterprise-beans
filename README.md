@@ -1,4 +1,4 @@
-# Jakarta Enterprise beans
+# Jakarta Enterprise Beans
 
 This repository contains the code for Jakarta Enterprise Beans.
 
