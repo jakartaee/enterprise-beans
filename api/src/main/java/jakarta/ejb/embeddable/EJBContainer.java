@@ -16,17 +16,16 @@
 
 package jakarta.ejb.embeddable;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ServiceLoader;
-
-import javax.naming.Context;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.spi.EJBContainerProvider;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.ServiceLoader;
+import java.util.Set;
+import javax.naming.Context;
 
 /**
  * Used to execute an enterprise bean application in an embeddable container.

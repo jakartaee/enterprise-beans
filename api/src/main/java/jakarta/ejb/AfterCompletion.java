@@ -16,10 +16,11 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
-import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * Designate a stateful session bean method to receive the after completion session synchronization callback.

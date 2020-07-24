@@ -16,11 +16,10 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.ElementType;
-
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Declares the remote home interface or adapted remote home interface for a session bean. The value is never a 2.x

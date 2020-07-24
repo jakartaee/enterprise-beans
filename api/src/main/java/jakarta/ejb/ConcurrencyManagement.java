@@ -16,10 +16,11 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
-import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * Declares a singleton session bean's concurrency management type.

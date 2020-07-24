@@ -16,11 +16,10 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.ElementType;
-
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Designates a method of a session bean that corresponds to a <code>create&#060;METHOD&#062;</code> method of an
