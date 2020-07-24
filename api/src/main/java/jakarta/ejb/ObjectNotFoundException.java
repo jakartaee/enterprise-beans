@@ -17,13 +17,13 @@
 package jakarta.ejb;
 
 /**
- * The ObjectNotFoundException exception is thrown by a finder or select method to
- * indicate that the specified enterprise bean object or local object does not exist.
+ * The ObjectNotFoundException exception is thrown by a finder or select method to indicate that the specified
+ * enterprise bean object or local object does not exist.
  *
- * <p> Only the finder and select methods that are declared to return
- * a single object use this exception. This exception should not be
- * thrown by finder or select methods that return a collection of
- * objects (they should return an empty collection instead).
+ * <p>
+ * Only the finder and select methods that are declared to return a single object use this exception. This exception
+ * should not be thrown by finder or select methods that return a collection of objects (they should return an empty
+ * collection instead).
  *
  * @since EJB 1.0
  */
@@ -33,16 +33,14 @@ public class ObjectNotFoundException extends FinderException {
 
     /**
      * Constructs an ObjectNotFoundException with no detail message.
-     */  
+     */
     public ObjectNotFoundException() {
     }
 
     /**
-     * Constructs an ObjectNotFoundException with the specified
-     * detail message.
-     */  
+     * Constructs an ObjectNotFoundException with the specified detail message.
+     */
     public ObjectNotFoundException(String message) {
         super(message);
     }
 }
-

@@ -16,37 +16,32 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
-import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * Used to express an initialization dependency between singleton
- * components.  
- * <p> 
- * 
- * The container ensures that all singleton beans with which a
- * singleton has a <code>DependsOn</code> relationship have been
- * initialized before the singleton's <code>PostConstruct</code>
- * method is called.
+ * Used to express an initialization dependency between singleton components.
  * <p>
- * During application shutdown the container ensures that all singleton beans on
- * with which the singleton has a <code>DependsOn</code> relationship are still
- * available during the singleton's <code>PreDestroy</code> method.
+ * 
+ * The container ensures that all singleton beans with which a singleton has a <code>DependsOn</code> relationship have
+ * been initialized before the singleton's <code>PostConstruct</code> method is called.
+ * <p>
+ * During application shutdown the container ensures that all singleton beans on with which the singleton has a
+ * <code>DependsOn</code> relationship are still available during the singleton's <code>PreDestroy</code> method.
  *
  * @since EJB 3.1
  */
-@Target(TYPE) 
+@Target(TYPE)
 @Retention(RUNTIME)
 public @interface DependsOn {
 
     /**
-     * The ejb-names of singleton components whose initialization must
-     * occur before this singleton.  The order in which these names are
-     * listed is not significant.
+     * The ejb-names of singleton components whose initialization must occur before this singleton. The order in which these
+     * names are listed is not significant.
      */
     String[] value();
 
 }
-

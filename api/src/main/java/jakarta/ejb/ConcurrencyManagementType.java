@@ -17,8 +17,7 @@
 package jakarta.ejb;
 
 /**
- * Used to specify the value of the <code>ConcurrencyManagement</code> annotation
- * for a singleton session bean.
+ * Used to specify the value of the <code>ConcurrencyManagement</code> annotation for a singleton session bean.
  *
  * @see ConcurrencyManagement
  *
@@ -26,15 +25,12 @@ package jakarta.ejb;
  */
 public enum ConcurrencyManagementType {
     /**
-     * Container is responsible for managing concurrent access 
-     * to the bean instance.
+     * Container is responsible for managing concurrent access to the bean instance.
      */
     CONTAINER,
 
     /**
-     *  Bean developer is responsible for managing concurrent
-     *  access to the bean instance.
+     * Bean developer is responsible for managing concurrent access to the bean instance.
      */
     BEAN
 }
-

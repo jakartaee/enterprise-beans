@@ -16,35 +16,32 @@
 
 package jakarta.ejb;
 
-/**  
- * An AccessLocalException is thrown to indicate that the caller does not 
- * have permission to call the method. This exception is thrown to 
- * local clients. 
+/**
+ * An AccessLocalException is thrown to indicate that the caller does not have permission to call the method. This
+ * exception is thrown to local clients.
  *
  * @since EJB 2.0
  */
 public class AccessLocalException extends EJBException {
 
     private static final long serialVersionUID = -4089104928924996726L;
-    
+
     /**
      * Constructs an AccessLocalException with no detail message.
-     */  
+     */
     public AccessLocalException() {
     }
 
     /**
-     * Constructs an AccessLocalException with the specified
-     * detail message.
-     */  
+     * Constructs an AccessLocalException with the specified detail message.
+     */
     public AccessLocalException(String message) {
         super(message);
     }
 
     /**
-     * Constructs an AccessLocalException with the specified
-     * detail message and a nested exception. 
-     */  
+     * Constructs an AccessLocalException with the specified detail message and a nested exception.
+     */
     public AccessLocalException(String message, Exception ex) {
         super(message, ex);
     }

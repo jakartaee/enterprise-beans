@@ -17,13 +17,15 @@
 package jakarta.ejb;
 
 /**
- * The FinderException exception must be included in the throws clause
- * of every finder method of an entity bean's home or local home interface.
+ * The FinderException exception must be included in the throws clause of every finder method of an entity bean's home
+ * or local home interface.
  *
- * <p> The exception is used as a standard application-level exception to 
- * report a failure to find the requested enterprise bean object(s).
+ * <p>
+ * The exception is used as a standard application-level exception to report a failure to find the requested enterprise
+ * bean object(s).
  *
- * <p><b>Note:</b> Support for entity beans is optional as of EJB 3.2.
+ * <p>
+ * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
  *
  * @since EJB 1.0
  */
@@ -33,16 +35,14 @@ public class FinderException extends java.lang.Exception {
 
     /**
      * Constructs an FinderException with no detail message.
-     */  
+     */
     public FinderException() {
     }
 
     /**
-     * Constructs an FinderException with the specified
-     * detail message.
-     */  
+     * Constructs an FinderException with the specified detail message.
+     */
     public FinderException(String message) {
         super(message);
     }
 }
-

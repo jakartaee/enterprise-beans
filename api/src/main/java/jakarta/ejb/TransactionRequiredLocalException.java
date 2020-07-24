@@ -17,9 +17,8 @@
 package jakarta.ejb;
 
 /**
- * This exception is thrown to a local client to indicate that a
- * request carried a null transaction context, but the target object
- * requires an active transaction.
+ * This exception is thrown to a local client to indicate that a request carried a null transaction context, but the
+ * target object requires an active transaction.
  *
  * @since EJB 2.0
  */
@@ -29,18 +28,16 @@ public class TransactionRequiredLocalException extends EJBException {
 
     /**
      * Constructs a TransactionRequiredLocalException with no detail message.
-     */  
+     */
 
     public TransactionRequiredLocalException() {
     }
 
     /**
-     * Constructs an TransactionRequiredLocalException with the specified
-     * detailed message.
-     */  
+     * Constructs an TransactionRequiredLocalException with the specified detailed message.
+     */
     public TransactionRequiredLocalException(String message) {
         super(message);
     }
 
-  
 }

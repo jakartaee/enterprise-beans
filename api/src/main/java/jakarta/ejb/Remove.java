@@ -16,27 +16,24 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.ElementType;
-
-import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Applied to a business method of a stateful session bean class to indicate
- * to the container that the stateful session bean is to be removed by the
- * container after completion of the method.
+ * Applied to a business method of a stateful session bean class to indicate to the container that the stateful session
+ * bean is to be removed by the container after completion of the method.
  *
  * @since EJB 3.0
  */
 
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Remove {
 
     /**
-     * If true, the stateful session bean will not be removed if an 
-     * exception is thrown from the designated method.
+     * If true, the stateful session bean will not be removed if an exception is thrown from the designated method.
      */
     boolean retainIfException() default false;
 

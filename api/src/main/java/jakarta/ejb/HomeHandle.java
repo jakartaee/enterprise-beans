@@ -19,9 +19,8 @@ package jakarta.ejb;
 import java.rmi.RemoteException;
 
 /**
- * The HomeHandle interface is implemented by all home object handles. A handle
- * is an abstraction of a network reference to a home object. A handle is
- * intended to be used as a "robust" persistent reference to a home object.
+ * The HomeHandle interface is implemented by all home object handles. A handle is an abstraction of a network reference
+ * to a home object. A handle is intended to be used as a "robust" persistent reference to a home object.
  *
  * @since EJB 1.1
  */
@@ -31,8 +30,7 @@ public interface HomeHandle extends java.io.Serializable {
      *
      * @return the home object represented by this handle.
      *
-     * @exception RemoteException The home object could not be obtained
-     *    because of a system-level failure.
+     * @exception RemoteException The home object could not be obtained because of a system-level failure.
      */
     public EJBHome getEJBHome() throws RemoteException;
 }

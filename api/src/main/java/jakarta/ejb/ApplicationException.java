@@ -16,35 +16,33 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
-import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * Applied to an exception to denote that it is an application exception
- * and should be reported to the client directly (i.e., unwrapped).
+ * Applied to an exception to denote that it is an application exception and should be reported to the client directly
+ * (i.e., unwrapped).
  *
  * @since EJB 3.0
  */
 
-@Target(TYPE) 
+@Target(TYPE)
 @Retention(RUNTIME)
 public @interface ApplicationException {
 
     /**
-     * Indicates whether the container should cause the transaction to 
-     * rollback when the exception is thrown.
+     * Indicates whether the container should cause the transaction to rollback when the exception is thrown.
      */
     boolean rollback() default false;
 
     /**
-     * Indicates whether the application exception designation should
-     * apply to subclasses of the annotated exception class.
+     * Indicates whether the application exception designation should apply to subclasses of the annotated exception class.
      *
      * @since EJB 3.1
      */
     boolean inherited() default true;
-
 
 }

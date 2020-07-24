@@ -16,10 +16,11 @@
 
 package jakarta.ejb;
 
-import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
-import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.*;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * Mark a singleton bean for eager initialization during the application startup sequence.
@@ -27,7 +28,7 @@ import static java.lang.annotation.RetentionPolicy.*;
  * @since EJB 3.1
  */
 
-@Target(TYPE) 
+@Target(TYPE)
 @Retention(RUNTIME)
-public @interface Startup {}
-
+public @interface Startup {
+}
