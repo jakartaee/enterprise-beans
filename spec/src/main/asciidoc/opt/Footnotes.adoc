@@ -134,7 +134,7 @@ interface is a remote business interface that extends _java.rmi.Remote_
 
 [.footnoteNumber]# 32.# [[a3396]]If the business
 interface is a remote business interface that extends _java.rmi.Remote_
-, the _javax.transaction.TransactionRolledbackException_ is thrown to
+, the _jakarta.transaction.TransactionRolledbackException_ is thrown to
 the client instead.
 
 [.footnoteNumber]# 33.# [[a3397]]If the business

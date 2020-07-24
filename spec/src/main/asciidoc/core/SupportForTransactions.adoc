@@ -1399,7 +1399,7 @@ bean. Typically, the container interposes only on the resource manager
 connection factory (e.g. a JDBC data source) JNDI look up by registering
 the container-specific implementation of the resource manager connection
 factory object. The resource manager connection factory object allows
-the container to obtain the `javax.transaction.xa.XAResource` interface
+the container to obtain the `jakarta.transaction.xa.XAResource` interface
 as described in the Jakarta Transactions specification and pass it to the transaction
 manager. After the set up is done, the enterprise bean communicates with
 the resource manager without going through the container._
