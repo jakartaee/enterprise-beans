@@ -318,11 +318,11 @@ of endpoints operating on messages. The abstract description of the
 service is bound to an XML based protocol (SOAP <<a9875>>) 
 and underlying transport (HTTP or HTTPS)
 by means of which the messages are conveyed between client and server.
-(See references <<a9873>>, <<a9874>>, <<a9878>>, <<a9879>>, <<a9881>>).
+(See references <<a9874>>, <<a9878>>, <<a9879>>, <<a9881>>).
 
 The web service methods of a session bean
 provide the basis of the web service client view of the bean that is
-exported through WSDL. See references <<a9878>> and <<a9873>> for a
+exported through WSDL. See reference <<a9878>> for a
 description of how Java language metadata annotations may be used to 
 specify a session bean’s web services client view.
 

@@ -20,65 +20,62 @@ https://jakarta.ee/specifications/enterprise-ws/2.0/.
 - [[[a9878, 6]]] Jakarta Web Services Metadata 3.0. 
 https://jakarta.ee/specifications/web-services-metadata/3.0/.
 
-- [[[a9873, 7]]] Jakarta XML RPC 1.1. 
-https://jakarta.ee/specifications/xml-rpc/1.1/.
-
-- [[[a9886, 8]]] Jakarta Managed Beans 2.0. 
+- [[[a9886, 7]]] Jakarta Managed Beans 2.0. 
 https://jakarta.ee/specifications/managedbeans/2.0/.
 
-- [[[a9888, 9]]] Jakarta Context Dependency Injection 3.0 
+- [[[a9888, 8]]] Jakarta Context Dependency Injection 3.0 
 https://jakarta.ee/specifications/cdi/3.0/.
 
-- [[[a9889, 10]]] Jakarta RESTful Web Services 3.0
+- [[[a9889, 9]]] Jakarta RESTful Web Services 3.0
 https://jakarta.ee/specifications/restful-ws/3.0/.
 
-- [[[a9876, 11]]] The Java Virtual Machine Specification.
+- [[[a9876, 10]]] The Java Virtual Machine Specification.
 https://docs.oracle.com/javase/specs/jvms/se8/html/index.html.
 
-- [[[a9875, 12]]] W3C: SOAP 1.2.
+- [[[a9875, 11]]] W3C: SOAP 1.2.
 https://www.w3.org/TR/soap/.
 
-- [[[a9874, 13]]]Web Services Description Language (WSDL) 1.1. 
+- [[[a9874, 12]]]Web Services Description Language (WSDL) 1.1. 
 https://www.w3.org/TR/wsdl.html.
 
-- [[[a9883, 14]]] Java(TM) Platform, Standard Edition 8 API Specification.
+- [[[a9883, 13]]] Java(TM) Platform, Standard Edition 8 API Specification.
 https://docs.oracle.com/javase/8/docs/api/index.html.
 
-- [[[a9854, 15]]] Java(TM) Naming and Directory Interface 1.2 Specification (JNDI).
+- [[[a9854, 14]]] Java(TM) Naming and Directory Interface 1.2 Specification (JNDI).
 https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/index.html.
 
-- [[[a9887, 16]]] Jakarta Interceptors 2.0. 
+- [[[a9887, 15]]] Jakarta Interceptors 2.0. 
 https://jakarta.ee/specifications/interceptors/2.0/.
 
-- [[[a9863, 17]]] Jakarta Connectors 2.0. 
+- [[[a9863, 16]]] Jakarta Connectors 2.0. 
 https://jakarta.ee/specifications/connectors/2.0/.
 
-- [[[a9857, 18]]] Jakarta Transactions 2.0. 
+- [[[a9857, 17]]] Jakarta Transactions 2.0. 
 https://jakarta.ee/specifications/transactions/2.0/.
 
-- [[[a9861, 19]]] Jakarta EE Platform 9. 
+- [[[a9861, 18]]] Jakarta EE Platform 9. 
 https://jakarta.ee/specifications/platform/9/.
 
-- [[[a9858, 20]]] Java(TM) Transaction Service, version 1.0 (JTS).
+- [[[a9858, 19]]] Java(TM) Transaction Service, version 1.0 (JTS).
 https://www.oracle.com/technetwork/java/javaee/jts-spec095-1508547.pdf.
 
-- [[[a9862, 21]]] Jakarta Messaging 3.0. 
+- [[[a9862, 20]]] Jakarta Messaging 3.0. 
 https://jakarta.ee/specifications/messaging/3.0/.
 
-- [[[a9885, 22]]] List of zoneinfo time zones: 
+- [[[a9885, 21]]] List of zoneinfo time zones: 
 https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 
-- [[[a9882, 23]]] JAR File Specification,
+- [[[a9882, 22]]] JAR File Specification,
 https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html.
 
-- [[[a9856, 24]]] Java(TM) Security.
+- [[[a9856, 23]]] Java(TM) Security.
 https://www.oracle.com/java/technologies/javase/javase-tech-security.html.
 
-- [[[a9855, 25]]] Java Remote Method Invocation (RMI).
+- [[[a9855, 24]]] Java Remote Method Invocation (RMI).
 https://docs.oracle.com/javase/8/docs/technotes/guides/rmi/.
 
-- [[[a9872, 26]]] Database Language SQL.
+- [[[a9872, 25]]] Database Language SQL.
 ANSI X3.135-1992 or ISO/IEC 9075:1992.
 
-- [[[a9877, 27]]] JDBC(TM) 4.3 API (JDBC specification).
+- [[[a9877, 26]]] JDBC(TM) 4.3 API (JDBC specification).
 https://jcp.org/en/jsr/detail?id=221.

@@ -3,7 +3,7 @@
 == Related Documents
 
 - [[[a3323, 1]]] Enterprise JavaBeans(TM), version 3.1.
-http://jcp.org/en/jsr/detail?id=318.
+https://jcp.org/en/jsr/detail?id=318.
 
 - [[[a3339, 2]]] Jakarta Enterprise Beans, Core Features 4.0
 https://jakarta.ee/specifications/enterprise-beans/4.0/.
@@ -17,16 +17,8 @@ https://docs.oracle.com/javase/specs/jvms/se8/html/index.html.
 - [[[a3325, 5]]] Jakarta Persistence 3.0.
 https://jakarta.ee/specifications/persistence/3.0/.
 
-- [[[a3335, 6]]] JDBC(TM) 4.0 API (JDBC specification). 
-http://jcp.org/en/jsr/detail?id=221.
+- [[[a3335, 6]]] JDBC(TM) 4.3 API (JDBC specification). 
+https://jcp.org/en/jsr/detail?id=221.
 
-- [[[a3331, 7]]] Database Language SQL. ANSI X3.135-1992 or ISO/IEC 9075:1992.
-
-- [[[a3338, 8]]] W3C: SOAP 1.2.
-http://www.w3.org/TR/SOAP/.
-
-- [[[a3332, 9]]] Jakarta XML RPC 1.1.
-https://jakarta.ee/specifications/xml-rpc/1.1/.
-
-- [[[a3337, 10]]] Jakarta Enterprise Web Services 2.0. 
-https://jakarta.ee/specifications/enterprise-ws/2.0/.
+- [[[a3331, 7]]] Database Language SQL. 
+ANSI X3.135-1992 or ISO/IEC 9075:1992.
