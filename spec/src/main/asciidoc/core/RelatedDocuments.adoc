@@ -70,3 +70,15 @@ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 
 - [[[a9882, 23]]] JAR File Specification,
 https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html.
+
+- [[[a9856, 24]]] Java(TM) Security.
+https://www.oracle.com/java/technologies/javase/javase-tech-security.html.
+
+- [[[a9855, 25]]] Java Remote Method Invocation (RMI).
+https://docs.oracle.com/javase/8/docs/technotes/guides/rmi/.
+
+- [[[a9872, 26]]] Database Language SQL.
+ANSI X3.135-1992 or ISO/IEC 9075:1992.
+
+- [[[a9877, 27]]] JDBC(TM) 4.3 API (JDBC specification).
+https://jcp.org/en/jsr/detail?id=221.
