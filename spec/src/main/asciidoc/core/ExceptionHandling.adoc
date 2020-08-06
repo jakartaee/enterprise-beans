@@ -56,7 +56,7 @@ is designed to meet these high-level goals:
 * An application exception thrown by an
 enterprise bean instance should be reported to the client precisely
 (i.e., the client gets the same exception).footnote:a10282[This may not 
-be the case where web services protocols are used. See <<a9873>>.]
+be the case where web services protocols are used. See <<a9881>>.]
 
 * An application exception thrown by an
 enterprise bean instance should not automatically cause a client’s
@@ -615,7 +615,7 @@ container callbacks on the instance. Discarding does not apply if the
 bean is a singleton session bean. +
 [[a10299, Note D]]  [D] Throw `RemoteException` to web service client means that 
 the container maps the `RemoteException` to the appropriate SOAP fault. 
-See <<a9873>>.
+See <<a9881>>.
 
 <<a3129>> specifies 
 how the container must handle the exceptions thrown by the business
@@ -663,7 +663,7 @@ Receives `RemoteException` or `EJBException`.
 apply if the bean is a singleton session bean. +
 [[a10301, Note B]]  [B] Throw `RemoteException` to web service client means 
 that the container maps the `RemoteException` to the appropriate SOAP fault. 
-See <<a9873>>.
+See <<a9881>>.
 
 ==== Exceptions from AroundConstruct, PostConstruct and PreDestroy Lifecycle Callbacks
 
@@ -1084,7 +1084,7 @@ application exception from one of its web service methods, it is the
 responsibility of the container to map the exception to the SOAP fault
 specified in the WSDL that describes the port type that the stateless
 session bean implements. For Java clients, the exceptions received by
-the client are described by the mapping rules in <<a9873>>.
+the client are described by the mapping rules in <<a9881>>.
 
 ==== java.rmi.RemoteException and jakarta.ejb.EJBException
 

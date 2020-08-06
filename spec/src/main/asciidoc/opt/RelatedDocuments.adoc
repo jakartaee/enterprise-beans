@@ -2,38 +2,23 @@
 [bibliography]
 == Related Documents
 
-- [[[a3322, 1]]] Jakarta Enterprise Beans, Optional Features 3.2. (this specification) https://jakarta.ee/specifications/enterprise-beans/3.2/.
+- [[[a3323, 1]]] Enterprise JavaBeans(TM), version 3.1.
+https://jcp.org/en/jsr/detail?id=318.
 
-- [[[a3323, 2]]] Enterprise JavaBeans™, version 3.1. (EJB 3.1). http://jcp.org/en/jsr/detail?id=318.
+- [[[a3339, 2]]] Jakarta Enterprise Beans, Core Features 4.0
+https://jakarta.ee/specifications/enterprise-beans/4.0/.
 
-- [[[a3324, 3]]] Enterprise JavaBeans™, version 2. (EJB 2.1). http://www.oracle.com/technetwork/java/javaee/ejb/index.html.
+- [[[a3327, 3]]] Java Remote Method Invocation (RMI).
+https://docs.oracle.com/javase/8/docs/technotes/guides/rmi/.
 
-- [[[a3325, 4]]] Jakarta Persistence 2.2. https://jakarta.ee/specifications/persistence/2.2/.
+- [[[a3334, 4]]] The Java Virtual Machine Specification.
+https://docs.oracle.com/javase/specs/jvms/se8/html/index.html.
 
-- [[[a3326, 5]]] Java™ Naming and Directory Interface 1.2 Specification (JNDI). http://docs.oracle.com/javase/7/docs/technotes/guides/jndi/index.html.
+- [[[a3325, 5]]] Jakarta Persistence 3.0.
+https://jakarta.ee/specifications/persistence/3.0/.
 
-- [[[a3327, 6]]] Java Remote Method Invocation (RMI). http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/.
+- [[[a3335, 6]]] JDBC(TM) 4.3 API (JDBC specification). 
+https://jcp.org/en/jsr/detail?id=221.
 
-- [[[a3328, 7]]] IDL To Java™ Language Mapping Specification. http://www.omg.org/cgi-bin/doc?ptc/2000-01-08.
-
-- [[[a3329, 8]]] Jakarta EE Platform 8. https://jakarta.ee/specifications/platform/8/.
-
-- [[[a3330, 9]]] Jakarta Connectors 1.7. https://jakarta.ee/specifications/connectors/1.7/.
-
-- [[[a3331, 10]]] Database Language SQL. ANSI X3.135-1992 or ISO/IEC 9075:1992.
-
-- [[[a3332, 11]]] Jakarta XML RPC 1.1. https://jakarta.ee/specifications/xml-rpc/1.1/.
-
-- [[[a3333, 12]]] Web Services Description Language (WSDL) 1.1. http://www.w3.org/TR/wsdl.
-
-- [[[a3334, 13]]] The Java Virtual Machine Specification.
-
-- [[[a3335, 14]]] JDBC™ 4.1 API (JDBC specification). http://jcp.org/en/jsr/detail?id=221.
-
-- [[[a3336, 15]]] Jakarta Web Services Metadata 2.1. https://jakarta.ee/specifications/web-services-metadata/2.1/.
-
-- [[[a3337, 16]]] Jakarta Enterprise Web Services 1.4. https://jakarta.ee/specifications/enterprise-ws/1.4/
-
-- [[[a3338, 17]]] W3C: SOAP 1.2. http://www.w3.org/TR/SOAP/.
-
-- [[[a3339, 18]]] Jakarta Enterprise Beans, Core Features 3.2 https://jakarta.ee/specifications/enterprise-beans/3.2/.
+- [[[a3331, 7]]] Database Language SQL. 
+ANSI X3.135-1992 or ISO/IEC 9075:1992.

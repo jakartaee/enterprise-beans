@@ -187,13 +187,6 @@ s|Entity Beans a|
 Enterprise Beans QL
 
 |Optional
-
-s|Jakarta XML RPC Web Service Endpoints a|
-*SESSION BEAN CLIENT VIEWS:*
-
-Jakarta XML RPC Web Service Endpoints
-
-|Optional
 |===
 
 [[a9516]]

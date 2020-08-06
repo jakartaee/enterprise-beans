@@ -460,12 +460,6 @@ HTTP in conformance with the requirements of the Jakarta(R) XML Web Services
 <<a9881>>, Jakarta(R) Enterprise Web Services <<a9879>>, and Jakarta(R) Web 
 Services Metadata <<a9878>> specifications.
 
-Support for web services invocations using
-Jakarta(R) XML RPC <<a9873>> is optional
-as of the 3.2 release of the Enterprise Beans specification. See the
-Enterprise Beans Optional Features document <<a9890>> for the complete
-description.
-
 [[a182]]
 === Pruning the Enterprise Beans API
 
