@@ -173,8 +173,6 @@ TimedObject interface
 
 SessionSynchronization interface
 
-RMI-IIOP Interoperability
-
 |Optional
 
 s|Entity Beans a|
@@ -478,7 +476,7 @@ deny all other
 *Notes:* +
 [[a10342, Note A]]  [A]  This permission is
 necessary, for example, to allow enterprise beans to use the client
-functionality of the Java IDL and RMI-IIOP packages that are part of the
+functionality of the Java IDL and RMI packages that are part of the
 Java SE platform.
 
 _Some containers may allow the Deployer to
@@ -670,7 +668,7 @@ An enterprise
 bean’s remote business interfaces and/or remote home and remote
 component interfaces are _remote interfaces_ for Java RMI. The container
 must ensure the semantics for passing arguments conforms to Java
-RMI-IIOP. Non-remote objects must be passed by value.
+RMI. Non-remote objects must be passed by value.
 
 Specifically, the Enterprise Beans container is not
 allowed to pass non-remote objects by reference on inter-Enterprise Beans invocations
@@ -678,7 +676,7 @@ when the calling and called enterprise beans are collocated in the same
 JVM. Doing so could result in the multiple beans sharing the state of a
 Java object, which would break the enterprise bean’s semantics. Any
 local optimizations of remote interface calls must ensure the semantics
-for passing arguments conforms to Java RMI-IIOP.
+for passing arguments conforms to Java RMI.
 
 An enterprise bean’s local business
 interfaces and/or local home and local interfaces are _local Java
