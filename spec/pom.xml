@@ -62,10 +62,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
-        <asciidoctor.maven.plugin.version>2.0.0</asciidoctor.maven.plugin.version>
-        <asciidoctorj.version>2.3.0</asciidoctorj.version>
+        <asciidoctor.maven.plugin.version>1.6.0</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>1.6.2</asciidoctorj.version>
         <asciidoctorj.pdf.version>1.5.3</asciidoctorj.pdf.version>
-        <jruby.version>9.2.11.1</jruby.version>
+        <jruby.version>9.2.12.0</jruby.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
