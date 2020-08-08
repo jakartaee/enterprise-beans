@@ -5,7 +5,4 @@
 * Entity Beans are not supported within `.war` files.
 These component types must only be packaged in a stand-alone ejb-jar file or an ejb-jar file packaged within an `.ear` file.
 
-* Jakarta XML RPC based web service endpoints are not supported within `.war` files.
-These endpoints must be only be packaged in a stand-alone ejb-jar file or an ejb-jar file packaged within an `.ear` file.
-
-* Entity Beans and XML RPC based web service endpoints are not supported with the Enterprise Beans 3.2 Lite API (see Enterprise Beans Core Contracts and Requirements document <<a3339>>, Subsection "`__Enterprise Beans 3.2 Lite__`").
+* Entity Beans are not supported with the Enterprise Beans 3.2 Lite API (see Enterprise Beans Core Contracts and Requirements document <<a3339>>, Subsection "`__Enterprise Beans 3.2 Lite__`").

@@ -8,10 +8,9 @@ clients.
 [[a9696]]
 === Support for Existing Applications
 
-Existing Enterprise Beans 3.1 and earlier applications
-that do not include entity bean components and Jakarta XML RPC based web
-services endpoints footnote:a10344[See <<a182>>.] must be supported to run
-unchanged in Enterprise Beans 3.2 containers.
+Existing Enterprise Beans 3.1 and earlier applications that do not
+include entity bean components footnote:a10344[See <<a182>>.] must be
+supported to run unchanged in Enterprise Beans 3.2 containers.
 
 Full Enterprise Beans 3.2 implementations must support Enterprise Beans
 1.1, Enterprise Beans 2.0, Enterprise Beans 2.1, Enterprise Beans 3.0, and Enterprise Beans 3.1 deployment descriptors for

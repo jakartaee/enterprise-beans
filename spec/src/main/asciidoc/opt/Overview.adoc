@@ -7,8 +7,6 @@ This document describes features for which support has been made optional as of 
 * _Enterprise Beans 1.1 Entity Bean Component Contract for Container-Managed Persistence_
 * _Client View of an Entity Bean_
 * _Enterprise Beans QL: Query Language for Container-Managed Persistence Query Methods_
-* _Jakarta XML RPC Based Web Service Endpoints_
-* _Jakarta XML RPC Web Service Client View._
 
 If an implementation supports such features, it must do so in accordance with the requirements of this specification.
 In addition, the following rules apply:
@@ -18,7 +16,5 @@ In addition, the following rules apply:
 ** Enterprise Beans 1.1 entity beans with container-managed persistence
 ** Enterprise Beans 2.x entity beans with bean-managed persistence
 ** Enterprise Beans QL
-
-* If Jakarta XML RPC web service endpoints are supported, the Jakarta XML RPC web service endpoint client view must be supported.
 
 See the general description of the Enterprise Beans goals and requirements in the Enterprise Beans Core Contracts and Requirements <<a3339>> document.
