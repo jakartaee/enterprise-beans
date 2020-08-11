@@ -34,7 +34,7 @@ The Bean Provider of an enterprise bean with container-managed transaction demar
 A transaction attribute is a value associated with a method of an entity bean’s home or component interface.
 
 The transaction attributes are specified for the methods defined in the bean’s component interface and all the direct and indirect superinterfaces of the component interface, excluding the `getEJBHome`, `getEJBLocalHome`, `getHandle`, `getPrimaryKey`, and `isIdentical` methods; for the methods defined in the bean’s home interface and all the direct and indirect superinterfaces of the home interface, excluding the `getEJBMetaData` and `getHomeHandle` methods specific to the remote home interface; and for the timeout callback methods, if any.
-footnote:<<a3394>>[Note that the deployment descriptor must be used to specify transaction attributes for entity bean methods if the transaction attribute is not `Required` (the default value)]
+footnote:a3394[Note that the deployment descriptor must be used to specify transaction attributes for entity bean methods if the transaction attribute is not `Required` (the default value)]
 
 For entity beans that use container-managed persistence, only the `Required`, `RequiresNew`, or `Mandatory` deployment descriptor transaction attribute values should be used for the methods defined in the bean’s component interface and all the direct and indirect superinterfaces of the component interface, excluding the `getEJBHome`, `getEJBLocalHome`, `getHandle`, `getPrimaryKey`, and `isIdentical` methods; and for the methods defined in the bean’s home interface and all the direct and indirect superinterfaces of the home interface, excluding the `getEJBMetaData` and `getHomeHandle` methods specific to the remote home interface.
 

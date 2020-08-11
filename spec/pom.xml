@@ -17,37 +17,69 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.eclipse.ee4j.ejb-api</groupId>
-        <artifactId>ejb-api-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>enterprise-beans-spec</artifactId>
+    <groupId>jakarta.ejb</groupId>
+    <artifactId>jakarta.ejb-spec</artifactId>
+    <version>4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Jakarta Enterprise Beans Specification</name>
-    <version>4.0-SNAPSHOT</version>
-
+    <description>Jakarta Enterprise Beans Specification</description>
+    <organization>
+        <name>Eclipse Foundation</name>
+        <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>EFSL 1.0</name>
+            <url>https://www.eclipse.org/legal/efsl.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/eclipse-ee4j/ejb-api/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
+        <url>https://github.com/eclipse-ee4j/ejb-api/tree/${project.scm.tag}</url>
+        <tag>HEAD</tag>
+    </scm>
+    <mailingLists>
+        <mailingList>
+            <name>Enterprise Beans developer discussions</name>
+            <post>mailto:ejb-dev@eclipse.org</post>
+            <subscribe>mailto:ejb-dev-request@eclipse.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:ejb-dev-request@eclipse.org?subject=unsubscribe</unsubscribe>
+            <archive>http://www.eclipse.org/lists/ejb-dev</archive>
+            <otherArchives>
+                <otherArchive>http://www.eclipse.org/lists/ejb-dev/maillist.rss</otherArchive>
+            </otherArchives>
+        </mailingList>
+    </mailingLists>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <site.output.dir>${project.build.directory}/staging</site.output.dir>
         <maven.site.skip>true</maven.site.skip>
-        <asciidoctor.maven.plugin.version>1.5.7.1</asciidoctor.maven.plugin.version>
+        <asciidoctor.maven.plugin.version>1.6.0</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>1.6.2</asciidoctorj.version>
-        <asciidoctorj.pdf.version>1.5.0-alpha.18</asciidoctorj.pdf.version>
-        <jruby.version>9.2.6.0</jruby.version>
+        <asciidoctorj.pdf.version>1.5.3</asciidoctorj.pdf.version>
+        <jruby.version>9.2.12.0</jruby.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
     </properties>
-
     <build>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.4.1</version>
+                <version>${maven-enforcer-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -56,6 +88,9 @@
                         </goals>
                         <configuration>
                             <rules>
+                                <requireMavenVersion>
+                                    <version>3.0.5</version>
+                                </requireMavenVersion>
                                 <requireJavaVersion>
                                     <version>[1.8.0,)</version>
                                     <message>You need JDK8 or higher</message>
@@ -161,8 +196,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceHighlighter>coderay</sourceHighlighter>
                     <attributes>
+                        <sourceHighlighter>coderay</sourceHighlighter>
                         <revnumber>${project.version}</revnumber>
                         <revremark>${status}</revremark>
                         <revdate>${revisiondate}</revdate>
@@ -174,18 +209,15 @@
                         <idprefix />
                         <idseparator>-</idseparator>
                         <docinfo1>true</docinfo1>
+                        <imagesdir>images</imagesdir>
                     </attributes>
+                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
                 </configuration>
-
             </plugin>
-
-            <!--
-                This is the rule that builds the zip file for download.
-            -->
+            <!-- This is the rule that builds the zip file for download. -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>${maven-assembly-plugin.version}</version>
                 <inherited>false</inherited>
                 <executions>
                     <execution>
@@ -201,6 +233,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <preparationGoals>clean,package</preparationGoals>
+                </configuration>
             </plugin>
         </plugins>
     </build>
