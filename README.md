@@ -13,7 +13,7 @@ Jakarta Enterprise Beans defines a server-side API for implementing component-ba
 Prerequisites:
 
 * JDK8+
-* Maven 3.0.3+
+* Maven 3.5.4+
 
 Run the build: 
 
@@ -24,7 +24,7 @@ The API jar is built in /api/target.
 
 ## Checking findbugs
 
-`mvn -DskipTests -Dfindbugs.threshold=Low findbugs:findbugs`
+`mvn -pl api spotbugs:spotbugs`
 
 ## Licensing
 
