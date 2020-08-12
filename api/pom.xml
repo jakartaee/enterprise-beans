@@ -244,9 +244,12 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Adds the manifest file created by the org.apache.felix:maven-bundle-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -256,9 +259,12 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- Creates the source jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
                 <configuration>
                     <includePom>true</includePom>
                 </configuration>
@@ -271,9 +277,14 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--
+               Create Javadoc for API jar
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -287,12 +298,55 @@
                             <goal>javadoc</goal>
                         </goals>
                         <configuration>
+                            <source>1.8</source>
+                            <additionalJOption>-Xdoclint:none</additionalJOption>
+                            <description>Jakarta Enterprise Beans API documentation</description>
+                            <doctitle>Jakarta Enterprise Beans API documentation</doctitle>
+                            <windowtitle>Jakarta Enterprise Beans API documentation</windowtitle>
+                            <header><![CDATA[<br>Jakarta Enterprise Beans API v${project.version}]]></header>
+                            <bottom><![CDATA[
+Comments to: <a href="mailto:ejb-dev@eclipse.org">ejb-dev@eclipse.org</a>.<br>
+Copyright &#169; 2019 Eclipse Foundation. All rights reserved.<br>
+Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
+                            </bottom>
+                            <docfilessubdirs>true</docfilessubdirs>
                             <groups>
                                 <group>
                                     <title>Jakarta Enterprise Beans API Documentation</title>
                                     <packages>jakarta.ejb</packages>
                                 </group>
                             </groups>
+                            <tags>
+                                <tag>
+                                    <name>implSpec</name>
+                                    <placement>a</placement>
+                                    <head>Implementation Requirements:</head>
+                                </tag>
+                                <tag>
+                                    <name>param</name>
+                                </tag>
+                                <tag>
+                                    <name>return</name>
+                                </tag>
+                                <tag>
+                                    <name>throws</name>
+                                </tag>
+                                <tag>
+                                    <name>since</name>
+                                </tag>
+                                <tag>
+                                    <name>version</name>
+                                </tag>
+                                <tag>
+                                    <name>serialData</name>
+                                </tag>
+                                <tag>
+                                    <name>factory</name>
+                                </tag>
+                                <tag>
+                                    <name>see</name>
+                                </tag>
+                            </tags>
                         </configuration>
                     </execution>
                 </executions>
