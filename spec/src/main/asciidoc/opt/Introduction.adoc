@@ -7,8 +7,6 @@ This document describes features for which support has been made optional as of 
 * _Enterprise Beans 1.1 Entity Bean Component Contract for Container-Managed Persistence_
 * _Client View of an Entity Bean_
 * _Enterprise Beans QL: Query Language for Container-Managed Persistence Query Methods_
-* _Jakarta XML RPC Based Web Service Endpoints_
-* _Jakarta XML RPC Web Service Client View._
 
 === Acknowledgements
 

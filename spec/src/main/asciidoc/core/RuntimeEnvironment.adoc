@@ -173,8 +173,6 @@ TimedObject interface
 
 SessionSynchronization interface
 
-RMI-IIOP Interoperability
-
 |Optional
 
 s|Entity Beans a|

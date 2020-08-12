@@ -1,7 +1,7 @@
 [[a3210]]
 == Exception Handling
 
-This chapter defines requirements for exception handling of entity beans and Jakarta XML RPC web service endpoints in addition to the contracts specified in the Enterprise Beans Core Contracts and Requirements document <<a3339>> Chapter "`__Exception Handling__`".
+This chapter defines requirements for exception handling of entity beans in addition to the contracts specified in the Enterprise Beans Core Contracts and Requirements document <<a3339>> Chapter "`__Exception Handling__`".
 
 === Application Exceptions
 
@@ -81,8 +81,5 @@ The Enterprise Beans 1.0 specification allowed the business methods, `ejbCreate`
 See the corresponding section in the Enterprise Beans Core Contracts and Requirements document <<a3339>> for the rules on support of the deprecated use of `java.rmi.RemoteException`.
 
 === Client’s View of Exceptions
-
-The Jakarta XML RPC web service endpoint interface is Java RMI interface, and therefore the `throws` clauses of all its methods (including those inherited from superinterfaces) include the mandatory `java.rmi.RemoteException`.
-The `throws` clauses may include an arbitrary number of application exceptions.
 
 See the corresponding section in the Enterprise Beans Core Contracts and Requirements document <<a3339>> for the client’s view of exceptions received from from enterprise beans and web service endpoints.

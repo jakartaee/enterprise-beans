@@ -497,10 +497,6 @@ Bean
 * Enterprise Beans QL: Enterprise Beans Query Language for
 Container-Managed Persistence Query Methods
 
-* Jakarta XML RPC Based Web Service Endpoints
-
-* Jakarta XML RPC Web Service Client View
-
 === Relationship to Jakarta Managed Beans
 
 The _Jakarta(R) Managed Beans_ <<a9886>> defines the minimal
