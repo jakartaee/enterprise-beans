@@ -35,6 +35,8 @@ application programmer._
 
 * _Marked the EJB 2.x API Group as "Optional"_
 
+* _@Schedule annotation is now repeatable_
+
 === What was New in Enterprise Beans 3.2
 
 The Enterprise Beans 3.2 <<a9891>> architecture
