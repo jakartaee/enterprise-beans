@@ -975,7 +975,7 @@ The method must not be declared as `final` or `static`.
 
 The return type must be the entity bean’s primary key type.
 
-The method argument and return value types must be legal types for Java RMI if the `ejbCreate<METHOD>` corresponds to a `create<METHOD>` on the entity bean’s remote home interface.
+The method argument and return value types must be legal types for RMI-IIOP if the `ejbCreate<METHOD>` corresponds to a `create<METHOD>` on the entity bean’s remote home interface.
 
 The `throws` clause may define arbitrary application specific exceptions, including the `jakarta.ejb.CreateException`.
 
@@ -1020,7 +1020,7 @@ A finder method must be declared as `public`.
 
 The method must not be declared as `final` or `static`.
 
-The method argument types must be legal types for Java RMI if the `ejbFind<METHOD>` method corresponds to a `find<METHOD>` method on the entity bean’s remote home interface.
+The method argument types must be legal types for RMI-IIOP if the `ejbFind<METHOD>` method corresponds to a `find<METHOD>` method on the entity bean’s remote home interface.
 
 The return type of a finder method must be the entity bean’s primary key type, or a collection of primary keys (see <<a2729>>).
 
@@ -1044,7 +1044,7 @@ The method must be declared as `public`.
 
 The method must not be declared as `static`.
 
-The method argument and return value types must be legal types for Java RMI if the `ejbHome` method corresponds to a method on the entity bean’s remote home interface.
+The method argument and return value types must be legal types for RMI-IIOP if the `ejbHome` method corresponds to a method on the entity bean’s remote home interface.
 
 The `throws` clause may define arbitrary application specific exceptions.
 The `throws` clause must not throw the `java.rmi.RemoteException`.
@@ -1059,7 +1059,7 @@ The business method must be declared as `public`.
 
 The method must not be declared as `final` or `static`.
 
-The method argument and return value types must be legal types for Java RMI if the method corresponds to a business method on the entity bean’s remote interface.
+The method argument and return value types must be legal types for RMI-IIOP if the method corresponds to a business method on the entity bean’s remote interface.
 
 The `throws` clause may define arbitrary application specific exceptions.
 
@@ -1073,11 +1073,11 @@ The following are the requirements for the entity bean’s remote interface:
 
 The interface must extend the `jakarta.ejb.EJBObject` interface.
 
-The methods defined in the remote interface must follow the rules for Java RMI.
-This means that their argument and return value types must be valid types for Java RMI, and their `throws` clauses must include the `java.rmi.RemoteException`.
+The methods defined in the remote interface must follow the rules for RMI-IIOP.
+This means that their argument and return value types must be valid types for RMI-IIOP, and their `throws` clauses must include the `java.rmi.RemoteException`.
 
 The remote interface is allowed to have superinterfaces.
-Use of interface inheritance is subject to the Java RMI rules for the definition of remote interfaces.
+Use of interface inheritance is subject to the RMI-IIOP rules for the definition of remote interfaces.
 
 For each method defined in the remote interface, there must be a matching method in the entity bean’s class.
 The matching method must have:
@@ -1096,11 +1096,11 @@ The following are the requirements for the entity bean’s remote home interface
 
 The interface must extend the `jakarta.ejb.EJBHome` interface.
 
-The methods defined in this interface must follow the rules for Java RMI.
-This means that their argument and return types must be of valid types for Java RMI, and that their `throws` clauses must include the `java.rmi.RemoteException`.
+The methods defined in this interface must follow the rules for RMI-IIOP.
+This means that their argument and return types must be of valid types for RMI-IIOP, and that their `throws` clauses must include the `java.rmi.RemoteException`.
 
 The remote home interface is allowed to have superinterfaces.
-Use of interface inheritance is subject to the Java RMI rules for the definition of remote interfaces.
+Use of interface inheritance is subject to the RMI-IIOP rules for the definition of remote interfaces.
 
 Each method defined in the remote home interface must be one of the following:
 
@@ -1209,7 +1209,7 @@ The `throws` clause of any method on the entity bean’s local home interface mu
 
 The Bean Provider must specify a primary key class in the deployment descriptor.
 
-The primary key type must be a legal Value Type in Java RMI.
+The primary key type must be a legal Value Type in RMI-IIOP.
 
 The class must provide suitable implementation of the `hashCode()` and `equals(Object other)` methods to simplify the management of the primary keys by client code.
 
@@ -1308,7 +1308,7 @@ Because the home handle class is not entity-bean specific, the container may, bu
 
 ==== Metadata Class
 
-The deployment tools are responsible for implementing the class that provides metadata information to the remote client view contract. The class must be a valid Java RMI Value Type, and must implement the `jakarta.ejb.EJBMetaData` interface.
+The deployment tools are responsible for implementing the class that provides metadata information to the remote client view contract. The class must be a valid RMI-IIOP Value Type, and must implement the `jakarta.ejb.EJBMetaData` interface.
 
 Because the metadata class is not entity-bean specific, the container may, but is not required to, use a single class for all deployed enterprise beans.
 

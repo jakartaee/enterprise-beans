@@ -3071,7 +3071,7 @@ static.
 * The return type must be void.
 
 * The method arguments must be legal types for
-Java RMI if there is a `create<METHOD>` corresponding to the
+RMI/IIOP if there is a `create<METHOD>` corresponding to the
 `ejbCreate<METHOD>` method on the session bean’s remote home interface.
 
 * A stateless session bean may define only a
@@ -3106,7 +3106,7 @@ used by the Enterprise Beans architecture.
 * The method must not be declared as final or static.
 
 * The argument and return value types for the
-method must be legal types for Java RMI if the method corresponds to a
+method must be legal types for RMI/IIOP if the method corresponds to a
 business method on the session bean’s remote business interface or
 remote component interface.
 
@@ -3152,7 +3152,7 @@ the requirements for the session bean’s business interface:
 
 If the business interface is a remote
 business interface, the argument and return values must be of valid
-types for Java RMI. The remote business interface is not required or
+types for RMI/IIOP. The remote business interface is not required or
 expected to be a `java.rmi.Remote` interface. The `throws` clause should
 not include the `java.rmi.RemoteException`. The methods of the business
 interface may only throw the `java.rmi.RemoteException` if the interface
@@ -3344,13 +3344,13 @@ the requirements for the session bean’s remote component interface:
 * The interface must extend the `jakarta.ejb.EJBObject` interface.
 
 * The methods defined in this interface must
-follow the rules for Java RMI. This means that their argument and return
-values must be of valid types for Java RMI, and their `throws` clauses
+follow the rules for RMI/IIOP. This means that their argument and return
+values must be of valid types for RMI/IIOP, and their `throws` clauses
 must include the `java.rmi.RemoteException`.
 
 * The remote component interface is allowed to
 have superinterfaces. Use of interface inheritance is subject to the
-Java RMI rules for the definition of remote interfaces.
+RMI/IIOP rules for the definition of remote interfaces.
 
 * For each method defined in the remote
 component interface, there must be a matching method in the session
@@ -3378,12 +3378,12 @@ remote home interface:
 * The interface must extend the `jakarta.ejb.EJBHome` interface.
 
 * The methods defined in this interface must
-follow the rules for Java RMI. This means that their argument and return
-values must be of valid types for Java RMI, and that their `throws`
+follow the rules for RMI/IIOP. This means that their argument and return
+values must be of valid types for RMI/IIOP, and that their `throws`
 clauses must include the `java.rmi.RemoteException`.
 
 * The remote home interface is allowed to have
-superinterfaces. Use of interface inheritance is subject to the Java RMI
+superinterfaces. Use of interface inheritance is subject to the RMI/IIOP
 rules for the definition of remote interfaces.
 
 * A session bean’s

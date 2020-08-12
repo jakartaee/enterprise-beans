@@ -248,7 +248,7 @@ Home methods are methods that the Bean Provider supplies for business logic that
 
 Home methods on the remote home interface can have arbitrary method names, but they must not start with "```create```", "```find```", or "```remove```".
 The arguments of a home method are used by the entity bean implementation in computations that do not depend on a specific entity bean instance.
-The method arguments and return value types of a home method on the remote home interface must be legal types for Java RMI.
+The method arguments and return value types of a home method on the remote home interface must be legal types for RMI-IIOP.
 
 The `throws` clause of every home method on the remote home interface includes the `java.rmi.RemoteException`.
 It may also include additional application-level exceptions.
@@ -497,7 +497,7 @@ In addition to the rules described in Enterprise Beans Core Contracts and Requir
 Every entity object has a unique identity within its home.
 If two entity objects have the same home and the same primary key, they are considered identical.
 
-The Enterprise Beans architecture allows a primary key class to be any class that is a legal Value Type in Java RMI, subject to the restrictions defined in <<a1725>> and <<a3011>>.
+The Enterprise Beans architecture allows a primary key class to be any class that is a legal Value Type in RMI-IIOP, subject to the restrictions defined in <<a1725>> and <<a3011>>.
 The primary key class may be specific to an entity bean class (i.e., each entity bean class may define a different class for its primary key, but it is possible that multiple entity beans use the same primary key class).
 
 A client that holds a reference to an entity object’s component interface can determine the entity object’s identity within its home by invoking the `getPrimaryKey` method on the reference.
