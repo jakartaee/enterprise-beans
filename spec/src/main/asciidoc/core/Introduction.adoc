@@ -43,6 +43,8 @@ the removal of CORBA from Java 11 and the Jakarta EE 9 Platform._
 
 * _Marked the EJB 2.x API Group as "Optional"_
 
+* _@Schedule annotation is now repeatable_
+
 === What was New in Jakarta Enterprise Beans 3.2
 
 The Jakarta Enterprise Beans 3.2 <<a9895>> architecture is the first official
