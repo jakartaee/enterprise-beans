@@ -14,6 +14,7 @@ Document updates in preparation for EJB 4.0:
 - Removed the methods relying on JAX-RPC link:Ejb.html#a608[See Session Bean Component Contract]
 - Removed the deprecated EJBContext.getEnvironment() method link:Ejb.html#a3613[See Enterprise Bean Environment]
 - Marked the EJB 2.x API Group as "Optional" link:Ejb.html#a9423[See Runtime Environment]
+- @Schedule now a repeatable annotation
 
 Removed documents in preparation for EJB 4.0:
 

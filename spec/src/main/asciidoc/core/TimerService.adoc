@@ -455,6 +455,18 @@ single timeout callback method using the `Schedules` annotation.
 public void sendLunchNotification() { ... }
 ----
 
+Alternatively, as of Enterprise Beans 4.0 multiple automatic timers
+can be applied to a single timeout callback method using `Schedule`
+as a repeatable annotation.
+
+*Example:*
+[source, java]
+----
+@Schedule(hour="12", dayOfWeek="Mon-Thu")
+@Schedule(hour="11", dayOfWeek="Fri")
+public void sendLunchNotification() { ... }
+----
+
 A `Schedule` annotation can optionally
 specify an info string. This string can be retrieved by calling
 `Timer.getInfo()` on the associated Timer object. If no `info` string is
