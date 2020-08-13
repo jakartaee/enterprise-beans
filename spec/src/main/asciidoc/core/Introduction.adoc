@@ -28,7 +28,7 @@ prior Enterprise Beans specifications delivering a namespace change
 from `javax` to `jakarta` across the API along with removal of
 deprecated APIs.
 
-* _All 'javax.ejb' namespace/packages have been renamed to 'jakarta.ejb'_
+* _All `javax.ejb` namespace/packages have been renamed to `jakarta.ejb`_
 
 * _Removed the methods relying on java.security.Identity which has
 been removed from the Java 14._
