@@ -31,7 +31,7 @@ document, or portions thereof, that you use:
 * All existing copyright notices, or if one does not exist, a notice
   (hypertext is preferred, but a textual representation is permitted)
   of the form: "Copyright (C) [$date-of-document]
-  Eclipse Foundation, Inc. https://www.eclipse.org/legal/efsl.php[]"
+  Eclipse Foundation, Inc. \<<url to this license>>"
 
 Inclusion of the full text of this NOTICE must be provided. We
 request that authorship attribution be provided in any software,
@@ -50,10 +50,9 @@ specification is expressly prohibited.
 
 The notice is:
 
-"Copyright (C) 2018, 2020 Eclipse Foundation. This software or
-document includes material copied from or derived from 
-Jakarta(R) Enterprise Beans 
-https://jakarta.ee/specifications/enterprise-beans/4.0/[]"
+"Copyright (C) [$date-of-document] Eclipse Foundation. This software or
+document includes material copied from or derived from [title and URI
+of the Eclipse Foundation specification document]."
 
 ==== Disclaimers
 
