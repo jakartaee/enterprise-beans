@@ -79,3 +79,13 @@ ANSI X3.135-1992 or ISO/IEC 9075:1992.
 
 - [[[a9877, 26]]] JDBC(TM) 4.3 API (JDBC specification).
 https://jcp.org/en/jsr/detail?id=221.
+
+- [[[a9895, 27]]] Jakarta Enterprise Beans 3.2
+https://jakarta.ee/specifications/enterprise-beans/3.2/.
+
+- [[[a9893, 28]]] Enterprise JavaBeans(TM), version 3.1.
+https://jcp.org/en/jsr/detail?id=318.
+
+- [[[a9894, 29]]] Enterprise JavaBeans(TM), version 3.0.
+https://jcp.org/en/jsr/detail?id=220.
+
