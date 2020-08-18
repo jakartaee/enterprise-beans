@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  * which messages a JMS message driven bean is to receive.
  *
  * <li><code>destinationType</code>. This property is used to specify whether the message driven bean is intended to be
- * used with a queue or a topic. The value must be either <code>jakarta.jms.Queue</code> or <code>jakartaF.jms.Topic</code>.
+ * used with a queue or a topic. The value must be either <code>jakarta.jms.Queue</code> or <code>jakarta.jms.Topic</code>.
  *
  * <li><code>destinationLookup</code>. This property is used to specify the JMS queue or topic from which a JMS
  * message-driven bean is to receive messages.
