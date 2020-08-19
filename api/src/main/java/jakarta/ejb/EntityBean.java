@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
  *
  * <p>
  * Applications written to the EJB 3.0 and later APIs should use the facilities of the Jakarta Persistence API
- * (<code>javax.persistence</code>) to model persistent entities.
+ * (<code>jakarta.persistence</code>) to model persistent entities.
  *
  * <p>
  * <b>Note:</b> Support for entity beans is optional as of EJB 3.2.
@@ -48,7 +48,7 @@ public interface EntityBean extends EnterpriseBean {
      * EJB2.0 and higher specifications must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void setEntityContext(EntityContext ctx) throws EJBException,
-            RemoteException;
+                                                           RemoteException;
 
     /**
      * Unset the associated entity context. The container calls this method before removing the instance.
@@ -85,7 +85,7 @@ public interface EntityBean extends EnterpriseBean {
      * EJB2.0 and higher specifications must throw the jakarta.ejb.EJBException instead of this exception.
      */
     public void ejbRemove() throws RemoveException, EJBException,
-            RemoteException;
+                                   RemoteException;
 
     /**
      * A container invokes this method when the instance is taken out of the pool of available instances to become
