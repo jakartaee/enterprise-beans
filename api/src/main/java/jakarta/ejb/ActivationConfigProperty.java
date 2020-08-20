@@ -24,24 +24,24 @@ import java.lang.annotation.Target;
  * Used to provide information to the deployer about the configuration of a message driven bean in its operational
  * environment.
  * <p>
- * The following standard properties are recognized for JMS message driven beans:
+ * The following standard properties are recognized for Jakarta Messaging message driven beans:
  * <ul>
- * <li><code>acknowledgeMode</code>. This property is used to specify the JMS acknowledgement mode for the message
+ * <li><code>acknowledgeMode</code>. This property is used to specify the Jakarta Messaging acknowledgement mode for the message
  * delivery when bean-managed transaction demarcation is used. Its values are <code>Auto_acknowledge</code> or
- * <code>Dups_ok_acknowledge</code>. If this property is not specified, JMS <code>AUTO_ACKNOWLEDGE</code> semantics are
+ * <code>Dups_ok_acknowledge</code>. If this property is not specified, Jakarta Messaging <code>AUTO_ACKNOWLEDGE</code> semantics are
  * assumed.
  *
- * <li><code>messageSelector</code>. This property is used to specify the JMS message selector to be used in determining
- * which messages a JMS message driven bean is to receive.
+ * <li><code>messageSelector</code>. This property is used to specify the Jakarta Messaging message selector to be used in determining
+ * which messages a Jakarta Messaging message driven bean is to receive.
  *
  * <li><code>destinationType</code>. This property is used to specify whether the message driven bean is intended to be
- * used with a queue or a topic. The value must be either <code>javax.jms.Queue</code> or <code>javax.jms.Topic</code>.
+ * used with a queue or a topic. The value must be either <code>jakarta.jms.Queue</code> or <code>jakarta.jms.Topic</code>.
  *
- * <li><code>destinationLookup</code>. This property is used to specify the JMS queue or topic from which a JMS
+ * <li><code>destinationLookup</code>. This property is used to specify the Jakarta Messaging queue or topic from which a Jakarta Messaging
  * message-driven bean is to receive messages.
  *
- * <li><code>connectionFactoryLookup</code>. This property is used to specify the JMS connection factory that will be
- * used to connect to the JMS provider from which a JMS message-driven bean is to receive messages.
+ * <li><code>connectionFactoryLookup</code>. This property is used to specify the Jakarta Messaging connection factory that will be
+ * used to connect to the Jakarta Messaging provider from which a Jakarta Messaging message-driven bean is to receive messages.
  *
  * <li><code>subscriptionDurability</code>. If the message driven bean is intended to be used with a topic, this
  * property may be used to indicate whether a durable or non-durable subscription should be used. The value of this
@@ -51,8 +51,8 @@ import java.lang.annotation.Target;
  * message-driven bean is intended to be used with a Topic, and the bean provider has indicated that a durable
  * subscription should be used.
  *
- * <li><code>clientId</code>. This property is used to specify the JMS client identifier that will be used when
- * connecting to the JMS provider from which a JMS message-driven bean is to receive messages. If this property is not
+ * <li><code>clientId</code>. This property is used to specify the Jakarta Messaging client identifier that will be used when
+ * connecting to the Jakarta Messaging provider from which a Jakarta Messaging message-driven bean is to receive messages. If this property is not
  * specified then the client identifier will be left unset.
  *
  * </ul>
