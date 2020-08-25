@@ -2,23 +2,32 @@
 [[a9892]]
 == Revision History
 
-This appendix lists the significant changes
-that have been made to this document during the development of the EJB
-4.0 Specification.
+This appendix lists the significant changes that have been made to this
+document during the development of the Enterprise Beans 4.0
+Specification.
 
 === Public Draft
 
-Document updates in preparation for EJB 4.0:
+Document updates in preparation for Enterprise Beans 4.0:
 
-- Removed the methods relying on java.security.Identity link:Ejb.html#a4945[See Security Management]
-- Removed the methods relying on JAX-RPC link:Ejb.html#a608[See Session Bean Component Contract]
-- Removed the deprecated EJBContext.getEnvironment() method link:Ejb.html#a3613[See Enterprise Bean Environment]
-- Marked the EJB 2.x API Group as "Optional" link:Ejb.html#a9423[See Runtime Environment]
-- @Schedule now a repeatable annotation
+- Removed the methods relying on `java.security.Identity` <<a4945, See
+Security Management>>
 
-Removed documents in preparation for EJB 4.0:
+- Removed the methods relying on Jakarta XML RPC <<a608, See Session
+Bean Component Contract>>
 
-- Support for Distributed Interoperability
+- Removed the deprecated `EJBContext.getEnvironment()` method <<a3613,
+See Enterprise Bean Environment>>
+
+- Marked the Enterprise Beans 2.x API Group as "Optional" <<a9423, See
+Runtime Environment>>
+
+- `@Schedule` now a repeatable annotation <<automatic-timer-creation,
+See Automatic Timer Creation>>
+
+Removed documents in preparation for Enterprise Beans 4.0:
+
+- "`Support for Distributed Interoperability`"
 
 === Final Release Candidate
 
