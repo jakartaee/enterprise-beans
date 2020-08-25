@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jakarta.ejb</groupId>
     <artifactId>jakarta.ejb-spec</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>4.0</version>
     <packaging>pom</packaging>
     <name>Jakarta Enterprise Beans Specification</name>
     <description>Jakarta Enterprise Beans Specification</description>
@@ -73,6 +73,7 @@
         <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
+        <docversion>4.0-draft</docversion>
     </properties>
     <build>
         <defaultGoal>package</defaultGoal>
@@ -132,7 +133,7 @@
                         <configuration>
                             <backend>html5</backend>
                             <sourceDocumentName>enterprise-beans-spec-core.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-core-${project.version}.html</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-core-${docversion}.html</outputFile>
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
@@ -148,7 +149,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <sourceDocumentName>enterprise-beans-spec-core.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-core-${project.version}.pdf</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-core-${docversion}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
@@ -168,7 +169,7 @@
                         <configuration>
                             <backend>html5</backend>
                             <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.html</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-opt-${docversion}.html</outputFile>
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
@@ -184,7 +185,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.pdf</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-opt-${docversion}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
