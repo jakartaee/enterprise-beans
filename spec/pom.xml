@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jakarta.ejb</groupId>
     <artifactId>jakarta.ejb-spec</artifactId>
-    <version>4.0</version>
+    <version>4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Jakarta Enterprise Beans Specification</name>
     <description>Jakarta Enterprise Beans Specification</description>
@@ -73,7 +73,8 @@
         <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
-        <docversion>4.0-draft</docversion>
+        <spec.version>4.0</spec.version>
+        <docversion>${spec.version}-draft</docversion>
     </properties>
     <build>
         <defaultGoal>package</defaultGoal>
@@ -199,7 +200,7 @@
                 <configuration>
                     <attributes>
                         <sourceHighlighter>coderay</sourceHighlighter>
-                        <revnumber>${project.version}</revnumber>
+                        <revnumber>${spec.version}</revnumber>
                         <revremark>${status}</revremark>
                         <revdate>${revisiondate}</revdate>
                         <doctype>book</doctype>
