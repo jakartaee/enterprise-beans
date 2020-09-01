@@ -28,22 +28,22 @@ prior Enterprise Beans specifications delivering a namespace change
 from `javax` to `jakarta` across the API along with removal of
 deprecated APIs.
 
-* _All `javax.ejb` namespace/packages have been renamed to `jakarta.ejb`_
+* _All `javax.ejb` namespace/packages have been renamed to `jakarta.ejb`._
 
-* _Removed the methods relying on java.security.Identity which has
+* _Removed the methods relying on `java.security.Identity` which has
 been removed from the Java 14._
 
-* _Removed the methods relying on JAX-RPC to reflect the removal of
-JAX-RPC from the Jakarta EE 9 Platform._
+* _Removed the methods relying on Jakarta XML RPC to reflect the removal of
+XML RPC from the Jakarta EE 9 Platform._
 
-* _Removed the deprecated EJBContext.getEnvironment() method._
+* _Removed the deprecated `EJBContext.getEnvironment()` method._
 
-* _Removed the Support for Distributed Interoperability to reflect
+* _Removed the "`Support for Distributed Interoperability`" to reflect
 the removal of CORBA from Java 11 and the Jakarta EE 9 Platform._
 
-* _Marked the EJB 2.x API Group as "Optional"_
+* _Marked the Enterprise Beans 2.x API Group as "Optional"._
 
-* _@Schedule annotation is now repeatable_
+* _``@Schedule`` annotation is now repeatable._
 
 === What was New in Jakarta Enterprise Beans 3.2
 

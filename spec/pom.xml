@@ -73,6 +73,8 @@
         <status>DRAFT</status>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
+        <spec.version>4.0</spec.version>
+        <docversion>${spec.version}-draft</docversion>
     </properties>
     <build>
         <defaultGoal>package</defaultGoal>
@@ -132,7 +134,7 @@
                         <configuration>
                             <backend>html5</backend>
                             <sourceDocumentName>enterprise-beans-spec-core.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-core-${project.version}.html</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-core-${docversion}.html</outputFile>
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
@@ -148,7 +150,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <sourceDocumentName>enterprise-beans-spec-core.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-core-${project.version}.pdf</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-core-${docversion}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
@@ -168,7 +170,7 @@
                         <configuration>
                             <backend>html5</backend>
                             <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.html</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-opt-${docversion}.html</outputFile>
                             <attributes>
                                 <toc>left</toc>
                             </attributes>
@@ -184,7 +186,7 @@
                         <configuration>
                             <backend>pdf</backend>
                             <sourceDocumentName>enterprise-beans-spec-opt.adoc</sourceDocumentName>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-beans-spec-opt-${project.version}.pdf</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/jakarta-enterprise-beans-spec-opt-${docversion}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/main/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
@@ -198,7 +200,7 @@
                 <configuration>
                     <attributes>
                         <sourceHighlighter>coderay</sourceHighlighter>
-                        <revnumber>${project.version}</revnumber>
+                        <revnumber>${spec.version}</revnumber>
                         <revremark>${status}</revremark>
                         <revdate>${revisiondate}</revdate>
                         <doctype>book</doctype>
