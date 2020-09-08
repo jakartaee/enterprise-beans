@@ -41,7 +41,7 @@ XML RPC from the Jakarta EE 9 Platform._
 * _Removed the "`Support for Distributed Interoperability`" to reflect
 the removal of CORBA from Java 11 and the Jakarta EE 9 Platform._
 
-* _Marked the Enterprise Beans 2.x API Group as "Optional"._
+* _Marked the Enterprise Beans 2.x API Group as "`Optional`"._
 
 * _``@Schedule`` annotation is now repeatable._
 
@@ -49,7 +49,7 @@ the removal of CORBA from Java 11 and the Jakarta EE 9 Platform._
 
 The Jakarta Enterprise Beans 3.2 <<a9895>> architecture is the first official
 release from the Eclipse Foundation under the specification's new name of
-"Jakarta Enterprise Beans" after the successful donation of Enterprise JavaBeans
+"`Jakarta Enterprise Beans`" after the successful donation of Enterprise JavaBeans
 by Oracle.
 
 The Jakarta Enterprise Beans 3.2 release is identical to Enterprise JavaBeans 3.2
@@ -84,7 +84,7 @@ message listener methods._
 for an Enterprise JavaBeans Lite Container to support other API groups._
 
 * _Added container provided security role named
-`"**"` to indicate any authenticated caller independent of the actual role
+"```**```" to indicate any authenticated caller independent of the actual role
 name._
 
 * _Extended the Enterprise JavaBeans Lite Group to include local
@@ -120,7 +120,7 @@ activation properties._
 security role using the ejb deployment descriptor._
 
 * _Removed restriction on obtaining the current
-class loader; replaced 'must not' with 'should exercise caution' when
+class loader; replaced '`must not`' with '`should exercise caution`' when
 using the Java I/O package._
 
 === What was New in Enterprise JavaBeans 3.1
@@ -214,7 +214,8 @@ implementation of callback interfaces._
 
 === Acknowledgements
 
-The Enterprise Beans 4.0 specification was done under the Jakarta EE Specification Process (JESP).
+The Enterprise Beans 4.0 specification work was done under the Jakarta
+EE Specification Process (JESP).
 
 === Acknowledgements for Enterprise JavaBeans 3.2
 
@@ -234,20 +235,20 @@ Jean-Louis Monteiro.
 This specification is organized into the
 following documents:
 
-* Enterprise Beans Core Contracts and Requirements
+* Enterprise Beans Core Features
 
 * Enterprise Beans Optional Features
 
-This Enterprise Beans Core Contracts document defines the
+This Enterprise Beans Core Features document defines the
 contracts and requirements for the use and implementation of Enterprise Beans. 
-These contracts include those for the Enterprise Beans 3.2 API, as well as
+These contracts include those for the Enterprise Beans 4.0 API, as well as
 for the earlier Enterprise Beans API that is required to be supported in this
 release. See <<a9423>> for coverage of the Enterprise Beans API requirements.
 
 The Enterprise Beans Optional Features document <<a9890>> defines the contracts and
 requirements for the use and implementation of features support for
-which has been made optional as of Enterprise Beans, 3.2. These
-contracts are separated from the core contracts requirements of the Enterprise Beans
+which has been made optional as of Enterprise JavaBeans, 3.2. These
+contracts are separated from the core contracts requirements of the Enterprise JavaBeans
 3.1 specification.
 
 === Document Conventions
