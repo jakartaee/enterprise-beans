@@ -52,7 +52,7 @@ compatible with other Java programming language APIs._
 * _The Enterprise Beans architecture will be
 compatible with the CORBA protocols._
 
-The purpose of the Enterprise Beans 3.2 release is both to
+The purpose of the Enterprise Beans 4.0 release is both to
 continue to achieve these goals and to improve the Enterprise Beans architecture by
 reducing its complexity from the enterprise application developer’s
 point of view.

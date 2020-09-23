@@ -81,7 +81,7 @@ the same transaction.
 
 Such clients access components written to the
 earlier Enterprise Beans APIs using the Enterprise Beans 2.1 client view home and component
-interfaces. The `Enterprise Beans` annotation (or the `ejb-ref` and `ejb-local-ref`
+interfaces. The `EJB` annotation (or the `ejb-ref` and `ejb-local-ref`
 deployment descriptor elements) may be used to specify the injection of
 home interfaces into components that are clients of beans written to the
 earlier Enterprise Beans client view.
