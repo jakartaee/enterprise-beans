@@ -50,7 +50,7 @@
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <build-helper-maven-plugin.version>3.1.0</build-helper-maven-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
-        <jakarta.transaction-api.version>2.0.0-RC1</jakarta.transaction-api.version>
+        <jakarta.transaction-api.version>2.0.0</jakarta.transaction-api.version>
     </properties>
 
     <name>Jakarta Enterprise Beans API</name>
