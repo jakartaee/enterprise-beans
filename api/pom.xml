@@ -254,7 +254,6 @@
                             Jakarta Enterprise Beans ${spec.version} API Design Specification
                         </Bundle-Description>
                         <Specification-Vendor>${project.organization.name}</Specification-Vendor>
-                        <Multi-Release>true</Multi-Release>
                     </instructions>
                 </configuration>
                 <executions>
