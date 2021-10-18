@@ -192,27 +192,24 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>compile-java-8</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
+                        <id>default-compile</id>
                         <configuration>
-                            <source>${maven.compiler.source}</source>
-                            <target>${maven.compiler.target}</target>
+                            <excludes>
+                                <exclude>module-info.java</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>compile-java-11</id>
+                        <id>compile-module-info</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <release>11</release>
-                            <compileSourceRoots>
-                                <compileSourceRoot>${project.basedir}/src/main/java-11</compileSourceRoot>
-                            </compileSourceRoots>
-                            <multiReleaseOutput>true</multiReleaseOutput>
+                            <release>9</release>
+                            <includes>
+                                <include>module-info.java</include>
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>
@@ -395,8 +392,8 @@
                                     <version>3.5.4</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[11,)</version>
-                                    <message>You need JDK 11 or higher</message>
+                                    <version>[9,)</version>
+                                    <message>You need JDK 9 or higher</message>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
