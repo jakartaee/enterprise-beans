@@ -25,19 +25,19 @@
     <version>4.0.0-SNAPSHOT</version>
     <name>Jakarta Enterprise Beans Parent</name>
     <description>Jakarta Enterprise Beans Parent</description>
-    <url>https://github.com/eclipse-ee4j/ejb-api</url>
+    <url>https://github.com/jakartaee/enterprise-beans</url>
     <organization>
         <name>Eclipse Foundation</name>
         <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
     </organization>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/eclipse-ee4j/ejb-api/issues</url>
+        <url>https://github.com/jakartaee/enterprise-beans/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/eclipse-ee4j/ejb-api.git</developerConnection>
-        <url>https://github.com/eclipse-ee4j/ejb-api/tree/${project.scm.tag}</url>
+        <connection>scm:git:ssh://git@github.com/jakartaee/enterprise-beans.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jakartaee/enterprise-beans.git</developerConnection>
+        <url>https://github.com/jakartaee/enterprise-beans</url>
         <tag>HEAD</tag>
     </scm>
     <mailingLists>
