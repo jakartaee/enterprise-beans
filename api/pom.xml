@@ -36,8 +36,6 @@
         <legal.doc.source>../</legal.doc.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <spec-version-maven-plugin.version>2.1</spec-version-maven-plugin.version>
         <maven-bundle-plugin.version>4.2.1</maven-bundle-plugin.version>
@@ -50,7 +48,8 @@
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <build-helper-maven-plugin.version>3.1.0</build-helper-maven-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
-        <jakarta.transaction-api.version>2.0.0</jakarta.transaction-api.version>
+        <jakarta.transaction-api.version>2.0.1-RC1</jakarta.transaction-api.version>
+        <jakarta.cdi-api.version>3.0.1</jakarta.cdi-api.version>
     </properties>
 
     <name>Jakarta Enterprise Beans API</name>
@@ -190,10 +189,30 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <!-- This is the common/default-compile execution configuration -->
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <release>11</release>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
                 </configuration>
+                <executions>
+                    <!-- This runs after the default-compile execution to rebuild with 8 -->
+                    <execution>
+                        <id>base-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>8</release>
+                            <excludes>
+                                <exclude>module-info.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.glassfish.build</groupId>
@@ -412,6 +431,12 @@
             <groupId>jakarta.transaction</groupId>
             <artifactId>jakarta.transaction-api</artifactId>
             <version>${jakarta.transaction-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${jakarta.cdi-api.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
