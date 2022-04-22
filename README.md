@@ -16,5 +16,5 @@ mvn clean install
 
 ## Links
 
-- Official web site: https://github.com/eclipse-ee4j/ejb-api
+- Official web site: https://github.com/jakartaee/enterprise-beans
 
