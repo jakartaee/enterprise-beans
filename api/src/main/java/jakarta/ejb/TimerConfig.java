@@ -64,6 +64,24 @@ public class TimerConfig {
     }
 
     /**
+     * Set externalid.
+     *
+     * @param externalId external id.
+     */
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    /**
+     * Return the <code>externalId</code>.
+     *
+     * @return externalId
+     */
+    public Serializable getExternalId() {
+        return externalId;
+    }
+
+    /**
      * Return the <code>info</code> object made available to timer callbacks.
      *
      * @return info object
@@ -100,4 +118,5 @@ public class TimerConfig {
 
     private boolean persistent_ = true;
 
+    private String externalId;
 }

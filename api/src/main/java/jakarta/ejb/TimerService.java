@@ -216,6 +216,19 @@ public interface TimerService {
             jakarta.ejb.EJBException;
 
     /**
+     * Returns all active timers associated with this bean matching externalId. These include both the programmatically-created timers and the
+     * automatically-created timers.
+     *
+     * @param externalId external id to look for.
+     * @return a collection of <code>jakarta.ejb.Timer</code> objects.
+     * @exception java.lang.IllegalStateException If this method is invoked while the instance is in a state that does not
+     * allow access to this method.
+     * @throws jakarta.ejb.EJBException If this method could not complete due to a system-level failure.
+     */
+    public Collection<Timer> getTimersbyExternalId(String externalId) throws java.lang.IllegalStateException,
+            jakarta.ejb.EJBException;
+
+    /**
      * Returns all active timers associated with the beans in the same module in which the caller bean is packaged. These
      * include both the programmatically-created timers and the automatically-created timers.
      *
