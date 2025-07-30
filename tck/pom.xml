@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2025 Contributors to the Eclipse Foundation.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.7</version>
+    </parent>
+
+    <groupId>jakarta.ejb.tck</groupId>
+    <artifactId>ejb-tck</artifactId>
+    <version>4.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    
+    <name>Jakarta Enterprise Beans TCK</name>
+    <description>Jakarta Enterprise Beans TCK</description>
+
+    <url>https://github.com/jakartaee/enterprise-beans</url>
+    <organization>
+        <name>Eclipse Foundation</name>
+        <url>https://projects.eclipse.org/projects/ee4j.ejb</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>EPL 2.0</name>
+            <url>https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GPL2 w/ CPE</name>
+            <url>https://www.gnu.org/software/classpath/license.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/jakartaee/enterprise-beans/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:ssh://git@github.com/jakartaee/enterprise-beans.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jakartaee/enterprise-beans.git</developerConnection>
+        <url>https://github.com/jakartaee/enterprise-beans</url>
+        <tag>HEAD</tag>
+    </scm>
+    <mailingLists>
+        <mailingList>
+            <name>Enterprise Beans developer discussions</name>
+            <post>mailto:ejb-dev@eclipse.org</post>
+            <subscribe>mailto:ejb-dev-request@eclipse.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:ejb-dev-request@eclipse.org?subject=unsubscribe</unsubscribe>
+            <archive>http://www.eclipse.org/lists/ejb-dev</archive>
+            <otherArchives>
+                <otherArchive>http://www.eclipse.org/lists/ejb-dev/maillist.rss</otherArchive>
+            </otherArchives>
+        </mailingList>
+    </mailingLists>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>jakarta.tck</groupId>
+                <artifactId>artifacts-bom</artifactId>
+                 <version>11.0.2-SNAPSHOT</version>
+                 <type>pom</type>
+                 <scope>import</scope>
+             </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>ejb30</module>
+        <module>ejb32</module>
+    </modules>
+</project>

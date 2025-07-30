@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2021,2024 Contributors to the Eclipse Foundation.
+    Copyright (c) 2021,2025 Contributors to the Eclipse Foundation.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -10,7 +10,7 @@
     This Source Code may also be made available under the following Secondary
     Licenses when the conditions for such availability set forth in the
     Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
-    version 2 with the GNU Classpath Exception, which is available at
+    version 2 with the GNU Classpath Exception, whicNon-resolvable parent POM for jakarta.ejb:ejb32:4.0.1-SNAPSHOT: The following artifacts could not be resolved: jakarta.ejb:jakarta.ejb-tck:pom:4.0.1-SNAPSHOT (absent): Could not find artifact jakarta.ejb:jakarta.ejb-tck:pom:4.0.1-SNAPSHOT in jakarta-staging (https://jakarta.oss.sonatype.org/content/groups/staging/) and 'parent.relativePath' points at no local POM @ line 21, column 13h is available at
     https://www.gnu.org/software/classpath/license.html.
 
     SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
@@ -19,15 +19,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.eclipse.ee4j</groupId>
-        <artifactId>project</artifactId>
-        <version>1.0.9</version>
-        <relativePath/>
+        <groupId>jakarta.ejb.tck</groupId>
+        <artifactId>ejb-tck</artifactId>
+        <version>4.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>jakarta.tck</groupId>
     <artifactId>ejb30</artifactId>
-    <version>11.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ejb30</name>
@@ -37,18 +34,6 @@
         <maven.compiler.release>17</maven.compiler.release>
     </properties>
     
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>jakarta.tck</groupId>
-                <artifactId>artifacts-bom</artifactId>
-                 <version>${project.version}</version>
-                 <type>pom</type>
-                 <scope>import</scope>
-             </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <!-- For javax.rmi.PortableRemoteObject -->
         <dependency>
